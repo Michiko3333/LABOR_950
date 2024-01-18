@@ -2,4 +2,7 @@
      User Global Variables
 *******************************/
 // override after node_modules\fomantic-ui-less\themes\default\globals\site.variables
-@primaryColor : #a52a2a;
+@blue : #1C68B4;
+@primaryColor : @blue;
+@black : #2F323E;
+@secondaryColor: @black;
