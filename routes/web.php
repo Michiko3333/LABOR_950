@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\EgovController;
 use App\Http\Controllers\HomeController;
 
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
+
+    // EgovAPI
+    Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
 });
 
