@@ -121,6 +121,7 @@
                     display: none;
                 }
             }
+            }
         </style>
     @endslot
     <div class="ui grid">
