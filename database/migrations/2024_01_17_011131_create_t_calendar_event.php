@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('t_calendar_event', function (Blueprint $table) {
-            $table->id('calendar_event_id')->autoIncrement()->comment('カレンダーイベントID');
+            $table->id()->autoIncrement()->comment('カレンダーイベントID');
             $table->integer('employee_id')->nullable()->comment('社員ID（システム）');
             $table->tinyInteger('category_type')->nullable()->comment('カテゴリ区分');
             $table->string('name', 255)->nullable()->comment('タイトル');

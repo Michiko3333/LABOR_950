@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_prefecture', function (Blueprint $table) {
-            $table->id('prefecture_id')->autoIncrement()->comment('都道府県ID');
+            $table->id()->autoIncrement()->comment('都道府県ID');
             $table->string('prefecture_code', 2)->comment('都道府県コード');
             $table->string('name', 255)->nullable()->comment('都道府県名');
             $table->timestamps();

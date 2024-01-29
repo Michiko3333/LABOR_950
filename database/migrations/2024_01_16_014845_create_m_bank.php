@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_bank', function (Blueprint $table) {
-            $table->id('bank_id')->autoIncrement()->comment('銀行ID');
+            $table->id()->autoIncrement()->comment('銀行ID');
             $table->string('bank_code', 4)->unique()->nullable()->comment('銀行コード');
             $table->string('name', 255)->comment('銀行名');
             $table->string('branch_code', 3)->nullable()->comment('支店コード');
