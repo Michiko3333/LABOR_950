@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_shareholder', function (Blueprint $table) {
-            $table->id('shareholder_id')->autoIncrement()->comment('株主ID');
+            $table->id()->autoIncrement()->comment('株主ID');
             $table->string('name', 255)->nullable()->comment('株主名称');
             $table->tinyInteger('shareholder_type')->nullable()->comment('株主区分');
             $table->string('share_numbers', 20)->nullable()->comment('保有株式数');

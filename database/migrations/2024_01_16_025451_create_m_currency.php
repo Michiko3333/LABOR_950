@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_currency', function (Blueprint $table) {
-            $table->id('currency_id')->autoIncrement()->comment('通貨ID');
+            $table->id()->autoIncrement()->comment('通貨ID');
             $table->string('currency_no', 3)->nullable()->default(0)->comment('通貨番号');
             $table->string('currency_code', 3)->nullable()->default(0)->comment('通貨コード');
             $table->string('country', 255)->nullable()->comment('国名');

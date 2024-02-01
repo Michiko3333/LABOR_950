@@ -12,19 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_company', function (Blueprint $table) {
-            $table->id('company_id')->autoIncrement()->comment('会社ID');
+            $table->id()->autoIncrement()->comment('会社ID');
             $table->string('name', 255)->nullable()->comment('会社名');
             $table->string('name_kana', 255)->nullable()->comment('会社名（カナ）');
             $table->string('name_en', 255)->nullable()->comment('会社名（英語表記）');
             $table->string('name_abbreviation', 255)->nullable()->comment('会社名（略称表記）');
             $table->string('company_no', 20)->nullable()->comment('法人番号');
             $table->tinyInteger('company_type_id')->nullable()->comment('法人格');
-            // 保険関連一旦保留
-            // $table->string('employment_insurance_office_no', 10)->nullable()->comment('事業所番号（雇用保険）');
-            // $table->string('pension_insurance_office_no', 10)->nullable()->comment('事業所整理記号（厚生年金保険）');
-            // $table->string('pension_insurance_office_reference_no', 20)->nullable()->comment('事業所番号（厚生年金保険）');
-            // $table->string('health_insurance_no', 20)->nullable()->comment('事業所整理記号（健康保険）');
-            // $table->string('labor_insurance_no', 20)->nullable()->comment('労働保険番号');
             $table->string('license_id')->nullable()->comment('許認可番号');
             $table->tinyInteger('business_type')->nullable()->comment('企業区分');
             $table->tinyInteger('listed_type')->nullable()->comment('上場区分');

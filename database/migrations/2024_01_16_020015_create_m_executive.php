@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_executive', function (Blueprint $table) {
-            $table->id('executive_id')->autoIncrement()->comment('役員ID');
+            $table->id()->autoIncrement()->comment('役員ID');
             $table->string('name', 255)->comment('役員名称');
             $table->integer('company_id')->comment('会社ID');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_company_type', function (Blueprint $table) {
-            $table->id('company_type_id')->autoIncrement()->comment('法人格ID');
+            $table->id()->autoIncrement()->comment('法人格ID');
             $table->string('company_type_name', 255)->nullable()->comment('法人形態名');
             $table->string('big_category', 255)->nullable()->comment('大分類');
             $table->string('medium_category', 255)->nullable()->comment('中分類');

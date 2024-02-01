@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_country', function (Blueprint $table) {
-            $table->id('country_id')->autoIncrement()->comment('国名ID');
+            $table->id()->autoIncrement()->comment('国名ID');
             $table->string('country_code', 2)->unique()->nullable()->default(0)->comment('国名コード');
             $table->string('country_name', 255)->nullable()->comment('国又は地域名(日本語表記)');
             $table->string('country_name_en', 255)->nullable()->comment('国又は地域名(英語表記)');
