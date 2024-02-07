@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_employee_employment_route;
+use Illuminate\Support\Facades\DB;
 
 class ValuesEmployeeEmploymentRouteSeeder extends Seeder
 {
@@ -12,20 +12,12 @@ class ValuesEmployeeEmploymentRouteSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_employee_employment_route = Values_employee_employment_route::create([
-            'name' => '安定所紹介', 
+        DB::table('m_values_employee_employment_route')->insert([
+            ['name' => '安定所紹介'],
+            ['name' => '自己就職'],
+            ['name' => '民間紹介'],
+            ['name' => '把握していない']
         ]);
-
-        $values_employee_employment_route = Values_employee_employment_route::create([
-            'name' => '自己就職', 
-        ]);
-
-        $values_employee_employment_route = Values_employee_employment_route::create([
-            'name' => '民間紹介', 
-        ]);
-
-        $values_employee_employment_route = Values_employee_employment_route::create([
-            'name' => '把握していない', 
-        ]);
+    
     }
 }
