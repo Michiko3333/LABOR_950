@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_employee_employment_insurance_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesEmployeeEmploymentInsuranceTypeSeeder extends Seeder
 {
@@ -12,13 +12,9 @@ class ValuesEmployeeEmploymentInsuranceTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_employee_employment_insurance_type = Values_employee_employment_insurance_type::create([
-            'name' => '常用労働者', 
+        DB::table('m_values_employee_employment_insurance_type')->insert([
+            ['name' => '常用労働者'],
+            ['name' => '役員で雇用保険に加入'],
         ]);
-
-        $values_employee_employment_insurance_type = Values_employee_employment_insurance_type::create([
-            'name' => '役員で雇用保険に加入', 
-        ]);
-
     }
 }
