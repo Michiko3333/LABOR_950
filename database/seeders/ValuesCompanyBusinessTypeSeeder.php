@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_company_business_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesCompanyBusinessTypeSeeder extends Seeder
 {
@@ -12,17 +12,10 @@ class ValuesCompanyBusinessTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_company_business_type = Values_company_business_type::create([
-            'name' => '大企業', 
+        DB::table('m_values_company_business_type')->insert([
+            ['name' => '大企業'],
+            ['name' => '中小企業'],
+            ['name' => '小規模企業者']
         ]);
-
-        $values_company_business_type = Values_company_business_type::create([
-            'name' => '中小企業', 
-        ]);
-
-        $values_company_business_type = Values_company_business_type::create([
-            'name' => '小規模企業者', 
-        ]);
-
     }
 }
