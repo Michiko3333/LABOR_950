@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_shareholder_shareholder_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesShareholderShareholderTypeSeeder extends Seeder
 {
@@ -12,13 +12,9 @@ class ValuesShareholderShareholderTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_shareholder_shareholder_type = Values_shareholder_shareholder_type::create([
-            'name' => '代表取締役', 
+        DB::table('m_values_shareholder_shareholder_type')->insert([
+            ['name' => '代表取締役'],
+            ['name' => '取締役'],
         ]);
-
-        $values_shareholder_shareholder_type = Values_shareholder_shareholder_type::create([
-            'name' => '取締役', 
-        ]);
-
     }
 }
