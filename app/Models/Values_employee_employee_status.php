@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Values_employee_employee_status extends Model
+{
+    protected $table = 'm_values_employee_employee_status';
+    protected $primaryKey = 'id';
+}
