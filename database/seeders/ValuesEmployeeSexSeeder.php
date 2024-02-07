@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_employee_sex;
+use Illuminate\Support\Facades\DB;
 
 class ValuesEmployeeSexSeeder extends Seeder
 {
@@ -12,13 +12,9 @@ class ValuesEmployeeSexSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_employee_sex = Values_employee_sex::create([
-            'name' => '男性', 
+        DB::table('m_values_employee_sex')->insert([
+            ['name' => '男性'],
+            ['name' => '女性'],
         ]);
-
-        $values_employee_sex = Values_employee_sex::create([
-            'name' => '女性', 
-        ]);
-
     }
 }
