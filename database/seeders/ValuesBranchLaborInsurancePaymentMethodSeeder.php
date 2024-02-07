@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_branch_labor_insurance_payment_method;
+use Illuminate\Support\Facades\DB;
 
 class ValuesBranchLaborInsurancePaymentMethodSeeder extends Seeder
 {
@@ -12,13 +12,9 @@ class ValuesBranchLaborInsurancePaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_branch_labor_insurance_payment_method = Values_branch_labor_insurance_payment_method::create([
-            'name' => '口座振替', 
+        DB::table('m_values_branch_labor_insurance_payment_method')->insert([
+            ['name' => '口座振替'],
+            ['name' => '窓口納付   （窓口の場合納付期限が異なる。直接納付は2週間も納付が早い）']
         ]);
-
-        $values_branch_labor_insurance_payment_method = Values_branch_labor_insurance_payment_method::create([
-            'name' => '窓口納付   （窓口の場合納付期限が異なる。直接納付は2週間も納付が早い）', 
-        ]);
-
     }
 }
