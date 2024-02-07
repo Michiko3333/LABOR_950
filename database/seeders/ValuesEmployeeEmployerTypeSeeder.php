@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_employee_employer_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesEmployeeEmployerTypeSeeder extends Seeder
 {
@@ -12,12 +12,9 @@ class ValuesEmployeeEmployerTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_employee_employer_type = Values_employee_employer_type::create([
-            'name' => '雇用主', 
-        ]);
-
-        $values_employee_employer_type = Values_employee_employer_type::create([
-            'name' => '非雇用主', 
+        DB::table('m_values_employee_employer_type')->insert([
+            ['name' => '雇用主'],
+            ['name' => '非雇用主']
         ]);
     }
 }
