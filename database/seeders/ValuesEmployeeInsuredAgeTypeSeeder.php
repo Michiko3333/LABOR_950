@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_employee_insured_age_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesEmployeeInsuredAgeTypeSeeder extends Seeder
 {
@@ -12,20 +12,11 @@ class ValuesEmployeeInsuredAgeTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_employee_insured_age_type = Values_employee_insured_age_type::create([
-            'name' => '一般', 
-        ]);
-
-        $values_employee_insured_age_type = Values_employee_insured_age_type::create([
-            'name' => '高年齢', 
-        ]);
-
-        $values_employee_insured_age_type = Values_employee_insured_age_type::create([
-            'name' => '短期', 
-        ]);
-
-        $values_employee_insured_age_type = Values_employee_insured_age_type::create([
-            'name' => '高年齢(65歳以上)', 
+        DB::table('m_values_employee_insured_age_type')->insert([
+            ['name' => '一般'],
+            ['name' => '高年齢'],
+            ['name' => '短期'],
+            ['name' => '高年齢(65歳以上)']
         ]);
     }
 }
