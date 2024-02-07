@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ValuesCalendarEventCategoryTypeSeeder::class);
+        $this->call([
+            ValuesCalendarEventCategoryTypeSeeder::class，
+            PrefectureSeeder::class，
+        ]);    
     }
 }
