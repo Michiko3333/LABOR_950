@@ -1,0 +1,55 @@
+.fadeInY {
+    animation-name: fadeInY;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s;
+    opacity: 0;
+}
+
+.fadeOutY {
+    animation-name: fadeOutY;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s;
+    opacity: 0;
+}
+
+@keyframes fadeInY {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutY {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
