@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_company_listed_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesCompanyListedTypeSeeder extends Seeder
 {
@@ -12,29 +12,13 @@ class ValuesCompanyListedTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '東証プライム', 
+        DB::table('m_values_company_listed_type')->insert([
+            ['name' => '東証プライム'],
+            ['name' => '東証スタンダード'],
+            ['name' => '東証グロース'],
+            ['name' => '札幌'],
+            ['name' => '名古屋'],
+            ['name' => '福岡'],
         ]);
-
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '東証スタンダード', 
-        ]);
-
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '東証グロース', 
-        ]);
-
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '札幌', 
-        ]);
-
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '名古屋', 
-        ]);
-
-        $values_company_listed_type = Values_company_listed_type::create([
-            'name' => '福岡', 
-        ]);
-
     }
 }
