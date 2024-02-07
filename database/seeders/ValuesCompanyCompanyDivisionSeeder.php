@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_company_company_division;
+use Illuminate\Support\Facades\DB;
 
 class ValuesCompanyCompanyDivisionSeeder extends Seeder
 {
@@ -12,13 +12,9 @@ class ValuesCompanyCompanyDivisionSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_company_company_division = Values_company_company_division::create([
-            'name' => '労務事務所', 
+        DB::table('m_values_company_company_division')->insert([
+            ['name' => '労務事務所'],
+            ['name' => '顧客企業']
         ]);
-
-        $values_company_company_division = Values_company_company_division::create([
-            'name' => '顧客企業', 
-        ]);
-
     }
 }
