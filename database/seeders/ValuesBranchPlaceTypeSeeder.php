@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Values_branch_place_type;
+use Illuminate\Support\Facades\DB;
 
 class ValuesBranchPlaceTypeSeeder extends Seeder
 {
@@ -12,12 +12,9 @@ class ValuesBranchPlaceTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $values_branch_place_type = values_branch_place_type::create([
-            'name' => '国内', 
-        ]);
-
-        $values_branch_place_type = values_branch_place_type::create([
-            'name' => '国外', 
+        DB::table('m_values_branch_place_type')->insert([
+            ['name' => '国内'],
+            ['name' => '国外']
         ]);
 
     }
