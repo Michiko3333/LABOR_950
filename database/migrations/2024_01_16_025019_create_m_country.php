@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('country_code', 2)->unique()->nullable()->default(0)->comment('国名コード');
             $table->string('country_name', 255)->nullable()->comment('国又は地域名(日本語表記)');
             $table->string('country_name_en', 255)->nullable()->comment('国又は地域名(英語表記)');
+            $table->string('setting_value', 10)->nullable()->comment('設定値');
             $table->timestamps();
             $table->comment('国マスタ');
         });
