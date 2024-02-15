@@ -11,4 +11,9 @@ class Roles extends Model
 
     protected $table = 'm_roles';
     protected $primaryKey = 'id';
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }

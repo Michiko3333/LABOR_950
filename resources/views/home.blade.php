@@ -1,46 +1,49 @@
 <x-layout title="ホーム" mode="{{ $body['mode'] }}">
     @slot('header')
-        <style type="text/css">
-            #control-panel {
-                display: grid;
-                gap: 10px;
-                grid-template-columns: repeat(3, minmax(280px, 1fr));
-                align-items: start;
-                justify-items: start;
-                justify-content: start;
-            }
+    <style type="text/css">
+        #control-panel {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(3, minmax(280px, 1fr));
+            align-items: start;
+            justify-items: start;
+            justify-content: start;
+        }
 
-            #control-panel .ui.card {
-                width: 100%;
-                margin: 0;
-            }
+        #control-panel .ui.card {
+            width: 100%;
+            margin: 0;
+        }
 
-            .panel-menu {
-                backgrount: #fff;
-            }
+        .panel-menu {
+            backgrount: #fff;
+        }
 
-            .panel-menu.ui.card>.image {
-                background: unset;
-            }
+        .panel-menu.ui.card>.image {
+            background: unset;
+        }
 
-            .ui.card .panel-menu .description {
-                color: var(--color-blue);
-            }
+        .ui.card .panel-menu .description {
+            color: var(--color-blue);
+        }
 
-            .blue-text {
-                color: var(--color-blue) !important;
-            }
+        .blue-text {
+            color: var(--color-blue) !important;
+        }
 
-            .control-panel-menu {
-                animation-name: fadeIn;
-                animation-fill-mode: forwards;
-                animation-duration: 1s;
-                animation-delay: 1s;
-                opacity: 0;
-            }
-        </style>
+        .control-panel-menu {
+            animation-name: fadeIn;
+            animation-fill-mode: forwards;
+            animation-duration: 1s;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+    </style>
     @endslot
-    <h1 class="my-2">ホーム</h1>
+    <h1 class="my-2">
+        <i class="briefcase icon"></i>
+        {{$currentCompany->name}} {{$branch->name}}
+    </h1>
     <section id="control-panel">
         <div class="ui horizontal huge card card-shadow control-panel-menu">
             <div class="content">
@@ -63,13 +66,13 @@
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">視点・営業所追加</div>
+                            <div class="header">支店・営業所の追加、削除</div>
                         </div>
                     </a>
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">組織・部署変更</div>
+                            <div class="header">組織・部署マスタ変更</div>
                         </div>
                     </a>
                 </div>
@@ -79,7 +82,7 @@
             <div class="content">
                 <i class="right floated user friends icon big blue-text" style="visibility: visible;"></i>
                 <div class="header blue-text">
-                    従業員情報
+                    社員管理
                 </div>
                 <div class="meta">
                     Employee
@@ -90,7 +93,7 @@
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">社員一覧・変更</div>
+                            <div class="header">社員一覧</div>
                         </div>
                     </a>
                     <a href="#" class="item">
@@ -123,19 +126,36 @@
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">e-gov 申請</div>
+                            <div class="header">帳票一覧</div>
                         </div>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui horizontal huge card card-shadow control-panel-menu">
+            <div class="content">
+                <i class="right floated calendar alternate outline icon big blue-text" style="visibility: visible;"></i>
+                <div class="header blue-text">
+                    カレンダー
+                </div>
+                <div class="meta">
+                    Calendar
+                </div>
+            </div>
+            <div class="extra content">
+                <div class="ui middle aligned selection list">
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">e-gov ステータス確認</div>
+                            <div class="header">カレンダー閲覧</div>
                         </div>
                     </a>
+                </div>
+                <div class="ui middle aligned selection list">
                     <a href="#" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
-                            <div class="header">e-gov リンク</div>
+                            <div class="header">カレンダー設定変更</div>
                         </div>
                     </a>
                 </div>

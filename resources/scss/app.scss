@@ -99,3 +99,8 @@ body {
         height: 25%;
     }
 }
+
+// エラーメッセージエリアの強制表示
+.ui.form .error.message {
+    display: block;
+}

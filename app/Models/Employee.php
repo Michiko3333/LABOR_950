@@ -43,4 +43,8 @@ class Employee extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+    public function roles()
+    {
+        return $this->belongsTo(Roles::class, 'role_id');
+    }
 }
