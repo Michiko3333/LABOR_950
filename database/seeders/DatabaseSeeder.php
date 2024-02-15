@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ValuesBranchBranchTypeSeeder::class，
             ValuesCompanyListedTypeSeeder::class，
             ValuesCompanyCompanyDivisionSeeder::class，
+            ValuesBranchPlaceTypeSeeder::class，
         ]);    
     }
 }
