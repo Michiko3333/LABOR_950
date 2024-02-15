@@ -1,0 +1,122 @@
+.calendar-component {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.calendar-component-control {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 32px;
+}
+
+.calendar-component-control__date {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.calendar-component-head {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background: silver;
+}
+
+.calendar-component-head__day {
+    flex: 1 1 0%;
+    min-height: 1.5em;
+    text-align: center;
+}
+
+.calendar-component-row {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border-top: solid 1px gray;
+}
+
+.calendar-component-row__day {
+    position: relative;
+    flex: 1 1 0%;
+    border-left: solid 1px gray;
+    aspect-ratio: 1 / 0.9;
+    box-sizing: border-box;
+}
+
+.calendar-component-row__day.other-month time {
+    color: silver;
+}
+
+.calendar-component-row__day time {
+    display: block;
+    text-align: right;
+    padding: 0.5em;
+    user-select: none;
+}
+
+.calendar-component-row__day .cc-events {
+    width: 100%;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item {
+    position: relative;
+    padding: 2px;
+    padding-left: 1.5em;
+    width: 100%;
+    margin-bottom: 2px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 55;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item:hover::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item.single div.dot {
+    position: absolute;
+    top: calc(50% - 4px);
+    left: 6px;
+    width: 0;
+    height: 0;
+    border: solid 4px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item.multi.start {
+    border-radius: 8px 1px 1px 8px;
+}
+
+
+.calendar-component-row__day .cc-events .cc-events__ghost {
+    position: relative;
+    padding: 2px;
+    width: 100%;
+    margin-bottom: 2px;
+    height: 24px;
+    pointer-events: none;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item>p {
+    font-size: 1em;
+    user-select: none;
+}
+
+.calendar-component-row__day .cc-events .cc-events__item.multi>p {
+    font-weight: bold;
+}
