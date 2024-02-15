@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ValuesBranchWorkStyleTypeSeeder::class，
             ValuesShareholderShareholderTypeSeeder::class，
             ValuesEmployeeSexSeeder::class，
+            ValuesEmployeeInsuredAgeTypeSeeder::class，
         ]);    
     }
 }
