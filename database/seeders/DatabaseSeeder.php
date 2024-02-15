@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             ValuesEmployeeSexSeeder::class，
             ValuesEmployeeInsuredAgeTypeSeeder::class，            
             ValuesEmployeeLaborInsuranceTypeSeeder::class，
-            ValuesEmployeeEmploymentInsuranceTypeSeeder::class，
+            ValuesEmployeeEmploymentInsuranceTypeSeeder::class，            
+            ValuesEmployeeEmployeeTypeSeeder::class，
         ]);    
     }
 }
