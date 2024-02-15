@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ValuesBranchStartDaysOfWeekSeeder::class，
             ValuesBranchWorkStyleTypeSeeder::class，
             ValuesShareholderShareholderTypeSeeder::class，
+            ValuesEmployeeSexSeeder::class，
         ]);    
     }
 }
