@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ValuesBranchPlaceTypeSeeder::class，
             ValuesBranchStartDaysOfWeekSeeder::class，
             ValuesBranchWorkStyleTypeSeeder::class，
+            ValuesShareholderShareholderTypeSeeder::class，
         ]);    
     }
 }
