@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('m_hello_work', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->nullable()->comment('所名');
-            $table->string('identifier', 255)->nullable()->comment('提出先識別子');
+            $table->string('office_no', 20)->nullable()->comment('安定書番号');
+            $table->string('identifier_d', 255)->nullable()->comment('提出先識別子D');
+            $table->string('system_name_d', 255)->nullable()->comment('提出先名称D');
+            $table->string('system_union_name_d', 255)->nullable()->comment('提出先名称D（県名込み）');
+            $table->string('identifier_h', 255)->nullable()->comment('提出先識別子H');
+            $table->string('system_name_h', 255)->nullable()->comment('提出先名称H');
+            $table->string('system_union_name_h', 255)->nullable()->comment('提出先名称H（県名込み）');
             $table->string('post_code', 20)->nullable()->comment('郵便番号');
             $table->string('address_prefecture', 255)->nullable()->comment('住所（都道府県）');
             $table->string('address_city', 255)->nullable()->comment('住所（市区町村）');
