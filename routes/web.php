@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\EgovController;
 use App\Http\Controllers\HomeController;
@@ -60,5 +61,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // EgovAPI
     Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
+
+    // Admin
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/company', [AdminController::class, 'company_list'])->name('admin.company');
+
 });
 
