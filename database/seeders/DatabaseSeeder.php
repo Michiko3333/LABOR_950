@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ValuesEmployeeEmployeeStatusSeeder::class，
             ValuesEmployeeEmploymentRouteSeeder::class，
             ValuesEmployeeInsuredReasonSeeder::class，
+            ValuesEmployeeEmploymentTypeSeeder::class，
         ]);    
     }
 }
