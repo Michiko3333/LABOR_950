@@ -16,6 +16,16 @@ class DatabaseSeeder extends Seeder
             ValuesCalendarEventCategoryTypeSeeder::class，
             ValuesBranchLaborInsurancePaymentMethodSeeder::class，
             PrefectureSeeder::class，
+            ValuesBranchBranchTypeSeeder::class，
+            ValuesCompanyListedTypeSeeder::class，
+            ValuesCompanyCompanyDivisionSeeder::class，
+            ValuesBranchPlaceTypeSeeder::class，
+            ValuesBranchStartDaysOfWeekSeeder::class，
+            ValuesBranchWorkStyleTypeSeeder::class，
+            ValuesShareholderShareholderTypeSeeder::class，
+            ValuesEmployeeSexSeeder::class，
+            ValuesEmployeeInsuredAgeTypeSeeder::class，            
+            ValuesEmployeeLaborInsuranceTypeSeeder::class，
             ValuesEmployeeEmploymentInsuranceTypeSeeder::class，
         ]);    
     }
