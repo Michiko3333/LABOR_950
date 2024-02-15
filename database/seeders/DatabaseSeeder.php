@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ValuesBranchLaborInsurancePaymentMethodSeeder::class，
             PrefectureSeeder::class，
             ValuesBranchBranchTypeSeeder::class，
+            ValuesCompanyListedTypeSeeder::class，
         ]);    
     }
 }
