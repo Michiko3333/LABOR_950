@@ -2,8 +2,10 @@
 <html lang="ja">
 
 @php
-    $laborAlert = $laborAlert ?? true;
-    $useMenu = $useMenu ?? true;
+$laborAlert = session()->get('labor-alert', false);
+$laborAlertTitle = session()->get('company_name', 'エラー');
+$useMenu = $useMenu ?? true;
+$useRightContent = $useRightContent ?? true;
 @endphp
 
 <head>
@@ -28,7 +30,7 @@
         .full-screen {
             display: flex;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
 
             background: rgba(0, 0, 0, 0.8);
             justify-content: space-between;
@@ -114,6 +116,10 @@
             opacity: 0;
         }
 
+        .ui.huge.breadcrumb {
+            margin-bottom: 2em;
+        }
+
         @media screen and (max-width: 768px) {
             .left-container {
                 width: 100%;
@@ -126,25 +132,27 @@
         }
     </style>
     @if (isset($title))
-        <title>Karte - {{ $title }}</title>
+    <title>Karte - {{ $title }}</title>
     @else
-        <title>Karte</title>
+    <title>Karte</title>
     @endif
     {{ $header ?? '' }}
 </head>
 
 <body>
     @if ($useMenu == true)
-        <x-menu></x-menu>
+    <x-menu></x-menu>
     @endif
     <div class="full-screen {{ $mode ?? '' }}">
         <div class="left-container">
             @if ($laborAlert == true)
-                <x-labor-alert name="株式会社コラットベース" />
+            <x-labor-alert name="{{$laborAlertTitle}}" />
             @endif
             {{ $slot }}
         </div>
+        @if($useRightContent)
         <div class="right-container">{{ $side ?? '' }}</div>
+        @endif
     </div>
 
     {{ $footer ?? '' }}
