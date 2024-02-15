@@ -14,8 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ValuesCalendarEventCategoryTypeSeeder::class，
-            ValuesShareholderShareholderTypeSeeder::class，
+            ValuesBranchLaborInsurancePaymentMethodSeeder::class，
             PrefectureSeeder::class，
+            ValuesShareholderShareholderTypeSeeder::class，
         ]);    
     }
 }
