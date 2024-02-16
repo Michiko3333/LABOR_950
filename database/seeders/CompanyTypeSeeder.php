@@ -88,7 +88,7 @@ class CompanyTypeSeeder extends Seeder
                 'big_category' => '私法人',
                 'medium_category' => '営利法人',
                 'small_category' => '持分会社',
-                'example' => 'null',
+                'example' => null,
             ],
             [
                 'company_type_name' => '合資会社',
