@@ -33,6 +33,6 @@ class ValuesEmployeeOverRetiredInsuranceLossReasonSeeder extends Seeder
                 'id' => '11', 
                 'name' => '社会保障協定', 
             ],
-    ]);
+        ]);
     }
 }
