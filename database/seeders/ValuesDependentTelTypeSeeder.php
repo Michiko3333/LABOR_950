@@ -18,6 +18,5 @@ class ValuesDependentTelTypeSeeder extends Seeder
             ['name' => '勤務先'],
             ['name' => 'その他']
         ]);
-
     }
 }
