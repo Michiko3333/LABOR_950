@@ -16,6 +16,5 @@ class ValuesDependentLivingTypeSeeder extends Seeder
             ['name' => '同居'],
             ['name' => '別居']
         ]);
-
     }
 }
