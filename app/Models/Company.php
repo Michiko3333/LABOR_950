@@ -9,6 +9,33 @@ class Company extends Model
     protected $table = 'm_company';
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'name',
+        'name_kana',
+        'name_en',
+        'name_abbreviation',
+        'company_no',
+        'company_type_id',
+        'license_id',
+        'business_type',
+        'listed_type',
+        'stock_code',
+        'founding_date',
+        'establishment_date',
+        'capital',
+        'annual_sales',
+        'employee_sum',
+        'qualification',
+        'authorized_shares',
+        'issued_shares',
+        'supplier_company',
+        'outsourcing_company',
+        'sales_company',
+        'url',
+        'purpose',
+        'company_division',
+    ];
+
     public function company_type()
     {
         return $this->belongsTo(Company_type::class);

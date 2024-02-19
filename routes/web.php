@@ -4,7 +4,6 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\EgovController;
@@ -65,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Admin
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/company', [AdminController::class, 'company_list'])->name('admin.company');
-
+    Route::get('/admin/company/create', [AdminController::class, 'company_create'])->name('admin.company_create');
+    Route::post('/admin/company/create', [AdminController::class, 'company_create_post'])->name('admin.company_create_post');
 });
 
