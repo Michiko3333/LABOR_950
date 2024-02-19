@@ -15,8 +15,8 @@ class ValuesDependentRelationshipSexSeeder extends Seeder
         DB::table('m_values_dependent_relationship_sex')->insert([
             ['name' => '夫'],
             ['name' => '妻'],
-            ['name' => '夫(未届)'],
-            ['name' => '妻(未届) ']
+            ['name' => '夫（未届）'],
+            ['name' => '妻（未届）']
         ]);
     }
 }
