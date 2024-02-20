@@ -352,8 +352,8 @@ class ResidentialStatusSeeder extends Seeder
             ->update(['unused_flg' => '1']);
 
         DB::table('m_residential_status')
-        ->where('setting_value', '52')
-        ->update(['unused_flg' => '1']);
+            ->where('setting_value', '52')
+            ->update(['unused_flg' => '1']);
 
         DB::table('m_residential_status')
             ->where('setting_value', '53')
