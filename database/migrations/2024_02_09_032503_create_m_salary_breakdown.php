@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement()->comment('給与内訳ID');
             $table->integer('branch_id')->nullable()->comment('支店ID');
             $table->string('name', 255)->nullable()->comment('支給項目名');
+            $table->tinyInteger('bonus_flg')->nullable()->comment('給与フラグ');
             $table->timestamps();
             $table->comment('給与内訳マスタ');
         });
