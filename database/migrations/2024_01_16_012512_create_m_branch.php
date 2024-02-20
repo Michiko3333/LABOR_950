@@ -46,7 +46,7 @@ return new class extends Migration
             $table->time('work_time_start')->nullable()->comment('就業時間(開始)');
             $table->time('work_time_end')->nullable()->comment('就業時間(終了)');
             $table->integer('work_time_standards_id')->nullable()->comment('年金事務所ID');
-            $table->text('agreed_hours_year')->nullable()->comment('所定労働時間(年)');
+            $table->string('agreed_hours_year', 255)->nullable()->comment('所定労働時間(年)');
             $table->time('agreed_hours_month')->nullable()->comment('所定労働時間(月)');
             $table->time('agreed_hours_week')->nullable()->comment('所定労働時間(週)');
             $table->time('agreed_hours_day')->nullable()->comment('所定労働時間(日)');
@@ -57,6 +57,8 @@ return new class extends Migration
             $table->text('holiday_legal')->nullable()->comment('休日内容(基本の法定休日)');
             $table->text('holiday_not_logal')->nullable()->comment('休日内容(法定外休日)');
             $table->integer('work_style_type')->nullable()->comment('体制区分');
+            $table->string('matters_of_retirement')->default('1　定年制：　あり（　60歳　）希望により再雇用をすることがある。 \n2　自己都合退職の手続き：　退職する3カ月以上前に届け出ること。 \n3　解雇の事由および手続き：　詳細は就業規則による。')->comment('退職に関する事項');
+            $table->string('other_contract_matters', 800)->default('1　社会保険等の加入：　厚生年金・健康保険・雇用保険・労災保険 \n2　事業の都合および本人の適性により、業務内容の変更を命ずることがある。 \n3　労働契約期間内に知り得た会社に関する秘密情報を、本契約の期間内はもちろん、\n本契約終了後においても、第三者に開示もしくは漏洩してはならない。 \n4　労働契約期間内に社外に持ち出す事となった資料・データ等、その所有権が会社に\n帰属するものに関して、その契約終了時には一切の例外なく返却しなければならない。 \n5　労働契約に違反すると認められた場合は、直ちに契約を解除するものとする。 \n6　会社所定の誓約書等がある場合は、必要書類を提出しその内容を遵守するものとす\nる。 \n※この書面に記載されていない事項については、就業規則および諸規程を準用する。')->comment('その他の契約事項');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
             $table->comment('支店マスタ');
