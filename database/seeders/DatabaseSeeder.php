@@ -36,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesEmployeeOccupationTypeSeeder::class);
         $this->call(ValuesCompanyBusinessTypeSeeder::class);
         $this->call(ValuesDependentRelationshipSeeder::class);
+        $this->call(ValuesDependentRelationshipSexSeeder::class);
     }
 }
