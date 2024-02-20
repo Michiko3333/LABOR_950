@@ -40,5 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesDependentCaredFamilyMemberRelationshipSeeder::class);
         $this->call(ValuesDependentLivingTypeSeeder::class);
         $this->call(ValuesDependentTelTypeSeeder::class);
+        $this->call(ValuesDependentDependentReasonTypeSeeder::class);
     }
 }
