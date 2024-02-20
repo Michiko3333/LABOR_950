@@ -119,9 +119,9 @@ class Employee extends Model
         return $this->hasMany(External_advisor_receptionist::class,'id','external_advisor_id');
     }
 
-    public function values_employee_sex()
+    public function values_sex()
     {
-        return $this->belongsTo(Values_employee_sex::class,'sex','id');
+        return $this->belongsTo(Values_sex::class,'sex','id');
     }
 
     public function values_employee_insured_age_type()

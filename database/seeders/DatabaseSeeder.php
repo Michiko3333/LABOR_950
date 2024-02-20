@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesBranchStartDaysOfWeekSeeder::class);
         $this->call(ValuesBranchWorkStyleTypeSeeder::class);
         $this->call(ValuesShareholderShareholderTypeSeeder::class);
-        $this->call(ValuesEmployeeSexSeeder::class);
+        $this->call(ValuesSexSeeder::class);
         $this->call(ValuesEmployeeInsuredAgeTypeSeeder::class);
         $this->call(ValuesEmployeeLaborInsuranceTypeSeeder::class);
         $this->call(ValuesEmployeeEmploymentInsuranceTypeSeeder::class);

@@ -73,4 +73,9 @@ class Dependent extends Model
     {
         return $this->belongsTo(Values_dependent_non_applicable_reason_type::class,'special_requirements_non_applicable_reason_type','id');
     }
+
+    public function values_sex()
+    {
+        return $this->belongsTo(Values_sex::class,'sex','id');
+    }
 }
