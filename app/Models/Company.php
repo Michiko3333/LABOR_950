@@ -9,6 +9,33 @@ class Company extends Model
     protected $table = 'm_company';
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'name',
+        'name_kana',
+        'name_en',
+        'name_abbreviation',
+        'company_no',
+        'company_type_id',
+        'license_id',
+        'business_type',
+        'listed_type',
+        'stock_code',
+        'founding_date',
+        'establishment_date',
+        'capital',
+        'annual_sales',
+        'employee_sum',
+        'qualification',
+        'authorized_shares',
+        'issued_shares',
+        'supplier_company',
+        'outsourcing_company',
+        'sales_company',
+        'url',
+        'purpose',
+        'company_division',
+    ];
+
     public function company_type()
     {
         return $this->belongsTo(Company_type::class);
@@ -47,6 +74,16 @@ class Company extends Model
     public function client()
     {
         return $this->hasMany(Client::class,'id','client_company_id');
+    }
+
+    public function managerial_position()
+    {
+        return $this->hasMany(Managerial_position::class);
+    }
+
+    public function external_advisor_receptioninst()
+    {
+        return $this->hasMany(External_advisor_receptioninst::class);
     }
 }
 
