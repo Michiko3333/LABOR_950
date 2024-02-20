@@ -9,14 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-use App\Models\User;
+use App\Models\CurrentUser;
 
 class LoginController extends Controller
 {
     public function __construct()
     {
         $this->middleware('guest')->except('home.index');
-        ;
     }
     public function index()
     {
@@ -31,7 +30,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('home.index');
+            return redirect()->route('home.index');
         }
 
         return back()->withErrors([

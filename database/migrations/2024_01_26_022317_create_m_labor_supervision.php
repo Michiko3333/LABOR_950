@@ -15,6 +15,15 @@ return new class extends Migration
             $table->id()->autoIncrement()->comment('労働基準監督署ID');
             $table->string('name', 255)->nullable()->comment('労働基準監督署名');
             $table->string('name_kana', 255)->nullable()->comment('労働基準監督署名（カナ）');
+            $table->string('identifier_hij', 255)->nullable()->comment('提出先識別子HIJ');
+            $table->string('system_name_hij', 255)->nullable()->comment('提出先名称HIJ');
+            $table->string('system_union_name_hij', 255)->nullable()->comment('提出先名称HIJ（県名込み）');
+            $table->string('identifier_l', 255)->nullable()->comment('提出先識別子L');
+            $table->string('system_name_l', 255)->nullable()->comment('提出先名称L');
+            $table->string('system_union_name_l', 255)->nullable()->comment('提出先名称L（県名込み）');
+            $table->string('identifier_n', 255)->nullable()->comment('提出先識別子N');
+            $table->string('system_name_n', 255)->nullable()->comment('提出先名称N');
+            $table->string('system_union_name_n', 255)->nullable()->comment('提出先名称N（県名込み）');
             $table->string('post_code', 20)->nullable()->comment('郵便番号');
             $table->string('address_prefecture', 255)->nullable()->comment('住所（都道府県）');
             $table->string('address_city', 255)->nullable()->comment('住所（市区町村）');
