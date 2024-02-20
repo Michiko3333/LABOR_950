@@ -43,5 +43,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesDependentDependentReasonTypeSeeder::class);
         $this->call(ValuesDependentDependentRemoveReasonTypeSeeder::class);
         $this->call(ValuesDependentCategory3InsuredOccupationTypeSeeder::class);
+        $this->call(ValuesDependentDependentOccupationTypeSeeder::class);
     }
 }
