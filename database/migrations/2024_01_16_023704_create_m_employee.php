@@ -68,12 +68,12 @@ return new class extends Migration {
             $table->integer('dependent_family_number')->nullable()->comment('扶養人数');
             $table->integer('country_id')->nullable()->comment('国籍');
             $table->integer('currency_id')->nullable()->comment('給与支払通貨');
-            $table->text('salary_notices')->nullable()->comment('賃金特記事項');
+            $table->string('salary_notices', 255)->nullable()->comment('賃金特記事項');
             $table->integer('insured_age_type')->nullable()->comment('取得時被保険者種類');
             $table->string('residence_card_no', 20)->nullable()->comment('在留カード番号');
             $table->date('stay_date_period')->nullable()->comment('在留期間');
             $table->integer('residential_status_id')->nullable()->comment('在留資格');
-            $table->text('residential_status_unknown_reason')->nullable()->comment('在留資格不明理由');
+            $table->string('residential_status_unknown_reason', 255)->nullable()->comment('在留資格不明理由');
             $table->tinyInteger('unauthorized_activities_permission_flg')->nullable()->comment('資格外活動許可フラグ');
             $table->string('mynumber_card_no', 20)->nullable()->comment('マイナンバーカード番号');
             $table->string('social_insurance_no', 10)->nullable()->comment('社会保険番号');
@@ -105,7 +105,7 @@ return new class extends Migration {
             $table->string('occupation_type', 10)->nullable()->comment('職種');
             $table->integer('employment_route')->nullable()->comment('就職経路');
             $table->integer('insured_reason')->nullable()->comment('被保険者となった原因');
-            $table->text('insured_reason_details')->nullable()->comment('被保険者となった原因の備考');
+            $table->string('insured_reason_details', 255)->nullable()->comment('被保険者となった原因の備考');
             $table->integer('salary_payment_system')->nullable()->comment('支払いの態様');
             $table->integer('employment_type')->nullable()->comment('就労区分');
             $table->integer('employment_status')->nullable()->comment('雇用形態（労働者種別）');

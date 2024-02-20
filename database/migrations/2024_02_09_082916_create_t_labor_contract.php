@@ -18,11 +18,11 @@ return new class extends Migration
             $table->date('contract_start_date')->nullable()->comment('契約開始年月日');
             $table->date('contract_end_date')->nullable()->comment('契約終了年月日');
             $table->integer('employment_status')->nullable()->comment('労働者種別（雇用形態）');
-            $table->text('work_place')->nullable()->comment('勤務場所');
+            $table->string('work_place', 255)->nullable()->comment('勤務場所');
             $table->tinyInteger('trial_period_flg')->nullable()->comment('試用期間の有無');
             $table->time('trial_period_start_date')->nullable()->comment('試用期間開始年月日');
             $table->time('trial_period_end_date')->nullable()->comment('試用期間終了年月日');
-            $table->text('job_description')->nullable()->comment('業務内容');
+            $table->string('job_description', 255)->nullable()->comment('業務内容');
             $table->time('work_time_start')->nullable()->comment('就業時間(開始)');
             $table->time('work_time_end')->nullable()->comment('就業時間(終了)');
             $table->text('break_time')->nullable()->comment('休憩時間');

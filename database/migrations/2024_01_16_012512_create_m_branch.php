@@ -46,7 +46,7 @@ return new class extends Migration
             $table->time('work_time_start')->nullable()->comment('就業時間(開始)');
             $table->time('work_time_end')->nullable()->comment('就業時間(終了)');
             $table->integer('work_time_standards_id')->nullable()->comment('年金事務所ID');
-            $table->text('agreed_hours_year')->nullable()->comment('所定労働時間(年)');
+            $table->string('agreed_hours_year', 255)->nullable()->comment('所定労働時間(年)');
             $table->time('agreed_hours_month')->nullable()->comment('所定労働時間(月)');
             $table->time('agreed_hours_week')->nullable()->comment('所定労働時間(週)');
             $table->time('agreed_hours_day')->nullable()->comment('所定労働時間(日)');
