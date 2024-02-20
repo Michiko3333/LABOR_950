@@ -38,5 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesDependentRelationshipSeeder::class);
         $this->call(ValuesDependentRelationshipSexSeeder::class);
         $this->call(ValuesDependentCaredFamilyMemberRelationshipSeeder::class);
+        $this->call(ValuesDependentLivingTypeSeeder::class);
     }
 }
