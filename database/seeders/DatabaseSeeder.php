@@ -46,5 +46,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesDependentDependentOccupationTypeSeeder::class);
         $this->call(ValuesDependentApplicableReasonTypeSeeder::class);
         $this->call(ValuesDependentNonApplicableReasonTypeSeeder::class);
+        $this->call(ValuesEmployeeOverRetiredInsuranceLossReasonSeeder::class);
     }
 }
