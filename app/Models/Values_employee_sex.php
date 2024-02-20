@@ -8,4 +8,9 @@ class Values_employee_sex extends Model
 {
     protected $table = 'm_values_employee_sex';
     protected $primaryKey = 'id';
+
+    public function employee()
+    {
+        return $this->hasMany(Employee::class,'id','sex');
+    }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('contents')->nullable()->comment('内容');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
-            $table->comment('カレンダーイベントマスタ');
+            $table->comment('カレンダーイベントトランザクション');
         });
     }
 

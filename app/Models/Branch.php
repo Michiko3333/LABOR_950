@@ -23,4 +23,14 @@ class Branch extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    public function salary_breakdown()
+    {
+        return $this->hasMany(Salary_breakdown::class);
+    }
+
+    public function labor_contract()
+    {
+        return $this->hasMany(Labor_contract::class);
+    }
 }

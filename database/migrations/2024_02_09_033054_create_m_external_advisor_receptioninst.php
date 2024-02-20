@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_external_advisor_receptioninst', function (Blueprint $table) {
+        Schema::create('m_external_advisor_receptionist', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('外部顧問担当ID');
             $table->integer('external_advisor_id')->nullable()->comment('外部顧問ID');
             $table->integer('company_id')->nullable()->comment('会社ID');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_external_advisor_receptioninst');
+        Schema::dropIfExists('m_external_advisor_receptionist');
     }
 };
