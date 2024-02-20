@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('m_salary_breakdown', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('給与内訳ID');
             $table->integer('branch_id')->nullable()->comment('支店ID');
-            $table->string('salary_name', 255)->nullable()->comment('給料名称');
+            $table->string('name', 255)->nullable()->comment('支給項目名');
             $table->timestamps();
             $table->comment('給与内訳マスタ');
         });

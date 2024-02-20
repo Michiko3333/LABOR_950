@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_values_employee_sex', function (Blueprint $table) {
+        Schema::create('m_values_sex', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('社員の性別設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
             $table->timestamps();
-            $table->comment('社員の性別設定値マスタ');
+            $table->comment('性別設定値マスタ');
         });
     }
 
