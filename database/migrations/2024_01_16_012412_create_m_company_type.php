@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('m_company_type', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('法人格ID');
-            $table->string('company_type_name', 255)->nullable()->comment('法人形態名');
+            $table->string('name', 255)->nullable()->comment('法人形態名');
             $table->string('big_category', 255)->nullable()->comment('大分類');
             $table->string('medium_category', 255)->nullable()->comment('中分類');
             $table->string('small_category', 255)->nullable()->comment('小分類');
+            $table->string('example', 255)->nullable()->comment('法人例');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
             $table->comment('法人格マスタ');
