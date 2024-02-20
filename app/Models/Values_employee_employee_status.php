@@ -8,4 +8,9 @@ class Values_employee_employee_status extends Model
 {
     protected $table = 'm_values_employee_employee_status';
     protected $primaryKey = 'id';
+
+    public function employee()
+    {
+        return $this->hasMany(Employee::class,'id','employee_status');
+    }
 }

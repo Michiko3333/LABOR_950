@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('labor_contract_id')->nullable()->comment('労働契約ID');
             $table->integer('salary_breakdown_id')->nullable()->comment('給与内訳ID');
             $table->integer('amount')->nullable()->comment('金額');
+            $table->string('payment_date', 255)->nullable()->comment('支払日'); // 日付が入るとも限らないので文字列
             $table->timestamps();
             $table->comment('労働契約の給料内訳トランザクション');
         });

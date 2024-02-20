@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('detail_content1', 255)->nullable()->comment('細目詳細1');
             $table->string('detail_kana', 20)->nullable()->comment('細目細目イロハ');
             $table->string('detail_content2', 255)->nullable()->comment('細目詳細2');
-            $table->text('remarks')->nullable()->comment('備考');
+            $table->string('remarks', 255)->nullable()->comment('備考');
             $table->timestamps();
             $table->comment('労災保険適用事業マスタ');
         });
