@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/company', [AdminController::class, 'company_list'])->name('admin.company');
     Route::get('/admin/company/create', [AdminController::class, 'company_create'])->name('admin.company_create');
     Route::post('/admin/company/create', [AdminController::class, 'company_create_post'])->name('admin.company_create_post');
+    Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
     Route::get('/admin/company/create/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
     Route::post('/admin/company/create/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
 });

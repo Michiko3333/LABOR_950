@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\CurrentUser;
 use App\Models\Company;
 use Illuminate\Validation\ValidationException;
@@ -31,6 +32,16 @@ class AdminController extends Controller
     public function company_list(Request $request)
     {
         return view('admin.companies');
+    }
+
+    public function company_list_api(Request $request)
+    {
+        try {
+            $data = Company::select('id', 'name', 'company_no', 'company_type_id', 'business_type', 'company_division')->where('delete_flg', 0)->get();
+        } catch (\Exception $e) {
+            return response()->json([], 400);
+        }
+        return response()->json($data, 200);
     }
 
     public function company_create(Request $request)
