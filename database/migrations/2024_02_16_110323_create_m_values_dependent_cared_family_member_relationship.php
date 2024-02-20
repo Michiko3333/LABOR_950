@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_values_sex', function (Blueprint $table) {
-            $table->id()->autoIncrement()->comment('社員の性別設定値ID');
+        Schema::create('m_values_dependent_cared_family_member_relationship', function (Blueprint $table) {
+            $table->id()->autoIncrement()->comment('被扶養者の介護対象家族の続柄設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
             $table->timestamps();
-            $table->comment('性別設定値マスタ');
+            $table->comment('被扶養者の介護対象家族の続柄設定値マスタ');
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_values_employee_sex');
+        Schema::dropIfExists('m_values_dependent_cared_family_member_relationship');
     }
 };
