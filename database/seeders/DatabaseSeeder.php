@@ -35,6 +35,15 @@ class DatabaseSeeder extends Seeder
         $this->call(ValuesEmployeeEmployerTypeSeeder::class);
         $this->call(ValuesEmployeeOccupationTypeSeeder::class);
         $this->call(ValuesCompanyBusinessTypeSeeder::class);
+        $this->call(ValuesDependentRelationshipSeeder::class);
+        $this->call(ValuesDependentRelationshipSexSeeder::class);
+        $this->call(ValuesDependentCaredFamilyMemberRelationshipSeeder::class);
+        $this->call(ValuesDependentLivingTypeSeeder::class);
+        $this->call(ValuesDependentTelTypeSeeder::class);
+        $this->call(ValuesDependentDependentReasonTypeSeeder::class);
+        $this->call(ValuesDependentDependentRemoveReasonTypeSeeder::class);
+        $this->call(ValuesDependentCategory3InsuredOccupationTypeSeeder::class);
+        $this->call(ValuesDependentDependentOccupationTypeSeeder::class);
         $this->call(ValuesDependentApplicableReasonTypeSeeder::class);
     }
 }
