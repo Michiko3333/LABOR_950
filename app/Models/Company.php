@@ -75,5 +75,15 @@ class Company extends Model
     {
         return $this->hasMany(Client::class,'id','client_company_id');
     }
+
+    public function managerial_position()
+    {
+        return $this->hasMany(Managerial_position::class);
+    }
+
+    public function external_advisor_receptioninst()
+    {
+        return $this->hasMany(External_advisor_receptioninst::class);
+    }
 }
 
