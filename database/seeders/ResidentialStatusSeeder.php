@@ -211,15 +211,15 @@ class ResidentialStatusSeeder extends Seeder
             ],
             [
                 'setting_value' => '51',
-                'content' => '特定技能1号（素形材産業）（※廃止済）',
+                'content' => '特定技能1号（素形材産業）',
             ],
             [
                 'setting_value' => '52',
-                'content' => '特定技能1号（産業機械製造業）（※廃止済）',
+                'content' => '特定技能1号（産業機械製造業）',
             ],
             [
                 'setting_value' => '53',
-                'content' => '特定技能1号（電気・電子情報関連産業）（※廃止済）',
+                'content' => '特定技能1号（電気・電子情報関連産業）',
             ],
             [
                 'setting_value' => '54',
@@ -349,14 +349,14 @@ class ResidentialStatusSeeder extends Seeder
 
         DB::table('m_residential_status')
             ->where('setting_value', '51')
-            ->update(['unused_flg' => '1']);
+            ->update(['disuse_flg' => '1']);
 
         DB::table('m_residential_status')
             ->where('setting_value', '52')
-            ->update(['unused_flg' => '1']);
+            ->update(['disuse_flg' => '1']);
 
         DB::table('m_residential_status')
             ->where('setting_value', '53')
-            ->update(['unused_flg' => '1']);
+            ->update(['disuse_flg' => '1']);
     }
 }
