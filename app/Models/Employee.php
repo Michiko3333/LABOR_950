@@ -49,11 +49,6 @@ class Employee extends Model
         return $this->hasMany(Dependent::class);
     }
 
-    public function payment_status_before_retirement()
-    {
-        return $this->hasOne(Payment_status_before_retirement::class);
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class);
