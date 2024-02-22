@@ -39,7 +39,7 @@ return new class extends Migration {
             $table->string('address_city', 255)->nullable()->comment('住所（市区町村）');
             $table->string('address_ward', 255)->nullable()->comment('住所（丁目・番地）');
             $table->string('address_apartment', 255)->nullable()->comment('住所（アパート・マンション名等）');
-            $table->integer('address_prefecture_kana')->nullable()->comment('住所（都道府県）（カナ）');
+            $table->string('address_prefecture_kana', 255)->nullable()->comment('住所（都道府県）（カナ）');
             $table->string('address_city_kana', 255)->nullable()->comment('住所（市区町村）（カナ）');
             $table->string('address_ward_kana', 255)->nullable()->comment('住所（丁目・番地）（カナ）');
             $table->string('address_apartment_kana', 255)->nullable()->comment('住所（アパート・マンション名等）（カナ）');
@@ -85,15 +85,18 @@ return new class extends Migration {
             $table->string('insurance_office_no', 20)->nullable()->comment('事業所番号（保険）');
             $table->string('insurance_office_reference_no', 20)->nullable()->comment('事業所整理番号（保険）');
             $table->string('insurer_no', 10)->nullable()->comment('保険者番号');
+            $table->string('employment_insurance_office_no', 20)->nullable()->comment('事業所番号（雇用保険）');
             $table->date('employment_insurance_applied_date')->nullable()->comment('雇用保険届出日');
             $table->date('employment_insured_date')->nullable()->comment('雇用保険資格取得日');
-            $table->tinyInteger('employee_type')->nullable()->comment('社員区分');
-            $table->tinyInteger('employee_status')->nullable()->comment('社員ステータス');
+            $table->integer('employee_type')->nullable()->comment('社員区分');
+            $table->integer('employee_status')->nullable()->comment('社員ステータス');
             $table->tinyInteger('contract_period_flg')->nullable()->comment('契約期間フラグ');
             $table->date('contract_start_date')->nullable()->comment('契約開始日');
             $table->date('contract_end_date')->nullable()->comment('契約終了日');
             $table->tinyInteger('contract_renewal_flg')->nullable()->comment('契約更新条項フラグ');
             $table->date('hired_date')->nullable()->comment('入社日');
+            $table->date('childcare_leave_start_date')->nullable()->comment('育児休業開始日');
+            $table->date('caregiver_leave_start_date')->nullable()->comment('介護休業開始日');
             $table->date('retirement_date')->nullable()->comment('離職日');
             $table->date('intended_retirement_date')->nullable()->comment('離職予定日');
             $table->tinyInteger('resignation_letter_request_flg')->nullable()->comment('離職票の交付希望フラグ');
@@ -102,8 +105,6 @@ return new class extends Migration {
             $table->integer('over_retired_insurance_loss_reason')->nullable()->comment('喪失原因（70歳以上）');
             $table->tinyInteger('over_70_non_applicable_flg')->nullable()->comment('70歳以上被用者不該当フラグ');
             $table->date('passed_away_date')->nullable()->comment('死亡日');
-            $table->tinyInteger('personal_information_access_flg')->nullable()->comment('個人情報の取り扱い許可フラグ');
-            $table->datetime('personal_information_access_flg_tmsp')->nullable()->comment('個人情報の取り扱い許可タイムスタンプ');
             $table->tinyInteger('external_advisor_flg')->nullable()->comment('外部顧問フラグ');
             $table->string('occupation_type', 10)->nullable()->comment('職種');
             $table->integer('employment_route')->nullable()->comment('就職経路');

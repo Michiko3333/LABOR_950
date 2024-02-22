@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement()->comment('在留資格ID');
             $table->string('setting_value', 10)->nullable()->comment('設定値');
             $table->string('content', 255)->nullable()->comment('内容');
-            $table->tinyInteger('unused_flg')->nullable()->comment('未使用フラグ');
+            $table->tinyInteger('disuse_flg')->default(0)->comment('廃止フラグ');
             $table->timestamps();
             $table->comment('在留資格マスタ');
         });

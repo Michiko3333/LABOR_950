@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name_abbreviation', 255)->nullable()->comment('会社名（略称表記）');
             $table->string('company_no', 20)->nullable()->comment('法人番号');
             $table->tinyInteger('company_type_id')->nullable()->comment('法人格');
-            $table->string('license_id')->nullable()->comment('許認可番号');
+            $table->string('license_no', 255)->nullable()->comment('許認可番号');
             $table->integer('business_type')->nullable()->comment('企業区分');
             $table->integer('listed_type')->nullable()->comment('上場区分');
             $table->string('stock_code', 20)->unique()->nullable()->comment('証券コード');
