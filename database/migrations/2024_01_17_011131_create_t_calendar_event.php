@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('t_calendar_event', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('カレンダーイベントID');
             $table->integer('employee_id')->nullable()->comment('社員ID（システム）');
-            $table->tinyInteger('category_type')->nullable()->comment('カテゴリ区分');
+            $table->integer('category_type')->nullable()->comment('カテゴリ区分');
             $table->string('name', 255)->nullable()->comment('タイトル');
             $table->datetime('from')->nullable()->comment('日付from');
             $table->datetime('to')->nullable()->comment('日付to');
             $table->text('contents')->nullable()->comment('内容');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
-            $table->comment('カレンダーイベントマスタ');
+            $table->comment('カレンダーイベントトランザクション');
         });
     }
 
