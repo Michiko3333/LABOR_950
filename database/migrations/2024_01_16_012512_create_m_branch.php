@@ -31,9 +31,11 @@ return new class extends Migration
             $table->integer('insurance_type_id')->nullable()->comment('労働保険種類の分類');
             $table->date('labor_insurance_establishment_date')->nullable()->comment('労働保険成立年月日');
             $table->string('insurance_office_no', 20)->nullable()->comment('事業所番号（保険）');
-            $table->string('insurance_office_reference_no', 20)->nullable()->comment('事業所整理番号（保険）');
+            $table->string('insurance_office_reference_no', 20)->nullable()->comment('事業所整理記号（保険）');
             $table->string('pension_office_no', 10)->nullable()->comment('事業所番号（厚生年金）');
-            $table->string('pension_office_reference_no', 10)->nullable()->comment('事業所整理番号（厚生年金）');
+            $table->string('pension_office_reference_prefecture', 10)->nullable()->comment('事業所整理記号（厚生年金）用の都道府県コード');
+            $table->string('pension_office_reference_no_cities', 10)->nullable()->comment('事業所整理記号（厚生年金）郡市区記号');
+            $table->string('pension_office_reference_no_office', 10)->nullable()->comment('事業所整理記号（厚生年金）事業所記号');
             $table->integer('pension_office_id')->nullable()->comment('年金事務所ID');
             $table->string('employment_insurance_office_no', 20)->nullable()->comment('事業所番号（雇用保険）');
             $table->date('employment_insurance_establishment_date')->nullable()->comment('雇用保険設立年月日');

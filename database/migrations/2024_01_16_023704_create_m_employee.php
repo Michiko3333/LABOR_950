@@ -51,14 +51,14 @@ return new class extends Migration {
             $table->string('mail_address1', 255)->nullable()->comment('メールアドレス１');
             $table->string('mail_address2', 255)->nullable()->comment('メールアドレス２');
             $table->string('emergency_contact1', 255)->nullable()->comment('緊急連絡先名１');
-            $table->string('emergency_relationship1', 255)->nullable()->comment('緊急連絡先属柄１');
+            $table->string('emergency_relationship1', 255)->nullable()->comment('緊急連絡先続柄１');
             $table->string('emergency_tel1', 20)->nullable()->comment('緊急連絡先電話番号１');
             $table->string('emergency_address_prefecture1', 255)->nullable()->comment('緊急連絡先住所（都道府県）１');
             $table->string('emergency_address_city1', 255)->nullable()->comment('緊急連絡先住所（市区町村）１');
             $table->string('emergency_address_ward1', 255)->nullable()->comment('緊急連絡先住所（丁目・番地）１');
             $table->string('emergency_address_apartment1', 255)->nullable()->comment('緊急連絡先住所（アパート・マンション名等）１');
             $table->string('emergency_contact2', 255)->nullable()->comment('緊急連絡先名２');
-            $table->string('emergency_relationship2', 255)->nullable()->comment('緊急連絡先属柄２');
+            $table->string('emergency_relationship2', 255)->nullable()->comment('緊急連絡先続柄２');
             $table->string('emergency_tel2', 20)->nullable()->comment('緊急連絡先電話番号２');
             $table->string('emergency_address_prefecture2', 255)->nullable()->comment('緊急連絡先住所（都道府県）２');
             $table->string('emergency_address_city2', 255)->nullable()->comment('緊急連絡先住所（市区町村）２');
@@ -79,7 +79,9 @@ return new class extends Migration {
             $table->string('mynumber_card_no', 20)->nullable()->comment('マイナンバーカード番号');
             $table->string('social_insurance_no', 10)->nullable()->comment('社会保険番号');
             $table->string('pension_office_no', 10)->nullable()->comment('事業所番号（厚生年金）');
-            $table->string('pension_office_reference_no', 10)->nullable()->comment('事業所整理番号（厚生年金）');
+            $table->string('pension_office_reference_prefecture', 10)->nullable()->comment('事業所整理記号（厚生年金）用の都道府県コード');
+            $table->string('pension_office_reference_no_cities', 10)->nullable()->comment('事業所整理記号（厚生年金）郡市区記号');
+            $table->string('pension_office_reference_no_office', 10)->nullable()->comment('事業所整理記号（厚生年金）事業所記号');
             $table->string('pension_no', 10)->nullable()->comment('基礎年金番号');
             $table->integer('labor_insurance_type')->nullable()->default(1)->comment('労災保険区分');
             $table->integer('employment_insurance_type')->nullable()->default(1)->comment('雇用保険区分');
@@ -109,7 +111,7 @@ return new class extends Migration {
             $table->date('insurance_loss_date')->nullable()->comment('喪失日');
             $table->integer('insurance_loss_reason')->nullable()->comment('喪失原因');
             $table->integer('over_retired_insurance_loss_reason')->nullable()->comment('喪失原因（70歳以上）');
-            $table->tinyInteger('over_70_non_applicable_flg')->nullable()->comment('70歳以上被用者不該当フラグ');
+            $table->tinyInteger('over_70_applicable_flg')->nullable()->comment('70歳以上被用者該当フラグ');
             $table->date('over_70_non_applicable_date')->nullable()->comment('70歳以上被用者不該当日');
             $table->date('passed_away_date')->nullable()->comment('死亡日');
             $table->tinyInteger('external_advisor_flg')->nullable()->comment('外部顧問フラグ');
