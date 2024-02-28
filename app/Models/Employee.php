@@ -49,11 +49,6 @@ class Employee extends Model
         return $this->hasMany(Dependent::class);
     }
 
-    public function payment_status_before_retirement()
-    {
-        return $this->hasOne(Payment_status_before_retirement::class);
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class);
@@ -192,5 +187,15 @@ class Employee extends Model
     public function values_employee_salary_payment_system()
     {
         return $this->belongsTo(Values_employee_salary_payment_system::class,'salary_payment_system','id');
+    }
+
+    public function values_employee_insured_type()
+    {
+        return $this->belongsTo(Values_employee_insured_type::class,'insured_type','id');
+    }
+
+    public function values_employee_childcare_reacquisition_reason()
+    {
+        return $this->belongsTo(Values_employee_childcare_reacquisition_reason::class,'childcare_reacquisition_reason','id');
     }
 }

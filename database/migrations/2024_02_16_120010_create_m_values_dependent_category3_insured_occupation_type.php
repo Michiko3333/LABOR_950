@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('m_values_dependent_category3_insured_occupation_type', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('被扶養者の第3号被保険者職業区分設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
+            $table->timestamps();
             $table->comment('被扶養者の第3号被保険者職業区分設定値マスタ');
         });
     }

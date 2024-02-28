@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_values_employee_salary_payment_system', function (Blueprint $table) {
-            $table->id()->autoIncrement()->comment('社員の支払いの態様設定値ID');
+        Schema::create('m_values_employee_childcare_reacquisition_reason', function (Blueprint $table) {
+            $table->id()->autoIncrement()->comment('社員の育児休業再取得理由設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
             $table->timestamps();
-            $table->comment('社員の支払いの態様設定値マスタ');
+            $table->comment('社員の育児休業再取得理由設定値マスタ');
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_values_employee_salary_payment_system');
+        Schema::dropIfExists('m_values_employee_childcare_reacquisition_reason');
     }
 };

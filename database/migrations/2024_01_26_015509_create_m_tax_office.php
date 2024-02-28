@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address_city', 255)->nullable()->comment('住所（市区町村）');
             $table->string('address_more_details', 255)->nullable()->comment('住所（他）');
             $table->string('tel', 20)->nullable()->comment('電話番号');
-            $table->text('coverage_area')->nullable()->comment('管轄地域');
+            $table->string('coverage_area', 255)->nullable()->comment('管轄地域');
             $table->string('office_no', 10)->nullable()->comment('署番号');
             $table->string('url', 2083)->nullable()->comment('URL');
             $table->timestamps();

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('m_values_employee_insurance_loss_reason', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('社員の喪失原因設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
+            $table->timestamps();
             $table->comment('社員の喪失原因設定値マスタ');
         });
     }

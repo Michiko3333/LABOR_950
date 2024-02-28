@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('m_industry_type', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('業種ID');
             $table->string('industry_type_code', 10)->unique()->nullable()->comment('業種コード');
-            $table->string('big_category', 255)->comment('大分類');
-            $table->tinyInteger('big_category_alphabet')->nullable()->comment('大分類アルファベット');
+            $table->string('industry_type_no', 10)->nullable()->comment('業種番号');
+            $table->string('name', 255)->nullable()->comment('業種名');
+            $table->string('big_category', 255)->nullable()->comment('大分類');
+            $table->string('big_category_alphabet',10)->nullable()->comment('大分類アルファベット');
             $table->string('medium_category', 255)->nullable()->comment('中分類');
-            $table->tinyInteger('medium_category_no')->nullable()->comment('中分類番号');
+            $table->string('medium_category_no', 10)->nullable()->comment('中分類番号');
             $table->string('small_category', 255)->nullable()->comment('小分類');
-            $table->tinyInteger('small_category_no')->nullable()->comment('小分類番号');
+            $table->string('small_category_no', 10)->nullable()->comment('小分類番号');
             $table->timestamps();
             $table->comment('業種マスタ');
         });
