@@ -14,8 +14,9 @@ class ValuesEmployeeInsuredTypeSeeder extends Seeder
     {
         DB::table('m_values_employee_insured_type')->insert([
             [
-                'id' => '0',
-                'name' => '該当なし', 
+                // 本当は0だけどidに0指定不可の為99に設定
+                'id' => '99',
+                'name' => '該当なし（０：該当なし）',
             ],
             [
                 'id' => '1',

@@ -63,6 +63,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HelloWorkSeeder::class);
         $this->call(ValuesEmployeeInsuredTypeSeeder::class);
         $this->call(ValuesEmployeeChildcareReacquisitionReasonSeeder::class);
+        $this->call(LegalAffairsBureauSeeder::class);
         $this->call(CompensationApplicableIndustrySeeder::class);
     }
 }
