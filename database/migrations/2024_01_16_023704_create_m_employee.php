@@ -69,6 +69,7 @@ return new class extends Migration {
             $table->integer('dependent_family_number')->nullable()->comment('扶養人数');
             $table->integer('country_id')->nullable()->comment('国籍');
             $table->string('salary_notices', 255)->nullable()->comment('賃金特記事項');
+            $table->integer('insured_type')->nullable()->comment('被保険者資格取得区分');
             $table->integer('insured_age_type')->nullable()->comment('取得時被保険者種類');
             $table->string('residence_card_no', 20)->nullable()->comment('在留カード番号');
             $table->date('stay_date_period')->nullable()->comment('在留期間');
@@ -96,14 +97,20 @@ return new class extends Migration {
             $table->tinyInteger('contract_renewal_flg')->nullable()->comment('契約更新条項フラグ');
             $table->date('hired_date')->nullable()->comment('入社日');
             $table->date('childcare_leave_start_date')->nullable()->comment('育児休業開始日');
+            $table->integer('childcare_extension_reason')->nullable()->comment('育児期間の延長事由');
+            $table->integer('childcare_reacquisition_reason')->nullable()->comment('育児休業再取得理由');
+            $table->date('childcare_leave_end_date')->nullable()->comment('育児休業終了日');
             $table->date('caregiver_leave_start_date')->nullable()->comment('介護休業開始日');
+            $table->date('caregiver_leave_end_date')->nullable()->comment('介護休業終了日');
             $table->date('retirement_date')->nullable()->comment('離職日');
             $table->date('intended_retirement_date')->nullable()->comment('離職予定日');
             $table->tinyInteger('resignation_letter_request_flg')->nullable()->comment('離職票の交付希望フラグ');
             $table->integer('retired_reason_type')->nullable()->comment('離職理由');
+            $table->date('insurance_loss_date')->nullable()->comment('喪失日');
             $table->integer('insurance_loss_reason')->nullable()->comment('喪失原因');
             $table->integer('over_retired_insurance_loss_reason')->nullable()->comment('喪失原因（70歳以上）');
             $table->tinyInteger('over_70_non_applicable_flg')->nullable()->comment('70歳以上被用者不該当フラグ');
+            $table->date('over_70_non_applicable_date')->nullable()->comment('70歳以上被用者不該当日');
             $table->date('passed_away_date')->nullable()->comment('死亡日');
             $table->tinyInteger('external_advisor_flg')->nullable()->comment('外部顧問フラグ');
             $table->string('occupation_type', 10)->nullable()->comment('職種');
