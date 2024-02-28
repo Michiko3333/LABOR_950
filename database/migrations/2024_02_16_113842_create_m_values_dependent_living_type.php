@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('m_values_dependent_living_type', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('被扶養者の同居区分設定値ID');
             $table->string('name', 255)->nullable()->comment('項目名');
+            $table->timestamps();
             $table->comment('被扶養者の同居区分設定値マスタ');
         });
     }

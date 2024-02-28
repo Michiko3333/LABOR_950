@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('m_hello_work', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->nullable()->comment('所名');
-            $table->string('office_no', 20)->nullable()->comment('安定書番号');
+            $table->string('office_no', 20)->nullable()->comment('安定所番号');
+            $table->string('local_code', 20)->nullable()->comment('局所コード');
             $table->string('identifier_d', 255)->nullable()->comment('提出先識別子D');
             $table->string('submit_name_d', 255)->nullable()->comment('提出先名称D');
             $table->string('submit_union_name_d', 255)->nullable()->comment('提出先名称D（県名込み）');
