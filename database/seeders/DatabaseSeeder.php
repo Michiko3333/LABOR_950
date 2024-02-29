@@ -67,5 +67,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompensationApplicableIndustrySeeder::class);
         $this->call(CurrencySeeder::class);
         $this->call(ResidentialStatusSeeder::class);
+        $this->call(BankSeeder::class);
     }
 }
