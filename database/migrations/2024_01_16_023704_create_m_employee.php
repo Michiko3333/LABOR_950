@@ -43,7 +43,6 @@ return new class extends Migration {
             $table->string('address_city_kana', 255)->nullable()->comment('住所（市区町村）（カナ）');
             $table->string('address_ward_kana', 255)->nullable()->comment('住所（丁目・番地）（カナ）');
             $table->string('address_apartment_kana', 255)->nullable()->comment('住所（アパート・マンション名等）（カナ）');
-            $table->string('tel', 20)->nullable()->comment('連絡先電話番号（ハイフン無し）');
             $table->string('tel_area_code', 10)->nullable()->comment('連絡先電話番号（市外局番）');
             $table->string('tel_city_code', 10)->nullable()->comment('連絡先電話番号（市内局番）');
             $table->string('tel_subscriber_code', 10)->nullable()->comment('連絡先電話番号（加入者番号）');

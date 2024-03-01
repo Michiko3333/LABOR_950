@@ -55,7 +55,7 @@ return new class extends Migration
             $table->integer('working_days_yearly')->nullable()->comment('労働日数(年間)');
             $table->tinyInteger('working_days_monthly')->nullable()->comment('労働日数(月間)');
             $table->integer('holiday_yearly')->nullable()->comment('休日日数(年間)');
-            $table->tinyInteger('hoiday_monthly')->nullable()->comment('休日日数(月間)');
+            $table->tinyInteger('holiday_monthly')->nullable()->comment('休日日数(月間)');
             $table->string('holiday_legal', 255)->nullable()->comment('休日内容(基本の法定休日)');
             $table->string('holiday_not_logal', 255)->nullable()->comment('休日内容(法定外休日)');
             $table->integer('work_style_type')->nullable()->comment('体制区分');
