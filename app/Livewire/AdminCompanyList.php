@@ -2,18 +2,41 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use App\Livewire\BaseTable;
 use App\Models\Company;
 use App\Models\Values_company_listed_type;
 use App\Models\Values_company_business_type;
 
-class AdminCompanyList extends Component
+class AdminCompanyList extends BaseTable
 {
-    public $data = [];
+    public $search = '';
+
     public $subList = [];
+
+    public function mount($page = 1, $search = '')
+    {
+        $this->page = $page;
+        $this->search = $search;
+    }
+
     public function render()
     {
-        $this->data = $this->getData();
+        $condition = Company::select(
+            'id',
+            'name',
+            'company_no',
+            'company_type_id',
+            'business_type',
+            'company_division',
+            'company_no'
+        )->where('delete_flg', 0);
+
+        if (!empty($this->search)) {
+            $pat = '%' . addcslashes($this->search, '%_\\') . '%';
+            $condition = $condition->where('name', 'LIKE', $pat);
+        }
+
+        $this->data = $this->getData($condition);
         $this->subList = $this->getSubList();
 
         return view('livewire.admin-company-list');
@@ -24,26 +47,10 @@ class AdminCompanyList extends Component
         redirect()->route('admin.company_update', ['id' => $id]);
     }
 
-    private function getData()
-    {
-        $d = Company::select(
-            'id',
-            'name',
-            'company_no',
-            'company_type_id',
-            'business_type',
-            'company_division',
-            'company_no'
-        )->where('delete_flg', 0)->get();
-        return $d;
-    }
-
     private function getSubList()
     {
         $company_listed_type = Values_company_listed_type::pluck('name', 'id');
         $businessTypes = Values_company_business_type::pluck('name', 'id');
-
-        \Log::info(print_r($businessTypes, true));
 
         return [
             'company_listed_type' => $company_listed_type,

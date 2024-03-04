@@ -1,32 +1,32 @@
 <x-layout title="ログイン" mode="small" useMenu="{{ false }}" laborAlert="{{ false }}">
     @slot('header')
-        <style type="text/css">
-            #login {
-                display: flex;
-                width: 360px;
-                flex-direction: column;
-            }
+    <style type="text/css">
+        #login {
+            display: flex;
+            width: 360px;
+            flex-direction: column;
+        }
 
-            .submit.button {
-                width: 100%;
-                margin: 1em 0;
-                font-size: 1.2em;
-                padding: 0.5em 1em;
-                height: 48px;
-            }
+        .submit.button {
+            width: 100%;
+            margin: 1em 0;
+            font-size: 1.2em;
+            padding: 0.5em 1em;
+            height: 48px;
+        }
 
-            .ui.form .ui.input {
-                font-size: 1.2em;
-            }
+        #login.ui.form .ui.input {
+            font-size: 1.2em;
+        }
 
-            .ui.form .error.message {
-                display: block;
-            }
+        #login.ui.form .error.message {
+            display: block;
+        }
 
-            .ui.form .error.message:empty {
-                display: none;
-            }
-        </style>
+        #login.ui.form .error.message:empty {
+            display: none;
+        }
+    </style>
     @endslot
     <section class="centering">
         <form id="login" class="ui form" action="{{ route('auth.login_post') }}" method="post">
@@ -44,14 +44,14 @@
                     </label>
                 </div>
                 @if ($errors->has('email') || $errors->has('password'))
-                    <div class="ui error message">
-                        @error('email')
-                            <div class="error-text">{{ $message }}</div>
-                        @enderror
-                        @error('password')
-                            <div class="error-text">{{ $message }}</div>
-                        @enderror
-                    </div>
+                <div class="ui error message">
+                    @error('email')
+                    <div class="error-text">{{ $message }}</div>
+                    @enderror
+                    @error('password')
+                    <div class="error-text">{{ $message }}</div>
+                    @enderror
+                </div>
                 @endif
             </div>
             <button class="ui primary submit button" type="submit">
@@ -60,12 +60,12 @@
         </form>
     </section>
     @slot('footer')
-        <script type="module">
-            $('#login').submit(_ => {
+    <script type="module">
+        $('#login').submit(_ => {
                 $('button.submit').html('<div class="ui loader small active inline"></div>');
                 $('button.submit').attr('disabled', true);
                 return true;
             });
-        </script>
+    </script>
     @endslot
 </x-layout>

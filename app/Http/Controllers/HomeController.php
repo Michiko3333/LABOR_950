@@ -37,7 +37,7 @@ class HomeController extends Controller
         $body = [
             'mode' => $small ? 'small' : '',
         ];
-
+        Log::info(print_r($currentCompany->name, true));
         return view('home', compact('body', 'user', 'branch', 'currentCompany'));
     }
 
@@ -88,6 +88,7 @@ class HomeController extends Controller
                     throw new \Exception('担当外');
                 }
             }
+            Log::info(print_r($company_id, true));
             $company = Company::find($company_id);
             $request->session()->put('labor-alert', true);
             $request->session()->put('company_id', $company->id);

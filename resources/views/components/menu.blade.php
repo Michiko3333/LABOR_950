@@ -1,4 +1,9 @@
 <header>
+    @php
+    $user = Auth::user();
+    $employee = $user->employee()->first();
+    $name = !empty($employee) ? $employee->last_name . " " . $employee->first_name : '';
+    @endphp
     <section class="left">
         <a id="sidebar-toggle">
             <i class="sidebar big icon primary"></i>
@@ -11,7 +16,7 @@
                 <div class="user-icon">
                     <img src="{{ asset('/img/image.png') }}">
                 </div>
-                <div class="name">松田 哲弥</div>
+                <div class="name">{{$name}}</div>
                 <i class="dropdown icon"></i>
                 <div class="menu" style="width: auto; min-width: 120px;">
                     <a class="item" href="#link1">個人設定</a>

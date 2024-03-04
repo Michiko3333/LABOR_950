@@ -42,7 +42,7 @@
     @endslot
     <h1 class="my-2">
         <i class="briefcase icon"></i>
-        {{$currentCompany->name}} {{$branch->name}}
+        {{$currentCompany->name}} {{empty($branch) ? '' : $branch->name}}
     </h1>
     <section id="control-panel">
         <div class="ui horizontal huge card card-shadow control-panel-menu">

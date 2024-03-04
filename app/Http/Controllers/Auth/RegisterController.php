@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
+use App\Models\Employee;
 
 class RegisterController extends Controller
 {
@@ -34,7 +35,6 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
-        Log::info(print_r($data, true));
         $user = User::create($data);
 
         Auth::login($user);
@@ -52,16 +52,26 @@ class RegisterController extends Controller
                 'password' => 'required|min:6',
             ]);
 
+            $employee_id = Employee::create([
+                'branch_id' => 0,
+                'name_common' => $request->name,
+                'role_id' => 999
+            ])->id;
+
+            Log::info(print_r($employee_id, true));
+
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'employee_id' => 1
+                'employee_id' => $employee_id
             ];
+
             $user = User::create($data);
             $output->success = true;
             $output->message = '';
             $output->user = $user;
+
         } catch (\Exception $err) {
             $output->success = false;
             $output->message = $err->getMessage();

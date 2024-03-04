@@ -2,9 +2,14 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Models\User;
+use App\Models\Employee;
 
 class CreateAccount extends Command
 {
@@ -27,14 +32,6 @@ class CreateAccount extends Command
      */
     public function handle()
     {
-
-        $name = $this->ask('Name?');
-
-        if (empty($name)) {
-            $this->info('名前を入力してください');
-            return;
-        }
-
         $email = $this->ask('Email Address?');
 
         if (empty($email)) {
@@ -48,15 +45,27 @@ class CreateAccount extends Command
             return;
         }
 
-        $request = new Request();
-        $request->mergeIfMissing(['name' => $name, 'email' => $email, 'password' => $pass]);
-        $register_controller = new RegisterController();
-        $result = $register_controller->registerAccount($request);
+        try {
+            $employee = new Employee();
+            $employee->last_name = '管理';
+            $employee->first_name = '太郎';
+            $employee->branch_id = 0;
+            $employee->role_id = 999;
+            $employee->save();
 
-        if ($result->success) {
-            $this->info("下記アカウントを作成しました。\n\n名前：$name\nメールアドエス：$email\nパスワード：$pass");
-        } else {
-            $this->error($result->message);
+
+            Log::info(print_r($employee->id, true));
+
+            $data = [
+                'name' => 'ADMIN',
+                'email' => $email,
+                'password' => Hash::make($pass),
+                'employee_id' => $employee->id
+            ];
+            $user = User::create($data);
+            $this->info("管理アカウントを下記に作成しました。\n\nメールアドエス：$email\nパスワード：$pass");
+        } catch (\Exception $e) {
+            $this->error($e);
         }
     }
 }

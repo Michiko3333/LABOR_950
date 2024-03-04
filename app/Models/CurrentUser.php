@@ -52,4 +52,3 @@ class CurrentUser extends Auth
         return Company::find($company_id);
     }
 }
-
