@@ -90,6 +90,7 @@ return new class extends Migration {
             $table->string('employment_insurance_office_no', 20)->nullable()->comment('事業所番号（雇用保険）');
             $table->date('employment_insurance_applied_date')->nullable()->comment('雇用保険届出日');
             $table->date('employment_insured_date')->nullable()->comment('雇用保険資格取得日');
+            $table->string('employment_insured_no', 20)->nullable()->comment('雇用保険被保険者番号');
             $table->integer('employee_type')->nullable()->comment('社員区分');
             $table->integer('employee_status')->nullable()->comment('社員ステータス');
             $table->tinyInteger('contract_period_flg')->nullable()->comment('契約期間フラグ');
