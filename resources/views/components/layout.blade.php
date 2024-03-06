@@ -121,15 +121,18 @@ $useRightContent = $useRightContent ?? true;
             margin-bottom: 2em;
         }
 
+        @media screen and (max-width: 1250px) {
+            .right-container {
+                display: none;
+            }
+        }
+
         @media screen and (max-width: 768px) {
             .left-container {
                 width: 100%;
                 max-width: unset;
             }
 
-            .right-container {
-                display: none;
-            }
         }
     </style>
     @if (isset($title))

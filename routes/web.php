@@ -18,6 +18,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
+use App\Http\Controllers\Ledger\SampleController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -69,4 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
     Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
     Route::post('/admin/company/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
+
+    // Ledger
+    Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
 });

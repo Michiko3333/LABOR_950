@@ -18,14 +18,13 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+
+        if (!$this->isSelectedCompany()) {
+            return redirect()->route('home.select');
+        }
+
         $user = CurrentUser::info();
         $currentCompany = CurrentUser::currentCompany();
-
-        if ($user->role_id == 999 || $user->role_id == 500) {
-            if (empty($currentCompany)) {
-                return redirect()->route('home.select');
-            }
-        }
 
         $branch = $user->branch()->first();
 
@@ -37,7 +36,6 @@ class HomeController extends Controller
         $body = [
             'mode' => $small ? 'small' : '',
         ];
-        Log::info(print_r($currentCompany->name, true));
         return view('home', compact('body', 'user', 'branch', 'currentCompany'));
     }
 
@@ -69,8 +67,6 @@ class HomeController extends Controller
                 break;
         }
 
-        Log::info(print_r($companies, true));
-
         return view('select', compact('companies', 'user'));
     }
 
@@ -88,7 +84,6 @@ class HomeController extends Controller
                     throw new \Exception('担当外');
                 }
             }
-            Log::info(print_r($company_id, true));
             $company = Company::find($company_id);
             $request->session()->put('labor-alert', true);
             $request->session()->put('company_id', $company->id);

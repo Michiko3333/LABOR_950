@@ -12,8 +12,11 @@ class BaseTable extends Component
 
     public $data = [];
 
+    public $paginated = false;
+
     protected function getData($condition)
     {
+        if (!$this->paginated) $this->page = 1;
         $page = $this->page;
         $pageSize = $this->limit;
 
@@ -25,6 +28,8 @@ class BaseTable extends Component
 
         // 全ページ数を計算
         $totalPages = ceil($totalItems / $pageSize);
+
+        $this->paginated = false;
 
         // ページ情報とデータを返す
         return [
