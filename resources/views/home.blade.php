@@ -115,7 +115,7 @@
             <div class="content">
                 <i class="right floated fax icon big blue-text" style="visibility: visible;"></i>
                 <div class="header blue-text">
-                    行制定続き
+                    行政手続き
                 </div>
                 <div class="meta">
                     Procedure
@@ -123,7 +123,7 @@
             </div>
             <div class="extra content">
                 <div class="ui middle aligned selection list">
-                    <a href="#" class="item">
+                    <a href="{{ route('ledger.index') }}" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
                             <div class="header">帳票一覧</div>

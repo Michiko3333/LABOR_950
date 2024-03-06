@@ -18,6 +18,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
+use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
 
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/administrative_procedure', [AdministrativeController::class, 'index'])->name('administrative');
     Route::get('/regulation_related', [RegulationController::class, 'index'])->name('regulation_related');
     Route::get('/department_information', [DepartmentInforController::class, 'index'])->name('department_information');
+
+    // 帳票
+    Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
 
     // EgovAPI
     Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
