@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('m_client', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('顧客ID');
-            $table->integer('branch_id')->comment('支店ID');
+            $table->integer('company_id')->comment('会社ID');
             $table->integer('client_company_id')->comment('顧客会社ID');
+            $table->integer('client_branch_id')->comment('顧客支店ID');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
-            $table->comment('顧客マスタ');
+            $table->comment('契約顧客マスタ');
         });
     }
 
