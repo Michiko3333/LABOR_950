@@ -49,6 +49,7 @@ return new class extends Migration {
             $table->string('fax', 20)->nullable()->comment('連絡先FAX番号（ハイフン無し）');
             $table->string('mail_address1', 255)->nullable()->comment('メールアドレス１');
             $table->string('mail_address2', 255)->nullable()->comment('メールアドレス２');
+            $table->string('emergency_post_code1', 20)->nullable()->comment('緊急連絡先郵便番号１');
             $table->string('emergency_contact1', 255)->nullable()->comment('緊急連絡先名１');
             $table->string('emergency_relationship1', 255)->nullable()->comment('緊急連絡先続柄１');
             $table->string('emergency_tel1', 20)->nullable()->comment('緊急連絡先電話番号１');
@@ -56,6 +57,7 @@ return new class extends Migration {
             $table->string('emergency_address_city1', 255)->nullable()->comment('緊急連絡先住所（市区町村）１');
             $table->string('emergency_address_ward1', 255)->nullable()->comment('緊急連絡先住所（丁目・番地）１');
             $table->string('emergency_address_apartment1', 255)->nullable()->comment('緊急連絡先住所（アパート・マンション名等）１');
+            $table->string('emergency_post_code2', 20)->nullable()->comment('緊急連絡先郵便番号２');
             $table->string('emergency_contact2', 255)->nullable()->comment('緊急連絡先名２');
             $table->string('emergency_relationship2', 255)->nullable()->comment('緊急連絡先続柄２');
             $table->string('emergency_tel2', 20)->nullable()->comment('緊急連絡先電話番号２');
