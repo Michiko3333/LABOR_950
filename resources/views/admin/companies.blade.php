@@ -23,7 +23,7 @@
         }
     </style>
     @endslot
-    <div class="ui breadcrumb">
+    <div class="ui huge breadcrumb">
         <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
         <i class="right chevron icon divider"></i>
         <a class="section" href="{{route('admin.index')}}">Karte管理</a>

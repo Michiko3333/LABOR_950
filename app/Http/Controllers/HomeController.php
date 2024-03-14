@@ -52,7 +52,7 @@ class HomeController extends Controller
 
         switch ($user->role_id) {
             case 999:
-                $companies = Company::select('id', 'name')->where('delete_flg', 0)->get()->toArray();
+                $companies = Company::select('id', 'name')->where('company_division', 2)->where('delete_flg', 0)->get()->toArray();
                 break;
 
             case 500:

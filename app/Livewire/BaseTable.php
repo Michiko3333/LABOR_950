@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class BaseTable extends Component
 {
@@ -41,5 +42,23 @@ class BaseTable extends Component
                 'totalPages' => $totalPages,
             ],
         ];
+    }
+    #[On('movePage')]
+    public function movePage($page)
+    {
+        $this->paginated = true;
+        $this->page = $page;
+    }
+    #[On('onPrev')]
+    public function onPrev()
+    {
+        $this->paginated = true;
+        $this->page = $this->page - 1;
+    }
+    #[On('onNext')]
+    public function onNext()
+    {
+        $this->paginated = true;
+        $this->page = $this->page + 1;
     }
 }

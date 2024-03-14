@@ -144,7 +144,7 @@
             </div>
             <div class="extra content">
                 <div class="ui middle aligned selection list">
-                    <a href="#" class="item">
+                    <a href="{{route('calendar.index')}}" class="item">
                         <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                         <div class="content">
                             <div class="header">カレンダー閲覧</div>

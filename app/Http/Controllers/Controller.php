@@ -7,6 +7,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Models\CurrentUser;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
@@ -23,5 +24,23 @@ class Controller extends BaseController
             }
         }
         return true;
+    }
+
+    protected function isSuccess($request)
+    {
+        $bool = $request->session()->get('post-success', false);
+        $request->session()->put('post-success', false);
+        return $bool;
+    }
+
+    protected function putSuccess($request, $bool = true)
+    {
+        $request->session()->put('post-success', $bool);
+    }
+
+    public function resetToast(Request $request)
+    {
+        $this->putSuccess($request, false);
+        return 0;
     }
 }

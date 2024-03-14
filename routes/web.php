@@ -16,6 +16,8 @@ use App\Http\Controllers\AlertController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AdministrativeController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
@@ -38,6 +40,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
+Route::post('/toast', [Controller::class, 'resetToast'])->name('toast.reset');
 
 
 /** ログイン必須ページ */
@@ -59,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/administrative_procedure', [AdministrativeController::class, 'index'])->name('administrative');
     Route::get('/regulation_related', [RegulationController::class, 'index'])->name('regulation_related');
     Route::get('/department_information', [DepartmentInforController::class, 'index'])->name('department_information');
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
     // 帳票
     Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
@@ -75,6 +79,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
     Route::post('/admin/company/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
 
+    Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
+    Route::get('/admin/labor/create', [AdminController::class, 'labor_create'])->name('admin.labor_create');
+    Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
+    Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
+    Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
+
+    ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
+    Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
+    Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
 });

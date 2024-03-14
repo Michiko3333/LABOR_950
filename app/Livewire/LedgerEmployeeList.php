@@ -69,15 +69,4 @@ class LedgerEmployeeList extends BaseTable
 
         $this->dispatch('onSelectEmployee', data: $output);
     }
-
-    public function onPrev()
-    {
-        $this->paginated = true;
-        $this->page = $this->page - 1;
-    }
-    public function onNext()
-    {
-        $this->paginated = true;
-        $this->page = $this->page + 1;
-    }
 }

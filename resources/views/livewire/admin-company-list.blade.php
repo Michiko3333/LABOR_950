@@ -13,9 +13,10 @@
         <thead>
             <tr>
                 <th style="width: 360px;">会社名</th>
-                <th style="width: 150px;">会社区分</th>
+                <th style="width: 150px;">種別</th>
+                <th style="width: 120px;">会社区分</th>
                 <th style="width: 150px;">法人格</th>
-                <th style="width: 150px;">法人番号</th>
+                <th style="width: 120px;">法人番号</th>
                 <th style="min-width: 90px;">従業員数</th>
                 <th></th>
             </tr>
@@ -24,6 +25,7 @@
             @foreach ($data['items'] as $item)
             <tr class="card">
                 <td>{{ $item->name }}</td>
+                <td>{{ $item->company_division == 1 ? '社労士事務所' : '顧客企業' }}</td>
                 <td>{{ $businessTypes[$item->company_division] ?? 'E' }}</td>
                 <td>{{ $company_listed_type[$item->company_type_id] ?? 'E' }}</td>
                 <td>{{ $item->company_no }}</td>
@@ -42,5 +44,7 @@
     $pagination = $data['pagination'];
     @endphp
 
-    <livewire:pagination :total="$pagination['totalItems']" :currentPage="$pagination['currentPage']">
+    <livewire:pagination :total="$pagination['totalItems']" :currentPage="$pagination['currentPage']"
+        :perPageNum="$pagination['pageSize']" @onPrev="onPrev" @movePage="movePage($event.detail.page)"
+        @onNext="onNext">
 </div>

@@ -222,7 +222,7 @@
 
     @endphp
 
-    <div class="ui breadcrumb">
+    <div class="ui huge breadcrumb">
         <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
         <i class="right chevron icon divider"></i>
         <a class="section" href="{{route('admin.index')}}">Karte管理</a>
@@ -237,9 +237,9 @@
     </div>
 
     @if(!isset($company_id))
-    <h1 class="mb-2">会社情報登録</h1>
+    <h1 class="mb-2 mt-0">会社情報登録</h1>
     @else
-    <h1 class="mb-2">会社情報編集</h1>
+    <h1 class="mb-2 mt-0">会社情報編集</h1>
     @endif
     <form class="ui form"
         action="{{!isset($company_id) ? route('admin.company_create_post') : route('admin.company_update_post', $company_id)}}"

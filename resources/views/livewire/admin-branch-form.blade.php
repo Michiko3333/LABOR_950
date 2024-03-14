@@ -300,8 +300,8 @@
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-hoiday_monthly', $key)}}">
-                        <label for="br-hoiday_monthly">休日日数(月間)</label>
-                        <input type="text" name="br-hoiday_monthly[]" placeholder="">
+                        <label for="br-holiday_monthly">休日日数(月間)</label>
+                        <input type="text" name="br-holiday_monthly[]" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-work_style_type', $key)}}">
                         <label for="br-work_style_type">体制区分</label>

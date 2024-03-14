@@ -163,6 +163,16 @@ $useRightContent = $useRightContent ?? true;
     </div>
 
     {{ $footer ?? '' }}
+    @if (session('post-success'))
+    <script type="module">
+        $.toast({
+            position: 'bottom right',
+            class: 'success',
+            message: `更新が完了しました`
+        });
+        $.ajax({url:'{{ route("toast.reset") }}', type:'post'});
+    </script>
+    @endif
 </body>
 
 </html>

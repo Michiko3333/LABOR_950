@@ -56,14 +56,12 @@ class Pagination extends Component
 
     public function paginate($c, $t)
     {
-        \Log::info(print_r($c, true));
-        \Log::info(print_r($t, true));
         $l = $r = [];
         $d = array_filter([$c - 2, $c - 1, $c, $c + 1, $c + 2], function ($n) use ($t) {
             return $n > 1 && $n < $t;
         });
         $d = array_merge($d);
-        \Log::info(print_r($d, true));
+
         $diff = 5 - count($d);
         if (count($d) > 0) {
             for ($i = 1; $i < $diff; $i++) {
@@ -76,5 +74,19 @@ class Pagination extends Component
         return array_unique(array_merge([1], array_filter(array_merge($l, $d, $r), function ($n) use ($t) {
             return $n > 1 && $n < $t;
         }), [$t]));
+    }
+
+    public function movePage($page)
+    {
+        $this->dispatch('movePage', page: $page);
+    }
+
+    public function onPrev()
+    {
+        $this->dispatch('onPrev');
+    }
+    public function onNext()
+    {
+        $this->dispatch('onNext');
     }
 }

@@ -58,9 +58,9 @@
             <i class="building outline icon" style="visibility: visible;"></i>
             <p>会社管理</p>
         </a>
-        <a class="secondary card card-shadow">
+        <a class="secondary card card-shadow" href="{{ route('admin.labor') }}">
             <i class="user graduate icon" style="visibility: visible;"></i>
-            <p>社労士管理</p>
+            <p>アカウント管理</p>
         </a>
     </div>
 </x-layout>
