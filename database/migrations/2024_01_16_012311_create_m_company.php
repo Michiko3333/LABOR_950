@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('url', 255)->nullable()->comment('ホームページアドレス');
             $table->text('purpose')->nullable()->comment('事業目的');
             $table->integer('company_division')->nullable()->comment('会社区分');
+            $table->tinyInteger('procedure_hidden_flg')->default(0)->comment('行政手続非表示フラグ');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
             $table->comment('会社マスタ');
