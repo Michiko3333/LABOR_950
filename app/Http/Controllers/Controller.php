@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
 
 use App\Models\CurrentUser;
+use App\Models\Prefecture;
 use Illuminate\Http\Request;
 
 class Controller extends BaseController
@@ -26,6 +27,12 @@ class Controller extends BaseController
         }
         return true;
     }
+
+    public function getPrefectures() {
+        $prefectures = Prefecture::all(['id', 'name']);
+        $prefectureArray = $prefectures->toArray();
+        return $prefectureArray;
+    } 
 
     public function convertEra(string $era)
     {
