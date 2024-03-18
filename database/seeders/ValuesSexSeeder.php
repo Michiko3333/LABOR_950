@@ -13,8 +13,8 @@ class ValuesSexSeeder extends Seeder
     public function run(): void
     {
         DB::table('m_values_sex')->insert([
-            ['name' => '男性'],
-            ['name' => '女性'],
+            ['name' => '男'],
+            ['name' => '女'],
         ]);
     }
 }
