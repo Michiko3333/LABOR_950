@@ -22,6 +22,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
+use App\Http\Controllers\ledger\ContinuousEmploymentBenefitsForOlderWorkersController;
 use App\Http\Controllers\ledger\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController;
 use App\Http\Controllers\Ledger\EmploymentInsuranceChildcareLeaveApplicationController;
 use App\Http\Controllers\ledger\EmploymentInsuranceSeniorContinuationAllowanceController;
@@ -93,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
+    Route::get('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index'])->name('ledger.4950008680047000');
+    Route::post('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index_post'])->name('ledger.4950008680047000_post');
     Route::get('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'index'])->name('ledger.4950013520873000');
     Route::post('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'index_post'])->name('ledger.4950013520873000_post');
     Route::get('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'index'])->name('ledger.4950008680050000');
