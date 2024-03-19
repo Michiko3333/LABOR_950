@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Branch;
+use App\Models\Company;
 use App\Models\CurrentUser;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
@@ -57,12 +58,24 @@ class LedgerEmployeeList extends BaseTable
 
         $employee->aaa = 2;
 
-        $employee_data = $employee->toArray();
-        $branch_data = $employee->branch->toArray();
+        $employeeData = $employee->toArray();
+        $branchData = $employee->branch->toArray();
+
+        //append
+        $companyId = $branchData['company_id'];
+        $headquarters  = Branch::select('address_prefecture', 'address_city', 'address_ward', 'address_apartment', 'tel_area_code', 'tel_city_code', 'tel_subscriber_code')
+            ->where('company_id', $companyId)
+            ->where('branch_type', 1)
+            ->first();
+        $company = Company::where('id', $companyId)->first();
+        $headquartersData = $headquarters->toArray();
+        $companyData = $company->toArray();
 
         $output = [
-            'employee' => $employee_data,
-            'branch' => $branch_data
+            'employee' => $employeeData,
+            'branch' => $branchData,
+            'headquarters' => $headquartersData,
+            'company' => $companyData,
         ];
 
         $this->selected_id = $id;
