@@ -22,6 +22,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
+use App\Http\Controllers\Ledger\EmploymentInsuranceChildcareLeaveApplicationController;
 use App\Http\Controllers\ledger\EmploymentInsuranceSeniorContinuationAllowanceController;
 
 use Illuminate\Support\Facades\Route;
@@ -91,6 +92,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
+    Route::get('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'index'])->name('ledger.4950008680050000');
+    Route::post('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'index_post'])->name('ledger.4950008680050000_post');
     Route::get('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index'])->name('ledger.4950008680046000');
     Route::post('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index_post'])->name('ledger.4950008680046000_post');
 });
