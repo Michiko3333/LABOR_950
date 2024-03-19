@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 use App\Models\CurrentUser;
 use App\Models\Prefecture;
+use App\Models\Values_sex;
+
 use Illuminate\Http\Request;
 
 class Controller extends BaseController
@@ -28,11 +30,23 @@ class Controller extends BaseController
         return true;
     }
 
-    public function getPrefectures() {
+    public function convertSex(string $sex)
+    {
+        $sexMap = Values_sex::pluck('id', 'name')->toArray();
+
+        if (!array_key_exists($sex, $sexMap)) {
+            return 0;
+        }
+
+        return (int)$sexMap[$sex];
+    }
+
+    public function getPrefectures()
+    {
         $prefectures = Prefecture::all(['id', 'name']);
         $prefectureArray = $prefectures->toArray();
         return $prefectureArray;
-    } 
+    }
 
     public function convertEra(string $era)
     {
@@ -50,11 +64,11 @@ class Controller extends BaseController
         return false;
     }
 
-    public function convertFirstYear(string $date) 
+    public function convertFirstYear(string $date)
     {
-        if(strpos($date, '元') !== false) {
+        if (strpos($date, '元') !== false) {
             return 1;
-        } elseif(preg_match('/[^0-9元]/', $date)) {
+        } elseif (preg_match('/[^0-9元]/', $date)) {
             return false;
         }
     }
@@ -67,12 +81,12 @@ class Controller extends BaseController
             ['date' => '1989-01-08', 'year' => '1989', 'era' => 3],
             ['date' => '2019-05-01', 'year' => '2019', 'era' => 4],
         ];
-    
+
         // $japaneseCalendarの年,月,日を取り出す
         $westernCalendarYear = $japaneseCalendar->year;
         $westernCalendarMonth = $japaneseCalendar->month;
         $westernCalendarDate = $japaneseCalendar->day;
-    
+
         // 西暦年
         foreach ($arr as $item) {
             if ($era == $item['era']) {
@@ -95,7 +109,7 @@ class Controller extends BaseController
         if ($endYear <= $westernCalendarYear || $westernCalendarYear < $startYear) {
             return false;
         } else {
-             // 日付をCarbonオブジェクトに変換
+            // 日付をCarbonオブジェクトに変換
             $westernCalendarResult = Carbon::create($westernCalendarYear, $westernCalendarMonth, $westernCalendarDate);
 
             return $westernCalendarResult;
