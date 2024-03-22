@@ -20,9 +20,9 @@
                 <td>{{ $item->procedure_id }}</td>
                 <td>{{ $item->procedure_name }}</td>
                 <td class="right aligned collapsing">
-                    <button class="ui basic primary button" type="button">
+                    <a href="/ledger/{{ $item->procedure_id }}" class="ui basic primary button">
                         作成
-                    </button>
+                    </a>
                 </td>
             </tr>
             @endforeach
