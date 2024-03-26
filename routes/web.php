@@ -22,6 +22,8 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
+use App\Http\Controllers\Ledger\EmploymentInsuredTransferNotificationController;
+use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
 use App\Http\Controllers\Ledger\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
 use App\Http\Controllers\ledger\HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
 use App\Http\Controllers\Ledger\HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController;
@@ -100,6 +102,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
+    Route::get('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'index'])->name('ledger.4950008680040000');
+    Route::post('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'post'])->name('ledger.4950008680040000_post');
     Route::get('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'index'])->name('ledger.4950013520989000');
     Route::post('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'post'])->name('ledger.4950013520989000_post');
     Route::get('/ledger/4950013520711000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'index'])->name('ledger.4950013520711000');
