@@ -70,6 +70,13 @@ class LedgerEmployeeList extends BaseTable
         $headquartersData = $headquarters->toArray();
         $companyData = $company->toArray();
 
+        $company_id = $branchData['company_id'];
+        $headquarters  = Branch::select('name', 'address_prefecture', 'address_city', 'address_ward', 'address_apartment', 'tel_area_code', 'tel_city_code', 'tel_subscriber_code')
+        ->where('company_id', $company_id)
+            ->where('branch_type', 1)
+            ->first();
+        $headquarters_data = $headquarters->toArray();
+
         $output = [
             'employee' => $employeeData,
             'branch' => $branchData,

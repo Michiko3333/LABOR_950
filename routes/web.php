@@ -23,6 +23,7 @@ use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
 use App\Http\Controllers\ledger\FirstParentalLeaveBenefitsForEmploymentInsuranceController;
+use App\Http\Controllers\Ledger\EmploymentInsuredLeaveStartAmountMonthlyCertificateController;
 use App\Http\Controllers\ledger\ContinuousEmploymentBenefitsForOlderWorkersController;
 use App\Http\Controllers\ledger\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController;
 use App\Http\Controllers\Ledger\EmploymentInsuranceChildcareLeaveApplicationController;
@@ -98,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'index'])->name('ledger.4950008680182000');
     Route::post('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'index_post'])->name('ledger.4950008680182000_post');    
+    Route::get('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'index'])->name('ledger.4950008680048000');
+    Route::post('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'post'])->name('ledger.4950008680048000_post');
     Route::get('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index'])->name('ledger.4950008680047000');
     Route::post('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index_post'])->name('ledger.4950008680047000_post');
     Route::get('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'index'])->name('ledger.4950013520873000');
