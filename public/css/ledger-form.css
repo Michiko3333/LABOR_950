@@ -46,12 +46,14 @@
     flex-shrink: 1;
     flex-grow: 1;
 }
-
 .preview-area input,
 .ledger-twocol .right-col input {
     border: none !important;
-    background-color: transparent !important;
     outline: none;
+}
+.preview-area input,
+.ledger-twocol .right-col input:not(.onImage) {
+    background-color: transparent !important;
 }
 
 .preview-area textarea,
