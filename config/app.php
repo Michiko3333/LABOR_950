@@ -83,7 +83,6 @@ return [
     |
     */
 
-    // 'locale' => 'en',
     'locale' => 'ja',
 
 

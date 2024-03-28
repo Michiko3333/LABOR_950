@@ -84,13 +84,6 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "remarks_others"=> 'nullable|string|max:255',
         ];
     }
-    public function messages()
-    {
-        return [
-            // 例
-            // 'employment_insured_no_4digit.string' => 'メッセージのカスタマイズしたい場合はこちらを使用',
-        ];
-    }
 
     public function attributes()
 
@@ -100,7 +93,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             'today_month' => '提出年月日/月',
             'today_date' => '提出年月日/日',
             'pension_office_reference_prefecture' => '事業所整理記号/都道府県コード',
-            'pension_office_reference_no_cities' => '事業所整理記号/都市区符号',
+            'pension_office_reference_no_cities' => '事業所整理記号/郡市区符号',
             'pension_office_reference_no_office' => '事業所整理記号/事業所記号',
             'branch_post_code_parent' => '事業所郵便番号3桁',
             'branch_post_code_child' => '事業所郵便番号4桁',
