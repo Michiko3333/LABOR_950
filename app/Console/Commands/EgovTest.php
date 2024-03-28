@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use App\EgovAPI\Cert;
+use App\EgovAPI\Signer;
 
 class EgovTest extends Command
 {
@@ -20,7 +20,7 @@ class EgovTest extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'sample code: egov sign';
 
     /**
      * Execute the console command.
@@ -31,15 +31,27 @@ class EgovTest extends Command
         $pfx = 'e-GovEE01_sha2.pfx';
         $pfxPath = Storage::path($pfx);
         $pfxPassword = 'gpkitest';
-        $input_xml = Storage::get('kousei.xml');
 
-        $cert = new Cert($input_xml);
-        $cert->loadPfx($pfxPath, $pfxPassword);
-        // strage/appフォルダ内指定
-        $cert->addReference('495013520714030511_01.xml', Storage::get('495013520714030511_01.xml'));
-        $result = $cert->sign();
-        $this->info(print_r($result, true));
+        // 署名インスタンス作成
+        $signer = new Signer();
+        $signer->makeDir();
+        $path = $signer->getPath();
+
+        // ここで申請ファイル一式を$pathへ移動or保存
+
+        // 署名
+        if ($signer->run($pfxPath, $pfxPassword)) {
+
+            // zip化しBASE64エンコードしたデータを取得
+            $result = $signer->getZippedBase64();
+
+            // ここで$resultを使って申請処理
+
+        }
+
+        // tempフォルダ削除
+        $signer->removeDir();
+
         $this->info("署名完了");
-
     }
 }
