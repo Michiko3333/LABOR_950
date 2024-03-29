@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminCompanyCreateRequest;
 use App\Http\Requests\AdminCompanyUpdateRequest;
 use App\Http\Requests\AdminEmployeeCreateRequest;
+use App\Http\Requests\AdminEmployeeUpdateRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +39,8 @@ use App\Models\Values_employee_insured_type;
 use App\Models\Values_employee_occupation_type;
 use App\Models\Values_employee_over_retired_insurance_loss_reason;
 use App\Models\Values_sex;
+use App\Models\Department;
+use App\Models\Employee_department;
 
 class AdminController extends Controller
 {
@@ -283,6 +287,13 @@ class AdminController extends Controller
         ];
     }
 
+    public function company_department_update(Request $request, $id)
+    {
+        $company = Company::find($id);
+        $company_name = $company->name;
+        return view('admin.department', ['company_id' => $id, 'company_name' => $company_name]);
+    }
+
     // ---------------------------------------------------------------------------------------
     // 従業員一覧
     // ---------------------------------------------------------------------------------------
@@ -305,7 +316,10 @@ class AdminController extends Controller
     {
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
 
-        return view('admin.labor-create', ['employee_type' => $employee_type]);
+        return view('admin.labor-create', [
+            'departments' => [],
+            'employee_type' => $employee_type
+        ]);
     }
 
     public function labor_create_post(AdminLaborCreateRequest $request)
@@ -332,6 +346,14 @@ class AdminController extends Controller
 
             Employee::where('id', $employee_id)->update(['role_id' => 500]);
 
+            $departments = $request->input('departments', []);
+            foreach ($departments as $dep) {
+                Employee_department::insert([
+                    'department_id' => $dep,
+                    'emloyee_id' => $employee_id
+                ]);
+            }
+
             $data = [
                 'name' => $request->input('last_name') . ' ' . $request->input('first_name'),
                 'email' => $request->input('user_email'),
@@ -340,6 +362,7 @@ class AdminController extends Controller
             ];
 
             User::create($data);
+
 
             DB::commit();
             $this->putSuccess($request);
@@ -357,13 +380,20 @@ class AdminController extends Controller
         $employee = Employee::where('delete_flg', 0)->where('id', $id)->first();
         $branch = Branch::find($employee->branch_id)->with('company')->first();
         $user = User::where('employee_id', $employee->id)->first();
+        $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
+
 
         $employee->company_name = $branch->company->name;
         $employee->company_id = $branch->company->id;
         $employee->branch_name = $branch->name;
         $employee->branch_id = $branch->id;
 
-        return view('admin.labor-create', ['employee_id' => $id, 'employee' => $employee, 'employee_type' => $employee_type]);
+        return view('admin.labor-create', [
+            'departments' => $departments,
+            'employee_id' => $id,
+            'employee' => $employee,
+            'employee_type' => $employee_type
+        ]);
     }
 
     public function labor_update_post(AdminLaborUpdateRequest $request, $id)
@@ -386,6 +416,25 @@ class AdminController extends Controller
                 'tel_subscriber_code' => $request->input('tel_subscriber_code'),
                 'mail_address2' => $request->input('mail_address2'),
             ]);
+
+            $departments = $request->input('departments', []);
+            Employee_department::whereNotIn('department_id', $departments)
+                ->where('employee_id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->update(['delete_flg' => 1]);
+
+            $existingRecords = Employee_department::whereIn('department_id', $departments)->where('employee_id', $request->input('employee_id'))->where('delete_flg', 0)->get();
+
+            $existingDepartmentIds = $existingRecords->pluck('department_id')->toArray();
+            $newDepartmentIds = array_diff($departments, $existingDepartmentIds);
+            if (!empty($newDepartmentIds)) {
+                foreach ($newDepartmentIds as $departmentId) {
+                    Employee_department::insert([
+                        'department_id' => $departmentId,
+                        'employee_id' => $request->input('employee_id')
+                    ]);
+                }
+            }
 
             DB::commit();
             $this->putSuccess($request);
@@ -415,6 +464,7 @@ class AdminController extends Controller
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
 
         return view('admin.employee_create', [
+            'departments' => [],
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
             'prefectures' => $prefectures,
@@ -543,7 +593,15 @@ class AdminController extends Controller
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
             ])->id;
 
-            Employee::where('id', $employee_id)->update(['role_id' => 500]);
+            $departments = $request->input('departments', []);
+            foreach ($departments as $dep) {
+                Employee_department::insert([
+                    'department_id' => $dep,
+                    'emloyee_id' => $employee_id
+                ]);
+            }
+
+            Employee::where('id', $employee_id)->update(['role_id' => 100]);
 
             $data = [
                 'name' => $request->input('last_name') . ' ' . $request->input('first_name'),
@@ -566,264 +624,190 @@ class AdminController extends Controller
 
     public function employee_update(Request $request, $id)
     {
-        session(['company_id' => '999']);
-        $company_id = session('company_id');
-        $employee = employee::find($id);
-        $Branch = branch::where('company_id', $company_id)->pluck('name', 'id');
-        $Managerial_position = Managerial_position::where('company_id', $company_id)->pluck('name', 'id');
-        $Country = Country::pluck('country_name', 'id');
-        $Prefecture = Prefecture::pluck('name', 'prefecture_code');
-        $Currency = Currency::pluck('country', 'id');
-        if ($employee && $Branch) {
-            return view('admin.employee_create', [
-                'm_employee_id' => $id,
-                'employee' => $employee,
-                'company_id' => $company_id,
-                'Branch' => $Branch,
-                'Managerial_position' => $Managerial_position,
-                'Country' => $Country,
-                'Prefecture' => $Prefecture,
-                'Currency' => $Currency,
-            ]);
-        } else {
-            return redirect()->route('admin.company');
-        }
-    }
+        $employee = Employee::where('id', $id)->where('delete_flg', 0)->first();
+        $branch = $employee->branch()->first();
+        $company = $branch->company()->first();
 
-    public function employee_update_post(Request $request, $id)
-    {
-        try {
-            $this->validate_employee($request);
-            $data = $this->data_employee($request);
-            employee::where('id', $id)->update($data);
-            return redirect()->route('admin.company');
-        } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
-        } catch (UniqueConstraintViolationException $e) {
-            return redirect()->back()->withErrors("")->withInput();
-        }
-    }
+        $employee->company_name = $company->name;
+        $employee->company_id = $company->id;
+        $employee->branch_name = $branch->name;
 
-    private function validate_employee(Request $request)
-    {
-        $request->validate([
-            'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
-            'branch_id' => 'integer',
-            'managerial_position_id' => 'integer',
-            'division_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'division_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'last_name' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'last_name_kana' => 'string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'last_name_alphabet' => 'string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'first_name' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'first_name_kana' => 'string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'first_name_alphabet' => 'string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'old_last_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'old_last_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'old_last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'old_first_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'old_first_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'old_first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'name_common' => 'nullable|string|max:255',
-            'name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'sex' => 'integer',
-            'post_code' => 'string|max:20|regex:/\A[0-9]+\z/u',
-            'address_prefecture' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'address_city' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'address_ward' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'address_apartment' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
-            'address_city_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
-            'address_ward_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
-            'address_apartment_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
-            'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            'fax' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'mail_address1' => 'nullable|string|max:255|email',
-            'mail_address2' => 'nullable|string|max:255|email',
-            'emergency_contact1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_relationship1' => 'nullable|string|max:255',
-            'emergency_tel1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'emergency_address_prefecture1' => 'nullable|string|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_address_city1' => 'nullable|string|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_address_apartment1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_contact2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_relationship2' => 'nullable|string|max:255',
-            'emergency_tel2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'emergency_address_prefecture2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_address_city2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            'emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_address_apartment2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'spouse_flg' => 'integer|required|regex:/^[01]+\z/u',
-            'dependent_flg' => 'integer|required|regex:/^[01]+\z/u',
-            'dependent_family_number' => 'integer',
-            'country_id' => 'integer',
-            'salary_notices' => 'nullable|string|max:255',
-            'insured_age_type' => 'nullable|integer',
-            'residence_card_no' => 'nullable|string|max:20|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
-            'residential_status_unknown_reason' => 'nullable|string|max:255',
-            'unauthorized_activities_permission_flg' => 'nullable|integer',
-            'mynumber_card_no' => 'nullable|string|max:20|regex:/^[0-9]{12}+\z/',
-            'social_insurance_no' => 'nullable|string|max:10|regex:/\A[A-Z0-9]+\z/u',
-            'pension_office_no' => 'nullable|string|max:5|regex:/\A[0-9]+\z/u',
-            'pension_office_reference_no' => 'nullable|string|max:10',
-            'pension_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
-            'labor_insurance_type' => 'nullable|integer',
-            'employment_insurance_type' => 'nullable|integer',
-            'insurance_office_no' => 'nullable|string|max:5|regex:/\A[0-9]+\z/u',
-            'insurance_office_reference_no' => 'nullable|string|max:20',
-            'employment_insurance_office_no' => 'nullable|string|max:20',
-            'insurer_no' => 'nullable|string|max:8|regex:/\A[0-9]+\z/u',
-            'employee_type' => 'nullable|integer',
-            'employee_status' => 'nullable|integer',
-            'contract_period_flg' => 'nullable|integer',
-            'contract_renewal_flg' => 'nullable|integer',
-            'resignation_letter_request_flg' => 'nullable|integer',
-            'retired_reason_type' => 'nullable|integer',
-            'insurance_loss_reason' => 'nullable|integer',
-            'over_retired_insurance_loss_reason' => 'nullable|integer',
-            'over_70_non_applicable_flg' => 'nullable|integer',
-            'external_advisor_flg' => 'nullable|integer',
-            'occupation_type' => 'nullable|string|max:10',
-            'employment_route' => 'nullable|integer',
-            'insured_reason' => 'nullable|integer',
-            'insured_reason_details' => 'nullable|string|max:255',
-            'currency_id' => 'nullable|integer',
-            'salary_payment_system' => 'nullable|integer',
-            'caregiver_leave_benefit_receive_bank_id' => 'nullable|integer',
-            'japan_post_bank_code_no' => 'nullable|string|max:5|regex:/\A[0-9]+\z/u',
-            'japan_post_bank_account_no' => 'nullable|string|max:7|regex:/\A[0-9]+\z/u',
-            'bank_account_no' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'employment_type' => 'nullable|integer',
-            'employment_status' => 'nullable|integer',
-            'employer_type' => 'integer',
+        $employee_type = Values_employee_employee_type::pluck('name', 'id');
+        $sex_type = Values_sex::pluck('name', 'id');
+        $prefectures = Prefecture::pluck('name', 'id');
+        $country_type = Country::pluck('country_name', 'id');
+        $employee_status_type = Values_employee_employee_status::pluck('name', 'id');
+        $labor_insurance_type = Values_employee_labor_insurance_type::pluck('name', 'id');
+        $employment_insurance_type = Values_employee_employment_insurance_type::pluck('name', 'id');
+        $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
+        $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
+        $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
+
+        return view('admin.employee_create', [
+            'employee' => $employee,
+            'departments' => $departments,
+            'employee_id' => $id,
+            'employee_type' => $employee_type,
+            'sex_type' => $sex_type,
+            'prefectures' => $prefectures,
+            'country_type' => $country_type,
+            'employee_status_type' => $employee_status_type,
+            'labor_insurance_type' => $labor_insurance_type,
+            'employment_insurance_type' => $employment_insurance_type,
+            'insurance_loss_reason' => $insurance_loss_reason,
+            'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
+            'occupation_type' => $occupation_type
         ]);
     }
 
-    private function data_employee(Request $request)
+    public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
-        $formmatted_birthday = $this->validateAndFormatDate($request->input('birthday'));
-        $stay_date_period = $this->validateAndFormatDate($request->input('stay_date_period'));
-        $employment_insurance_applied_date = $this->validateAndFormatDate($request->input('employment_insurance_applied_date'));
-        $employment_insured_date = $this->validateAndFormatDate($request->input('employment_insured_date'));
-        $contract_start_date = $this->validateAndFormatDate($request->input('contract_start_date'));
-        $contract_end_date = $this->validateAndFormatDate($request->input('contract_end_date'));
-        $hired_date = $this->validateAndFormatDate($request->input('hired_date'));
-        $retirement_date = $this->validateAndFormatDate($request->input('retirement_date'));
-        $intended_retirement_date = $this->validateAndFormatDate($request->input('intended_retirement_date'));
-        $passed_away_date = $this->validateAndFormatDate($request->input('passed_away_date'));
-        $employment_start_date = $this->validateAndFormatDate($request->input('employment_start_date'));
-        $employment_end_date = $this->validateAndFormatDate($request->input('employment_end_date'));
-        return $data = [
-            'employee_no' => $request->input('employee_no'),
-            'branch_id' => $request->input('branch_id'),
-            'managerial_position_id' => $request->input('managerial_position_id'),
-            'division_name' => $request->input('division_name'),
-            'division_name_kana' => $request->input('division_name_kana'),
-            'last_name' => $request->input('last_name'),
-            'last_name_kana' => $request->input('last_name_kana'),
-            'last_name_alphabet' => $request->input('last_name_alphabet'),
-            'first_name' => $request->input('first_name'),
-            'first_name_kana' => $request->input('first_name_kana'),
-            'first_name_alphabet' => $request->input('first_name_alphabet'),
-            'old_last_name' => $request->input('old_last_name'),
-            'old_last_name_kana' => $request->input('old_last_name_kana'),
-            'old_last_name_alphabet' => $request->input('old_last_name_alphabet'),
-            'old_first_name' => $request->input('old_first_name'),
-            'old_first_name_kana' => $request->input('old_first_name_kana'),
-            'old_first_name_alphabet' => $request->input('old_first_name_alphabet'),
-            'name_common' => $request->input('name_common'),
-            'name_common_kana' => $request->input('name_common_kana'),
-            'sex' => $request->input('sex'),
-            'birthday' => $formmatted_birthday,
-            'post_code' => $request->input('post_code'),
-            'address_prefecture' => $request->input('address_prefecture'),
-            'address_city' => $request->input('address_city'),
-            'address_ward' => $request->input('address_ward'),
-            'address_apartment' => $request->input('address_apartment'),
-            // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
-            'address_city_kana' => $request->input('address_city_kana'),
-            'address_ward_kana' => $request->input('address_ward_kana'),
-            'address_apartment_kana' => $request->input('address_apartment_kana'),
-            'tel_area_code' => $request->input('tel_area_code'),
-            'tel_city_code' => $request->input('tel_city_code'),
-            'tel_subscriber_code' => $request->input('tel_subscriber_code'),
-            'fax' => $request->input('fax'),
-            'mail_address1' => $request->input('mail_address1'),
-            'mail_address2' => $request->input('mail_address2'),
-            'emergency_contact1' => $request->input('emergency_contact1'),
-            'emergency_relationship1' => $request->input('emergency_relationship1'),
-            'emergency_tel1' => $request->input('emergency_tel1'),
-            'emergency_address_prefecture1' => $request->input('emergency_address_prefecture1'),
-            'emergency_address_city1' => $request->input('emergency_address_city1'),
-            'emergency_address_ward1' => $request->input('emergency_address_ward1'),
-            'emergency_address_apartment1' => $request->input('emergency_address_apartment1'),
-            'emergency_contact2' => $request->input('emergency_contact2'),
-            'emergency_relationship2' => $request->input('emergency_relationship2'),
-            'emergency_tel2' => $request->input('emergency_tel2'),
-            'emergency_address_prefecture2' => $request->input('emergency_address_prefecture2'),
-            'emergency_address_city2' => $request->input('emergency_address_city2'),
-            'emergency_address_ward2' => $request->input('emergency_address_ward2'),
-            'emergency_address_apartment2' => $request->input('emergency_address_apartment2'),
-            'spouse_flg' => $request->input('spouse_flg'),
-            // 'dependent_flg' => $request->input('dependent_flg'),// developにない
-            'dependent_family_number' => $request->input('dependent_family_number'),
-            'country_id' => $request->input('country_id'),
-            'salary_notices' => $request->input('salary_notices'),
-            'insured_age_type' => $request->input('insured_age_type'),
-            'residence_card_no' => $request->input('residence_card_no'),
-            'stay_date_period' => $stay_date_period,
-            'residential_status_id' => $request->input('residential_status_id'),
-            'residential_status_unknown_reason' => $request->input('residential_status_unknown_reason'),
-            'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
-            'mynumber_card_no' => $request->input('mynumber_card_no'),
-            'social_insurance_no' => $request->input('social_insurance_no'),
-            'pension_office_no' => $request->input('pension_office_no'),
-            'pension_office_reference_no' => $request->input('pension_office_reference_no'),
-            'pension_no' => $request->input('pension_no'),
-            'labor_insurance_type' => $request->input('labor_insurance_type'),
-            'employment_insurance_type' => $request->input('employment_insurance_type'),
-            'insurance_office_no' => $request->input('insurance_office_no'),
-            'insurance_office_reference_no' => $request->input('insurance_office_reference_no'),
-            // 'employment_insurance_office_no' => $request->input('employment_insurance_office_no'),// developにない
-            'insurer_no' => $request->input('insurer_no'),
-            'employment_insurance_applied_date' => $employment_insurance_applied_date,
-            'employment_insured_date' => $employment_insured_date,
-            'employee_type' => $request->input('employee_type'),
-            'employee_status' => $request->input('employee_status'),
-            'contract_period_flg' => $request->input('contract_period_flg'),
-            'contract_start_date' => $contract_start_date,
-            'contract_end_date' => $contract_end_date,
-            'contract_renewal_flg' => $request->input('contract_renewal_flg'),
-            'hired_date' => $hired_date,
-            'retirement_date' => $retirement_date,
-            'intended_retirement_date' => $intended_retirement_date,
-            'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
-            'retired_reason_type' => $request->input('retired_reason_type'),
-            'insurance_loss_reason' => $request->input('insurance_loss_reason'),
-            // 'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'),// developにない
-            // 'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'),// developにない
-            // 'passed_away_date' => $passed_away_date,// developにない
-            'personal_information_access_flg' => $request->input('personal_information_access_flg'),
-            'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
-            'external_advisor_flg' => $request->input('external_advisor_flg'),
-            'occupation_type' => $request->input('occupation_type'),
-            'employment_route' => $request->input('employment_route'),
-            'insured_reason' => $request->input('insured_reason'),
-            'insured_reason_details' => $request->input('insured_reason_details'),
-            'currency_id' => $request->input('currency_id'),
-            'salary_payment_system' => $request->input('salary_payment_system'),
-            // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-            // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
-            // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
-            // 'bank_account_no' => $request->input('bank_account_no'),// developにない
-            'employment_type' => $request->input('employment_type'),
-            'employment_status' => $request->input('employment_status'),
-            'employer_type' => $request->input('employer_type'),
-            'employment_start_date' => $employment_start_date,
-            'employment_end_date' => $employment_end_date,
-        ];
+        DB::beginTransaction();
+        try {
+            Employee::where('id', $request->input('employee_id'))
+                ->update([
+                    'employee_no' => $request->input('employee_no'),
+                    'branch_id' => $request->input('branch_id'),
+                    'managerial_position_id' => $request->input('managerial_position_id'),
+                    'division_name' => $request->input('division_name'),
+                    'division_name_kana' => $request->input('division_name_kana'),
+                    'last_name' => $request->input('last_name'),
+                    'last_name_kana' => $request->input('last_name_kana'),
+                    'last_name_alphabet' => $request->input('last_name_alphabet'),
+                    'first_name' => $request->input('first_name'),
+                    'first_name_kana' => $request->input('first_name_kana'),
+                    'first_name_alphabet' => $request->input('first_name_alphabet'),
+                    'old_last_name' => $request->input('old_last_name'),
+                    'old_last_name_kana' => $request->input('old_last_name_kana'),
+                    'old_last_name_alphabet' => $request->input('old_last_name_alphabet'),
+                    'old_first_name' => $request->input('old_first_name'),
+                    'old_first_name_kana' => $request->input('old_first_name_kana'),
+                    'old_first_name_alphabet' => $request->input('old_first_name_alphabet'),
+                    'name_common' => $request->input('name_common'),
+                    'name_common_kana' => $request->input('name_common_kana'),
+                    'sex' => $request->input('sex'),
+                    'birthday' => $this->formatDate($request->input('birthday')),
+                    'post_code' => $request->input('post_code'),
+                    'address_prefecture' => $request->input('address_prefecture'),
+                    'address_city' => $request->input('address_city'),
+                    'address_ward' => $request->input('address_ward'),
+                    'address_apartment' => $request->input('address_apartment'),
+                    // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
+                    'address_city_kana' => $request->input('address_city_kana'),
+                    'address_ward_kana' => $request->input('address_ward_kana'),
+                    'address_apartment_kana' => $request->input('address_apartment_kana'),
+                    'tel_area_code' => $request->input('tel_area_code'),
+                    'tel_city_code' => $request->input('tel_city_code'),
+                    'tel_subscriber_code' => $request->input('tel_subscriber_code'),
+                    'fax' => $request->input('fax'),
+                    'mail_address1' => $request->input('mail_address1'),
+                    'mail_address2' => $request->input('mail_address2'),
+                    'emergency_contact1' => $request->input('emergency_contact1'),
+                    'emergency_relationship1' => $request->input('emergency_relationship1'),
+                    'emergency_tel1' => $request->input('emergency_tel1'),
+                    'emergency_address_prefecture1' => $request->input('emergency_address_prefecture1'),
+                    'emergency_address_city1' => $request->input('emergency_address_city1'),
+                    'emergency_address_ward1' => $request->input('emergency_address_ward1'),
+                    'emergency_address_apartment1' => $request->input('emergency_address_apartment1'),
+                    'emergency_contact2' => $request->input('emergency_contact2'),
+                    'emergency_relationship2' => $request->input('emergency_relationship2'),
+                    'emergency_tel2' => $request->input('emergency_tel2'),
+                    'emergency_address_prefecture2' => $request->input('emergency_address_prefecture2'),
+                    'emergency_address_city2' => $request->input('emergency_address_city2'),
+                    'emergency_address_ward2' => $request->input('emergency_address_ward2'),
+                    'emergency_address_apartment2' => $request->input('emergency_address_apartment2'),
+                    'spouse_flg' => $request->input('spouse_flg'),
+                    'dependent_flg' => $request->input('dependent_flg'),
+                    'dependent_family_number' => $request->input('dependent_family_number'),
+                    'country_id' => $request->input('country_id'),
+                    'salary_notices' => $request->input('salary_notices'),
+                    'insured_age_type' => $request->input('insured_age_type'),
+                    'residence_card_no' => $request->input('residence_card_no'),
+                    // 'stay_date_period' => $this->formatDate($request->input('stay_date_period')),
+                    'residential_status_id' => $request->input('residential_status_id'),
+                    'residential_status_unknown_reason' => $request->input('residential_status_unknown_reason'),
+                    'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
+                    'mynumber_card_no' => $request->input('mynumber_card_no'),
+                    'social_insurance_no' => $request->input('social_insurance_no'),
+                    'pension_office_no' => $request->input('pension_office_no'),
+                    //'pension_office_reference_no' => $request->input('pension_office_reference_no'),
+                    'pension_no' => $request->input('pension_no'),
+                    'labor_insurance_type' => $request->input('labor_insurance_type'),
+                    'employment_insurance_type' => $request->input('employment_insurance_type'),
+                    'insurance_office_no' => $request->input('insurance_office_no'),
+                    'insurance_office_reference_no' => $request->input('insurance_office_reference_no'),
+                    'employment_insurance_office_no' => $request->input('employment_insurance_office_no'),
+                    'insurer_no' => $request->input('insurer_no'),
+                    'employment_insurance_applied_date' => $this->formatDate($request->input('employment_insurance_applied_date')),
+                    'employment_insured_date' => $this->formatDate($request->input('employment_insured_date')),
+                    'employee_type' => $request->input('employee_type'),
+                    'employee_status' => $request->input('employee_status'),
+                    'contract_period_flg' => $request->input('contract_period_flg'),
+                    'contract_start_date' => $this->formatDate($request->input('contract_start_date')),
+                    'contract_end_date' => $this->formatDate($request->input('contract_end_date')),
+                    'contract_renewal_flg' => $request->input('contract_renewal_flg'),
+                    'hired_date' => $this->formatDate($request->input('hired_date')),
+                    'retirement_date' => $this->formatDate($request->input('retirement_date')),
+                    'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
+                    'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
+                    'retired_reason_type' => $request->input('retired_reason_type'),
+                    'insurance_loss_reason' => $request->input('insurance_loss_reason'),
+                    'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
+                    //'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
+                    'passed_away_date' => $this->formatDate($request->input('passed_away_date')),
+                    //'personal_information_access_flg' => $request->input('personal_information_access_flg'),
+                    //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
+                    'external_advisor_flg' => $request->input('external_advisor_flg'),
+                    'occupation_type' => $request->input('occupation_type'),
+                    //'employment_route' => $request->input('employment_route'),
+                    //'insured_reason' => $request->input('insured_reason'),
+                    //'insured_reason_details' => $request->input('insured_reason_details'),
+                    //'currency_id' => $request->input('currency_id'),
+                    //'salary_payment_system' => $request->input('salary_payment_system'),
+                    // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
+                    // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
+                    // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
+                    // 'bank_account_no' => $request->input('bank_account_no'),// developにない
+                    'employment_type' => $request->input('employment_type'),
+                    'employment_status' => $request->input('employment_status'),
+                    'employer_type' => $request->input('employer_type'),
+                    'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
+                    'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                ]);
+
+            $departments = $request->input('departments', []);
+            Employee_department::whereNotIn('department_id', $departments)
+                ->where('employee_id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->update(['delete_flg' => 1]);
+
+            $existingRecords = Employee_department::whereIn('department_id', $departments)->where('employee_id', $request->input('employee_id'))->where('delete_flg', 0)->get();
+
+            $existingDepartmentIds = $existingRecords->pluck('department_id')->toArray();
+            $newDepartmentIds = array_diff($departments, $existingDepartmentIds);
+            if (!empty($newDepartmentIds)) {
+                foreach ($newDepartmentIds as $departmentId) {
+                    Employee_department::insert([
+                        'department_id' => $departmentId,
+                        'employee_id' => $request->input('employee_id')
+                    ]);
+                }
+            }
+
+            DB::commit();
+            $this->putSuccess($request);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error($e);
+            return back()->withErrors('エラー');
+        }
+        return redirect()->route('admin.labor');
+    }
+
+    public function get_departments(Request $request)
+    {
+        $departments = Department::select('id', 'name')->where('company_id', $request->input('company_id'))->where('delete_flg', 0)->get();
+        return response()->json($departments);
     }
 }

@@ -47,6 +47,11 @@ class AdminCompanyList extends BaseTable
         redirect()->route('admin.company_update', ['id' => $id]);
     }
 
+    public function toDepartment($id)
+    {
+        redirect()->route('admin.company_department_update', ['id' => $id]);
+    }
+
     private function getSubList()
     {
         $company_listed_type = Values_company_listed_type::pluck('name', 'id');

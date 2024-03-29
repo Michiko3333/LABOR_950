@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
     Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
     Route::post('/admin/company/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
+    Route::get('/admin/company/department/{id}', [AdminController::class, 'company_department_update'])->name('admin.company_department_update');
+    Route::post('/admin/company/department/{id}', [AdminController::class, 'company_department_update_post'])->name('admin.company_department_update_post');
 
     Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
     Route::get('/admin/labor/create', [AdminController::class, 'labor_create'])->name('admin.labor_create');
@@ -100,6 +102,10 @@ Route::group(['middleware' => 'auth'], function () {
     ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
     Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
     Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
+    Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
+    Route::post('admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
+    Route::post('admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
+
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'index'])->name('ledger.4950008680040000');

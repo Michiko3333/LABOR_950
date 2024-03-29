@@ -40,127 +40,130 @@
         }
     </style>
     @endslot
-    <h1 class="my-2">
-        <i class="briefcase icon"></i>
-        {{$currentCompany->name}} {{empty($branch) ? '' : $branch->name}}
-    </h1>
-    <section id="control-panel">
-        <div class="ui horizontal huge card card-shadow control-panel-menu">
-            <div class="content">
-                <i class="right floated building icon big blue-text" style="visibility: visible;"></i>
-                <div class="header blue-text">
-                    会社情報
+    <section class="content">
+        <h1 class="my-2">
+            <i class="briefcase icon"></i>
+            {{$currentCompany->name}} {{empty($branch) ? '' : $branch->name}}
+        </h1>
+        <section id="control-panel">
+            <div class="ui horizontal huge card card-shadow control-panel-menu">
+                <div class="content">
+                    <i class="right floated building icon big blue-text" style="visibility: visible;"></i>
+                    <div class="header blue-text">
+                        会社情報
+                    </div>
+                    <div class="meta">
+                        Company
+                    </div>
                 </div>
-                <div class="meta">
-                    Company
-                </div>
-            </div>
-            <div class="extra content">
-                <div class="ui middle aligned selection list">
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">会社基本情報変更</div>
-                        </div>
-                    </a>
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">支店・営業所の追加、削除</div>
-                        </div>
-                    </a>
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">組織・部署マスタ変更</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="ui horizontal huge card card-shadow control-panel-menu">
-            <div class="content">
-                <i class="right floated user friends icon big blue-text" style="visibility: visible;"></i>
-                <div class="header blue-text">
-                    社員管理
-                </div>
-                <div class="meta">
-                    Employee
+                <div class="extra content">
+                    <div class="ui middle aligned selection list">
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">会社基本情報変更</div>
+                            </div>
+                        </a>
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">支店・営業所の追加、削除</div>
+                            </div>
+                        </a>
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">組織・部署マスタ変更</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="extra content">
-                <div class="ui middle aligned selection list">
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">社員一覧</div>
-                        </div>
-                    </a>
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">社員一括登録</div>
-                        </div>
-                    </a>
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">勤怠一覧</div>
-                        </div>
-                    </a>
+            <div class="ui horizontal huge card card-shadow control-panel-menu">
+                <div class="content">
+                    <i class="right floated user friends icon big blue-text" style="visibility: visible;"></i>
+                    <div class="header blue-text">
+                        社員管理
+                    </div>
+                    <div class="meta">
+                        Employee
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="ui middle aligned selection list">
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">社員一覧</div>
+                            </div>
+                        </a>
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">社員一括登録</div>
+                            </div>
+                        </a>
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">勤怠一覧</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="ui horizontal huge card card-shadow control-panel-menu">
-            <div class="content">
-                <i class="right floated fax icon big blue-text" style="visibility: visible;"></i>
-                <div class="header blue-text">
-                    行政手続き
+            <div class="ui horizontal huge card card-shadow control-panel-menu">
+                <div class="content">
+                    <i class="right floated fax icon big blue-text" style="visibility: visible;"></i>
+                    <div class="header blue-text">
+                        行政手続き
+                    </div>
+                    <div class="meta">
+                        Procedure
+                    </div>
                 </div>
-                <div class="meta">
-                    Procedure
-                </div>
-            </div>
-            <div class="extra content">
-                <div class="ui middle aligned selection list">
-                    <a href="{{ route('ledger.index') }}" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">帳票一覧</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="ui horizontal huge card card-shadow control-panel-menu">
-            <div class="content">
-                <i class="right floated calendar alternate outline icon big blue-text" style="visibility: visible;"></i>
-                <div class="header blue-text">
-                    カレンダー
-                </div>
-                <div class="meta">
-                    Calendar
+                <div class="extra content">
+                    <div class="ui middle aligned selection list">
+                        <a href="{{ route('ledger.index') }}" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">帳票一覧</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="extra content">
-                <div class="ui middle aligned selection list">
-                    <a href="{{route('calendar.index')}}" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">カレンダー閲覧</div>
-                        </div>
-                    </a>
+            <div class="ui horizontal huge card card-shadow control-panel-menu">
+                <div class="content">
+                    <i class="right floated calendar alternate outline icon big blue-text"
+                        style="visibility: visible;"></i>
+                    <div class="header blue-text">
+                        カレンダー
+                    </div>
+                    <div class="meta">
+                        Calendar
+                    </div>
                 </div>
-                <div class="ui middle aligned selection list">
-                    <a href="#" class="item">
-                        <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                        <div class="content">
-                            <div class="header">カレンダー設定変更</div>
-                        </div>
-                    </a>
+                <div class="extra content">
+                    <div class="ui middle aligned selection list">
+                        <a href="{{route('calendar.index')}}" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">カレンダー閲覧</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="ui middle aligned selection list">
+                        <a href="#" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">カレンダー設定変更</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>
     <script src="{{ asset('custom/calendar-small.js') }}"></script>
     <script type="module">

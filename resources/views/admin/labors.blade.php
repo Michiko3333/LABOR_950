@@ -23,24 +23,29 @@
         }
     </style>
     @endslot
-    <div class="ui huge breadcrumb">
-        <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
-        <i class="right chevron icon divider"></i>
-        <a class="section" href="{{route('admin.index')}}">Karte管理</a>
-        <i class="right chevron icon divider"></i>
-        <div class="active section">アカウント管理</div>
-    </div>
-    <h1 class="mt-0">アカウント管理</h1>
-    <div id="new" class="ui floating dropdown button primary my-1">
-        <div class="text" style="text-align: center; width: 103px;">新規登録</div>
-        <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item" href="{{route('admin.labor_create')}}">社労士</a>
-            <a class="item" href="{{route('admin.employee_create')}}">顧客社員</a>
+    <section class="content">
+        <div class="ui huge breadcrumb">
+            <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
+            <i class="right chevron icon divider"></i>
+            <a class="section" href="{{route('admin.index')}}">Karte管理</a>
+            <i class="right chevron icon divider"></i>
+            <div class="active section">アカウント管理</div>
         </div>
-    </div>
-    <livewire:admin-labor-list />
-
+        <h1 class="mt-0">アカウント管理</h1>
+        <div id="new" class="ui floating dropdown button primary my-1">
+            <div class="text" style="text-align: center; width: 103px;">新規登録</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" href="{{route('admin.labor_create')}}">社労士</a>
+                <a class="item" href="{{route('admin.employee_create')}}">顧客社員</a>
+            </div>
+        </div>
+        <div class="ui card full card-shadow item-0">
+            <div class="content">
+                <livewire:admin-labor-list />
+            </div>
+        </div>
+    </section>
     <!-- 会社検索モーダル -->
     <x-search-company-modal id="company_select" selectorName="#company_name" selectorId="#company_id" />
     <script type="module" src="{{ asset('/js/search-company-modal.js') }}"></script>

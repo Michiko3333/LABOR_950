@@ -13,4 +13,9 @@ class Department extends Model
     {
         return $this->hasMany(Employee_department::class);
     }
+
+    public function department_permission()
+    {
+        return $this->hasOne(DepartmentPermission::class, 'department_permission_id');
+    }
 }

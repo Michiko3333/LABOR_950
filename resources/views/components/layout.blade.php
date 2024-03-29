@@ -52,6 +52,7 @@ $useRightContent = $useRightContent ?? true;
             border-left: solid 0.5em #979100;
             font-weight: bold;
             font-size: 1.2em;
+            background-color: #fff;
         }
 
         .labor-alert .left {}
@@ -70,7 +71,7 @@ $useRightContent = $useRightContent ?? true;
             padding-top: 80px;
             transition: 1s;
             transition-delay: 0.4s;
-            background: #fff;
+            background: #F7F7F7;
 
             flex-shrink: 1;
         }
@@ -93,6 +94,15 @@ $useRightContent = $useRightContent ?? true;
             max-width: 100%;
 
             flex-grow: 1;
+        }
+
+        section.content {
+            margin: 0 auto;
+            max-width: 1400px;
+        }
+
+        .ui.card.full {
+            width: 100%;
         }
 
         .centering {

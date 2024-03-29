@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminEmployeeCreateRequest extends FormRequest
+class AdminEmployeeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,6 +22,7 @@ class AdminEmployeeCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'employee_id' => 'required|integer',
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
             'branch_id' => 'integer',
             'managerial_position_id' => 'integer',
@@ -45,12 +46,12 @@ class AdminEmployeeCreateRequest extends FormRequest
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
-            'address_ward' => 'required|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'address_ward' => 'required|string|max:255',
             'address_apartment' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
             // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
             'address_city_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
             'address_ward_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
-            //'address_apartment_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
+            // 'address_apartment_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
@@ -69,8 +70,8 @@ class AdminEmployeeCreateRequest extends FormRequest
             'emergency_tel2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_address_prefecture2' => 'nullable|string|max:255',
             'emergency_address_city2' => 'nullable|string|max:255',
-            'emergency_address_ward2' => 'nullable|string|max:255',
-            'emergency_address_apartment2' => 'nullable|string|max:255',
+            'emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_address_apartment2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
             'spouse_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',

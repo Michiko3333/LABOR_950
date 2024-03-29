@@ -96,7 +96,7 @@ class SearchCompanyList extends BaseTable
         $d = $items->where('id', $id)->first();
 
         $output = [
-            'id' => $this->withBranch ? $d->id : $d->company_id,
+            'id' => $this->withBranch ? $d->company_id : $d->id,
             'name' => $d->name,
             'branch_id' => $this->withBranch ? $d->id : '',
             'branch_name' => $this->withBranch ? $d->branch_name : '',

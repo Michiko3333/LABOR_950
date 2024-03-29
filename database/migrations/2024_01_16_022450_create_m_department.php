@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id()->autoIncrement()->comment('組織ID');
             $table->string('name', 255)->nullable()->comment('組織名');
             $table->integer('upper_department_id')->nullable()->comment('上位組織名ID');
+            $table->integer('company_id')->comment('会社ID');
+            $table->integer('department_permission_id')->default(1)->comment('部署権限ID');
             $table->integer('layer')->nullable()->comment('階層');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();

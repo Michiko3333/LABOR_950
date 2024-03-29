@@ -1,3 +1,9 @@
+const companyModalEvent = [];
+const addEventCompanyModal = (func) => {
+    companyModalEvent.push(func);
+}
+window.addEventCompanyModal = addEventCompanyModal;
+
 $(document).ready(() => {
     const insertCompanyDataByModal = (data) => {
         $(data['selector_id']).val(data['id']);
@@ -10,6 +16,12 @@ $(document).ready(() => {
         // dataをlivewireへ返却する
         Livewire.dispatch('request-reload', { data: data });
     }
+
     // 選択イベントを通してlivewireからデータを受け取る
-    Livewire.on('modal-onSelectCompany', ({ data }) => { insertCompanyDataByModal(data) });
+    Livewire.on('modal-onSelectCompany', ({ data }) => {
+        insertCompanyDataByModal(data);
+        companyModalEvent.forEach(f => {
+            f(data);
+        });
+    });
 });

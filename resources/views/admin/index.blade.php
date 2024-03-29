@@ -46,21 +46,22 @@
         }
     </style>
     @endslot
+    <section class="content">
+        <div class="ui huge breadcrumb">
+            <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
+            <i class="right chevron icon divider"></i>
+            <div class="active section">Karte管理</div>
+        </div>
 
-    <div class="ui huge breadcrumb">
-        <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
-        <i class="right chevron icon divider"></i>
-        <div class="active section">Karte管理</div>
-    </div>
-
-    <div class="ui two cards">
-        <a class="primary card card-shadow" href="{{ route('admin.company') }}">
-            <i class="building outline icon" style="visibility: visible;"></i>
-            <p>会社管理</p>
-        </a>
-        <a class="secondary card card-shadow" href="{{ route('admin.labor') }}">
-            <i class="user graduate icon" style="visibility: visible;"></i>
-            <p>アカウント管理</p>
-        </a>
-    </div>
+        <div class="ui two cards">
+            <a class="primary card card-shadow" href="{{ route('admin.company') }}">
+                <i class="building outline icon" style="visibility: visible;"></i>
+                <p>会社管理</p>
+            </a>
+            <a class="secondary card card-shadow" href="{{ route('admin.labor') }}">
+                <i class="user graduate icon" style="visibility: visible;"></i>
+                <p>アカウント管理</p>
+            </a>
+        </div>
+    </section>
 </x-layout>

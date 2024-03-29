@@ -23,16 +23,22 @@
         }
     </style>
     @endslot
-    <div class="ui huge breadcrumb">
-        <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
-        <i class="right chevron icon divider"></i>
-        <a class="section" href="{{route('admin.index')}}">Karte管理</a>
-        <i class="right chevron icon divider"></i>
-        <div class="active section">会社一覧</div>
-    </div>
-    <h1>会社一覧</h1>
-    <div style="padding: 1em 0;">
-        <a class="ui button primary" href="{{route('admin.company_create')}}" style="width: 200px;">新規登録</a>
-    </div>
-    <livewire:admin-company-list>
+    <section class="content">
+        <div class="ui huge breadcrumb mb-0">
+            <a class="section" href="{{route('home.select')}}">会社・操作選択</a>
+            <i class="right chevron icon divider"></i>
+            <a class="section" href="{{route('admin.index')}}">Karte管理</a>
+            <i class="right chevron icon divider"></i>
+            <div class="active section">会社一覧</div>
+        </div>
+        <h1>会社一覧</h1>
+        <div style="padding: 1em 0;">
+            <a class="ui button primary" href="{{route('admin.company_create')}}" style="width: 200px;">新規登録</a>
+        </div>
+        <div class="ui card full card-shadow item-0">
+            <div class="content">
+                <livewire:admin-company-list />
+            </div>
+        </div>
+    </section>
 </x-layout>

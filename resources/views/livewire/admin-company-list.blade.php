@@ -31,6 +31,9 @@
                 <td>{{ $item->company_no }}</td>
                 <td>{{ $item->employee_sum }}</td>
                 <td class="right aligned collapsing">
+                    <button class="ui button" type="button" wire:click="toDepartment({{ $item->id }})">
+                        部署編集
+                    </button>
                     <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
                         編集
                     </button>
