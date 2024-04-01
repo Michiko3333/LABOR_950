@@ -75,11 +75,26 @@
             $('#J66_005F_944E').val( '{{ old("notification_year", $today["year"]) }}' );
             $('#J67_005F_8C8E').val( '{{ old("notification_month", $today["month"]) }}' );
             $('#J68_005F_93FA').val( '{{ old("notification_date", $today["date"]) }}' );
+
             @if($current_employee->role_id === 500)
-            $('#J71_005F_944E_8D86').val( '{{ old("create_era", $today["era"]) }}' );
-            $('#J72_005F_944E').val( '{{ old("create_year", $today["year"]) }}' );
-            $('#J73_005F_8C8E').val( '{{ old("create_month", $today["month"]) }}' );
-            $('#J74_005F_93FA').val( '{{ old("create_day", $today["date"]) }}' );
+                $('#J71_005F_944E_8D86').val( '{{ old("create_era", $today["era"]) }}' );
+                $('#J72_005F_944E').val( '{{ old("create_year", $today["year"]) }}' );
+                $('#J73_005F_8C8E').val( '{{ old("create_month", $today["month"]) }}' );
+                $('#J74_005F_93FA').val( '{{ old("create_day", $today["date"]) }}' );
+                $('#J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val( '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J76_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J77_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
+                $('#J78_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
+                $('#J79_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
+                $('#J71_005F_944E_8D86, #J72_005F_944E, #J73_005F_8C8E, #J74_005F_93FA, \
+                    #J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J76_005F_8E81_96BC,\
+                    #J77_005F_8E73_8A4F_8BC7_94D4, #J78_005F_8E73_93E0_8BC7_94D4, \
+                    #J79_005F_89C1_93FC_8ED2_94D4_8D86, #J80_005F_9574_8B4C_9793').prop('readonly', true);
+            @else
+                $('#J71_005F_944E_8D86, #J72_005F_944E, #J73_005F_8C8E, #J74_005F_93FA, \
+                    #J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J76_005F_8E81_96BC,\
+                    #J77_005F_8E73_8A4F_8BC7_94D4, #J78_005F_8E73_93E0_8BC7_94D4, \
+                    #J79_005F_89C1_93FC_8ED2_94D4_8D86, #J80_005F_9574_8B4C_9793').prop('readonly', false);
             @endif
         });
     </script>
@@ -180,28 +195,6 @@
             $('#J61_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code ?? '');
             $('#J62_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code ?? '');
             $('#J63_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code ?? '');
-            @if($current_employee->role_id === 500)
-                $('#J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val( '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
-                $('#J76_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
-                $('#J77_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
-                $('#J78_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
-                $('#J79_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
-                $('#J71_005F_944E_8D86, #J72_005F_944E, #J73_005F_8C8E, #J74_005F_93FA, \
-                    #J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J76_005F_8E81_96BC,\
-                    #J77_005F_8E73_8A4F_8BC7_94D4, #J78_005F_8E73_93E0_8BC7_94D4, \
-                    #J79_005F_89C1_93FC_8ED2_94D4_8D86, #J80_005F_9574_8B4C_9793').prop('disabled', false);
-            @else
-                $('#J71_005F_944E_8D86').val('').prop('disabled', true);
-                $('#J72_005F_944E').val('').prop('disabled', true);
-                $('#J73_005F_8C8E').val('').prop('disabled', true);
-                $('#J74_005F_93FA').val('').prop('disabled', true);
-                $('#J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('').prop('disabled', true);
-                $('#J76_005F_8E81_96BC').val('').prop('disabled', true);
-                $('#J77_005F_8E73_8A4F_8BC7_94D4').val('').prop('disabled', true);
-                $('#J78_005F_8E73_93E0_8BC7_94D4').val('').prop('disabled', true);
-                $('#J79_005F_89C1_93FC_8ED2_94D4_8D86').val('').prop('disabled', true);
-                $('#J80_005F_9574_8B4C_9793').val('').prop('disabled', true);
-            @endif
         }
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
     </script>

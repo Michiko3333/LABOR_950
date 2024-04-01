@@ -80,7 +80,7 @@ class HomeController extends Controller
             $company_id = $req['company_select'];
             $user = CurrentUser::info();
             if ($user->role_id === 500) {
-                if (!CurrentUser::clients()->where('id', $company_id)->exists()) {
+                if (!CurrentUser::clients()->where('client_company_id', $company_id)->exists()) {
                     throw new \Exception('担当外');
                 }
             }
