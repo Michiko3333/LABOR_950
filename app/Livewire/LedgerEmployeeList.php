@@ -85,7 +85,6 @@ class LedgerEmployeeList extends BaseTable
         ];
 
         $this->selected_id = $id;
-
         $this->dispatch('onSelectEmployee', data: $output);
     }
 }

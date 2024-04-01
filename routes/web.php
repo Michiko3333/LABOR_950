@@ -22,6 +22,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
+use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
 use App\Http\Controllers\Ledger\HealthAndPensionInsuredBonusPaymentNotificationController;
 use App\Http\Controllers\Ledger\HealthInsurancePensionInsuredQualificationLossController;
 use App\Http\Controllers\ledger\WageCertificatesEmploymentInsuredAtSixtyController;
@@ -112,6 +113,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
+    Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
+    Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index_post'])->name('ledger.4950008680045000_post');
     Route::get('/ledger/4950013520733000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'index'])->name('ledger.4950013520733000');
     Route::post('/ledger/4950013520733000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'post'])->name('ledger.4950013520733000_post');
     Route::get('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'index'])->name('ledger.4950013520714000');
