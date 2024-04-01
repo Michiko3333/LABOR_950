@@ -3,8 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Branch;
+use App\Models\Country;
 use App\Models\Company;
 use App\Models\CurrentUser;
+use App\Models\Dependent;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -77,13 +79,23 @@ class LedgerEmployeeList extends BaseTable
             ->first();
         $headquarters_data = $headquarters->toArray();
 
+        $employee_id = $employeeData['id'];
+        $spouse_data = Dependent::where('employee_id', $employee_id)->where('relationship', '1')->first();
+        if ($spouse_data){
+            $spouse_country_id = $spouse_data['country_id'];
+            if ($spouse_country_id) {
+                $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
+            }
+        }
+        
         $output = [
             'employee' => $employeeData,
             'branch' => $branchData,
             'headquarters' => $headquartersData,
             'company' => $companyData,
+            'spouse' => $spouse_data,
         ];
-
+        
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
     }
