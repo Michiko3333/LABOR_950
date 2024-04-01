@@ -22,6 +22,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
+use App\Http\Controllers\Ledger\EmploymentInsuredQualificationGetController;
 use App\Http\Controllers\Ledger\EmploymentInsuredTransferNotificationController;
 use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
 use App\Http\Controllers\Ledger\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
@@ -130,4 +131,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index_post'])->name('ledger.4950008680046000_post');
     Route::get('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'index'])->name('ledger.4950008680034000');
     Route::post('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'post'])->name('ledger.4950008680034000_post');
+    Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
+    Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
 });
