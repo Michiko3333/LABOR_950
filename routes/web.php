@@ -35,6 +35,7 @@ use App\Http\Controllers\ledger\HealthInsuranceEmployeePensionInsuranceBonusNonP
 use App\Http\Controllers\Ledger\EmploymentInsuranceChildcareLeaveApplicationController;
 use App\Http\Controllers\ledger\EmploymentInsuranceSeniorContinuationAllowanceController;
 use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController;
+use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -133,6 +134,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index_post'])->name('ledger.4950008680046000_post');
     Route::get('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'index'])->name('ledger.4950008680034000');
     Route::post('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'post'])->name('ledger.4950008680034000_post');
+    Route::get('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'index'])->name('ledger.4950008680051000');
+    Route::post('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'post'])->name('ledger.4950008680051000_post');
     Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
     Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
 });
