@@ -22,8 +22,20 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends FormReques
     public function rules(): array
     {
         return array_merge(
-            app(ParentalLeaveBenefitsClaimFormRequest::class)->rules(),
-            app(EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest::class)->rules()
+            ParentalLeaveBenefitsClaimFormRequest::rules(),
+            EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest::rules()
         );
+    }
+
+    public function attributes()
+    {
+        $parentalRequest = new ParentalLeaveBenefitsClaimFormRequest();
+        $attributes = $parentalRequest->attributes();
+    
+        $employmentRequest = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest();
+        $attributes_2 = $employmentRequest->attributes();
+    
+        // 属性を結合して返す
+        return array_merge($attributes, $attributes_2);
     }
 }
