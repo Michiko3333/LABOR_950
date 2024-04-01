@@ -28,7 +28,7 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
             'employment_insured_no_4digit' => 'required|string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6digit' => 'required|string|regex:/^[0-9]{6}$/u',
             'employment_insured_no_CD' => 'required|string|max:255|regex:/^[0-9]{1}$/u',
-            'qualifications_japan_era' => 'required|string|max:2', 
+            'qualifications_japan_era' => 'required|string|max:2',
             'qualifications_japan_era_year' => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'qualifications_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'qualifications_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
