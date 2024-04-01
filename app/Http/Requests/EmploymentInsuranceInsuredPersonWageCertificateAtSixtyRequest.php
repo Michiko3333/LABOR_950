@@ -19,7 +19,7 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public static function rules(): array
     {
         return [
             "employmentInsuredNo4digit" => 'string|regex:/^[0-9]{4}$/u',

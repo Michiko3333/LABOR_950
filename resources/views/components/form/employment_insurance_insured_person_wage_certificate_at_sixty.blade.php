@@ -9,13 +9,8 @@
 		if(f.wageAmountB1.value == "" && f.wageAmountB1.value == ""){
 			nullFlg = false;
 		}
-
-		if (isNaN(val) == false && nullFlg == true) {
-			f.totalWages1.value = val;
 		}else{
-			f.totalWages1.value = "";
 		}
-
 		return false;
 	}
 
@@ -33,7 +28,6 @@
 		}else{
 			f.elements["totalWages1_" + line].value = "";
 		}
-
 		return false;
 	}
 
@@ -51,7 +45,6 @@
 		}else{
 			f.elements["totalWages2_" + line].value = "";
 		}
-
 		return false;
 	}
 

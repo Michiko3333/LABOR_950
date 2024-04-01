@@ -114,7 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Ledger
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
-    Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index_post'])->name('ledger.4950008680045000_post');
+    Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');
     Route::get('/ledger/4950013520733000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'index'])->name('ledger.4950013520733000');
     Route::post('/ledger/4950013520733000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'post'])->name('ledger.4950013520733000_post');
     Route::get('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'index'])->name('ledger.4950013520714000');
