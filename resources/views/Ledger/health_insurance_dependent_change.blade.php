@@ -63,8 +63,8 @@
             </div>
 
             <div class="prevew-btn">
-                <button id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;">戻る</button>
+                <a id="ledger-back" class="ui button negative basic" type="button"
+                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
                 <button id="ledger-preview-btn" class="ui button primary" type="button"
                     style="width: 200px;">確認</button>
             </div>
