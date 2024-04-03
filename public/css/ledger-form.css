@@ -75,14 +75,16 @@
     color: var(--color-blue) !important;
 }
 
-.preview-area input[type="CHECKBOX"] {
+.preview-area input[type="CHECKBOX"],
+.preview-area input[type="RADIO"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     pointer-events: none;
 }
 
-.preview-area input[type="CHECKBOX"]::before {
+.preview-area input[type="CHECKBOX"]::before,
+.preview-area input[type="RADIO"]::before {
     font-size: 10px;
     position: absolute;
     display: inline-block;
@@ -93,7 +95,8 @@
     text-align: center;
 }
 
-.preview-area input[type="CHECKBOX"]:checked::after {
+.preview-area input[type="CHECKBOX"]:checked::after,
+.preview-area input[type="RADIO"]:checked::after {
     position: absolute;
     content: '';
     width: 10px;
