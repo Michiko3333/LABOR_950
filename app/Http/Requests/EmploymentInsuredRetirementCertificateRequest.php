@@ -60,6 +60,7 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+  
     public static function rules(): array
     {
         return [

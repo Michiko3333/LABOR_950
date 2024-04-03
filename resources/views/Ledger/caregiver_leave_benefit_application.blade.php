@@ -1,4 +1,5 @@
 <x-layout title="帳票作成：介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請">
+<section class="content">
     @slot('header')
     <!-- 帳票用の共通CSSを読み込む -->
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -232,4 +233,5 @@
     <!-- 帳票用の共通jsを読み込む -->
     <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
     @endslot
+</section>
 </x-layout>

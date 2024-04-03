@@ -8,6 +8,14 @@ use App\Models\Company;
 use App\Models\CurrentUser;
 use App\Models\Dependent;
 use App\Models\Employee;
+use App\Models\Retirement_reason_age;
+use App\Models\Retirement_reason_business_owner_suggestion;
+use App\Models\Retirement_reason_contract_period_expired_except_eternal_hire;
+use App\Models\Retirement_reason_contract_period_expired_eternal_hire;
+use App\Models\Retirement_reason_contract_period_reached_limit;
+use App\Models\Retirement_reason_employee_decision_change_job_type;
+use App\Models\Retirement_reason_employee_decision_change_office;
+use App\Models\Retirement_reason_employee_decision_reasons;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 

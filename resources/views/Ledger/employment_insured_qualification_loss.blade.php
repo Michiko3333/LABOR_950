@@ -1,4 +1,5 @@
 <x-layout title="帳票作成：雇用保険被保険者資格喪失届（離職票交付あり）">
+<section class="content">
     @slot('header')
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
@@ -533,4 +534,5 @@
         });
     </script>
     @endslot
+</section>
 </x-layout>

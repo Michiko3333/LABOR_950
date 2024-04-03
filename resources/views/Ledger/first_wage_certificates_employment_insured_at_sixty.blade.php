@@ -1,4 +1,5 @@
 <x-layout title="帳票作成：">
+<section class="content">
     @slot('header')
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
@@ -53,33 +54,44 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                
+                <div class="prevew-btn">
+                    <a id="ledger-back" class="ui button negative basic" type="button"
+                        style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                    <button id="ledger-preview-btn" class="ui button primary" type="button"
+                        style="width: 200px;">確認</button>
+                </div>
+            </form>
+        </div>
 
-            <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
-                <button id="ledger-preview-btn" class="ui button primary" type="button"
-                    style="width: 200px;">確認</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="ledger-step2" class="step-view my-2">
-        <h2 style="text-align: center;">プレビュー</h2>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                <x-form.first_senior_employment_continuation_benefit_claim_form />
+        <div id="ledger-step2" class="step-view my-2">
+            <h2 style="text-align: center;">プレビュー</h2>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                    <x-form.first_senior_employment_continuation_benefit_claim_form />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                <x-form.employment_insurance_insured_person_wage_certificate_at_sixty />
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                    <x-form.employment_insurance_insured_person_wage_certificate_at_sixty />
                 </div>
             </div>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                    <x-form.employment_insurance_insured_person_wage_certificate_at_sixty />
+                    </div>
+                </div>
+            </div>
+            <div class="submit-btn py-2">
+                <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
+                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
+            </div>
         </div>
+
         <div class="submit-btn py-2">
             <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
             <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
@@ -246,4 +258,5 @@
     @slot('footer')
     <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
     @endslot
+</section>
 </x-layout>

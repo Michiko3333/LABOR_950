@@ -1,4 +1,5 @@
 <x-layout title="帳票作成：健康保険・厚生年金保険被保険者資格喪失届">
+<section class="content">
     @slot('header')
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
@@ -192,4 +193,5 @@
     @slot('footer')
     <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
     @endslot
+</section>
 </x-layout>

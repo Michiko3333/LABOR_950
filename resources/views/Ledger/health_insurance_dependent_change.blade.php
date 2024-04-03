@@ -1,5 +1,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <x-layout title="帳票作成：健康保険被扶養者（異動）届 / 健康保険被扶養者（異動）・国民年金第3号被保険者関係届">
+<section class="content">
     @slot('header')
     <!-- 帳票用の共通CSSを読み込む -->
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -487,4 +488,5 @@
         });
     </script>
     @endslot
+</section>
 </x-layout>
