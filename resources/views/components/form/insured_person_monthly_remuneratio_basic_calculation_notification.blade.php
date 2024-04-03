@@ -1,18 +1,4 @@
 <div>
-    <main role="main" class="egovui-main-input-application">
-        <form name="inputApplicationForm" method="post" action="/recept/application-form-entry"><input type="hidden" name="_csrf" value="345725df-0207-4ba9-b0c8-ad29114f7993"/>
-            <section class="egovui-sec-input-application">
-                    <div class="egovui-application-form-input-area">
-                        <input type="hidden" name="htmlFlag" id="htmlFlag" value="false">
-                        <input type="hidden" name="html5Flag"id="html5Flag" value="true">
-                        <input type="hidden" name="partAmendItemColor" value="">
-                        <input type="hidden" name="errItemColor" value="#FF8888">
-                        <input type="hidden" name="errItemStr" id="errItemStr" value="">
-                        
-                        <input type="hidden" name="currentPartAmendTagXpaths" id="currentPartAmendTagXpaths" value="">
-                        <div id="eGovFormArea">
-                            <div id="eGovScript">
-                            </div>
                             <div id="eGovForm">
 
                                 <style>
@@ -4761,7 +4747,4 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </form>
+                    

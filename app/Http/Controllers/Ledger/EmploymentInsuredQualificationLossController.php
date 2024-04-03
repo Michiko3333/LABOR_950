@@ -129,7 +129,6 @@ class EmploymentInsuredQualificationLossController extends Controller
                 'the_day_after_retirement_date_day' => $request->input('the_day_after_retirement_date_day'),
                 'insured_period_start_month' => $request->input('insured_period_start_month'),
                 'insured_period_start_day' => $request->input('insured_period_start_day'),
-
                 'basic_days_for_salary_payment_of_insured_period' => $request->input('basic_days_for_salary_payment_of_insured_period'),
                 'salary_payment_period_start_month' => $request->input('salary_payment_period_start_month'),
                 'salary_payment_period_start_day' => $request->input('salary_payment_period_start_day'),
