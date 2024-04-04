@@ -22,18 +22,22 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
 
         $company = CurrentUser::currentCompany();
         $current_employee = CurrentUser::info();
-
-        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
-
-        $today = Carbon::today();
-        $converted_today = $this->convertWesternCalendarToJapaneseCalendar($today)['japanese_calendar_result']->toArray();
+        $current_branch_id = $current_employee->branch_id;
+        $current_branch = Branch::where('id', $current_branch_id)->first();
+        $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
+        $today = [
+            'era' => $convertToday['japanese_calendar_era_string'],
+            'year' => $convertToday['japanese_calendar_result']->year,
+            'month' => $convertToday['japanese_calendar_result']->month,
+            'date' => $convertToday['japanese_calendar_result']->day,
+        ];
 
         return view('ledger.employment_insured_status_acquisition_not_issued_separation_form',
         [
             'company' => $company,
             'current_employee' => $current_employee,
             'current_branch' => $current_branch,
-            'today' => $converted_today
+            'today' => $today
         ]);
     }
 

@@ -21,15 +21,19 @@ class CaregiverLeaveBenefitApplicationController extends Controller
         $company = CurrentUser::currentCompany();
         $currentEmployee = CurrentUser::info();
         $currentBranch = Branch::where('id', $currentEmployee->branch_id)->first();
-
-        $today = Carbon::today();
-        $convertedToday = $this->convertWesternCalendarToJapaneseCalendar($today)['japanese_calendar_result']->toArray();
+        $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
+        $today = [
+            'era' => $convertToday['japanese_calendar_era_string'],
+            'year' => $convertToday['japanese_calendar_result']->year,
+            'month' => $convertToday['japanese_calendar_result']->month,
+            'date' => $convertToday['japanese_calendar_result']->day,
+        ];
 
         return view('ledger.caregiver_leave_benefit_application', [
             'company' => $company,
             'current_employee' => $currentEmployee,
             'current_branch' => $currentBranch,
-            'today' => $convertedToday
+            'today' => $today
         ]);
     }
 

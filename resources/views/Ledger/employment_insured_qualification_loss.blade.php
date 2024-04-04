@@ -1,5 +1,4 @@
-<x-layout title="帳票作成：雇用保険被保険者資格喪失届（離職票交付あり）">
-<section class="content">
+<x-layout title="雇用保険被保険者資格喪失届（離職票交付あり）">
     @slot('header')
     <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
@@ -7,7 +6,7 @@
     @endslot
     <h1>雇用保険被保険者資格喪失届（離職票交付あり）</h1>
     <p>申請・届出に関する事項を入力してください。<br>
-    複数の様式を提出する場合は、タブから様式を切り替えてください。 
+        複数の様式を提出する場合は、タブから様式を切り替えてください。
     </p>
 
     <div id="ledger-step1" class="step-view active my-2">
@@ -44,9 +43,12 @@
                                 </a>
                             </div>
                             <div class="ui bottom attached segment" data-tab="sample">
-                                <x-form.employment_insured_qualification_loss :residentials="$residentials" :countries="$countries" :insuredAgeTypes="$insuredAgeTypes" :employmentStatuses="$employmentStatuses" />
+                                <x-form.employment_insured_qualification_loss :residentials="$residentials"
+                                    :countries="$countries" :insuredAgeTypes="$insuredAgeTypes"
+                                    :employmentStatuses="$employmentStatuses" />
                             </div>
-                            <div class="ui bottom attached segment" data-tab="sample2" style="display: none; overflow-x: auto;">
+                            <div class="ui bottom attached segment" data-tab="sample2"
+                                style="display: none; overflow-x: auto;">
                                 <x-form.employment_insured_retirement_certificate />
                             </div>
                         </div>
@@ -55,8 +57,8 @@
             </div>
 
             <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                    href="{{ route('ledger.index') }}">戻る</a>
                 <button id="ledger-preview-btn" class="ui button primary" type="button"
                     style="width: 200px;">確認</button>
             </div>
@@ -68,7 +70,8 @@
         <div class="preview-area">
             <div class="ui card card-shadow ledger-card">
                 <div class="content" preview-component>
-                    <x-form.employment_insured_qualification_loss :residentials="$residentials" :countries="$countries" :insuredAgeTypes="$insuredAgeTypes" :employmentStatuses="$employmentStatuses" />
+                    <x-form.employment_insured_qualification_loss :residentials="$residentials" :countries="$countries"
+                        :insuredAgeTypes="$insuredAgeTypes" :employmentStatuses="$employmentStatuses" />
                 </div>
             </div>
         </div>
@@ -91,12 +94,37 @@
             $('#J60_005F_944E').val( '{{ old("notification_year", $today["year"]) }}' );
             $('#J61_005F_8C8E').val( '{{ old("notification_month", $today["month"]) }}' );
             $('#J62_005F_93FA').val( '{{ old("notification_date", $today["date"]) }}' );
-            if( "{{$current_employee->role_id}}" === 500 ){
+            @if($current_employee->role_id === 500)
                 $('#J70_005F_944E_8D86').val( '{{ old("labor_consultant_japan_era", $today["era"]) }}' );
+                $('#J70_005F_944E_8D86').find('option').not(`[value="{{ old("labor_consultant_japan_era", $today["era"]) }}"]`).prop('disabled', true);
                 $('#J71_005F_944E').val( '{{ old("labor_consultant_japan_era_year", $today["year"]) }}' );
                 $('#J72_005F_8C8E').val( '{{ old("labor_consultant_month", $today["month"]) }}' );
                 $('#J73_005F_93FA').val( '{{ old("labor_consultant_day", $today["date"]) }}' );
-            }
+                $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J75_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
+                $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
+                $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
+                $('#J72_005F_944E_8D86').val( '{{ old("labor_consultant_japan_era", $today["era"]) }}' );
+                $('#J72_005F_944E_8D86').find('option').not(`[value="{{ old("labor_consultant_japan_era", $today["era"]) }}"]`).prop('disabled', true);
+                $('#J73_005F_944E').val( '{{ old("labor_consultant_japan_era_year", $today["year"]) }}' );
+                $('#J74_005F_8C8E').val( '{{ old("labor_consultant_month", $today["month"]) }}' );
+                $('#J75_005F_93FA').val( '{{ old("labor_consultant_day", $today["date"]) }}' );
+                $('#J76_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J77_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J78_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
+                $('#J79_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
+                $('#J80_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
+                $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA,\
+                    #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
+                    #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4\
+                    #J78_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+            @else
+                $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA,\
+                    #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
+                    #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4\
+                    #J78_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', false);
+            @endif
         });
     </script>
 
@@ -283,7 +311,7 @@
             $('#J23_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code ?? '');
             $('#J24_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code ?? '');
             $('#J25_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code ?? '');
-            $('#J26_005F_8F5A_8F8A').val((headquarters.address_prefecture ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));            
+            $('#J26_005F_8F5A_8F8A').val((headquarters.address_prefecture ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
             $('#J63_005F_97A3_9045_8ED2_8F90_96BC').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
             $('#J35_005F_8C8E').val(isNaN(parseInt(retirement_date_nextday_month, 10)) ? '' : parseInt(retirement_date_nextday_month, 10));
             $('#J36_005F_93FA').val(isNaN(parseInt(retirement_date_nextday_day, 10)) ? '' : parseInt(retirement_date_nextday_day, 10));
@@ -534,5 +562,5 @@
         });
     </script>
     @endslot
-</section>
+    </section>
 </x-layout>
