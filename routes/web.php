@@ -20,6 +20,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
+use App\Http\Controllers\Ledger\CertificateController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
 use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
@@ -114,6 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
 
     // Ledger
+    Route::get('/ledger/certificate', [CertificateController::class, 'index'])->name('ledger.certificate');
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
     Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');
