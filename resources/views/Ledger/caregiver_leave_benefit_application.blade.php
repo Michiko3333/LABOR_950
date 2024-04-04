@@ -1,93 +1,94 @@
-<x-layout title="介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請">
-    @slot('header')
-    <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+<x-layout title="帳票作成：介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請">
+    <section class="content">
+        @slot('header')
+        <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
-    <style type="text/css"></style>
-    @endslot
-    <h1>介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請</h1>
-    <p>申請・届出に関する事項を入力してください。<br>
-        複数の様式を提出する場合は、タブから様式を切り替えてください。
-    </p>
+        <style type="text/css"></style>
+        @endslot
+        <h1>介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請</h1>
+        <p>申請・届出に関する事項を入力してください。<br>
+            複数の様式を提出する場合は、タブから様式を切り替えてください。
+        </p>
 
-    <div id="ledger-step1" class="step-view active my-2">
-        <form id="ledger-form" action="" method="post">
-            @csrf
-            @if(session('errors'))
-            <div class="ui error message">
-                <div class="header">入力エラー</div>
-                <ul class="list">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            <div class="ledger-twocol my-2">
-                <div class="left-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <h2>社員選択</h2>
-                            <livewire:ledger-employee-list />
-                        </div>
-                    </div>
+        <div id="ledger-step1" class="step-view active my-2">
+            <form id="ledger-form" action="" method="post">
+                @csrf
+                @if(session('errors'))
+                <div class="ui error message">
+                    <div class="header">入力エラー</div>
+                    <ul class="list">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="right-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <div class="ui top attached tabular menu">
-                                <a class="item active" data-tab="sample">
-                                    介護休業給付金支給申請書
-                                </a>
-                                <a class="item" data-tab="sample2">
-                                    雇用保険被保険者休業開始時賃金月額証明書<br>
-                                    所定労働時間短縮開始時賃金証明書
-                                </a>
-                            </div>
-                            <div class="ui bottom attached segment active mb-0" data-tab="sample">
-                                <x-form.caregiver_leave_benefit_application />
-                            </div>
-                            <div class="ui bottom attached segment" data-tab="sample2"
-                                style="display: none; overflow-x: auto;">
-                                <x-form.wage_monthly_certificate_on_employment_insurance_insured_leave_start />
+                @endif
+                <div class="ledger-twocol my-2">
+                    <div class="left-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>社員選択</h2>
+                                <livewire:ledger-employee-list />
                             </div>
                         </div>
                     </div>
+                    <div class="right-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <div class="ui top attached tabular menu">
+                                    <a class="item active" data-tab="sample">
+                                        介護休業給付金支給申請書
+                                    </a>
+                                    <a class="item" data-tab="sample2">
+                                        雇用保険被保険者休業開始時賃金月額証明書<br>
+                                        所定労働時間短縮開始時賃金証明書
+                                    </a>
+                                </div>
+                                <div class="ui bottom attached segment active mb-0" data-tab="sample">
+                                    <x-form.caregiver_leave_benefit_application />
+                                </div>
+                                <div class="ui bottom attached segment" data-tab="sample2"
+                                    style="display: none; overflow-x: auto;">
+                                    <x-form.wage_monthly_certificate_on_employment_insurance_insured_leave_start />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prevew-btn">
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    <button id="ledger-preview-btn" class="ui button primary" type="button"
+                        style="width: 200px;">確認</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="ledger-step2" class="step-view my-2">
+            <h2 style="text-align: center;">プレビュー</h2>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                        <x-form.caregiver_leave_benefit_application />
+                    </div>
                 </div>
             </div>
-
-            <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
-                    href="{{ route('ledger.index') }}">戻る</a>
-                <button id="ledger-preview-btn" class="ui button primary" type="button"
-                    style="width: 200px;">確認</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="ledger-step2" class="step-view my-2">
-        <h2 style="text-align: center;">プレビュー</h2>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                    <x-form.caregiver_leave_benefit_application />
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component style="overflow-x: auto;">
+                        <x-form.wage_monthly_certificate_on_employment_insurance_insured_leave_start />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component style="overflow-x: auto;">
-                    <x-form.wage_monthly_certificate_on_employment_insurance_insured_leave_start />
-                </div>
+            <div class="submit-btn py-2">
+                <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
+                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
             </div>
         </div>
-        <div class="submit-btn py-2">
-            <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
-            <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
-        </div>
-    </div>
 
-    <script type="module">
-        $(document).ready(function () {
+        <script type="module">
+            $(document).ready(function () {
             $('#J70_005F_944E_8D86').val( '{{ old("notification_era", $today["era"]) }}' );
             $('#J71_005F_944E').val( '{{ old("notification_year", $today["year"]) }}' );
             $('#J72_005F_8C8E').val( '{{ old("notification_month", $today["month"]) }}' );
@@ -142,10 +143,10 @@
                 });
             });
         });
-    </script>
+        </script>
 
-    <script type="module">
-        function insertDataFromEmployee(data) {
+        <script type="module">
+            function insertDataFromEmployee(data) {
             const employee = data['employee'];
             const branch = data['branch'];
             const headquarters = data['headquarters'];
@@ -203,10 +204,10 @@
         }
 
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
-    </script>
+        </script>
 
-    @slot('footer')
-    <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
-    @endslot
+        @slot('footer')
+        <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
+        @endslot
     </section>
 </x-layout>

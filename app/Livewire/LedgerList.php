@@ -6,6 +6,7 @@ use App\Models\Ledger;
 
 class LedgerList extends BaseTable
 {
+    public $limit = 25;
     public $search = '';
 
     public function mount($page = 1, $search = '')

@@ -32,13 +32,15 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.employment_insured_status_acquisition_not_issued_separation_form',
-        [
-            'company' => $company,
-            'current_employee' => $current_employee,
-            'current_branch' => $current_branch,
-            'today' => $today
-        ]);
+        return view(
+            'ledger.employment_insured_status_acquisition_not_issued_separation_form',
+            [
+                'company' => $company,
+                'current_employee' => $current_employee,
+                'current_branch' => $current_branch,
+                'today' => $today
+            ]
+        );
     }
 
     public function post(EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest $request)

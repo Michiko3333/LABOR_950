@@ -66,8 +66,6 @@ class LedgerEmployeeList extends BaseTable
         $items = $this->data['items'];
         $employee = $items->where('id', $id)->first();
 
-        $employee->aaa = 2;
-
         $employeeData = $employee->toArray();
         $branchData = $employee->branch->toArray();
 
@@ -80,22 +78,15 @@ class LedgerEmployeeList extends BaseTable
         $headquartersData = $headquarters->toArray();
         $companyData = $company->toArray();
 
-        $company_id = $branchData['company_id'];
-        $headquarters  = Branch::select('name', 'address_prefecture', 'address_city', 'address_ward', 'address_apartment', 'tel_area_code', 'tel_city_code', 'tel_subscriber_code')
-        ->where('company_id', $company_id)
-            ->where('branch_type', 1)
-            ->first();
-        $headquarters_data = $headquarters->toArray();
-
         $employee_id = $employeeData['id'];
         $spouse_data = Dependent::where('employee_id', $employee_id)->where('relationship', '1')->first();
-        if ($spouse_data){
+        if ($spouse_data) {
             $spouse_country_id = $spouse_data['country_id'];
             if ($spouse_country_id) {
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
             }
         }
-        
+
         $output = [
             'employee' => $employeeData,
             'branch' => $branchData,
@@ -103,7 +94,7 @@ class LedgerEmployeeList extends BaseTable
             'company' => $companyData,
             'spouse' => $spouse_data,
         ];
-        
+
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
     }

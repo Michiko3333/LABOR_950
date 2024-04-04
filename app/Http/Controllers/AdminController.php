@@ -350,7 +350,7 @@ class AdminController extends Controller
             foreach ($departments as $dep) {
                 Employee_department::insert([
                     'department_id' => $dep,
-                    'emloyee_id' => $employee_id
+                    'employee_id' => $employee_id
                 ]);
             }
 
@@ -548,7 +548,7 @@ class AdminController extends Controller
                 'mynumber_card_no' => $request->input('mynumber_card_no'),
                 'social_insurance_no' => $request->input('social_insurance_no'),
                 'pension_office_no' => $request->input('pension_office_no'),
-                'pension_office_reference_no' => $request->input('pension_office_reference_no'),
+                // 'pension_office_reference_no' => $request->input('pension_office_reference_no'),
                 'pension_no' => $request->input('pension_no'),
                 'labor_insurance_type' => $request->input('labor_insurance_type'),
                 'employment_insurance_type' => $request->input('employment_insurance_type'),
@@ -571,7 +571,7 @@ class AdminController extends Controller
                 'retired_reason_type' => $request->input('retired_reason_type'),
                 'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                 'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
-                'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
+                // 'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
                 'passed_away_date' => $this->formatDate($request->input('passed_away_date')),
                 //'personal_information_access_flg' => $request->input('personal_information_access_flg'),
                 //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
@@ -597,7 +597,7 @@ class AdminController extends Controller
             foreach ($departments as $dep) {
                 Employee_department::insert([
                     'department_id' => $dep,
-                    'emloyee_id' => $employee_id
+                    'employee_id' => $employee_id
                 ]);
             }
 
