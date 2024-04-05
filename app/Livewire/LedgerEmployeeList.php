@@ -16,6 +16,7 @@ use App\Models\Retirement_reason_contract_period_reached_limit;
 use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
+
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -79,6 +80,14 @@ class LedgerEmployeeList extends BaseTable
         $companyData = $company->toArray();
 
         $employee_id = $employeeData['id'];
+        $retirement_reason_age_data = Retirement_reason_age::where('employee_id', $employee_id)->first();
+        $retirement_reason_contract_period_reached_limit_data = Retirement_reason_contract_period_reached_limit::where('employee_id', $employee_id)->first();
+        $retirement_reason_contract_period_expired_eternal_hire_data = Retirement_reason_contract_period_expired_eternal_hire::where('employee_id', $employee_id)->first();
+        $retirement_reason_contract_period_expired_except_eternal_hire_data = Retirement_reason_contract_period_expired_except_eternal_hire::where('employee_id', $employee_id)->first();
+        $retirement_reason_business_owner_suggestion_data = Retirement_reason_business_owner_suggestion::where('employee_id', $employee_id)->first();
+        $retirement_reason_employee_decision_change_office_data = Retirement_reason_employee_decision_change_office::where('employee_id', $employee_id)->first();
+        $retirement_reason_employee_decision_change_job_type_data = Retirement_reason_employee_decision_change_job_type::where('employee_id', $employee_id)->first();
+        $retirement_reason_employee_decision_reasons_data = Retirement_reason_employee_decision_reasons::where('employee_id', $employee_id)->first();
         $spouse_data = Dependent::where('employee_id', $employee_id)->where('relationship', '1')->first();
         if ($spouse_data) {
             $spouse_country_id = $spouse_data['country_id'];
@@ -93,6 +102,14 @@ class LedgerEmployeeList extends BaseTable
             'headquarters' => $headquartersData,
             'company' => $companyData,
             'spouse' => $spouse_data,
+            'retirement_reason_age' => $retirement_reason_age_data,
+            'retirement_reason_contract_period_reached_limit' => $retirement_reason_contract_period_reached_limit_data,
+            'retirement_reason_contract_period_expired_eternal_hire' => $retirement_reason_contract_period_expired_eternal_hire_data,
+            'retirement_reason_contract_period_expired_except_eternal_hire' => $retirement_reason_contract_period_expired_except_eternal_hire_data,
+            'retirement_reason_business_owner_suggestion' => $retirement_reason_business_owner_suggestion_data,
+            'retirement_reason_employee_decision_change_job_type' => $retirement_reason_employee_decision_change_job_type_data,
+            'retirement_reason_employee_decision_change_office' => $retirement_reason_employee_decision_change_office_data,
+            'retirement_reason_employee_decision_reasons' => $retirement_reason_employee_decision_reasons_data,
         ];
 
         $this->selected_id = $id;

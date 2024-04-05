@@ -148,14 +148,14 @@
             $('#J23_005F_8E73_8A4F_8BC7_94D4').val('');
             $('#J24_005F_8E73_93E0_8BC7_94D4').val('');
             $('#J25_005F_89C1_93FC_8ED2_94D4_8D86').val('');
-            // const retirement_reason_age = data['retirement_reason_age'];
-            // const retirement_reason_contract_period_reached_limit = data['retirement_reason_contract_period_reached_limit'];
-            // const retirement_reason_contract_period_expired_eternal_hire = data['retirement_reason_contract_period_expired_eternal_hire'];
-            // const retirement_reason_contract_period_expired_except_eternal_hire = data['retirement_reason_contract_period_expired_except_eternal_hire'];
-            // const retirement_reason_business_owner_suggestion = data['retirement_reason_business_owner_suggestion'];
-            // const retirement_reason_employee_decision_change_job_type = data['retirement_reason_employee_decision_change_job_type'];
-            // const retirement_reason_employee_decision_change_office = data['retirement_reason_employee_decision_change_office'];
-            // const retirement_reason_employee_decision_reasons = data['retirement_reason_employee_decision_reasons'];
+            const retirement_reason_age = data['retirement_reason_age'];
+            const retirement_reason_contract_period_reached_limit = data['retirement_reason_contract_period_reached_limit'];
+            const retirement_reason_contract_period_expired_eternal_hire = data['retirement_reason_contract_period_expired_eternal_hire'];
+            const retirement_reason_contract_period_expired_except_eternal_hire = data['retirement_reason_contract_period_expired_except_eternal_hire'];
+            const retirement_reason_business_owner_suggestion = data['retirement_reason_business_owner_suggestion'];
+            const retirement_reason_employee_decision_change_job_type = data['retirement_reason_employee_decision_change_job_type'];
+            const retirement_reason_employee_decision_change_office = data['retirement_reason_employee_decision_change_office'];
+            const retirement_reason_employee_decision_reasons = data['retirement_reason_employee_decision_reasons'];
             var employment_insured_date_year;
             var employment_insured_date_month;
             var employment_insured_date_day;
@@ -254,44 +254,44 @@
             $('#J65_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code ?? '');
             $('#J66_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code ?? '');
             $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code ?? '');
-            // if( "{{$current_employee->role_id}}" === 500 ){
-            //     $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val( '{{$current_employee->last_name}}' ? '{{$current_employee->last_name}}' + '　' : '') + ( '{{$current_employee->first_name}}' ?? ''));
-            //     $('#J75_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}' ?? '');
-            //     $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}' ?? '');
-            //     $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}' ?? '');
-            //     $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}' ?? '');
-            // } else {
-            //     $('#J70_005F_944E_8D86').val('').prop('disabled', true);
-            //     $('#J71_005F_944E').val('').prop('disabled', true);
-            //     $('#J72_005F_8C8E').val('').prop('disabled', true);
-            //     $('#J73_005F_93FA').val('').prop('disabled', true);
-            //     $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('').prop('disabled', true);
-            //     $('#J75_005F_8E81_96BC').val('').prop('disabled', true);
-            //     $('#J76_005F_8E73_8A4F_8BC7_94D4').val('').prop('disabled', true);
-            //     $('#J77_005F_8E73_93E0_8BC7_94D4').val('').prop('disabled', true);
-            //     $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('').prop('disabled', true);
-            //     $('#J79_005F_9574_8B4C_9793').val('').prop('disabled', true);
-            // }
+            if( "{{$current_employee->role_id}}" === 500 ){
+                $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val( '{{$current_employee->last_name}}' ? '{{$current_employee->last_name}}' + '　' : '') + ( '{{$current_employee->first_name}}' ?? '');
+                $('#J75_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}' ?? '');
+                $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}' ?? '');
+                $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}' ?? '');
+                $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}' ?? '');
+            } else {
+                $('#J70_005F_944E_8D86').val('').prop('disabled', true);
+                $('#J71_005F_944E').val('').prop('disabled', true);
+                $('#J72_005F_8C8E').val('').prop('disabled', true);
+                $('#J73_005F_93FA').val('').prop('disabled', true);
+                $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('').prop('disabled', true);
+                $('#J75_005F_8E81_96BC').val('').prop('disabled', true);
+                $('#J76_005F_8E73_8A4F_8BC7_94D4').val('').prop('disabled', true);
+                $('#J77_005F_8E73_93E0_8BC7_94D4').val('').prop('disabled', true);
+                $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('').prop('disabled', true);
+                $('#J79_005F_9574_8B4C_9793').val('').prop('disabled', true);
+            }
 
             // 帳票2枚目
-            // if(employee.employment_insured_no != null && employee.employment_insured_no.length == 11){
-            //     $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
-            //     $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
-            //     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10, 11));
-            // } else {
-            //     $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
-            //     $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
-            //     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
-            // }
-            // if(branch.insurance_office_no != null && branch.employment_insured_no.length == 11){
-            //     $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.insurance_office_no.substring(0, 4));
-            //     $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
-            //     $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10, 11));
-            // } else {
-            //     $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val('');
-            //     $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
-            //     $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
-            // }
+            if(employee.employment_insured_no && employee.employment_insured_no.length == 11){
+                $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
+                $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
+                $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10, 11));
+            } else {
+                $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
+                $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
+                $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
+            }
+            if(branch.insurance_office_no && branch.insurance_office_no.length == 11){
+                $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.insurance_office_no.substring(0, 4));
+                $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
+                $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10, 11));
+            } else {
+                $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val('');
+                $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
+                $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
+            }
             $('#J8_005F_97A3_9045_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ?? ''));
             $('#J9_005F_97A3_9045_8ED2_8E81_96BC').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
             $('#J12_005F_944').val(intended_retirement_date_year);
@@ -302,7 +302,7 @@
             $('#J17_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code ?? '');
             $('#J18_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code ?? '');
             $('#J19_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code ?? '');
-            if(employee.post_code !== null && employee.post_code.length ==  7) {
+            if(employee.post_code && employee.post_code.length == 7) {
                 $('#J20_005F_947A_9242_8BC7_94D4_8D86').val(employee.post_code.substring(0, 3));
                 $('#J21_005F_92AC_88E6_94D4_8D86').val(employee.post_code.substring(3, 7));
             } else {
@@ -335,148 +335,148 @@
                 $('#J80_005F_89C1_93FC_8ED2_94D4_8D86').val('').prop('disabled', true);
                 $('#J81_005F_9574_8B4C_9793').val('').prop('disabled', true);
             }
-            // $('#J86_005F_9149_91F02').on('change', function() {
-            //     if($(this).prop('checked')){
-            //         $('#J103_005F_92E8_944E_005F_944E_97EE').val(retirement_reason_age.retirement_age);
-            //         if(retirement_reason_age.reemployment_request_flg === 0){
-            //             $('#J104_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J104_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_age.retirement_reason_type === 'a'){
-            //             $('#J105_005F_Radio1').prop('checked', true);
-            //         } else if(retirement_reason_age.retirement_reason_type === 'b'){
-            //             $('#J105_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J105_005F_Radio3').prop('checked', true);
-            //             $('#J106_005F_8C70_91B1_8CD9_9770_8AF3_965D_8ED2_005F_97A3_9045_979D_9752_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_age.retirement_reason  ?? '');
-            //         }
-            //     }
-            // });
-            // $('#J87_005F_9149_91F03_005F1').on('change', function() {
-            //     if($(this).prop('checked')){
-            //         $('#J194_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_31_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_reached_limit.contract_period_once  ?? '');
-            //         $('#J195_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_reached_limit.contract_period_total  ?? '');
-            //         $('#J196_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_reached_limit.contract_renewal_count  ?? '');
-            //         if(retirement_reason_contract_period_reached_limit.shortened_contract_renewal_reached_limit_flg === 0){
-            //             $('#J197_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J197_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_reached_limit.contract_renewal_reached_limit_flg === 0){
-            //             $('#J198_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J198_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_reached_limit.rehire_contract_renewal_reached_limit_flg === 0){
-            //             $('#J199_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J199_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_reached_limit.contract_period_total_reached_limit_flg === 0){
-            //             $('#J200_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J200_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_reached_limit.contract_period_total_established_before_law_amendment_flg === 0){
-            //             $('#J201_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J201_005F_Radio1').prop('checked', true);
-            //         }
-            //     }
-            // });
-            // $('#J107_005F_Radio1').on('change', function() {
-            //     if($('#J107_005F_Radio1').prop('checked')){
-            //         $('#J108_005F_8FED_9770_984A_93AD_8ED2_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_eternal_hire.contract_period_once  ?? '');
-            //         $('#J109_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_eternal_hire.contract_period_total  ?? '');
-            //         $('#J110_005F_8FED_9770_984A_93AD_8ED2_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_count  ?? '');
-            //         if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_guarantee_agreement_flg === 0){
-            //             $('#J111_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J111_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_eternal_hire.contract_non_renewal_flg === 0){
-            //             $('#J112_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J112_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_eternal_hire.employment_termination_notice_flg === 0){
-            //             $('#J113_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J113_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_eternal_hire.non_renewal_clause_addition_flg === 0){
-            //             $('#J202_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J202_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_request_type === 'a'){
-            //             $('#J114_005F_Radio2').prop('checked', true);
-            //         } else if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_request_type === 'b'){
-            //             $('#J114_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J114_005F_Radio3').prop('checked', true);
-            //         }
-            //     }
-            // });
-            // $('#J107_005F_Radio2').on('change', function() {
-            //     if($('#J107_005F_Radio2').prop('checked')){
-            //         $('#J115_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_period_once  ?? '');
-            //         $('#J116_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_period_total  ?? '');
-            //         $('#J117_005F_8FED_9770_984A_93AD_8ED2_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_count  ?? '');
-            //         if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_guarantee_agreement_flg === 0){
-            //             $('#J118_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J118_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_except_eternal_hire.no_contract_renewal_flg === 0){
-            //             $('#J119_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J119_005F_Radio1').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_request_type === 'a'){
-            //             $('#J120_005F_Radio2').prop('checked', true);
-            //         } else if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_request_type === 'b'){
-            //             $('#J120_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J120_005F_Radio3').prop('checked', true);
-            //         }
-            //         if(retirement_reason_contract_period_expired_except_eternal_hire.employment_instructions_type === 'a'){
-            //             $('#J121_005F_Radio2').prop('checked', true);
-            //         } else{
-            //             $('#J121_005F_Radio3').prop('checked', true);
-            //         }
-            //     }
-            // });
-            // $('#J94_005F_9149_91F04_005F3_005F2').on('change', function() {
-            //     if($('#J94_005F_9149_91F04_005F3_005F2').prop('checked')){
-            //         $('#J122_005F_8AF3_965D_91DE_9045_9694_82CD_91DE_9045_8AA9_8FA7_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_business_owner_suggestion.retirement_recommendation_reason  ?? '');
-            //     }
-            // });
-            // $('#J98_005F_9149_91F05_005F1_005F5').on('change', function() {
-            //     if($('#J98_005F_9149_91F05_005F1_005F5').prop('checked')){
-            //         if(retirement_reason_employee_decision_change_job_type.education_training_flg === 0){
-            //                 $('#J123_005F_Radio2').prop('checked', true);
-            //             } else{
-            //                 $('#J123_005F_Radio1').prop('checked', true);
-            //             }
-            //     }
-            // });
-            // $('#J99_005F_9149_91F05_005F1_005F6').on('change', function() {
-            //     if($('#J99_005F_9149_91F05_005F1_005F6').prop('checked')){
-            //         $('#J124_005F_8E96_8BC6_8F8A_88DA_935D_82C9_82E6_82E8_92CA_8BCE_8DA2_93EF_005F_8F8A_8DDD_926E').val(retirement_reason_employee_decision_change_office.place  ?? '');
-            //     }
-            // });
-            // $('#J100_005F_9149_91F05_005F1_005F7').on('change', function() {
-            //     if($('#J100_005F_9149_91F05_005F1_005F7').prop('checked')){
-            //         $('#J125_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_employee_decision_reasons.reason  ?? '');
-            //     }
-            // });
-            // $('#J102_005F_9149_91F06').on('change', function() {
-            //     if($('#J102_005F_9149_91F06').prop('checked')){
-            //         $('#J126_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_other_reasons.reason  ?? '');
-            //     }
-            // });
+            $('#J86_005F_9149_91F02').on('change', function() {
+                if($(this).prop('checked')){
+                    $('#J103_005F_92E8_944E_005F_944E_97EE').val(retirement_reason_age.retirement_age);
+                    if(retirement_reason_age.reemployment_request_flg === 0){
+                        $('#J104_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J104_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_age.retirement_reason_type === 'a'){
+                        $('#J105_005F_Radio1').prop('checked', true);
+                    } else if(retirement_reason_age.retirement_reason_type === 'b'){
+                        $('#J105_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J105_005F_Radio3').prop('checked', true);
+                        $('#J106_005F_8C70_91B1_8CD9_9770_8AF3_965D_8ED2_005F_97A3_9045_979D_9752_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_age.retirement_reason  ?? '');
+                    }
+                }
+            });
+            $('#J87_005F_9149_91F03_005F1').on('change', function() {
+                if($(this).prop('checked')){
+                    $('#J194_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_31_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_reached_limit.contract_period_once  ?? '');
+                    $('#J195_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_reached_limit.contract_period_total  ?? '');
+                    $('#J196_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_reached_limit.contract_renewal_count  ?? '');
+                    if(retirement_reason_contract_period_reached_limit.shortened_contract_renewal_reached_limit_flg === 0){
+                        $('#J197_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J197_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_reached_limit.contract_renewal_reached_limit_flg === 0){
+                        $('#J198_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J198_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_reached_limit.rehire_contract_renewal_reached_limit_flg === 0){
+                        $('#J199_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J199_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_reached_limit.contract_period_total_reached_limit_flg === 0){
+                        $('#J200_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J200_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_reached_limit.contract_period_total_established_before_law_amendment_flg === 0){
+                        $('#J201_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J201_005F_Radio1').prop('checked', true);
+                    }
+                }
+            });
+            $('#J107_005F_Radio1').on('change', function() {
+                if($('#J107_005F_Radio1').prop('checked')){
+                    $('#J108_005F_8FED_9770_984A_93AD_8ED2_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_eternal_hire.contract_period_once  ?? '');
+                    $('#J109_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_eternal_hire.contract_period_total  ?? '');
+                    $('#J110_005F_8FED_9770_984A_93AD_8ED2_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_count  ?? '');
+                    if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_guarantee_agreement_flg === 0){
+                        $('#J111_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J111_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_eternal_hire.contract_non_renewal_flg === 0){
+                        $('#J112_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J112_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_eternal_hire.employment_termination_notice_flg === 0){
+                        $('#J113_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J113_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_eternal_hire.non_renewal_clause_addition_flg === 0){
+                        $('#J202_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J202_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_request_type === 'a'){
+                        $('#J114_005F_Radio2').prop('checked', true);
+                    } else if(retirement_reason_contract_period_expired_eternal_hire.contract_renewal_request_type === 'b'){
+                        $('#J114_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J114_005F_Radio3').prop('checked', true);
+                    }
+                }
+            });
+            $('#J107_005F_Radio2').on('change', function() {
+                if($('#J107_005F_Radio2').prop('checked')){
+                    $('#J115_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_period_once  ?? '');
+                    $('#J116_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_period_total  ?? '');
+                    $('#J117_005F_8FED_9770_984A_93AD_8ED2_005F_8C5F_96F1_8D58_9056_89F1_9094').val(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_count  ?? '');
+                    if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_guarantee_agreement_flg === 0){
+                        $('#J118_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J118_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_except_eternal_hire.no_contract_renewal_flg === 0){
+                        $('#J119_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J119_005F_Radio1').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_request_type === 'a'){
+                        $('#J120_005F_Radio2').prop('checked', true);
+                    } else if(retirement_reason_contract_period_expired_except_eternal_hire.contract_renewal_request_type === 'b'){
+                        $('#J120_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J120_005F_Radio3').prop('checked', true);
+                    }
+                    if(retirement_reason_contract_period_expired_except_eternal_hire.employment_instructions_type === 'a'){
+                        $('#J121_005F_Radio2').prop('checked', true);
+                    } else{
+                        $('#J121_005F_Radio3').prop('checked', true);
+                    }
+                }
+            });
+            $('#J94_005F_9149_91F04_005F3_005F2').on('change', function() {
+                if($('#J94_005F_9149_91F04_005F3_005F2').prop('checked')){
+                    $('#J122_005F_8AF3_965D_91DE_9045_9694_82CD_91DE_9045_8AA9_8FA7_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_business_owner_suggestion.retirement_recommendation_reason  ?? '');
+                }
+            });
+            $('#J98_005F_9149_91F05_005F1_005F5').on('change', function() {
+                if($('#J98_005F_9149_91F05_005F1_005F5').prop('checked')){
+                    if(retirement_reason_employee_decision_change_job_type.education_training_flg === 0){
+                            $('#J123_005F_Radio2').prop('checked', true);
+                        } else{
+                            $('#J123_005F_Radio1').prop('checked', true);
+                        }
+                }
+            });
+            $('#J99_005F_9149_91F05_005F1_005F6').on('change', function() {
+                if($('#J99_005F_9149_91F05_005F1_005F6').prop('checked')){
+                    $('#J124_005F_8E96_8BC6_8F8A_88DA_935D_82C9_82E6_82E8_92CA_8BCE_8DA2_93EF_005F_8F8A_8DDD_926E').val(retirement_reason_employee_decision_change_office.place  ?? '');
+                }
+            });
+            $('#J100_005F_9149_91F05_005F1_005F7').on('change', function() {
+                if($('#J100_005F_9149_91F05_005F1_005F7').prop('checked')){
+                    $('#J125_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_employee_decision_reasons.reason  ?? '');
+                }
+            });
+            $('#J102_005F_9149_91F06').on('change', function() {
+                if($('#J102_005F_9149_91F06').prop('checked')){
+                    $('#J126_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752').val(retirement_reason_other_reasons.reason  ?? '');
+                }
+            });
         }
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
         $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').on('input', function() {

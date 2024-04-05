@@ -49,9 +49,9 @@ class LedgerBranchList extends BaseTable
     {
         $this->paginated = true;
 
-        $branch = Branch::join('m_prefecture', 'm_branch.address_prefecture', '=', 'm_prefecture.name')->select('m_branch.*', 'm_prefecture.name as address_prefecture')->find($id);
+        $branch = Branch::join('m_prefecture', 'm_branch.address_prefecture', '=', 'm_prefecture.id')->select('m_branch.*', 'm_prefecture.name as address_prefecture')->first();
         
-        $branch_data = $branch->toArray();
+        $branch_data = $branch;
 
         $output = [
             'branch' => $branch_data
