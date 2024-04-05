@@ -70,7 +70,7 @@
                                 <div class="header">支店・営業所の追加、削除</div>
                             </div>
                         </a>
-                        <a href="#" class="item">
+                        <a href="{{ route('current_company_department_update') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">組織・部署マスタ変更</div>
