@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\Log;
 
-use App\Models\Roles;
+use App\Models\DepartmentPermission;
 
 class DepartmentPermissionSeeder extends Seeder
 {
@@ -16,11 +16,11 @@ class DepartmentPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles_data = [
+        $dep_data = [
             ['id' => 1, 'name' => '一般'],
             ['id' => 2, 'name' => '人事総務'],
             ['id' => 3, 'name' => '経理']
         ];
-        Roles::insert($roles_data);
+        DepartmentPermission::insert($dep_data);
     }
 }

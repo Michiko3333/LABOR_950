@@ -16,7 +16,6 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        Log::info('test');
         $roles_data = [
             ['id' => 999, 'name' => '管理者'],
             ['id' => 500, 'name' => '社労士'],

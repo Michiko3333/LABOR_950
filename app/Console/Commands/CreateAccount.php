@@ -63,7 +63,7 @@ class CreateAccount extends Command
                 'employee_id' => $employee->id
             ];
             $user = User::create($data);
-            $this->info("管理アカウントを下記に作成しました。\n\nメールアドエス：$email\nパスワード：$pass");
+            $this->info("管理アカウントを下記に作成しました。\n\nメールアドレス：$email\nパスワード：$pass");
         } catch (\Exception $e) {
             $this->error($e);
         }

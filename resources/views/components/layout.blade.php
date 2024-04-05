@@ -163,7 +163,9 @@ $useRightContent = $useRightContent ?? true;
     <div class="full-screen {{ $mode ?? '' }}">
         <div class="left-container">
             @if ($laborAlert == true)
-            <x-labor-alert name="{{$laborAlertTitle}}" />
+            <section class="content">
+                <x-labor-alert name="{{$laborAlertTitle}}" />
+            </section>
             @endif
             {{ $slot }}
         </div>

@@ -19,14 +19,14 @@ class LogoutController extends Controller
     }
     public function index(Request $request)
     {
-        $request->session()->regenerateToken();
         Auth::logout();
+        $request->session()->flush();
         return redirect()->route('auth.login');
     }
     public function logout(Request $request)
     {
-        $request->session()->regenerateToken();
         Auth::logout();
+        $request->session()->flush();
         return redirect()->route('auth.login');
     }
 }
