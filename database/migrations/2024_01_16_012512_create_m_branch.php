@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('tel_subscriber_code', 10)->nullable()->comment('電話番号（加入者番号）');
             $table->string('tel_overseas', 20)->nullable()->comment('国外電話番号');
             $table->integer('place_type')->default(1)->comment('国内外');
-            $table->integer('branch_type')->nullable()->comment('区分');
+            $table->integer('branch_type')->comment('区分');
             $table->string('labor_insurance_no', 20)->nullable()->comment('労働保険番号');
             $table->integer('labor_insurance_payment_method')->nullable()->comment('労働保険納付区分');
             $table->integer('insurance_type_id')->nullable()->comment('労働保険種類の分類');

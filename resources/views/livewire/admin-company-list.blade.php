@@ -1,6 +1,6 @@
 <div>
     @php
-    $company_listed_type = $subList['company_listed_type'];
+    $company_type = $subList['company_type'];
     $businessTypes = $subList['businessTypes'];
     @endphp
     <div class="filter">
@@ -27,7 +27,7 @@
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->company_division == 1 ? '社労士事務所' : '顧客企業' }}</td>
                 <td>{{ $businessTypes[$item->company_division] ?? 'E' }}</td>
-                <td>{{ $company_listed_type[$item->company_type_id] ?? 'E' }}</td>
+                <td>{{ $company_type[$item->company_type_id] ?? 'E' }}</td>
                 <td>{{ $item->company_no }}</td>
                 <td>{{ $item->employee_sum }}</td>
                 <td class="right aligned collapsing">

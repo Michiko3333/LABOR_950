@@ -55,7 +55,9 @@ class AdminBranchForm extends Component
                 $d['br-insurance_office_no'] = $item->insurance_office_no;
                 $d['br-insurance_office_reference_no'] = $item->insurance_office_reference_no;
                 $d['br-pension_office_no'] = $item->pension_office_no;
-                $d['br-pension_office_reference_no'] = $item->pension_office_reference_no;
+                $d['br-pension_office_reference_prefecture'] = $item->pension_office_reference_prefecture;
+                $d['br-pension_office_reference_no_cities'] = $item->pension_office_reference_no_cities;
+                $d['br-pension_office_reference_no_office'] = $item->pension_office_reference_no_office;
                 $d['br-pension_office_id'] = $item->pension_office_id;
                 $d['br-employment_insurance_office_no'] = $item->employment_insurance_office_no;
                 $d['br-employment_insurance_establishment_date'] = $item->employment_insurance_establishment_date;

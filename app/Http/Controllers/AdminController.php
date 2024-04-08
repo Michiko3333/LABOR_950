@@ -240,6 +240,7 @@ class AdminController extends Controller
     private function data_branch(Request $request, $index, $company_id)
     {
         $formmatted_br_labor_insurance_establishment_date = $request->input('br-labor_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-labor_insurance_establishment_date')[$index])->format('Y-m-d') : null;
+        $formmatted_br_employment_insurance_establishment_date = $request->input('br-employment_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-employment_insurance_establishment_date')[$index])->format('Y-m-d') : null;
 
         return [
             'name' => $request->input('br-name')[$index],
@@ -263,8 +264,11 @@ class AdminController extends Controller
             'insurance_office_reference_no' => $request->input('br-insurance_office_reference_no')[$index],
             'pension_office_no' => $request->input('br-pension_office_no')[$index],
             'pension_office_id' => $request->input('br-pension_office_id')[$index],
+            'pension_office_reference_prefecture' => $request->input('br-pension_office_reference_prefecture')[$index],
+            'pension_office_reference_no_cities' => $request->input('br-pension_office_reference_no_cities')[$index],
+            'pension_office_reference_no_office' => $request->input('br-pension_office_reference_no_office')[$index],
             'employment_insurance_office_no' => $request->input('br-employment_insurance_office_no')[$index],
-            'employment_insurance_establishment_date' => $request->input('br-employment_insurance_establishment_date')[$index],
+            'employment_insurance_establishment_date' => $formmatted_br_employment_insurance_establishment_date,
             'hello_work_id' => $request->input('br-hello_work_id')[$index],
             'labor_bureau_id' => $request->input('br-labor_bureau_id')[$index],
             'labor_supervision_id' => $request->input('br-labor_supervision_id')[$index],

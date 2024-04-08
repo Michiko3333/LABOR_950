@@ -184,7 +184,7 @@
                 </div>
                 <div class="ui divider my-2"></div>
 
-                <div class="three fields">
+                <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-pension_office_id', $key)}}">
                         <label for="br-pension_office_id">年金事務所ID</label>
                         <input type="text" name="br-pension_office_id[]" placeholder="">
@@ -194,11 +194,24 @@
                         <input type="text" name="br-pension_office_no[]" placeholder="">
                     </div>
                 </div>
-
+                <div class="three fields">
+                    <div class="field {{err_bind($errs, 'br-pension_office_reference_prefecture', $key)}}">
+                        <label for="br-pension_office_reference_prefecture">事業所整理記号（都道府県コード）</label>
+                        <input type="text" name="br-pension_office_reference_prefecture[]" placeholder="">
+                    </div>
+                    <div class="field {{err_bind($errs, 'br-pension_office_reference_no_cities', $key)}}">
+                        <label for="br-pension_office_reference_no_cities">事業所整理記号（郡市区記号）</label>
+                        <input type="text" name="br-pension_office_reference_no_cities[]" placeholder="">
+                    </div>
+                    <div class="field {{err_bind($errs, 'br-pension_office_reference_no_office', $key)}}">
+                        <label for="br-pension_office_reference_no_office">事業所整理記号（事業所記号）</label>
+                        <input type="text" name="br-pension_office_reference_no_office[]" placeholder="">
+                    </div>
+                </div>
                 <div class="ui divider my-2"></div>
             </div>
             <div class="content_inner">
-                <div class="three fields">
+                <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-employment_insurance_office_no', $key)}}">
                         <label for="br-employment_insurance_office_no">事業所番号（雇用保険）</label>
                         <input type="text" name="br-employment_insurance_office_no[]" placeholder="">
@@ -206,7 +219,14 @@
 
                     <div class="field {{err_bind($errs, 'br-employment_insurance_establishment_date', $key)}}">
                         <label for="br-employment_insurance_establishment_date">雇用保険設立年月日</label>
-                        <input type="text" name="br-employment_insurance_establishment_date[]" placeholder="">
+                        <div class="ui calendar branch-calendar">
+                            <div class="ui fluid input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" name="br-employment_insurance_establishment_date[]"
+                                    wire:model.live="data.{{ $key }}.br-employment_insurance_establishment_date"
+                                    placeholder="YYYY年M月D日">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -246,7 +266,7 @@
                     </div>
                 </div>
 
-                <div class="three fields">
+                <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-work_time_start', $key)}}">
                         <label for="br-work_time_start">就業時間(開始)</label>
                         <input type="text" name="br-work_time_start[]" placeholder="">

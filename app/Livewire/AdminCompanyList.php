@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\BaseTable;
 use App\Models\Company;
-use App\Models\Values_company_listed_type;
+use App\Models\Company_type;
 use App\Models\Values_company_business_type;
 
 class AdminCompanyList extends BaseTable
@@ -54,11 +54,11 @@ class AdminCompanyList extends BaseTable
 
     private function getSubList()
     {
-        $company_listed_type = Values_company_listed_type::pluck('name', 'id');
+        $company_type = Company_type::pluck('name', 'id');
         $businessTypes = Values_company_business_type::pluck('name', 'id');
 
         return [
-            'company_listed_type' => $company_listed_type,
+            'company_type' => $company_type,
             'businessTypes' => $businessTypes
         ];
     }
