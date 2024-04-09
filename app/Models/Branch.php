@@ -80,4 +80,9 @@ class Branch extends Model
     {
         return $this->hasMany(Labor_contract::class);
     }
+
+    public function work_contract()
+    {
+        return $this->hasMany(Work_contract::class);
+    }
 }

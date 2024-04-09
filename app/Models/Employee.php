@@ -307,4 +307,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Values_employee_childcare_reacquisition_reason::class, 'childcare_reacquisition_reason', 'id');
     }
+
+    public function work_contract()
+    {
+        return $this->hasOne(Work_contract::class);
+    }
 }
