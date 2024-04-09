@@ -7,6 +7,9 @@ use App\Http\Requests\EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormR
 use App\Models\Branch;
 use App\Models\CurrentUser;
 use App\Models\Prefecture;
+use App\Models\Country;
+use App\Models\Residential_status;
+use App\Models\Values_employee_employment_status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,11 +18,9 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
 {
     public function index(Request $request)
     {
-        // 操作する会社が設定されているか
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
-
         $company = CurrentUser::currentCompany();
         $current_employee = CurrentUser::info();
         $current_branch_id = $current_employee->branch_id;
@@ -32,13 +33,20 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
+        $countries = Country::all();
+        $residentials = Residential_status::all();
+        $employmentStatuses = Values_employee_employment_status::all();
+
         return view(
             'ledger.employment_insured_status_acquisition_not_issued_separation_form',
             [
                 'company' => $company,
                 'current_employee' => $current_employee,
                 'current_branch' => $current_branch,
-                'today' => $today
+                'today' => $today,
+                'countries' => $countries,
+                'residentials' => $residentials,
+                'employmentStatuses' => $employmentStatuses
             ]
         );
     }

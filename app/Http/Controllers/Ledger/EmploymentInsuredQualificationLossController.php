@@ -26,6 +26,7 @@ class EmploymentInsuredQualificationLossController extends Controller
         $current_employee = CurrentUser::info();
         $current_branch_id = $current_employee->branch_id;
         $current_branch = Branch::where('id', $current_branch_id)->first();
+
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
             'era' => $convertToday['japanese_calendar_era_string'],
