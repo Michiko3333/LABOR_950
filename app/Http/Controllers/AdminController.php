@@ -41,6 +41,10 @@ use App\Models\Values_employee_over_retired_insurance_loss_reason;
 use App\Models\Values_sex;
 use App\Models\Department;
 use App\Models\Employee_department;
+use App\Models\Values_branch_labor_insurance_payment_method;
+use App\Models\Values_branch_place_type;
+use App\Models\Values_branch_start_days_of_week;
+use App\Models\Values_branch_work_style_type;
 
 class AdminController extends Controller
 {
@@ -87,14 +91,20 @@ class AdminController extends Controller
         $businessTypes = Values_company_business_type::pluck('name', 'id');
         $company_type = Company_type::where('delete_flg', 0)->get();
         $prefectures = Prefecture::pluck('name', 'id');
-        $insuranceTypes = Values_employee_labor_insurance_type::pluck('name', 'id');
+        $labor_insurance_payment_method = Values_branch_labor_insurance_payment_method::pluck('name', 'id');
+        $place_type = Values_branch_place_type::pluck('name', 'id');
+        $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
+        $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
         return view('admin.company_create', [
             'company_listed_type' => $company_listed_type,
             'businessTypes' => $businessTypes,
             'branch' => [],
             'company_type' => $company_type,
             'prefectures' => $prefectures,
-            'insuranceTypes' => $insuranceTypes
+            'labor_insurance_payment_method' => $labor_insurance_payment_method,
+            'place_type' => $place_type,
+            'start_days_of_week' => $start_days_of_week,
+            'work_style_type' => $work_style_type
         ]);
     }
 
@@ -135,7 +145,10 @@ class AdminController extends Controller
         $branch = $company->branch()->where('delete_flg', 0)->get();
         $company_type = Company_type::where('delete_flg', 0)->get();
         $prefectures = Prefecture::pluck('name', 'id');
-        $insuranceTypes = Values_employee_labor_insurance_type::pluck('name', 'id');
+        $labor_insurance_payment_method = Values_branch_labor_insurance_payment_method::pluck('name', 'id');
+        $place_type = Values_branch_place_type::pluck('name', 'id');
+        $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
+        $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
         return view('admin.company_create', [
             'company_id' => $company->id,
             'company' => $company,
@@ -144,7 +157,10 @@ class AdminController extends Controller
             'branch' => $branch,
             'company_type' => $company_type,
             'prefectures' => $prefectures,
-            'insuranceTypes' => $insuranceTypes
+            'labor_insurance_payment_method' => $labor_insurance_payment_method,
+            'place_type' => $place_type,
+            'start_days_of_week' => $start_days_of_week,
+            'work_style_type' => $work_style_type
         ]);
     }
 

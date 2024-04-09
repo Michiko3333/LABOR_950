@@ -28,7 +28,6 @@ return new class extends Migration
             $table->integer('branch_type')->comment('区分');
             $table->string('labor_insurance_no', 20)->nullable()->comment('労働保険番号');
             $table->integer('labor_insurance_payment_method')->nullable()->comment('労働保険納付区分');
-            $table->integer('insurance_type_id')->nullable()->comment('労働保険種類の分類');
             $table->date('labor_insurance_establishment_date')->nullable()->comment('労働保険成立年月日');
             $table->string('insurance_office_no', 20)->nullable()->comment('事業所番号（保険）');
             $table->string('insurance_office_reference_no', 20)->nullable()->comment('事業所整理記号（保険）');

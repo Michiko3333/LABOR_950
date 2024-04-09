@@ -13,12 +13,18 @@ class AdminBranchForm extends Component
     public $branch_types = [];
     public $errs = [];
     public $prefectures = [];
-    public $insuranceTypes = [];
+    public $labor_insurance_payment_method = [];
+    public $place_type = [];
+    public $start_days_of_week = [];
+    public $work_style_type = [];
 
-    public function mount($errors, $branch = [], $prefectures = [], $insuranceTypes = [])
+    public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [])
     {
         $this->prefectures = $prefectures;
-        $this->insuranceTypes = $insuranceTypes;
+        $this->labor_insurance_payment_method = $labor_insurance_payment_method;
+        $this->place_type = $place_type;
+        $this->start_days_of_week = $start_days_of_week;
+        $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
