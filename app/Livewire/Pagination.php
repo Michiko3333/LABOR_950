@@ -3,24 +3,29 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Reactive;
 
 class Pagination extends Component
 {
+    #[Reactive]
+    public $pagination;
     public $total;
     public $currentPage;
     public $perPageNum;
     public $visibleNum = 2;
 
-    public function mount($total, $currentPage = 1, $perPageNum = 10)
+    public function mount($pagination)
     {
-        $this->total = (int) $total;
-        $this->currentPage = (int) $currentPage;
-        $this->perPageNum = (int) $perPageNum;
+        $this->pagination = $pagination;
     }
 
     public function render()
     {
-        $pageCount = floor($this->total / $this->perPageNum);
+        $this->total = (int) $this->pagination['totalItems'];
+        $this->currentPage = (int) $this->pagination['currentPage'];
+        $this->perPageNum = (int)  $this->pagination['pageSize'];
+
+        $pageCount = ceil($this->total / $this->perPageNum);
         $disableFirst = $this->currentPage <= 1;
         $disableLast = $this->currentPage >= $pageCount;
 

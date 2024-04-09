@@ -43,11 +43,5 @@
         </tbody>
     </table>
 
-    @php
-    $pagination = $data['pagination'];
-    @endphp
-
-    <livewire:pagination :total="$pagination['totalItems']" :currentPage="$pagination['currentPage']"
-        :perPageNum="$pagination['pageSize']" @onPrev="onPrev" @movePage="movePage($event.detail.page)"
-        @onNext="onNext">
+    <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
 </div>

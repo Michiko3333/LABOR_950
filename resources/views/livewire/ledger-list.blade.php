@@ -29,10 +29,5 @@
         </tbody>
     </table>
 
-
-    @php
-    $pagination = $data['pagination'];
-    @endphp
-
-    <livewire:pagination :total="$pagination['totalItems']" :currentPage="$pagination['currentPage']">
+    <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
 </div>
