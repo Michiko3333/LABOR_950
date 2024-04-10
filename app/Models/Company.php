@@ -85,5 +85,11 @@ class Company extends Model
     {
         return $this->hasMany(External_advisor_receptioninst::class);
     }
+
+    public function egov_account()
+    {
+        return $this->hasOne(Egov_account::class);
+    }
+
 }
 
