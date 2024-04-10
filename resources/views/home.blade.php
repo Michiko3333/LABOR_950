@@ -58,7 +58,7 @@
                 </div>
                 <div class="extra content">
                     <div class="ui middle aligned selection list">
-                        <a href="#" class="item">
+                        <a href="{{ route('company_edit', ['id' => $currentCompany->id]) }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">会社基本情報変更</div>
