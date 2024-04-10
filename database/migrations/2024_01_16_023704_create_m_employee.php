@@ -133,6 +133,7 @@ return new class extends Migration {
             $table->date('employment_start_date')->nullable()->comment('雇用開始年月日');
             $table->date('employment_end_date')->nullable()->comment('雇用終了年月日');
             $table->integer('role_id')->default(100)->comment('権限コード');
+            $table->string('icon_path', 255)->nullable()->comment('アイコン画像');
             $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
             $table->timestamps();
             $table->comment('社員マスタ');
