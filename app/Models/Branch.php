@@ -24,7 +24,6 @@ class Branch extends Model
         'branch_type',
         'labor_insurance_no',
         'labor_insurance_payment_method',
-        'insurance_type_id',
         'labor_insurance_establishment_date',
         'insurance_office_no',
         'insurance_office_reference_no',

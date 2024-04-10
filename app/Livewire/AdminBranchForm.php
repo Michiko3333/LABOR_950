@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Branch;
 use Illuminate\Support\MessageBag;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -56,7 +57,6 @@ class AdminBranchForm extends Component
                 $d['br-branch_type'] = $item->branch_type;
                 $d['br-labor_insurance_no'] = $item->labor_insurance_no;
                 $d['br-labor_insurance_payment_method'] = $item->labor_insurance_payment_method;
-                $d['br-insurance_type_id'] = $item->insurance_type_id;
                 $d['br-labor_insurance_establishment_date'] = $item->labor_insurance_establishment_date;
                 $d['br-insurance_office_no'] = $item->insurance_office_no;
                 $d['br-insurance_office_reference_no'] = $item->insurance_office_reference_no;
@@ -121,8 +121,11 @@ class AdminBranchForm extends Component
         }
     }
 
-    public function remove($index)
+    public function remove($index,$branch)
     {
+        if (!empty($branch['br-id'])) {
+            Branch::destroy($branch['br-id']);
+        }
         unset($this->data[$index]);
         $this->data = array_values($this->data);
     }
@@ -146,7 +149,6 @@ class AdminBranchForm extends Component
             'br-branch_type' => 1,
             'br-labor_insurance_no' => '',
             'br-labor_insurance_payment_method' => '',
-            'br-insurance_type_id' => '',
             'br-labor_insurance_establishment_date' => '',
             'br-insurance_office_no' => '',
             'br-insurance_office_reference_no' => '',

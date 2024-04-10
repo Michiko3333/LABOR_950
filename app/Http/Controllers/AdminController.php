@@ -223,8 +223,8 @@ class AdminController extends Controller
 
     private function data_company(Request $request)
     {
-        $formmatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
-        $formmatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
+        $formatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
+        $formatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
         return [
             'name' => $request->input('name'),
             'name_kana' => $request->input('name_kana'),
@@ -236,8 +236,8 @@ class AdminController extends Controller
             'business_type' => $request->input('business_type'),
             'listed_type' => $request->input('listed_type'),
             'stock_code' => $request->input('stock_code'),
-            'founding_date' => $formmatted_founding_date,
-            'establishment_date' => $formmatted_establishment_date,
+            'founding_date' => $formatted_founding_date,
+            'establishment_date' => $formatted_establishment_date,
             'capital' => $request->input('capital'),
             'annual_sales' => $request->input('annual_sales'),
             'employee_sum' => $request->input('employee_sum'),
@@ -254,9 +254,18 @@ class AdminController extends Controller
 
     private function data_branch(Request $request, $index, $company_id)
     {
-        $formmatted_br_labor_insurance_establishment_date = $request->input('br-labor_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-labor_insurance_establishment_date')[$index])->format('Y-m-d') : null;
-        $formmatted_br_employment_insurance_establishment_date = $request->input('br-employment_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-employment_insurance_establishment_date')[$index])->format('Y-m-d') : null;
-
+        $input_date1 = $request->input('br-labor_insurance_establishment_date')[$index];
+        if (!is_null($input_date1) && strtotime($input_date1) === false) {
+            $formatted_br_labor_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+        } else {
+            $formatted_br_labor_insurance_establishment_date = $input_date1;
+        }
+        $input_date2 = $request->input('br-employment_insurance_establishment_date')[$index];
+        if (!is_null($input_date2) && strtotime($input_date2) === false) {
+            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+        } else {
+            $formatted_br_employment_insurance_establishment_date = $input_date2;
+        }
         return [
             'name' => $request->input('br-name')[$index],
             'company_id' => $company_id,
@@ -273,7 +282,7 @@ class AdminController extends Controller
             'branch_type' => $request->input('br-branch_type')[$index],
             'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],
             'labor_insurance_payment_method' => $request->input('br-labor_insurance_payment_method')[$index],
-            'labor_insurance_establishment_date' => $formmatted_br_labor_insurance_establishment_date,
+            'labor_insurance_establishment_date' => $formatted_br_labor_insurance_establishment_date,
             'insurance_office_no' => $request->input('br-insurance_office_no')[$index],
             'insurance_office_reference_no' => $request->input('br-insurance_office_reference_no')[$index],
             'pension_office_no' => $request->input('br-pension_office_no')[$index],
@@ -282,7 +291,7 @@ class AdminController extends Controller
             'pension_office_reference_no_cities' => $request->input('br-pension_office_reference_no_cities')[$index],
             'pension_office_reference_no_office' => $request->input('br-pension_office_reference_no_office')[$index],
             'employment_insurance_office_no' => $request->input('br-employment_insurance_office_no')[$index],
-            'employment_insurance_establishment_date' => $formmatted_br_employment_insurance_establishment_date,
+            'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
             'hello_work_id' => $request->input('br-hello_work_id')[$index],
             'labor_bureau_id' => $request->input('br-labor_bureau_id')[$index],
             'labor_supervision_id' => $request->input('br-labor_supervision_id')[$index],

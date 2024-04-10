@@ -167,22 +167,22 @@
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-insurance_office_no', $key)}}">
                         <label for="br-insurance_office_no">事業所番号（保険）</label>
-                        <input type="text" name="br-insurance_office_no[]" placeholder="">
+                        <input type="text" name="br-insurance_office_no[]" wire:model.live="data.{{ $key }}.br-insurance_office_no" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-insurance_office_reference_no', $key)}}">
                         <label for="br-insurance_office_reference_no">事業所整理番号（保険）</label>
-                        <input type="text" name="br-insurance_office_reference_no[]" placeholder="">
+                        <input type="text" name="br-insurance_office_reference_no[]" wire:model.live="data.{{ $key }}.br-insurance_office_reference_no" placeholder="">
                     </div>
                 </div>
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-pension_office_no', $key)}}">
                         <label for="br-pension_office_no">事業所番号（厚生年金）</label>
-                        <input type="text" name="br-pension_office_no[]" placeholder="">
+                        <input type="text" name="br-pension_office_no[]" wire:model.live="data.{{ $key }}.br-pension_office_no" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-employment_insurance_office_no', $key)}}">
                         <label for="br-employment_insurance_office_no">事業所番号（雇用保険）</label>
-                        <input type="text" name="br-employment_insurance_office_no[]" placeholder="">
+                        <input type="text" name="br-employment_insurance_office_no[]" wire:model.live="data.{{ $key }}.br-employment_insurance_office_no" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-employment_insurance_establishment_date', $key)}}">
@@ -200,15 +200,15 @@
                 <div class="three fields">
                     <div class="field {{err_bind($errs, 'br-pension_office_reference_prefecture', $key)}}">
                         <label for="br-pension_office_reference_prefecture">事業所整理記号-都道府県コード</label>
-                        <input type="text" name="br-pension_office_reference_prefecture[]" placeholder="">
+                        <input type="text" name="br-pension_office_reference_prefecture[]" wire:model.live="data.{{ $key }}.br-pension_office_reference_prefecture" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-pension_office_reference_no_cities', $key)}}">
                         <label for="br-pension_office_reference_no_cities">事業所整理記号-郡市区記号</label>
-                        <input type="text" name="br-pension_office_reference_no_cities[]" placeholder="">
+                        <input type="text" name="br-pension_office_reference_no_cities[]" wire:model.live="data.{{ $key }}.br-pension_office_reference_no_cities" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-pension_office_reference_no_office', $key)}}">
                         <label for="br-pension_office_reference_no_office">事業所整理記号-事業所記号</label>
-                        <input type="text" name="br-pension_office_reference_no_office[]" placeholder="">
+                        <input type="text" name="br-pension_office_reference_no_office[]" wire:model.live="data.{{ $key }}.br-pension_office_reference_no_office" placeholder="">
                     </div>
                 </div>
                 <div class="ui divider my-2"></div>
@@ -216,20 +216,20 @@
                 <div class="four fields">
                     <div class="field {{err_bind($errs, 'br-hello_work_id', $key)}}">
                         <label for="br-hello_work_id">公共職業安定所</label>
-                        <input type="text" name="br-hello_work_id[]" placeholder="">
+                        <input type="text" name="br-hello_work_id[]" wire:model.live="data.{{ $key }}.br-hello_work_id" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-labor_bureau_id', $key)}}">
                         <label for="br-labor_bureau_id">労働局</label>
-                        <input type="text" name="br-labor_bureau_id[]" placeholder="">
+                        <input type="text" name="br-labor_bureau_id[]" wire:model.live="data.{{ $key }}.br-labor_bureau_id" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-labor_supervision_id', $key)}}">
                         <label for="br-labor_supervision_id">労働基準監督署</label>
-                        <input type="text" name="br-labor_supervision_id[]" placeholder="">
+                        <input type="text" name="br-labor_supervision_id[]" wire:model.live="data.{{ $key }}.br-labor_supervision_id" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-pension_office_id', $key)}}">
                         <label for="br-pension_office_id">年金事務所ID</label>
-                        <input type="text" name="br-pension_office_id[]" placeholder="">
+                        <input type="text" name="br-pension_office_id[]" wire:model.live="data.{{ $key }}.br-pension_office_id" placeholder="">
                     </div>
                 </div>
             </div>
@@ -239,7 +239,7 @@
                 <div class="three fields">
                     <div class="field {{err_bind($errs, 'br-start_date_of_month', $key)}}">
                         <label for="br-start_date_of_month">月</label>
-                        <input type="text" name="br-start_date_of_month[]" placeholder="">
+                        <input type="text" name="br-start_date_of_month[]" wire:model.live="data.{{ $key }}.br-start_date_of_month" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-start_days_of_week', $key)}}">
@@ -255,64 +255,64 @@
 
                     <div class="field {{err_bind($errs, 'br-start_time_of_day', $key)}}">
                         <label for="br-start_time_of_day">日</label>
-                        <input type="text" name="br-start_time_of_day[]" placeholder="">
+                        <input type="text" name="br-start_time_of_day[]" wire:model.live="data.{{ $key }}.br-start_time_of_day" placeholder="">
                     </div>
                 </div>
                 <h4>就労時間設定</h4>
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-work_time_start', $key)}}">
                         <label for="br-work_time_start">就業開始</label>
-                        <input type="text" name="br-work_time_start[]" placeholder="">
+                        <input type="text" name="br-work_time_start[]" wire:model.live="data.{{ $key }}.br-work_time_start" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-work_time_end', $key)}}">
                         <label for="br-work_time_end">就業終了</label>
-                        <input type="text" name="br-work_time_end[]" placeholder="">
+                        <input type="text" name="br-work_time_end[]" wire:model.live="data.{{ $key }}.br-work_time_end" placeholder="">
                     </div>
                 </div>
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-agreed_hours_year', $key)}}">
                         <label for="br-agreed_hours_year">所定労働時間(年)</label>
-                        <input type="text" name="br-agreed_hours_year[]" placeholder="">
+                        <input type="text" name="br-agreed_hours_year[]" wire:model.live="data.{{ $key }}.br-agreed_hours_year" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-agreed_hours_month', $key)}}">
                         <label for="br-agreed_hours_month">所定労働時間(月)</label>
-                        <input type="text" name="br-agreed_hours_month[]" placeholder="">
+                        <input type="text" name="br-agreed_hours_month[]" wire:model.live="data.{{ $key }}.br-agreed_hours_month" placeholder="">
                     </div>
                 </div>
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-agreed_hours_week', $key)}}">
                         <label for="br-agreed_hours_week">所定労働時間(週)</label>
-                        <input type="text" name="br-agreed_hours_week[]" placeholder="">
+                        <input type="text" name="br-agreed_hours_week[]" wire:model.live="data.{{ $key }}.br-agreed_hours_week" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-agreed_hours_day', $key)}}">
                         <label for="br-agreed_hours_day">所定労働時間(日)</label>
-                        <input type="text" name="br-agreed_hours_day[]" placeholder="">
+                        <input type="text" name="br-agreed_hours_day[]" wire:model.live="data.{{ $key }}.br-agreed_hours_day" placeholder="">
                     </div>
                 </div>
                 <h4>休日設定</h4>
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-working_days_yearly', $key)}}">
                         <label for="br-working_days_yearly">労働(年間)</label>
-                        <input type="text" name="br-working_days_yearly[]" placeholder="">
+                        <input type="text" name="br-working_days_yearly[]" wire:model.live="data.{{ $key }}.br-working_days_yearly" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-working_days_monthly', $key)}}">
                         <label for="br-working_days_monthly">労働(月間)</label>
-                        <input type="text" name="br-working_days_monthly[]" placeholder="">
+                        <input type="text" name="br-working_days_monthly[]" wire:model.live="data.{{ $key }}.br-working_days_monthly" placeholder="">
                     </div>
                 </div>
 
                 <div class="three fields">
                     <div class="field {{err_bind($errs, 'br-holiday_yearly', $key)}}">
                         <label for="br-holiday_yearly">休日(年間)</label>
-                        <input type="text" name="br-holiday_yearly[]" placeholder="">
+                        <input type="text" name="br-holiday_yearly[]" wire:model.live="data.{{ $key }}.br-holiday_yearly" placeholder="">
                     </div>
 
                     <div class="field {{err_bind($errs, 'br-hoiday_monthly', $key)}}">
                         <label for="br-holiday_monthly">休日(月間)</label>
-                        <input type="text" name="br-holiday_monthly[]" placeholder="">
+                        <input type="text" name="br-holiday_monthly[]" wire:model.live="data.{{ $key }}.br-holiday_monthly" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-work_style_type', $key)}}">
                         <label for="br-work_style_type">体制区分</label>
@@ -329,16 +329,16 @@
                 <div class="two fields">
                     <div class="field {{err_bind($errs, 'br-holiday_legal', $key)}}">
                         <label for="br-holiday_legal">休日内容(法定休日)</label>
-                        <input type="text" name="br-holiday_legal[]" placeholder="">
+                        <input type="text" name="br-holiday_legal[]" wire:model.live="data.{{ $key }}.br-holiday_legal" placeholder="">
                     </div>
                     <div class="field {{err_bind($errs, 'br-holiday_not_legal', $key)}}">
                         <label for="br-holiday_not_logal">休日内容(法定休日以外)</label>
-                        <input type="text" name="br-holiday_not_logal[]" placeholder="">
+                        <input type="text" name="br-holiday_not_logal[]" wire:model.live="data.{{ $key }}.br-holiday_not_logal" placeholder="">
                     </div>
                 </div>
                 @if($key > 0)
                 <div style="text-align: right;">
-                    <button class="ui negative button" type="button" wire:click="remove({{ $key }})">
+                    <button class="ui negative button" type="button" wire:click="remove({{ $key }}, {{ json_encode($data[$key]) }})">
                         この事業所を削除
                     </button>
                 </div>

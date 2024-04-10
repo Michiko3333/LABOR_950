@@ -64,7 +64,7 @@
                                 <div class="header">会社基本情報変更</div>
                             </div>
                         </a>
-                        <a href="#" class="item">
+                        <a href="{{ route('branch') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">支店・営業所の追加、削除</div>

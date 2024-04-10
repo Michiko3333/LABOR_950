@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminCompanyUpdateRequest extends FormRequest
+class BranchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,28 +22,6 @@ class AdminCompanyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255',
-            'name_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
-            'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
-            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9]+$/',
-            'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'company_type_id' => 'integer',
-            'license_no' => 'nullable|string|max:255',
-            'business_type' => 'integer',
-            'listed_type' => 'nullable|integer',
-            'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'capital' => 'nullable|integer',
-            'annual_sales' => 'nullable|integer',
-            'employee_sum' => 'nullable|integer',
-            'qualification' => 'nullable|string',
-            'authorized_shares' => 'nullable|integer',
-            'issued_shares' => 'nullable|integer',
-            'supplier_company' => 'nullable|string|max:255',
-            'outsourcing_company' => 'nullable|string|max:255',
-            'sales_company' => 'nullable|string|max:255',
-            'url' => 'nullable|string|max:255|url',
-            'purpose' => 'string|max:255',
-            'company_division' => 'integer',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:255',
             'br-branch_type' => 'required|array',
@@ -58,8 +36,8 @@ class AdminCompanyUpdateRequest extends FormRequest
             "br-address_city.*" => 'string|max:255',
             "br-address_ward" => 'required|array',
             "br-address_ward.*" => 'string|max:255',
-            "br-address_apartment" => 'nullable|array',
-            "br-address_apartment.*" => 'nullable|string|max:255',
+            "br-address_apartment" => 'required|array',
+            "br-address_apartment.*" => 'string|max:255',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'nullable|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',
