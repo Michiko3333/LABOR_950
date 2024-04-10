@@ -43,6 +43,7 @@ use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 use App\Http\Controllers\Ledger\HealthInsuranceDependentChangeController;
 use App\Http\Controllers\CompanyDepartmentController;
+use App\Http\Controllers\LaborCompanyController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -160,4 +161,8 @@ Route::group(['middleware' => 'auth'], function () {
     // 顧客画面
     Route::get('/company/department', [CompanyDepartmentController::class, 'current_company_department_update'])->name('current_company_department_update');
     Route::post('/company/department', [CompanyDepartmentController::class, 'current_company_department_update_post'])->name('current_company_department_update_post');
+
+    Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
+    Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
+
 });

@@ -52,12 +52,17 @@
                 <button id="company_select_submit" class="ui primary submit button" disabled><i
                         class="home icon"></i>ホームへ進む</button>
             </div>
-            @if ($user->role_id === 999)
             <div class="ui divider"></div>
             <h2 class="slideY">または</h2>
+            @if ($user->role_id === 999)
             <div class="field btn-area slideY">
                 <button class="ui secondary submit button" type="button"
                     onclick="location.href='{{ route('admin.index') }}'"><i class="cogs icon"></i>Karte管理</button>
+            </div>
+            @elseif ($user->role_id === 500)
+            <div class="field btn-area slideY">
+                <button class="ui secondary submit button" type="button"
+                    onclick="location.href='{{ route('labor_company_update') }}'"><i class="cogs icon"></i>自社情報編集</button>
             </div>
             @endif
         </form>

@@ -249,7 +249,6 @@ class AdminController extends Controller
             'sales_company' => $request->input('sales_company'),
             'url' => $request->input('url'),
             'purpose' => $request->input('purpose'),
-            'company_division' => $request->input('company_division'),
         ];
     }
 
@@ -274,7 +273,6 @@ class AdminController extends Controller
             'branch_type' => $request->input('br-branch_type')[$index],
             'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],
             'labor_insurance_payment_method' => $request->input('br-labor_insurance_payment_method')[$index],
-            'insurance_type_id' => $request->input('br-insurance_type_id')[$index],
             'labor_insurance_establishment_date' => $formmatted_br_labor_insurance_establishment_date,
             'insurance_office_no' => $request->input('br-insurance_office_no')[$index],
             'insurance_office_reference_no' => $request->input('br-insurance_office_reference_no')[$index],
