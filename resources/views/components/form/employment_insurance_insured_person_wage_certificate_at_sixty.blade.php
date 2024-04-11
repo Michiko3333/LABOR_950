@@ -9,8 +9,6 @@
 		if(f.wageAmountB1.value == "" && f.wageAmountB1.value == ""){
 			nullFlg = false;
 		}
-		}else{
-		}
 		return false;
 	}
 

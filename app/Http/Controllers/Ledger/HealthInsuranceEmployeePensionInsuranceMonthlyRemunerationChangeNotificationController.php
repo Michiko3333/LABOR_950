@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest;
 use Illuminate\Support\Facades\File;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 
 class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController extends Controller
@@ -24,6 +25,15 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -33,7 +43,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.health_insurance_employee_pension_insurance_monthly_remuneration_change_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri]);
+        return view('ledger.health_insurance_employee_pension_insurance_monthly_remuneration_change_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest $request)

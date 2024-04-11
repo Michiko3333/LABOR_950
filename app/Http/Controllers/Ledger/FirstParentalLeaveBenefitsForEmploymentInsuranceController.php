@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\FirstParentalLeaveBenefitsForEmploymentInsuranceRequest;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 
 use function Laravel\Prompts\text;
 
@@ -20,6 +21,15 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $japanEra = '令和';
         $year = date("Y");
@@ -33,7 +43,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet]);
+        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
     public function index_post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)

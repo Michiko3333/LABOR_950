@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\FirstWageCertificatesEmploymentInsuredAtSixtyRequest;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 
 class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
 {
@@ -18,6 +19,15 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $japanEra = '令和';
         $year = date("Y");
@@ -32,7 +42,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
             "day" => $day
         );
 
-        return view('ledger.first_wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet]);
+        return view('ledger.first_wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
     public function post(FirstWageCertificatesEmploymentInsuredAtSixtyRequest $request)

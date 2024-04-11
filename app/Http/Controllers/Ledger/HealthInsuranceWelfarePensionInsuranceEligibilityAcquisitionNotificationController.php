@@ -11,6 +11,7 @@ use App\Http\Requests\NotificationOfObtainingInsuredQualificationRequest;
 use Illuminate\Support\Facades\File;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 
 class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
@@ -27,6 +28,15 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -36,7 +46,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri'));
+        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate'));
     }
 
     public function post(NotificationOfObtainingInsuredQualificationRequest $request)

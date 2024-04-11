@@ -5,12 +5,19 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1>雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）</h1>
+        <h1 class="mt-2">雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。<br>
-        複数の様式を提出する場合は、タブから様式を切り替えてください。 
+            複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
+            </div>
+        </div>
+        @endif
 
-        <div id="ledger-step1" class="step-view active my-2">
+        <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
                 @if(session('errors'))
@@ -46,10 +53,10 @@
                                     </a>
                                 </div>
                                 <div class="ui bottom attached segment" data-tab="sample">
-                                <x-form.parental_leave_benefits_claim_form />
+                                    <x-form.parental_leave_benefits_claim_form />
                                 </div>
                                 <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
-                                <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
+                                    <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
                                 </div>
                             </div>
                         </div>
@@ -57,10 +64,15 @@
                 </div>
 
                 <div class="prevew-btn">
-                    <a id="ledger-back" class="ui button negative basic" type="button"
-                        style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
                     <button id="ledger-preview-btn" class="ui button primary" type="button"
                         style="width: 200px;">確認</button>
+                    @endif
                 </div>
             </form>
         </div>
@@ -77,7 +89,7 @@
             <div class="preview-area">
                 <div class="ui card card-shadow ledger-card">
                     <div class="content" preview-component>
-                    <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
+                        <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
                     </div>
                 </div>
             </div>
@@ -120,8 +132,8 @@
                 const company = data['company'];
                 const todaySet = data['todaySet'];
 
-                
-                
+
+
 
 
                 if ( employee.employment_insured_no !== null && employee.employment_insured_no.length == 11 ) {
@@ -197,7 +209,7 @@
                 $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code || '');
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || '');
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || '');
-                $('#J27_005F_8F5A_8F8A').val((headquarters.address_prefecture || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || ""));    
+                $('#J27_005F_8F5A_8F8A').val((headquarters.address_prefecture || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || ""));
             }
             document.getElementById('J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').value = this.value;
@@ -259,7 +271,7 @@
             document.getElementById('J200_005F_89C1_93FC_8ED2_94D4_8D86').addEventListener('input', function() {
                 document.getElementById('J82_005F_89C1_93FC_8ED2_94D4_8D86').value = this.value;
             });
-            
+
 
 
             document.getElementById('J46_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8E73_8BE6_8C53_8B79_82D1_92AC_91BA_96BC').addEventListener('input', addressPlus);

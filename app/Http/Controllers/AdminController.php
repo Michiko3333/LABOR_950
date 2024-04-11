@@ -226,6 +226,7 @@ class AdminController extends Controller
         $formatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
         $formatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
         return [
+            'company_division' => $request->input('company_division'),
             'name' => $request->input('name'),
             'name_kana' => $request->input('name_kana'),
             'name_en' => $request->input('name_en'),

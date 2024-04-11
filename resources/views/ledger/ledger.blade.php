@@ -27,6 +27,13 @@
             <i class="right chevron icon divider"></i>
             <div class="active section">帳票一覧</div>
         </div>
+        @if($certificate == false)
+            <div class="ui warning message">
+                <div class="header">
+                    電子証明書が登録されていません
+                </div>
+            </div>
+        @endif
         <h1>帳票一覧</h1>
         <livewire:ledger-list />
     </section>

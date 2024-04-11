@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -13,12 +14,21 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
 {
     public function index(Request $request)
     {
-        // 操作する会社が設定されているか
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
+
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -27,7 +37,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', ['company' => $company, 'today' => $today]);
+        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', ['company' => $company, 'today' => $today, 'certificate' => $certificate]);
     }
 
     public function post(EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest $request)
@@ -36,7 +46,6 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
         // var_dump($request->input());
         // return back()->withErrors("");
         try {
-            
             $data = [
                 // １枚目
                 'employee_employment_insured_no_4' => $request->input('employee_employment_insured_no_4'),

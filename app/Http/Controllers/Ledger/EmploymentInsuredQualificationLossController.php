@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Residential_status;
 use App\Models\Values_employee_insured_age_type;
 use App\Models\Values_employee_employment_status;
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
@@ -23,6 +24,15 @@ class EmploymentInsuredQualificationLossController extends Controller
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
         $current_employee = CurrentUser::info();
         $current_branch_id = $current_employee->branch_id;
         $current_branch = Branch::where('id', $current_branch_id)->first();
@@ -49,6 +59,7 @@ class EmploymentInsuredQualificationLossController extends Controller
             'residentials' => $residentials,
             'insuredAgeTypes' => $insuredAgeTypes,
             'employmentStatuses' => $employmentStatuses,
+            'certificate' => $certificate
         ]);
     }
 

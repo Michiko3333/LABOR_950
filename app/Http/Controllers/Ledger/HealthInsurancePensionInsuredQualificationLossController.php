@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ledger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsurancePensionInsuredQualificationRequest;
 
@@ -28,6 +29,15 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -37,7 +47,7 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
             'day' => $convertToday['japanese_calendar_result']->day,
         ];
         
-        return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri]);
+        return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
     }
 
     public function post(HealthInsurancePensionInsuredQualificationRequest $request)

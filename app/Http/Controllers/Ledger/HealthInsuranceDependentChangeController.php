@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HealthInsuranceDependentChangeWithCertificateRequest;
 use Illuminate\Http\Request;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -31,6 +32,16 @@ class HealthInsuranceDependentChangeController extends Controller
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
+
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -53,6 +64,7 @@ class HealthInsuranceDependentChangeController extends Controller
             'dataUri3' => $dataUri3,
             'today' => $today,
             'yesterday' => $yesterday,
+            'certificate' => $certificate
         ]);
     }
 

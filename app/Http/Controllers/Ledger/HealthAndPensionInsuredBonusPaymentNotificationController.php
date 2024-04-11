@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\HealthAndPensionInsuredBonusPaymentNotificationRequest;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -31,6 +32,15 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -40,7 +50,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri]);
+        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
     }
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)

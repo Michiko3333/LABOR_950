@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\SeniorEmploymentContinuationBenefitClaimFormRequest;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 
 class EmploymentInsuranceSeniorContinuationAllowanceController extends Controller
 {
@@ -18,6 +19,15 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $japanEra = '令和';
         $year = date("Y");
@@ -31,7 +41,7 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet]);
+        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
     public function index_post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)

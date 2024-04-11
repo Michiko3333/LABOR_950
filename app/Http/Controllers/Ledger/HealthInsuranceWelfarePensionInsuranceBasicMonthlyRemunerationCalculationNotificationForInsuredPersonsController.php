@@ -10,6 +10,7 @@ use App\Http\Requests\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunera
 use Illuminate\Support\Facades\File;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 
 class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController extends Controller
@@ -26,6 +27,15 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -35,7 +45,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri]);
+        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
     }
 
     public function post(HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsRequest $request)

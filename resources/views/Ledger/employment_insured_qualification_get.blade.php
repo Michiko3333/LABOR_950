@@ -1,73 +1,85 @@
 <x-layout title="帳票作成：雇用保険被保険者資格取得届">
-<section class="content">
-    @slot('header')
-    <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+    <section class="content">
+        @slot('header')
+        <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
-    <style type="text/css"></style>
-    @endslot
-    <h1>雇用保険被保険者資格取得届</h1>
-    <p>申請・届出に関する事項を入力してください。
-    </p>
-
-    <div id="ledger-step1" class="step-view active my-2">
-        <form id="ledger-form" action="" method="post">
-            @csrf
-            @if(session('errors'))
-            <div class="ui error message">
-                <div class="header">入力エラー</div>
-                <ul class="list">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        <style type="text/css"></style>
+        @endslot
+        <h1 class="mt-2">雇用保険被保険者資格取得届</h1>
+        <p>申請・届出に関する事項を入力してください。
+        </p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
             </div>
-            @endif
-            <div class="ledger-twocol my-2">
-                <div class="left-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <h2>社員選択</h2>
-                            <livewire:ledger-employee-list />
+        </div>
+        @endif
+
+        <div id="ledger-step1" class="step-view active mb-2">
+            <form id="ledger-form" action="" method="post">
+                @csrf
+                @if(session('errors'))
+                <div class="ui error message">
+                    <div class="header">入力エラー</div>
+                    <ul class="list">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="ledger-twocol my-2">
+                    <div class="left-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>社員選択</h2>
+                                <livewire:ledger-employee-list />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <x-form.employment_insured_qualification_get :residentials="$residentials"
+                                    :countries="$countries" />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="right-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <x-form.employment_insured_qualification_get :residentials="$residentials"
-                                :countries="$countries" />
-                        </div>
+
+                <div class="prevew-btn">
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
+                    <button id="ledger-preview-btn" class="ui button primary" type="button"
+                        style="width: 200px;">確認</button>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        <div id="ledger-step2" class="step-view my-2">
+            <h2 style="text-align: center;">プレビュー</h2>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                        <x-form.employment_insured_qualification_get :residentials="$residentials"
+                            :countries="$countries" />
                     </div>
                 </div>
             </div>
-
-            <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
-                <button id="ledger-preview-btn" class="ui button primary" type="button"
-                    style="width: 200px;">確認</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="ledger-step2" class="step-view my-2">
-        <h2 style="text-align: center;">プレビュー</h2>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                    <x-form.employment_insured_qualification_get :residentials="$residentials"
-                        :countries="$countries" />
-                </div>
+            <div class="submit-btn py-2">
+                <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
+                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
             </div>
         </div>
-        <div class="submit-btn py-2">
-            <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
-            <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
-        </div>
-    </div>
 
-    <script type="module">
-        $(document).ready(function () {
+        <script type="module">
+            $(document).ready(function () {
             $('#J24_005F_944E_8D86').val( '{{ old("insured_date_era", $today["era"]) }}' );
             $('#J25_005F_944E').val( '{{ old("insured_date_year", $today["year"]) }}' );
             $('#J26_005F_8C8E').val( '{{ old("insured_date_month", $today["month"]) }}' );
@@ -99,10 +111,10 @@
                     #J79_005F_89C1_93FC_8ED2_94D4_8D86, #J80_005F_9574_8B4C_9793').prop('readonly', false);
             @endif
         });
-    </script>
+        </script>
 
-    <script type="module">
-        function insertDataFromEmployee(data) {
+        <script type="module">
+            function insertDataFromEmployee(data) {
             const employee = data['employee'];
             const branch = data['branch'];
             const headquarters = data['headquarters'];
@@ -199,11 +211,11 @@
             $('#J63_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code ?? '');
         }
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
-    </script>
+        </script>
 
-    @slot('footer')
-    <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
-    @endslot
-    </script>
-</section>
+        @slot('footer')
+        <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
+        @endslot
+        </script>
+    </section>
 </x-layout>

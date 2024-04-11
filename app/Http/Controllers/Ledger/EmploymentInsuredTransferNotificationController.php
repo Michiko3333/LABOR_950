@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmploymentInsuredTransferNotificationRequest;
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 use Carbon\Carbon;
 
 
@@ -19,6 +20,15 @@ class EmploymentInsuredTransferNotificationController extends Controller
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
@@ -28,7 +38,7 @@ class EmploymentInsuredTransferNotificationController extends Controller
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today]);
+        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate]);
     }
 
     public function post(EmploymentInsuredTransferNotificationRequest $request)

@@ -1,4 +1,3 @@
-
 <x-layout title="帳票作成：">
     <section class="content">
         @slot('header')
@@ -6,9 +5,16 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1>帳票：雇用保険被保険者休業開始時賃金月額証明書</h1>
+        <h1 class="mt-2">帳票：雇用保険被保険者休業開始時賃金月額証明書</h1>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
+            </div>
+        </div>
+        @endif
 
-        <div id="ledger-step1" class="step-view active my-2">
+        <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
                 @if(session('errors'))
@@ -40,20 +46,25 @@
                 </div>
 
                 <div class="prevew-btn">
-                    <a id="ledger-back" class="ui button negative basic" type="button"
-                        style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
                     <button id="ledger-preview-btn" class="ui button primary" type="button"
                         style="width: 200px;">確認</button>
+                    @endif
                 </div>
             </form>
         </div>
 
-        <!-- プレビューエリア -->
         <div id="ledger-step2" class="step-view my-2">
             <h2 style="text-align: center;">プレビュー</h2>
             <div class="preview-area">
                 <div class="ui card card-shadow ledger-card">
-                    <div class="content" preview-component style="overflow-x: auto; overflow-y: auto; max-height: 650px;">
+                    <div class="content" preview-component
+                        style="overflow-x: auto; overflow-y: auto; max-height: 650px;">
                         <x-form.employment_insured_leave_start_amount_monthly_certificate />
                     </div>
                 </div>
@@ -80,7 +91,7 @@
                 const headquarters = data['headquarters'];
 
                 if (employee.employment_insured_no !== null) {
-                    $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4)); 
+                    $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
                     $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10));
                 }

@@ -1,17 +1,21 @@
 <x-layout title="帳票作成：">
     <section class="content">
         @slot('header')
-        <!-- 帳票用の共通CSSを読み込む -->
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
-        <!-- ページ単位で追加分CSS -->
         <style type="text/css"></style>
         @endslot
-        <h1>健康保険・厚生年金保険賞与不支給報告書／電子申請</h1>
+        <h1 class="mt-2">健康保険・厚生年金保険賞与不支給報告書／電子申請</h1>
         <p>申請・届出に関する事項を入力してください</p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
+            </div>
+        </div>
+        @endif
 
-        <!-- 入力エリア -->
-        <div id="ledger-step1" class="step-view active my-2">
+        <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
                 @if(session('errors'))
@@ -37,7 +41,7 @@
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui bottom attached segment" data-tab="sample">
-                                <x-form.bonus_non_payment_report />
+                                    <x-form.bonus_non_payment_report />
                                 </div>
                             </div>
                         </div>
@@ -45,21 +49,25 @@
                 </div>
 
                 <div class="prevew-btn">
-                    <a id="ledger-back" class="ui button negative basic" type="button"
-                        style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
                     <button id="ledger-preview-btn" class="ui button primary" type="button"
                         style="width: 200px;">確認</button>
+                    @endif
                 </div>
             </form>
         </div>
 
-        <!-- プレビューエリア -->
         <div id="ledger-step2" class="step-view my-2">
             <h2 style="text-align: center;">プレビュー</h2>
             <div class="preview-area">
                 <div class="ui card card-shadow ledger-card">
                     <div class="content" preview-component>
-                    <x-form.bonus_non_payment_report />
+                        <x-form.bonus_non_payment_report />
                     </div>
                 </div>
             </div>

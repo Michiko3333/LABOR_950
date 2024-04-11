@@ -1,19 +1,25 @@
 <x-layout title="帳票作成：">
-    <section class="content">    
+    <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
         <style>
-            .preview-area .ledger-card .content{
+            .preview-area .ledger-card .content {
                 padding: 14px;
             }
         </style>
         @endslot
-        <h1> 雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き）</h1>
-        <p>申請・届出に関する事項を入力してください。<br>
-        </p>
+        <h1 class="mt-2"> 雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き）</h1>
+        <p>申請・届出に関する事項を入力してください。</p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
+            </div>
+        </div>
+        @endif
 
-        <div id="ledger-step1" class="step-view active my-2">
+        <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
                 @if(session('errors'))
@@ -45,12 +51,17 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="prevew-btn">
-                    <a id="ledger-back" class="ui button negative basic" type="button"
-                        style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
                     <button id="ledger-preview-btn" class="ui button primary" type="button"
                         style="width: 200px;">確認</button>
+                    @endif
                 </div>
             </form>
         </div>

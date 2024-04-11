@@ -1,111 +1,119 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <x-layout title="帳票作成：健康保険被扶養者（異動）届 / 健康保険被扶養者（異動）・国民年金第3号被保険者関係届">
-<section class="content">
-    @slot('header')
-    <!-- 帳票用の共通CSSを読み込む -->
-    <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+    <section class="content">
+        @slot('header')
+        <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
-    <!-- ページ単位で追加分CSS -->
-    <style type="text/css"></style>
-    @endslot
-    <h1>帳票：健康保険被扶養者（異動）届 / 国民年金第3号被保険者関係届</h1>
-    <p>申請・届出に関する事項を入力してください。
-    </p>
-
-    <!-- 入力エリア -->
-    <div id="ledger-step1" class="step-view active my-2">
-        <form id="ledger-form" action="" method="post">
-            @csrf
-            @if(session('errors'))
-            <div class="ui error message">
-                <div class="header">入力エラー</div>
-                <ul class="list">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        <style type="text/css"></style>
+        @endslot
+        <h1 class="mt-2">帳票：健康保険被扶養者（異動）届 / 国民年金第3号被保険者関係届</h1>
+        <p>申請・届出に関する事項を入力してください。
+        </p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
             </div>
-            @endif
-            <div class="ledger-twocol my-2">
-                <div class="left-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <h2>社員選択</h2>
-                            <livewire:ledger-employee-list />
-                        </div>
-                    </div>
+        </div>
+        @endif
+
+        <div id="ledger-step1" class="step-view active mb-2">
+            <form id="ledger-form" action="" method="post">
+                @csrf
+                @if(session('errors'))
+                <div class="ui error message">
+                    <div class="header">入力エラー</div>
+                    <ul class="list">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="right-col">
-                    <div class="ui card card-shadow">
-                        <div class="content">
-                            <div class="ui top attached tabular menu">
-                                <a class="item active" data-tab="sample">
-                                健康保険被扶養者（異動）届／国民年金第３号被保険者関係届
-                                </a>
-                                <a class="item" data-tab="sample2">
-                                事業主等証明書
-                                </a>
-                                <a class="item" data-tab="sample3">
-                                医療保険者証明書
-                                </a>
-                            </div>
-                            <div class="ui bottom attached segment" data-tab="sample">
-                                <x-form.health_insurance_dependent_change :dataUri="$dataUri1"/>
-                            </div>
-                            <div class="ui bottom attached segment" data-tab="sample1" style="display: none">
-                                <x-form.employer_certificate_etc :dataUri="$dataUri2"/>
-                            </div>
-                            <div class="ui bottom attached segment" data-tab="sample2" style="display: none">
-                                <x-form.medical_insurer_certificate :dataUri="$dataUri3"/>
+                @endif
+                <div class="ledger-twocol my-2">
+                    <div class="left-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>社員選択</h2>
+                                <livewire:ledger-employee-list />
                             </div>
                         </div>
                     </div>
+                    <div class="right-col">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <div class="ui top attached tabular menu">
+                                    <a class="item active" data-tab="sample">
+                                        健康保険被扶養者（異動）届／国民年金第３号被保険者関係届
+                                    </a>
+                                    <a class="item" data-tab="sample2">
+                                        事業主等証明書
+                                    </a>
+                                    <a class="item" data-tab="sample3">
+                                        医療保険者証明書
+                                    </a>
+                                </div>
+                                <div class="ui bottom attached segment" data-tab="sample">
+                                    <x-form.health_insurance_dependent_change :dataUri="$dataUri1" />
+                                </div>
+                                <div class="ui bottom attached segment" data-tab="sample1" style="display: none">
+                                    <x-form.employer_certificate_etc :dataUri="$dataUri2" />
+                                </div>
+                                <div class="ui bottom attached segment" data-tab="sample2" style="display: none">
+                                    <x-form.medical_insurer_certificate :dataUri="$dataUri3" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prevew-btn">
+                    <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                        href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
+                    <button id="ledger-preview-btn" class="ui button primary" type="button"
+                        style="width: 200px;">確認</button>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        <div id="ledger-step2" class="step-view my-2">
+            <h2 style="text-align: center;">プレビュー</h2>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                        <x-form.health_insurance_dependent_change :dataUri="$dataUri1" />
+                    </div>
                 </div>
             </div>
-
-            <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
-                <button id="ledger-preview-btn" class="ui button primary" type="button"
-                    style="width: 200px;">確認</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- プレビューエリア -->
-    <div id="ledger-step2" class="step-view my-2">
-        <h2 style="text-align: center;">プレビュー</h2>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                    <x-form.health_insurance_dependent_change :dataUri="$dataUri1"/>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                        <x-form.employer_certificate_etc :dataUri="$dataUri2" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                    <x-form.employer_certificate_etc :dataUri="$dataUri2"/>
+            <div class="preview-area">
+                <div class="ui card card-shadow ledger-card">
+                    <div class="content" preview-component>
+                        <x-form.medical_insurer_certificate :dataUri="$dataUri3" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="preview-area">
-            <div class="ui card card-shadow ledger-card">
-                <div class="content" preview-component>
-                    <x-form.medical_insurer_certificate :dataUri="$dataUri3"/>
-                </div>
+            <div class="submit-btn py-2">
+                <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
+                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
             </div>
         </div>
-        <div class="submit-btn py-2">
-            <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
-            <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
-        </div>
-    </div>
 
 
-    <!-- 会社情報のセット ここから -->
-    <script type="module">
-        $(document).ready(function () {
+        <!-- 会社情報のセット ここから -->
+        <script type="module">
+            $(document).ready(function () {
             $('#N4_P1').val( '{{ old("submission_year", $today["year"]) }}' );
             $('#N5_P1').val( '{{ old("submission_month", $today["month"]) }}' );
             $('#N6_P1').val( '{{ old("submission_date", $today["date"]) }}' );
@@ -119,12 +127,12 @@
             $('#N32_1').val( '{{ old("submission_month", $today["month"]) }}' );
             $('#N33_1').val( '{{ old("submission_date", $today["date"]) }}' );
         });
-    </script>
-    <!-- 会社情報のセット ここまで -->
+        </script>
+        <!-- 会社情報のセット ここまで -->
 
-    <!-- 従業員・支店情報のセット ここから -->
-    <script type="module">
-        function insertDataFromEmployee(data) {
+        <!-- 従業員・支店情報のセット ここから -->
+        <script type="module">
+            function insertDataFromEmployee(data) {
             const employee = data['employee'];
             const branch = data['branch'];
             const spouse = data['spouse'];
@@ -453,14 +461,14 @@
         $('#N19_P1').on('input', function() {
             $('#N30').val($(this).val());
         });
-    </script>
-    <!-- 従業員・支店情報のセット ここまで -->
+        </script>
+        <!-- 従業員・支店情報のセット ここまで -->
 
-    @slot('footer')
-    <!-- 帳票用の共通jsを読み込む -->
-    <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        @slot('footer')
+        <!-- 帳票用の共通jsを読み込む -->
+        <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.ui.tabular.menu .item');
             const contents = document.querySelectorAll('.ui.bottom.attached.segment');
             tabs.forEach((tab, index) => {
@@ -472,9 +480,9 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+        </script>
+        <script>
+            $(document).ready(function() {
             $("#ledger-form").submit(function(event) {
                 if (!$("#certificate_checkbox_1").prop("checked")) {
                     $("#sample1 input").removeAttr("name");
@@ -486,7 +494,7 @@
                 }
             });
         });
-    </script>
-    @endslot
-</section>
+        </script>
+        @endslot
+    </section>
 </x-layout>

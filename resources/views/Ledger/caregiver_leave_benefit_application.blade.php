@@ -5,12 +5,19 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1>介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請</h1>
+        <h1 class="mt-2">介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請</h1>
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
+        @if($certificate == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                電子証明書が登録されていません
+            </div>
+        </div>
+        @endif
 
-        <div id="ledger-step1" class="step-view active my-2">
+        <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
                 @if(session('errors'))
@@ -59,8 +66,13 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
+                    @if($certificate == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
+                    @else
                     <button id="ledger-preview-btn" class="ui button primary" type="button"
                         style="width: 200px;">確認</button>
+                    @endif
                 </div>
             </form>
         </div>

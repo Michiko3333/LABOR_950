@@ -8,17 +8,26 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest;
 
 use App\Models\CurrentUser;
+use App\Models\Certificate;
 
 class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        // 操作する会社が設定されているか
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
 
         $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        $certificate = Certificate::where('company_id', $companyId)
+            ->where('delete_flg', 0)
+            ->first();
+        if($certificate !== null) {
+            $certificate = true;
+        } else {
+            $certificate = false;
+        }
 
         $japanEra = '令和';
         $year = date("Y");
@@ -35,7 +44,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
 
         // $prefectures = $this->getPrefectures();
 
-        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet]); // , 'prefectures' => $prefectures
+        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]); // , 'prefectures' => $prefectures
     }
 
     public function index_post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)
