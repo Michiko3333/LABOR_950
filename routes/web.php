@@ -20,7 +20,6 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\DepartmentInforController;
-use App\Http\Controllers\Ledger\CertificateController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
 use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
@@ -113,13 +112,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
     Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
-    Route::post('admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
+    Route::post('/admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
-    Route::post('admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
-    Route::post('admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
+    Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
+    Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
 
     // Ledger
-    Route::get('/ledger/certificate', [CertificateController::class, 'index'])->name('ledger.certificate');
+    Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
+    Route::post('/ledger/api/disconnect', [EgovController::class, 'disconnect'])->name('egov.disconnect');
+    Route::get('/ledger/egov', [EgovController::class, 'index'])->name('ledger.egov');
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
     Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');

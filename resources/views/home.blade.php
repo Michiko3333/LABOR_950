@@ -132,10 +132,10 @@
                         </a>
                     </div>
                     <div class="ui middle aligned selection list">
-                        <a href="{{ route('ledger.certificate') }}" class="item">
+                        <a href="{{ route('ledger.egov') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
-                                <div class="header">電子証明書登録</div>
+                                <div class="header">e-Gov連携</div>
                             </div>
                         </a>
                     </div>

@@ -32,12 +32,11 @@
         @endif
         @if ($view == 2)
         <div class="verified">
-            <i class="check icon massive"></i>
+            <i class="check icon massive positive"></i>
             <p>電子証明書設定済</p>
             <button class="ui button small basic negative" style="margin-top: 1em;" type="button"
                 wire:click='remove'>削除</button>
         </div>
         @endif
     </div>
-</div>
 </div>

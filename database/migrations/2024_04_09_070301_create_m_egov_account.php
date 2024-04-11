@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('m_egov_account', function (Blueprint $table) {
             $table->id()->autoIncrement()->comment('egovアカウントID');
             $table->integer('company_id')->comment('会社ID');
-            $table->string('access_token')->nullable()->comment('アクセストークン');
-            $table->string('refresh_token')->nullable()->comment('リフレッシュトークン');
+            $table->text('access_token')->nullable()->comment('アクセストークン');
+            $table->text('refresh_token')->nullable()->comment('リフレッシュトークン');
             $table->string('code')->nullable()->comment('コード');
             $table->tinyInteger('delete_flg')->nullable()->default(0)->comment('削除フラグ');
             $table->timestamps();

@@ -40,7 +40,8 @@ class Egov
     public static function getAuth(array $option = []): string
     {
         $client = new AuthAPI(self::$config);
-        return $client->getAuth();
+
+        return $client->getAuth($option);
     }
 
     public static function getToken($code, $code_verifier = ''): Response|null
