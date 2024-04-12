@@ -56,49 +56,6 @@
 		return false;
 	}
 
-	function zokushiCheck1(f){
-
-		var chk_cnt = 0;
-		var iArray = new Array("calculation_duration_start_month2_1","calculation_duration_start_day2_1","calculation_duration_end_month2_1","calculation_duration_end_day2_1");
-
-		for (i=0; i<iArray.length; i++) {
-			if ("" != f.elements[iArray[i]].value) {
-				chk_cnt++;
-			}
-		}
-
-		if (0 < chk_cnt) {
-			f.J111_check_flg.value = "1";
-		} else {
-			f.J111_check_flg.value = "";
-		}
-	}
-
-	function zokushiCheck2(f){
-
-		var chk_cnt = 0;
-		var trimStr;
-		var iArray = new Array("calculation_duration_start_month2_","calculation_duration_start_day2_","calculation_duration_end_month2_","calculation_duration_end_day2_","calculation_duration_basic_days2_"
-								,"payment_duration_start_month2_","payment_duration_start_day2_","payment_duration_end_month2_","payment_duration_end_day2_","payment_duration_basic_days2_"
-								,"wage_amount_A2_","wage_amount_B2_","total_wages2_","wage_note2_");
-
-		for (i=0; i<iArray.length; i++) {
-			for (j=2; j<=15; j++) {
-				// 全角スペース、半角スペース、改行、タブのみの場合は入力なしとみなす
-				trimStr = f.elements[iArray[i]+j].value.replace(/\s|　/g,"");
-				if ("" != trimStr) {
-					chk_cnt++;
-				}
-			}
-		}
-
-		if (0 < chk_cnt) {
-			f.J112_check_flg2.value = "1";
-		} else {
-			f.J112_check_flg2.value = "";
-		}
-	}
-
 </script>
 
 <style>
@@ -1564,7 +1521,5 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:396px; top:1485px; width:45px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">者の氏名</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:60px; top:2395px; width:46px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用期間</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:53px; top:1383px; width:68px; height:23px; text-align:center; font-size:21px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">[続紙]</SPAN>
-<SPAN><INPUT type = "hidden" id="J111_005F_check_005F_flg" name="check_flg" value=""></SPAN>
-<SPAN><INPUT type = "hidden" id="J112_005F_check_005F_flg2" name="check_flg2" value=""></SPAN>
 
 </DIV>

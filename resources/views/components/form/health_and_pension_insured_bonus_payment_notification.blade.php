@@ -19,12 +19,6 @@
   
     <div class="egovui-application-form-grid pb2">
       <div class="egovui-application-form-input-area">
-        <input type="hidden" name="htmlFlag" id="htmlFlag" value="false">
-        <input type="hidden" name="html5Flag"id="html5Flag" value="true">
-        <input type="hidden" name="partAmendItemColor" >
-        <input type="hidden" name="errItemColor" value="#FF8888">
-        <input type="hidden" name="errItemStr" id="errItemStr" >
-        <input type="hidden" name="currentPartAmendTagXpaths" id="currentPartAmendTagXpaths" >
           <script type="text/javascript">
             null
           </script>
