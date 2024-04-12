@@ -46,7 +46,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
         return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function index_post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)
+    public function post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)
     {
         try {
             $data = [

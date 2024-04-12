@@ -46,7 +46,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function index_post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
+    public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
     {
         try {
             return $request;

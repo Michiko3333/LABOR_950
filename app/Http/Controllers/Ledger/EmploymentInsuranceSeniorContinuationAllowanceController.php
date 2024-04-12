@@ -44,7 +44,7 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
         return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function index_post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
+    public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
     {
         try {
             $data = [

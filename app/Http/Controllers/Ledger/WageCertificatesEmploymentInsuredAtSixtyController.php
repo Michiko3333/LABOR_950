@@ -43,7 +43,7 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
         return view('ledger.wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function index_post(WageCertificatesEmploymentInsuredAtSixtyRequest $request)
+    public function post(WageCertificatesEmploymentInsuredAtSixtyRequest $request)
     {
         try {
             $data = [

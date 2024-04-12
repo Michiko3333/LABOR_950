@@ -47,7 +47,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]); // , 'prefectures' => $prefectures
     }
 
-    public function index_post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)
+    public function post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)
     {
         try {
             $data = [

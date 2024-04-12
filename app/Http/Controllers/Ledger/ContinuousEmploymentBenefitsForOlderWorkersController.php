@@ -44,7 +44,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
         return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function index_post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
+    public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
     {
         try {
             $data = [
