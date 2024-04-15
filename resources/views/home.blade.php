@@ -76,6 +76,12 @@
                                 <div class="header">組織・部署マスタ変更</div>
                             </div>
                         </a>
+                        <a href="{{ route('managerial_position') }}" class="item">
+                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                            <div class="content">
+                                <div class="header">役職マスタ登録</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

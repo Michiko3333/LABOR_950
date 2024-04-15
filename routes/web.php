@@ -45,6 +45,7 @@ use App\Http\Controllers\CompanyDepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
+use App\Http\Controllers\ManagerialPositionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -173,4 +174,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
     Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
+
+    Route::get('/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
+    Route::post('/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
 });
