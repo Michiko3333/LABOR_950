@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string('address_city', 255)->nullable()->comment('住所（市区町村）');
             $table->string('address_ward', 255)->nullable()->comment('住所（丁目・番地）');
             $table->string('address_apartment', 255)->nullable()->comment('住所（アパート・マンション名等）');
+            $table->string('address_city_kana', 255)->nullable()->comment('住所（市区町村）カナ');
+            $table->string('address_ward_kana', 255)->nullable()->comment('住所（丁目・番地）カナ');
+            $table->string('address_apartment_kana', 255)->nullable()->comment('住所（アパート・マンション名等）カナ');
+            $table->string('fax', 20)->nullable()->comment('連絡先FAX番号（ハイフン有り）');
+            $table->string('mail_address', 255)->nullable()->comment('メールアドレス');
             $table->string('name', 255)->nullable()->comment('名称');
             $table->string('tel_area_code', 10)->nullable()->comment('電話番号（市外局番）');
             $table->string('tel_city_code', 10)->nullable()->comment('電話番号（市内局番）');

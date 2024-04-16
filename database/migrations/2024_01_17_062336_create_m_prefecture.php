@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement()->comment('都道府県ID');
             $table->string('prefecture_code', 2)->comment('都道府県コード');
             $table->string('name', 255)->nullable()->comment('都道府県名');
+            $table->string('name_kana', 255)->nullable()->comment('都道府県名（カナ）');
             $table->timestamps();
             $table->comment('都道府県マスタ');
         });
