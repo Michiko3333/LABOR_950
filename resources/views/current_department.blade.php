@@ -1,4 +1,4 @@
-<x-layout title="部署マスタ編集" useRightContent="{{false}}">
+<x-layout title="部署マスタ編集" useRightContent="{{true}}">
     @slot('header')
     <style type="text/css">
         ul.list-table {

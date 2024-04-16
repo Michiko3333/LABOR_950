@@ -60,6 +60,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/** ヘルスチェック */
+Route::group(['prefix' => 'healthcheck'], function () {
+    Route::get('/', function () {
+        return response()->json([]);
+    });
+});
+
+
 /** 未ログイン */
 
 Route::get('/login', [LoginController::class, 'index'])->name('auth.login');

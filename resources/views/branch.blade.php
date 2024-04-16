@@ -1,4 +1,4 @@
-<x-layout title="支店・営業所の追加、削除" useRightContent="{{false}}">
+<x-layout title="支店・営業所の追加、削除" useRightContent="{{true}}">
     @slot('header')
     <style type="text/css">
         .calendar-container {
