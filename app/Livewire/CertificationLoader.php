@@ -53,7 +53,6 @@ class CertificationLoader extends Component
         $path = $this->cert_file->store(path: 'tmp_loading_pfx');
         $file = Storage::get($path);
         $result = $this->checkKey($file, $this->cert_pass);
-
         if ($result) {
             $this->isError = false;
             $company = CurrentUser::currentCompany()->first();

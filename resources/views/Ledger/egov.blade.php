@@ -70,13 +70,13 @@
         <h1>e-Gov連携</h1>
         <div class="ui card card-shadow" style="width: 100%; max-width: 512px; height:290px;">
             <div id="egovConnect" class="content">
-                <div id="notConnected" class="verified {{$isConnected == 1 ? 'hide' : ''}}">
+                <div id="notConnected" class="verified {{ $isConnected == 1 ? 'hide' : '' }}">
                     <i class="times icon massive negative"></i>
                     <p>アカウントが連携されていません</p>
                     <button id="connectBtn" class="ui button small primary" style="margin-top: 1em;"
                         type="button">連携する</button>
                 </div>
-                <div id="connected" class="verified {{$isConnected == 1 ? '' : 'hide'}}">
+                <div id="connected" class="verified {{ $isConnected == 1 ? '' : 'hide' }}">
                     <i class="check icon massive positive"></i>
                     <p>アカウント連携済</p>
                     <button id="disconnectBtn" class="ui button small basic negative" style="margin-top: 1em;"
@@ -91,11 +91,13 @@
                 target="_blank">こちら<i class="window restore outline icon small"></i></a>をご覧ください</p>
         <livewire:certification-loader />
     </section>
-    a:{{$isConnected}}
     <script type="module">
         $('#connectBtn').click(function() {
             $('#connectBtn').prop('disabled', true);
-            $.ajax({url:'{{ route("egov.auth") }}', type:'post'}).then(d => {
+            $.ajax({
+                url: '{{ route('egov.auth') }}',
+                type: 'post'
+            }).then(d => {
                 if (d) {
                     const url = d.url;
                     const authWindow = window.open(url, null, 'width=512,height=512');
@@ -114,11 +116,13 @@
         });
 
         $('#disconnectBtn').click(function() {
-            $.ajax({url:'{{ route("egov.disconnect") }}', type:'post'}).then(_ => {
+            $.ajax({
+                url: '{{ route('egov.disconnect') }}',
+                type: 'post'
+            }).then(_ => {
                 $('#notConnected').removeClass('hide');
                 $('#connected').addClass('hide');
             });
         });
-
     </script>
 </x-layout>

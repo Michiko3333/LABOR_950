@@ -1,10 +1,10 @@
 <x-layout title="帳票作成：">
     @slot('header')
-    <!-- 帳票用の共通CSSを読み込む -->
-    <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+        <!-- 帳票用の共通CSSを読み込む -->
+        <link rel="stylesheet" href="{{ asset('/css/ledger-form.css') }}">
 
-    <!-- ページ単位で追加分CSS -->
-    <style type="text/css"></style>
+        <!-- ページ単位で追加分CSS -->
+        <style type="text/css"></style>
     @endslot
     <h1>帳票：雇用保険適用事業所設置届</h1>
     <p>帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト帳票の説明テキスト
@@ -15,15 +15,15 @@
     <div id="ledger-step1" class="step-view active my-2">
         <form id="ledger-form" action="" method="post">
             @csrf
-            @if(session('errors'))
-            <div class="ui error message">
-                <div class="header">入力エラー</div>
-                <ul class="list">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+            @if (session('errors'))
+                <div class="ui error message">
+                    <div class="header">入力エラー</div>
+                    <ul class="list">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
             <div class="ledger-twocol my-2">
                 <div class="left-col">
@@ -31,6 +31,12 @@
                         <div class="content">
                             <h2>社員選択</h2>
                             <livewire:ledger-employee-list />
+                        </div>
+                    </div>
+                    <div class="ui card card-shadow">
+                        <div class="content">
+                            <h2>添付ファイル</h2>
+                            <x-ledger-attachment />
                         </div>
                     </div>
                 </div>
@@ -44,8 +50,8 @@
             </div>
 
             <div class="prevew-btn">
-                <a id="ledger-back" class="ui button negative basic" type="button"
-                    style="width: 200px;" href="{{ route('ledger.index') }}">戻る</a>
+                <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
+                    href="{{ route('ledger.index') }}">戻る</a>
                 <button id="ledger-preview-btn" class="ui button primary" type="button"
                     style="width: 200px;">確認</button>
             </div>
@@ -71,9 +77,9 @@
 
     <!-- 会社情報のセット ここから -->
     <script type="module">
-        $(document).ready(function () {
+        $(document).ready(function() {
             // 例：
-            $('#J59_005F_9640_906C_94D4_8D86').val('{{$company->company_no}}');
+            $('#J59_005F_9640_906C_94D4_8D86').val('{{ $company->company_no }}');
         });
     </script>
     <!-- 会社情報のセット ここまで -->
@@ -92,12 +98,16 @@
         }
 
         // 選択イベントを通してlivewireからデータを受け取る
-        Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
+        Livewire.on('onSelectEmployee', ({
+            data
+        }) => {
+            insertDataFromEmployee(data)
+        });
     </script>
     <!-- 従業員・支店情報のセット ここまで -->
 
     @slot('footer')
-    <!-- 帳票用の共通jsを読み込む -->
-    <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
+        <!-- 帳票用の共通jsを読み込む -->
+        <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
     @endslot
 </x-layout>
