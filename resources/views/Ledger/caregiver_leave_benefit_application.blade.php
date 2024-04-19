@@ -156,7 +156,6 @@
             });
         });
         </script>
-
         <script type="module">
             function insertDataFromEmployee(data) {
             const employee = data['employee'];

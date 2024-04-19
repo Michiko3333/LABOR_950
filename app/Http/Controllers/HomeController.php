@@ -96,4 +96,9 @@ class HomeController extends Controller
             ])->onlyInput('company_select');
         }
     }
+
+    public function test(Request $request)
+    {
+        return view('test');
+    }
 }

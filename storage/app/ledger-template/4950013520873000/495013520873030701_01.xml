@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataRoot>
+	<様式ID>495013520873030701</様式ID>
+	<様式バージョン>0001</様式バージョン>
+	<STYLESHEET>495013520873030701.xsl</STYLESHEET>
+	<様式コピー情報>0</様式コピー情報>
+	<Doctype>1</Doctype>
+<A-330452-001_1>
+	<標題x健康保険の別>title_different_types_of_health_insurance</標題x健康保険の別>
+	<標題x船員保険の別>title_different_types_of_seafarers_insurance</標題x船員保険の別>
+	<標題x厚生年金保険の別>title_types_of_welfare_pension_insurance</標題x厚生年金保険の別>
+	<提出年月日>
+		<年>today_japan_era_year</年>
+		<月>today_japan_era_month</月>
+		<日>today_japan_era_day</日>
+	</提出年月日>
+	<事業所整理記号x都道府県コード>business_establishment_code_prefecture_code</事業所整理記号x都道府県コード>
+	<事業所整理記号x郡市区記号>office_arrangement_code_county_city_ward_code</事業所整理記号x郡市区記号>
+	<事業所整理記号x事業所記号>office_reference_symbol_office_symbol</事業所整理記号x事業所記号>
+	<船舶所有者整理記号x船保事務所略称名>ship_owner_reference_code_ship_insurance_office_abbreviation_name</船舶所有者整理記号x船保事務所略称名>
+	<船舶所有者整理記号x記号>ship_owner_arrangement_symbol_symbol</船舶所有者整理記号x記号>
+	<事業所番号x告知番号>office_number_notification_number</事業所番号x告知番号>
+	<事業所所在地x郵便番号x親番号>post_code_former</事業所所在地x郵便番号x親番号>
+	<事業所所在地x郵便番号x子番号>post_code_latter</事業所所在地x郵便番号x子番号>
+	<事業所所在地x船舶所有者住所>business_location_ship_owner_address</事業所所在地x船舶所有者住所>
+	<事業所名称x船舶所有者氏名>business_name_name_of_ship_owner</事業所名称x船舶所有者氏名>
+	<事業主氏名x代表者氏名>business_owner_name_representative_name</事業主氏名x代表者氏名>
+	<電話番号x市外局番>branch_tel_area_code</電話番号x市外局番>
+	<電話番号x局番>branch_tel_city_code</電話番号x局番>
+	<電話番号x番号>branch_tel_subscriber_code</電話番号x番号>
+	<社会保険労務士の提出代行者名>labor_consultant_name</社会保険労務士の提出代行者名>
+	<賞与の名称>bonus_name</賞与の名称>
+	<賞与支払x予定x年月>
+		<元号>era_name</元号>
+		<年>scheduled_year_of_bonus_payment</年>
+		<月>scheduled_month_of_bonus_payment</月>
+	</賞与支払x予定x年月>
+	<支給の状況>payment_status</支給の状況>
+	<変更後の賞与支払予定月1>changed_bonus_payment_schedule_month1</変更後の賞与支払予定月1>
+	<変更後の賞与支払予定月2>changed_bonus_payment_schedule_month2</変更後の賞与支払予定月2>
+	<変更後の賞与支払予定月3>changed_bonus_payment_schedule_month3</変更後の賞与支払予定月3>
+	<変更後の賞与支払予定月4>changed_bonus_payment_schedule_month4</変更後の賞与支払予定月4>
+	<Xmit>0</Xmit>
+</A-330452-001_1>
+</DataRoot>

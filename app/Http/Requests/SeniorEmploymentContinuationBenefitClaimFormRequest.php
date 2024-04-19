@@ -14,6 +14,36 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['name'])) {
+            $data['name'] = mb_convert_kana($data['name'], 'S');
+        }
+        if (isset($data['name_kana'])) {
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        }
+        if (isset($data['new_name'])) {
+            $data['new_name'] = mb_convert_kana($data['new_name'], 'S');
+        }
+        if (isset($data['new_name_kana'])) {
+            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
+        }
+        if (isset($data['branch_name'])) {
+            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
+            $data['branch_name'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['branch_name']);
+        }
+        if (isset($data['headquarters_address'])) {
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['headquarters_address']);
+        }
+        if (isset($data['agent_name'])) {
+            $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
+        }
+
+        return $data;
+    }
     /**
      * Get the validation rules that apply to the request.
      *

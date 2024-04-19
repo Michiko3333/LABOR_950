@@ -46,6 +46,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
     }
 
     public function post(FirstWageCertificatesEmploymentInsuredAtSixtyRequest $request)
+
     {
         try {
             $data = [
@@ -491,7 +492,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'specialNoteOnWages2_01' => $request->input('specialNoteOnWages2_01'),
                 'J102_check_flg' => $request->input('J102_check_flg'),
             ];
-            return view('admin.company', ['send_data' => $data]);
+            return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

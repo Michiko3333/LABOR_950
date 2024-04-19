@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\SeniorEmploymentContinuationBenefitClaimFormRequest;
-
 use App\Models\CurrentUser;
+use Carbon\Carbon;
+use Illuminate\Mail\Attachment;
+use App\EgovAPI\MixXmlEgovSigner;
+use App\EgovAPI\Signer;
 use App\Models\Certificate;
 
 class EmploymentInsuranceSeniorContinuationAllowanceController extends Controller
@@ -44,7 +47,8 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
         return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
+    // public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
+    public function post(Request $request)
     {
         try {
             $data = [
@@ -108,6 +112,12 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
                 'payer_japan_era3' => $request->input('payer_japan_era3'),
                 'today_japan_era' => $request->input('today_japan_era'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

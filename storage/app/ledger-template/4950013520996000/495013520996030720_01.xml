@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataRoot>
+	<様式ID>495013520996030720</様式ID>
+	<様式バージョン>1</様式バージョン>
+	<STYLESHEET>495013520996030720.xsl</STYLESHEET>
+	<様式コピー情報>0</様式コピー情報>
+	<Doctype>1</Doctype>
+	<A-330476-002_1>
+		<配偶者の個人番号または基礎年金番号>spouse_mynumber_card_no</配偶者の個人番号または基礎年金番号>
+		<配偶者の氏名>spouse_name</配偶者の氏名>
+		<配偶者の生年月日>
+			<元号>spouse_birthday_era_kanji</元号>
+			<年>spouse_birthday_year</年>
+			<月>spouse_birthday_month</月>
+			<日>spouse_birthday_day</日>
+		</配偶者の生年月日>
+		<個人番号または基礎年金番号>mynumber_card_no</個人番号または基礎年金番号>
+		<被保険者氏名xカナx>name_kana</被保険者氏名xカナx>
+		<被保険者氏名x漢字x>name</被保険者氏名x漢字x>
+		<被保険者の生年月日>
+			<元号>birthday_era</元号>
+			<年>birthday_year</年>
+			<月>birthday_month</月>
+			<日>birthday_day</日>
+		</被保険者の生年月日>
+		<郵便番号x親番号x>headquarters_post_code_former</郵便番号x親番号x>
+		<郵便番号x子番号x>headquarters_post_code_latter</郵便番号x子番号x>
+		<所在地>headquarters_address</所在地>
+		<名称>company_name</名称>
+		<事業主氏名>headquarters_representative</事業主氏名>
+		<電話番号>
+			<市外局番>headquarters_tel_area_code</市外局番>
+			<局番>headquarters_tel_city_code</局番>
+			<番号>headquarters_tel_subscriber_code</番号>
+		</電話番号>
+		<提出年月日>
+			<年>submission_year</年>
+			<月>submission_month</月>
+			<日>submission_day</日>
+		</提出年月日>
+		<社会保険労務士の提出代行者名記載欄>labor_consultant_name</社会保険労務士の提出代行者名記載欄>
+		<Xmit>0</Xmit>
+	</A-330476-002_1>
+</DataRoot>

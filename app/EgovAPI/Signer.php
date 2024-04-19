@@ -30,6 +30,7 @@ class Signer
     public function makeDir()
     {
         Storage::makeDirectory('ledger/' . $this->id);
+        Storage::makeDirectory('ledger/' . $this->id . '/zip');
     }
 
     public function removeDir()
@@ -46,11 +47,12 @@ class Signer
         return Storage::path('ledger/' . $this->id);
     }
 
-    public function run($pfx, $pass)
+    public function run($workingDirectry, $pfx, $pass)
     {
-        $cmd = 'CrossEgovSigner ' . Storage::path('ledger/' . $this->id) . ' -i ' . $pfx . ' -p ' . $pass;
+        $envEgov = $_SERVER['EGOV_SIGNER_APP'];
+        $cmd = 'dotnet ' . $envEgov . ' ' . $workingDirectry . ' -i ' . $pfx . ' -p ' . $pass;
         exec($cmd, $output, $code);
-        if ($code != 2000) {
+        if ($code != 2000 && $code != 208) {
             return false;
         }
         return true;
@@ -64,12 +66,15 @@ class Signer
         $tmpFilePath = storage_path('app/tmp/tmp_zip_' . $this->id . '.zip');
 
         if ($zip->open($tmpFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-            $files = Storage::files($folderPath);
+            $files = glob($folderPath . '/*');
 
             foreach ($files as $file) {
-                $filePath = Storage::path($file);
-                $fileName = basename($file);
-                $zip->addFile($filePath, $fileName);
+                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                if ($extension !== 'pfx') {
+                    $filePath = $file;
+                    $fileName = basename($file);
+                    $zip->addFile($filePath, $fileName);
+                }
             }
             $zip->close();
             $base64EncodedData = base64_encode(file_get_contents($tmpFilePath));

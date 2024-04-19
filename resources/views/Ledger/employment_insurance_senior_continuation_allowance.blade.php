@@ -20,6 +20,7 @@
         <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post">
                 @csrf
+                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
                 @if(session('errors'))
                 <div class="ui error message">
                     <div class="header">入力エラー</div>

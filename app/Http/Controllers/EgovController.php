@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\EgovAPI\Egov;
 use App\Models\CurrentUser;
 use App\Models\Egov_account;
+use Carbon\Carbon;
 
 class EgovController extends Controller
 {
@@ -84,5 +85,23 @@ class EgovController extends Controller
             'delete_flg' => 1
         ]);
         return true;
+    }
+
+    public function codeCheck(Request $request)
+    {
+        $company = CurrentUser::currentCompany();
+        $company_id = $company->id;
+
+        $now = Carbon::now()->toDateTimeString();
+        $account = Egov_account::where('company_id', $company_id)->where('delete_flg', 0)->first();
+        // dd($now, $account->updated_at->format('Y-m-d H:i:s'));
+        $now = Carbon::parse($now);
+        $updated = Carbon::parse($account->updated_at->format('Y-m-d H:i:s'));
+        $diffInMinutes = $now->diffInMinutes($updated);
+        if ($diffInMinutes <= 5) {
+            \Log::info(print_r('コード・アクセストークン・リフレッシュトークンの取得に成功しました', true));
+        } else {
+            \Log::error("アクセストークン・リフレッシュトークンの取得に失敗しました");
+        }
     }
 }
