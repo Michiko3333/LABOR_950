@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\EmploymentInsuranceChildcareLeaveApplicationRequest;
-
+use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 
@@ -49,15 +49,14 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
     {
         try {
-            return $request;
             $data = [
                 'note' => $request->input('note'),
                 'labor_consultant_acting_as_agent_name' => $request->input('labor_consultant_acting_as_agent_name'),
                 'labor_consultant_name' => $request->input('labor_consultant_name'),
                 'ledger_type' => $request->input('ledger_type'),
                 'fullname_kana_number_symbol' => $request->input('fullname_kana_number_symbol'),
-                'childcare_start_date_japane_era' => $request->input('childcare_start_date_japane_era'),
-                'childcare_start_date_japane_era_year' => $request->input('childcare_start_date_japane_era_year'),
+                'childcare_start_date_japan_era' => $request->input('childcare_start_date_japan_era'),
+                'childcare_start_date_japan_era_year' => $request->input('childcare_start_date_japan_era_year'),
                 'childcare_start_date_month' => $request->input('childcare_start_date_month'),
                 'childcare_start_date_day' => $request->input('childcare_start_date_day'),
                 'employment_insurance_office_no_4digit' => $request->input('employment_insurance_office_no_4digit'),
@@ -143,6 +142,12 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
                 'partner_insured_no_CD' => $request->input('partner_insured_no_CD'),
                 'partner_childcare_leave_taken' => $request->input('partner_childcare_leave_taken'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

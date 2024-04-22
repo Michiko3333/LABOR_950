@@ -8,7 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsRequest;
 
 use Illuminate\Support\Facades\File;
-
+use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
@@ -113,6 +113,12 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 "remarks_calculation_basic_month_month2" => $request->input('remarks_calculation_basic_month_month2'),
                 "others" => $request->input('others'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

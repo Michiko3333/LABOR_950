@@ -85,7 +85,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'verification_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'verification_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch_address' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/',
+            'branch' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９0-9ー一-龥　]+\z/',
             'entrepreneur_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+\z/u',
             'application_date_era' => 'nullable|string|max:2',
             'application_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -107,8 +107,11 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'commuting_allowance_period' => 'nullable|string',
             'commuting_allowance_period_other' => 'nullable|string|max:255',
             'note_main' => 'nullable|string|max:255',
-            'creation_date_submission_agent_2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
-            'labor_consultant_fullname_2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
+            'creation_date_submission_agent' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
+            'labor_consultant_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
+            'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
         ];
     }
 
@@ -186,7 +189,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'verification_date_year' => '証明年月日/年',
             'verification_date_month' => '証明年月日/月',
             'verification_date_day' => '証明年月日/日',
-            'branch_address' => '事業所名（所在地・電話番号）',
+            'branch' => '事業所名（所在地・電話番号）',
             'entrepreneur_name' => '事業主氏名',
             'application_date_era' => '申請年月日/年号',
             'application_date_year' => '申請年月日/年',
@@ -208,8 +211,11 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'commuting_allowance_period' => '通勤手当/期間',
             'commuting_allowance_period_other' => '通勤手当/期間/その他',
             'note_main' => '備考',
-            'creation_date_submission_agent_2' => '社会保険労務士記載欄/作成年月日･提出代行者･事務代理者の表示',
-            'labor_consultant_fullname_2' => '社会保険労務士記載欄/氏名',
+            'creation_date_submission_agent' => '社会保険労務士記載欄/作成年月日･提出代行者･事務代理者の表示',
+            'labor_consultant_fullname' => '社会保険労務士記載欄/氏名',
+            'labor_consultant_tel_treacode' => '社会保険労務士記載欄/電話番号（市外局番）',
+            'labor_consultant_tel_city_code' => '社会保険労務士記載欄/電話番号（市内局番）',
+            'labor_consultant_tel_subscriber_code' => '社会保険労務士記載欄/電話番号（加入者番号）',
         ];
     }
 }

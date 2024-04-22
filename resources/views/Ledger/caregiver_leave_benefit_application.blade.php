@@ -164,6 +164,8 @@
             const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
             const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
             const headquartersAddress = (headquarters.address_prefecture || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || "");
+            const branchAddress = (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "");
+            const branchInfo = (branch.name || "")  + '　' +  (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "")  + '　' +  (branch.tel_area_code || "") + (branch.tel_city_code || "") + (branch.tel_subscriber_code || "");
             const employeeAddress = (employee.address_prefecture || "") + (employee.address_city || "") + (employee.address_ward || "") + (employee.address_apartment || "");
 
             $('#J120_005F_89EE_8CEC_8B78_8BC6_94ED_95DB_8CAF_8ED2_82CC_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no || "");
@@ -181,7 +183,7 @@
             }
             $('#J12_005F_94ED_95DB_8CAF_8ED2_82CC_90A9').val(employee.last_name || "");
             $('#J13_005F_94ED_95DB_8CAF_8ED2_82CC_96BC').val(employee.first_name || "");
-            $('#J77_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquartersAddress);
+            $('#J77_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(branchInfo);
             $('#J93_005F_9761_8BE0_92CA_92A0_82CC_8CFB_8DC0_94D4_8D86').val(employee.bank_account_no || "");
             $('#J118_005F_8B4C_8D86_94D4_8D86').val(employee.japan_post_bank_code_no || "");
             $('#J119_005F_8CFB_8DC0_94D4_8D86').val(employee.japan_post_bank_account_no || "");
@@ -199,21 +201,66 @@
             $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
             $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
             $('#J16_005F_96BC_8FCC').val(branch.name || "");
-            $('#J17_005F_8F8A_8DDD_926E').val(headquartersAddress);
-            $('#J18_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code || "");
-            $('#J19_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code || "");
-            $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code || "");
+            $('#J17_005F_8F8A_8DDD_926E').val(branchAddress);
+            $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || "");
+            $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || "");
+            $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code || "");
             if (employee.post_code !== null) {
                 $('#J21_005F_947A_9242_8BC7_94D4_8D86').val(employee.post_code.slice(0, 3));
                 $('#J22_005F_92AC_88E6_94D4_8D86').val(employee.post_code.slice(3, 7));
             }
-
             $('#J23_005F_8F5A_8F8A').val(employeeAddress);
             $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code || "");
             $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || "");
             $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || "");
+            $('#J27_005F_8F5A_8F8A').val(headquartersAddress);
         }
 
+        $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').on('input', function() {
+            $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val($(this).val());
+        });
+        $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').on('input', function() {
+            $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val($(this).val());
+        });
+        $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').on('input', function() {
+            $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val($(this).val());
+        });
+        $('#J9_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').on('input', function() {
+            $('#J6_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val($(this).val());
+        });
+        $('#J10_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').on('input', function() {
+            $('#J7_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val($(this).val());
+        });
+        $('#J11_005F_8E96_8BC6_8F8A_94D4_8D86CD').on('input', function() {
+            $('#J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').val($(this).val());
+        });
+        $('#J123_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
+            $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val($(this).val());
+        });
+        $('#J124_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
+            $('#J9_005F_8374_838A_834B_8369').val($(this).val());
+        });
+        $('#J14_005F_944E_8D86').on('input', function() {
+            $('#J12_005F_944E_8D86').val($(this).val());
+        });
+        $('#J15_005F_944E').on('input', function() {
+            $('#J13_005F_944E').val($(this).val());
+        });
+        $('#J16_005F_8C8E').on('input', function() {
+            $('#J14_005F_8C8E').val($(this).val());
+        });
+        $('#J17_005F_93FA').on('input', function() {
+            $('#J15_005F_93FA').val($(this).val());
+        });
+        $('#J78_005F_8E96_8BC6_8EE5_96BC').on('input', function() {
+            $('#J28_005F_8E81_96BC').val($(this).val());
+        });
+        $('#J16_005F_8C8E').on('input', function() {
+            $('#J29_005F_8C8E').val($(this).val());
+        });
+        $('#J17_005F_93FA').on('input', function() {
+            $('#J30_005F_93FA').val($(this).val());
+        });
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
         </script>
 

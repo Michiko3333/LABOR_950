@@ -38,7 +38,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "branch_tel_area_code" => 'string|max:5|regex:/^[0-9]+$/',
             "branch_tel_city_code" => 'string|max:5|regex:/^[0-9]+$/',
             "branch_tel_subscriber_code" => 'string|max:5|regex:/^[0-9]+$/',
-            "labor_consultant_submission_agent_name" => 'string|max:255',
+            "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
             "employment_insured_no" => 'nullable|int|max:6|regex:/^[0-9]+$/',
             "insured_fullname_kana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             "insured_fullname" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+$/u',

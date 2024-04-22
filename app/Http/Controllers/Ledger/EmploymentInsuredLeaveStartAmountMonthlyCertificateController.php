@@ -9,6 +9,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\EgovAPI\MixXmlEgovSigner;
 
 class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Controller
 {
@@ -42,9 +43,6 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
 
     public function post(EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest $request)
     {
-        // TODO: 方針決まり次第加筆
-        // var_dump($request->input());
-        // return back()->withErrors("");
         try {
             $data = [
                 // １枚目
@@ -431,6 +429,12 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
                 'note2_15' => $request->input('note2_15'),
                 'employee_salary_notices2'=>$request->input('employee_salary_notices2'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.company', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
