@@ -17,7 +17,7 @@
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
-            <form id="ledger-form" action="" method="post">
+            <form id="ledger-form" action="" method="post"  enctype="multipart/form-data">
                 @csrf
                 @if(session('errors'))
                 <div class="ui error message">
@@ -35,6 +35,19 @@
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>添付ファイル</h2>
+                                <x-ledger-attachment 
+                                    :file_original_names="[
+                                        'retirement_date' => '退職日が確認できる書類',
+                                        'employment_agreement' => '再雇用されたことが確認できる雇用契約書のコピー',
+                                        'continued_rehiring' => '退職後継続再雇用されたことが確認できる事業主の証明書',
+                                        'loss_report' => '被保険者資格喪失届・70歳以上被用者不該当届',
+                                        'other' => 'その他の添付書類']"
+                                    :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>
                         </div>
                     </div>

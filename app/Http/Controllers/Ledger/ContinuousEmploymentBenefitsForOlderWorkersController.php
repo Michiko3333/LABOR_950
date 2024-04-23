@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Ledger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Http\Requests\SeniorEmploymentContinuationBenefitClaimFormRequest;
+use App\Http\Requests\ContinuousEmploymentBenefitsForOlderWorkersRequest;
 
 use App\Models\CurrentUser;
 use App\Models\Certificate;
@@ -41,11 +41,53 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             "month" => $month,
             "day" => $day
         );
+        
+
         return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
     }
 
-    public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)
+    public function post(ContinuousEmploymentBenefitsForOlderWorkersRequest $request)
     {
+        $attachment = [];
+
+        $data = $request->all();
+
+        foreach ($data as $key => $value) {
+            if (strpos($key, 'radio_') === 0) {
+                $file_key = substr($key, strlen('radio_'));
+                $label_key = 'label_' . $file_key;
+
+                $attachment_type = ($value === '2') ? '添付' : '別送';
+
+                $attached_document_name = $request->input($label_key);
+
+                $attachment_file_name = '';
+                if ($value === '2' && $request->hasFile($file_key)) {
+                    $file = $request->file($file_key);
+                    $attachment_file_name = $file->getClientOriginalName();
+                }
+
+                $attachment[] = [
+                    'attachment_type' => $attachment_type,
+                    'attached_document_name' => $attached_document_name,
+                    'attachment_file_name' => $attachment_file_name,
+                    'submission_info' => '1'
+                ];
+            }
+        }
+
+        if (!empty($attachment)) {
+            $request->merge(['attachment' => $attachment]);
+        }
+
+        $radio_keys = ["radio_file_wage_amount", "radio_file_stable_job", "radio_file_eligibility", "radio_file_written_consent", "radio_file_other"];
+
+        foreach ($radio_keys as $key) {
+            if (!$request->has($key)) {
+                $request->merge([$key => 0]);
+            }
+        }    
+
         try {
             $data = [
                 'labor_consultant_acting_as_agent' => $request->input('labor_consultant_acting_as_agent'),

@@ -15,7 +15,7 @@
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
-            <form id="ledger-form" action="" method="post">
+            <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
                 @csrf
                 @if(session('errors'))
                 <div class="ui error message">
@@ -33,6 +33,15 @@
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>添付ファイル</h2>
+                                <x-ledger-attachment 
+                                    :file_original_names="[
+                                        'other' => 'その他の添付書類']"
+                                    :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>
                         </div>
                     </div>

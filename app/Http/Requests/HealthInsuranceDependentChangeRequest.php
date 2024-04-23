@@ -89,6 +89,8 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
     public static function rules(): array
     {
         return [
+            "file_tax_exempt_income" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "submission_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "submission_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "submission_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -260,5 +262,22 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_remarks" => 'nullable|string|max:255',
             "other_dependent2_confirmation_relationship_0" => 'nullable|string|in:確認済'
         ];
+    }
+    
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_tax_exempt_income')) {
+                $totalSize += $this->file('file_tax_exempt_income')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 }

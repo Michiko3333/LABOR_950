@@ -22,6 +22,11 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
     public static function rules(): array
     {
         return [
+            "file_nursing_facts" => 'required_unless:radio_file_nursing_facts,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_nursing_care_recipient" => 'required_unless:radio_file_nursing_care_recipient,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_wage_payment_status" => 'required_if:radio_file_wage_payment_status,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_closing_starts" => 'required_if:radio_file_closing_starts,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'employment_mynumber_card_no' => 'nullable|string|regex:/^[0-9]{12}$/u',
             'employment_insured_no_4' => 'nullable|string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'nullable|string|regex:/^[0-9]{6}$/u',
@@ -110,6 +115,31 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'creation_date_submission_agent_2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
             'labor_consultant_fullname_2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
         ];
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_nursing_facts')) {
+                $totalSize += $this->file('file_nursing_facts')->getSize();
+            }
+            if ($this->hasFile('file_nursing_care_recipient')) {
+                $totalSize += $this->file('file_nursing_care_recipient')->getSize();
+            }
+            if ($this->hasFile('file_wage_payment_status')) {
+                $totalSize += $this->file('file_wage_payment_status')->getSize();
+            }
+            if ($this->hasFile('file_closing_starts')) {
+                $totalSize += $this->file('file_closing_starts')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 
     public function messages()

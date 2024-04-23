@@ -22,6 +22,11 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "file_retirement_date" => 'required_if:radio_file_retirement_date,2|file|mimes:jpg,pdf|max:50000',
+            "file_employment_agreement" => 'required_if:radio_file_employment_agreement,2|file|mimes:jpg,pdf|max:50000',
+            "file_continued_rehiring" => 'required_if:radio_file_continued_rehiring,2|file|mimes:jpg,pdf|max:50000',
+            "file_loss_report" => 'required_if:radio_file_loss_report,2|file|mimes:jpg,pdf|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "health_insurance" => 'nullable|int|in:1',
             "welfare_pension_insurance" => 'nullable|int|in:1',
             "input_date_japan_era_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -69,6 +74,31 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "acquisition_reason" => 'nullable|string|in:海外在住,短期在留,その他',
             "other_acquisition_reason" =>   'nullable|string|max:255',
         ];
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_retirement_date')) {
+                $totalSize += $this->file('file_retirement_date')->getSize();
+            }
+            if ($this->hasFile('file_employment_agreement')) {
+                $totalSize += $this->file('file_employment_agreement')->getSize();
+            }
+            if ($this->hasFile('file_continued_rehiring')) {
+                $totalSize += $this->file('file_continued_rehiring')->getSize();
+            }
+            if ($this->hasFile('file_loss_report')) {
+                $totalSize += $this->file('file_loss_report')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 
     public function attributes()

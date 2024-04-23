@@ -22,6 +22,12 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "file_amount_days_time" => 'required_unless:radio_file_amount_days_time,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_written_consent" => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_extension_reason" => 'required_if:radio_file_extension_reason,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_spouse" => 'required_if:radio_file_spouse,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_spouse_childcare_leave" => 'required_if:radio_file_spouse_childcare_leave,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'ledger_type' => 'required|string|regex:/^[0-9]{1,5}$/u',
             'fullname_kana_number_symbol' => 'required|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
             'employment_insured_no_4digit' => 'required|string|regex:/^[0-9]{4}$/u',
@@ -115,6 +121,35 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'note' => 'nullable|string|max:255',
         ];
     }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_amount_days_time')) {
+                $totalSize += $this->file('file_amount_days_time')->getSize();
+            }
+            if ($this->hasFile('file_written_consent')) {
+                $totalSize += $this->file('file_written_consent')->getSize();
+            }
+            if ($this->hasFile('file_extension_reason')) {
+                $totalSize += $this->file('file_extension_reason')->getSize();
+            }
+            if ($this->hasFile('file_spouse')) {
+                $totalSize += $this->file('file_spouse')->getSize();
+            }
+            if ($this->hasFile('file_spouse')) {
+                $totalSize += $this->file('file_spouse')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
+    }
+    
 
     public function attributes()
     {

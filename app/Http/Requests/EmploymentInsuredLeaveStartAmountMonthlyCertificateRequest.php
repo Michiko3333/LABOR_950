@@ -22,6 +22,10 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
     public function rules(): array
     {
         return [
+            "file_wage_certificate_or_payment_status" => 'required_unless:radio_file_wage_certificate_or_payment_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_childcare" => 'required_if:radio_file_childcare,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_nursing_care" => 'required_if:radio_file_nursing_care,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|  max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'employee_employment_insured_no_4' => 'required|string|regex:/^[0-9]{4}$/u',
             'employee_employment_insured_no_6' => 'required|string|regex:/^[0-9]{6}$/u',
             'employee_employment_insured_no_cd' => 'required|string|regex:/^[0-9]{1}$/u',
@@ -437,6 +441,29 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             'employee_salary_notices2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴ一-龥０-９ａ-ｚＡ-Ｚー　]+\z/u',
         ];
 
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_wage_certificate_or_payment_status')) {
+                $totalSize += $this->file('file_wage_certificate')->getSize();
+            }
+            if ($this->hasFile('file_childcare')) {
+                $totalSize += $this->file('file_childcare')->getSize();
+            }
+            if ($this->hasFile('file_nursing_care')) {
+                $totalSize += $this->file('file_nursing_care')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 
     public function attributes()

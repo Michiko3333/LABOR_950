@@ -48,6 +48,46 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
 
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
     {
+        $attachment = [];
+
+        $data = $request->all();
+
+        foreach ($data as $key => $value) {
+            if (strpos($key, 'radio_') === 0) {
+                $file_key = substr($key, strlen('radio_'));
+                $label_key = 'label_' . $file_key;
+
+                $attachment_type = ($value === '2') ? '添付' : '別送';
+
+                $attached_document_name = $request->input($label_key);
+
+                $attachment_file_name = '';
+                if ($value === '2' && $request->hasFile($file_key)) {
+                    $file = $request->file($file_key);
+                    $attachment_file_name = $file->getClientOriginalName();
+                }
+
+                $attachment[] = [
+                    'attachment_type' => $attachment_type,
+                    'attached_document_name' => $attached_document_name,
+                    'attachment_file_name' => $attachment_file_name,
+                    'submission_info' => '1'
+                ];
+            }
+        }
+
+        if (!empty($attachment)) {
+            $request->merge(['attachment' => $attachment]);
+        }
+
+        $radio_keys = ["radio_file_amount_days_time", "radio_file_written_consent", "radio_file_extension_reason", "radio_file_spouse", "radio_file_spouse_childcare_leave", "radio_file_other"];
+
+        foreach ($radio_keys as $key) {
+            if (!$request->has($key)) {
+                $request->merge([$key => 0]);
+            }
+        }    
+
         try {
             return $request;
             $data = [

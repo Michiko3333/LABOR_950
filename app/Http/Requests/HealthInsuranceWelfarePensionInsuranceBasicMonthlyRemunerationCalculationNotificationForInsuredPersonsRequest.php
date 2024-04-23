@@ -22,6 +22,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     public function rules(): array
     {
         return [
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "today_japan_era_year" => 'required|int|between:1,99|regex:/^[0-9]+$/',
             "today_japan_era_month" => 'required|int|between:1,12|regex:/^[0-9]+$/',
             "today_japan_era_day" => 'required|int|between:1,31|regex:/^[0-9]+$/',
