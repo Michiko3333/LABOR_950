@@ -8,7 +8,7 @@ use App\Http\Requests\EmploymentInsuredTransferNotificationRequest;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
-
+use App\EgovAPI\MixXmlEgovSigner;
 
 class EmploymentInsuredTransferNotificationController extends Controller
 {

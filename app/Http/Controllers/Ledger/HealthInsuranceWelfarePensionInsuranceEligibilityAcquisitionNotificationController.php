@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\NotificationOfObtainingInsuredQualificationRequest;
-
-
+use App\EgovAPI\MixXmlEgovSigner;
 use Illuminate\Support\Facades\File;
-
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
@@ -140,6 +138,12 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
                 'acquisition_reason' => $request->input('acquisition_reason'),
                 'other_acquisition_reason' => $request->input('other_acquisition_reason'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

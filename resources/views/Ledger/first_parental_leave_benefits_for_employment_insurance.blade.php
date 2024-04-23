@@ -248,6 +248,20 @@
             document.getElementById('J25_005F_8E96_8BC6_8F8A_94D4_8D86CD').addEventListener('input', function() {
                 document.getElementById('J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').value = this.value;
             });
+            document.getElementById('J27_005F_944E_8D86').addEventListener('input', function() {
+                document.getElementById('J12_005F_944E_8D86').value = this.value;
+            });
+            document.getElementById('J28_005F_944E').addEventListener('input', function() {
+                document.getElementById('J13_005F_944E').value = this.value;
+            });
+            document.getElementById('J29_005F_8C8E').addEventListener('input', function() {
+                document.getElementById('J14_005F_8C8E').value = this.value;
+                document.getElementById('J29_005F_8C8E1').value = this.value;
+            });
+            document.getElementById('J30_005F_93FA').addEventListener('input', function() {
+                document.getElementById('J15_005F_93FA').value = this.value;
+                document.getElementById('J30_005F_93FA1').value = this.value;
+            });
             document.getElementById('J20_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').addEventListener('input', function() {
                 document.getElementById('J163_005F_905C_90BF_8ED2_8E81_96BC').value = this.value;
                 document.getElementById('J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').value = this.value;
@@ -266,12 +280,11 @@
                 document.getElementById('J26_005F_89C1_93FC_8ED2_94D4_8D86').value = this.value;
             });
             document.getElementById('J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').addEventListener('input', function() {
-                document.getElementById('J27_005F_8F5A_8F8A').value = this.value;
+                document.getElementById('J17_005F_8F8A_8DDD_926E').value = this.value;
             });
             document.getElementById('J154_005F_8E96_8BC6_8EE5_8E81_96BC').addEventListener('input', function() {
                 document.getElementById('J28_005F_8E81_96BC').value = this.value;
             });
-
             document.getElementById('J44_005F_947A_9242_8BC7_94D4_8D86').addEventListener('input', function() {
                 document.getElementById('J21_005F_947A_9242_8BC7_94D4_8D86').value = this.value;
             });

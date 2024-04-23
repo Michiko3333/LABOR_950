@@ -496,7 +496,7 @@
             $('#J13_005F_8C8').val($(this).val());
         });
         $('#J19_005F_93FA').on('input', function() {
-            $('#J14_005F_93FA').val($(this).val());
+            $('#J14_005F_93F').val($(this).val());
         });
         $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
             $('#J9_005F_97A3_9045_8ED2_8E81_96BC').val($(this).val());

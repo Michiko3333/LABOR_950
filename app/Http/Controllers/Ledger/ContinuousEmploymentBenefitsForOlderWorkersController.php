@@ -150,6 +150,12 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
                 'payer_japan_era3' => $request->input('payer_japan_era3'),
                 'today_japan_era' => $request->input('today_japan_era'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

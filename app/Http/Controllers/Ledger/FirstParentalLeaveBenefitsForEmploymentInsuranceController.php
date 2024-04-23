@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\FirstParentalLeaveBenefitsForEmploymentInsuranceRequest;
-
+use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 
@@ -104,8 +104,8 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
                 'employment_insurance_office_no_4digit' => $request->input('employment_insurance_office_no_4digit'),
                 'employment_insurance_office_no_6digit' => $request->input('employment_insurance_office_no_6digit'),
                 'employment_insurance_office_no_CD' => $request->input('employment_insurance_office_no_CD'),
-                'childcare_start_date_japane_era' => $request->input('childcare_start_date_japane_era'),
-                'childcare_start_date_japane_era_year' => $request->input('childcare_start_date_japane_era_year'),
+                'childcare_start_date_japan_era' => $request->input('childcare_start_date_japan_era'),
+                'childcare_start_date_japan_era_year' => $request->input('childcare_start_date_japan_era_year'),
                 'childcare_start_date_month' => $request->input('childcare_start_date_month'),
                 'childcare_start_date_day' => $request->input('childcare_start_date_day'),
                 'birth_date_japan_era' => $request->input('birth_date_japan_era'),
@@ -175,7 +175,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
                 'headquarters_tel_treacode' => $request->input('headquarters_tel_treacode'),
                 'headquarters_tel_city_code' => $request->input('headquarters_tel_city_code'),
                 'headquarters_tel_subscriber_code' => $request->input('headquarters_tel_subscriber_code'),
-                'employer_company_managerial_position_name1' => $request->input('employer_company_managerial_position_name1'),
+                'employer_company_managerial_position_name' => $request->input('employer_company_managerial_position_name'),
                 'destination' => $request->input('destination'),
                 'financial_institution_name' => $request->input('financial_institution_name'),
                 'financia_iInstitution_code' => $request->input('financia_iInstitution_code'),
@@ -353,9 +353,6 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
                 'payment_duration_basic_days1_13' => $request->input('payment_duration_basic_days1_13'),
                 'payment_duration_basic_days1_14' => $request->input('payment_duration_basic_days1_14'),
                 'payment_duration_basic_days1_15' => $request->input('payment_duration_basic_days1_15'),
-                'leave_start_date_japan_era_year' => $request->input('leave_start_date_japan_era_year'),
-                'leave_start_date_month' => $request->input('leave_start_date_month'),
-                'leave_start_date_day' => $request->input('leave_start_date_day'),
                 'address' => $request->input('address'),
                 'labor_consultant_japan_era_year' => $request->input('labor_consultant_japan_era_year'),
                 'labor_consultant_month' => $request->input('labor_consultant_month'),
@@ -434,7 +431,6 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
                 'employment_duration_set_day' => $request->input('employment_duration_set_day'),
                 'period_with_leave_start_included_month' => $request->input('period_with_leave_start_included_month'),
                 'period_with_leave_start_included_day' => $request->input('period_with_leave_start_included_day'),
-                'leave_start_date_japan_era' => $request->input('leave_start_date_japan_era'),
                 'employment_duration_set_japan_era' => $request->input('employment_duration_set_japan_era'),
                 'labor_consultant_japan_era' => $request->input('labor_consultant_japan_era'),
                 'special_note_on_wages2' => $request->input('special_note_on_wages2'),
@@ -654,6 +650,12 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
                 'reduced_working_hours_wage_certificate_start' => $request->input('reduced_working_hours_wage_certificate_start'),
                 'leave_start_wage_monthly_certificate' => $request->input('leave_start_wage_monthly_certificate'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

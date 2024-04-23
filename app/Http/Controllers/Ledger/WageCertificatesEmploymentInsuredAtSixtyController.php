@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\WageCertificatesEmploymentInsuredAtSixtyRequest;
-
+use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 
@@ -529,6 +529,12 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'specialNoteOnWages2_01' => $request->input('specialNoteOnWages2_01'),
                 'J102_check_flg' => $request->input('J102_check_flg'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
