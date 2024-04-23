@@ -90,7 +90,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'verification_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'verification_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９0-9ー一-龥　]+\z/',
+            'branch' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　\-a-zA-Z0-9]+\z/',
             'entrepreneur_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+\z/u',
             'application_date_era' => 'string|max:2',
             'application_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',

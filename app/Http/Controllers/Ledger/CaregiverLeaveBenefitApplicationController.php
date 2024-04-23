@@ -652,4 +652,5 @@ class CaregiverLeaveBenefitApplicationController extends Controller
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }
+    }
 }
