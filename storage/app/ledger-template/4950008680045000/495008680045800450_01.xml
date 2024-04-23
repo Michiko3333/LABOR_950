@@ -96,7 +96,7 @@
 		<事業所名_所在地>headquartersAddress</事業所名_所在地>
 		<事業所名_電話番号>
 			<市外局番>headquartersTelAreaCode</市外局番>
-			<市内局番>headquartersTelCityCode9999</市内局番>
+			<市内局番>headquartersTelCityCode</市内局番>
 			<加入者番号>headquartersTelsubscriberCode</加入者番号>
 		</事業所名_電話番号>
 		<事業主氏名>employer_company_managerial_position_name</事業主氏名>

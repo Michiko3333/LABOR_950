@@ -17,8 +17,8 @@
 			<事業所番号6桁>employmentInsuranceOfficeNo6digit</事業所番号6桁>
 			<事業所番号CD>employmentInsuranceOfficeNoCD</事業所番号CD>
 		</事業所番号>
-		<フリガナ>fullnameKana</フリガナ>
-		<六十歳に達した者の氏名>fullname</六十歳に達した者の氏名>
+		<フリガナ>employeeFullnameKana</フリガナ>
+		<六十歳に達した者の氏名>employeeFullname</六十歳に達した者の氏名>
 		<事業所>
 			<名称>branchName</名称>
 			<所在地>branchAddress</所在地>
@@ -47,14 +47,14 @@
 			<日>dateOfAttainmentage60Day</日>
 		</六十歳に達した日等の年月日>
 		<六十歳に達した者の生年月日>
-			<年号>昭和</年号>
+			<年号>birthdayEra</年号>
 			<年>birthdayYear</年>
 			<月>birthdayMonth</月>
 			<日>birthdayDay</日>
 		</六十歳に達した者の生年月日>
 		<事業主>
 			<住所>headquartersAddress</住所>
-			<氏名>employerName</氏名>
+			<氏名>employer_company_managerial_position_name</氏名>
 		</事業主>
 		<確認印又は自筆による署名/>
 		<六十歳に達した日等の翌日>
