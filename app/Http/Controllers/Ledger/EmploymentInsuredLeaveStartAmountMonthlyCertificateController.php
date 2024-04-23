@@ -29,6 +29,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
@@ -38,7 +39,12 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', ['company' => $company, 'today' => $today, 'certificate' => $certificate]);
+        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', [
+            'company' => $company,
+            'today' => $today,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest $request)
