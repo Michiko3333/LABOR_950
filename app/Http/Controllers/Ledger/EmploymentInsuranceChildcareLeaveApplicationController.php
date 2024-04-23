@@ -30,6 +30,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -43,7 +44,12 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.employment_insurance_childcare_leave_application', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
