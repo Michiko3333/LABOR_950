@@ -46,6 +46,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
+use App\Http\Controllers\Contract\EmployeeContractController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -185,4 +186,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
     Route::post('/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
+
+    Route::get('/employee/contract', [EmployeeContractController::class, 'index'])->name('contract.index');
+    Route::post('/employee/contract/check', [EmployeeContractController::class, 'check'])->name('contract.check');
+    Route::post('/employee/contract/download', [EmployeeContractController::class, 'downlaod'])->name('contract.download');
 });

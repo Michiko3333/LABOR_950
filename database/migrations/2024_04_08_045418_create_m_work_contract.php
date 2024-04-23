@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('work_place')->nullable()->comment('勤務場所');
             $table->string('employer_type')->nullable()->comment('労働者種別');
             $table->text('probation_period')->nullable()->comment('試用期間');
+            $table->text('probation_period_detail')->nullable()->comment('試用期間詳細');
             $table->text('duties')->nullable()->comment('業務内容');
+            $table->text('duties_detail')->nullable()->comment('業務内容詳細');
             $table->text('start_end_and_break_time_of_work')->nullable()->comment('始業・終業・休憩の時間');
             $table->text('holiday')->nullable()->comment('休日');
             $table->text('overtime_work')->nullable()->comment('時間外勤務の有無');
@@ -31,6 +33,7 @@ return new class extends Migration
             $table->text('other_contract_matters')->nullable()->comment('その他の契約事項');
             $table->text('matters_of_retirement_and_premature_termination')->nullable()->comment('退職および契約の中途解消に関する事項');
             $table->text('other_contract_matters_and_covenant')->nullable()->comment('その他の契約事項および誓約事項');
+            $table->datetime('date')->nullable()->comment('日付');
             $table->tinyInteger('format_flg')->comment('フォーマットフラグ');
             $table->timestamps();
             $table->comment('労働条件通知＆契約書');

@@ -17,6 +17,7 @@ use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
 
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -33,6 +34,8 @@ class LedgerEmployeeList extends BaseTable
     public $disableNext = false;
 
     public $selected_id = 0;
+
+    public $allDisable = false;
 
     public function render()
     {
@@ -114,5 +117,20 @@ class LedgerEmployeeList extends BaseTable
 
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
+    }
+
+    #[On('disableCmponent')]
+    public function disableComponent($bool = true)
+    {
+        $this->allDisable = $bool;
+    }
+
+    #[On('setDefault')]
+    public function setDefault($employee_id, $employee_name)
+    {
+        if ($employee_id) {
+            $this->search = $employee_name;
+            $this->selected_id = $employee_id;
+        }
     }
 }
