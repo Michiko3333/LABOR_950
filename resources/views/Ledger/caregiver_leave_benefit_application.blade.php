@@ -110,7 +110,7 @@
             $('#J81_005F_8C8E').val( '{{ old("notification_month", $today["month"]) }}' );
             $('#J82_005F_93FA').val( '{{ old("notification_date", $today["date"]) }}' );
             @if($current_employee->role_id === 500)
-                $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val( '{{$today["era"]}}' + '{{$today["year"]}}' + "年" + '{{$today["month"]}}' + "月" + '{{$today["date"]}}' + "日\n" + '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                // $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val( '{{$today["era"]}}' + '{{$today["year"]}}' + "年" + '{{$today["month"]}}' + "月" + '{{$today["date"]}}' + "日\n" + '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J114_005F_8E81_96BC').val( '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}' );
                 $('#J75_005F_944E').val( '{{ old("creation_date_year", $today["year"]) }}' );
                 $('#J76_005F_8C8E').val( '{{ old("creation_date_month", $today["month"]) }}' );
@@ -123,7 +123,7 @@
                 $('#J75_005F_944E').val( '{{ old("creation_date_year", $today["year"]) }}' );
                 $('#J76_005F_8C8E').val( '{{ old("creation_date_month", $today["month"]) }}' );
                 $('#J77_005F_93FA').val( '{{ old("creation_date_day", $today["date"]) }}' );
-                $('#J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                // $('#J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J79_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J80_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
                 $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
@@ -165,7 +165,7 @@
             const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
             const headquartersAddress = (headquarters.address_prefecture || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || "");
             const branchAddress = (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "");
-            const branchInfo = (branch.name || "")  + '　' +  (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "")  + '　' +  (branch.tel_area_code || "") + (branch.tel_city_code || "") + (branch.tel_subscriber_code || "");
+            const branchInfo = (branch.name || "")  + '　' +  (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "")  + '　' +  (branch.tel_area_code || "") + '-' + (branch.tel_city_code || "") + '-' + (branch.tel_subscriber_code || "");
             const employeeAddress = (employee.address_prefecture || "") + (employee.address_city || "") + (employee.address_ward || "") + (employee.address_apartment || "");
 
             $('#J120_005F_89EE_8CEC_8B78_8BC6_94ED_95DB_8CAF_8ED2_82CC_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no || "");

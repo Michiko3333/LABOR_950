@@ -94,7 +94,7 @@
                     $('#J72_005F_944E').val('{{ old('create_year', $today['year']) }}');
                     $('#J73_005F_8C8E').val('{{ old('create_month', $today['month']) }}');
                     $('#J74_005F_93FA').val('{{ old('create_day', $today['date']) }}');
-                    $('#J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                    // $('#J75_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
                         '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
                     $('#J76_005F_8E81_96BC').val('{{ $current_employee->last_name }}' + '　' +
                         '{{ $current_employee->first_name }}');
