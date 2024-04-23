@@ -29,6 +29,7 @@ class EmploymentInsuredTransferNotificationController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
@@ -38,7 +39,12 @@ class EmploymentInsuredTransferNotificationController extends Controller
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
 
-        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate]);
+        return view('ledger.employment_insured_transfer_notification', [
+            'company' => $company,
+            'today' => $today,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(EmploymentInsuredTransferNotificationRequest $request)
