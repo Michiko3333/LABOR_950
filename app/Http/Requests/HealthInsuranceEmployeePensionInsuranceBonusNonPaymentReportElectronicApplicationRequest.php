@@ -22,6 +22,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     public function rules(): array
     {
         return [
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "office_number_notification_number" => 'required|string|max:5|regex:/^[0-9]+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥　]+\z/u',
             "business_location_ship_owner_address" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥ａ-ｚＡ-Ｚ　]+\z/u',

@@ -64,6 +64,8 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
     public static function rules(): array
     {
         return [
+            "file_disqualification_status" => 'required_unless:radio_file_disqualification_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "employment_insured_no_4" => 'string|regex:/^[0-9]{4}$/u',
             "employment_insured_no_6" => 'string|regex:/^[0-9]{6}$/u',
             "employment_insured_no_CD" => 'string|regex:/^[0-9]{1}$/u',
@@ -126,5 +128,22 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "labor_consultant_tel_subscriber_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "other_notes" => 'nullable|string|max:255',
         ];
+    }
+    
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_disqualification_status')) {
+                $totalSize += $this->file('file_disqualification_status')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 }

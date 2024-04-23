@@ -1,49 +1,49 @@
 <x-layout title="ホーム" mode="{{ $body['mode'] }}">
     @slot('header')
-    <style type="text/css">
-        #control-panel {
-            display: grid;
-            gap: 10px;
-            grid-template-columns: repeat(3, minmax(280px, 1fr));
-            align-items: start;
-            justify-items: start;
-            justify-content: start;
-        }
+        <style type="text/css">
+            #control-panel {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(3, minmax(280px, 1fr));
+                align-items: start;
+                justify-items: start;
+                justify-content: start;
+            }
 
-        #control-panel .ui.card {
-            width: 100%;
-            margin: 0;
-        }
+            #control-panel .ui.card {
+                width: 100%;
+                margin: 0;
+            }
 
-        .panel-menu {
-            backgrount: #fff;
-        }
+            .panel-menu {
+                backgrount: #fff;
+            }
 
-        .panel-menu.ui.card>.image {
-            background: unset;
-        }
+            .panel-menu.ui.card>.image {
+                background: unset;
+            }
 
-        .ui.card .panel-menu .description {
-            color: var(--color-blue);
-        }
+            .ui.card .panel-menu .description {
+                color: var(--color-blue);
+            }
 
-        .blue-text {
-            color: var(--color-blue) !important;
-        }
+            .blue-text {
+                color: var(--color-blue) !important;
+            }
 
-        .control-panel-menu {
-            animation-name: fadeIn;
-            animation-fill-mode: forwards;
-            animation-duration: 1s;
-            animation-delay: 1s;
-            opacity: 0;
-        }
-    </style>
+            .control-panel-menu {
+                animation-name: fadeIn;
+                animation-fill-mode: forwards;
+                animation-duration: 1s;
+                animation-delay: 1s;
+                opacity: 0;
+            }
+        </style>
     @endslot
     <section class="content">
         <h1 class="my-2">
             <i class="briefcase icon"></i>
-            {{$currentCompany->name}} {{empty($branch) ? '' : $branch->name}}
+            {{ $currentCompany->name }} {{ empty($branch) ? '' : $branch->name }}
         </h1>
         <section id="control-panel">
             <div class="ui horizontal huge card card-shadow control-panel-menu">
@@ -103,10 +103,10 @@
                                 <div class="header">社員一覧</div>
                             </div>
                         </a>
-                        <a href="#" class="item">
+                        <a href="{{ route('contract.index') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
-                                <div class="header">社員一括登録</div>
+                                <div class="header">労働契約書作成</div>
                             </div>
                         </a>
                         <a href="#" class="item">
@@ -160,7 +160,7 @@
                 </div>
                 <div class="extra content">
                     <div class="ui middle aligned selection list">
-                        <a href="{{route('calendar.index')}}" class="item">
+                        <a href="{{ route('calendar.index') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">カレンダー閲覧</div>
@@ -185,7 +185,7 @@
             $('.full-screen').removeClass('small');
         @endif
         $('.control-panel-menu').each((index, val) => {
-            const n = (index*0.2) + 0.8;
+            const n = (index * 0.2) + 0.8;
             $(val).css('animation-delay', n + 's')
         });
     </script>

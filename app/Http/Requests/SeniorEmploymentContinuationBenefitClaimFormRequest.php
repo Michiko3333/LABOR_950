@@ -52,6 +52,9 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "file_wage_amount" => 'required_unless:radio_file_wage_amount,1|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_written_consent" => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'labor_consultant_acting_as_agent' => 'nullable|string|max:255',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+[　][ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+$/u',
             'ledger_type' => 'required|string|regex:/^[0-9]{1,5}$/u',
@@ -113,6 +116,25 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
             'payer_japan_era3' => 'nullable|string|max:2',
             'today_japan_era' => 'required|string|max:2',
         ];
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_wage_amount')) {
+                $totalSize += $this->file('file_wage_amount')->getSize();
+            }
+            if ($this->hasFile('file_written_consent')) {
+                $totalSize += $this->file('file_written_consent')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 
     public function attributes()

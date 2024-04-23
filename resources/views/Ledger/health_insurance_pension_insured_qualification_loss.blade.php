@@ -21,7 +21,7 @@
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
-            <form id="ledger-form" action="" method="post">
+            <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
                 @csrf
                 @if(session('errors'))
                 <div class="ui error message">
@@ -39,6 +39,24 @@
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>添付ファイル</h2>
+                                <x-ledger-attachment 
+                                    :required_list="[
+                                        'required_insurance',
+                                        'required_dependent']"
+                                    :file_original_names="[
+                                        'insurance' => '被保険者証',
+                                        'dependent' => '被扶養者証',
+                                        'load' => '標準負担額減額認定証',
+                                        'medical_treatment' => '特定疾病療養受療証',
+                                        'old_age' => '高齢受給者証',
+                                        'unrecoverable' => '被保険者証回収不能届',
+                                        'other' => 'その他の添付書類']"
+                                    :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>
                         </div>
                     </div>

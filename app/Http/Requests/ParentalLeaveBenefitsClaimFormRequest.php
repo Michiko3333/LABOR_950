@@ -22,6 +22,15 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
     public static function rules(): array
     {
         return [
+            "file_childcare" => 'required_unless:radio_file_childcare,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_wage_amount" => 'required_if:radio_file_wage_amount,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_wage_certificate" => 'required_if:radio_file_wage_certificate,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_confirmation_document" => 'required_if:radio_file_confirmation_document,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_passbook" => 'required_if:radio_file_passbook,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_extension_reason" => 'required_if:radio_file_extension_reason,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_spouse" => 'required_if:radio_file_spouse,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_spouse_childcare_leave" => 'required_if:radio_file_spouse_childcare_leave,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'leave_start_wage_monthly_certificate' => 'nullable|int|max:1',
             'reduced_working_hours_wage_certificate_start' => 'nullable|int|max:1',
             'ledger_type' => 'string|regex:/^[0-9]{1,10}$/u',
@@ -132,6 +141,43 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
         ];
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_childcare')) {
+                $totalSize += $this->file('file_childcare')->getSize();
+            }
+            if ($this->hasFile('file_wage_amount')) {
+                $totalSize += $this->file('file_wage_amount')->getSize();
+            }
+            if ($this->hasFile('file_wage_certificate')) {
+                $totalSize += $this->file('file_wage_certificate')->getSize();
+            }
+            if ($this->hasFile('file_confirmation_document')) {
+                $totalSize += $this->file('file_confirmation_document')->getSize();
+            }
+            if ($this->hasFile('file_passbook')) {
+                $totalSize += $this->file('file_passbook')->getSize();
+            }
+            if ($this->hasFile('file_extension_reason')) {
+                $totalSize += $this->file('file_extension_reason')->getSize();
+            }
+            if ($this->hasFile('file_spouse')) {
+                $totalSize += $this->file('file_spouse')->getSize();
+            }
+            if ($this->hasFile('file_spouse_childcare_leave')) {
+                $totalSize += $this->file('file_spouse_childcare_leave')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 
     public function attributes()

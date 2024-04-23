@@ -22,6 +22,12 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
     public function rules(): array
     {
         return [
+            "file_wage_payment_status" => 'required_unless:radio_file_wage_payment_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_insured_age" => 'required_if:radio_file_insured_age,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_separation_form" => 'required_if:radio_file_separation_form,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_insured_period" => 'required_if:radio_file_insured_period,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_passbook" => 'required_if:radio_file_passbook,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "ledgerType" => 'string|regex:/^[0-9]{1,10}$/u',
             "mynumberCardNo" => 'nullable|string|regex:/^[0-9]{12}$/u',
             "financialInstitutionName" => 'nullable|string|max:255',
@@ -93,5 +99,34 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "laborConsultantTelSubscriberCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "laborConsultantTelCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
         ];
+    }
+    
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $totalSize = 0;
+
+            if ($this->hasFile('file_wage_payment_status')) {
+                $totalSize += $this->file('file_wage_payment_status')->getSize();
+            }
+            if ($this->hasFile('file_insured_age')) {
+                $totalSize += $this->file('file_insured_age')->getSize();
+            }
+            if ($this->hasFile('file_separation_form')) {
+                $totalSize += $this->file('file_separation_form')->getSize();
+            }
+            if ($this->hasFile('file_insured_period')) {
+                $totalSize += $this->file('file_insured_period')->getSize();
+            }
+            if ($this->hasFile('file_passbook')) {
+                $totalSize += $this->file('file_passbook')->getSize();
+            }
+            if ($this->hasFile('file_other')) {
+                $totalSize += $this->file('file_other')->getSize();
+            }
+            if ($totalSize > 99 * 1024 * 1024) {
+                $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+        });
     }
 }

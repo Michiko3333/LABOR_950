@@ -18,7 +18,7 @@
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
-            <form id="ledger-form" action="" method="post">
+            <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
                 @csrf
                 <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
                 @if(session('errors'))
@@ -37,6 +37,19 @@
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>添付ファイル</h2>
+                                <x-ledger-attachment 
+                                    :required_list="[
+                                        'required_wage_amount']"
+                                    :file_original_names="[
+                                        'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
+                                        'written_consent' => '支給申請に係る承諾書',
+                                        'other' => 'その他の添付書類']"
+                                    :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
                     </div>
