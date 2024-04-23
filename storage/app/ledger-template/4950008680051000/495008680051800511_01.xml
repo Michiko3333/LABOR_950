@@ -9,26 +9,26 @@
 		<休業開始時賃金月額証明書>leave_start_wage_monthly_certificate</休業開始時賃金月額証明書>
 		<所定労働時間短縮開始時賃金証明書>reduced_working_hours_wage_certificate_start</所定労働時間短縮開始時賃金証明書>
 		<被保険者番号>
-			<被保険者番号4桁>employment_insured_no_4_2</被保険者番号4桁>
-			<被保険者番号6桁>employment_insured_no_6_2</被保険者番号6桁>
-			<被保険者番号CD>employment_insured_no_cd_2</被保険者番号CD>
+			<被保険者番号4桁>employment_insured_no_4</被保険者番号4桁>
+			<被保険者番号6桁>employment_insured_no_6</被保険者番号6桁>
+			<被保険者番号CD>employment_insured_no_cd</被保険者番号CD>
 		</被保険者番号>
 		<事業所番号>
-			<事業所番号4桁>insurance_office_no_4_2</事業所番号4桁>
-			<事業所番号6桁>insurance_office_no_6_2</事業所番号6桁>
-			<事業所番号CD>insurance_office_no_cd_2</事業所番号CD>
+			<事業所番号4桁>insurance_office_no_4</事業所番号4桁>
+			<事業所番号6桁>insurance_office_no_6</事業所番号6桁>
+			<事業所番号CD>insurance_office_no_cd</事業所番号CD>
 		</事業所番号>
-		<フリガナ>employment_fullname_kana_2</フリガナ>
-		<休業等を開始した者の氏名>employment_fullname_2</休業等を開始した者の氏名>
+		<フリガナ>employment_fullname_kana</フリガナ>
+		<休業等を開始した者の氏名>employment_fullname</休業等を開始した者の氏名>
 		<休業等を開始した日の年月日>
-			<年号>caregiver_leave_start_date_year_japan_era_2</年号>
-			<年>caregiver_leave_start_date_year_2</年>
-			<月>caregiver_leave_start_date_month_2</月>
-			<日>caregiver_leave_start_date_day_2</日>
+			<年号>caregiver_leave_start_date_year_japan_era</年号>
+			<年>caregiver_leave_start_date_year</年>
+			<月>caregiver_leave_start_date_month</月>
+			<日>caregiver_leave_start_date_day</日>
 		</休業等を開始した日の年月日>
 		<事業所>
 			<名称>branch_name</名称>
-			<所在地>branch_address_2</所在地>
+			<所在地>branch_address</所在地>
 			<電話番号>
 				<市外局番>branch_tel_area_code</市外局番>
 				<市内局番>branch_tel_city_code</市内局番>
@@ -49,23 +49,23 @@
 		</休業等を開始した者の住所又は居所>
 		<事業主>
 			<住所>entrepreneur_address</住所>
-			<氏名>entrepreneur_name_2</氏名>
+			<氏名>entrepreneur_name</氏名>
 		</事業主>
 		<公共職業安定所名/>
 		<確認印又は自筆による署名/>
 		<休業等を開始した日>
-			<月>leave_start_date_month</月>
-			<日>leave_start_date_day</日>
+			<月>caregiver_leave_start_date_month</月>
+			<日>caregiver_leave_start_date_day</日>
 		</休業等を開始した日>
 		<休業等を開始した日前の賃金支払状況等1>
 			<被保険者期間算定対象期間_開始>
-				<月>J29_月</月>
-				<日>J30_日</日>
+				<月>calculation_month_start_1</月>
+				<日>calculation_day_start_1</日>
 			</被保険者期間算定対象期間_開始>
 			<被保険者期間算定対象期間_基礎日数>calculation_basic_period_1</被保険者期間算定対象期間_基礎日数>
 			<賃金支払対象期間_開始>
-				<月>J34_月</月>
-				<日>J35_日</日>
+				<月>payment_month_start_1</月>
+				<日>payment_day_start_1</日>
 			</賃金支払対象期間_開始>
 			<賃金支払対象期間_基礎日数>payment_basic_period_1</賃金支払対象期間_基礎日数>
 			<賃金額A>wage_amountA</賃金額A>
