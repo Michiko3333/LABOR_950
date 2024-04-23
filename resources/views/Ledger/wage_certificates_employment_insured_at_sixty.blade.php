@@ -153,6 +153,7 @@
             const headquarters = data['headquarters'];
             const company = data['company'];
             const todaySet = data['todaySet'];
+            const birthdayConvertJapan = data['birthday_convert_japan'];
             var fullname_kana;
             var fullname;
             fullname_kana = ( employee.last_name_kana && employee.first_name_kana) ? (employee.last_name_kana + '　' + employee.first_name_kana) : "";
@@ -253,20 +254,11 @@
             }else{
                 $('#J17_005F_8F5A_8F8A').val("");
             }
-            var birthday = employee.birthday;
-            if ( birthday ){
-                var dateParts = birthday.split('-');
-                var birthdayYear = parseInt(dateParts[0]);
-                var birthdayMonth = parseInt(dateParts[1]);
-                var birthdayDay = parseInt(dateParts[2]);
-            }else{
-                var birthdayYear = "";
-                var birthdayMonth = "";
-                var birthdayDay = "";
+            if ( birthdayConvertJapan['era'] === '昭和' ) {
+                $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
+                $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
+                $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
             }
-            $('#J26_005F_944E').val(birthdayYear);
-            $('#J27_005F_8C8E').val(birthdayMonth);
-            $('#J28_005F_93FA').val(birthdayDay);
         }
         document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;
