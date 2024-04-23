@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：健康保険・厚生年金保険被保険者資格喪失届">
+<x-layout title="健康保険・厚生年金保険被保険者資格喪失届（単記用）（２０１９年５月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -9,7 +9,7 @@
             }
         </style>
         @endslot
-        <h1 class="mt-2">健康保険・厚生年金保険被保険者資格喪失届（単記用）（２０１９年５月以降手続き）／電子申請</h1>
+        <h1 class="mt-2">健康保険・厚生年金保険被保険者資格喪失届（単記用）（２０１９年５月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
         @if($certificate == false)

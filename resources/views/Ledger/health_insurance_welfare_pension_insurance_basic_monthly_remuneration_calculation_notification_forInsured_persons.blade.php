@@ -1,11 +1,11 @@
-<x-layout title="帳票作成：">
+<x-layout title="健康保険・厚生年金保険被保険者報酬月額算定基礎届（単記用）（２０１９年５月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">健康保険・厚生年金保険被保険者報酬月額算定基礎届（単記用）（２０１９年５月以降手続き）／電子申請</h1>
+        <h1 class="mt-2">健康保険・厚生年金保険被保険者報酬月額算定基礎届（単記用）（２０１９年５月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。 </p>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">

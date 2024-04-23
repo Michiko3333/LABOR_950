@@ -1,11 +1,11 @@
-<x-layout title="帳票作成：雇用保険被保険者資格取得届">
+<x-layout title="雇用保険被保険者資格取得届（令和４年６月以降手続き）">
     <section class="content">
         @slot('header')
             <link rel="stylesheet" href="{{ asset('/css/ledger-form.css') }}">
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">雇用保険被保険者資格取得届</h1>
+        <h1 class="mt-2">雇用保険被保険者資格取得届（令和４年６月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。
         </p>
         @if ($certificate == false)

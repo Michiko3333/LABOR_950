@@ -1,11 +1,11 @@
-<x-layout title="帳票作成：介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請">
+<x-layout title="雇用保険介護休業給付（介護休業給付金）の申請（令和４年６月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">介護休業給付（介護休業給付金）の申請 / 雇用保険介護休業給付（介護休業給付金）の申請</h1>
+        <h1 class="mt-2">雇用保険介護休業給付（介護休業給付金）の申請（令和４年６月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>

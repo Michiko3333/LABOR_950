@@ -1,11 +1,11 @@
-<x-layout title="帳票作成：">
+<x-layout title="健康保険・厚生年金保険賞与不支給報告書">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">健康保険・厚生年金保険賞与不支給報告書／電子申請</h1>
+        <h1 class="mt-2">健康保険・厚生年金保険賞与不支給報告書</h1>
         <p>申請・届出に関する事項を入力してください</p>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
