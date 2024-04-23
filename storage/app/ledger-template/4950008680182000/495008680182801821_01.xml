@@ -21,10 +21,10 @@
 		<フリガナ>fullname_kana</フリガナ>
 		<休業等を開始した者の氏名>fullname</休業等を開始した者の氏名>
 		<休業等を開始した日の年月日>
-			<年号>leave_start_date_japan_era</年号>
-			<年>leave_start_date_japan_era_year</年>
-			<月>leave_start_date_month</月>
-			<日>leave_start_date_day</日>
+			<年号>childcare_start_date_japan_era</年号>
+			<年>childcare_start_date_japan_era_year</年>
+			<月>childcare_start_date_month</月>
+			<日>childcare_start_date_day</日>
 		</休業等を開始した日の年月日>
 		<事業所>
 			<名称>branch_name</名称>
@@ -54,8 +54,8 @@
 		<公共職業安定所名/>
 		<確認印又は自筆による署名/>
 		<休業等を開始した日>
-			<月>leave_start_date_month</月>
-			<日>leave_start_date_day</日>
+			<月>childcare_start_date_month</月>
+			<日>childcare_start_date_day</日>
 		</休業等を開始した日>
 		<休業等を開始した日前の賃金支払状況等1>
 			<被保険者期間算定対象期間_開始>
