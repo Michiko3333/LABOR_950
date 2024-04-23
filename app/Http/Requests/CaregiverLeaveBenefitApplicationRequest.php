@@ -42,12 +42,12 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'caregiver_leave_start_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'caregiver_leave_start_date_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'dependent_mynumber_card_no' => 'string|regex:/^[0-9]{12}$/u',
-            'dependent_lastname_kana' => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'dependent_firstname_kana' => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
+            'dependent_lastname_kana' => 'string|max:255|regex:/^[ァ-ヴー]+\z/u',
+            'dependent_firstname_kana' => 'string|max:255|regex:/^[ァ-ヴー]+\z/u',
             'dependent_sex' => 'int|max:2',
             'dependent_relationship' => 'int|max:7',
-            'dependent_lastname' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+\z/u',
-            'dependent_firstname' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+\z/u',
+            'dependent_lastname' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]/u',
+            'dependent_firstname' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]/u',
             'care_target_family_birthday_era' => 'string|max:2',
             'care_target_family_birthday_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'care_target_family_birthday_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
@@ -112,6 +112,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'employment_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴ一-龥０-９ａ-ｚＡ-Ｚー　]+/u',
         ];
     }
 
@@ -150,8 +151,8 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'dependent_firstname_kana' => '介護対象家族の名（カタカナ）',
             'dependent_sex' => '介護対象家族の性別',
             'dependent_relationship' => '介護対象家族の続柄',
-            'dependent_lastname' => '介護対象家族の姓（カタカナ）',
-            'dependent_firstname' => '介護対象家族の名（カタカナ）',
+            'dependent_lastname' => '介護対象家族の姓',
+            'dependent_firstname' => '介護対象家族の名',
             'care_target_family_birthday_era' => '介護対象家族の生年月日/年号',
             'care_target_family_birthday_year' => '介護対象家族の生年月日/年',
             'care_target_family_birthday_month' => '介護対象家族の生年月日/月',
@@ -216,6 +217,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'labor_consultant_tel_treacode' => '社会保険労務士記載欄/電話番号（市外局番）',
             'labor_consultant_tel_city_code' => '社会保険労務士記載欄/電話番号（市内局番）',
             'labor_consultant_tel_subscriber_code' => '社会保険労務士記載欄/電話番号（加入者番号）',
+            'employment_address' => '住所',
         ];
     }
 }
