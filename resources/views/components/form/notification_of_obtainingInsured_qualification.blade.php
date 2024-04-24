@@ -3057,8 +3057,13 @@
                             min-height: 10px;
                             min-width: 10px;
                         }
+                        .preview-area input[type="RADIO"]::before {
+                            display: none;
+                            border: none !important;
+                        }
                         .preview-area input[type="CHECKBOX"]::before {
                             display: none;
+                            border: none !important;
                         }
                     </style>
                     <script>
