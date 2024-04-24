@@ -5,7 +5,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">雇用保険被保険者休業開始時賃金月額証明書又は同休業・所定労働時間短縮開始時賃金証明書の提出（令和４年６月以降手続き）</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
             <div class="header">

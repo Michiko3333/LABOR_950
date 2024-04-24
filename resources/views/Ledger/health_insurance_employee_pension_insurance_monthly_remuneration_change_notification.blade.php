@@ -5,7 +5,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">健康保険・厚生年金保険被保険者報酬月額変更届（単記用）（２０１９年５月以降手続き）</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
             <div class="header">

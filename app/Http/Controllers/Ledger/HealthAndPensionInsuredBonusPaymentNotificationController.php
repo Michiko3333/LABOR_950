@@ -15,19 +15,11 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
 {
     public function index(Request $request)
     {
-         // 画像のパス
         $imagePath = public_path('img/tyohyo160.png');
-
-         // 画像の読み込み
         $imageData = File::get($imagePath);
-
-         // 画像をBase64にエンコード
         $base64Data = base64_encode($imageData);
-
-         // Base64データをデータURIに組み込む
         $dataUri = 'data:image/png;base64,' . $base64Data;
 
-         // 操作する会社が設定されているか
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
@@ -50,8 +42,9 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
+        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)

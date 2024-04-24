@@ -7573,7 +7573,7 @@ button:disabled {
     -moz-box-sizing: border-box;
     line-height: 1em;
     color: rgb(0, 0, 0);
-    background-color: rgb(255, 255, 0);
+    background-color:#ddeeff;
     font-size: 13px !important;
     font-family: 'ＭＳ 明朝', serif !important;
     width: 38px;

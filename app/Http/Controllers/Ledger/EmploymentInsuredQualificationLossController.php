@@ -50,6 +50,7 @@ class EmploymentInsuredQualificationLossController extends Controller
         $residentials = Residential_status::all();
         $insuredAgeTypes = Values_employee_insured_age_type::all();
         $employmentStatuses = Values_employee_employment_status::all();
+        $procedureName = $this->getProcedureName($request);
 
         return view('ledger.employment_insured_qualification_loss', [
             'company' => $company,
@@ -60,7 +61,8 @@ class EmploymentInsuredQualificationLossController extends Controller
             'residentials' => $residentials,
             'insuredAgeTypes' => $insuredAgeTypes,
             'employmentStatuses' => $employmentStatuses,
-            'certificate' => $certificate
+            'certificate' => $certificate,
+            'procedureName' => $procedureName
         ]);
     }
 

@@ -41,10 +41,11 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "month" => $month,
             "day" => $day
         );
+        $procedureName = $this->getProcedureName($request);
 
         // $prefectures = $this->getPrefectures();
 
-        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]); // , 'prefectures' => $prefectures
+        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]); // , 'prefectures' => $prefectures
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)

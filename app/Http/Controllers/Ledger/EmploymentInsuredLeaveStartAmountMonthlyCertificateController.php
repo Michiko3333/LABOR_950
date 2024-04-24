@@ -38,13 +38,9 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', [
-            'company' => $company,
-            'today' => $today,
-            'certificate' => $certificate,
-            'current_employee' => $current_employee,
-        ]);
+        return view('ledger.employment_insured_leave_start_amount_monthly_certificate', ['company' => $company, 'today' => $today, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee]);
     }
 
     public function post(EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest $request)

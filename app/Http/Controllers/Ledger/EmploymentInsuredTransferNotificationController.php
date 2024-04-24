@@ -14,7 +14,6 @@ class EmploymentInsuredTransferNotificationController extends Controller
 {
     public function index(Request $request)
     {
-        // 操作する会社が設定されているか
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
@@ -38,13 +37,9 @@ class EmploymentInsuredTransferNotificationController extends Controller
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.employment_insured_transfer_notification', [
-            'company' => $company,
-            'today' => $today,
-            'certificate' => $certificate,
-            'current_employee' => $current_employee,
-        ]);
+        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee]);
     }
 
     public function post(EmploymentInsuredTransferNotificationRequest $request)

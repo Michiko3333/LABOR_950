@@ -44,7 +44,9 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        $procedureName = $this->getProcedureName($request);
+
+        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)

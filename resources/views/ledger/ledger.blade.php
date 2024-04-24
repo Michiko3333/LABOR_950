@@ -23,11 +23,11 @@
     </style>
     <section class="content">
         <div class="ui breadcrumb huge mt-2 mb-0">
-            <a class="section" href="/">個人ポータル</a>
+            <a class="section" href="/">ホーム</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">帳票一覧</div>
         </div>
-        @if($certificate == false)
+        @if ($certificate == false)
             <div class="ui warning message">
                 <div class="header">
                     電子証明書が登録されていません

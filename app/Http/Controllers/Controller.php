@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\CurrentUser;
 use App\Models\Prefecture;
 use App\Models\Values_sex;
+use App\Models\Ledger;
 
 use Illuminate\Http\Request;
 
@@ -169,5 +170,15 @@ class Controller extends BaseController
     {
         $this->putSuccess($request, false);
         return 0;
+    }
+
+    public function getProcedureName(Request $request)
+    {
+        $request->url();
+        $pattern = "/ledger/";
+        $procedureId = substr($request, strpos($request, $pattern) + strlen($pattern));
+        $procedureName = Ledger::where('procedure_id', $procedureId)->pluck('procedure_name')->first();
+
+        return $procedureName;
     }
 }

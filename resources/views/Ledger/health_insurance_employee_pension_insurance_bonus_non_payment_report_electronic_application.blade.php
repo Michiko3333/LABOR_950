@@ -5,7 +5,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">健康保険・厚生年金保険賞与不支給報告書</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください</p>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">

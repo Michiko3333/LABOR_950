@@ -18,6 +18,7 @@
         <button class="ui button primary modalbtn" type="button" wire:click='new' style="width: 100px;">追加</button>
     </div>
 
+    @if ($managerial_position->isNotEmpty())
     <div class="ui card full card-shadow item-0">
         <div class="content">
             <ul class="list-table">
@@ -25,6 +26,9 @@
             </ul>
         </div>
     </div>
+    @else
+    <h3>設定されていません</h3>
+    @endif
 
     <div id="editManagerialPosition" class="ui modal mini edit-department-modal">
         <i class="close icon"></i>
