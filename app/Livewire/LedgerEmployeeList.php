@@ -101,6 +101,16 @@ class LedgerEmployeeList extends BaseTable
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
             }
         }
+        if (!empty($spouse_data->spouse_birthday)) {
+            $spouse_birthday = Carbon::parse($employee->birthday);
+            $spouse_birthday_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($spouse_birthday);
+            $spouse_birthday_convert_japan = [
+                'era' => $spouse_birthday_convert_japan['japanese_calendar_era_string'],
+                'year' => $spouse_birthday_convert_japan['japanese_calendar_result']->year,
+                'month' => $spouse_birthday_convert_japan['japanese_calendar_result']->month,
+                'day' => $spouse_birthday_convert_japan['japanese_calendar_result']->day,
+            ];
+        }
         $country_id = Employee::where('id', $id)->value('country_id');
         if (!empty($country_id)) {
             $country_value = Country::where('id', $country_id)->value('setting_value');
@@ -192,6 +202,7 @@ class LedgerEmployeeList extends BaseTable
             'over_70_non_applicable_convert_date' => $over_70_non_applicable_convert_date ?? '',
             'employment_retirement_convert_date' => $employment_retirement_convert_date ?? '',
             'passed_away_convert_date' => $passed_away_convert_date ?? '',
+            'spouse_birthday_convert_japan' => $spouse_birthday_convert_japan ?? '',
         ];
 
         $this->selected_id = $id;
