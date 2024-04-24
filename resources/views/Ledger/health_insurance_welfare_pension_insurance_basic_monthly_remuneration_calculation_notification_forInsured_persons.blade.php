@@ -112,7 +112,16 @@
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
-
+                const birthdayConvertJapan = data['birthday_convert_japan'];
+                var eraMapping = {
+                    '明治': '1',
+                    '大正': '3',
+                    '昭和': '5',
+                    '平成': '7',
+                    '令和': '9',
+                };
+                var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+                var birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 $('#N6_005F_93FA').val(headquarters.pension_office_reference_prefecture ?? '');
                 $('#N7_005F_944E_8D86').val(headquarters.pension_office_reference_no_cities ?? '');
                 $('#N8_005F_944E').val(headquarters.pension_office_reference_no_office ?? '');
@@ -128,8 +137,13 @@
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(headquarters.tel_area_code ?? '');
                 $('#N16_005F_905C_90BF').val(headquarters.tel_city_code ?? '');
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val(headquarters.tel_subscriber_code ?? '');
+                $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.insurer_reference_no);
                 $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val((employee.last_name_kana ? employee.last_name_kana  + '　' : '') + (employee.first_name_kana ?? ''));
                 $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
+                $('#N23__005F_94ED').val(birthdayEra);
+                $('#N24_005F_8E96_8BC6').val(birthdayConvertJapan['year'] ?? "");
+                $('#N25_005F_8E96_8BC6_8F8A').val(birthdayConvertJapan['month'] ?? "");
+                $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['day'] ?? "");
             }
             Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
         </script>
