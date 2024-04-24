@@ -1,5 +1,29 @@
         <div class="egovui-application-form-input-area">
             <div id="eGovForm">
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const checkboxes = document.querySelectorAll('.check');
+                        const otherCheckbox = document.getElementById('N49_005F_8E73_8A4F_8BC8');
+                        const clearInput = document.getElementById('N50_005F_8E73_8A4F_8BC9');
+
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.addEventListener('click', function() {
+                                if (this.checked) {
+                                    checkboxes.forEach(function(cb) {
+                                        if (cb !== checkbox) {
+                                            cb.checked = false;
+                                            clearInput.value = "";
+                                            clearInput.disabled = true;
+                                        }
+                                        if(otherCheckbox === checkbox) {
+                                            clearInput.disabled = false;
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    });
+                </script>
                 <style>
                     ul {
                         list-style: none;
@@ -3237,37 +3261,37 @@
                             </div>
 
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 400px; top: 394px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                <INPUT tabindex="48" value="1" <?php echo old('note_over_70_years_old') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N45__005F_8E73_8A4F_8BC7_94D4" name="note_over_70_years_old">
+                                <INPUT tabindex="48" value="1" <?php echo old('note_over_70_years_old') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" class="check" id="N45__005F_8E73_8A4F_8BC7_94D4" name="note_over_70_years_old">
                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
                                     &nbsp;
                                 </SPAN>
                             </SPAN>
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 400px; top: 409.5px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                <INPUT tabindex="48" value="1" <?php echo old('note_multiple_office_workers') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N46__005F_8E73_93E0_8BC7_94D4" name="note_multiple_office_workers">
+                                <INPUT tabindex="48" value="1" <?php echo old('note_multiple_office_workers') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" class="check" id="N46__005F_8E73_93E0_8BC7_94D4" name="note_multiple_office_workers">
                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
                                     &nbsp;
                                 </SPAN>
                             </SPAN>
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 400px; top: 426px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                <INPUT tabindex="48" value="1" <?php echo old('note_short_time_work') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N47_005F_89C1_93FC_8ED2_94D4_8D86" name="note_short_time_work">
+                                <INPUT tabindex="48" value="1" <?php echo old('note_short_time_work') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" class="check" id="N47_005F_89C1_93FC_8ED2_94D4_8D86" name="note_short_time_work">
                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
                                     &nbsp;
                                 </SPAN>
                             </SPAN>
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 516px; top: 393.5px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                <INPUT tabindex="48" value="1" <?php echo old('note_continued_reemployment_after_retirement') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N48_005F_8E73_8A4F_8BC7" name="note_continued_reemployment_after_retirement">
+                                <INPUT tabindex="48" value="1" <?php echo old('note_continued_reemployment_after_retirement') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" class="check" id="N48_005F_8E73_8A4F_8BC7" name="note_continued_reemployment_after_retirement">
                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
                                     &nbsp;
                                 </SPAN>
                             </SPAN>
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 516px; top: 409.5px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                <INPUT tabindex="48" value="1" <?php echo old('note_others') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N49_005F_8E73_8A4F_8BC8" name="note_others">
+                                <INPUT tabindex="48" value="1" <?php echo old('note_others') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" class="check" id="N49_005F_8E73_8A4F_8BC8" name="note_others">
                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
                                     &nbsp;
                                 </SPAN>
                             </SPAN>
                             <div class="egov-tool-field-origin" style="left: 562px; top: 408px;">
-                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="10" name="note_others_in" style="width: 106px; height: 18px; font-size: 10px; text-align: left; line-height: 21px; padding: inherit; background-color: rgb(255, 255, 0);" type="text" value="{{ old('note_others_in') }}"/>
+                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="10" name="note_others_in" style="width: 106px; height: 18px; font-size: 10px; text-align: left; line-height: 21px; padding: inherit; background-color: rgb(255, 255, 0);" type="text" value="{{ old('note_others_in') }}" disabled/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 175px; top: 443px;">
                                 <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="3" name="employee_post_code_first" style="width: 30px; height: 13px; font-size: 10px; text-align: center; line-height: 19px; padding: inherit; background-color: rgb(255, 255, 0);" type="text" value="{{ old('employee_post_code_first') }}"/>
