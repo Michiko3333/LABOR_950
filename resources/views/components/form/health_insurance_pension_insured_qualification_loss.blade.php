@@ -6945,17 +6945,17 @@
                             text-align: left;
                         }
                         .preview-area input[type="CHECKBOX"]::before {
-                                            display: none;
-                                            border: none !important;
+                            display: none;
+                            border: none;
                         }
                         .preview-area input[type="RADIO"]::before {
-                                            display: none;
-                                            border: none !important;
+                            display: none;
+                            border: none;
                         }
                         .preview-area input.checkboxs::before {
-                                            display: block;
+                            display: block;
+                            border: solid 1px black;
                         }
-
                         @keyframes fadeIn {
                         from {opacity: 0;}
                         to {opacity:1 ;}
