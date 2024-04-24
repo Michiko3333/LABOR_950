@@ -1,4 +1,4 @@
-<x-layout title="雇用保険被保険者休業開始時賃金月額証明書又は同休業・所定労働時間短縮開始時賃金証明書の提出（令和４年６月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

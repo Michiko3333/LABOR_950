@@ -1,4 +1,4 @@
-<x-layout title="健康保険・厚生年金保険賞与不支給報告書">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

@@ -1,4 +1,4 @@
-<x-layout title="雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

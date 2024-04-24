@@ -1,4 +1,4 @@
-<x-layout title="雇用保険被保険者転勤届（令和４年６月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

@@ -1,4 +1,4 @@
-<x-layout title="健康保険・厚生年金保険被保険者資格喪失届（単記用）（２０１９年５月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

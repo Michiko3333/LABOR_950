@@ -1,4 +1,4 @@
-<x-layout title="雇用保険被保険者資格喪失届（離職票交付なし）（令和４年６月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

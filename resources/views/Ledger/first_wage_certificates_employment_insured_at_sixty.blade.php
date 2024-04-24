@@ -1,4 +1,4 @@
-<x-layout title="雇用保険被保険者六十歳到達時等賃金証明書の提出及び高年齢雇用継続給付受給資格確認・高年齢雇用継続給付（高年齢雇用継続基本給付金・高年齢再就職給付金）の申請（初回申請）（令和４年６月以降手続き）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
