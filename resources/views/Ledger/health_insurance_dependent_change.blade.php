@@ -130,12 +130,12 @@
             $('#N22_P1').val( '{{ old("accepted_year", $yesterday["year"]) }}' );
             $('#N23_P1').val( '{{ old("accepted_month", $yesterday["month"]) }}' );
             $('#N24_P1').val( '{{ old("accepted_date", $yesterday["date"]) }}' );
-            $('#N27').val( '{{ old("submission_year", $today["year"]) }}' );
-            $('#N28').val( '{{ old("submission_month", $today["month"]) }}' );
-            $('#N29').val( '{{ old("submission_date", $today["date"]) }}' );
-            $('#N31_1').val( '{{ old("submission_year", $today["year"]) }}' );
-            $('#N32_1').val( '{{ old("submission_month", $today["month"]) }}' );
-            $('#N33_1').val( '{{ old("submission_date", $today["date"]) }}' );
+            $('#N27').val( '{{ old("submission_year1", $today["year"]) }}' );
+            $('#N28').val( '{{ old("submission_month1", $today["month"]) }}' );
+            $('#N29').val( '{{ old("submission_date1", $today["date"]) }}' );
+            $('#N31_1').val( '{{ old("submission_year2", $today["year"]) }}' );
+            $('#N32_1').val( '{{ old("submission_month2", $today["month"]) }}' );
+            $('#N33_1').val( '{{ old("submission_date2", $today["date"]) }}' );
         });
         </script>
         <!-- 会社情報のセット ここまで -->

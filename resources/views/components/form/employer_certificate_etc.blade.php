@@ -10778,115 +10778,115 @@ min-width: 10px;
     </div>
      <div class="egov-tool-wrapper">
       <div class="egov-tool-field-origin" style="left: 83px; top: 138px;">
-       <input class="egov-tool-field-rect" id="N2" maxlength="12" name="spouse_mynumber_card_no" value="{{ old('spouse_mynumber_card_no') }}" style="width: 139px; height: 35px; font-size: 12px; text-align: left; line-height: 58px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N2" maxlength="12" name="spouse_mynumber_card_no1" value="{{ old('spouse_mynumber_card_no1') }}" style="width: 139px; height: 35px; font-size: 12px; text-align: left; line-height: 58px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 225px; top: 138px;">
-       <input class="egov-tool-field-rect" id="N3" maxlength="25" name="spouse_name" value="{{ old('spouse_name') }}" style="width: 265px; height: 35px; font-size: 12px; text-align: left; line-height: 58px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N3" maxlength="25" name="spouse_name1" value="{{ old('spouse_name1') }}" style="width: 265px; height: 35px; font-size: 12px; text-align: left; line-height: 58px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 492px; top: 147px;">
-       <select class="egov-tool-field-rect" id="N5" name="spouse_birthday_era_kanji" style="width: 42px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
+       <select class="egov-tool-field-rect" id="N5" name="spouse_birthday_era_kanji1" style="width: 42px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
         <option >
         </option>
-        <option value="明治" {{ old('spouse_birthday_era') == '明治' ? 'selected' : '' }}>
+        <option value="明治" {{ old('spouse_birthday_era_kanji1') == '明治' ? 'selected' : '' }}>
          明
         </option>
-        <option value="大正" {{ old('spouse_birthday_era') == '大正' ? 'selected' : '' }}>
+        <option value="大正" {{ old('spouse_birthday_era_kanji1') == '大正' ? 'selected' : '' }}>
          大
         </option>
-        <option value="昭和" {{ old('spouse_birthday_era') == '昭和' ? 'selected' : '' }}>
+        <option value="昭和" {{ old('spouse_birthday_era_kanji1') == '昭和' ? 'selected' : '' }}>
          昭
         </option>
-        <option value="平成" {{ old('spouse_birthday_era') == '平成' ? 'selected' : '' }}>
+        <option value="平成" {{ old('spouse_birthday_era_kanji1') == '平成' ? 'selected' : '' }}>
          平
         </option>
-        <option value="令和" {{ old('spouse_birthday_era') == '令和' ? 'selected' : '' }}>
+        <option value="令和" {{ old('spouse_birthday_era_kanji1') == '令和' ? 'selected' : '' }}>
          令
         </option>
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 536px; top: 147px;">
-       <input class="egov-tool-field-rect" id="N6" name="spouse_birthday_year" value="{{ old('spouse_birthday_year') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N6" name="spouse_birthday_year1" value="{{ old('spouse_birthday_year1') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 571px; top: 147px;">
-       <input class="egov-tool-field-rect" id="N7" name="spouse_birthday_month" value="{{ old('spouse_birthday_month') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N7" name="spouse_birthday_month1" value="{{ old('spouse_birthday_month1') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 606px; top: 147px;">
-       <input class="egov-tool-field-rect" id="N8" name="spouse_birthday_day" value="{{ old('spouse_birthday_day') }}" style="width: 31px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N8" name="spouse_birthday_day1" value="{{ old('spouse_birthday_day1') }}" style="width: 31px; height: 26px; font-size: 12px; text-align: center; line-height: 44px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 83px; top: 197px;">
-       <input class="egov-tool-field-rect" id="N9" maxlength="12" name="mynumber_card_no" value="{{ old('mynumber_card_no') }}" style="width: 139px; height: 37px; font-size: 12px; text-align: left; line-height: 62px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N9" maxlength="12" name="mynumber_card_no1" value="{{ old('mynumber_card_no1') }}" style="width: 139px; height: 37px; font-size: 12px; text-align: left; line-height: 62px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 265px; top: 197px;">
-       <input class="egov-tool-field-rect" id="N10" maxlength="25" name="name_kana" value="{{ old('name_kana') }}" style="width: 225px; height: 19px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N10" maxlength="25" name="name_kana1" value="{{ old('name_kana1') }}" style="width: 225px; height: 19px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 224px; top: 219px;">
-       <input class="egov-tool-field-rect" id="N11" maxlength="25" name="name" value="{{ old('name') }}" style="width: 265px; height: 17px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N11" maxlength="25" name="name1" value="{{ old('name1') }}" style="width: 265px; height: 17px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 492px; top: 206px;">
-       <select class="egov-tool-field-rect" id="N13" name="birthday_era_kanji" style="width: 42px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
+       <select class="egov-tool-field-rect" id="N13" name="birthday_era_kanji1" style="width: 42px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
         <option >
         </option>
-        <option value="明治" {{ old('birthday_era') == '明治' ? 'selected' : '' }}>
+        <option value="明治" {{ old('birthday_era_kanji1') == '明治' ? 'selected' : '' }}>
          明
         </option>
-        <option value="大正" {{ old('birthday_era') == '大正' ? 'selected' : '' }}>
+        <option value="大正" {{ old('birthday_era_kanji1') == '大正' ? 'selected' : '' }}>
          大
         </option>
-        <option value="昭和" {{ old('birthday_era') == '昭和' ? 'selected' : '' }}>
+        <option value="昭和" {{ old('birthday_era_kanji1') == '昭和' ? 'selected' : '' }}>
          昭
         </option>
-        <option value="平成" {{ old('birthday_era') == '平成' ? 'selected' : '' }}>
+        <option value="平成" {{ old('birthday_era_kanji1') == '平成' ? 'selected' : '' }}>
          平
         </option>
-        <option value="令和" {{ old('birthday_era') == '令和' ? 'selected' : '' }}>
+        <option value="令和" {{ old('birthday_era_kanji1') == '令和' ? 'selected' : '' }}>
          令
         </option>
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 536px; top: 206px;">
-       <input class="egov-tool-field-rect" id="N14" name="birthday_year" value="{{ old('birthday_year') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N14" name="birthday_year1" value="{{ old('birthday_year1') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 571px; top: 206px;">
-       <input class="egov-tool-field-rect" id="N15" name="birthday_month" value="{{ old('birthday_month') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N15" name="birthday_month1" value="{{ old('birthday_month1') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 606px; top: 206px;">
-       <input class="egov-tool-field-rect" id="N16" name="birthday_day" value="{{ old('birthday_day') }}" style="width: 31px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N16" name="birthday_day1" value="{{ old('birthday_day1') }}" style="width: 31px; height: 26px; font-size: 12px; text-align: center; line-height: 47px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 241px; top: 274px;">
-       <input class="egov-tool-field-rect" id="N17" maxlength="3" name="headquarters_post_code_former" value="{{ old('headquarters_post_code_former') }}" style="width: 38px; height: 15px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N17" maxlength="3" name="headquarters_post_code_former1" value="{{ old('headquarters_post_code_former1') }}" style="width: 38px; height: 15px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 290px; top: 274px;">
-       <input class="egov-tool-field-rect" id="N18" maxlength="4" name="headquarters_post_code_latter" value="{{ old('headquarters_post_code_latter') }}" style="width: 62px; height: 15px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N18" maxlength="4" name="headquarters_post_code_latter1" value="{{ old('headquarters_post_code_latter1') }}" style="width: 62px; height: 15px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 241px; top: 295px;">
-       <input class="egov-tool-field-rect" id="N19" maxlength="50" name="headquarters_address" value="{{ old('headquarters_address') }}" style="width: 396px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" type="text" disabled>
+       <input class="egov-tool-field-rect" id="N19" maxlength="50" name="headquarters_address1" value="{{ old('headquarters_address1') }}" style="width: 396px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" type="text" disabled>
       </div>
       <div class="egov-tool-field-origin" style="left: 241px; top: 322px;">
-       <input class="egov-tool-field-rect" id="N20" maxlength="25" name="company_name" value="{{ old('company_name') }}" style="width: 396px; height: 20px; font-size: 12px; text-align: left; line-height: 31px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N20" maxlength="25" name="company_name1" value="{{ old('company_name1') }}" style="width: 396px; height: 20px; font-size: 12px; text-align: left; line-height: 31px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 241px; top: 346px;">
-       <input class="egov-tool-field-rect" id="N21" maxlength="25" name="headquarters_representative" value="{{ old('headquarters_representative') }}" style="width: 396px; height: 20px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N21" maxlength="25" name="headquarters_representative1" value="{{ old('headquarters_representative1') }}" style="width: 396px; height: 20px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 310px; top: 367px;">
-       <input class="egov-tool-field-rect" id="N23" maxlength="5" name="headquarters_tel_area_code" value="{{ old('headquarters_tel_area_code') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N23" maxlength="5" name="headquarters_tel_area_code1" value="{{ old('headquarters_tel_area_code1') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 406px; top: 367px;">
-       <input class="egov-tool-field-rect" id="N24" maxlength="4" name="headquarters_tel_city_code" value="{{ old('headquarters_tel_city_code') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N24" maxlength="4" name="headquarters_tel_city_code1" value="{{ old('headquarters_tel_city_code1') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 506px; top: 367px;">
-       <input class="egov-tool-field-rect" id="N25" maxlength="5" name="headquarters_tel_subscriber_code" value="{{ old('headquarters_tel_subscriber_code') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N25" maxlength="5" name="headquarters_tel_subscriber_code1" value="{{ old('headquarters_tel_subscriber_code1') }}" style="width: 60px; height: 15px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 118px; top: 400px;">
-       <input class="egov-tool-field-rect" id="N27" name="submission_year" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N27" name="submission_year1" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 143px; top: 400px;">
-       <input class="egov-tool-field-rect" id="N28" name="submission_month" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N28" name="submission_month1" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 168px; top: 400px;">
-       <input class="egov-tool-field-rect" id="N29" name="submission_day" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
+       <input class="egov-tool-field-rect" id="N29" name="submission_day1" style="width: 15px; height: 13px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 366px; top: 495px;">
-       <input class="egov-tool-field-rect" id="N30" maxlength="40" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" style="width: 320px; height: 21px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" disabled>
+       <input class="egov-tool-field-rect" id="N30" maxlength="40" name="labor_consultant_name1" value="{{ old('labor_consultant_name1') }}" style="width: 320px; height: 21px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" disabled>
       </div>
       <img style="position: relative; left: -28px;" alt="法令様式画像" src="{{ $dataUri }}" />
      </div>
