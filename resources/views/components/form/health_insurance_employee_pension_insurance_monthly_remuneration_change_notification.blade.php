@@ -5000,7 +5000,6 @@
 
 
                             <script>
-                                //<![CDATA[
                                 function addlength(ele,ml){
                                     var tmp = ele.getAttribute("maxlength");
                                     
@@ -5008,109 +5007,92 @@
                                     ele.setAttribute("maxlength", ml);
                                     }
                                 }
-
-                                /*
-                                ---------------------------------------------------------
-
-                                @babel/core 7.20.7
-
-                                Copyright (c) 2014-present Sebastian McKenzie and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/babel/babel/blob/v7.20.7/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                @babel/plugin-transform-runtime 7.19.6
-
-                                Copyright (c) 2014-present Sebastian McKenzie and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/babel/babel/blob/v7.19.6/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                @babel/preset-env 7.20.2
-
-                                Copyright (c) 2014-present Sebastian McKenzie and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/babel/babel/blob/v7.20.2/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                @babel/runtime 7.20.7
-
-                                Copyright (c) 2014-present Sebastian McKenzie and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/babel/babel/blob/v7.20.7/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                babel-loader 9.1.0
-
-                                Copyright (c) 2014-2019 Lu?s Couto <hello@luiscouto.pt>
-
-                                This software is released under the MIT license.
-                                see https://github.com/babel/babel-loader/blob/v9.1.0/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                core-js 3.27.1
-
-                                Copyright (c) 2014-2022 Denis Pushkarev
-
-                                This software is released under the MIT license.
-                                see https://github.com/zloirock/core-js/blob/v3.27.1/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                fs-extra 11.1.0
-
-                                Copyright (c) 2011-2017 JP Richardson
-
-                                This software is released under the MIT license.
-                                see https://github.com/jprichardson/node-fs-extra/blob/11.1.0/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                webpack 5.75.0
-
-                                Copyright JS Foundation and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/webpack/webpack/blob/v5.75.0/LICENSE
-
-                                ---------------------------------------------------------
-
-                                ---------------------------------------------------------
-
-                                webpack-cli 5.0.1
-
-                                Copyright JS Foundation and other contributors
-
-                                This software is released under the MIT license.
-                                see https://github.com/webpack/webpack-cli/blob/webpack-cli%405.0.1/LICENSE
-
-                                ---------------------------------------------------------
-                                */
-
-                                //]]>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var c1_0 = document.getElementById("N60_005F_8E73_8A4F_8BC7_9432");
+                                    var c1_1 = document.getElementById("N61_005F_8E73_8A4F_8BC7_94DD");
+                                    var c1_2 = document.getElementById("N62_005F_8E73_8A4F_8BC7_94DC");
+                                    var c1_3 = document.getElementById("N63_005F_8E73_8A4F_8BC7_9467");
+                                    var c1_4 = document.getElementById("N64_005F_8F5A_8F8A");
+                                    var c1_5 = document.getElementById("N65_005F_8F5A_8F8B");
+                                    var remarks1 = document.getElementById("remarks_salary_raise_and_reduction_reasons_text");
+                                    var remarks2 = document.getElementById("remarks_others");
+                                    c1_0.addEventListener("change", function() {
+                                        if (c1_0.checked) {
+                                            c1_1.checked = false;
+                                            c1_2.checked = false;
+                                            c1_3.checked = false;
+                                            c1_4.checked = false;
+                                            c1_5.checked = false;
+                                            remarks1.value = "";
+                                            remarks2.value = "";
+                                            remarks1.disabled = true;
+                                            remarks2.disabled = true;
+                                        }
+                                    });
+                                    c1_1.addEventListener("change", function() {
+                                        if (c1_1.checked) {
+                                            c1_0.checked = false;
+                                            c1_2.checked = false;
+                                            c1_3.checked = false;
+                                            c1_4.checked = false;
+                                            c1_5.checked = false;
+                                            remarks1.value = "";
+                                            remarks2.value = "";
+                                            remarks1.disabled = true;
+                                            remarks2.disabled = true;
+                                        }
+                                    });
+                                    c1_2.addEventListener("change", function() {
+                                        if (c1_2.checked) {
+                                            c1_1.checked = false;
+                                            c1_0.checked = false;
+                                            c1_3.checked = false;
+                                            c1_4.checked = false;
+                                            c1_5.checked = false;
+                                            remarks1.value = "";
+                                            remarks2.value = "";
+                                            remarks1.disabled = true;
+                                            remarks2.disabled = true;
+                                        }
+                                    });
+                                    c1_3.addEventListener("change", function() {
+                                        if (c1_3.checked) {
+                                            c1_1.checked = false;
+                                            c1_2.checked = false;
+                                            c1_0.checked = false;
+                                            c1_4.checked = false;
+                                            c1_5.checked = false;
+                                            remarks2.value = "";
+                                            remarks2.disabled = true;
+                                            remarks1.disabled = false;
+                                        }
+                                    });
+                                    c1_4.addEventListener("change", function() {
+                                        if (c1_4.checked) {
+                                            c1_1.checked = false;
+                                            c1_0.checked = false;
+                                            c1_3.checked = false;
+                                            c1_0.checked = false;
+                                            c1_5.checked = false;
+                                            remarks1.value = "";
+                                            remarks2.value = "";
+                                            remarks1.disabled = true;
+                                            remarks2.disabled = true;
+                                        }
+                                    });
+                                    c1_5.addEventListener("change", function() {
+                                        if (c1_5.checked) {
+                                            c1_1.checked = false;
+                                            c1_2.checked = false;
+                                            c1_0.checked = false;
+                                            c1_4.checked = false;
+                                            c1_3.checked = false;
+                                            remarks1.value = "";
+                                            remarks1.disabled = true;
+                                            remarks2.disabled = false;
+                                        }
+                                    });
+                                });
                             </script>
                         </div>
                     </div>
