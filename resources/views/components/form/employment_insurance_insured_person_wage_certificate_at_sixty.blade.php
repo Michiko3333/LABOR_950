@@ -9,6 +9,13 @@
 		if(f.wageAmountB1.value == "" && f.wageAmountB1.value == ""){
 			nullFlg = false;
 		}
+
+        if (isNaN(val) == false && nullFlg == true) {
+			f.totalWages1.value = val;
+		}else{
+			f.totalWages1.value = "";
+		}
+
 		return false;
 	}
 
@@ -821,13 +828,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:506px; top:115px; width:409px; line-height:32px; height:33px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="8"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:11px; font-family:'ＭＳ 明朝', serif; width:407px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J8_005F_8374_838A_834B_8369" value="{{ old('fullnameKana') }}" name="fullnameKana" disabled></SPAN>
+            id="J8_005F_8374_838A_834B_8369" value="{{ old('employeeFullnameKana') }}" name="employeeFullnameKana" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:506px; top:147px; width:409px; height:34px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:8px 0px 0px 0px;"><INPUT
             tabindex="9"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:left; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:409px; max-width:409px; height:15px; ime-mode:active;"
             type="TEXT" id="J9_005F_985A_8F5C_8DCE_82C9_9242_82B5_82BD_8ED2_82CC_8E81_96BC"
-            value="{{ old('fullname') }}" name="fullname" maxlength="32" disabled></SPAN>
+            value="{{ old('employeeFullname') }}" name="employeeFullname" maxlength="32" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:148px; top:182px; width:349px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="10"
@@ -919,8 +926,9 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J24_005F_93FA" value="{{ old('dateOfAttainmentage60Day') }}" name="dateOfAttainmentage60Day"
             maxlength="2"></SPAN>
+    <INPUT hidden type="TEXT" id="birthdayEra" value="昭和" name="birthdayEra"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:700px; top:279px; width:50px; height:15px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:690px; top:279px; width:50px; height:15px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="25"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:30px; max-width:30px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J26_005F_944E" value="{{ old('birthdayYear') }}" name="birthdayYear" maxlength="2"></SPAN>
@@ -943,7 +951,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:147px; top:365px; width:348px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="29"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:348px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J30_005F_8E81_96BC" value="{{ old('employerName') }}" name="employerName" disabled></SPAN>
+            id="J30_005F_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" name="employer_company_managerial_position_name" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:558px; width:17px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
             tabindex="45"
@@ -2525,6 +2533,8 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:496px; top:1722px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">印</SPAN>
     <SPAN
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:666px; top:281px; width:23px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">昭和</SPAN>
+    <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:748px; top:1629px; width:10px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">年</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:528px; top:1616px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">７</SPAN>
@@ -2966,289 +2976,289 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:760px; top:1589px; width:13px; height:13px; text-align:left; font-size:11px; font-family:'ＭＳ 明朝', serif; line-height:normal;">－</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:1907px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="674" onChange="return(zokushiCheck1(this.form));"
+            tabindex="674" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F1" value="{{ old('applicablePeriodEndDay2_2') }}"
             name="applicablePeriodEndDay2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="688" onChange="return(zokushiCheck2(this.form));"
+            tabindex="688" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F2" value="{{ old('applicablePeriodEndDay2_3') }}"
             name="applicablePeriodEndDay2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="702" onChange="return(zokushiCheck2(this.form));"
+            tabindex="702" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F3" value="{{ old('applicablePeriodEndDay2_4') }}"
             name="applicablePeriodEndDay2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="716" onChange="return(zokushiCheck2(this.form));"
+            tabindex="716" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F4" value="{{ old('applicablePeriodEndDay2_5') }}"
             name="applicablePeriodEndDay2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="730" onChange="return(zokushiCheck2(this.form));"
+            tabindex="730" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F5" value="{{ old('applicablePeriodEndDay2_6') }}"
             name="applicablePeriodEndDay2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="744" onChange="return(zokushiCheck2(this.form));"
+            tabindex="744" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F6" value="{{ old('applicablePeriodEndDay2_7') }}"
             name="applicablePeriodEndDay2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="758" onChange="return(zokushiCheck2(this.form));"
+            tabindex="758" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F7" value="{{ old('applicablePeriodEndDay2_8') }}"
             name="applicablePeriodEndDay2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="772" onChange="return(zokushiCheck2(this.form));"
+            tabindex="772" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F8" value="{{ old('applicablePeriodEndDay2_9') }}"
             name="applicablePeriodEndDay2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="786" onChange="return(zokushiCheck2(this.form));"
+            tabindex="786" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F9" value="{{ old('applicablePeriodEndDay2_10') }}"
             name="applicablePeriodEndDay2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="800" onChange="return(zokushiCheck2(this.form));"
+            tabindex="800" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F10" value="{{ old('applicablePeriodEndDay2_11') }}"
             name="applicablePeriodEndDay2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="814" onChange="return(zokushiCheck2(this.form));"
+            tabindex="814" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F11" value="{{ old('applicablePeriodEndDay2_12') }}"
             name="applicablePeriodEndDay2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:202px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="828" onChange="return(zokushiCheck2(this.form));"
+            tabindex="828" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J90_005F_93FA_005F12" value="{{ old('applicablePeriodEndDay2_13') }}"
             name="applicablePeriodEndDay2_13" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:1907px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="673" onChange="return(zokushiCheck1(this.form));"
+            tabindex="673" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F1" value="{{ old('applicablePeriodEndMonth2_2') }}"
             name="applicablePeriodEndMonth2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="687" onChange="return(zokushiCheck2(this.form));"
+            tabindex="687" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F2" value="{{ old('applicablePeriodEndMonth2_3') }}"
             name="applicablePeriodEndMonth2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="701" onChange="return(zokushiCheck2(this.form));"
+            tabindex="701" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F3" value="{{ old('applicablePeriodEndMonth2_4') }}"
             name="applicablePeriodEndMonth2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="715" onChange="return(zokushiCheck2(this.form));"
+            tabindex="715" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F4" value="{{ old('applicablePeriodEndMonth2_5') }}"
             name="applicablePeriodEndMonth2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="729" onChange="return(zokushiCheck2(this.form));"
+            tabindex="729" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F5" value="{{ old('applicablePeriodEndMonth2_6') }}"
             name="applicablePeriodEndMonth2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="743" onChange="return(zokushiCheck2(this.form));"
+            tabindex="743" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F6" value="{{ old('applicablePeriodEndMonth2_7') }}"
             name="applicablePeriodEndMonth2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="757" onChange="return(zokushiCheck2(this.form));"
+            tabindex="757" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F7" value="{{ old('applicablePeriodEndMonth2_8') }}"
             name="applicablePeriodEndMonth2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="771" onChange="return(zokushiCheck2(this.form));"
+            tabindex="771" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F8" value="{{ old('applicablePeriodEndMonth2_9') }}"
             name="applicablePeriodEndMonth2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="785" onChange="return(zokushiCheck2(this.form));"
+            tabindex="785" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F9" value="{{ old('applicablePeriodEndMonth2_10') }}"
             name="applicablePeriodEndMonth2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="799" onChange="return(zokushiCheck2(this.form));"
+            tabindex="799" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F10" value="{{ old('applicablePeriodEndMonth2_11') }}"
             name="applicablePeriodEndMonth2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="813" onChange="return(zokushiCheck2(this.form));"
+            tabindex="813" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F11" value="{{ old('applicablePeriodEndMonth2_12') }}"
             name="applicablePeriodEndMonth2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:171px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="827" onChange="return(zokushiCheck2(this.form));"
+            tabindex="827" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J89_005F_8C8E_005F12" value="{{ old('applicablePeriodEndMonth2_13') }}"
             name="applicablePeriodEndMonth2_13" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:1907px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="672" onChange="return(zokushiCheck1(this.form));"
+            tabindex="672" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F1" value="{{ old('applicablePeriodStartDay2_2') }}"
             name="applicablePeriodStartDay2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="686" onChange="return(zokushiCheck2(this.form));"
+            tabindex="686" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F2" value="{{ old('applicablePeriodStartDay2_3') }}"
             name="applicablePeriodStartDay2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="700" onChange="return(zokushiCheck2(this.form));"
+            tabindex="700" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F3" value="{{ old('applicablePeriodStartDay2_4') }}"
             name="applicablePeriodStartDay2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="714" onChange="return(zokushiCheck2(this.form));"
+            tabindex="714" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F4" value="{{ old('applicablePeriodStartDay2_5') }}"
             name="applicablePeriodStartDay2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="728" onChange="return(zokushiCheck2(this.form));"
+            tabindex="728" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F5" value="{{ old('applicablePeriodStartDay2_6') }}"
             name="applicablePeriodStartDay2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="742" onChange="return(zokushiCheck2(this.form));"
+            tabindex="742" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F6" value="{{ old('applicablePeriodStartDay2_7') }}"
             name="applicablePeriodStartDay2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="756" onChange="return(zokushiCheck2(this.form));"
+            tabindex="756" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F7" value="{{ old('applicablePeriodStartDay2_8') }}"
             name="applicablePeriodStartDay2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="770" onChange="return(zokushiCheck2(this.form));"
+            tabindex="770" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F8" value="{{ old('applicablePeriodStartDay2_9') }}"
             name="applicablePeriodStartDay2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="784" onChange="return(zokushiCheck2(this.form));"
+            tabindex="784" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F9" value="{{ old('applicablePeriodStartDay2_10') }}"
             name="applicablePeriodStartDay2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="798" onChange="return(zokushiCheck2(this.form));"
+            tabindex="798" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F10" value="{{ old('applicablePeriodStartDay2_11') }}"
             name="applicablePeriodStartDay2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="812" onChange="return(zokushiCheck2(this.form));"
+            tabindex="812" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F11" value="{{ old('applicablePeriodStartDay2_12') }}"
             name="applicablePeriodStartDay2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:123px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="826" onChange="return(zokushiCheck2(this.form));"
+            tabindex="826" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J88_005F_93FA_005F12" value="{{ old('applicablePeriodStartDay2_13') }}"
             name="applicablePeriodStartDay2_13" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:1907px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="671" onChange="return(zokushiCheck1(this.form));"
+            tabindex="671" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F1" value="{{ old('applicablePeriodStartMonth2_2') }}"
             name="applicablePeriodStartMonth2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="685" onChange="return(zokushiCheck2(this.form));"
+            tabindex="685" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F2" value="{{ old('applicablePeriodStartMonth2_3') }}"
             name="applicablePeriodStartMonth2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="699" onChange="return(zokushiCheck2(this.form));"
+            tabindex="699" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F3" value="{{ old('applicablePeriodStartMonth2_4') }}"
             name="applicablePeriodStartMonth2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="713" onChange="return(zokushiCheck2(this.form));"
+            tabindex="713" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F4" value="{{ old('applicablePeriodStartMonth2_5') }}"
             name="applicablePeriodStartMonth2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="727" onChange="return(zokushiCheck2(this.form));"
+            tabindex="727" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F5" value="{{ old('applicablePeriodStartMonth2_6') }}"
             name="applicablePeriodStartMonth2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="741" onChange="return(zokushiCheck2(this.form));"
+            tabindex="741" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F6" value="{{ old('applicablePeriodStartMonth2_7') }}"
             name="applicablePeriodStartMonth2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="755" onChange="return(zokushiCheck2(this.form));"
+            tabindex="755" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F7" value="{{ old('applicablePeriodStartMonth2_8') }}"
             name="applicablePeriodStartMonth2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="769" onChange="return(zokushiCheck2(this.form));"
+            tabindex="769" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F8" value="{{ old('applicablePeriodStartMonth2_9') }}"
             name="applicablePeriodStartMonth2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="783" onChange="return(zokushiCheck2(this.form));"
+            tabindex="783" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F9" value="{{ old('applicablePeriodStartMonth2_10') }}"
             name="applicablePeriodStartMonth2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="797" onChange="return(zokushiCheck2(this.form));"
+            tabindex="797" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F10" value="{{ old('applicablePeriodStartMonth2_11') }}"
             name="applicablePeriodStartMonth2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="811" onChange="return(zokushiCheck2(this.form));"
+            tabindex="811" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F11" value="{{ old('applicablePeriodStartMonth2_12') }}"
             name="applicablePeriodStartMonth2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:93px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="825" onChange="return(zokushiCheck2(this.form));"
+            tabindex="825" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J87_005F_8C8E_005F12" value="{{ old('applicablePeriodStartMonth2_13') }}"
             name="applicablePeriodStartMonth2_13" maxlength="2"></SPAN>
@@ -3261,77 +3271,77 @@
             value="{{ old('basicDays2_2') }}" name="basicDays2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="689" onChange="return(zokushiCheck2(this.form));"
+            tabindex="689" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F2"
             value="{{ old('basicDays2_3') }}" name="basicDays2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="703" onChange="return(zokushiCheck2(this.form));"
+            tabindex="703" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F3"
             value="{{ old('basicDays2_4') }}" name="basicDays2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="717" onChange="return(zokushiCheck2(this.form));"
+            tabindex="717" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F4"
             value="{{ old('basicDays2_5') }}" name="basicDays2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="731" onChange="return(zokushiCheck2(this.form));"
+            tabindex="731" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F5"
             value="{{ old('basicDays2_6') }}" name="basicDays2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="745" onChange="return(zokushiCheck2(this.form));"
+            tabindex="745" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F6"
             value="{{ old('basicDays2_7') }}" name="basicDays2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="759" onChange="return(zokushiCheck2(this.form));"
+            tabindex="759" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F7"
             value="{{ old('basicDays2_8') }}" name="basicDays2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="773" onChange="return(zokushiCheck2(this.form));"
+            tabindex="773" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F8"
             value="{{ old('basicDays2_9') }}" name="basicDays2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="787" onChange="return(zokushiCheck2(this.form));"
+            tabindex="787" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F9"
             value="{{ old('basicDays2_10') }}" name="basicDays2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="801" onChange="return(zokushiCheck2(this.form));"
+            tabindex="801" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F10"
             value="{{ old('basicDays2_11') }}" name="basicDays2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="815" onChange="return(zokushiCheck2(this.form));"
+            tabindex="815" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F11"
             value="{{ old('basicDays2_12') }}" name="basicDays2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:243px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="829" onChange="return(zokushiCheck2(this.form));"
+            tabindex="829" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT"
             id="J91_005F_94ED_95DB_8CAF_8ED2_8AFA_8AD4_8E5A_92E8_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F12"
@@ -3344,67 +3354,67 @@
             name="paymentPeriodEndDay2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="693" onChange="return(zokushiCheck2(this.form));"
+            tabindex="693" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F2" value="{{ old('paymentPeriodEndDay2_3') }}"
             name="paymentPeriodEndDay2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="707" onChange="return(zokushiCheck2(this.form));"
+            tabindex="707" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F3" value="{{ old('paymentPeriodEndDay2_4') }}"
             name="paymentPeriodEndDay2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="721" onChange="return(zokushiCheck2(this.form));"
+            tabindex="721" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F4" value="{{ old('paymentPeriodEndDay2_5') }}"
             name="paymentPeriodEndDay2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="735" onChange="return(zokushiCheck2(this.form));"
+            tabindex="735" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F5" value="{{ old('paymentPeriodEndDay2_6') }}"
             name="paymentPeriodEndDay2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="749" onChange="return(zokushiCheck2(this.form));"
+            tabindex="749" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F6" value="{{ old('paymentPeriodEndDay2_7') }}"
             name="paymentPeriodEndDay2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="763" onChange="return(zokushiCheck2(this.form));"
+            tabindex="763" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F7" value="{{ old('paymentPeriodEndDay2_8') }}"
             name="paymentPeriodEndDay2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="777" onChange="return(zokushiCheck2(this.form));"
+            tabindex="777" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F8" value="{{ old('paymentPeriodEndDay2_9') }}"
             name="paymentPeriodEndDay2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="791" onChange="return(zokushiCheck2(this.form));"
+            tabindex="791" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F9" value="{{ old('paymentPeriodEndDay2_10') }}"
             name="paymentPeriodEndDay2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="805" onChange="return(zokushiCheck2(this.form));"
+            tabindex="805" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F10" value="{{ old('paymentPeriodEndDay2_11') }}"
             name="paymentPeriodEndDay2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="819" onChange="return(zokushiCheck2(this.form));"
+            tabindex="819" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F11" value="{{ old('paymentPeriodEndDay2_12') }}"
             name="paymentPeriodEndDay2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:411px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="833" onChange="return(zokushiCheck2(this.form));"
+            tabindex="833" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J95_005F_93FA_005F12" value="{{ old('paymentPeriodEndDay2_13') }}"
             name="paymentPeriodEndDay2_13" maxlength="2"></SPAN>
@@ -3416,67 +3426,67 @@
             name="paymentPeriodEndMonth2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="692" onChange="return(zokushiCheck2(this.form));"
+            tabindex="692" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F2" value="{{ old('paymentPeriodEndMonth2_3') }}"
             name="paymentPeriodEndMonth2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="706" onChange="return(zokushiCheck2(this.form));"
+            tabindex="706" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F3" value="{{ old('paymentPeriodEndMonth2_4') }}"
             name="paymentPeriodEndMonth2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="720" onChange="return(zokushiCheck2(this.form));"
+            tabindex="720" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F4" value="{{ old('paymentPeriodEndMonth2_5') }}"
             name="paymentPeriodEndMonth2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="734" onChange="return(zokushiCheck2(this.form));"
+            tabindex="734" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F5" value="{{ old('paymentPeriodEndMonth2_6') }}"
             name="paymentPeriodEndMonth2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="748" onChange="return(zokushiCheck2(this.form));"
+            tabindex="748" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F6" value="{{ old('paymentPeriodEndMonth2_7') }}"
             name="paymentPeriodEndMonth2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="762" onChange="return(zokushiCheck2(this.form));"
+            tabindex="762" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F7" value="{{ old('paymentPeriodEndMonth2_8') }}"
             name="paymentPeriodEndMonth2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="776" onChange="return(zokushiCheck2(this.form));"
+            tabindex="776" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F8" value="{{ old('paymentPeriodEndMonth2_9') }}"
             name="paymentPeriodEndMonth2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="790" onChange="return(zokushiCheck2(this.form));"
+            tabindex="790" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F9" value="{{ old('paymentPeriodEndMonth2_10') }}"
             name="paymentPeriodEndMonth2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="804" onChange="return(zokushiCheck2(this.form));"
+            tabindex="804" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F10" value="{{ old('paymentPeriodEndMonth2_11') }}"
             name="paymentPeriodEndMonth2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="818" onChange="return(zokushiCheck2(this.form));"
+            tabindex="818" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F11" value="{{ old('paymentPeriodEndMonth2_12') }}"
             name="paymentPeriodEndMonth2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:379px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="832" onChange="return(zokushiCheck2(this.form));"
+            tabindex="832" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J94_005F_8C8E_005F12" value="{{ old('paymentPeriodEndMonth2_13') }}"
             name="paymentPeriodEndMonth2_13" maxlength="2"></SPAN>
@@ -3488,67 +3498,67 @@
             name="paymentPeriodStartDay2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="691" onChange="return(zokushiCheck2(this.form));"
+            tabindex="691" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F2" value="{{ old('paymentPeriodStartDay2_3') }}"
             name="paymentPeriodStartDay2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="705" onChange="return(zokushiCheck2(this.form));"
+            tabindex="705" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F3" value="{{ old('paymentPeriodStartDay2_4') }}"
             name="paymentPeriodStartDay2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="719" onChange="return(zokushiCheck2(this.form));"
+            tabindex="719" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F4" value="{{ old('paymentPeriodStartDay2_5') }}"
             name="paymentPeriodStartDay2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="733" onChange="return(zokushiCheck2(this.form));"
+            tabindex="733" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F5" value="{{ old('paymentPeriodStartDay2_6') }}"
             name="paymentPeriodStartDay2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="747" onChange="return(zokushiCheck2(this.form));"
+            tabindex="747" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F6" value="{{ old('paymentPeriodStartDay2_7') }}"
             name="paymentPeriodStartDay2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="761" onChange="return(zokushiCheck2(this.form));"
+            tabindex="761" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F7" value="{{ old('paymentPeriodStartDay2_8') }}"
             name="paymentPeriodStartDay2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="775" onChange="return(zokushiCheck2(this.form));"
+            tabindex="775" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F8" value="{{ old('paymentPeriodStartDay2_9') }}"
             name="paymentPeriodStartDay2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="789" onChange="return(zokushiCheck2(this.form));"
+            tabindex="789" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F9" value="{{ old('paymentPeriodStartDay2_10') }}"
             name="paymentPeriodStartDay2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="803" onChange="return(zokushiCheck2(this.form));"
+            tabindex="803" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F10" value="{{ old('paymentPeriodStartDay2_11') }}"
             name="paymentPeriodStartDay2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="817" onChange="return(zokushiCheck2(this.form));"
+            tabindex="817" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F11" value="{{ old('paymentPeriodStartDay2_12') }}"
             name="paymentPeriodStartDay2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:332px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="831" onChange="return(zokushiCheck2(this.form));"
+            tabindex="831" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J93_005F_93FA_005F12" value="{{ old('paymentPeriodStartDay2_13') }}"
             name="paymentPeriodStartDay2_13" maxlength="2"></SPAN>
@@ -3560,67 +3570,67 @@
             name="paymentPeriodStartMonth2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="690" onChange="return(zokushiCheck2(this.form));"
+            tabindex="690" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F2" value="{{ old('paymentPeriodStartMonth2_3') }}"
             name="paymentPeriodStartMonth2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:1974px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="704" onChange="return(zokushiCheck2(this.form));"
+            tabindex="704" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F3" value="{{ old('paymentPeriodStartMonth2_4') }}"
             name="paymentPeriodStartMonth2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="718" onChange="return(zokushiCheck2(this.form));"
+            tabindex="718" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F4" value="{{ old('paymentPeriodStartMonth2_5') }}"
             name="paymentPeriodStartMonth2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2042px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="732" onChange="return(zokushiCheck2(this.form));"
+            tabindex="732" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F5" value="{{ old('paymentPeriodStartMonth2_6') }}"
             name="paymentPeriodStartMonth2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="746" onChange="return(zokushiCheck2(this.form));"
+            tabindex="746" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F6" value="{{ old('paymentPeriodStartMonth2_7') }}"
             name="paymentPeriodStartMonth2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2108px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="760" onChange="return(zokushiCheck2(this.form));"
+            tabindex="760" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F7" value="{{ old('paymentPeriodStartMonth2_8') }}"
             name="paymentPeriodStartMonth2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="774" onChange="return(zokushiCheck2(this.form));"
+            tabindex="774" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F8" value="{{ old('paymentPeriodStartMonth2_9') }}"
             name="paymentPeriodStartMonth2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="788" onChange="return(zokushiCheck2(this.form));"
+            tabindex="788" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F9" value="{{ old('paymentPeriodStartMonth2_10') }}"
             name="paymentPeriodStartMonth2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
-            tabindex="802" onChange="return(zokushiCheck2(this.form));"
+            tabindex="802" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F10" value="{{ old('paymentPeriodStartMonth2_11') }}"
             name="paymentPeriodStartMonth2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2243px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="816" onChange="return(zokushiCheck2(this.form));"
+            tabindex="816" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F11" value="{{ old('paymentPeriodStartMonth2_12') }}"
             name="paymentPeriodStartMonth2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:304px; top:2276px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="830" onChange="return(zokushiCheck2(this.form));"
+            tabindex="830" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J92_005F_8C8E_005F12" value="{{ old('paymentPeriodStartMonth2_13') }}"
             name="paymentPeriodStartMonth2_13" maxlength="2"></SPAN>
@@ -3632,67 +3642,67 @@
             value="{{ old('paymentPeriodBasicDays2_2') }}" name="paymentPeriodBasicDays2_2" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:1940px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="694" onChange="return(zokushiCheck2(this.form));"
+            tabindex="694" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F2"
             value="{{ old('paymentPeriodBasicDays2_3') }}" name="paymentPeriodBasicDays2_3" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:1974px; width:18px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="708" onChange="return(zokushiCheck2(this.form));"
+            tabindex="708" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F3"
             value="{{ old('paymentPeriodBasicDays2_4') }}" name="paymentPeriodBasicDays2_4" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2008px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="722" onChange="return(zokushiCheck2(this.form));"
+            tabindex="722" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F4"
             value="{{ old('paymentPeriodBasicDays2_5') }}" name="paymentPeriodBasicDays2_5" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2042px; width:18px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="736" onChange="return(zokushiCheck2(this.form));"
+            tabindex="736" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F5"
             value="{{ old('paymentPeriodBasicDays2_6') }}" name="paymentPeriodBasicDays2_6" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2074px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="750" onChange="return(zokushiCheck2(this.form));"
+            tabindex="750" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F6"
             value="{{ old('paymentPeriodBasicDays2_7') }}" name="paymentPeriodBasicDays2_7" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2108px; width:18px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="764" onChange="return(zokushiCheck2(this.form));"
+            tabindex="764" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F7"
             value="{{ old('paymentPeriodBasicDays2_8') }}" name="paymentPeriodBasicDays2_8" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2141px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="778" onChange="return(zokushiCheck2(this.form));"
+            tabindex="778" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F8"
             value="{{ old('paymentPeriodBasicDays2_9') }}" name="paymentPeriodBasicDays2_9" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2175px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="792" onChange="return(zokushiCheck2(this.form));"
+            tabindex="792" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F9"
             value="{{ old('paymentPeriodBasicDays2_10') }}" name="paymentPeriodBasicDays2_10" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2209px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="806" onChange="return(zokushiCheck2(this.form));"
+            tabindex="806" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F10"
             value="{{ old('paymentPeriodBasicDays2_11') }}" name="paymentPeriodBasicDays2_11" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2243px; width:18px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="820" onChange="return(zokushiCheck2(this.form));"
+            tabindex="820" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F11"
             value="{{ old('paymentPeriodBasicDays2_12') }}" name="paymentPeriodBasicDays2_12" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:452px; top:2276px; width:18px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="834" onChange="return(zokushiCheck2(this.form));"
+            tabindex="834" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J96_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F12"
             value="{{ old('paymentPeriodBasicDays2_13') }}" name="paymentPeriodBasicDays2_13" maxlength="2"></SPAN>
@@ -3716,199 +3726,199 @@
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:1940px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="695" onChange="return(zokushiCheck2(this.form));"
+            tabindex="695" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 2);" id="J97_005F_92C0_8BE0_8A7AA_005F2"
             value="{{ old('wageAmountA2_2') }}" name="wageAmountA2_2" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:1940px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="696" onChange="return(zokushiCheck2(this.form));"
+            tabindex="696" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 2);" id="J98_005F_92C0_8BE0_8A7AB_005F2"
             value="{{ old('wageAmountB2_2') }}" name="wageAmountB2_2" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:1940px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F2" value="{{ old('totalWages2_2') }}" name="totalWages2_2"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:1974px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="709" onChange="return(zokushiCheck2(this.form));"
+            tabindex="709" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 3);" id="J97_005F_92C0_8BE0_8A7AA_005F3"
             value="{{ old('wageAmountA2_3') }}" name="wageAmountA2_3" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:1974px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="710" onChange="return(zokushiCheck2(this.form));"
+            tabindex="710" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 3);" id="J98_005F_92C0_8BE0_8A7AB_005F3"
             value="{{ old('wageAmountB2_3') }}" name="wageAmountB2_3" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:1974px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F3" value="{{ old('totalWages2_3') }}" name="totalWages2_3"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2008px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="723" onChange="return(zokushiCheck2(this.form));"
+            tabindex="723" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 4);" id="J97_005F_92C0_8BE0_8A7AA_005F4"
             value="{{ old('wageAmountA2_4') }}" name="wageAmountA2_4" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2008px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="724" onChange="return(zokushiCheck2(this.form));"
+            tabindex="724" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 4);" id="J98_005F_92C0_8BE0_8A7AB_005F4"
             value="{{ old('wageAmountB2_4') }}" name="wageAmountB2_4" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2008px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F4" value="{{ old('totalWages2_4') }}" name="totalWages2_4"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2042px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="737" onChange="return(zokushiCheck2(this.form));"
+            tabindex="737" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 5);" id="J97_005F_92C0_8BE0_8A7AA_005F5"
             value="{{ old('wageAmountA2_5') }}" name="wageAmountA2_5" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2042px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="738" onChange="return(zokushiCheck2(this.form));"
+            tabindex="738" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 5);" id="J98_005F_92C0_8BE0_8A7AB_005F5"
             value="{{ old('wageAmountB2_5') }}" name="wageAmountB2_5" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2042px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F5" value="{{ old('totalWages2_5') }}" name="totalWages2_5"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2074px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="751" onChange="return(zokushiCheck2(this.form));"
+            tabindex="751" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 6);" id="J97_005F_92C0_8BE0_8A7AA_005F6"
             value="{{ old('wageAmountA2_6') }}" name="wageAmountA2_6" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2074px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="752" onChange="return(zokushiCheck2(this.form));"
+            tabindex="752" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 6);" id="J98_005F_92C0_8BE0_8A7AB_005F6"
             value="{{ old('wageAmountB2_6') }}" name="wageAmountB2_6" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2074px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F6" value="{{ old('totalWages2_6') }}" name="totalWages2_6"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2108px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="765" onChange="return(zokushiCheck2(this.form));"
+            tabindex="765" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 7);" id="J97_005F_92C0_8BE0_8A7AA_005F7"
             value="{{ old('wageAmountA2_7') }}" name="wageAmountA2_7" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2108px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="766" onChange="return(zokushiCheck2(this.form));"
+            tabindex="766" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 7);" id="J98_005F_92C0_8BE0_8A7AB_005F7"
             value="{{ old('wageAmountB2_7') }}" name="wageAmountB2_7" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2108px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F7" value="{{ old('totalWages2_7') }}" name="totalWages2_7"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2141px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="779" onChange="return(zokushiCheck2(this.form));"
+            tabindex="779" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 8);" id="J97_005F_92C0_8BE0_8A7AA_005F8"
             value="{{ old('wageAmountA2_8') }}" name="wageAmountA2_8" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2141px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="780" onChange="return(zokushiCheck2(this.form));"
+            tabindex="780" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 8);" id="J98_005F_92C0_8BE0_8A7AB_005F8"
             value="{{ old('wageAmountB2_8') }}" name="wageAmountB2_8" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2141px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F8" value="{{ old('totalWages2_8') }}" name="totalWages2_8"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2175px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="793" onChange="return(zokushiCheck2(this.form));"
+            tabindex="793" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 9);" id="J97_005F_92C0_8BE0_8A7AA_005F9"
             value="{{ old('wageAmountA2_9') }}" name="wageAmountA2_9" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2175px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="794" onChange="return(zokushiCheck2(this.form));"
+            tabindex="794" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 9);" id="J98_005F_92C0_8BE0_8A7AB_005F9"
             value="{{ old('wageAmountB2_9') }}" name="wageAmountB2_9" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2175px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F9" value="{{ old('totalWages2_9') }}" name="totalWages2_9"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2209px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="807" onChange="return(zokushiCheck2(this.form));"
+            tabindex="807" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 10);" id="J97_005F_92C0_8BE0_8A7AA_005F10"
             value="{{ old('wageAmountA2_10') }}" name="wageAmountA2_10" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2209px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="808" onChange="return(zokushiCheck2(this.form));"
+            tabindex="808" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 10);" id="J98_005F_92C0_8BE0_8A7AB_005F10"
             value="{{ old('wageAmountB2_10') }}" name="wageAmountB2_10" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2209px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" readonly onChange="return(zokushiCheck2(this.form));"
+            tabindex="-1" readonly 
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F10" value="{{ old('totalWages2_10') }}"
             name="totalWages2_10" maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2243px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="821" onChange="return(zokushiCheck2(this.form));"
+            tabindex="821" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 11);" id="J97_005F_92C0_8BE0_8A7AA_005F11"
             value="{{ old('wageAmountA2_11') }}" name="wageAmountA2_11" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2243px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="822" onChange="return(zokushiCheck2(this.form));"
+            tabindex="822" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 11);" id="J98_005F_92C0_8BE0_8A7AB_005F11"
             value="{{ old('wageAmountB2_11') }}" name="wageAmountB2_11" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2243px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" onChange="return(zokushiCheck2(this.form));" readonly
+            tabindex="-1"  readonly
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F11" value="{{ old('totalWages2_11') }}"
             name="totalWages2_11" maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:518px; top:2276px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="835" onChange="return(zokushiCheck2(this.form));"
+            tabindex="835" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 12);" id="J97_005F_92C0_8BE0_8A7AA_005F12"
             value="{{ old('wageAmountA2_12') }}" name="wageAmountA2_12" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left:624px; top:2276px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="836" onChange="return(zokushiCheck2(this.form));"
+            tabindex="836" 
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:69px; max-width:69px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 12);" id="J98_005F_92C0_8BE0_8A7AB_005F12"
             value="{{ old('wageAmountB2_12') }}" name="wageAmountB2_12" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:2276px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="-1" onChange="return(zokushiCheck2(this.form));" readonly
+            tabindex="-1"  readonly
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J99_005F_92C0_8BE0_8A7A_8C76_005F12" value="{{ old('totalWages2_12') }}"
             name="totalWages2_12" maxlength="8"></SPAN>
@@ -3921,57 +3931,57 @@
             id="J100_005F_94F5_8D6C_005F1" value="{{ old('WageNote2_1') }}" name="WageNote2_1"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:1930px; width:109px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="698" onChange="return(zokushiCheck2(this.form));"
+            tabindex="698" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F2" value="{{ old('WageNote2_2') }}" name="WageNote2_2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:1964px; width:109px; line-height:34px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="712" onChange="return(zokushiCheck2(this.form));"
+            tabindex="712" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F3" value="{{ old('WageNote2_3') }}" name="WageNote2_3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:1997px; width:109px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="726" onChange="return(zokushiCheck2(this.form));"
+            tabindex="726" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F4" value="{{ old('WageNote2_4') }}" name="WageNote2_4"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2031px; width:109px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="740" onChange="return(zokushiCheck2(this.form));"
+            tabindex="740" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F5" value="{{ old('WageNote2_5') }}" name="WageNote2_4"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2064px; width:109px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="754" onChange="return(zokushiCheck2(this.form));"
+            tabindex="754" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F6" value="{{ old('WageNote2_6') }}" name="WageNote2_6"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2097px; width:109px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="768" onChange="return(zokushiCheck2(this.form));"
+            tabindex="768" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F7" value="{{ old('WageNote2_7') }}" name="WageNote2_7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2131px; width:109px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="782" onChange="return(zokushiCheck2(this.form));"
+            tabindex="782" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F8" value="{{ old('WageNote2_8') }}" name="WageNote2_8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2165px; width:109px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="796" onChange="return(zokushiCheck2(this.form));"
+            tabindex="796" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F9" value="{{ old('WageNote2_9') }}" name="WageNote2_9"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2198px; width:109px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="810" onChange="return(zokushiCheck2(this.form));"
+            tabindex="810" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F10" value="{{ old('WageNote2_10') }}" name="WageNote2_10"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2232px; width:109px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="824" onChange="return(zokushiCheck2(this.form));"
+            tabindex="824" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F11" value="{{ old('WageNote2_11') }}" name="WageNote2_11"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2265px; width:109px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
-            tabindex="838" onChange="return(zokushiCheck2(this.form));"
+            tabindex="838" 
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J100_005F_94F5_8D6C_005F12" value="{{ old('WageNote2_12') }}" name="WageNote2_12"></SPAN>
     <SPAN

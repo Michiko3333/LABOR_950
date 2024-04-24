@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -128,6 +128,18 @@
                 $('#J158_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J159_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J160_005F_93FA').val('{{ $todaySet['day'] }}');
+                @if($current_employee->role_id === 500)
+                // $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J198_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
+                $('#J199_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
+                $('#J200_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_employee->tel_subscriber_code}}');
+                $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                    #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @else
+                $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                    #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @endif
             });
             document.addEventListener('DOMContentLoaded', function () {
                 const tabs = document.querySelectorAll('.ui.tabular.menu .item');

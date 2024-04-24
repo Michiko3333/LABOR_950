@@ -1,12 +1,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<x-layout title="帳票作成：健康保険被扶養者（異動）届 / 健康保険被扶養者（異動）・国民年金第3号被保険者関係届">
+<x-layout title="健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２２年１０月以降手続き）">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">帳票：健康保険被扶養者（異動）届 / 国民年金第3号被保険者関係届</h1>
+        <h1 class="mt-2">健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２２年１０月以降手続き）</h1>
         <p>申請・届出に関する事項を入力してください。
         </p>
         @if($certificate == false)

@@ -28,6 +28,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -42,7 +43,12 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
             "day" => $day
         );
 
-        return view('ledger.first_wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.first_wage_certificates_employment_insured_at_sixty', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(FirstWageCertificatesEmploymentInsuredAtSixtyRequest $request)
@@ -97,8 +103,8 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'employmentInsuredNo4digit' => $request->input('employmentInsuredNo4digit'),
                 'employmentInsuredNo6digit' => $request->input('employmentInsuredNo6digit'),
                 'employmentInsuredNoCD' => $request->input('employmentInsuredNoCD'),
-                'fullname' => $request->input('fullname'),
-                'fullnameKana' => $request->input('fullnameKana'),
+                'employeeFullname' => $request->input('employeeFullname'),
+                'employeeFullnameKana' => $request->input('employeeFullnameKana'),
                 'employmentInsuranceOfficeNo4digit' => $request->input('employmentInsuranceOfficeNo4digit'),
                 'employmentInsuranceOfficeNo6digit' => $request->input('employmentInsuranceOfficeNo6digit'),
                 'employmentInsuranceOfficeNoCD' => $request->input('employmentInsuranceOfficeNoCD'),
@@ -172,7 +178,6 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'birthdayYear' => $request->input('birthdayYear'),
                 'birthdayMonth' => $request->input('birthdayMonth'),
                 'birthdayDay' => $request->input('birthdayDay'),
-                'employerName' => $request->input('employerName'),
                 'applicablePeriodEndDay1_02' => $request->input('applicablePeriodEndDay1_02'),
                 'applicablePeriodEndDay1_03' => $request->input('applicablePeriodEndDay1_03'),
                 'applicablePeriodEndDay1_04' => $request->input('applicablePeriodEndDay1_04'),
@@ -530,6 +535,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'WageNote2_13' => $request->input('WageNote2_13'),
                 'specialNoteOnWages2_01' => $request->input('specialNoteOnWages2_01'),
                 'J102_check_flg' => $request->input('J102_check_flg'),
+                'employer_company_managerial_position_name' => $request->input('employer_company_managerial_position_name'),
             ];
             $XML = new MixXmlEgovSigner($request);
             $response = $XML->run($request);            

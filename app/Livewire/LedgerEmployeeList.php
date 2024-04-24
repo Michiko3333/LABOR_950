@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\CurrentUser;
 use App\Models\Dependent;
 use App\Models\Employee;
+use App\Models\Residential_status;
 use App\Models\Retirement_reason_age;
 use App\Models\Retirement_reason_business_owner_suggestion;
 use App\Models\Retirement_reason_contract_period_expired_except_eternal_hire;
@@ -16,6 +17,8 @@ use App\Models\Retirement_reason_contract_period_reached_limit;
 use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
@@ -98,6 +101,44 @@ class LedgerEmployeeList extends BaseTable
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
             }
         }
+        $country_id = Employee::where('id', $id)->value('country_id');
+        if (!empty($country_id)) {
+            $country_value = Country::where('id', $country_id)->value('setting_value');
+        }
+        $residential_status_id = Employee::where('id', $id)->value('residential_status_id');
+        if (!empty($residential_status_id)) {
+            $residential_status_value = Residential_status::where('id', $residential_status_id)->value('setting_value');
+        }
+        if (!empty($employee->birthday)) {
+            $birthday = Carbon::parse($employee->birthday);
+            $birthday_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($birthday);
+            $birthday_convert_japan = [
+                'era' => $birthday_convert_japan['japanese_calendar_era_string'],
+                'year' => $birthday_convert_japan['japanese_calendar_result']->year,
+                'month' => $birthday_convert_japan['japanese_calendar_result']->month,
+                'day' => $birthday_convert_japan['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($employee->employment_insured_date)) {
+            $employment_insured_date = Carbon::parse($employee->employment_insured_date);
+            $employment_insured_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($employment_insured_date);
+            $employment_insured_convert_date = [
+                'era' => $employment_insured_convert_date['japanese_calendar_era_string'],
+                'year' => $employment_insured_convert_date['japanese_calendar_result']->year,
+                'month' => $employment_insured_convert_date['japanese_calendar_result']->month,
+                'day' => $employment_insured_convert_date['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($employee->retirement_date)) {
+            $employment_retirement_date = Carbon::parse($employee->retirement_date);
+            $employment_retirement_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($employment_retirement_date);
+            $employment_retirement_convert_date = [
+                'era' => $employment_retirement_convert_date['japanese_calendar_era_string'],
+                'year' => $employment_retirement_convert_date['japanese_calendar_result']->year,
+                'month' => $employment_retirement_convert_date['japanese_calendar_result']->month,
+                'day' => $employment_retirement_convert_date['japanese_calendar_result']->day,
+            ];
+        }
 
         $output = [
             'employee' => $employeeData,
@@ -113,6 +154,11 @@ class LedgerEmployeeList extends BaseTable
             'retirement_reason_employee_decision_change_job_type' => $retirement_reason_employee_decision_change_job_type_data,
             'retirement_reason_employee_decision_change_office' => $retirement_reason_employee_decision_change_office_data,
             'retirement_reason_employee_decision_reasons' => $retirement_reason_employee_decision_reasons_data,
+            'country_value' => $country_value ?? '',
+            'residential_status_value' => $residential_status_value ?? '',
+            'birthday_convert_japan' => $birthday_convert_japan ?? '',
+            'employment_insured_convert_date' => $employment_insured_convert_date ?? '',
+            'employment_retirement_convert_date' => $employment_retirement_convert_date ?? '',
         ];
 
         $this->selected_id = $id;

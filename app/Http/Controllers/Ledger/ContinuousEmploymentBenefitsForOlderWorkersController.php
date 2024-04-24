@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Ledger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\EgovAPI\MixXmlEgovSigner;
 use App\Http\Requests\ContinuousEmploymentBenefitsForOlderWorkersRequest;
-
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 
@@ -28,6 +28,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -41,9 +42,12 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             "month" => $month,
             "day" => $day
         );
-        
-
-        return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.continuous_employment_benefits_for_older_workers', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(ContinuousEmploymentBenefitsForOlderWorkersRequest $request)

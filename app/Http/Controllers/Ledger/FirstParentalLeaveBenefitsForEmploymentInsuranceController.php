@@ -30,6 +30,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -43,7 +44,12 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.first_parental_leave_benefits_for_employment_insurance', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)

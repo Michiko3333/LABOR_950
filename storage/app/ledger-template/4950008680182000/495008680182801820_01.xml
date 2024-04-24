@@ -26,8 +26,8 @@
 		<事業所番号CD>employment_insurance_office_no_CD</事業所番号CD>
 	</事業所番号>
 	<育児休業開始年月日>
-		<年号>childcare_start_date_japane_era</年号>
-		<年>childcare_start_date_japane_era_year</年>
+		<年号>childcare_start_date_japan_era</年号>
+		<年>childcare_start_date_japan_era_year</年>
 		<月>childcare_start_date_month</月>
 		<日>childcare_start_date_day</日>
 	</育児休業開始年月日>
@@ -180,7 +180,7 @@
 			<市内局番>headquarters_tel_city_code_name</市内局番>
 			<加入者番号>headquarters_tel_subscriber_code</加入者番号>
 		</事業所名_電話番号>
-		<事業主氏名>employer_company_managerial_position_name1</事業主氏名>
+		<事業主氏名>employer_company_managerial_position_name</事業主氏名>
 	</事業主証明欄>
 	<申請欄>
 		<申請年月日>

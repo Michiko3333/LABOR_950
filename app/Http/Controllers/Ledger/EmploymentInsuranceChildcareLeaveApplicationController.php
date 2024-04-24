@@ -30,6 +30,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -43,7 +44,12 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.employment_insurance_childcare_leave_application', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)
@@ -102,6 +108,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
                 'employment_insurance_office_no_4digit' => $request->input('employment_insurance_office_no_4digit'),
                 'employment_insurance_office_no_6digit' => $request->input('employment_insurance_office_no_6digit'),
                 'employment_insurance_office_no_CD' => $request->input('employment_insurance_office_no_CD'),
+                'jurisdiction' => $request->input('jurisdiction'),
                 'payer_japan_era1' => $request->input('payer_japan_era1'),
                 'payer_japan_era_year1' => $request->input('payer_japan_era_year1'),
                 'payer_month1' => $request->input('payer_month1'),

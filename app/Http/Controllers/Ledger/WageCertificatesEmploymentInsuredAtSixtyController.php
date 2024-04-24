@@ -27,6 +27,7 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -40,7 +41,12 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.wage_certificates_employment_insured_at_sixty', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'current_employee' => $current_employee,
+        ]);
     }
 
     public function post(WageCertificatesEmploymentInsuredAtSixtyRequest $request)
