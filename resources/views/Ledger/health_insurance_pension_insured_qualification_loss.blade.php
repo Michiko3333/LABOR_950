@@ -151,6 +151,7 @@
             $('#N21_P1').val(branch.tel_subscriber_code || '');
             const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
             const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
+            $('#N23_P1').val(employee.insured_reference_number || '');
             $('#N24_P1').val(employeeNameKana);
             $('#N25_P1').val(employeeName);
             $('#N31_P1').val(employee.mynumber_card_no || '');
