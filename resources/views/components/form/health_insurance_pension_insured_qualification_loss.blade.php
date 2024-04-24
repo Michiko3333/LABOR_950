@@ -6961,6 +6961,183 @@
                         to {opacity:1 ;}
                         }
                     </style>
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var c1_0 = document.getElementById("N3_P1");
+                        var c1_1 = document.getElementById("N4_P1");
+                        var c2_0 = document.getElementById("N48_P1");
+                        var c2_1 = document.getElementById("N49_P1");
+                        var c2_2 = document.getElementById("N50_P1");
+                        var c3 = document.getElementById("N54_P1");
+                        var r1_0 = document.getElementById("N37_P1_0");
+                        var r1_1 = document.getElementById("N37_P1_1");
+                        var r1_2 = document.getElementById("N37_P1_2");
+                        var r1_3 = document.getElementById("N37_P1_3");
+                        var r1_4 = document.getElementById("N37_P1_4");
+                        var remarks = document.getElementById("N51_P1");
+                        var over70Era = document.getElementById("N56_P1");
+                        var over70Year = document.getElementById("N57_P1");
+                        var over70Month = document.getElementById("N58_P1");
+                        var over70Day = document.getElementById("N59_P1");
+                        var retireEra = document.getElementById("N39_P1");
+                        var retireYear = document.getElementById("N40_P1");
+                        var retireMonth = document.getElementById("N41_P1");
+                        var retireDay = document.getElementById("N42_P1");
+                        var passEra = document.getElementById("N44_P1");
+                        var passYear = document.getElementById("N45_P1");
+                        var passMonth = document.getElementById("N46_P1");
+                        var passDay = document.getElementById("N47_P1");
+                        over70Era.value = "";
+                        over70Year.value = "";
+                        over70Month.value = "";
+                        over70Day.value = "";
+                        over70Era.disabled = true;
+                        over70Year.disabled = true;
+                        over70Month.disabled = true;
+                        over70Day.disabled = true;
+                        c1_0.addEventListener("change", function() {
+                            if (c1_0.checked) {
+                                c1_1.checked = false;
+                            }
+                        });
+                        c1_1.addEventListener("change", function() {
+                            if (c1_1.checked) {
+                                c1_0.checked = false;
+                            }
+                        });
+                        c2_0.addEventListener("change", function() {
+                            if (c2_0.checked) {
+                                c2_1.checked = false;
+                                c2_2.checked = false;
+                                remarks.value = "";
+                                remarks.disabled = true;
+                            }
+                        });
+                        c2_1.addEventListener("change", function() {
+                            if (c2_1.checked) {
+                                c2_0.checked = false;
+                                c2_2.checked = false;
+                                remarks.value = "";
+                                remarks.disabled = true;
+                            }
+                        });
+                        c2_2.addEventListener("change", function() {
+                            if (c2_2.checked) {
+                                c2_0.checked = false;
+                                c2_1.checked = false;
+                                remarks.disabled = false;
+                            }
+                        });
+                        c3.addEventListener("change", function() {
+                            if (c3.checked) {
+                                over70Era.disabled = false;
+                                over70Year.disabled = false;
+                                over70Month.disabled = false;
+                                over70Day.disabled = false;
+                            } else {
+                                over70Year.value = "";
+                                over70Month.value = "";
+                                over70Day.value = "";
+                                over70Era.disabled = true;
+                                over70Year.disabled = true;
+                                over70Month.disabled = true;
+                                over70Day.disabled = true;
+                            }
+                        });
+                        r1_0.addEventListener("change", function() {
+                            if (r1_0.checked) {
+                                retireEra.disabled = false;
+                                retireYear.disabled = false;
+                                retireMonth.disabled = false;
+                                retireDay.disabled = false;
+                                passEra.value = "";
+                                passYear.value = "";
+                                passMonth.value = "";
+                                passDay.value = "";
+                                passEra.disabled = true;
+                                passYear.disabled = true;
+                                passMonth.disabled = true;
+                                passDay.disabled = true;
+                            }
+                        });
+                        r1_1.addEventListener("change", function() {
+                            if (r1_1.checked) {
+                                passEra.disabled = false;
+                                passYear.disabled = false;
+                                passMonth.disabled = false;
+                                passDay.disabled = false;
+                                retireEra.value = "";
+                                retireYear.value = "";
+                                retireMonth.value = "";
+                                retireDay.value = "";
+                                retireEra.disabled = true;
+                                retireYear.disabled = true;
+                                retireMonth.disabled = true;
+                                retireDay.disabled = true;
+                            }
+                        });
+                        r1_2.addEventListener("change", function() {
+                            if (r1_2.checked) {
+                                passEra.value = "";
+                                passYear.value = "";
+                                passMonth.value = "";
+                                passDay.value = "";
+                                passEra.disabled = true;
+                                passYear.disabled = true;
+                                passMonth.disabled = true;
+                                passDay.disabled = true;
+                                retireEra.value = "";
+                                retireYear.value = "";
+                                retireMonth.value = "";
+                                retireDay.value = "";
+                                retireEra.disabled = true;
+                                retireYear.disabled = true;
+                                retireMonth.disabled = true;
+                                retireDay.disabled = true;
+                            }
+                        });
+                        r1_3.addEventListener("change", function() {
+                            if (r1_3.checked) {
+                                passEra.value = "";
+                                passYear.value = "";
+                                passMonth.value = "";
+                                passDay.value = "";
+                                passEra.disabled = true;
+                                passYear.disabled = true;
+                                passMonth.disabled = true;
+                                passDay.disabled = true;
+                                retireEra.value = "";
+                                retireYear.value = "";
+                                retireMonth.value = "";
+                                retireDay.value = "";
+                                retireEra.disabled = true;
+                                retireYear.disabled = true;
+                                retireMonth.disabled = true;
+                                retireDay.disabled = true;
+                            }
+                        });
+                        r1_4.addEventListener("change", function() {
+                            if (r1_4.checked) {
+                                passEra.value = "";
+                                passYear.value = "";
+                                passMonth.value = "";
+                                passDay.value = "";
+                                passEra.disabled = true;
+                                passYear.disabled = true;
+                                passMonth.disabled = true;
+                                passDay.disabled = true;
+                                retireEra.value = "";
+                                retireYear.value = "";
+                                retireMonth.value = "";
+                                retireDay.value = "";
+                                retireEra.disabled = true;
+                                retireYear.disabled = true;
+                                retireMonth.disabled = true;
+                                retireDay.disabled = true;
+                            }
+                        });
+                    });
+                    </script>
                     <form class="egovuiForm-form">
                         <div class="egov-tool-wrapper">
                         <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 268px; top: 13px; width:15px; line-height:12px; height:15px; text-align:left; font-size:16px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
@@ -6972,8 +7149,6 @@
                             <INPUT class="checkboxs" tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:12px; margin:auto;"
                                 type="CHECKBOX" id="N4_P1" name="pension" <?php echo old('pension') == '1' ? 'checked' : ''; ?>/>
                         <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-
-     
                             <div class="egov-tool-field-origin" style="left: 91px; top: 67px;">
                                 <input class="egov-tool-field-rect" id="N6_P1" name="submission_year" value="{{ old('submission_year') }}" onfocus="addlength(this,2)" required="required" style="width: 25px; height: 18px; font-size: 12px; text-align: center; line-height: 24px; padding: inherit; background-color:rgb(255, 255, 0);" type="text"/>
                             </div>

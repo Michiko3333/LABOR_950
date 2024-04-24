@@ -177,10 +177,10 @@
             }
             if(employee.over_70_applicable_flg === 0){
                 $('#N54_P1').prop("checked", true);
-                $('#N56_P1').val(over70Era);
-                $('#N57_P1').val(over_70_non_applicable_convert_date['year'] ?? "");
-                $('#N58_P1').val(over_70_non_applicable_convert_date['month'] ?? "");
-                $('#N59_P1').val(over_70_non_applicable_convert_date['day'] ?? "");
+                $('#N56_P1').val(over70Era).prop("disabled", false);
+                $('#N57_P1').val(over_70_non_applicable_convert_date['year'] ?? "").prop("disabled", false);
+                $('#N58_P1').val(over_70_non_applicable_convert_date['month'] ?? "").prop("disabled", false);
+                $('#N59_P1').val(over_70_non_applicable_convert_date['day'] ?? "").prop("disabled", false);
             }
         }
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
