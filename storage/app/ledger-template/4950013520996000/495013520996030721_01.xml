@@ -6,22 +6,22 @@
 	<様式コピー情報>0</様式コピー情報>
 	<Doctype>1</Doctype>
 	<A-330476-003_1>
-		<配偶者の個人番号または基礎年金番号>spouse_mynumber_card_no2</配偶者の個人番号または基礎年金番号>
-		<配偶者の氏名>spouse_name2</配偶者の氏名>
+		<配偶者の個人番号または基礎年金番号>spouse_mynumber_card_no</配偶者の個人番号または基礎年金番号>
+		<配偶者の氏名>spouse_name</配偶者の氏名>
 		<配偶者の生年月日>
-			<元号>spouse_birthday_era_kanji2</元号>
-			<年>spouse_birthday_year2</年>
-			<月>spouse_birthday_month2</月>
-			<日>spouse_birthday_day2</日>
+			<元号>spouse_birthday_era_kanji</元号>
+			<年>spouse_birthday_year</年>
+			<月>spouse_birthday_month</月>
+			<日>spouse_birthday_day</日>
 		</配偶者の生年月日>
-		<個人番号または基礎年金番号>mynumber_card_no2</個人番号または基礎年金番号>
-		<被保険者氏名xカナx>name_kana2</被保険者氏名xカナx>
-		<被保険者氏名x漢字x>name2</被保険者氏名x漢字x>
+		<個人番号または基礎年金番号>mynumber_card_no</個人番号または基礎年金番号>
+		<被保険者氏名xカナx>name_kana</被保険者氏名xカナx>
+		<被保険者氏名x漢字x>name</被保険者氏名x漢字x>
 		<被保険者の生年月日>
-			<元号>birthday_era2</元号>
-			<年>birthday_year2</年>
-			<月>birthday_month2</月>
-			<日>birthday_day2</日>
+			<元号>birthday_era</元号>
+			<年>birthday_year</年>
+			<月>birthday_month</月>
+			<日>birthday_day</日>
 		</被保険者の生年月日>
 		<認定年月日>
 			<年>certification_year</年>
@@ -39,11 +39,11 @@
 			<番号>medical_insurer_tel_subscriber_code</番号>
 		</電話番号>
 		<提出年月日>
-			<年>submission_year2</年>
-			<月>submission_month2</月>
-			<日>submission_day2</日>
+			<年>submission_year</年>
+			<月>submission_month</月>
+			<日>submission_day</日>
 		</提出年月日>
-		<社会保険労務士の提出代行者名記載欄>labor_consultant_name2</社会保険労務士の提出代行者名記載欄>
+		<社会保険労務士の提出代行者名記載欄>labor_consultant_name</社会保険労務士の提出代行者名記載欄>
 		<Xmit>0</Xmit>
 	</A-330476-003_1>
 </DataRoot>
