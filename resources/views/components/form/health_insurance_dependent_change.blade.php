@@ -7573,7 +7573,7 @@ button:disabled {
     -moz-box-sizing: border-box;
     line-height: 1em;
     color: rgb(0, 0, 0);
-    background-color: rgb(255, 255, 0);
+    background-color:#ddeeff;
     font-size: 13px !important;
     font-family: 'ＭＳ 明朝', serif !important;
     width: 38px;
@@ -7666,7 +7666,7 @@ button:disabled {
     position: relative;
     height: 1.2rem;
     width: 1.2rem;
-    background-color: yellow !important;
+    background-color: #ddeeff !important;
 }
 
 .egovuiForm-radio-wrapper .egovuiForm-label {
@@ -10797,7 +10797,7 @@ overflow: visible;
 color: #000000 !important;
 font-family: sans-serif;
 min-height: initial;
-background-color: yellow;
+background-color: #ddeeff;
 }
 
 .egovuiForm-preview-style.egovuiForm-preview-legal-style .egov-tool-field-origin{
@@ -10890,7 +10890,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 503px; top: 253px;">
        <input class="egov-tool-field-rect onImage" id="N19_P1" maxlength="40" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" style="width: 239px; height: 45px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 134px; top: 317px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 134px; top: 317px;">
        <input type="checkbox" name="employer_confirmation" value="" checked style="display: none;">
        <input id="N20_P1" name="employer_confirmation" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="有" <?php echo (old('employer_confirmation') == '有') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N20_P1" style="font-size: 12px;">
@@ -11017,7 +11017,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 122px; top: 630px;">
        <input class="egov-tool-field-rect onImage" id="N50_P1" maxlength="12" name="spouse_name" value="{{ old('spouse_name') }}" style="width: 233px; height: 25px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text"/>
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 329px; top: 664px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 329px; top: 664px;">
        <input type="checkbox" name="appointment" value="" checked style="display: none;">
        <input id="N51_P1" name="appointment" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="有" <?php echo (old('appointment') == '有') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N51_P1" style="font-size: 12px;">
@@ -11125,7 +11125,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 671px; top: 715px;">
        <input class="egov-tool-field-rect onImage" id="N70_P1" maxlength="5" name="spouse_tel_subscriber_code" value="{{ old('spouse_tel_subscriber_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 92px; top: 748px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 92px; top: 748px;">
        <input type="checkbox" name="confirmation_notification_0" value="" checked style="display: none;">
        <input id="N71_P1_0" name="confirmation_notification_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="1" <?php echo (old('confirmation_notification_0') == '1') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N71_P1_0" style="font-size: 12px;">
@@ -11340,7 +11340,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 162px; top: 1007px;">
        <input class="egov-tool-field-rect onImage" id="N110_P1" maxlength="39" name="spouse_remarks" value="{{ old('spouse_remarks') }}" style="width: 308px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;left: 548px; top: 1021px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;left: 548px; top: 1021px;">
        <input type="checkbox" name="spouse_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N111_P1_0" name="spouse_confirmation_relationship_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:13px; height:13px; margin:auto;" value="確認済" <?php echo (old('spouse_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N111_P1_0" style="font-size: 12px;">
@@ -11569,7 +11569,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 619px; top: 1380px;">
        <input class="egov-tool-field-rect onImage" id="N147_P2" maxlength="39" name="other_dependent1_remarks" value="{{ old('other_dependent1_remarks') }}" style="width: 126px; height: 101px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1480px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1480px;">
        <input type="checkbox" name="other_dependent1_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N148_P2_0" name="other_dependent1_confirmation_relationship_0" type="checkbox"  style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="確認済" <?php echo (old('other_dependent1_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N148_P2_0" style="font-size: 12px;">
@@ -11855,7 +11855,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 619px; top: 1860px;">
        <input class="egov-tool-field-rect onImage" id="N188_P2" maxlength="39" name="other_dependent2_remarks" value="{{ old('other_dependent2_remarks') }}" style="width: 127px; height: 98px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1958px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1958px;">
        <input type="checkbox" name="other_dependent2_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N189_P2_0" name="other_dependent2_confirmation_relationship_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="確認済" <?php echo (old('other_dependent2_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N189_P2_0" style="font-size: 12px;">
