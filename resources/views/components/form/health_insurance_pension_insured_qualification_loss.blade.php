@@ -6946,6 +6946,11 @@
                         }
                         .preview-area input[type="CHECKBOX"]::before {
                                             display: none;
+                                            border: none !important;
+                        }
+                        .preview-area input[type="RADIO"]::before {
+                                            display: none;
+                                            border: none !important;
                         }
                         .preview-area input.checkboxs::before {
                                             display: block;
@@ -7104,7 +7109,7 @@
                                     <option value="平成" {{ old('retirement_date_era') == '平成' ? 'selected' : '' }}>
                                     平成
                                     </option>
-                                    <option value="令和" {{ old('loss_retirement_date_eraera') == '令和' ? 'selected' : '' }}>
+                                    <option value="令和" {{ old('retirement_date_era') == '令和' ? 'selected' : '' }}>
                                     令和
                                     </option>
                                 </select>
