@@ -105,7 +105,7 @@
                 const branch = data['branch'];
                 const company = data['company'];
                 const headquarters = data['headquarters'];
-
+                const birthdayConvertJapan = data['birthday_convert_japan'];
                 const employee_pension_office_reference_prefecture = headquarters.pension_office_reference_prefecture;
                 const employee_pension_office_reference_no_cities = headquarters.pension_office_reference_no_cities;
                 const employee_pension_office_reference_no_office = headquarters.pension_office_reference_no_office;
@@ -145,7 +145,13 @@
                 const employee_address_city = employee.address_city;
                 const employee_address_ward = employee.address_ward;
                 const employee_address_apartment = employee.address_apartment;
-
+                var eraMapping = {
+                    '昭和': '5',
+                    '平成': '7',
+                    '令和': '9',
+                };
+                var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+                var birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 $('#N8_005F_944E').val(employee_pension_office_reference_prefecture ?? '');
                 $('#N9_005F_8C8E').val(employee_pension_office_reference_no_cities ?? '');
                 $('#N10_005F_93FA').val(employee_pension_office_reference_no_office ?? '');
@@ -159,6 +165,10 @@
                 $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(branch_tel_subscriber_code ?? '');
                 $('#N23__005F_94ED').val((employee_last_name_kana ? employee_last_name_kana + '　' : '') + (employee_first_name_kana ?? ''));
                 $('#N24_005F_8E96_8BC6').val((employee_last_name ? employee_last_name + '　' : '') + (employee_first_name ?? ''));
+                $('#N25_005F_8E96_8BC6_8F8A').val(birthdayEra);
+                $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['year'] ?? "");
+                $('#N28_8D864_8C85').val(birthdayConvertJapan['month'] ?? "");
+                $('#N29_005F_8E73').val(birthdayConvertJapan['day'] ?? "");
                 $('#N36_005F_8E96_8BC6_8F8A').val(employee_mynumber_card_no ?? '');
                 $('#N51_005F_8E73_8A4F_8BC7').val(employee_post_code_first ?? '');
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
