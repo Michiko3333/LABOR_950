@@ -3061,7 +3061,21 @@
                             display: none;
                         }
                     </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                        var dropdown = document.getElementById("N54_005F_89C1_93FC_8ED2_94D4_8D86");
+                        var input = document.getElementById("N55_005F_8E73_8A4F_8BC7_94D4");
 
+                        dropdown.addEventListener("change", function() {
+                            if (dropdown.value === "その他") {
+                                input.disabled = false;
+                            } else {
+                                input.value = "";
+                                input.disabled = true;
+                            }
+                        });
+                    });
+                    </script>
                     <form class="egovuiForm-form">
                         <div class="egov-tool-wrapper">
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 271.5px; top: 8.5px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
