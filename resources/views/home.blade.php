@@ -97,7 +97,7 @@
                 </div>
                 <div class="extra content">
                     <div class="ui middle aligned selection list">
-                        <a href="#" class="item">
+                        <a href="{{ route('employee') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">社員一覧</div>
@@ -107,12 +107,6 @@
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
                                 <div class="header">労働契約書作成</div>
-                            </div>
-                        </a>
-                        <a href="#" class="item">
-                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                            <div class="content">
-                                <div class="header">勤怠一覧</div>
                             </div>
                         </a>
                     </div>

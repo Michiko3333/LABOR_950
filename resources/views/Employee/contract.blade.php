@@ -97,7 +97,7 @@
 
                     <div class="prevew-btn">
                         <a id="ledger-back" class="ui button negative" type="button" style="width: 200px;"
-                            href="{{ route('ledger.index') }}">破棄する</a>
+                            href="{{ route('home.index') }}">破棄する</a>
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
                     </div>

@@ -1,4 +1,4 @@
-<x-layout title="{{ !isset($employee_id) ? '従業員情報登録' : '従業員情報編集' }}" useRightContent="{{ false }}">
+<x-layout title="{{ !isset($employee_id) ? '従業員情報登録' : '従業員情報編集' }}" useRightContent="{{ true }}">
     @slot('header')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <style type="text/css">
@@ -102,28 +102,18 @@
         </style>
     @endslot
     <section class="content">
-        <div class="ui huge breadcrumb">
-            <a class="section" href="{{ route('home.select') }}">会社・操作選択</a>
+        <div class="ui huge breadcrumb mt-2">
+            <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <a class="section" href="{{ route('admin.index') }}">Karte管理</a>
+            <a class="section" href="{{ route('employee') }}">社員一覧</a>
             <i class="right chevron icon divider"></i>
-            <a class="section" href="{{ route('admin.labor') }}">アカウント管理</a>
-            <i class="right chevron icon divider"></i>
-            @if (!isset($employee_id))
-                <div class="active section">従業員情報登録</div>
-            @else
-                <div class="active section">従業員情報更新</div>
-            @endif
+            <div class="active section">従業員情報更新</div>
         </div>
 
-        @if (!isset($employee_id))
-            <h1 class="mb-2 mt-0">従業員情報登録</h1>
-        @else
-            <h1 class="mb-2 mt-0">従業員情報更新</h1>
-        @endif
+        <h1 class="mb-2 mt-0">従業員情報更新</h1>
 
         <form class="ui form"
-            action="{{ !isset($employee_id) ? route('admin.employee_create_post') : route('admin.employee_update_post', $employee_id) }}"
+            action="{{ !isset($employee_id) ? route('employee_create_post') : route('employee_update_post', $employee_id) }}"
             method="post">
             @csrf
             @if (session('errors'))
@@ -354,14 +344,6 @@
                     <div class="content">
                         <h2>所属情報</h2>
                         <div class="two fields">
-                            <div class="required field {{ err($errors, 'company_id') }}">
-                                <label for="company_name">会社</label>
-                                <input type="text" id="company_name" name="company_name" placeholder="会社名"
-                                    readonly
-                                    value="{{ old('company_name', isset($employee_id) ? $employee->company_name : '') }}">
-                                <input type="hidden" id="company_id" name="company_id"
-                                    value="{{ old('company_id', isset($employee_id) ? $employee->company_id : '') }}">
-                            </div>
                             <div class="required field {{ err($errors, 'branch_id') }}">
                                 <label for="branch_name">支店</label>
                                 <input type="text" id="branch_name" name="branch_name" readonly
@@ -371,12 +353,15 @@
                             </div>
                         </div>
                         <div style="text-align:right;">
-                            <button class="ui button" type="button" id="company_btn">会社・支店検索</button>
+                            <button class="ui button" type="button" id="branch_btn">支店検索</button>
                         </div>
                         <div class="field {{ err($errors, 'departments[]') }}">
                             <label for="departments[]">所属部署</label>
                             <select class="ui fluid search dropdown multiple clearable department_select"
                                 multiple="" name="departments[]">
+                                @foreach ($departments_list as $k => $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="field {{ err($errors, 'managerial_position_id[]') }}">
@@ -965,46 +950,21 @@
                         </div>
                     </div>
                 </div>
-                @if (!isset($employee_id))
-                    <div class="ui horizontal card card-shadow item-6">
-                        <div class="content">
-                            <h2>ログイン情報</h2>
-                            <div class="two fields">
-                                <div class="required field {{ err($errors, 'user_email') }}">
-                                    <label for="user_email">メールアドレス</label>
-                                    <input type="text" id="user_email" name="user_email"
-                                        placeholder="karte_xxxx@xxx.com"
-                                        value="{{ old('user_email', isset($employee_id) ? $employee->user_email : '') }}">
-                                </div>
-                                <div class="required field {{ err($errors, 'user_pass') }}">
-                                    <label for="user_pass">パスワード</label>
-                                    <input type="password" id="user_pass" name="user_pass"
-                                        value="{{ old('user_pass', isset($employee_id) ? $employee->user_pass : '') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
             </div>
             <div class="my-4" style="text-align: right; margin-right: 1em;">
-                <a class="ui button negative basic" href="{{ route('admin.labor') }}"
-                    style="width: 200px;">キャンセル</a>
-                @if (!isset($employee_id))
-                    <button class="ui button primary" type="submit" style="width: 200px;">登録</button>
-                @else
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
-                @endif
+                <a class="ui button negative basic" href="{{ route('employee') }}" style="width: 200px;">キャンセル</a>
+                <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
             </div>
         </form>
 
     </section>
 
     <!-- 会社検索モーダル -->
-    <x-search-company-modal id="company_select" selectorName="#company_name" selectorId="#company_id"
-        selectorBrName="#branch_name" selectorBrId="#branch_id" withBranch="true" division="2" />
-    <script type="module" src="{{ asset('/js/search-company-modal.js') }}"></script>
+    <x-search-branch-modal id="branch_select" selectorBrName="#branch_name" selectorBrId="#branch_id"
+        division="2" />
+    <script type="module" src="{{ asset('/js/search-branch-modal.js') }}"></script>
     <script type="module">
-        $('.ui.dropdown.company')
+        $('.ui.dropdown.branch')
             .dropdown({
                 apiSettings: {
                     // this url just returns a list of tags (with API response expected above)
@@ -1012,8 +972,8 @@
                 },
                 filterRemoteData: true
             });
-        $('#company_btn').click(_ => {
-            $('#company_select').modal({
+        $('#branch_btn').click(_ => {
+            $('#branch_select').modal({
                 blurring: true
             }).modal('show');
         });
@@ -1035,76 +995,22 @@
             });
             $('.ui.dropdown.dropdown.multiple').dropdown({});
 
-            function getDepartmentList(id, first = false) {
-                $.ajax({
-                        url: '{{ route('admin.get_departments') }}',
-                        data: {
-                            company_id: id
-                        },
-                        type: 'post'
-                    })
-                    .done((data) => {
-                        $('select[name="departments[]"]').empty();
-                        data.forEach(element => {
-                            $('<option>').attr({
-                                value: element.id
-                            }).text(element.name).appendTo('select[name="departments[]"]');
-                        });
-                        $('.ui.dropdown.dropdown.multiple').dropdown('clear');
-
-                        if (first) {
-                            const def = @json(old('departments', $departments));
-                            def.forEach(v => {
-                                let a = $('select[name="departments[]"] option[value=' + v +
-                                    ']').prop(
-                                    'selected', true);
-                            });
-
-                        }
-                    });
+            function getDepartmentList() {
+                $('select[name="departments[]"]').empty();
+                const data = @json($departments_list);
+                data.forEach(element => {
+                    $('<option>').attr({
+                        value: element.id
+                    }).text(element.name).appendTo('select[name="departments[]"]');
+                });
+                $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                const def = @json(old('departments', $departments));
+                def.forEach(v => {
+                    let a = $('select[name="departments[]"] option[value=' + v + ']').prop(
+                        'selected', true);
+                });
             }
-
-            function getPositionList(id, first = false) {
-                $.ajax({
-                        url: '{{ route('admin.get_position') }}',
-                        data: {
-                            company_id: id
-                        },
-                        type: 'post'
-                    })
-                    .done((data) => {
-                        $('select[name="managerial_position_id"]').empty();
-                        data = [{
-                            id: '',
-                            name: '未選択'
-                        }, ...data];
-                        data.forEach(element => {
-                            $('<option>').attr({
-                                value: element.id
-                            }).text(element.name).appendTo('select[name="managerial_position_id"]');
-                        });
-                        $('.ui.dropdown.dropdown.multiple').dropdown('clear');
-
-                        if (first) {
-                            //const def = @json($managerial_position_list);
-                            const v = {{ old('managerial_position_id', $employee->managerial_position_id) }};
-                            if (v > 0) {
-                                $('select[name="managerial_position_id"] option[value=' + v +
-                                    ']').prop(
-                                    'selected', true);
-                            }
-                        }
-                    });
-            }
-            const company_id = $('input[name=company_id]').val();
-            if (company_id) {
-                getDepartmentList(company_id, true);
-                getPositionList(company_id, true);
-            }
-            addEventCompanyModal((data) => {
-                getDepartmentList(data['id']);
-                getPositionList(data['id']);
-            });
+            getDepartmentList();
         });
     </script>
 </x-layout>

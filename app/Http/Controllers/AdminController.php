@@ -95,6 +95,7 @@ class AdminController extends Controller
         $place_type = Values_branch_place_type::pluck('name', 'id');
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
+
         return view('admin.company_create', [
             'company_listed_type' => $company_listed_type,
             'businessTypes' => $businessTypes,
@@ -493,6 +494,7 @@ class AdminController extends Controller
 
         return view('admin.employee_create', [
             'departments' => [],
+            'managerial_position_list' => [],
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
             'prefectures' => $prefectures,
@@ -671,10 +673,12 @@ class AdminController extends Controller
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
+        $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
 
         return view('admin.employee_create', [
             'employee' => $employee,
             'departments' => $departments,
+            'managerial_position_list' => $managerial_position_list,
             'employee_id' => $id,
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
@@ -831,11 +835,5 @@ class AdminController extends Controller
             return back()->withErrors('エラー');
         }
         return redirect()->route('admin.labor');
-    }
-
-    public function get_departments(Request $request)
-    {
-        $departments = Department::select('id', 'name')->where('company_id', $request->input('company_id'))->where('delete_flg', 0)->get();
-        return response()->json($departments);
     }
 }

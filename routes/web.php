@@ -8,18 +8,10 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\EgovController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ResidentController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\KgiController;
-use App\Http\Controllers\BusinessController;
-use App\Http\Controllers\AlertController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\RegulationController;
-use App\Http\Controllers\DepartmentInforController;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
 use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
@@ -85,16 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
-    Route::get('/resident_voice', [ResidentController::class, 'index'])->name('resident_voice');
-    Route::get('/department_contact', [DepartmentController::class, 'index'])->name('department_contact');
-    Route::get('/kgi_information', [KgiController::class, 'index'])->name('kgi_information');
-    Route::get('/business_request', [BusinessController::class, 'index'])->name('business_request');
-    Route::get('/alert', [AlertController::class, 'index'])->name('alert');
     Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
     Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
-    Route::get('/administrative_procedure', [AdministrativeController::class, 'index'])->name('administrative');
-    Route::get('/regulation_related', [RegulationController::class, 'index'])->name('regulation_related');
-    Route::get('/department_information', [DepartmentInforController::class, 'index'])->name('department_information');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
     // 帳票
@@ -126,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
     Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
     Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
+    Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
 
     // Ledger
     Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
@@ -183,6 +168,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
     Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
+
+    Route::get('/employee', [EmployeeController::class, 'employee_list'])->name('employee');
+    Route::get('/employee/edit/{id}', [EmployeeController::class, 'employee_update'])->name('employee_update');
+    Route::post('/employee/edit/{id}', [EmployeeController::class, 'employee_update_post'])->name('employee_update_post');
 
     Route::get('/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
     Route::post('/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
