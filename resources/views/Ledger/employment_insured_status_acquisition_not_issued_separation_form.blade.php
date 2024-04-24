@@ -7,7 +7,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">雇用保険被保険者資格喪失届（離職票交付なし）</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
             <div class="header">

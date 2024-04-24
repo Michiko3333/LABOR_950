@@ -43,7 +43,9 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        $procedureName = $this->getProcedureName($request);
+
+        return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)

@@ -23,7 +23,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -41,9 +41,9 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             "month" => $month,
             "day" => $day
         );
-        
+        $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(ContinuousEmploymentBenefitsForOlderWorkersRequest $request)
@@ -86,7 +86,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [

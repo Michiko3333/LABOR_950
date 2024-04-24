@@ -44,6 +44,7 @@ class EmploymentInsuredQualificationGetController extends Controller
 
         $countries = Country::all();
         $residentials = Residential_status::all();
+        $procedureName = $this->getProcedureName($request);
 
         return view('ledger.employment_insured_qualification_get', [
             'company' => $company,
@@ -52,7 +53,8 @@ class EmploymentInsuredQualificationGetController extends Controller
             'today' => $today,
             'countries' => $countries,
             'residentials' => $residentials,
-            'certificate' => $certificate
+            'certificate' => $certificate,
+            'procedureName' => $procedureName
         ]);
     }
 

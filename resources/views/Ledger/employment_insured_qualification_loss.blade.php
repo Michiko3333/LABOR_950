@@ -5,7 +5,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">雇用保険被保険者資格喪失届（離職票交付あり）</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>

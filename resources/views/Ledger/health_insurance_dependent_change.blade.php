@@ -6,7 +6,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">帳票：健康保険被扶養者（異動）届 / 国民年金第3号被保険者関係届</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。
         </p>
         @if($certificate == false)

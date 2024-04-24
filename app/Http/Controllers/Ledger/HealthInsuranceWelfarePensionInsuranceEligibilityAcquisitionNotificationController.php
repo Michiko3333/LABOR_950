@@ -45,8 +45,9 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate'));
+        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName'));
     }
 
     public function post(NotificationOfObtainingInsuredQualificationRequest $request)

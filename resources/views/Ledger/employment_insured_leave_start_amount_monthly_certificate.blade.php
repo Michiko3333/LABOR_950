@@ -5,7 +5,7 @@
 
         <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">帳票：雇用保険被保険者休業開始時賃金月額証明書</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
             <div class="header">

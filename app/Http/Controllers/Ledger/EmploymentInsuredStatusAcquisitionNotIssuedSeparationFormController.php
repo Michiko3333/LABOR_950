@@ -32,6 +32,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
         } else {
             $certificate = false;
         }
+
         $current_employee = CurrentUser::info();
         $current_branch_id = $current_employee->branch_id;
         $current_branch = Branch::where('id', $current_branch_id)->first();
@@ -46,6 +47,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
         $countries = Country::all();
         $residentials = Residential_status::all();
         $employmentStatuses = Values_employee_employment_status::all();
+        $procedureName = $this->getProcedureName($request);
 
         return view(
             'ledger.employment_insured_status_acquisition_not_issued_separation_form',
@@ -57,7 +59,8 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
                 'countries' => $countries,
                 'residentials' => $residentials,
                 'employmentStatuses' => $employmentStatuses,
-                'certificate' => $certificate
+                'certificate' => $certificate,
+                'procedureName' => $procedureName
             ]
         );
     }

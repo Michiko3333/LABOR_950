@@ -9,7 +9,7 @@
             }
         </style>
         @endslot
-        <h1 class="mt-2">高年齢雇用継続給付（高年齢再就職給付金）の申請 / 雇用保険高年齢雇用継続給付（高年齢再就職給付金）の申請</h1>
+        <h1 class="mt-2">{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
         @if($certificate == false)

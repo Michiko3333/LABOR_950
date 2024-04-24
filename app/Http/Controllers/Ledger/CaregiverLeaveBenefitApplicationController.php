@@ -37,13 +37,15 @@ class CaregiverLeaveBenefitApplicationController extends Controller
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
 
         return view('ledger.caregiver_leave_benefit_application', [
             'company' => $company,
             'current_employee' => $currentEmployee,
             'current_branch' => $currentBranch,
             'today' => $today,
-            'certificate' => $certificate
+            'certificate' => $certificate,
+            'procedureName' => $procedureName
         ]);
     }
 

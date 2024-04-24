@@ -46,8 +46,9 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
             'month' => $convertToday['japanese_calendar_result']->month,
             'day' => $convertToday['japanese_calendar_result']->day,
         ];
+        $procedureName = $this->getProcedureName($request);
         
-        return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate]);
+        return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(HealthInsurancePensionInsuredQualificationRequest $request)

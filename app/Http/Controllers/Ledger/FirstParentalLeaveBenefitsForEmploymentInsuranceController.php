@@ -43,7 +43,9 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
             "month" => $month,
             "day" => $day
         );
-        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate]);
+        $procedureName = $this->getProcedureName($request);
+
+        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
     public function post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)

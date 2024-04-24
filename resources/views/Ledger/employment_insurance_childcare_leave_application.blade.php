@@ -9,7 +9,7 @@
             }
         </style>
         @endslot
-        <h1 class="mt-2"> 雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き）</h1>
+        <h1 class="mt-2"> {{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。</p>
         @if($certificate == false)
         <div class="ui warning message" style="margin: 0;">
