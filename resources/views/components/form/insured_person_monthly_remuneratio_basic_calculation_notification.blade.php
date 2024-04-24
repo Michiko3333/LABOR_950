@@ -4517,13 +4517,13 @@
                                                 <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="today_japan_era_day" required="required" style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 27px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('today_japan_era_day') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 144px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" maxlength="2" name="business_establishment_code_prefecture_code" required="required" style="width: 50px; height: 25px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('business_establishment_code_prefecture_code') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" maxlength="2" name="business_establishment_code_prefecture_code" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('business_establishment_code_prefecture_code') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 195.5px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" maxlength="2" name="office_arrangement_code_county_city_ward_code" required="required" style="width: 50px; height: 25px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('office_arrangement_code_county_city_ward_code') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" maxlength="2" name="office_arrangement_code_county_city_ward_code" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('office_arrangement_code_county_city_ward_code') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 246.5px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="4" name="office_reference_symbol_office_symbol" required="required" style="width: 50px; height: 25px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('office_reference_symbol_office_symbol') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="4" name="office_reference_symbol_office_symbol" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('office_reference_symbol_office_symbol') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 154px; top: 106px;">
                                                 <input class="egov-tool-field-rect onImage" id="N9_005F_8C8E" maxlength="3" name="post_code_former" required="required" style="width: 40px; height: 17px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('post_code_former') }}"/>
@@ -4552,14 +4552,14 @@
                                             <div class="egov-tool-field-origin" style="left: 398.3px; top: 193px;">
                                                 <input class="egov-tool-field-rect onImage" id="N18_005F_8CC2_906C_94D4" maxlength="40" name="labor_consultant_name" style="width: 293.5px; height: 34px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: rgba(255, 255, 0); overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('labor_consultant_name') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 62px; top: 267px;">
-                                                <input class="egov-tool-field-rect onImage" id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85" name="Insured_person_reference_number" onfocus="addlength(this,6)" style="width: 55px; height: 40px; font-size: 12px; text-align: right; line-height: 62px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('Insured_person_reference_number') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 62px; top: 269px;">
+                                                <input class="egov-tool-field-rect onImage" id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85" name="Insured_person_reference_number" onfocus="addlength(this,6)" style="width: 54px; height: 38px; font-size: 12px; text-align: right; line-height: 62px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('Insured_person_reference_number') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 149px; top: 267.5px;">
-                                                <input class="egov-tool-field-rect onImage" id="N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866" maxlength="25" name="insured_person_name_in_kana" required="required" style="width: 166px; height: 19px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color: rgba(255, 255, 0); overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('insured_person_name_in_kana') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866" maxlength="25" name="insured_person_name_in_kana" required="required" style="width: 164px; height: 19px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color: rgba(255, 255, 0); overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('insured_person_name_in_kana') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 119px; top: 288px;">
-                                                <input class="egov-tool-field-rect onImage" id="N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD" maxlength="12" name="Insured_person_name_in_kanji" required="required" style="width: 196px; height: 19px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color: rgba(255, 255, 0); overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('Insured_person_name_in_kanji') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD" maxlength="12" name="Insured_person_name_in_kanji" required="required" style="width: 194px; height: 19px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color: rgba(255, 255, 0); overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('Insured_person_name_in_kanji') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 317px; top: 272px;">
                                                 <select class="egov-tool-field-rect onImage" id="N23__005F_94ED" name="era_name" required="required" style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);">
@@ -4581,7 +4581,7 @@
                                                 </select>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 365px; top: 277px;">
-                                                <input class="egov-tool-field-rect onImage" id="N24_005F_8E96_8BC6" name="year_of_birth" required="required" style="width: 27px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('year_of_birth') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N24_005F_8E96_8BC6" name="year_of_birth" required="required" style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('year_of_birth') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 393px; top: 277px;">
                                                 <input class="egov-tool-field-rect onImage" id="N25_005F_8E96_8BC6_8F8A" name="month_of_birth" required="required" style="width: 27px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('month_of_birth') }}"/>
@@ -4599,25 +4599,25 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 498px; top: 277px;">
-                                                <input class="egov-tool-field-rect onImage" id="N29_005F_8E73" name="applicable_year" required="required" style="width: 27px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('applicable_year') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 500px; top: 277px;">
+                                                <input class="egov-tool-field-rect onImage" id="N29_005F_8E73" name="applicable_year" required="required" style="width: 25px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('applicable_year') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 76px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 76px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N30_93E0_8BC7_94D4" maxlength="4" name="previous_standard_monthly_remuneration_health_insurance" style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('previous_standard_monthly_remuneration_health_insurance') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 153px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 153px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N31__005F_89C1_93FC" maxlength="4" name="previous_standard_monthly_remuneration_employees_pension" style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('previous_standard_monthly_remuneration_employees_pension') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 216px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 216px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N33_005F_8E73_8A4F" name="previous_revision_year" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('previous_revision_year') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 260px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N34_93E0_8BC7_94D4" name="previous_revision_month" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('previous_revision_month') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 306px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 306px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N35_94D4_8D86" name="monthly_salary_increase" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_salary_increase') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 350px; top: 326.5px;">
+                                            <div class="egov-tool-field-origin" style="left: 350px; top: 327.5px;">
                                                 <select class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A" name="salary_increase" required="required" style="width: 70px; height: 15px; font-size: 10px; text-align: left; line-height: 15px; padding: inherit; background-color: rgba(255, 255, 0);">
                                                     <option selected="selected" value="昇給" {{ old('salary_increase') == '昇給' ? 'selected' : '' }}>
                                                     昇給
@@ -4627,108 +4627,108 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 422px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 422px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E" name="retroactive_payment_amount_month" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('retroactive_payment_amount_month') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 468px; top: 326px;">
+                                            <div class="egov-tool-field-origin" style="left: 468px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E'" maxlength="7" name="retroactive_payment_amount" style="width: 52px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('retroactive_payment_amount') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 101px; top: 388px;">
+                                            <div class="egov-tool-field-origin" style="left: 101px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF" name="basic_number_of_days_for_payroll_calculatio1" required="required" style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio1') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 101px; top: 406px;">
-                                                <input class="egov-tool-field-rect onImage" id="N40_905C_90BF_8ED2" name="basic_number_of_days_for_payroll_calculatio2" required="required" style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio2') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 101px; top: 407px;">
+                                                <input class="egov-tool-field-rect onImage" id="N40_905C_90BF_8ED2" name="basic_number_of_days_for_payroll_calculatio2" required="required" style="width: 39px; height: 15px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio2') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 101px; top: 424px;">
-                                                <input class="egov-tool-field-rect onImage" id="N41_005F_96BC_8FCC" name="basic_number_of_days_for_payroll_calculatio3" required="required" style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio3') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 101px; top: 425px;">
+                                                <input class="egov-tool-field-rect onImage" id="N41_005F_96BC_8FCC" name="basic_number_of_days_for_payroll_calculatio3" required="required" style="width: 39px; height: 15px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio3') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 148px; top: 388px;">
+                                            <div class="egov-tool-field-origin" style="left: 148px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N42_005F_8F8A_8DDD_926E" maxlength="7" name="monthly_remuneration_amount_in_currency1" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_currency1') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 148px; top: 406px;">
-                                                <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4" maxlength="7" name="monthly_remuneration_amount_in_currency2" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_currency2') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 148px; top: 407px;">
+                                                <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4" maxlength="7" name="monthly_remuneration_amount_in_currency2" required="required" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_currency2') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 148px; top: 424px;">
-                                                <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6" maxlength="7" name="monthly_remuneration_amount_in_currency3" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_currency3') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 148px; top: 425px;">
+                                                <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6" maxlength="7" name="monthly_remuneration_amount_in_currency3" required="required" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_currency3') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 220px; top: 388px;">
+                                            <div class="egov-tool-field-origin" style="left: 220px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N45__005F_8E73_8A4F_8BC7_94D4" maxlength="7" name="monthly_remuneration_amount_in_kind1" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_kind1') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 220px; top: 406px;">
-                                                <input class="egov-tool-field-rect onImage" id="N46__005F_8E73_93E0_8BC7_94D4" maxlength="7" name="monthly_remuneration_amount_in_kind2" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_kind2') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 220px; top: 407px;">
+                                                <input class="egov-tool-field-rect onImage" id="N46__005F_8E73_93E0_8BC7_94D4" maxlength="7" name="monthly_remuneration_amount_in_kind2" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_kind2') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 220px; top: 424px;">
-                                                <input class="egov-tool-field-rect onImage" id="N47_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="7" name="monthly_remuneration_amount_in_kind3" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_kind3') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 220px; top: 425px;">
+                                                <input class="egov-tool-field-rect onImage" id="N47_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="7" name="monthly_remuneration_amount_in_kind3" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_amount_in_kind3') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 291px; top: 388px;">
+                                            <div class="egov-tool-field-origin" style="left: 291px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N48_005F_8E73_8A4F_8BC7" maxlength="7" name="monthly_remuneration_total1" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_total1') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 291px; top: 406px;">
-                                                <input class="egov-tool-field-rect onImage" id="N49_005F_8E73_8A4F_8BC8" maxlength="7" name="monthly_remuneration_total2" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_total2') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 291px; top: 407px;">
+                                                <input class="egov-tool-field-rect onImage" id="N49_005F_8E73_8A4F_8BC8" maxlength="7" name="monthly_remuneration_total2" required="required" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_total2') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 291px; top: 424px;">
-                                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="7" name="monthly_remuneration_total3" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_total3') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 291px; top: 425px;">
+                                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="7" name="monthly_remuneration_total3" required="required" style="width: 60px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('monthly_remuneration_total3') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 430px; top: 388px;">
+                                            <div class="egov-tool-field-origin" style="left: 430px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="7" name="grand_total" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('grand_total') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 430px; top: 406px;">
-                                                <input class="egov-tool-field-rect onImage" id="N52_005F_8E73_8A4F" maxlength="7" name="average_amount" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('average_amount') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 430px; top: 407px;">
+                                                <input class="egov-tool-field-rect onImage" id="N52_005F_8E73_8A4F" maxlength="7" name="average_amount" required="required" style="width: 91px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('average_amount') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 430px; top: 424px;">
-                                                <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7" name="adjusted_average_amount" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('adjusted_average_amount') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 430px; top: 425px;">
+                                                <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7" name="adjusted_average_amount" style="width: 91px; height: 15px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('adjusted_average_amount') }}"/>
                                             </div>
-                                            <div class="egov-tool-field-origin" style="left: 555px; top: 267px;">
-                                                <input class="egov-tool-field-rect onImage" id="N54_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="12" name="my_number_or_basic_pension_number" style="width: 142px; height: 40px; font-size: 12px; text-align: left; line-height: 63px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('my_number_or_basic_pension_number') }}"/>
+                                            <div class="egov-tool-field-origin" style="left: 555px; top: 268px;">
+                                                <input class="egov-tool-field-rect onImage" id="N54_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="12" name="my_number_or_basic_pension_number" style="width: 142px; height: 38px; font-size: 12px; text-align: left; line-height: 63px; padding: inherit; background-color: rgba(255, 255, 0);" type="text" value="{{ old('my_number_or_basic_pension_number') }}"/>
                                             </div>
 
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 327px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 327px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N55_005F_8E73_8A4F_8BC7_94D4" name="remarks_and_calculation_of_employees_aged_70_and_over" <?php echo old('remarks_and_calculation_of_employees_aged_70_and_over') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 357px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 357px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N56_005F_8E73_8A4F_8BC7_94D7" name="remarks_and_two_or_more_jobs" <?php echo old('remarks_and_two_or_more_jobs') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 373px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 373px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N57_005F_8E73_8A4F_8BC7_94D9" name="remarks_and_scheduled_monthly_changes" <?php echo old('remarks_and_scheduled_monthly_changes') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 388px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 388px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N58_005F_8E73_8A4F_8BC7_9410" name="remarks_and_Joined_midway" <?php echo old('remarks_and_Joined_midway') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
             
                                             
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 404px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 404px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N59_005F_8E73_8A4F_8BC7_9412" name="remarks_and_sick_leave_childcare_leave" <?php echo old('remarks_and_sick_leave_childcare_leave') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 532px; top: 420px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 534px; top: 420px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N60_005F_8E73_8A4F_8BC7_9432" name="remarks_and_part_time_worker" <?php echo old('remarks_and_part_time_worker') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 596px; top: 357px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 598px; top: 357px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N61_005F_8E73_8A4F_8BC7_94DD" name="remarks_and_part" <?php echo old('remarks_and_part') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 596px; top: 373px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 598px; top: 373px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N62_005F_8E73_8A4F_8BC7_94DC" name="remarks_and_annual_average" <?php echo old('remarks_and_annual_average') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
-                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 596px; top: 404px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:3px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
+                                            <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 0); left: 598px; top: 404px; width:12px; line-height:12px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
+                                            <INPUT tabindex="50" value="1" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
                                                 type="CHECKBOX" id="N63_005F_8E73_8A4F_8BC7_9467" name="remarks_and_others" <?php echo old('remarks_and_others') == '1' ? 'checked' : ''; ?>/>
                                                 <SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
