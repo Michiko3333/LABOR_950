@@ -6,10 +6,20 @@
 
 <style>
     .ui.radio.checkbox label {
-      font-size: .8em;
+        font-size: .8em;
     }
     #radio-button {
         margin-bottom: 4px;
+    }
+    #other_file_name {
+        width: 100%;
+        font-size: .8em;
+    }
+    .ui.input.error>input {
+        background-color: #fff6f6;
+        border-color: #e0b4b4;
+        color: #9f3a38;
+        box-shadow: none;
     }
 </style>
 
@@ -36,27 +46,48 @@
             </div>
             <dic class="field four wide {{ err($errors, "checked_{$key}") }}">
                 <div class="ui toggle checkbox">
-                    <input class="file_check" type="checkbox" data-input="file_{{$key}}" data-label="label_file_{{$key}}" data-radio="radio_file_{{$key}}" name="checked_{{$key}}"
+                    <input class="file_check" type="checkbox" data-input="file_{{$key}}" data-label="label_file_{{$key}}" data-radio="radio_file_{{$key}}" data-input-other="input_file_{{$key}}" name="checked_{{$key}}"
                     {{ old("checked_{$key}") ? 'checked' : '' }}>
-                    <label> </label>
+                    <label></label>
                 </div>
             </dic>
         </div> 
     </div>
     @endforeach
-    
-    <script type="module">
-        function updateFields() {
-            const name = $(this).data('input');
-            const label = $(this).data('label');
-            const radio = $(this).data('radio');
-            const bool = $(this).prop('checked');
-            $('input[name=' + name + '], input[name=' + label + '], input[name=' + radio + ']').prop('disabled', !bool);
-        }
+    <div class="ui input {{ $errors->has('input_file_other') ? ' error' : '' }}" id="other_file_name" >
+        <input type="text" placeholder="その他添付ファイル名" name="input_file_other" value="{{ old('input_file_other') }}">
+    </div>
 
+    <script type="module">
         $(document).ready(function() {
-            $('.file_check').change(updateFields).trigger('change');
-            updateFields.call($('.file_check'));
+            function updateFields() {
+                const name = $(this).data('input');
+                const label = $(this).data('label');
+                const radio = $(this).data('radio');
+                const other_name = $(this).data('input-other');
+                const bool = $(this).prop('checked');
+                $('input[name=' + name + '], input[name=' + label + '], input[name=' + radio + '], input[name=' + other_name + ']').prop('disabled', !bool);
+        
+                if (bool) {
+                    const radioValue = $('input[name=' + radio + ']:checked').val();
+                    if (radioValue === '1') {
+                        $('input[name=' + name + ']').prop('disabled', true);
+                        $('input[name=' + name + ']').val('');
+                    }
+                }
+            }
+        
+            $('.file_check').change(function() {
+                updateFields.call(this);
+            }).trigger('change');
+        
+            $('input[type="radio"][name^="radio_file_"]').change(function() {
+                const fileInputField = $(this).closest('.field').find('input[type="file"]');
+                fileInputField.prop('disabled', $(this).val() === '1');
+                if ($(this).val() === '1') {
+                    fileInputField.val('');
+                }
+            });
         });
     </script>
 </div>

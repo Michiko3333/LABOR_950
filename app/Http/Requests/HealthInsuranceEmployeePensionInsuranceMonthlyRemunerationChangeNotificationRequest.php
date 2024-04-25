@@ -22,9 +22,10 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     public function rules(): array
     {
         return [
-            "file_form1" => 'required_if:radio_file_form1,2|file|mimes:jpg,pdf|max:50000',
-            "file_form2" => 'required_if:radio_file_form2,2|file|mimes:jpg,pdf|max:50000',
+            "file_wage_ledger" => 'required_if:radio_file_form1,2|file|mimes:jpg,pdf|max:50000',
+            "file_attendance_record" => 'required_if:radio_file_form2,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             "today_year" => 'required|int|between:1,99|regex:/^[0-9]+$/',
             "today_month" => 'required|int|between:1,12|regex:/^[0-9]+$/',
             "today_date" => 'required|int|between:1,31|regex:/^[0-9]+$/',
@@ -93,10 +94,10 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         $validator->after(function ($validator) {
             $totalSize = 0;
 
-            if ($this->hasFile('file_form1')) {
+            if ($this->hasFile('file_wage_ledger')) {
                 $totalSize += $this->file('file_form1')->getSize();
             }
-            if ($this->hasFile('file_form2')) {
+            if ($this->hasFile('file_attendance_record')) {
                 $totalSize += $this->file('file_form2')->getSize();
             }
             if ($this->hasFile('file_other')) {

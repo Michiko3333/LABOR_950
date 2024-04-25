@@ -51,14 +51,14 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
     public function post(NotificationOfObtainingInsuredQualificationRequest $request)
     {
         $attachment = [];
-
+        
         $data = $request->all();
 
         foreach ($data as $key => $value) {
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
-                $label_key = 'label_' . $file_key;
-
+                $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
+                
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -68,7 +68,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
                     $file = $request->file($file_key);
                     $attachment_file_name = $file->getClientOriginalName();
                 }
-
+                
                 $attachment[] = [
                     'attachment_type' => $attachment_type,
                     'attached_document_name' => $attached_document_name,
@@ -82,14 +82,14 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
             $request->merge(['attachment' => $attachment]);
         }
 
-        $radio_keys = ["radio_file_retirement_date", "radio_file_employment_agreement", "radio_file_continued_rehiring", "radio_file_loss_report", "radio_file_other"];
+        $radio_keys = ["radio_file_other"];
 
         foreach ($radio_keys as $key) {
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
         }    
-
+                
         try {
             $data = [
                 'health_insurance' => $request->input('health_insurance'),

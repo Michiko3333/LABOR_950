@@ -27,6 +27,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
             'file_eligibility' => 'required_if:radio_file_eligibility,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'file_written_consent' => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'file_other' => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'labor_consultant_acting_as_agent' => 'nullable|string|max:255',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+[　][ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+$/u',
             'ledger_type' => 'required|string|regex:/^[0-9]{1,5}$/u',

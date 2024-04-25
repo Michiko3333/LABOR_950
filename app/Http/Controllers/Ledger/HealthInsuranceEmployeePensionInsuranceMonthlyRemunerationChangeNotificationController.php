@@ -57,8 +57,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         foreach ($data as $key => $value) {
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
-                $label_key = 'label_' . $file_key;
-
+                $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
+                
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -82,7 +82,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             $request->merge(['attachment' => $attachment]);
         }
 
-        $radio_keys = ["radio_file_form1", "radio_file_form2", "radio_file_other"];
+        $radio_keys = ["radio_file_wage_ledger", "radio_file_attendance_record", "radio_file_other"];
 
         foreach ($radio_keys as $key) {
             if (!$request->has($key)) {

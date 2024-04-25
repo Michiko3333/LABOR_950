@@ -89,8 +89,16 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
     public static function rules(): array
     {
         return [
-            "file_tax_exempt_income" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_insurance" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_dependent" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_tax_exempt" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_currently_enrolled" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_basic_pension" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_livelihood_maintenance" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_business_owner" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
+            "file_medical_insurer" => 'required_if:radio_file_tax_exempt_income,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             "submission_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "submission_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "submission_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -269,8 +277,29 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
 
-            if ($this->hasFile('file_tax_exempt_income')) {
-                $totalSize += $this->file('file_tax_exempt_income')->getSize();
+            if ($this->hasFile('file_insurance')) {
+                $totalSize += $this->file('file_insurance')->getSize();
+            }
+            if ($this->hasFile('file_dependent')) {
+                $totalSize += $this->file('file_dependent')->getSize();
+            }
+            if ($this->hasFile('file_tax_exempt')) {
+                $totalSize += $this->file('file_tax_exempt')->getSize();
+            }
+            if ($this->hasFile('file_currently_enrolledfile_tax_exempt_income')) {
+                $totalSize += $this->file('file_currently_enrolledfile_tax_exempt_income')->getSize();
+            }
+            if ($this->hasFile('file_basic_pension')) {
+                $totalSize += $this->file('file_basic_pension')->getSize();
+            }
+            if ($this->hasFile('file_livelihood_maintenance')) {
+                $totalSize += $this->file('file_livelihood_maintenance')->getSize();
+            }
+            if ($this->hasFile('file_business_owner')) {
+                $totalSize += $this->file('file_business_owner')->getSize();
+            }
+            if ($this->hasFile('file_medical_insurer')) {
+                $totalSize += $this->file('file_medical_insurer')->getSize();
             }
             if ($this->hasFile('file_other')) {
                 $totalSize += $this->file('file_other')->getSize();

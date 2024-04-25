@@ -31,6 +31,7 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             "file_spouse" => 'required_if:radio_file_spouse,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_spouse_childcare_leave" => 'required_if:radio_file_spouse_childcare_leave,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'leave_start_wage_monthly_certificate' => 'nullable|int|max:1',
             'reduced_working_hours_wage_certificate_start' => 'nullable|int|max:1',
             'ledger_type' => 'string|regex:/^[0-9]{1,10}$/u',

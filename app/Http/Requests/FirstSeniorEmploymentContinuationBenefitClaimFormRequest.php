@@ -28,6 +28,7 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "file_insured_period" => 'required_if:radio_file_insured_period,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_passbook" => 'required_if:radio_file_passbook,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             "ledgerType" => 'string|regex:/^[0-9]{1,10}$/u',
             "mynumberCardNo" => 'nullable|string|regex:/^[0-9]{12}$/u',
             "financialInstitutionName" => 'nullable|string|max:255',

@@ -24,11 +24,9 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
         return [
             "file_insurance" => 'required_unless:radio_file_insurance,1|file|mimes:jpg,pdf|max:50000',
             "file_dependent" => 'required_unless:radio_file_dependent,1|file|mimes:jpg,pdf|max:50000',
-            "file_load" => 'required_if:radio_file_load,2|file|mimes:jpg,pdf|max:50000',
-            "file_medical_treatment" => 'required_if:radio_file_medical_treatment,2|file|mimes:jpg,pdf|max:50000',
-            "file_old_age" => 'required_if:radio_file_old_age,2|file|mimes:jpg,pdf|max:50000',
-            "file_unrecoverable" => 'required_if:radio_file_unrecoverable,2|file|mimes:jpg,pdf|max:50000',
+            "file_remote_dependent" => 'required_if:radio_file_load,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'health_insurance' => 'nullable|in:1',
             'pension' => 'nullable|in:1',
             'submission_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -83,17 +81,8 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
             if ($this->hasFile('file_dependent')) {
                 $totalSize += $this->file('file_dependent')->getSize();
             }
-            if ($this->hasFile('file_load')) {
-                $totalSize += $this->file('file_load')->getSize();
-            }
-            if ($this->hasFile('file_medical_treatment')) {
-                $totalSize += $this->file('file_medical_treatment')->getSize();
-            }
-            if ($this->hasFile('file_old_age')) {
-                $totalSize += $this->file('file_old_age')->getSize();
-            }
-            if ($this->hasFile('file_unrecoverable')) {
-                $totalSize += $this->file('file_nursing_care')->getSize();
+            if ($this->hasFile('file_remote_dependent')) {
+                $totalSize += $this->file('file_remote_dependent')->getSize();
             }
             if ($this->hasFile('file_other')) {
                 $totalSize += $this->file('file_other')->getSize();

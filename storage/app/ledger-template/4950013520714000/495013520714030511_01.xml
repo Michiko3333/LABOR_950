@@ -76,11 +76,11 @@
 		</P1_G00006-A-330388-001_1>
 		<P2_G00006-A-330388-001_2>
 			<P2_添付書類>
-				<P2_被保険者証>P2_insured_persons_certificate</P2_被保険者証>
-				<P2_被扶養者証>P2_dependent certificate</P2_被扶養者証>
-				<P2_遠隔地被扶養者証>P2_remote_dependent certificate</P2_遠隔地被扶養者証>
-				<P2_その他>P2_other</P2_その他>
-				<P2_その他名称>P2_other_name</P2_その他名称>
+				<P2_被保険者証>radio_file_insurance</P2_被保険者証>
+				<P2_被扶養者証>radio_file_dependent</P2_被扶養者証>
+				<P2_遠隔地被扶養者証>radio_file_remote_dependent</P2_遠隔地被扶養者証>
+				<P2_その他>radio_file_other</P2_その他>
+				<P2_その他名称>input_file_other</P2_その他名称>
 			</P2_添付書類>
 			<P2_回収区分>2</P2_回収区分>
 			<P2_Xmit>0</P2_Xmit>
