@@ -1,17 +1,17 @@
 <div>
     @script
-    <script>
-        const onCancel = () => {
-            $wire.dispatch('onCancelManagerialPosition');
-        }
-        const onEdit = () =>{
-            $wire.dispatch('onEditManagerialPosition');
-        }
-        window.$lw = {
-            onCancel: onCancel,
-            onEdit: onEdit
-        };
-    </script>
+        <script>
+            const onCancel = () => {
+                $wire.dispatch('onCancelManagerialPosition');
+            }
+            const onEdit = () => {
+                $wire.dispatch('onEditManagerialPosition');
+            }
+            window.$lw = {
+                onCancel: onCancel,
+                onEdit: onEdit
+            };
+        </script>
     @endscript
 
     <div style="padding: 1em 0;">
@@ -19,21 +19,21 @@
     </div>
 
     @if ($managerial_position->isNotEmpty())
-    <div class="ui card full card-shadow item-0">
-        <div class="content">
-            <ul class="list-table">
-                <x-managerial-position-list :managerial_position="$managerial_position" />
-            </ul>
+        <div class="ui card full card-shadow item-0">
+            <div class="content">
+                <ul class="list-table">
+                    <x-managerial-position-list :managerial_position="$managerial_position" />
+                </ul>
+            </div>
         </div>
-    </div>
     @else
-    <h3>設定されていません</h3>
+        <h3>設定されていません</h3>
     @endif
 
     <div id="editManagerialPosition" class="ui modal mini edit-department-modal">
         <i class="close icon"></i>
         <div class="header">
-        役職の追加
+            役職の追加
         </div>
         <div class="content">
             <form name="edit-managerial-position">
@@ -49,10 +49,11 @@
                     </div>
                     <div class="field required mb-2">
                         <label>ランク</label>
-                        <input type="text" placeholder="ランク" wire:model='form_rank'>
+                        <input type="number" placeholder="ランク" wire:model='form_rank' min="0" max="10">
                     </div>
                     <div class="ui checkbox mr-1">
-                        <input type="checkbox" name="form_representative_flg" value='1' wire:model='form_representative_flg'>
+                        <input type="checkbox" name="form_representative_flg" value='1'
+                            wire:model='form_representative_flg'>
                         <label>代表取締役</label>
                     </div>
                 </div>

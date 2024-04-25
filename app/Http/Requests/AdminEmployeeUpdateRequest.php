@@ -75,7 +75,7 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'spouse_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',
-            'country_id' => 'integer',
+            'country_id' => 'nullable|integer',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
             'residence_card_no' => 'nullable|string|max:20|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
