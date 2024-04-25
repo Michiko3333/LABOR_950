@@ -119,6 +119,8 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'employment_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴ一-龥０-９ａ-ｚＡ-Ｚー　]+/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function withValidator($validator)

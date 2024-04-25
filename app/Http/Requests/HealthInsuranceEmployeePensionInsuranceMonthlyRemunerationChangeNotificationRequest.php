@@ -75,20 +75,22 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "monthly_salary_sum2" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
             "monthly_salary_sum3" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
             "sum" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
-            "average_amount"=> 'required|int|between:1,9999999|regex:/^[0-9]+$/',
-            "adjusted_average_amount"=> 'nullable|int|between:1,9999999|regex:/^[0-9]+$/',
-            "mynumber_no_or_pension_no"=> 'nullable|string|max:12|regex:/^[0-9]+$/',
-            "remarks_over_70_monthly_salary_change"=> 'nullable|int|in:1',
-            "remarks_multi_work"=> 'nullable|int|in:1',
-            "remarks_part_time_workers"=> 'nullable|int|in:1',
-            "remarks_salary_raise_and_reduction_reasons"=> 'nullable|int|in:1',
-            "remarks_only_health_insurance_salary_change"=> 'nullable|int|in:1',
-            "remarks_and_others"=> 'nullable|int|in:1',
-            "remarks_salary_raise_and_reduction_reasons_text"=> 'nullable|string|max:255',
-            "remarks_others"=> 'nullable|string|max:255',
+            "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
+            "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]+$/',
+            "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]+$/',
+            "remarks_over_70_monthly_salary_change" => 'nullable|int|in:1',
+            "remarks_multi_work" => 'nullable|int|in:1',
+            "remarks_part_time_workers" => 'nullable|int|in:1',
+            "remarks_salary_raise_and_reduction_reasons" => 'nullable|int|in:1',
+            "remarks_only_health_insurance_salary_change" => 'nullable|int|in:1',
+            "remarks_and_others" => 'nullable|int|in:1',
+            "remarks_salary_raise_and_reduction_reasons_text" => 'nullable|string|max:255',
+            "remarks_others" => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
-    
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

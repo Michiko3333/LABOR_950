@@ -268,7 +268,7 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'note_1_12' => 'nullable|string|max:255',
             'note_1_13' => 'nullable|string|max:255',
             'note_1_14' => 'nullable|string|max:255',
-            'note_1_15' => 'nullable|string|max:255',            
+            'note_1_15' => 'nullable|string|max:255',
             'wage_note_1' => 'nullable|string|max:255',
             'employment_period_regulation' => 'nullable|string',
             'employment_period_japan_era' => 'nullable|string|max:2',
@@ -496,8 +496,10 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'note_2_12' => 'nullable|string|max:255',
             'note_2_13' => 'nullable|string|max:255',
             'note_2_14' => 'nullable|string|max:255',
-            'note_2_15' => 'nullable|string|max:255',            
+            'note_2_15' => 'nullable|string|max:255',
             'wage_note_2' => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 

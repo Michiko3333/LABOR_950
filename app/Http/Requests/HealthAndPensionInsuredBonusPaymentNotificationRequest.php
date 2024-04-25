@@ -60,6 +60,8 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "remarks_more_than_twice_work" => 'nullable|int|in:1',
             "remarks_bonus_sum_in_months" => 'nullable|int|in:1',
             "remarks_first_payment_date" => 'int|between:1,31|regex:/^[0-9]+$/',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 }

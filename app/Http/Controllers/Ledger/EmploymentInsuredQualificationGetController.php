@@ -26,7 +26,7 @@ class EmploymentInsuredQualificationGetController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -98,7 +98,7 @@ class EmploymentInsuredQualificationGetController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -173,6 +173,8 @@ class EmploymentInsuredQualificationGetController extends Controller
                 'labor_consultant_tel_city_code' => $request->input('labor_consultant_tel_city_code'),
                 'labor_consultant_tel_subscriber_code' => $request->input('labor_consultant_tel_subscriber_code'),
                 'memo' => $request->input('memo'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {

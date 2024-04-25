@@ -82,6 +82,8 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
             'labor_consultant_note' => 'nullable|string|max:250|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ　]+\z/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function withValidator($validator)

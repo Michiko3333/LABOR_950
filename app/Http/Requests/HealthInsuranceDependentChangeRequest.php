@@ -163,7 +163,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "spouse_become_date_era" => 'nullable|int|in:7,9',
             "spouse_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "spouse_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u', 
+            "spouse_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "spouse_reason_type" => 'nullable|string|in:配偶者の就職,婚姻,離職,収入減少,死亡,離婚,就職・収入増加,75歳到達,障害認定,その他',
             "spouse_remove_date_era" => 'nullable|int|in:7,9',
             "spouse_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -211,7 +211,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent1_become_date_era" => 'nullable|string|in:7,9',
             "other_dependent1_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "other_dependent1_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u', 
+            "other_dependent1_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "other_dependent1_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,死亡,離婚,就職,収入増加,75歳到達,障害認定,その他',
             "other_dependent1_remove_date_era" => 'nullable|string|in:7,9',
             "other_dependent1_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -248,7 +248,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_become_date_era" => 'nullable|int|in:7,9',
             "other_dependent2_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "other_dependent2_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u', 
+            "other_dependent2_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "other_dependent2_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,死亡,離婚,就職,収入増加,75歳到達,障害認定,その他',
             "other_dependent2_remove_date_era" => 'nullable|int|in:7,9',
             "other_dependent2_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -268,10 +268,12 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "other_dependent2_special_requirements_non_applicable_reason" => 'nullable|string|max:255',
             "other_dependent2_remarks" => 'nullable|string|max:255',
-            "other_dependent2_confirmation_relationship_0" => 'nullable|string|in:確認済'
+            "other_dependent2_confirmation_relationship_0" => 'nullable|string|in:確認済',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
-    
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

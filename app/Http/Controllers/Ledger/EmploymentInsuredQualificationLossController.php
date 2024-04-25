@@ -29,7 +29,7 @@ class EmploymentInsuredQualificationLossController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -106,7 +106,7 @@ class EmploymentInsuredQualificationLossController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -591,10 +591,12 @@ class EmploymentInsuredQualificationLossController extends Controller
                 'dispatched_employee_flg' => $request->input('dispatched_employee_flg'),
                 'reemployment_request_flg' => $request->input('reemployment_request_flg'),
                 'retirement_reason_type' => $request->input('retirement_reason_type'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

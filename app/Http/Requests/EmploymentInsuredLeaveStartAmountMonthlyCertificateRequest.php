@@ -440,8 +440,9 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             'wage_amount_b2_15' => 'nullable|int|max:9999999',
             'note2_15' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴ一-龥０-９ａ-ｚＡ-Ｚー　]+/u',
             'employee_salary_notices2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴ一-龥０-９ａ-ｚＡ-Ｚー　]+/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
-
     }
 
     public function withValidator($validator)

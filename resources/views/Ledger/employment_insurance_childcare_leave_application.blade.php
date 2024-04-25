@@ -1,36 +1,36 @@
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
-        <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+            <link rel="stylesheet" href="{{ asset('/css/ledger-form.css') }}">
 
-        <style>
-            .preview-area .ledger-card .content {
-                padding: 14px;
-            }
-        </style>
+            <style>
+                .preview-area .ledger-card .content {
+                    padding: 14px;
+                }
+            </style>
         @endslot
         <h1 class="mt-2"> {{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。</p>
-        @if($certificate == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                電子証明書が登録されていません
+        @if ($certificate == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    電子証明書が登録されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
                 @csrf
-                @if(session('errors'))
-                <div class="ui error message">
-                    <div class="header">入力エラー</div>
-                    <ul class="list">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                @if (session('errors'))
+                    <div class="ui error message">
+                        <div class="header">入力エラー</div>
+                        <ul class="list">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
                 <div class="ledger-twocol my-2">
                     <div class="left-col">
@@ -43,17 +43,21 @@
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
-                                <x-ledger-attachment 
-                                    :required_list="[
-                                        'required_amount_days_time']"
-                                    :file_original_names="[
-                                        'amount_days_time' => '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
-                                        'written_consent' => '支給申請に係る承諾書',
-                                        'extension_reason' => '延長事由に該当することを確認できる書類',
-                                        'spouse' => '被保険者の配偶者であることを確認できる書類',
-                                        'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
-                                        'other' => 'その他の添付書類']"
-                                    :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                <x-ledger-attachment :required_list="['required_amount_days_time']" :file_original_names="[
+                                    'amount_days_time' =>
+                                        '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
+                                    'written_consent' => '支給申請に係る承諾書',
+                                    'extension_reason' => '延長事由に該当することを確認できる書類',
+                                    'spouse' => '被保険者の配偶者であることを確認できる書類',
+                                    'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
+                                    'other' => 'その他の添付書類',
+                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>提出先選択</h2>
+                                <livewire:submission-selector :mode="0" />
                             </div>
                         </div>
                     </div>
@@ -71,12 +75,12 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
-                    <button id="ledger-preview-btn" class="ui button primary" type="button"
-                        style="width: 200px;">確認</button>
+                        <button id="ledger-preview-btn" class="ui button primary" type="button"
+                            style="width: 200px;">確認</button>
                     @endif
                 </div>
             </form>
@@ -98,7 +102,7 @@
         </div>
 
         <script type="module">
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#J87_005F_944E_8D86').val('{{ $todaySet['japanEra'] }}');
                 $('#J88_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J89_005F_8C8E').val('{{ $todaySet['month'] }}');
@@ -107,24 +111,27 @@
                 $('#J98_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J99_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J100_005F_93FA').val('{{ $todaySet['day'] }}');
-                @if($current_employee->role_id === 500)
-                // $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
-                $('#J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
-                $('#J107_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
-                $('#J108_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
-                $('#J109_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_employee->tel_subscriber_code}}');
-                $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                    #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @if ($current_employee->role_id === 500)
+                    // $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
+                    $('#J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val(
+                        '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
+                    $('#J107_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_employee->tel_area_code }}');
+                    $('#J108_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
+                    $('#J109_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
+                    $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                            #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86')
+                        .prop('readonly', true);
                 @else
-                $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                    #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                    $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                            #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86')
+                        .prop('readonly', true);
                 @endif
             });
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const tabs = document.querySelectorAll('.ui.tabular.menu .item');
                 const contents = document.querySelectorAll('.ui.bottom.attached.segment');
                 tabs.forEach((tab, index) => {
-                    tab.addEventListener('click', function () {
+                    tab.addEventListener('click', function() {
                         tabs.forEach((t) => t.classList.remove('active'));
                         tab.classList.add('active');
                         contents.forEach((c) => c.style.display = 'none');
@@ -142,13 +149,15 @@
                 const company = data['company'];
                 const todaySet = data['todaySet'];
 
-                if ( employee.last_name_kana && employee.first_name_kana ){
+                if (employee.last_name_kana && employee.first_name_kana) {
                     $('#J8_005F_8E81_96BC').val(employee.last_name_kana + '　' + employee.first_name_kana);
-                    $('#J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employee.last_name_kana + '　' + employee.first_name_kana);
-                    $('#J132_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employee.last_name_kana + '　' + employee.first_name_kana);
+                    $('#J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
+                        employee.first_name_kana);
+                    $('#J132_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
+                        employee.first_name_kana);
                 }
                 var employmentInsuredNo = employee.employment_insured_no;
-                if ( employmentInsuredNo && employmentInsuredNo.length === 11 ){
+                if (employmentInsuredNo && employmentInsuredNo.length === 11) {
                     var employmentInsuredNo4digit = employmentInsuredNo.substring(0, 4);
                     var employmentInsuredNo6digit = employmentInsuredNo.substring(4, 10);
                     var employmentInsuredNoCD = employmentInsuredNo.substring(10, 11);
@@ -157,7 +166,7 @@
                     $('#J11_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employmentInsuredNoCD);
                 }
                 var employmentInsuranceOfficeNo = employee.employment_insurance_office_no;
-                if ( employmentInsuranceOfficeNo && employmentInsuranceOfficeNo.length === 11 ){
+                if (employmentInsuranceOfficeNo && employmentInsuranceOfficeNo.length === 11) {
                     var employmentInsuranceOfficeNo4digit = employmentInsuranceOfficeNo.substring(0, 4);
                     var employmentInsuranceOfficeNo6digit = employmentInsuranceOfficeNo.substring(4, 10);
                     var employmentInsuranceOfficeNoCD = employmentInsuranceOfficeNo.substring(10, 11);
@@ -165,24 +174,30 @@
                     $('#J23_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employmentInsuranceOfficeNo6digit);
                     $('#J24_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employmentInsuranceOfficeNoCD);
                 }
-                if ( employee.last_name && employee.first_name ){
+                if (employee.last_name && employee.first_name) {
                     $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                     $('#J131_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                 }
-                if ( headquarters.tel_area_code && headquarters.tel_city_code && headquarters.tel_subscriber_code){
+                if (headquarters.tel_area_code && headquarters.tel_city_code && headquarters.tel_subscriber_code) {
                     $('#J92_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code);
                     $('#J93_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code);
                     $('#J94_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
                 }
-                if ( headquarters.address_prefecture && headquarters.address_city && headquarters.address_ward && headquarters.address_apartment){
-                    $('#J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquarters.address_prefecture + headquarters.address_city + headquarters.address_ward + headquarters.address_apartment);
+                if (headquarters.address_prefecture && headquarters.address_city && headquarters.address_ward && headquarters
+                    .address_apartment) {
+                    $('#J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquarters.address_prefecture + headquarters
+                        .address_city + headquarters.address_ward + headquarters.address_apartment);
                 }
             }
-            Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
+            Livewire.on('onSelectEmployee', ({
+                data
+            }) => {
+                insertDataFromEmployee(data)
+            });
         </script>
 
         @slot('footer')
-        <script src="{{asset('/js/ledger-form.js')}}" type="module"></script>
+            <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot
     </section>
 </x-layout>

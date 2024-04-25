@@ -116,6 +116,9 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
             'payer_japan_era2' => 'nullable|string|max:2',
             'payer_japan_era3' => 'nullable|string|max:2',
             'today_japan_era' => 'required|string|max:2',
+
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function withValidator($validator)

@@ -81,6 +81,8 @@ class MedicalInsurerCertificateRequest extends FormRequest
             "submission_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "submission_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "submission_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 }

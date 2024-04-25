@@ -99,9 +99,11 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "laborConsultantTelAreaCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "laborConsultantTelSubscriberCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "laborConsultantTelCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
-    
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

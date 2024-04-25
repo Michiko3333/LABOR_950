@@ -51,7 +51,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'office_before_transfer' => 'required|string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ　]+\z/u',
             'name_before_changed_kanji' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+[　][ぁ-んァ-ヴー一-龥]+$/u',
             'name_before_changed_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'name_changed_date_era' => 'nullable|in:平成,令和', 
+            'name_changed_date_era' => 'nullable|in:平成,令和',
             'name_changed_date_year' => 'nullable|numeric|between:1,99',
             'name_changed_date_month' => 'nullable|numeric|between:1,12',
             'name_changed_date_date' => 'nullable|numeric|between:1,31',
@@ -76,6 +76,8 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
             'labor_consultant_note' => 'nullable|string|max:784',
             'hello_work' => 'required|string|max:250|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ　]+\z/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 

@@ -71,19 +71,19 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "grand_total" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
             "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]+$/',
             "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]+$/',
-            "my_number_or_basic_pension_number" => 'nullable|string|max:12|regex:/^[0-9]+$/', 
+            "my_number_or_basic_pension_number" => 'nullable|string|max:12|regex:/^[0-9]+$/',
             "remarks_and_calculation_of_employees_aged_70_and_over" => 'nullable|int|in:1',
-            "remarks_and_two_or_more_jobs"=> 'nullable|int|in:1',
-            "remarks_and_scheduled_monthly_changes"=> 'nullable|int|in:1',
-            "remarks_and_Joined_midway"=> 'nullable|int|in:1',
-            "remarks_and_sick_leave_childcare_leave"=> 'nullable|int|in:1',
-            "remarks_and_part_time_worker"=> 'nullable|int|in:1',
-            "remarks_and_part"=> 'nullable|int|in:1',
-            "remarks_and_annual_average"=> 'nullable|int|in:1',
-            "remarks_and_others"=> 'nullable|int|in:1',
-            "remarks_calculation_basic_month_month1"=> 'nullable|int|between:1,12|regex:/^[0-9]+$/',
-            "remarks_calculation_basic_month_month2"=> 'nullable|int|between:1,12|regex:/^[0-9]+$/',
-            "others"=> 'nullable|string|max:255',
+            "remarks_and_two_or_more_jobs" => 'nullable|int|in:1',
+            "remarks_and_scheduled_monthly_changes" => 'nullable|int|in:1',
+            "remarks_and_Joined_midway" => 'nullable|int|in:1',
+            "remarks_and_sick_leave_childcare_leave" => 'nullable|int|in:1',
+            "remarks_and_part_time_worker" => 'nullable|int|in:1',
+            "remarks_and_part" => 'nullable|int|in:1',
+            "remarks_and_annual_average" => 'nullable|int|in:1',
+            "remarks_and_others" => 'nullable|int|in:1',
+            "remarks_calculation_basic_month_month1" => 'nullable|int|between:1,12|regex:/^[0-9]+$/',
+            "remarks_calculation_basic_month_month2" => 'nullable|int|between:1,12|regex:/^[0-9]+$/',
+            "others" => 'nullable|string|max:255',
         ];
     }
 
@@ -150,6 +150,8 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'remarks_calculation_basic_month_month1=>' => '備考/70歳以上被用者算定/算定基礎月_1',
             'remarks_calculation_basic_month_month2=>' => '備考/70歳以上被用者算定/算定基礎月_2',
             'others=>' => '備考/その他_記入欄',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 }

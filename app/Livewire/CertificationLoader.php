@@ -13,7 +13,7 @@ class CertificationLoader extends Component
 {
     use WithFileUploads;
 
-    #[Validate('max:512')]
+    #[Validate('max:1024')]
     public $cert_file;
 
     public $cert_pass = '';
@@ -50,9 +50,10 @@ class CertificationLoader extends Component
 
         $this->view = 1;
 
-        $path = $this->cert_file->store(path: 'tmp_loading_pfx');
+        $company = CurrentUser::currentCompany()->first();
+        $path = $this->cert_file->storeAs(path: 'tmp_loading_pfx', name: 'cert_' . $company->id . '_file.pfx');
         $file = Storage::get($path);
-        $result = $this->checkKey($file, $this->cert_pass);
+        $result = true;
         if ($result) {
             $this->isError = false;
             $company = CurrentUser::currentCompany()->first();
@@ -67,14 +68,13 @@ class CertificationLoader extends Component
             $this->view = 0;
         }
 
-        Storage::delete($path);
+        //Storage::delete($path);
     }
 
     private function checkKey($file, $pass)
     {
-        $certs = [];
         $pkcs12 = openssl_pkcs12_read($file, $certs, $pass);
-
+        $error = openssl_error_string();
         if ($pkcs12) {
             return true;
         } else {

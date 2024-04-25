@@ -29,7 +29,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "input_date_japan_era_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "input_date_month" => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "input_date_day" => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "employee_pension_office_reference_prefecture" => 'required|string|regex:/^[0-9]{2}$/u', 
+            "employee_pension_office_reference_prefecture" => 'required|string|regex:/^[0-9]{2}$/u',
             "employee_pension_office_reference_no_cities" => 'required|string|regex:/^[0-9]{2}$/u',
             "employee_pension_office_reference_no_office" => 'required|string|max:4|regex:/\A[ァ-ヴー0-9A-Z]+\z/u',
             "branch_insurance_office_no" => 'required|string|regex:/^[0-9]{5}$/u',
@@ -70,6 +70,8 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ　]+\z/u',
             "acquisition_reason" => 'nullable|string|in:海外在住,短期在留,その他',
             "other_acquisition_reason" =>   'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function attributes()
