@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：雇用保険被保険者資格喪失届（離職票交付なし）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -103,7 +103,7 @@
                     $('#J71_005F_944E').val( '{{ $today["year"]}}' );
                     $('#J72_005F_8C8E').val( '{{ $today["month"] }}' );
                     $('#J73_005F_93FA').val( '{{ $today["date"]}}' );
-                    $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                    // $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                     $('#J75_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                     $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
                     $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');

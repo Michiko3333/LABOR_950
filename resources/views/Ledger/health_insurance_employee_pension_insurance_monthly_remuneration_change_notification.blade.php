@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -112,7 +112,16 @@
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
-
+                const birthdayConvertJapan = data['birthday_convert_japan'];
+                var eraMapping = {
+                    '明治': '1',
+                    '大正': '3',
+                    '昭和': '5',
+                    '平成': '7',
+                    '令和': '9',
+                };
+            var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+            var birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 $('#N7_005F_944E_8D86').val(headquarters.pension_office_reference_prefecture || '');
                 $('#N8_005F_944E').val(headquarters.pension_office_reference_no_cities || '');
                 $('#N9_005F_8C8E').val(headquarters.pension_office_reference_no_office || '');
@@ -128,9 +137,13 @@
                 $('#N18_005F_8CC2_906C_94D4').val(headquarters.tel_subscriber_code || '');
                 const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee.first_name_kana || "");
                 const employeeName = (employee.last_name ? employee.last_name + '　' : "") + (employee.first_name || "");
+                $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(employee.insurer_reference_no || '');
                 $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employeeNameKana);
                 $('#N23__005F_94ED').val(employeeName);
-                // 生年月日
+                $('#N24_005F_8E96_8BC6').val(birthdayEra);
+                $('#N25_005F_8E96_8BC6_8F8A').val(birthdayConvertJapan['year'] ?? "");
+                $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['month'] ?? "");
+                $('#N28_8D864_8C85').val(birthdayConvertJapan['day'] ?? "");
             }
             Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
         </script>

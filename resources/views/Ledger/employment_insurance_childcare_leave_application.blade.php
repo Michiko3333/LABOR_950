@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -107,6 +107,18 @@
                 $('#J98_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J99_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J100_005F_93FA').val('{{ $todaySet['day'] }}');
+                @if($current_employee->role_id === 500)
+                // $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                $('#J107_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
+                $('#J108_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
+                $('#J109_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_employee->tel_subscriber_code}}');
+                $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                    #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @else
+                $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                    #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @endif
             });
             document.addEventListener('DOMContentLoaded', function () {
                 const tabs = document.querySelectorAll('.ui.tabular.menu .item');

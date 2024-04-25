@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：健康保険・厚生年金保険被保険者資格喪失届">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -110,55 +110,28 @@
             function insertDataFromEmployee(data) {
             const employee = data['employee'];
             const branch = data['branch'];
-            if( employee.birthday != null ){
-                var date_parts = employee.birthday.split('-');
-                var birthday_year = parseInt(date_parts[0]);
-                var birthday_month = parseInt(date_parts[1]);
-                var birthday_day = parseInt(date_parts[2]);
-                // 年号メソッドで年号と年を対応
-                // $('#N27_P1').val(年号);
-                // $('#N28_P1').val(年);
-                $('#N29_P1').val(birthday_month);
-                $('#N30_P1').val(birthday_day);
-            }else{
-                $('#N27_P1').val("昭和");
-                $('#N28_P1').val("");
-                $('#N29_P1').val("");
-                $('#N30_P1').val("");
-            }
-            if( employee.insurance_loss_date != null ){
-                var insurance_loss_date_parts = employee.insurance_loss_date.split('-');
-                var insurance_loss_date_year = parseInt(insurance_loss_date_parts[0]);
-                var insurance_loss_date_month = parseInt(insurance_loss_date_parts[1]);
-                var insurance_loss_date_day = parseInt(insurance_loss_date_parts[2]);
-                // 年号メソッドで年号と年を対応
-                // $('#N33_P1').val(年号);
-                // $('#N34_P1').val(年);
-                $('#N35_P1').val(insurance_loss_date_month);
-                $('#N36_P1').val(insurance_loss_date_day);
-            }else{
-                $('#N33_P1').val("");
-                $('#N34_P1').val("");
-                $('#N35_P1').val("");
-                $('#N36_P1').val("");
-            }
-
-            if( employee.over_70_non_applicable_date != null ){
-                var over_70_non_applicable_date_parts = employee.over_70_non_applicable_date.split('-');
-                var over_70_non_applicable_date_year = parseInt(over_70_non_applicable_date_parts[0]);
-                var over_70_non_applicable_date_month = parseInt(over_70_non_applicable_date_parts[1]);
-                var over_70_non_applicable_date_day = parseInt(over_70_non_applicable_date_parts[2]);
-                // 年号メソッドで年号と年を対応
-                // $('#N56_P1').val(年号);
-                // $('#N57_P1').val(年);
-                $('#N58_P1').val(over_70_non_applicable_date_month);
-                $('#N59_P1').val(over_70_non_applicable_date_day);
-            }else{
-                $('#N56_P1').val("");
-                $('#N57_P1').val("");
-                $('#N58_P1').val("");
-                $('#N59_P1').val("");
-            }
+            const birthdayConvertJapan = data['birthday_convert_japan'];
+            const insurance_loss_convert_date = data['insurance_loss_convert_date'];
+            const over_70_non_applicable_convert_date = data['over_70_non_applicable_convert_date'];
+            const employment_retirement_convert_date = data['employment_retirement_convert_date'];
+            const passed_away_convert_date = data['passed_away_convert_date'];
+            var eraMapping = {
+                '昭和': '5',
+                '平成': '7',
+                '令和': '9',
+            };
+            var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+            var birthdayEra = eraMapping[birthdayEraValue] ?? "";
+            var over70EraValue = over_70_non_applicable_convert_date['era'] ?? "";
+            var over70Era = eraMapping[over70EraValue] ?? "";
+            $('#N27_P1').val(birthdayEra);
+            $('#N28_P1').val(birthdayConvertJapan['year'] ?? "");
+            $('#N29_P1').val(birthdayConvertJapan['month'] ?? "");
+            $('#N30_P1').val(birthdayConvertJapan['day'] ?? "");
+            $('#N33_P1').val(insurance_loss_convert_date['era'] ?? "");
+            $('#N34_P1').val(insurance_loss_convert_date['year'] ?? "");
+            $('#N35_P1').val(insurance_loss_convert_date['month'] ?? "");
+            $('#N36_P1').val(insurance_loss_convert_date['day'] ?? "");
             $('#N9_P1').val(employee.pension_office_reference_prefecture || '');
             $('#N10_P1').val(employee.pension_office_reference_no_cities || '');
             $('#N11_P1').val(employee.pension_office_reference_no_office || '');
@@ -178,32 +151,23 @@
             $('#N21_P1').val(branch.tel_subscriber_code || '');
             const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
             const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
+            $('#N23_P1').val(employee.insured_reference_number || '');
             $('#N24_P1').val(employeeNameKana);
             $('#N25_P1').val(employeeName);
             $('#N31_P1').val(employee.mynumber_card_no || '');
 
-            if( employee.over_retired_insurance_loss_reason === 4 && employee.retirement_date != null ){
-                var retirement_date_parts = employee.retirement_date.split('-');
-                var retirement_date_year = parseInt(retirement_date_parts[0]);
-                var retirement_date_month = parseInt(retirement_date_parts[1]);
-                var retirement_date_day = parseInt(retirement_date_parts[2]);
+            if( employee.over_retired_insurance_loss_reason === 4 ){
                 $('#N37_P1_0').prop("checked", true);
-                // 年号メソッドで年号と年を対応
-                // $('#N39_P1').val(年号);
-                // $('#N40_P1').val(年);
-                $('#N41_P1').val(retirement_date_month);
-                $('#N42_P1').val(retirement_date_day);
-            } else if( employee.over_retired_insurance_loss_reason === 5 && employee.passed_away_date != null ){
-                var passed_away_date_parts = employee.passed_away_date.split('-');
-                var passed_away_date_year = parseInt(passed_away_date_parts[0]);
-                var passed_away_date_month = parseInt(passed_away_date_parts[1]);
-                var passed_away_date_day = parseInt(passed_away_date_parts[2]);
+                $('#N39_P1').val(employment_retirement_convert_date['era'] ?? "");
+                $('#N40_P1').val(employment_retirement_convert_date['year'] ?? "");
+                $('#N41_P1').val(employment_retirement_convert_date['month'] ?? "");
+                $('#N42_P1').val(employment_retirement_convert_date['day'] ?? "");
+            } else if( employee.over_retired_insurance_loss_reason === 5 ){
                 $('#N37_P1_1').prop("checked", true);
-                // 年号メソッドで年号と年を対応
-                // $('#N44_P1').val(年号);
-                // $('#N45_P1').val(年);
-                $('#N46_P1').val(passed_away_date_month);
-                $('#N47_P1').val(passed_away_date_day);
+                $('#N44_P1').val(passed_away_convert_date['era'] ?? "");
+                $('#N45_P1').val(passed_away_convert_date['year'] ?? "");
+                $('#N46_P1').val(passed_away_convert_date['month'] ?? "");
+                $('#N47_P1').val(passed_away_convert_date['day'] ?? "");
             } else if(employee.over_retired_insurance_loss_reason === 7){
                 $('#N37_P1_2').prop("checked", true);
             } else if(employee.over_retired_insurance_loss_reason === 9){
@@ -213,8 +177,10 @@
             }
             if(employee.over_70_applicable_flg === 0){
                 $('#N54_P1').prop("checked", true);
-                $('#N58_P1').val(over_70_non_applicable_date_month);
-                $('#N59_P1').val(over_70_non_applicable_date_day);
+                $('#N56_P1').val(over70Era).prop("disabled", false);
+                $('#N57_P1').val(over_70_non_applicable_convert_date['year'] ?? "").prop("disabled", false);
+                $('#N58_P1').val(over_70_non_applicable_convert_date['month'] ?? "").prop("disabled", false);
+                $('#N59_P1').val(over_70_non_applicable_convert_date['day'] ?? "").prop("disabled", false);
             }
         }
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});

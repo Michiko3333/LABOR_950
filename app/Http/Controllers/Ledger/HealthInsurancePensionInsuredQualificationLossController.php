@@ -8,7 +8,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsurancePensionInsuredQualificationRequest;
-
+use App\EgovAPI\MixXmlEgovSigner;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 
@@ -134,6 +134,12 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
                 'over_70_non_applicable_date_month' => $request->input('over_70_non_applicable_date_month'),
                 'over_70_non_applicable_date_day' => $request->input('over_70_non_applicable_date_day'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

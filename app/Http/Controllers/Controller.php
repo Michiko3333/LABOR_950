@@ -49,7 +49,7 @@ class Controller extends BaseController
         return $prefectureArray;
     }
 
-    public function convertEra(string $era)
+    public static function convertEra(string $era)
     {
         $eraMap = [
             '大正' => 1,
@@ -117,7 +117,7 @@ class Controller extends BaseController
         }
     }
 
-    public function convertWesternCalendarToJapaneseCalendar(Carbon $westernCalendar)
+    public static function convertWesternCalendarToJapaneseCalendar(Carbon $westernCalendar)
     {
         $arr = [
             ['date' => '1912-07-30', 'year' => '1912', 'era_string' => '大正'],
@@ -144,7 +144,7 @@ class Controller extends BaseController
             }
         }
         if ($japaneseCalendarEraString) {
-            $japaneseCalendarEraNum = $this->convertEra($japaneseCalendarEraString);
+            $japaneseCalendarEraNum = self::convertEra($japaneseCalendarEraString);
         }
 
         return [

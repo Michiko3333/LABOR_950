@@ -130,9 +130,9 @@
 			<P1_第3号被保険者x特例要件非該当理由xその他>spouse_special_requirements_non_applicable_reason</P1_第3号被保険者x特例要件非該当理由xその他>
 			<P1_第3号被保険者x備考>spouse_remarks</P1_第3号被保険者x備考>
 			<P1_第3号被保険者x続柄確認済>spouse_confirmation_relationship_0</P1_第3号被保険者x続柄確認済>
-			<P1_第3号被保険者x種別>31</P1_第3号被保険者x種別>
+			<P1_第3号被保険者x種別>P1_category3_insured_Type</P1_第3号被保険者x種別>
 			<P1_被扶養者でない配偶者の収入額>spouse_annual_income</P1_被扶養者でない配偶者の収入額>
-			<P1_標題>健康保険</P1_標題>
+			<P1_標題>P1_issue</P1_標題>
 			<P1_Xmit>0</P1_Xmit>
 		</P1_A-330476-001_1>
 		<P2_A-330476-001_2>

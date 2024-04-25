@@ -10845,6 +10845,8 @@ div.popup {
 }
     </style>
      <div class="egov-tool-wrapper">
+        <input hidden name="P1_category3_insured_Type" value="31">
+        <input hidden name="P1_issue" value="健康保険">
       <div class="egov-tool-field-origin" style="left: 63px; top: 85px;">
        <input class="egov-tool-field-rect onImage" id="N4_P1" name="submission_year" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
       </div>

@@ -30,7 +30,7 @@
 		<被保険者x氏名x漢字氏名>Insured_person_name_in_kanji</被保険者x氏名x漢字氏名>
 		<生年月日>
 			<元号>era_name</元号>
-			<年>year_of_birth9</年>
+			<年>year_of_birth</年>
 			<月>month_of_birth</月>
 			<日>date_of_birth</日>
 		</生年月日>

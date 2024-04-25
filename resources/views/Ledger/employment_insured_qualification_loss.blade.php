@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：雇用保険被保険者資格喪失届（離職票交付あり）">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -126,7 +126,7 @@
                 $('#J71_005F_944E').val( '{{ old("labor_consultant_japan_era_year", $today["year"]) }}' );
                 $('#J72_005F_8C8E').val( '{{ old("labor_consultant_month", $today["month"]) }}' );
                 $('#J73_005F_93FA').val( '{{ old("labor_consultant_day", $today["date"]) }}' );
-                $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                // $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J75_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
                 $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
@@ -136,12 +136,11 @@
                 $('#J73_005F_944E').val( '{{ old("labor_consultant_japan_era_year", $today["year"]) }}' );
                 $('#J74_005F_8C8E').val( '{{ old("labor_consultant_month", $today["month"]) }}' );
                 $('#J75_005F_93FA').val( '{{ old("labor_consultant_day", $today["date"]) }}' );
-                $('#J76_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+                // $('#J76_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J77_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
                 $('#J78_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
                 $('#J79_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
                 $('#J80_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_employee->tel_subscriber_code}}');
-
                 $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA, \
                     #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J75_005F_8E81_96BC').prop('readonly', true);
             @else
@@ -157,6 +156,11 @@
             function insertDataFromEmployee(data) {
             const employee = data['employee'];
             const branch = data['branch'];
+            const countryValue = data['country_value'];
+            const residentialStatusValue = data['residential_status_value'];
+            const birthdayConvertJapan = data['birthday_convert_japan'];
+            const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+            const employmentRetirementConvertDate = data['employment_retirement_convert_date'];
             const headquarters = data['headquarters'];
             const company = data['company'];
 
@@ -179,26 +183,6 @@
             const retirement_reason_employee_decision_change_job_type = data['retirement_reason_employee_decision_change_job_type'];
             const retirement_reason_employee_decision_change_office = data['retirement_reason_employee_decision_change_office'];
             const retirement_reason_employee_decision_reasons = data['retirement_reason_employee_decision_reasons'];
-            var employment_insured_date_year;
-            var employment_insured_date_month;
-            var employment_insured_date_day;
-            if(employee.employment_insured_date !== null) {
-                var employment_insured_date = new Date(employee.employment_insured_date);
-                var employment_insured_date_year = employment_insured_date.getFullYear();
-                var employment_insured_date_month = (employment_insured_date.getMonth() + 1);
-                var employment_insured_date_day = employment_insured_date.getDate();
-            }
-
-            var intended_retirement_date_year;
-            var intended_retirement_date_month;
-            var intended_retirement_date_day;
-            if(employee.intended_retirement_date !== null) {
-                var intended_retirement_date = new Date(employee.intended_retirement_date);
-                var intended_retirement_date_year = intended_retirement_date.getFullYear();
-                var intended_retirement_date_month = (intended_retirement_date.getMonth() + 1);
-                var intended_retirement_date_day = intended_retirement_date.getDate();
-            }
-
             var retirement_date_nextday_month;
             var retirement_date_nextday_day;
             if(employee.retirement_date !== null) {
@@ -230,12 +214,14 @@
                 $('#J8_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
                 $('#J9_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
             }
-            $('#J12_005F_944E').val(employment_insured_date_year);
-            $('#J13_005F_8C8E').val(employment_insured_date_month);
-            $('#J14_005F_93FA').val(employment_insured_date_day);
-            $('#J17_005F_944E').val(intended_retirement_date_year);
-            $('#J18_005F_8C8E').val(intended_retirement_date_month);
-            $('#J19_005F_93FA').val(intended_retirement_date_day);
+            $('#J11_005F_944E_8D86').val(employmentInsuredConvertDate['era'] ?? "");
+            $('#J12_005F_944E').val(employmentInsuredConvertDate['year'] ?? "");
+            $('#J13_005F_8C8E').val(employmentInsuredConvertDate['month'] ?? "");
+            $('#J14_005F_93FA').val(employmentInsuredConvertDate['day'] ?? "");
+            $('#J16_005F_944E_8D86').val(employmentRetirementConvertDate['era'] ?? "");
+            $('#J17_005F_944E').val(employmentRetirementConvertDate['year'] ?? "");
+            $('#J18_005F_8C8E').val(employmentRetirementConvertDate['month'] ?? "");
+            $('#J19_005F_93FA').val(employmentRetirementConvertDate['day'] ?? "");
             $('#J20_005F_9172_8EB8_8CB4_88F6').val(employee.insurance_loss_reason);
             if(branch.agreed_hours_week != null){
                 const agreed_hours_week = branch.agreed_hours_week.split(':');
@@ -245,6 +231,10 @@
             $('#J27_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? '');
             $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
             $('#J30_005F_90AB_95CA').val((employee.sex === 1) ? '1' : '2');
+            $('#J32_005F_944E_8D86').val(birthdayConvertJapan['era'] ?? "");
+            $('#J33_005F_944E').val(birthdayConvertJapan['year'] ?? "");
+            $('#J34_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
+            $('#J35_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
             $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(employee.insured_age_type ?? '');
             $('#J41_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
             $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(branch.name);
@@ -259,8 +249,8 @@
                     $('#J51_005F_93FA').val(parseInt(stay_date_period[2], 10));
                 }
                 $('#J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').val(employee.employment_type ?? '');
-                $('#J53_005F_8D91_90D0_005F_926E_88E6').val(employee.country_id ?? '');
-                $('#J54_005F_8DDD_97AF_8E91_8A69').val(employee.residential_status_id ?? '');
+                $('#J53_005F_8D91_90D0_005F_926E_88E6').val(countryValue ?? "");
+                $('#J54_005F_8DDD_97AF_8E91_8A69').val(residentialStatusValue ?? "");
                 $('#J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').val(employee.residential_status_unknown_reason ?? '');
             } else {
                 $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').val('').prop('disabled', true);
@@ -496,7 +486,7 @@
             $('#J13_005F_8C8').val($(this).val());
         });
         $('#J19_005F_93FA').on('input', function() {
-            $('#J14_005F_93FA').val($(this).val());
+            $('#J14_005F_93F').val($(this).val());
         });
         $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
             $('#J9_005F_97A3_9045_8ED2_8E81_96BC').val($(this).val());

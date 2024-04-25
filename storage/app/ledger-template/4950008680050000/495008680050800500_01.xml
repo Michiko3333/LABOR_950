@@ -32,8 +32,8 @@
         <日>qualifications_day</日>
       </資格取得年月日>
       <育児休業開始年月日>
-        <年号>childcare_start_date_japane_era</年号>
-        <年>childcare_start_date_japane_era_year</年>
+        <年号>childcare_start_date_japan_era</年号>
+        <年>childcare_start_date_japan_era_year</年>
         <月>childcare_start_date_month</月>
         <日>childcare_start_date_day</日>
       </育児休業開始年月日>
@@ -42,7 +42,7 @@
         <事業所番号6桁>employment_insurance_office_no_6digit</事業所番号6桁>
         <事業所番号CD>employment_insurance_office_no_CD</事業所番号CD>
       </事業所番号>
-      <管轄区分>9</管轄区分>
+      <管轄区分>jurisdiction</管轄区分>
       <支給終了年月日>
         <年/>
         <月/>

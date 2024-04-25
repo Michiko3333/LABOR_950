@@ -1,5 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<x-layout title="帳票作成：健康保険被扶養者（異動）届 / 健康保険被扶養者（異動）・国民年金第3号被保険者関係届">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -146,8 +146,18 @@
             const employee = data['employee'];
             const branch = data['branch'];
             const spouse = data['spouse'];
+            const spouse_birthday_convert_japan = data['spouse_birthday_convert_japan'];
+            const birthdayConvertJapan = data['birthday_convert_japan'];
             const headquarters = data['headquarters'];
-
+            var eraMapping = {
+                '昭和': '5',
+                '平成': '7',
+                '令和': '9',
+            };
+            var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+            var birthdayEra = eraMapping[birthdayEraValue] ?? "";
+            var spouseBirthdayEraValue = spouse_birthday_convert_japan['era'] ?? "";
+            var spouseBirthdayEra = eraMapping[spouseBirthdayEraValue] ?? "";
             // ここに従業員と紐づく支店情報をinputに入れる処理
             // 例：
             $('#N7_P1').val(headquarters.pension_office_reference_prefecture ?? '');
@@ -170,6 +180,10 @@
             $('#N18_P1').val(headquarters.tel_subscriber_code ?? '');
             $('#N28_P1').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
             $('#N27_P1').val((employee.last_name_kana ? employee.last_name_kana + '　' : '')  + (employee.first_name_kana ?? ''));
+            $('#N30_P1').val(birthdayEra);
+            $('#N31_P1').val(birthdayConvertJapan['year'] ?? "");
+            $('#N32_P1').val(birthdayConvertJapan['month'] ?? "");
+            $('#N33_P1').val(birthdayConvertJapan['day'] ?? "");
             if(employee.sex === 1){
                 $('#N34_P1_0').prop("checked", true);
             } else {
@@ -190,6 +204,10 @@
             if (spouse !== undefined && spouse !== null){
                 $('#N50_P1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
                 $('#N49_P1').val((spouse.last_name_kana ? spouse.last_name_kana + '　' : '')  + (spouse.first_name_kana ?? ''));
+                $('#N53_P1').val(spouseBirthdayEra);
+                $('#N54_P1').val(spouse_birthday_convert_japan['year'] ?? "");
+                $('#N55_P1').val(spouse_birthday_convert_japan['month'] ?? "");
+                $('#N56_P1').val(spouse_birthday_convert_japan['day'] ?? "");
                 if(spouse.relationship_sex === 1){
                     $('#N57_P1').val('1');
                 } else if(spouse.relationship_sex === 2){
@@ -284,10 +302,18 @@
             if (spouse !== undefined && spouse !== null){
                 $('#N2').val(spouse.mynumber_card_no ?? '');
                 $('#N3').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
+                $('#N5').val(spouse_birthday_convert_japan['era'] ?? "");
+                $('#N6').val(spouse_birthday_convert_japan['year'] ?? "");
+                $('#N7').val(spouse_birthday_convert_japan['month'] ?? "");
+                $('#N8').val(spouse_birthday_convert_japan['day'] ?? "");
             }
             $('#N9').val(employee.mynumber_card_no ?? '');
             $('#N10').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
             $('#N11').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ?? ''));
+            $('#N13').val(birthdayConvertJapan['era'] ?? "");
+            $('#N14').val(birthdayConvertJapan['year'] ?? "");
+            $('#N15').val(birthdayConvertJapan['month'] ?? "");
+            $('#N16').val(birthdayConvertJapan['day'] ?? "");
             if(headquarters.post_code != null){
                 $('#N17').val(headquarters.post_code.substring(0, 3));
                 $('#N18').val(headquarters.post_code.substring(3, 7));
@@ -308,10 +334,18 @@
             if (spouse !== undefined && spouse !== null){
                 $('#N2_1').val(spouse.mynumber_card_no ?? '');
                 $('#N3_1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
+                $('#N5_1').val(spouse_birthday_convert_japan['era'] ?? "");
+                $('#N6_1').val(spouse_birthday_convert_japan['year'] ?? "");
+                $('#N7_1').val(spouse_birthday_convert_japan['month'] ?? "");
+                $('#N8_1').val(spouse_birthday_convert_japan['day'] ?? "");
             }
             $('#N9_1').val(employee.mynumber_card_no ?? '');
             $('#N10_1').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ?? ''));
             $('#N11_1').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
+            $('#N13_1').val(birthdayConvertJapan['era'] ?? "");
+            $('#N14_1').val(birthdayConvertJapan['year'] ?? "");
+            $('#N15_1').val(birthdayConvertJapan['month'] ?? "");
+            $('#N16_1').val(birthdayConvertJapan['day'] ?? "");
             if(headquarters.post_code != null){
                 $('#N21_1').val(headquarters.post_code.substring(0, 3));
                 $('#N22_1').val(headquarters.post_code.substring(3, 7));
@@ -331,7 +365,7 @@
 
         // 選択イベントを通してlivewireからデータを受け取る
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});
-        var eraMapping = {
+        var eraMapping1 = {
             '5': '昭和',
             '7': '平成',
             '9': '令和',
@@ -346,7 +380,7 @@
             $('#N3').val($(this).val());
         });
         $('#N53_P1').on('change', function() {
-            $('#N5').val(eraMapping[$(this).val()]);
+            $('#N5').val(eraMapping1[$(this).val()]);
         });
         $('#N54_P1').on('input', function() {
             $('#N6').val($(this).val());
@@ -367,7 +401,7 @@
             $('#N11').val($(this).val());
         });
         $('#N30_P1').on('change', function() {
-            $('#N13').val(eraMapping[$(this).val()]);
+            $('#N13').val(eraMapping1[$(this).val()]);
         });
         $('#N31_P1').on('input', function() {
             $('#N14').val($(this).val());

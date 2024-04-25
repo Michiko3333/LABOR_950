@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -96,7 +96,16 @@
             const employee = data['employee'];
             const branch = data['branch'];
             const headquarters = data['headquarters'];
-
+            const birthdayConvertJapan = data['birthday_convert_japan'];
+                var eraMapping = {
+                    '明治': '1',
+                    '大正': '3',
+                    '昭和': '5',
+                    '平成': '7',
+                    '令和': '9',
+                };
+            var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+            var birthdayEra = eraMapping[birthdayEraValue] ?? "";
             $('#N9_005F_8C8E').val(headquarters.pension_office_reference_prefecture || '');
             $('#N10_005F_93FA').val(headquarters.pension_office_reference_no_cities || '');
             $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(headquarters.pension_office_reference_no_office || '');
@@ -112,9 +121,13 @@
             $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(headquarters.tel_subscriber_code || '');
             const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee.first_name_kana || "");
             const employeeName =  (employee.last_name ? employee.last_name + '　' : "") + (employee.first_name || "");
+            $('#N23_005F_94ED').val(employee.insurer_reference_no);
             $('#N24_005F_8E96_8BC6').val(employeeNameKana);
             $('#N25_005F_8E96_8BC6_8F8A').val(employeeName);
-            // 生年月日
+            $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayEra);
+            $('#N28_8D864_8C85').val(birthdayConvertJapan['year'] ?? "");
+            $('#N29_005F_8E73').val(birthdayConvertJapan['month'] ?? "");
+            $('#N30_93E0_8BC7_94D4').val(birthdayConvertJapan['day'] ?? "");
         }
 
         Livewire.on('onSelectEmployee', ({ data }) => {insertDataFromEmployee(data)});

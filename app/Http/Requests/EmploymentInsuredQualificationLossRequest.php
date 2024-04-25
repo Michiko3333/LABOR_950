@@ -88,7 +88,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
             "name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "sex" => 'nullable|int|in:1,2',
-            "birthday_era" => 'string|in:max:2',
+            "birthday_era" => 'string|in:大正,昭和,平成,令和',
             "birthday_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "birthday_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "birthday_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',

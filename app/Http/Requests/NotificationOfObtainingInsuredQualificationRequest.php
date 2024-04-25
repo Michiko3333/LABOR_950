@@ -42,7 +42,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "branch_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９　]+\z/u',
             "company_representative" => 'required|string|max:255',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
-            "branch_tel_city_code" => 'required|tring|regex:/^[0-9]{1,5}$/u',
+            "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
             "labor_consultant_acting_as_agent" => 'nullable|string|max:255',
             "employee_name_kana" =>  'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',

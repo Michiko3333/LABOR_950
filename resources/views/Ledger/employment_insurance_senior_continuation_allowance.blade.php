@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">

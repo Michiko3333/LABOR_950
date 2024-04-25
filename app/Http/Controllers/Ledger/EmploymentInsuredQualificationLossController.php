@@ -14,6 +14,7 @@ use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
+use App\EgovAPI\MixXmlEgovSigner;
 
 class EmploymentInsuredQualificationLossController extends Controller
 {
@@ -591,6 +592,12 @@ class EmploymentInsuredQualificationLossController extends Controller
                 'reemployment_request_flg' => $request->input('reemployment_request_flg'),
                 'retirement_reason_type' => $request->input('retirement_reason_type'),
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

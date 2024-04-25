@@ -1,4 +1,4 @@
-<x-layout title="帳票作成：">
+<x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
         <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
@@ -121,6 +121,26 @@
             $('#J74_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
             $('#J75_005F_8C8E').val('{{ $todaySet['month'] }}');
             $('#J76_005F_93FA').val('{{ $todaySet['day'] }}');
+            @if($current_employee->role_id === 500)
+            // $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+            $('#J113_005F_8E81_96BC').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+            $('#J114_005F_8E73_8A4F_8BC7_94D4').val('{{$current_employee->tel_area_code}}');
+            $('#J115_005F_8E73_93E0_8BC7_94D4').val('{{$current_employee->tel_city_code}}');
+            $('#J116_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_employee->tel_subscriber_code}}');
+            $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
+                #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+            $('#J64_005F_944E_8D86').val( '{{ old("laborConsultantJapanEra", $todaySet['japanEra']) }}' );
+            $('#J65_005F_944E').val( '{{ old("laborConsultantJapanEraYear", $todaySet['japanEraYear']) }}' );
+            $('#J66_005F_8C8E').val( '{{ old("laborConsultantMonth", $todaySet['month']) }}' );
+            $('#J67_005F_93FA').val( '{{ old("laborConsultantDay", $todaySet['day']) }}' );
+            $('#J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}');
+            $('#J65_005F_944E,#J66_005F_8C8E, #J67_005F_93FA, #J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').prop('readonly', true);
+            @else
+            $('#J64_005F_944E_8D86').prop('disabled', true);
+            $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
+                #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+            $('#J65_005F_944E,#J66_005F_8C8E, #J67_005F_93FA, #J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,J73_005F_9574_8B4C_9793').prop('readonly', true);
+            @endif
         });
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.ui.tabular.menu .item');
@@ -142,6 +162,7 @@
             const branch = data['branch'];
             const headquarters = data['headquarters'];
             const company = data['company'];
+            const birthdayConvertJapan = data['birthday_convert_japan'];
             if ( employee.employment_insured_no !== null && employee.employment_insured_no.length == 11 ) {
                 $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                 $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
@@ -179,15 +200,10 @@
                 $('#J15_005F_947A_9242_8BC7_94D4_8D86').val("");
                 $('#J16_005F_92AC_88E6_94D4_8D86').val("");
             }
-            if ( employee.post_code !== null ) {
-                var dateParts = employee.birthday.split('-');
-                $('#J26_005F_944E').val(parseInt(dateParts[0]));
-                $('#J27_005F_8C8E').val(parseInt(dateParts[1]));
-                $('#J28_005F_93FA').val(parseInt(dateParts[2]));
-            }else{
-                $('#J26_005F_944E').val("");
-                $('#J27_005F_8C8E').val("");
-                $('#J28_005F_93FA').val("");
+            if ( birthdayConvertJapan['era'] === '昭和' ) {
+                $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
+                $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
+                $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
             }
             $('#J119_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no || '');
             $('#J68_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code || '');
