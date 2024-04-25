@@ -60,7 +60,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-  
+
     public static function rules(): array
     {
         return [
@@ -128,9 +128,11 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "labor_consultant_tel_city_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "labor_consultant_tel_subscriber_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "other_notes" => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
-    
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

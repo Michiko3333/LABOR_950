@@ -121,6 +121,8 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'unsettled_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'unsettled_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'note' => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function withValidator($validator)
@@ -151,7 +153,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
         });
     }
-    
+
 
     public function attributes()
     {

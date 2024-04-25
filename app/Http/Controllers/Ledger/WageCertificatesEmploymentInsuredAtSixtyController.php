@@ -22,7 +22,7 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -86,7 +86,7 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -531,10 +531,13 @@ class WageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 'WageNote2_13' => $request->input('WageNote2_13'),
                 'specialNoteOnWages2_01' => $request->input('specialNoteOnWages2_01'),
                 'J102_check_flg' => $request->input('J102_check_flg'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name'),
+
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

@@ -35,8 +35,8 @@
                     </div>
                     <div class="ui card card-shadow">
                         <div class="content">
-                            <h2>添付ファイル</h2>
-                            <x-ledger-attachment />
+                            <h2>提出先選択</h2>
+                            <livewire:submission-selector :mode="1" />
                         </div>
                     </div>
                 </div>

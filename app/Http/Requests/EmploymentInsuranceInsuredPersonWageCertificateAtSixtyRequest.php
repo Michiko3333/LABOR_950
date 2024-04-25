@@ -409,6 +409,8 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
             "WageNote2_12" => 'nullable|string|max:255',
             "WageNote2_13" => 'nullable|string|max:255',
             "specialNoteOnWages2_1" => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 }

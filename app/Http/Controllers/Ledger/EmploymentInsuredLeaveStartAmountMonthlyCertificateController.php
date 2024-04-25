@@ -24,7 +24,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -83,7 +83,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -469,11 +469,15 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
                 'wage_amount_a2_15' => $request->input('wage_amount_a2_15'),
                 'wage_amount_b2_15' => $request->input('wage_amount_b2_15'),
                 'note2_15' => $request->input('note2_15'),
-                'employee_salary_notices2'=>$request->input('employee_salary_notices2'),
+                'employee_salary_notices2' => $request->input('employee_salary_notices2'),
+
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
+
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

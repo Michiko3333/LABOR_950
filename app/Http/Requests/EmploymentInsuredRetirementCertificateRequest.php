@@ -50,7 +50,7 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
         if (isset($data['labor_consultant_name'])) {
             $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
         }
-        
+
 
         return $data;
     }
@@ -60,7 +60,7 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-  
+
     public static function rules(): array
     {
         return [
@@ -510,6 +510,8 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
             "employee_decision_reasons" => 'nullable|string|max:255',
             "other_reasons" => 'nullable|string|max:255',
             "memo_for_employer" => 'nullable|string|max:255',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 }

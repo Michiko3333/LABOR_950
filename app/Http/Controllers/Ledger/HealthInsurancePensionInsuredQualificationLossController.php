@@ -21,8 +21,8 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         $imageData = File::get($imagePath);
 
         $base64Data = base64_encode($imageData);
-                
-        $dataUri = 'data:image/png;base64,' . $base64Data;     
+
+        $dataUri = 'data:image/png;base64,' . $base64Data;
 
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
@@ -33,7 +33,7 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -47,7 +47,7 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
             'day' => $convertToday['japanese_calendar_result']->day,
         ];
         $procedureName = $this->getProcedureName($request);
-        
+
         return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName]);
     }
 
@@ -91,9 +91,9 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
-        try {         
+        try {
             $data = [
                 'submission_year' => $request->input('submission_year'),
                 'submission_month' => $request->input('submission_month'),
@@ -133,10 +133,12 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
                 'over_70_non_applicable_date_year' => $request->input('over_70_non_applicable_date_year'),
                 'over_70_non_applicable_date_month' => $request->input('over_70_non_applicable_date_month'),
                 'over_70_non_applicable_date_day' => $request->input('over_70_non_applicable_date_day'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name'),
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

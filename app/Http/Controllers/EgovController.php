@@ -19,7 +19,6 @@ class EgovController extends Controller
 
         $company = CurrentUser::currentCompany();
         $isConnected = Egov_account::where('company_id', $company->id)->where('delete_flg', 0)->exists();
-        \Log::info(print_r($isConnected, true));
         return view('ledger.egov', compact('isConnected'));
     }
 

@@ -23,7 +23,7 @@ class EmploymentInsuredTransferNotificationController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -82,8 +82,8 @@ class EmploymentInsuredTransferNotificationController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        } 
-        
+        }
+
         try {
             $data = [
                 'employment_insured_no_4' => $request->input('employment_insured_no_4'),
@@ -138,16 +138,18 @@ class EmploymentInsuredTransferNotificationController extends Controller
                 'labor_consultant_tel_subscriber_code' => $request->input('labor_consultant_tel_subscriber_code'),
                 'labor_consultant_note' => $request->input('labor_consultant_note'),
                 'hello_work' => $request->input('hello_work'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
-        }   
+        }
     }
 }

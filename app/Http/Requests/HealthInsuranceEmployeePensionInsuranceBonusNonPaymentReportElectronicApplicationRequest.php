@@ -54,6 +54,8 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "title_types_of_welfare_pension_insurance" => 'nullable|regex:/1+$/',
             "title_different_types_of_seafarers_insurance" => 'nullable|regex:/1+$/',
             "title_different_types_of_health_insurance" => 'nullable|regex:/1+$/',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
 

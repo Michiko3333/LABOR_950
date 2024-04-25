@@ -25,7 +25,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -89,7 +89,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -185,10 +185,12 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
                 'partner_insured_no_6digit' => $request->input('partner_insured_no_6digit'),
                 'partner_insured_no_CD' => $request->input('partner_insured_no_CD'),
                 'partner_childcare_leave_taken' => $request->input('partner_childcare_leave_taken'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

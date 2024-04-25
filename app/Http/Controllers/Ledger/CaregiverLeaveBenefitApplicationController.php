@@ -24,7 +24,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -643,10 +643,12 @@ class CaregiverLeaveBenefitApplicationController extends Controller
                 'note_2_14' => $request->input('note_2_14'),
                 'note_2_15' => $request->input('note_2_15'),
                 'wage_note_2' => $request->input('wage_note_2'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

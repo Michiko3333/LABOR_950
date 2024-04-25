@@ -87,7 +87,7 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             'working_hours2' => 'nullable|int|max:999|regex:/^[0-9]{1,3}$/u',
             'wages_paid2' => 'nullable|int|max:9999999|regex:/^[0-9]{1,7}$/u',
             'payment_period_last_japan_era' => 'nullable|string|max:2',
-            'payment_period_last_japan_era_year' => 'nullable|int|max:99|regex:/^[0-9]{1,2}$/u', 
+            'payment_period_last_japan_era_year' => 'nullable|int|max:99|regex:/^[0-9]{1,2}$/u',
             'payment_period_last_month' => 'nullable|int|max:12|regex:/^[0-9]{1,2}$/u',
             'payment_period_last_day' => 'nullable|int|max:31|regex:/^[0-9]{1,2}$/u',
             'payment_period_last_month_end' => 'nullable|int|max:12|regex:/^[0-9]{1,2}$/u',
@@ -121,7 +121,7 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'employer_company_managerial_position_name' => 'nullable|string|max:255',
             'destination' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
-            'financial_Institutions_name_kana' =>'nullable|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
+            'financial_Institutions_name_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
             'financial_institution_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
             'headquarters_or_branch' => 'nullable|string|max:2',
             'financia_iInstitution_code' => 'nullable|string|regex:/^[0-9]{4}$/u',
@@ -135,12 +135,14 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             'commuting_allowance' => 'nullable|string|max:2',
             'commuting_allowance_period' => 'nullable|string|max:3',
             'commuting_allowance_period_other' => 'nullable|string|max:4',
-            'note' => 'nullable|string|max:255', 
-            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255', 
-            'labor_consultant_name' => 'nullable|string|max:255', 
+            'note' => 'nullable|string|max:255',
+            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255',
+            'labor_consultant_name' => 'nullable|string|max:255',
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'apply_to_code' => 'required|string',
+            'apply_to_name' => 'required|string'
         ];
     }
     public function withValidator($validator)

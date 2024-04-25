@@ -30,7 +30,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -88,7 +88,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -152,10 +152,12 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                 "remarks_and_others" => $request->input('remarks_and_others'),
                 "remarks_salary_raise_and_reduction_reasons_text" => $request->input('remarks_salary_raise_and_reduction_reasons_text'),
                 "remarks_others" => $request->input('remarks_others'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }

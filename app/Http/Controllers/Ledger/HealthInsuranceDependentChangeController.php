@@ -37,7 +37,7 @@ class HealthInsuranceDependentChangeController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -111,7 +111,7 @@ class HealthInsuranceDependentChangeController extends Controller
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -302,10 +302,12 @@ class HealthInsuranceDependentChangeController extends Controller
                 'certificate_checkbox_2' => $request->input('certificate_checkbox_2'),
                 'spouse_birthday_era_kanji' => $request->input('spouse_birthday_era_kanji'),
                 'birthday_era_kanji' => $request->input('birthday_era_kanji'),
+                'apply_to_code' => $request->input('apply_to_code'),
+                'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
