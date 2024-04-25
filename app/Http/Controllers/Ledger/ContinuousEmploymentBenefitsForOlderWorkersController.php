@@ -23,7 +23,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if ($certificate !== null) {
+        if($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;

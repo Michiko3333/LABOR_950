@@ -40,8 +40,8 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment 
                                     :file_original_names="[
-                                        'wage_amount' => '（様式１）年間報酬の平均で算定することの申立書（随時改定用）',
-                                        'stable_job' => '（様式２）被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意等（随時改定用）',
+                                        'wage_ledger' => '賃金台帳のコピー',
+                                        'attendance_record' => '出勤簿のコピー',
                                         'other' => 'その他の添付書類']"
                 				    :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>

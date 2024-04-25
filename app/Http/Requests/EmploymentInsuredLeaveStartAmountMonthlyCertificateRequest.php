@@ -26,6 +26,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             "file_childcare" => 'required_if:radio_file_childcare,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_nursing_care" => 'required_if:radio_file_nursing_care,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|  max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'employee_employment_insured_no_4' => 'required|string|regex:/^[0-9]{4}$/u',
             'employee_employment_insured_no_6' => 'required|string|regex:/^[0-9]{6}$/u',
             'employee_employment_insured_no_cd' => 'required|string|regex:/^[0-9]{1}$/u',

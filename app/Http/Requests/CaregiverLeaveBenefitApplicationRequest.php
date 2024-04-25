@@ -27,6 +27,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             "file_wage_payment_status" => 'required_if:radio_file_wage_payment_status,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_closing_starts" => 'required_if:radio_file_closing_starts,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'employment_mynumber_card_no' => 'nullable|string|regex:/^[0-9]{12}$/u',
             'employment_insured_no_4' => 'string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'string|regex:/^[0-9]{6}$/u',

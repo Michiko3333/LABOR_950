@@ -28,6 +28,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             "file_spouse" => 'required_if:radio_file_spouse,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_spouse_childcare_leave" => 'required_if:radio_file_spouse_childcare_leave,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'ledger_type' => 'required|string|regex:/^[0-9]{1,5}$/u',
             'fullname_kana_number_symbol' => 'required|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
             'employment_insured_no_4digit' => 'required|string|regex:/^[0-9]{4}$/u',

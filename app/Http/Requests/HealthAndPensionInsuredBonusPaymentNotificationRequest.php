@@ -23,6 +23,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     {
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             "title_health_insurance" => 'nullable|int|in:1',
             "title_pension_insurance" => 'nullable|int|in:1',
             "today_year" => 'int|between:1,99|regex:/^[0-9]+$/',

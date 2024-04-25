@@ -43,7 +43,14 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment 
                                     :file_original_names="[
-                                        'tax_exempt_income' => '非課税対象の収入金額の確認ができる書類（通知書等）のコピー',
+                                        'insurance' => '被保険者証',
+                                        'dependent' => '被扶養者証',
+                                        'tax_exempt' => '非課税証明書',
+                                        'currently_enrolled' => '在学証明書など',
+                                        'basic_pension' => '基礎年金番号通知書 又は 基礎年金番号を確認できる書類',
+                                        'livelihood_maintenance' => '生計維持を確認できる書類',
+                                        'business_owner' => '事業主等証明書',
+                                        'medical_insurer' => '医療保険者証明書',
                                         'other' => 'その他の添付書類']"
                 				    :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>

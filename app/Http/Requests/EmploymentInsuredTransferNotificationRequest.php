@@ -23,6 +23,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
     {
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'employment_insured_no_4' => 'required|string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'required|string|regex:/^[0-9]{6}$/u',
             'employment_insured_no_cd' => 'required|string|regex:/^[0-9]{1}$/u',

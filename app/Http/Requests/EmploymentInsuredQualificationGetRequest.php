@@ -53,6 +53,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
     {
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'required_if:radio_file_other,2|string|max:255',
             'mynumber_card_no' => 'nullable|string|regex:/^[0-9]{12}$/u',
             'employment_insured_no_4' => 'nullable|string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'nullable|string|regex:/^[0-9]{6}$/u',
