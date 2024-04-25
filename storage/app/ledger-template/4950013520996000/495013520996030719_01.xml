@@ -231,16 +231,16 @@
 		<P3_A-330476-001_3>
 			<P3_通知書希望形式>1</P3_通知書希望形式>
 			<P3_添付書類>
-				<P3_被保険者証>2</P3_被保険者証>
-				<P3_被扶養者証>2</P3_被扶養者証>
-				<P3_非課税証明書>2</P3_非課税証明書>
-				<P3_在学証明書など>2</P3_在学証明書など>
-				<P3_基礎年金番号確認書類>2</P3_基礎年金番号確認書類>
-				<P3_生計維持を確認できる書類>2</P3_生計維持を確認できる書類>
-				<P3_事業主等証明書>2</P3_事業主等証明書>
-				<P3_医療保険者証明書>2</P3_医療保険者証明書>
-				<P3_その他>2</P3_その他>
-				<P3_その他名称>ataegaege5a</P3_その他名称>
+				<P3_被保険者証>radio_file_insurance</P3_被保険者証>
+				<P3_被扶養者証>radio_file_dependent</P3_被扶養者証>
+				<P3_非課税証明書>radio_file_tax_exempt</P3_非課税証明書>
+				<P3_在学証明書など>radio_file_currently_enrolled</P3_在学証明書など>
+				<P3_基礎年金番号確認書類>radio_file_basic_pension</P3_基礎年金番号確認書類>
+				<P3_生計維持を確認できる書類>radio_file_livelihood_maintenance</P3_生計維持を確認できる書類>
+				<P3_事業主等証明書>radio_file_business_owner</P3_事業主等証明書>
+				<P3_医療保険者証明書>radio_file_medical_insurer</P3_医療保険者証明書>
+				<P3_その他>radio_file_other</P3_その他>
+				<P3_その他名称>input_file_other</P3_その他名称>
 			</P3_添付書類>
 			<P3_Xmit>0</P3_Xmit>
 		</P3_A-330476-001_3>
