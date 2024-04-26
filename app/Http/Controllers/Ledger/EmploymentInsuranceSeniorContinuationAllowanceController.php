@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\SeniorEmploymentContinuationBenefitClaimFormRequest;
+use App\Models\Branch;
+use App\Models\Certificate;
 use App\Models\CurrentUser;
 use Carbon\Carbon;
-use Illuminate\Mail\Attachment;
 use App\EgovAPI\MixXmlEgovSigner;
-use App\EgovAPI\Signer;
-use App\Models\Certificate;
+
 
 class EmploymentInsuranceSeniorContinuationAllowanceController extends Controller
 {
@@ -31,25 +31,24 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
         } else {
             $certificate = false;
         }
-
-        $japanEra = '令和';
-        $year = date("Y");
-        $japanEraYear = $year - 2018;
-        $month = ltrim(date("m"), '0');
-        $day = ltrim(date("d"), '0');
-        $todaySet = array(
-            "japanEra" => $japanEra,
-            "japanEraYear" => $japanEraYear,
-            "year" => $year,
-            "month" => $month,
-            "day" => $day
-        );
-        $egovAcount = $this->egovAcount();
-
-        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'egovAcount' => $egovAcount]);
+        $currentEmployee = CurrentUser::info();
+        $currentBranch = Branch::where('id', $currentEmployee->branch_id)->first();
+        $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $procedureName = $this->getProcedureName($request);
-
-        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
+        $today = [
+            'japanEra' => $convertToday['japanese_calendar_era_string'],
+            'japanEraYear' => $convertToday['japanese_calendar_result']->year,
+            'month' => $convertToday['japanese_calendar_result']->month,
+            'day' => $convertToday['japanese_calendar_result']->day,
+        ];
+        return view('ledger.employment_insurance_senior_continuation_allowance', [
+            'company' => $company,
+            'current_employee' => $currentEmployee,
+            'current_branch' => $currentBranch,
+            'todaySet' => $today,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName
+        ]);
     }
 
     public function post(SeniorEmploymentContinuationBenefitClaimFormRequest $request)

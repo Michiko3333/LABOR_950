@@ -91,7 +91,7 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
             'today_japan_era_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'destination' => 'required|string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ　]+\z/u',
-            'employer_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+[　][ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+$/u',
+            'employer_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥ａ-ｚＡ-Ｚ]+$/u',
             'headquarters_address' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥ａ-ｚＡ-Ｚ　]+\z/u',
             'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',

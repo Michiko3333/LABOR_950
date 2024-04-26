@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest;
-use App\EgovAPI\MixXmlEgovSigner;
+
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\EgovAPI\MixXmlEgovSigner;
 
 class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController extends Controller
 {
@@ -23,7 +24,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if ($certificate !== null) {
+        if($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -44,9 +45,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        // $prefectures = $this->getPrefectures();
-
-        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]); // , 'prefectures' => $prefectures
+        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)
@@ -58,7 +57,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         foreach ($data as $key => $value) {
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
-                $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
+                $label_key = 'label_' . $file_key;
 
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
@@ -89,7 +88,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }
+        }    
 
         try {
             $data = [
@@ -120,16 +119,15 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
                 'bonus_name' => $request->input('bonus_name'),
                 'era_name' => $request->input('era_name'),
                 'payment_status' => $request->input('payment_status'),
-                'apply_to_code' => $request->input('apply_to_code'),
-                'apply_to_name' => $request->input('apply_to_name')
-
+                
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);
-            if ($response[0] == false) {
-                $errorMessage = $response[1];
-                return redirect()->back()->withErrors($errorMessage)->withInput();
-            }
+            $response = $XML->run($request);   
+            if ( $response[0] == false ){
+                        $errorMessage = $response[1];
+                        return redirect()->back()->withErrors($errorMessage)->withInput();
+                    }
+
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

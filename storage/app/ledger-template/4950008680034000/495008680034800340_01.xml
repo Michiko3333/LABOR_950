@@ -6,7 +6,7 @@
 	<様式コピー情報>0</様式コピー情報>
 	<Doctype>1</Doctype>
 <G00006-A-250046-001_1>
-	<帳票種別>15103</帳票種別>
+	<帳票種別>ledger_type</帳票種別>
 	<被保険者番号>
 		<被保険者番号4桁>employment_insured_no_4</被保険者番号4桁>
 		<被保険者番号6桁>employment_insured_no_6</被保険者番号6桁>
@@ -30,7 +30,7 @@
 		<日>retirement_day</日>
 	</離職年月日>
 	<喪失原因>insurance_loss_reason</喪失原因>
-	<離職票交付希望>2</離職票交付希望>
+	<離職票交付希望>resignation_letter_request_flg</離職票交付希望>
 	<所定労働時間>
 		<時間>agreed_hours_week_hour</時間>
 		<分>agreed_hours_week_minute</分>
@@ -48,14 +48,14 @@
 		<月>insured_birthday_month</月>
 		<日>insured_birthday_day</日>
 	</生年月日>
-	<取得時被保険者種類>高年齢(65歳以上)</取得時被保険者種類>
+	<取得時被保険者種類>insured_age_type</取得時被保険者種類>
 	<転勤年月日>
 		<年/>
 		<月/>
 		<日/>
 	</転勤年月日>
 	<管轄安定所番号>hello_work_office_no</管轄安定所番号>
-	<雇用形態>employment status</雇用形態>
+	<雇用形態>employment_status</雇用形態>
 	<資格取得年月日現在>
 		<時間/>
 		<分/>
@@ -70,9 +70,9 @@
 		<月>stay_date_period_month</月>
 		<日>stay_date_period_day</日>
 	</在留期間>
-	<派遣_請負就労区分>2</派遣_請負就労区分>
-	<国籍_地域>004</国籍_地域>
-	<在留資格>12</在留資格>
+	<派遣_請負就労区分>employment_type</派遣_請負就労区分>
+	<国籍_地域>country_id</国籍_地域>
+	<在留資格>residential_status_id</在留資格>
 	<在留資格_不明理由>residential_status_unknown_reason</在留資格_不明理由>
 	<届出年月日>
 		<年号>notification_date_japan_era</年号>
