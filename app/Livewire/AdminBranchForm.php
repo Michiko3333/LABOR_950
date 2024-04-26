@@ -127,11 +127,8 @@ class AdminBranchForm extends Component
         }
     }
 
-    public function remove($index,$branch)
+    public function remove($index)
     {
-        if (!empty($branch['br-id'])) {
-            Branch::destroy($branch['br-id']);
-        }
         unset($this->data[$index]);
         $this->data = array_values($this->data);
     }
