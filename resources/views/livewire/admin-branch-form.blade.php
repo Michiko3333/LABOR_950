@@ -143,6 +143,35 @@
                                 wire:model.live="data.{{ $key }}.br-tel_overseas" placeholder="">
                         </div>
                     </div>
+                    <div class="two fields">
+                        <div class="ui unstackable three fields field" style="padding: 0;">
+                            <div class="field tel-hyphen {{ err_bind($errs, 'br-fax1', $key) }}"
+                                style="padding-right: 0.8em;">
+                                <label for="br-tel_area_code">fax</label>
+                                <input type="text" name="br-fax1[]"
+                                    wire:model.live="data.{{ $key }}.br-fax1" placeholder="">
+                            </div>
+
+                            <div class="field tel-hyphen {{ err_bind($errs, 'br-fax2', $key) }}"
+                                style="padding-left: 0.8em; padding-right: 0.8em;">
+                                <label for="br-fax2"></label>
+                                <input type="text" name="br-fax2[]"
+                                    wire:model.live="data.{{ $key }}.br-fax2" placeholder="">
+                            </div>
+
+                            <div class="field {{ err_bind($errs, 'br-fax3', $key) }}"
+                                style="padding-left: 0.8em;">
+                                <label for="br-fax3"></label>
+                                <input type="text" name="br-fax3[]"
+                                    wire:model.live="data.{{ $key }}.br-fax3" placeholder="">
+                            </div>
+                        </div>
+                        <div class="field required {{ err_bind($errs, 'br-mail_address', $key) }}">
+                            <label for="br-mail_address">メールアドレス</label>
+                            <input type="text" name="br-mail_address[]"
+                                wire:model.live="data.{{ $key }}.br-mail_address" placeholder="">
+                        </div>
+                    </div>
                     <div class="ui divider my-2"></div>
                     <h3>保険関連</h3>
                     <div class="three fields">

@@ -48,6 +48,12 @@ class AdminBranchForm extends Component
                 $d['br-address_city'] = $item->address_city;
                 $d['br-address_ward'] = $item->address_ward;
                 $d['br-address_apartment'] = $item->address_apartment;
+                $fax = $item->fax;
+                $fax_parts = preg_split('/-/', $fax);
+                $d['br-fax1'] = isset($fax_parts[0]) ? $fax_parts[0] : null;
+                $d['br-fax2'] = isset($fax_parts[1]) ? $fax_parts[1] : null;
+                $d['br-fax3'] = isset($fax_parts[2]) ? $fax_parts[2] : null;
+                $d['br-mail_address'] = $item->mail_address;
                 $d['br-name'] = $item->name;
                 $d['br-tel_area_code'] = $item->tel_area_code;
                 $d['br-tel_city_code'] = $item->tel_city_code;
@@ -140,6 +146,10 @@ class AdminBranchForm extends Component
             'br-address_city' => '',
             'br-address_ward' => '',
             'br-address_apartment' => '',
+            'br-fax1' => '',
+            'br-fax2' => '',
+            'br-fax3' => '',
+            'br-mail_address' => '',
             'br-name' => '',
             'br-tel_area_code' => '',
             'br-tel_city_code' => '',
