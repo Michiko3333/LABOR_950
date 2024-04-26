@@ -1,3 +1,4 @@
+<!-- 4950008680048000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
@@ -12,6 +13,13 @@
                     電子証明書が登録されていません
                 </div>
             </div>
+        @endif
+        @if($egovAcount == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                e-Govアカウントが連携されていません
+            </div>
+        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -66,9 +74,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false)
-                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                            disabled>確認</button>
+                    @if($certificate == false || $egovAcount == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -107,13 +115,13 @@
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
                     $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
                     $('#J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA, #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                            #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86')
+                                    #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @else
                     $('#J74_005F_944E_8D86').prop('disabled', true);
                     $('#J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA, #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                            #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86,\
-                            #J83_005F_9574_8B4C_9793').prop('readonly', true);
+                                    #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86,\
+                                    #J83_005F_9574_8B4C_9793').prop('readonly', true);
                 @endif
             });
         </script>

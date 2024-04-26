@@ -47,6 +47,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
         $countries = Country::all();
         $residentials = Residential_status::all();
         $employmentStatuses = Values_employee_employment_status::all();
+        $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
         return view(
@@ -60,6 +61,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController extend
                 'residentials' => $residentials,
                 'employmentStatuses' => $employmentStatuses,
                 'certificate' => $certificate,
+                'egovAcount' => $egovAcount,
                 'procedureName' => $procedureName
             ]
         );

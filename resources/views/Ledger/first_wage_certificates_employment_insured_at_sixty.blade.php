@@ -1,3 +1,4 @@
+<!-- 4950008680045000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
@@ -15,6 +16,13 @@
                     電子証明書が登録されていません
                 </div>
             </div>
+        @endif
+        @if($egovAcount == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                e-Govアカウントが連携されていません
+            </div>
+        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -87,9 +95,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false)
-                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                            disabled>確認</button>
+                    @if($certificate == false || $egovAcount == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -134,7 +142,7 @@
                     $('#J115_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
                     $('#J116_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
                     $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                        #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
+                                #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                     $('#J64_005F_944E_8D86').val('{{ old('laborConsultantJapanEra', $todaySet['japanEra']) }}');
                     $('#J65_005F_944E').val('{{ old('laborConsultantJapanEraYear', $todaySet['japanEraYear']) }}');
@@ -147,7 +155,7 @@
                 @else
                     $('#J64_005F_944E_8D86').prop('disabled', true);
                     $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                        #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
+                                #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                     $('#J65_005F_944E,#J66_005F_8C8E, #J67_005F_93FA, #J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,J73_005F_9574_8B4C_9793')
                         .prop('readonly', true);
@@ -265,7 +273,7 @@
                 function() {
                     document.getElementById('J8_005F_8374_838A_834B_8369').value = this.value;
                     document.getElementById('J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').value = this
-                    .value;
+                        .value;
                 });
             document.getElementById('J10_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').value = this.value;

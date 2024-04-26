@@ -42,6 +42,9 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             "month" => $month,
             "day" => $day
         );
+        $egovAcount = $this->egovAcount();
+        
+        return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'egovAcount' => $egovAcount]);
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.continuous_employment_benefits_for_older_workers', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee]);

@@ -159,8 +159,7 @@
                                     wire:model.live="data.{{ $key }}.br-fax2" placeholder="">
                             </div>
 
-                            <div class="field {{ err_bind($errs, 'br-fax3', $key) }}"
-                                style="padding-left: 0.8em;">
+                            <div class="field {{ err_bind($errs, 'br-fax3', $key) }}" style="padding-left: 0.8em;">
                                 <label for="br-fax3"></label>
                                 <input type="text" name="br-fax3[]"
                                     wire:model.live="data.{{ $key }}.br-fax3" placeholder="">
@@ -408,7 +407,7 @@
                     @if ($key > 0)
                         <div style="text-align: right;">
                             <button class="ui negative button" type="button"
-                                wire:click="remove({{ $key }}, {{ json_encode($data[$key]) }})">
+                                wire:click="remove({{ $key }})">
                                 この事業所を削除
                             </button>
                         </div>
@@ -417,8 +416,8 @@
             </div>
         </div>
     @endforeach
-    <button class="append-branch" type="button" wire:click="append"
-        {{ count($data) > 9 ? 'disabled' : '' }}><i class="plus circle icon"></i>事業所を追加</button>
+    <button class="append-branch" type="button" wire:click="append" {{ count($data) > 9 ? 'disabled' : '' }}><i
+            class="plus circle icon"></i>事業所を追加</button>
     @script
         <script type="module">
             $(document).ready(function() {

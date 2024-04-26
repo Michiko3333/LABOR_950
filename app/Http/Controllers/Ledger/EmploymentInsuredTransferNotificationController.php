@@ -37,9 +37,10 @@ class EmploymentInsuredTransferNotificationController extends Controller
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee]);
+        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee, 'egovAcount' => $egovAcount]);
     }
 
     public function post(EmploymentInsuredTransferNotificationRequest $request)

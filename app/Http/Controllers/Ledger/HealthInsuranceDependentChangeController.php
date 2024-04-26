@@ -57,6 +57,7 @@ class HealthInsuranceDependentChangeController extends Controller
             'month' => $convertYesterday['japanese_calendar_result']->month,
             'date' => $convertYesterday['japanese_calendar_result']->day,
         ];
+        $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.health_insurance_dependent_change', [
@@ -67,6 +68,7 @@ class HealthInsuranceDependentChangeController extends Controller
             'today' => $today,
             'yesterday' => $yesterday,
             'certificate' => $certificate,
+            'egovAcount' => $egovAcount,
             'procedureName' => $procedureName
         ]);
     }
