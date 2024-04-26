@@ -28,7 +28,8 @@ class ListController extends Controller
         } else {
             $certificate = false;
         }
+        $egovAcount = $this->egovAcount();
 
-        return view('ledger/ledger', compact('certificate'));
+        return view('ledger/ledger', compact('certificate', 'egovAcount'));
     }
 }

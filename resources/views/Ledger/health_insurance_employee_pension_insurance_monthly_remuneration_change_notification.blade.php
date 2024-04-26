@@ -14,6 +14,13 @@
                 </div>
             </div>
         @endif
+        @if($egovAcount == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                e-Govアカウントが連携されていません
+            </div>
+        </div>
+        @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
@@ -66,9 +73,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false)
-                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                            disabled>確認</button>
+                    @if($certificate == false || $egovAcount == false)
+                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                        disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>

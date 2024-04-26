@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\CurrentUser;
 use App\Models\Prefecture;
 use App\Models\Values_sex;
+use App\Models\Egov_account;
 use App\Models\Ledger;
 
 use Illuminate\Http\Request;
@@ -170,6 +171,20 @@ class Controller extends BaseController
     {
         $this->putSuccess($request, false);
         return 0;
+    }
+
+    public function egovAcount()
+    {
+        $user = CurrentUser::info();
+        $currentCompany = CurrentUser::currentCompany();
+        $company_id = $currentCompany->id;
+        $egovAcount = Egov_account::where('company_id', $company_id)->where('delete_flg', 0)->first();
+        if($egovAcount !== null) {
+            $egovAcount = true;
+        } else {
+            $egovAcount = false;
+        }
+        return $egovAcount;
     }
 
     public function getProcedureName(Request $request)

@@ -34,6 +34,13 @@
                 </div>
             </div>
         @endif
+        @if($egovAcount == false)
+        <div class="ui warning message" style="margin: 0;">
+            <div class="header">
+                e-Govアカウントが連携されていません
+            </div>
+        </div>
+        @endif
         <h1>帳票一覧</h1>
         <livewire:ledger-list />
     </section>

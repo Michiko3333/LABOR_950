@@ -38,6 +38,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
             'month' => $convertToday['japanese_calendar_result']->month,
             'date' => $convertToday['japanese_calendar_result']->day,
         ];
+        $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.caregiver_leave_benefit_application', [
@@ -46,6 +47,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
             'current_branch' => $currentBranch,
             'today' => $today,
             'certificate' => $certificate,
+            'egovAcount' => $egovAcount,
             'procedureName' => $procedureName
         ]);
     }

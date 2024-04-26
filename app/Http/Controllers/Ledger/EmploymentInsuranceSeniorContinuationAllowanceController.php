@@ -44,6 +44,9 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             "month" => $month,
             "day" => $day
         );
+        $egovAcount = $this->egovAcount();
+
+        return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'egovAcount' => $egovAcount]);
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.employment_insurance_senior_continuation_allowance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName]);
