@@ -415,6 +415,18 @@
                                 placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守">
                             @endif
                         </div>
+                        <div class="field {{err($errors, 'stock_code')}} mt-2">
+                            <div class="ui toggle checkbox">
+                                @if(!isset($company_id))
+                                <input type="hidden" name="procedure_hidden_flg" value="0">
+                                <input type="checkbox" name="procedure_hidden_flg" value="1" {{ old("procedure_hidden_flg") == '1' ? 'checked' : '' }}>
+                                @else
+                                <input type="hidden" name="procedure_hidden_flg" value="0">
+                                <input type="checkbox" name="procedure_hidden_flg" value="1" {{ $company->procedure_hidden_flg == '1' ? 'checked' : '' }}>
+                                @endif
+                                <label for="procedure_hidden_flg">行政手続きを非表示</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

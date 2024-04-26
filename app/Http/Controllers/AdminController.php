@@ -251,6 +251,7 @@ class AdminController extends Controller
             'sales_company' => $request->input('sales_company'),
             'url' => $request->input('url'),
             'purpose' => $request->input('purpose'),
+            'procedure_hidden_flg' => $request->input('procedure_hidden_flg'),
         ];
     }
 
@@ -268,6 +269,13 @@ class AdminController extends Controller
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
+        $fax = '';
+        if ($request->input('br-fax1') || $request->input('br-fax2') || $request->input('br-fax3')) {
+            $fax1 = $request->input('br-fax1');
+            $fax2 = $request->input('br-fax2');
+            $fax3 = $request->input('br-fax3');
+            $fax = ($fax1[0] ? $fax1[0].'-' : '') . ($fax2[0] ? $fax2[0].'-' : '') . ($fax3[0] ?? '');
+        }
         return [
             'name' => $request->input('br-name')[$index],
             'company_id' => $company_id,
@@ -280,6 +288,8 @@ class AdminController extends Controller
             'tel_city_code' => $request->input('br-tel_city_code')[$index],
             'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
             'tel_overseas' => $request->input('br-tel_overseas')[$index],
+            'fax' => $fax,
+            'mail_address' => $request->input('br-mail_address')[$index],
             'place_type' => $request->input('br-place_type')[$index],
             'branch_type' => $request->input('br-branch_type')[$index],
             'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],
