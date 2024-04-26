@@ -15,7 +15,8 @@
     @endscript
 
     <div style="padding: 1em 0;">
-        <button class="ui button primary modalbtn" type="button" wire:click='new' style="width: 100px;">追加</button>
+        <button class="ui button primary" onclick="openEditModal()" type="button" wire:click='new'
+            style="width: 100px;">追加</button>
     </div>
 
     @if ($managerial_position->isNotEmpty())

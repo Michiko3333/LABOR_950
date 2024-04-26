@@ -1,3 +1,4 @@
+<!-- 4950008680182000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
@@ -141,11 +142,11 @@
                     $('#J199_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
                     $('#J200_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
                     $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                            #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
+                                    #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @else
                     $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                            #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
+                                    #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @endif
             });
@@ -345,17 +346,17 @@
                 .addEventListener('input', addressPlus);
             document.getElementById(
                 'J48_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8341_8370_815B_8367_005F_837D_8393_8356_8387_8393_96BC_9399'
-                ).addEventListener('input', addressPlus);
+            ).addEventListener('input', addressPlus);
 
             function addressPlus() {
                 const prefectureCity = document.getElementById(
                     'J46_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8E73_8BE6_8C53_8B79_82D1_92AC_91BA_96BC'
-                    ).value;
+                ).value;
                 const addressWard = document.getElementById(
                     'J47_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_929A_96DA_005F_94D4_926E').value;
                 const addressApartment = document.getElementById(
                     'J48_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8341_8370_815B_8367_005F_837D_8393_8356_8387_8393_96BC_9399'
-                    ).value;
+                ).value;
                 const address = prefectureCity + addressWard + addressApartment;
                 document.getElementById('J23_005F_8F5A_8F8A').value = address;
             }

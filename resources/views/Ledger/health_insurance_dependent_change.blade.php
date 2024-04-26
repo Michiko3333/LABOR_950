@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 4950013520996000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
@@ -52,6 +52,12 @@
                                     'medical_insurer' => '医療保険者証明書',
                                     'other' => 'その他の添付書類',
                                 ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>提出先選択</h2>
+                                <livewire:submission-selector :mode="1" />
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+<!-- 4950008680035000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
@@ -148,13 +149,13 @@
                     $('#J79_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
                     $('#J80_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
                     $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA, \
-                            #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J75_005F_8E81_96BC')
+                                    #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J75_005F_8E81_96BC')
                         .prop('readonly', true);
                 @else
                     $('#J70_005F_944E_8D86').prop('disabled', true);
                     $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA, #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                            #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
-                            #J79_005F_9574_8B4C_9793').prop('readonly', true);
+                                    #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
+                                    #J79_005F_9574_8B4C_9793').prop('readonly', true);
                 @endif
             });
         </script>
@@ -442,7 +443,7 @@
                     if ($('#J107_005F_Radio2').prop('checked')) {
                         $('#J115_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4').val(
                             retirement_reason_contract_period_expired_except_eternal_hire.contract_period_once ?? ''
-                            );
+                        );
                         $('#J116_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4').val(
                             retirement_reason_contract_period_expired_except_eternal_hire.contract_period_total ??
                             '');
