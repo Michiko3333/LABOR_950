@@ -43,6 +43,7 @@ class AdminCompanyCreateRequest extends FormRequest
             'sales_company' => 'nullable|string|max:255',
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
+            'procedure_hidden_flg' => 'nullable|integer|in:0,1',
             'company_division' => 'integer',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:255',

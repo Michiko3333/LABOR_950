@@ -251,6 +251,7 @@ class AdminController extends Controller
             'sales_company' => $request->input('sales_company'),
             'url' => $request->input('url'),
             'purpose' => $request->input('purpose'),
+            'procedure_hidden_flg' => $request->input('procedure_hidden_flg'),
         ];
     }
 
