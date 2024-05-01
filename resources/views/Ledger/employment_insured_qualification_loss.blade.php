@@ -178,6 +178,9 @@
                 const employmentRetirementConvertDate = data['employment_retirement_convert_date'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const employee_prefecture_data = data['employee_prefecture_data'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
 
                 $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
                 $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
@@ -212,7 +215,7 @@
                     var retirement_date_nextday_day = ('0' + nextday.getDate()).slice(-2);
                 }
 
-                if (employee.employment_insured_no != null && employee.insurance_office_no.length == 11) {
+                if (employee.employment_insured_no != null && employee.employment_insured_no.length == 11) {
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
                     $('#J6_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10, 11));

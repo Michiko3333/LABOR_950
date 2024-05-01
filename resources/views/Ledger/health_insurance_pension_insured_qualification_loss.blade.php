@@ -122,6 +122,7 @@
                 const over_70_non_applicable_convert_date = data['over_70_non_applicable_convert_date'];
                 const employment_retirement_convert_date = data['employment_retirement_convert_date'];
                 const passed_away_convert_date = data['passed_away_convert_date'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
                 var eraMapping = {
                     '昭和': '5',
                     '平成': '7',
@@ -129,8 +130,6 @@
                 };
                 var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
-                var over70EraValue = over_70_non_applicable_convert_date['era'] ?? "";
-                var over70Era = eraMapping[over70EraValue] ?? "";
                 $('#N27_P1').val(birthdayEra);
                 $('#N28_P1').val(birthdayConvertJapan['year'] ?? "");
                 $('#N29_P1').val(birthdayConvertJapan['month'] ?? "");
@@ -151,15 +150,14 @@
                     $('#N13_P1').val("");
                     $('#N14_P1').val("");
                 }
-                $('#N15_P1').val(branch.address_prefecture + branch.address_city + branch.address_ward + branch
-                    .address_apartment || '');
+                $('#N15_P1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#N16_P1').val(branch.name || '');
                 $('#N19_P1').val(branch.tel_area_code || '');
                 $('#N20_P1').val(branch.tel_city_code || '');
                 $('#N21_P1').val(branch.tel_subscriber_code || '');
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
-                $('#N23_P1').val(employee.insured_reference_number || '');
+                $('#N23_P1').val(employee.insurer_reference_no || '');
                 $('#N24_P1').val(employeeNameKana);
                 $('#N25_P1').val(employeeName);
                 $('#N31_P1').val(employee.mynumber_card_no || '');
@@ -183,9 +181,9 @@
                 } else if (employee.over_retired_insurance_loss_reason === 11) {
                     $('#N37_P1_4').prop("checked", true);
                 }
-                if (employee.over_70_applicable_flg === 0) {
+                if (employee.over_70_applicable_flg === 1) {
                     $('#N54_P1').prop("checked", true);
-                    $('#N56_P1').val(over70Era).prop("disabled", false);
+                    $('#N56_P1').val(over_70_non_applicable_convert_date['era'] ?? "").prop("disabled", false);
                     $('#N57_P1').val(over_70_non_applicable_convert_date['year'] ?? "").prop("disabled", false);
                     $('#N58_P1').val(over_70_non_applicable_convert_date['month'] ?? "").prop("disabled", false);
                     $('#N59_P1').val(over_70_non_applicable_convert_date['day'] ?? "").prop("disabled", false);

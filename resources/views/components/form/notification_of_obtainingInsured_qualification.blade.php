@@ -3088,6 +3088,7 @@
                         .preview-area input[type="CHECKBOX"]::before {
                             display: none;
                             border: none !important;
+                            background-color: transparent !important;
                         }
                     </style>
                     <script>
@@ -3217,26 +3218,26 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 71px; top: 336px; height:15px; background-color:#ddeeff;">
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 71px; top: 336px; height:15px; background-color:#ddeeff;">
                                 <input checked="" id="N31_005F_89C1_93FC" name="employee_insured_type" required="required" type="radio" value="1" <?php echo (old('employee_insured_type') == '1') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="employee_insured_type_1" style="font-size: 10px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 126px; top: 336px; height:15px; background-color:#ddeeff;">
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 126px; top: 336px; height:15px; background-color:#ddeeff;">
                                 <input id="N33_005F_8E73_8A4F" name="employee_insured_type" required="required" type="radio" value="3" <?php echo (old('employee_insured_type') == '3') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="employee_insured_type_3" style="font-size: 10px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 71px; top: 357px; height:15px; background-color:#ddeeff;">
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 71px; top: 357px; height:15px; background-color:#ddeeff;">
                                 <input id="N34_93E0_8BC7_94D4" name="employee_insured_type" required="required" type="radio" value="4" <?php echo (old('employee_insured_type') == '4') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="employee_insured_type_4" style="font-size: 10px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 126px; top: 357px; height:15px; background-color:#ddeeff;">
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 126px; top: 357px; height:15px; background-color:#ddeeff;">
                                 <input id="N35_94D4_8D86" name="employee_insured_type" required="required" type="radio" value="0" <?php echo (old('employee_insured_type') == '0') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="employee_insured_type_0" style="font-size: 10px;">
                                 </label>
-                            </div>
+                            </span>
                             <div class="egov-tool-field-origin" style="left: 185px; top: 334px;">
                                 <input class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A" maxlength="12" name="employee_mynumber_card_no" style="width: 247px; height: 44px; font-size: 12px; text-align: left; line-height: 70px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('employee_mynumber_card_no') }}"/>
                             </div>

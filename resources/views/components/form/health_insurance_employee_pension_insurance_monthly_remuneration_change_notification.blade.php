@@ -4990,7 +4990,7 @@
                                         <div class="egov-tool-field-origin" style="left: 552px; top: 381px;">
                                             <input class="egov-tool-field-rect onImage" id="remarks_salary_raise_and_reduction_reasons_text" maxlength="13" name="remarks_salary_raise_and_reduction_reasons_text" style="width: 125px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_salary_raise_and_reduction_reasons_text') }}"/>
                                         </div>
-                                        <div class="egov-tool-field-origin" style="left: 576px; top: 425px;">
+                                        <div class="egov-tool-field-origin" style="left: 576px; top: 423px;">
                                             <input class="egov-tool-field-rect onImage" id="remarks_others" maxlength="10" name="remarks_others" style="width: 101px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_others') }}"/>
                                         </div>
                                         <img alt="法令様式画像" src="{{ $dataUri }}"/>

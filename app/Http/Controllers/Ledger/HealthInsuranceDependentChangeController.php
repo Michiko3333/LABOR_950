@@ -302,11 +302,18 @@ class HealthInsuranceDependentChangeController extends Controller
                 'medical_insurer_tel_subscriber_code' => $request->input('medical_insurer_tel_subscriber_code'),
                 'certificate_checkbox_1' => $request->input('certificate_checkbox_1'),
                 'certificate_checkbox_2' => $request->input('certificate_checkbox_2'),
-                'spouse_birthday_era_kanji' => $request->input('spouse_birthday_era_kanji'),
-                'birthday_era_kanji' => $request->input('birthday_era_kanji'),
                 'apply_to_code' => $request->input('apply_to_code'),
                 'apply_to_name' => $request->input('apply_to_name')
             ];
+            $eraMapping = [
+                '5' => '昭和',
+                '7' => '平成',
+                '9' => '令和',
+            ];
+            $spouse_birthday_era_kanji = $request->input('spouse_birthday_era');
+            $request['spouse_birthday_era_kanji'] = $eraMapping[$spouse_birthday_era_kanji];
+            $birthday_era_kanji = $request->input('birthday_era');
+            $request['birthday_era_kanji'] = $eraMapping[$birthday_era_kanji];
             $XML = new MixXmlEgovSigner($request);
             $response = $XML->run($request);
             if ($response[0] == false) {

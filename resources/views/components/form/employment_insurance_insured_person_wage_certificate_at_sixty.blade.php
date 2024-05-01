@@ -926,11 +926,10 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J24_005F_93FA" value="{{ old('dateOfAttainmentage60Day') }}" name="dateOfAttainmentage60Day"
             maxlength="2"></SPAN>
-    <INPUT hidden type="TEXT" id="birthdayEra" value="昭和" name="birthdayEra"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:690px; top:279px; width:50px; height:15px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:730px; top:279px; width:17px; height:15px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="25"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:30px; max-width:30px; height:15px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:17px; max-width:17px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J26_005F_944E" value="{{ old('birthdayYear') }}" name="birthdayYear" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:799px; top:279px; width:17px; height:15px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -2098,13 +2097,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:264px; top:1261px; width:109px; line-height:38px; height:38px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="222"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:109px; height:37px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J69_005F_8E81_96BC" value="{{ old('laborConsultantName') }}" name="laborConsultantName" disabled></SPAN>
+            id="J69_005F_8E81_96BC" value="{{ old('laborConsultantName') }}" name="laborConsultantName"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:405px; top:1262px; width:35px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="223"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:35px; max-width:35px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J70_005F_8E73_8A4F_8BC7_94D4" value="{{ old('laborConsultantTelAreaCode') }}"
-            name="laborConsultantTelAreaCode" maxlength="5" disabled></SPAN>
+            name="laborConsultantTelAreaCode" maxlength="5"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:441px; top:1262px; width:14px; height:13px; text-align:left; font-size:11px; font-family:'ＭＳ 明朝', serif; line-height:normal;">－</SPAN>
     <SPAN
@@ -2112,7 +2111,7 @@
             tabindex="224"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:35px; max-width:35px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J71_005F_8E73_93E0_8BC7_94D4" value="{{ old('laborConsultantTelCityCode') }}"
-            name="laborConsultantTelCityCode" maxlength="5" disabled></SPAN>
+            name="laborConsultantTelCityCode" maxlength="5"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:441px; top:1283px; width:14px; height:14px; text-align:left; font-size:11px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">－</SPAN>
     <SPAN
@@ -2120,7 +2119,7 @@
             tabindex="225"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:34px; max-width:34px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J72_005F_89C1_93FC_8ED2_94D4_8D86" value="{{ old('laborConsultantTelSubscriberCode') }}"
-            name="laborConsultantTelSubscriberCode" maxlength="5" disabled></SPAN>
+            name="laborConsultantTelSubscriberCode" maxlength="5"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:68px; top:1308px; width:538px; line-height:57px; height:57px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="226"
@@ -2533,9 +2532,14 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:496px; top:1722px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">印</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:666px; top:281px; width:23px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">昭和</SPAN>
-    <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:748px; top:1629px; width:10px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">年</SPAN>
+    style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:670px; top:279px; width:50px; height:16px; font-size:10px;"><SELECT
+        size="1" tabindex="21"
+        style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:50px; height:16px;"
+        id="birthdayEra" name="birthdayEra">
+        <OPTION value="昭和" selected="selected" {{ old('birthdayEra') == '昭和' ? 'selected' : '' }}>昭和</OPTION>
+        <OPTION value="平成" {{ old('birthdayEra') == '平成' ? 'selected' : '' }}>平成</OPTION>
+        <OPTION value="令和" {{ old('birthdayEra') == '令和' ? 'selected' : '' }}>令和</OPTION>
+    </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:528px; top:1616px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">７</SPAN>
     <SPAN

@@ -127,14 +127,11 @@
                 const pensionOfficeReferenceNoOffice = branch.pension_office_reference_no_office;
                 const pensionOfficeNo = branch.pension_office_no;
                 const postCode = branch.post_code;
-                const addressPrefecture = branch.address_prefecture;
-                const addressCity = branch.address_city;
-                const addressWard = branch.address_ward;
-                const addressApartment = branch.address_apartment;
                 const name = branch.name;
                 const telAreaCode = branch.tel_area_code;
                 const telCityCode = branch.tel_city_code;
                 const telSubscriberCode = branch.tel_subscriber_code;
+                const branch_prefecture_data = data['branch_prefecture_data'];
 
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_9373_93B9_957B_8CA7_8352_815B_8368_002E7').val(
                     pensionOfficeReferencePrefecture ?? '');
@@ -144,13 +141,10 @@
                     '');
                 $('#_8E96_8BC6_8F8A_94D4_8D86x_8D90_926D_94D4_8D86_002E12').val(pensionOfficeNo ?? '');
                 if (postCode && postCode.length == 7) {
-                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0,
-                        3));
-                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_8E71_94D4_8D86_002E14').val(postCode.substring(3,
-                        7));
-                }
-                $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val(addressPrefecture ?? '') + (
-                    addressCity ?? '') + (addressWard ?? '') + (addressApartment ?? '');
+                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0, 3));
+                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_8E71_94D4_8D86_002E14').val(postCode.substring(3, 7));
+                }            
+                $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(name ?? '');
                 $('#_9364_9862_94D4_8D86x_8E73_8A4F_8BC7_94D4_002E18').val(telAreaCode ?? '');
                 $('#_9364_9862_94D4_8D86x_8BC7_94D4_002E19').val(telCityCode ?? '');

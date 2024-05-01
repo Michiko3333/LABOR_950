@@ -148,9 +148,6 @@
                     $('#J198_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_employee->tel_area_code }}');
                     $('#J199_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
                     $('#J200_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
-                    $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                    #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
-                        .prop('readonly', true);
                 @else
                     $('#J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
                                     #J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J198_005F_8E73_8A4F_8BC7_94D4, #J199_005F_8E73_93E0_8BC7_94D4, #J200_005F_89C1_93FC_8ED2_94D4_8D86')
@@ -178,12 +175,10 @@
                 const headquarters = data['headquarters'];
                 const company = data['company'];
                 const todaySet = data['todaySet'];
-
-
-
-
-
-                if (employee.employment_insured_no !== null && employee.employment_insured_no.length == 11) {
+                const employee_prefecture_data = data['employee_prefecture_data'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
+                if ( employee.employment_insured_no !== null && employee.employment_insured_no.length == 11 ) {
                     $('#J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J13_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
                     $('#J14_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10, 11));
@@ -240,31 +235,23 @@
                 $('#J50_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code || '');
                 $('#J51_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || '');
                 $('#J52_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || '');
-                $('#J46_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8E73_8BE6_8C53_8B79_82D1_92AC_91BA_96BC')
-                    .val((employee.address_prefecture || "") + (employee.address_city || ""));
-                $('#J47_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_929A_96DA_005F_94D4_926E').val(employee
-                    .address_ward || '');
-                $('#J48_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8341_8370_815B_8367_005F_837D_8393_8356_8387_8393_96BC_9399')
-                    .val(employee.address_apartment || '');
-                $('#J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters.address_prefecture || "") + (
-                    headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters
-                    .address_apartment || ""));
+                $('#J46_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8E73_8BE6_8C53_8B79_82D1_92AC_91BA_96BC').val((employee_prefecture_data.name || "") + (employee.address_city || ""));
+                $('#J47_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_929A_96DA_005F_94D4_926E').val(employee.address_ward || '');
+                $('#J48_005F_94ED_95DB_8CAF_8ED2_82CC_8F5A_8F8A_005F_8ABF_8E9A_005F_8341_8370_815B_8367_005F_837D_8393_8356_8387_8393_96BC_9399').val(employee.address_apartment || '');
+                $('#J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || ""));
                 $('#J151_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code || '');
                 $('#J152_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code || '');
                 $('#J153_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code || '');
                 $('#J16_005F_96BC_8FCC').val(branch.name || '');
-                $('#J17_005F_8F8A_8DDD_926E').val((branch.address_prefecture || "") + (branch.address_city || "") + (branch
-                    .address_ward || "") + (branch.address_apartment || ""));
+                $('#J17_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || ""));
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');
                 $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code || '');
-                $('#J23_005F_8F5A_8F8A').val((employee.address_prefecture || "") + (employee.address_city || "") + (employee
-                    .address_ward || "") + (employee.address_apartment || ""));
+                $('#J23_005F_8F5A_8F8A').val((employee_prefecture_data.name || "") + (employee.address_city || "") + (employee.address_ward || "") + (employee.address_apartment || ""));
                 $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code || '');
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || '');
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || '');
-                $('#J27_005F_8F5A_8F8A').val((headquarters.address_prefecture || "") + (headquarters.address_city || "") + (
-                    headquarters.address_ward || "") + (headquarters.address_apartment || ""));
+                $('#J27_005F_8F5A_8F8A').val((headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || ""));
             }
             document.getElementById('J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').value = this.value;

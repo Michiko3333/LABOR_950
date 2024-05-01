@@ -18,7 +18,7 @@
 		<被保険者氏名xカナx>name_kana</被保険者氏名xカナx>
 		<被保険者氏名x漢字x>name</被保険者氏名x漢字x>
 		<被保険者の生年月日>
-			<元号>birthday_era</元号>
+			<元号>birthday_era_kanji</元号>
 			<年>birthday_year</年>
 			<月>birthday_month</月>
 			<日>birthday_day</日>

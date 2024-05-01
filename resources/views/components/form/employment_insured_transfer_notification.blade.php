@@ -1,44 +1,4 @@
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1049px;">
-<script>
-function katakanaNameCheck(f){
-	var st = f.value;
-	var zenkaku = "　ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトド";
-	zenkaku += "ナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロワンヴヲ";
-	zenkaku += "‐－ー";
-	var reg = new RegExp("[^" + zenkaku + "]","g");
-	if (st.match(reg) != null){
-		alert("指定可能な文字以外が指定されています。\n\n【指定可能な文字】\n全角カナ、全角記号（‐－ー）、全角空白");
-		f.focus();
-	}
-}
-
-function romajiCheck(f){
-     var st = f.value;
-     var hankaku = " !#$%&()*+.:;<=>@^_`{|}~";
-     hankaku += "\\\"\\\'\\\[\\\]\\\\\\\-";
-     hankaku += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-     hankaku += "abcdefghijklmnopqrstuvwxyz0123456789";
-     var reg = new RegExp("[^" + hankaku + "]","g");
-     if (st.match(reg) != null){
-             alert("指定可能な文字以外が指定されています。\n\n【指定可能な文字】\n半角英数字、半角記号（!\"#$%&\'()*+-.:;<=>@\[\\\]^_`{|}~）、半角空白");
-             f.focus();
-     }
-}
-
-   function katakanaCheck(f){
-        var st = f.value;
-        var zenkaku = "０１２３４５６７８９＋‐－ー＃￥＆．，：＊　";
-        zenkaku += "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトド";
-        zenkaku += "ナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ";
-        zenkaku += "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ";
-        var reg = new RegExp("[^" + zenkaku + "]","g");
-        if (st.match(reg) != null){
-                alert("指定可能な文字以外が指定されています。\n\n【指定可能な文字】\n全角カナ、全角英数字\n全角記号（＋‐－ー＃￥＆．，：＊）、全角空白");
-                f.focus();
-        }
-   }
-
-</script>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:36px; top:807px; width:47px; height:55px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:37px 0px 0px 0px;"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:82px; top:807px; width:163px; height:14px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif;"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:374px; top:807px; width:103px; height:14px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif;"></SPAN>
@@ -125,8 +85,8 @@ function romajiCheck(f){
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:60px; top:346px; width:71px; height:14px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">８転勤年月日</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:60px; top:368px; width:58px; height:20px; font-size:14px;"><SELECT size="1" tabindex="22" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:14px; font-family:'ＭＳ 明朝', serif; width:58px; height:20px;" id="J24_005F_944E_8D86" name="transfer_date_era">
 <OPTION value="" selected="selected"></OPTION>
-<OPTION value="平成">平成</OPTION>
-<OPTION value="令和">令和</OPTION>
+<OPTION value="平成" {{ old('transfer_date_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+<OPTION value="令和" {{ old('transfer_date_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:125px; top:363px; width:37px; height:28px; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:3px 0px 0px 0px;"><INPUT tabindex="23" style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:37px; max-width:37px; height:18px; ime-mode:disabled;" type="TEXT" id="J25_005F_944E" value="{{ old('transfer_date_year') }}" name="transfer_date_year" maxlength="2"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:162px; top:371px; width:15px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">年</SPAN>
@@ -174,8 +134,8 @@ function romajiCheck(f){
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:62px; top:52px; width:100px; height:32px; font-size:23px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;"><INPUT tabindex="-1" readonly style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:left; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:23px; font-family:'ＭＳ ゴシック', sans-serif; padding:0px 0px 0px 0px; min-width:100px; max-width:100px; height:27px;" value="14106" type="TEXT" id="J1_005F_92A0_955B_8EED_95CA" name="ledger_type"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:358px; top:107px; width:58px; height:20px; font-size:14px;"><SELECT size="1" tabindex="5" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:14px; font-family:'ＭＳ 明朝', serif; width:58px; height:20px;" id="J6_005F_944E_8D86" name="birthday_era">
 <OPTION value=""></OPTION>
-<OPTION value="大正" {{ old('birthday_era')=="大正" ? 'selected' : '' }}大正</OPTION>
-<OPTION value="昭和" selected="selected" {{ old('birthday_era')=="昭和" ? 'selected' : '' }}>昭和</OPTION>
+<OPTION value="大正" {{ old('birthday_era')=="大正" ? 'selected' : '' }}>大正</OPTION>
+<OPTION value="昭和" {{ old('birthday_era')=="昭和" ? 'selected' : '' }}>昭和</OPTION>
 <OPTION value="平成" {{ old('birthday_era')=="平成" ? 'selected' : '' }}>平成</OPTION>
 <OPTION value="令和" {{ old('birthday_era')=="令和" ? 'selected' : '' }}>令和</OPTION>
 </SELECT></SPAN>
@@ -236,7 +196,7 @@ function romajiCheck(f){
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:495px; top:447px; width:50px; height:16px; font-size:10px;"><SELECT size="1" tabindex="29" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:50px; height:16px;" id="J61_005F_944E_8D86" name="name_changed_date_era">
 <OPTION value=""></OPTION>
 <OPTION value="平成" {{ old('name_changed_date_era')=="平成" ? 'selected' : '' }}>平成</OPTION>
-<OPTION value="令和" selected="selected" {{ old('name_changed_date_era')=="令和" ? 'selected' : '' }}>令和</OPTION>
+<OPTION value="令和" {{ old('name_changed_date_era')=="令和" ? 'selected' : '' }}>令和</OPTION>
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:486px; top:465px; width:225px; height:23px; font-size:12px; font-family:'ＭＳ 明朝', serif;"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:531px; top:468px; width:35px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT tabindex="30" style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:35px; max-width:35px; height:17px; ime-mode:disabled;" type="TEXT" id="J62_005F_944E" value="{{ old('name_changed_date_year') }}" name="name_changed_date_year" maxlength="2"></SPAN>

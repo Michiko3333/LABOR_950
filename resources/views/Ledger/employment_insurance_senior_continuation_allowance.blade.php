@@ -144,6 +144,7 @@
                 const headquarters = data['headquarters'];
                 const company = data['company'];
                 const todaySet = data['todaySet'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 var employmentInsuredNo = employee.employment_insured_no;
                 if (employmentInsuredNo && employmentInsuredNo.length === 11) {
                     var employmentInsuredNo4digit = employmentInsuredNo.substring(0, 4);
@@ -176,11 +177,7 @@
                     $('#J52_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code);
                     $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
                 }
-                if (headquarters.address_prefecture && headquarters.address_city && headquarters.address_ward && headquarters
-                    .address_apartment) {
-                    $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquarters.address_prefecture + headquarters
-                        .address_city + headquarters.address_ward + headquarters.address_apartment);
-                }
+                $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

@@ -10684,22 +10684,22 @@ min-width: 10px;
        <input class="egov-tool-field-rect" id="N3_1" maxlength="25" name="spouse_name" value="{{ old('spouse_name') }}" style="width: 265px; height: 35px; font-size: 12px; text-align: left; line-height: 59px; padding: inherit;" type="text" value="" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 495px; top: 135px;">
-       <select class="egov-tool-field-rect" id="N5_1" name="spouse_birthday_era_kanji" style="width: 40px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
+       <select class="egov-tool-field-rect" id="N5_1" name="spouse_birthday_era" style="width: 40px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
         <option value="">
         </option>
-        <option value="明治" {{ old('spouse_birthday_era_kanji') == '明治' ? 'selected' : '' }}>
+        <option value="1" {{ old('spouse_birthday_era') == '1' ? 'selected' : '' }}>
          明
         </option>
-        <option value="大正" {{ old('spouse_birthday_era_kanji') == '大正' ? 'selected' : '' }}>
+        <option value="3" {{ old('spouse_birthday_era') == '3' ? 'selected' : '' }}>
          大
         </option>
-        <option value="昭和" {{ old('spouse_birthday_era_kanji') == '昭和' ? 'selected' : '' }}>
+        <option value="5" {{ old('spouse_birthday_era') == '5' ? 'selected' : '' }}>
          昭
         </option>
-        <option value="平成" {{ old('spouse_birthday_era_kanji') == '平成' ? 'selected' : '' }}>
+        <option value="7" {{ old('spouse_birthday_era') == '7' ? 'selected' : '' }}>
          平
         </option>
-        <option value="令和" {{ old('spouse_birthday_era_kanji') == '令和' ? 'selected' : '' }}>
+        <option value="9" {{ old('spouse_birthday_era') == '9' ? 'selected' : '' }}>
          令
         </option>
        </select>
@@ -10723,22 +10723,22 @@ min-width: 10px;
        <input class="egov-tool-field-rect" id="N11_1" maxlength="25" name="name" value="{{ old('name') }}" style="width: 265px; height: 18px; font-size: 12px; text-align: left; line-height: 31px; padding: inherit;" type="text" value="" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 495px; top: 194px;">
-       <select class="egov-tool-field-rect" id="N13_1" name="birthday_era_kanji" style="width: 40px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
+       <select class="egov-tool-field-rect" id="N13_1" name="birthday_era" style="width: 40px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" disabled>
         <option value="">
         </option>
-        <option value="明治" {{ old('birthday_era_kanji') == '明治' ? 'selected' : '' }}>
+        <option value="1" {{ old('birthday_era') == '1' ? 'selected' : '' }}>
          明
         </option>
-        <option value="大正" {{ old('birthday_era_kanji') == '大正' ? 'selected' : '' }}>
+        <option value="3" {{ old('birthday_era') == '3' ? 'selected' : '' }}>
          大
         </option>
-        <option value="昭和" {{ old('birthday_era_kanji') == '昭和' ? 'selected' : '' }}>
+        <option value="5" {{ old('birthday_era') == '5' ? 'selected' : '' }}>
          昭
         </option>
-        <option value="平成" {{ old('birthday_era_kanji') == '平成' ? 'selected' : '' }}>
+        <option value="7" {{ old('birthday_era') == '7' ? 'selected' : '' }}>
          平
         </option>
-        <option value="令和" {{ old('birthday_era_kanji') == '令和' ? 'selected' : '' }}>
+        <option value="9" {{ old('birthday_era') == '9' ? 'selected' : '' }}>
          令
         </option>
        </select>

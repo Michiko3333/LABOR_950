@@ -159,13 +159,6 @@
                     $('#J80_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
                     $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
-                    $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                                    #J114_005F_8E81_96BC, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_8E73_93E0_8BC7_94D4,\
-                                    #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
-                                    #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
-                                    #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
-                                    #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86')
-                        .prop('readonly', true);
                 @else
                     $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
                                     #J114_005F_8E81_96BC, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_8E73_93E0_8BC7_94D4\
@@ -194,18 +187,15 @@
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
+                const employee_prefecture_data = data['employee_prefecture_data'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
-                const headquartersAddress = (headquarters.address_prefecture || "") + (headquarters.address_city || "") + (
-                    headquarters.address_ward || "") + (headquarters.address_apartment || "");
-                const branchAddress = (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward ||
-                    "") + (branch.address_apartment || "");
-                const branchInfo = (branch.name || "") + '　' + (branch.address_prefecture || "") + (branch.address_city || "") +
-                    (branch.address_ward || "") + (branch.address_apartment || "") + '　' + (branch.tel_area_code || "") + '-' +
-                    (branch.tel_city_code || "") + '-' + (branch.tel_subscriber_code || "");
-                const employeeAddress = (employee.address_prefecture || "") + (employee.address_city || "") + (employee
-                    .address_ward || "") + (employee.address_apartment || "");
-
+                const headquartersAddress = (headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (headquarters.address_ward || "") + (headquarters.address_apartment || "");
+                const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "");
+                const branchInfo = (branch.name || "")  + '　' +  (branch.address_prefecture || "") + (branch.address_city || "") + (branch.address_ward || "") + (branch.address_apartment || "")  + '　' +  (branch.tel_area_code || "") + '-' + (branch.tel_city_code || "") + '-' + (branch.tel_subscriber_code || "");
+                const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee.address_ward || "") + (employee.address_apartment || "");
                 $('#J120_005F_89EE_8CEC_8B78_8BC6_94ED_95DB_8CAF_8ED2_82CC_8CC2_906C_94D4_8D86').val(employee
                     .mynumber_card_no || "");
                 if (employee.employment_insured_no !== null) {
