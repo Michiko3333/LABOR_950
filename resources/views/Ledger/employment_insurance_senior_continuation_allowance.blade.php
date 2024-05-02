@@ -8,7 +8,6 @@
         @endslot
         <h1 class="mt-2">{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
-            複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
@@ -28,7 +27,6 @@
         <div id="ledger-step1" class="step-view active mb-2">
             <form id="ledger-form" action="" method="post" enctype="multipart/form-data">
                 @csrf
-                <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
                 @if (session('errors'))
                     <div class="ui error message">
                         <div class="header">入力エラー</div>
@@ -114,6 +112,16 @@
                 $('#J57_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
+                @if( $current_employee->role_id === 500 )
+                    $('#J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val( '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}' );
+                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
+                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
+                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
+                @else
+                    $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
+                        #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
+                        #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                @endif
             });
             document.addEventListener('DOMContentLoaded', function() {
                 const tabs = document.querySelectorAll('.ui.tabular.menu .item');
@@ -136,6 +144,7 @@
                 const headquarters = data['headquarters'];
                 const company = data['company'];
                 const todaySet = data['todaySet'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 var employmentInsuredNo = employee.employment_insured_no;
                 if (employmentInsuredNo && employmentInsuredNo.length === 11) {
                     var employmentInsuredNo4digit = employmentInsuredNo.substring(0, 4);
@@ -168,11 +177,7 @@
                     $('#J52_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code);
                     $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
                 }
-                if (headquarters.address_prefecture && headquarters.address_city && headquarters.address_ward && headquarters
-                    .address_apartment) {
-                    $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquarters.address_prefecture + headquarters
-                        .address_city + headquarters.address_ward + headquarters.address_apartment);
-                }
+                $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

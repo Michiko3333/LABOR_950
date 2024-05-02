@@ -80,9 +80,9 @@ class SubmissionSelector extends Component
                     $this->apply_to_code = '';
                     $this->apply_to_name = '';
                 } else {
-                    $hello_work = Pension_office::select('identifier_e', 'submit_union_name_e')->where('id', $this->selected_pension_office)->first();
-                    $this->apply_to_code = $hello_work->identifier_d;
-                    $this->apply_to_name = $hello_work->submit_union_name_d;
+                    $pension_office = Pension_office::select('identifier_e', 'submit_union_name_e')->where('id', $this->selected_pension_office)->first();
+                    $this->apply_to_code = $pension_office->identifier_e;
+                    $this->apply_to_name = $pension_office->submit_union_name_e;
                 }
             }
         }

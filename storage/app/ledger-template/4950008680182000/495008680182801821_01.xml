@@ -6,8 +6,8 @@
 	<様式コピー情報>0</様式コピー情報>
 	<Doctype>1</Doctype>
 	<A-250075-107_1>
-		<休業開始時賃金月額証明書></休業開始時賃金月額証明書>
-		<所定労働時間短縮開始時賃金証明書></所定労働時間短縮開始時賃金証明書>
+		<休業開始時賃金月額証明書>leave_start_wage_monthly_certificate</休業開始時賃金月額証明書>
+		<所定労働時間短縮開始時賃金証明書>reduced_working_hours_wage_certificate_start</所定労働時間短縮開始時賃金証明書>
 		<被保険者番号>
 			<被保険者番号4桁>employment_insured_no_4digit</被保険者番号4桁>
 			<被保険者番号6桁>employment_insured_no_6digit</被保険者番号6桁>
@@ -434,8 +434,8 @@
 			<備考>wage_note1_15</備考>
 		</休業等を開始した日前の賃金支払状況等2>
 		<賃金に関する特記事項>special_note_on_wages1</賃金に関する特記事項>
-		<休業開始時賃金月額証明書受理>leave_start_wage_monthly_certificate</休業開始時賃金月額証明書受理>
-		<所定労働時間短縮開始時賃金証明書受理>reduced_working_hours_wage_certificate_start</所定労働時間短縮開始時賃金証明書受理>
+		<休業開始時賃金月額証明書受理></休業開始時賃金月額証明書受理>
+		<所定労働時間短縮開始時賃金証明書受理></所定労働時間短縮開始時賃金証明書受理>
 		<受理年月日>
 			<年号/>
 			<年/>

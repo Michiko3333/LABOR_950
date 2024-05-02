@@ -18,33 +18,56 @@ use app\EgovAPI\Egov;
 class MixXmlEgovSigner
 {
     private $companyId;
-    private $binarypfx;
     private $signerFolderPath;
-    private $sourceDirectory;
     private $password;
     private $pfxFilepath;
     private $procedureId;
-    private $folderPath;
+    private $signer;
+    private $workingDirectory;
+    private $afterLedgerPath;
 
     public function __construct($request)
     {
         $this->companyId = $request->session()->get('company_id');
-        $this->sourceDirectory = Storage::path('filled-out-ledger');
         $pathInfo = $request->getPathInfo();
         $this->procedureId = preg_replace('~^/.*?/~', '', $pathInfo);
+        $this->signer = new Signer();
+        $this->signer->makeDir();
+        $this->workingDirectory = $this->signer->getPath(); //"/var/www/karte/storage/app/ledger/2024042601124814"
+        preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
+        $this->afterLedgerPath = $matches[1];//app以降のアドレス取得
     }
 
+    /* -- 実行内容 --
+     * 1. テンプレートフォルダを元に各xmlファイルに帳票内容を記載しinput_xmlフォルダに保存。保存先input_xmlフォルダパスを返却
+     * 2. 電子証明書登録よりテーブルに登録されたpfxファイル実体化
+     * 3. 署名用afterSignerフォルダにinput_xml内のxmlファイルのみコピー　返却値：afterSigner/フォルダパス
+     * 4. 添付ファイルをinput_xmlフォルダに配置
+     * 4. afterSignerフォルダ内のkousei.xmlに電子署名を行う
+     * 5. afterSignerフォルダをzip化し、base64バイナリ化
+     * 6. 申請データ送信を行う
+     * 
+     * -- 構成 --
+     * テンプレートフォルダ：storage\app\ledger-template\{手続ID}
+     * 処理後作業フォルダ：storage\app\ledger\{一意名}\...
+     *  {一意名} ━┳━━ input_xml ━━━ 署名ファイル
+     *            ┗━━ zip       ━━━ zipファイル
+    */
     public function run($request)
     {
-        $this->xmlInput($request);
-        return $this->MixEgovSigner();
+        Log::info(print_r('******************************** MixEgovSigner start ******************************', true));
+        $outputPath = $this->xmlInput($request);
+        $this->getPfx();
+        $afterSigner = $this->copyToAfterSigner($outputPath);
+        $this->putAttachment($request, $afterSigner);
+        $this->egovSigner();
+        $base64Data = $this->zipBinary();
+        $response = $this->sendProcedure($base64Data);
+        Log::info(print_r('******************************** MixEgovSigner end ********************************', true));
+        return $response;
     }
 
-    /* テンプレートフォルダを元に各xmlファイルに帳票内容を記載し、アウトプットフォルダに保存する
-     * テンプレートフォルダ：storage\app\ledger-template\{手続ID アドレスのledger/〇〇の〇〇と同じ}
-     * アウトプットフォルダ：storage\app\filled-out-ledger
-    */
-    public static function xmlInput($request)
+    public function xmlInput($request)
     {
         // 申請者情報の設定
         $companyId = $request->session()->get('company_id');
@@ -66,7 +89,6 @@ class MixXmlEgovSigner
             $managerialPositionName = Managerial_position::where('id', $president->managerial_position_id)
             ->where('company_id', $companyId)->pluck('name')->first();
         }
-
         if (!is_null($president)){
             if (!is_null($president->last_name) && !is_null($president->first_name)) $request->merge(['applicant_name' => $president->last_name . '　' . $president->first_name]);
             if (!is_null($president->last_name_kana) && !is_null($president->first_name_kana)) $request->merge(['applicant_name_kana' => $president->last_name_kana . '　' . $president->first_name_kana]);
@@ -106,7 +128,6 @@ class MixXmlEgovSigner
             if (!is_null($laborConsultantCompany)){
                 $laborConsultantHeadquarter = Branch::where('company_id', $laborConsultantCompany->id)->where('delete_flg', 0)->where('branch_type', 1)->first();
             }
-                
             if (!is_null($user->last_name) && !is_null($user->first_name)) $request->merge(['contact_name' => $user->last_name . '　' . $user->first_name]);
             if (!is_null($user->last_name_kana) && !is_null($user->first_name_kana)) $request->merge(['contact_name_kana' => $user->last_name_kana . '　' . $user->first_name_kana]);
             
@@ -166,17 +187,8 @@ class MixXmlEgovSigner
         $pathInfo = $request->getPathInfo();
         $procedureID = preg_replace('~^/.*?/~', '', $pathInfo);
         $folderPath = storage_path('/app/ledger-template/' . $procedureID);
-        $outputPath = storage_path('/app/filled-out-ledger/');
-
-        //outputfolder cleaner
-        if (file_exists($outputPath)) {
-            $files = glob($outputPath . '*');
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file);
-                }
-            }
-        }
+        Storage::makeDirectory($this->afterLedgerPath . '/input_xml/');
+        $outputPath = $this->workingDirectory . '/input_xml/';
 
         // テンプレートの値を元にrequestで送られた値を入れ替える
         $files = scandir($folderPath);
@@ -190,8 +202,14 @@ class MixXmlEgovSigner
             $xml = new \DOMDocument();
             $xml->load($filePath);
             $xpath = new \DOMXPath($xml);
-            
+
             foreach ($request->all() as $key => $value) {
+                if ( !isset($requestData['certificate_checkbox_1'])) {
+                    continue;
+                }
+                else if ( !isset($requestData['certificate_checkbox_2'])) {
+                    continue;
+                }
                 $keyName = substr($key, 1);
                 $query = "//*[contains(text(), '$keyName')]";
                 $targetElements = $xpath->query($query);
@@ -231,6 +249,7 @@ class MixXmlEgovSigner
             $xmlB ->load($outputPath . $file);
             $xpathA = new \DOMXPath($xmlA);
             $xpathB = new \DOMXPath($xmlB);
+            // 変換対象にならないタグ一覧、全帳票共通で固定値があれば追加
             $ignoreTags = ['様式ID', '様式バージョン', 'STYLESHEET', '受付行政機関ID', '手続ID', '手続名称', '申請種別', '申請書様式ID', '申請書様式バージョン',
                             '申請書様式名称', '申請書ファイル名称', '様式コピー情報', 'Doctype', '帳票種別', '給付金の種類', 'Xmit'];
             // 最奥部のネストの値のみを取得
@@ -264,61 +283,88 @@ class MixXmlEgovSigner
             }
             $xmlB->save($outputPath . $file);
             Log::info(print_r($file . 'のデータ変換が成功しました', true));
+            return $outputPath;
         }
     }
 
-    //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する
+    //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する。パスワードとパスは署名で再利用
     public function getPfx()
     {
         $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
-        $this->binarypfx = $pfx->file;
+        $binarypfx = $pfx->file;
         $this->password = $pfx->password;
-        $this->pfxFilepath = $this->signerFolderPath . '/certificate.pfx';
-        file_put_contents($this->pfxFilepath, $this->binarypfx);
+        $this->pfxFilepath = $this->workingDirectory . '/input_xml/certificate.pfx';
+        file_put_contents($this->pfxFilepath, $binarypfx);
+        Log::info(print_r('pfxファイルの復元に成功しました', true));
     }
 
-    //変換後のファイルをzip化するフォルダへコピー
-    public function files_copy()    {
-        $files = scandir($this->sourceDirectory);
+    //input_xmlフォルダ内のxmlファイルのみを/afterSigner/フォルダへコピー
+    public function copyToAfterSigner($outputPath)    {
+        Storage::makeDirectory($this->afterLedgerPath . '/afterSigner');
+        $afterSignerPath = $this->workingDirectory . '/afterSigner';
+        $files = scandir($outputPath);
         foreach ($files as $file) {
-            if ($file != '.' && $file != '..') {
-                $sourceDirectoryFilePath = $this->sourceDirectory . '/' . $file;
-                $signerFilePath = $this->signerFolderPath . '/' . $file;
+            if ($file != '.' && $file != '..' && $file != 'certificate.pfx' ) {
+                $sourceDirectoryFilePath = $outputPath . '/' . $file;
+                $signerFilePath = $afterSignerPath . '/' . $file;
                 copy($sourceDirectoryFilePath, $signerFilePath);
             }
         }
     }
 
-    //リフレッシュトークンを利用してアクセストークンの取得
-    public function useRefreshToAccess()
+    //添付ファイルを/afterSignerフォルダに配置
+    public function putAttachment($request)
     {
-        $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
-        $r = Egov::refreshToken($account['refresh_token'])->getToken();
-        $access_token = $r['access_token'];
-        $refresh_token = $r['refresh_token'];
-        
-        $account->access_token = $access_token;
-        $account->refresh_token = $refresh_token;
-        $account->delete_flg = 0;
-        $account->save();
-        Log::info(print_r('リフレッシュトークンよりアクセストークンの再取得に成功しました', true));
+        if ($request->files->count() !== 0) {
+            foreach ( $request->all() as $key => $value ) {
+                if (strpos($key, 'radio_') === 0) {
+                    $file_key = substr($key, strlen('radio_'));
+                    $file = $request->file($file_key);
+                    $attachment_file_name = $file->getClientOriginalName();
+                    $putPath = $this->afterLedgerPath . '/afterSigner';
+                    $file->storeAs($putPath, $attachment_file_name);
+                    Log::info(print_r('添付ファイルを配置しました filename:' . $attachment_file_name , true));
+                }
+            }
+        }
+    }
+
+    //署名
+    public function egovSigner()
+    {
+        $inputPath = $this->workingDirectory . '/afterSigner';
+        $this->ledgerFolderDelete(); //ledgerフォルダ数の制限、指定値以上なら古い順にフォルダ削除　テスト用。完了した場合はディレクトリ削除メソッドを最後に追加
+        $signerBool = $this->signer->run($inputPath, $this->pfxFilepath, $this->password); //署名
+        if ( $signerBool==False ) {
+            Log::error("署名に失敗しました");
+        }else{
+            Log::info(print_r('署名に成功しました', true));
+        }
+    }
+
+    //不要なpfxファイルの削除
+    public function deletePfx()
+    {
+        $pfxPath = $this->afterLedgerPath . '/input_xml/certificate.pfx';
+        Storage::delete($pfxPath);
+        Log::info(print_r('pfxファイルを削除しました', true));
     }
 
     //zip圧縮後、base64バイナリデータを返す
     public function zipBinary()
     {
-        $zipfilepath = Storage::path('ledger/tmp/zip.zip');
+        $zipfilepath = $this->workingDirectory . '/zip/sent_data.zip';
         $zip = new \ZipArchive();
         if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
             $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($this->folderPath),
+                new \RecursiveDirectoryIterator($this->workingDirectory . '/afterSigner'),
                 \RecursiveIteratorIterator::LEAVES_ONLY
             );
             foreach ($files as $name => $file) {
                 $extension = pathinfo($file, PATHINFO_EXTENSION);
                 if (!$file->isDir() && $extension !== 'pfx') {
                     $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($this->folderPath) + 1);
+                    $relativePath = substr($filePath, strlen($this->workingDirectory) + 1);
                     $zip->addFile($filePath, $relativePath);
                 }
             }
@@ -331,22 +377,9 @@ class MixXmlEgovSigner
         return $base64Data;
     }
 
-    //xmlInput実行後、署名>zip>binary>手続送信>返却値キャッチ
-    public function MixEgovSigner()
+    //申請データ送信
+    public function sendProcedure($base64Data)
     {
-        $signer = new Signer();
-        $signer->makeDir(); //ledgerフォルダ内に手続IDフォルダ作成。手続IDフォルダ内にzipフォルダ作成
-        $this->folderPath = $signer->getPath(); //signerするzipフォルダー取得
-        $this->signerFolderPath = $this->folderPath . '/zip';
-        $this->getPfx(); //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元
-        $this->files_copy(); //filled-out-ledgerからコピー
-        $signerBool = $signer->run($this->signerFolderPath, $this->pfxFilepath, $this->password); //署名
-        if ( $signerBool==False ) {
-            Log::error("署名に失敗しました");
-        }else{
-            Log::info(print_r('署名に成功しました', true));
-        }
-        $base64Data = $this->zipBinary(); //zip圧縮後、base64バイナリデータ取得
         $send_file = new \stdClass();
         $send_file->file_name = $this->procedureId . '.zip';
         $send_file->file_data = $base64Data;
@@ -363,6 +396,7 @@ class MixXmlEgovSigner
             if (empty($body)) { //返却値が空だった場合、トークン再取得。
                 if ( $counter > 3 ){
                     Log::error("予期せぬエラー：申請データ送信に失敗しました");
+                    Log::info(print_r($r->collect(), true));
                     $returnData = [
                         false, [ 'title' => '予期せぬエラー', 'detail' => '申請データ送信に失敗しました' ]
                     ];
@@ -376,20 +410,40 @@ class MixXmlEgovSigner
                 $guzzleResponse = $r->toPsrResponse();
                 $statusCode = $guzzleResponse->getStatusCode();
                 $returnData = [
-                    false, [ 'title' => $r['title'], 'detail' => $r['detail'] ]
+                    false, [ 'title' => '', 'detail' => '' ]
                 ];
                 if ($statusCode == 200){
                     Log::info(print_r('手続送信に成功しました', true));
+                    Log::info(print_r($r->collect(), true));
                     $returnData[0] = true;
+                    $returnData[1]['detail'] = '手続送信に成功しました';
                     $this->TableInsert($r);
                     break;
                 }else{
                     Log::error("返却値エラー：申請データ送信に失敗しました");
+                    Log::info(print_r($r->collect(), true));
+                    $returnData[1]['title'] = $r['title'];
+                    $returnData[1]['detail'] = $r['detail'];
                     break;
                 }
             }
         }
         return $returnData;
+    }
+
+    //リフレッシュトークンを利用してアクセストークンの取得
+    public function useRefreshToAccess()
+    {
+        $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
+        $r = Egov::refreshToken($account['refresh_token'])->getToken();
+        $access_token = $r['access_token'];
+        $refresh_token = $r['refresh_token'];
+        
+        $account->access_token = $access_token;
+        $account->refresh_token = $refresh_token;
+        $account->delete_flg = 0;
+        $account->save();
+        Log::info(print_r('リフレッシュトークンよりアクセストークンの再取得に成功しました', true));
     }
 
     //t_egov_applicationテーブルに返却値を挿入
@@ -420,51 +474,157 @@ class MixXmlEgovSigner
             'updated_at' => $currentDateTime,
         ]);
     }
-     
+
+    //ledgerフォルダ数の制限、指定値以上なら古い順にフォルダ削除 //最終的にはremoveDir()入れ替え。テスト中はこちらを使用
+    public function ledgerFolderDelete($quantity=20)
+    {
+        function deleteFolder($deleteFolderPath) {
+            if (!is_dir($deleteFolderPath)) {
+                return false;
+            }
+            $files = array_diff(scandir($deleteFolderPath), ['.', '..']);
+            foreach ($files as $file) {
+                $filePath = $deleteFolderPath . '/' . $file;
+                if (is_dir($filePath)) {
+                    deleteFolder($filePath);
+                } else {
+                    unlink($filePath);
+                }
+            }
+            return rmdir($deleteFolderPath);
+        }
+
+        $folderPath = Storage::path('ledger');
+        $maxFolders = $quantity;
+        $folders = scandir($folderPath, SCANDIR_SORT_ASCENDING);
+        $folders = array_values(array_diff($folders, ['.', '..']));
+        
+        if (count($folders) > $maxFolders) {
+            $foldersToDelete = count($folders) - $maxFolders;
+            for ($i = 0; $i < $foldersToDelete; $i++) {
+                $deleteFolderPath = $folderPath . '/' . $folders[$i];
+                deleteFolder($deleteFolderPath);
+                Log::info($deleteFolderPath . 'を削除しました');
+            }
+            Log::info('ledgerFolderDeleteによりフォルダを整理しました');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //develop用
     public function TestMixEgovSigner() 
     {
-        //filled-out-ledgerにdeveで利用できる署名情報抜きのxmlファイルを入れる
-        //完了したら、手動で署名情報を正規の形に改行を直す
-        Log::info(print_r('TestMixEgovSigner実行', true));
-        $this->procedureId = '4950013520974000';
-        $signer = new Signer();
-        $signer->makeDir();
-        $this->folderPath = $signer->getPath();
-        $this->signerFolderPath = $this->folderPath . '/zip';
-        $this->getPfx();
-        $this->files_copy();
-        $signerBool = $signer->run($this->signerFolderPath, $this->pfxFilepath, $this->password);
+        //inputxmlのみを行ってinput_xmlに作成された署名抜きxmlファイルをdevに手動コピー
+        //ここで自動設定できない分を手動変換（手動で署名情報を正規の形に改行など
+        //その後送信手続まで行う
+        Log::info(print_r('******************************** TestMixEgovSigner実行 ********************************', true));
+        // $signer = new Signer();constに移動
+        // $signer->makeDir(); //ledgerフォルダ内に手続IDフォルダ作成。手続IDフォルダ内にzipフォルダ作成　constに移動
+        $this->workingDirectory = Storage::path('ledger/dev/zip');            //署名元フォルダ
+        $this->signerFolderPath = Storage::path('ledger/dev_copy/zip'); //署名先フォルダ
+        // $this->signerFolderPath = Storage::path('ledger/dev_copy'); //圧縮指定フォルダ
+        
+        //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元
+        $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
+        $this->binarypfx = $pfx->file;
+        $this->password = $pfx->password;
+        $this->pfxFilepath = $this->signerFolderPath . '/certificate.pfx';
+        file_put_contents($this->pfxFilepath, $this->binarypfx);
+        
+        //input_xmlからコピー
+        $files = scandir($this->workingDirectory);
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                $sourceDirectoryFilePath = $this->workingDirectory . '/' . $file;
+                $signerFilePath = $this->signerFolderPath . '/' . $file;
+                copy($sourceDirectoryFilePath, $signerFilePath);
+            }
+        }
+        // $this->ledgerFolderDelete(); //ledgerフォルダ数の制限、指定値以上なら古い順にフォルダ削除
+
+        //第一引数は署名前フォルダ
+        $signerBool = $this->signer->run($this->workingDirectory, $this->pfxFilepath, $this->password);
         if ( $signerBool==False ) {
             Log::error("署名に失敗しました");
         }else{
             Log::info(print_r('署名に成功しました', true));
         }
-        $base64Data = $this->zipBinary();
+
+        $this->workingDirectory = Storage::path('ledger/dev');
+        //zip圧縮後、base64バイナリデータ取得
+        $zipfilepath = Storage::path('ledger/tmp/zip.zip');
+        $zip = new \ZipArchive();
+        if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($this->workingDirectory),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+            foreach ($files as $name => $file) {
+                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                if (!$file->isDir() && $extension !== 'pfx') {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($this->workingDirectory) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+            $zip->close();
+            Log::info(print_r('zipファイル作成に成功しました', true));
+        } else {
+            Log::error("zipファイル作成に失敗しました");
+        }
+        $base64Data = base64_encode(file_get_contents($zipfilepath));
+
         $send_file = new \stdClass();
         $send_file->file_name = $this->procedureId . '.zip';
         $send_file->file_data = $base64Data;
 
         $counter = 0;
+        $returnData = [];
         while (True){
             $counter++;
             $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
             $api = Egov::accessToken($account->access_token);
-            $r = $api->ApplicationDataTransmission($this->procedureId, $send_file);
+            $r = $api->ApplicationDataTransmission($this->procedureId, $send_file); //送信
             $response = $r->toPsrResponse();
             $body = $response->getBody()->getContents();
-            if (empty($body)) {
+            if (empty($body)) { //返却値が空だった場合、トークン再取得。
                 if ( $counter > 3 ){
-                    Log::error("申請データ送信に失敗しました");
+                    Log::error("予期せぬエラー：申請データ送信に失敗しました");
+                    Log::info(print_r($r->collect(), true));
+                    $returnData = [
+                        false, [ 'title' => '予期せぬエラー', 'detail' => '申請データ送信に失敗しました' ]
+                    ];
                     break;
                 }
                 $this->useRefreshToAccess();
             } else {
-                Log::info(print_r('▼▼申請データ送信返却値▼▼', true));
-                Log::info(print_r($r, true));
-                break;
+                $jsonString = $r->getBody()->getContents();
+                $decodedArray = json_decode($jsonString, true);
+                Log::info(print_r('申請データ送信返却値 手続ID:' . $this->procedureId . PHP_EOL . $decodedArray, true));
+                $guzzleResponse = $r->toPsrResponse();
+                $statusCode = $guzzleResponse->getStatusCode();
+                $returnData = [
+                    false, [ 'title' => '', 'detail' => '' ]
+                ];
+                if ($statusCode == 200){
+                    Log::info(print_r('手続送信に成功しました', true));
+                    Log::info(print_r($r->collect(), true));
+                    $returnData[0] = true;
+                    $returnData[1]['detail'] = '手続送信に成功しました';
+                    $this->TableInsert($r);
+                    break;
+                }else{
+                    Log::error("返却値エラー：申請データ送信に失敗しました");
+                    Log::info(print_r($r->collect(), true));
+                    $returnData[1]['title'] = $r['title'];
+                    $returnData[1]['detail'] = $r['detail'];
+                    break;
+                }
             }
         }
+        return $returnData;
     }
 
     //develop用 署名作成済みxmlを元に成功再現
@@ -474,7 +634,7 @@ class MixXmlEgovSigner
         //run内で$this->devSosin();実行
         $this->procedureId = "4950013520974000";//要変更
         $zipfilepath = Storage::path('ledger/tmp/zip.zip');
-        $this->folderPath = Storage::path('ledger/dev');//参照フォルダ
+        $this->workingDirectory = Storage::path('ledger/dev');//参照フォルダ
         $this->zipBinary();
         $base64Data = base64_encode(file_get_contents($zipfilepath));
         $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();

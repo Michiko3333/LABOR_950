@@ -7,6 +7,9 @@
             <style type="text/css"></style>
         @endslot
         <h1 class="mt-2">{{ $procedureName }}</h1>
+        <p>
+        申請・届出に関する事項を入力してください。
+        </p>
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -131,7 +134,9 @@
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
-
+                const employee_prefecture_data = data['employee_prefecture_data'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
                 if (employee.employment_insured_no !== null) {
                     $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
@@ -147,8 +152,7 @@
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J16_005F_96BC_8FCC').val(branch.name);
-                const branchAddress = (branch.address_prefecture || "") + ' ' + (branch.address_city || "") + ' ' + (branch
-                    .address_ward || "") + ' ' + (branch.address_apartment || "");
+                const branchAddress = (branch_prefecture_data.name || "") + ' ' + (branch.address_city || "") + ' ' + (branch.address_ward || "") + ' ' + (branch.address_apartment || "");
                 $('#J17_005F_8F8A_8DDD_926E').val(branchAddress);
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');
@@ -157,14 +161,12 @@
                     $('#J21_005F_947A_9242_8BC7_94D4_8D86').val(employee.post_code.substring(0, 3));
                     $('#J22_005F_92AC_88E6_94D4_8D86').val(employee.post_code.substring(3, 7));
                 }
-                const employeeAddress = (employee.address_prefecture || "") + ' ' + (employee.address_city || "") + ' ' + (
-                    employee.address_ward || "") + ' ' + (employee.address_apartment || "");
+                const employeeAddress = (employee_prefecture_data.name || "") + ' ' + (employee.address_city || "") + ' ' + (employee.address_ward || "") + ' ' + (employee.address_apartment || "");
                 $('#J23_005F_8F5A_8F8A').val(employeeAddress);
                 $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code);
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code);
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code);
-                const headquarterAddress = (headquarters.address_prefecture || "") + ' ' + (headquarters.address_city || "") +
-                    ' ' + (headquarters.address_ward || "") + ' ' + (headquarters.address_apartment || "");
+                const headquarterAddress = (headquarters_prefecture_data.name || "") + ' ' + (headquarters.address_city || "") + ' ' + (headquarters.address_ward || "") + ' ' + (headquarters.address_apartment || "");
                 $('#J27_005F_8F5A_8F8A').val(headquarterAddress);
             }
             Livewire.on('onSelectEmployee', ({

@@ -126,6 +126,7 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
+                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 var eraMapping = {
                     '明治': '1',
                     '大正': '3',
@@ -145,8 +146,7 @@
                     $('#N9_005F_8C8E').val('');
                     $('#N10_005F_93FA').val('');
                 }
-                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val((headquarters.address_prefecture ?? '') + (headquarters
-                    .address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
                 $('#N12_005F_905C_90BF_8ED2_8E81').val(headquarters.name ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(headquarters.tel_area_code ?? '');
                 $('#N16_005F_905C_90BF').val(headquarters.tel_city_code ?? '');

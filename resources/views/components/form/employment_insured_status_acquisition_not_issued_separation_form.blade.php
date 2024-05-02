@@ -505,8 +505,7 @@
             id="J53_005F_8D91_90D0_005F_926E_88E6" disabled name="country_id">
             <OPTION value="" selected="selected"></OPTION>
             @foreach($countries as $country)
-            <option value="{{ $country->id }}" {{ (old('country_id')==$country->id || old('country_id') ==
-                $country->country_name) ? 'selected' : '' }}>{{ $country->country_name }}</option>
+            <option value="{{ $country->setting_value }}" {{ (old('country_id')==$country->setting_value || old('country_id') == $country->country_name) ? 'selected' : '' }}>{{ $country->country_name }}</option>
             @endforeach
         </SELECT></SPAN>
     <SPAN
@@ -518,7 +517,7 @@
             id="J54_005F_8DDD_97AF_8E91_8A69" disabled name="residential_status_id">
             <OPTION value="" selected="selected"></OPTION>
             @foreach($residentials as $residential_status)
-            <option value="{{ $residential_status->id }}" {{ (old('residential_status_id')==$residential_status->id ||
+            <option value="{{ $residential_status->setting_value }}" {{ (old('residential_status_id')==$residential_status->setting_value ||
                 old('residential_status_id') == $residential_status->content) ? 'selected' : '' }}>{{
                 $residential_status->content }}</option>
             @endforeach

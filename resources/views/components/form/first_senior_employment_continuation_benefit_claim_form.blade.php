@@ -814,19 +814,19 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:62px; top:514px; width:181px; height:12px; text-align:center; font-size:11px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">その他賃金に関する特記事項</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); left:84px; top:529px; width:203px; line-height:31px; height:32px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 36px 0px 0px;"><input
-            tabindex="-1" disabled
+            tabindex="-1"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:166px; height:29px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J59_005F_82BB_82CC_91BC_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D801"
             value="{{ old('specialNoteOnWages1') }}" name="specialNoteOnWages1"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); left:309px; top:529px; width:203px; line-height:31px; height:32px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 36px 0px 0px;"><input
-            tabindex="-1" disabled
+            tabindex="-1"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:166px; height:29px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J60_005F_82BB_82CC_91BC_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D802"
             value="{{ old('specialNoteOnWages2') }}" name="specialNoteOnWages2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); left:533px; top:529px; width:203px; line-height:31px; height:32px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 36px 0px 0px;"><input
-            tabindex="-1" disabled
+            tabindex="-1"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:166px; height:29px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J61_005F_82BB_82CC_91BC_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D803"
             value="{{ old('specialNoteOnWages3') }}" name="specialNoteOnWages3"></SPAN>

@@ -18,6 +18,7 @@ use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
 use App\Http\Controllers\Controller;
+use App\Models\Prefecture;
 use Carbon\Carbon;
 
 use Livewire\Attributes\On;
@@ -86,6 +87,12 @@ class LedgerEmployeeList extends BaseTable
         $companyData = $company->toArray();
 
         $employee_id = $employeeData['id'];
+        $employee_prefecture_id = $employeeData['address_prefecture'];
+        $employee_prefecture_data = Prefecture::where('id', $employee_prefecture_id)->first();
+        $branch_prefecture_id = $branchData['address_prefecture'];
+        $branch_prefecture_data = Prefecture::where('id', $branch_prefecture_id)->first();
+        $headquarters_prefecture_id = $headquartersData['address_prefecture'];
+        $headquarters_prefecture_data = Prefecture::where('id', $headquarters_prefecture_id)->first();
         $retirement_reason_age_data = Retirement_reason_age::where('employee_id', $employee_id)->first();
         $retirement_reason_contract_period_reached_limit_data = Retirement_reason_contract_period_reached_limit::where('employee_id', $employee_id)->first();
         $retirement_reason_contract_period_expired_eternal_hire_data = Retirement_reason_contract_period_expired_eternal_hire::where('employee_id', $employee_id)->first();
@@ -96,6 +103,8 @@ class LedgerEmployeeList extends BaseTable
         $retirement_reason_employee_decision_reasons_data = Retirement_reason_employee_decision_reasons::where('employee_id', $employee_id)->first();
         $spouse_data = Dependent::where('employee_id', $employee_id)->where('relationship', '1')->first();
         if ($spouse_data) {
+            $spouse_prefecture_id = $spouse_data['address_prefecture'];
+            $spouse_prefecture_data = Prefecture::where('id', $spouse_prefecture_id)->first();
             $spouse_country_id = $spouse_data['country_id'];
             if ($spouse_country_id) {
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
@@ -139,6 +148,16 @@ class LedgerEmployeeList extends BaseTable
                 'day' => $employment_insured_convert_date['japanese_calendar_result']->day,
             ];
         }
+        if (!empty($employee->retirement_date)) {
+            $employment_retirement_date = Carbon::parse($employee->retirement_date);
+            $employment_retirement_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($employment_retirement_date);
+            $employment_retirement_convert_date = [
+                'era' => $employment_retirement_convert_date['japanese_calendar_era_string'],
+                'year' => $employment_retirement_convert_date['japanese_calendar_result']->year,
+                'month' => $employment_retirement_convert_date['japanese_calendar_result']->month,
+                'day' => $employment_retirement_convert_date['japanese_calendar_result']->day,
+            ];
+        }
         if (!empty($employee->insurance_loss_date)) {
             $insurance_loss_date = Carbon::parse($employee->insurance_loss_date);
             $insurance_loss_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($insurance_loss_date);
@@ -157,26 +176,6 @@ class LedgerEmployeeList extends BaseTable
                 'year' => $over_70_non_applicable_convert_date['japanese_calendar_result']->year,
                 'month' => $over_70_non_applicable_convert_date['japanese_calendar_result']->month,
                 'day' => $over_70_non_applicable_convert_date['japanese_calendar_result']->day,
-            ];
-        }
-        if (!empty($employee->retirement_date)) {
-            $employment_retirement_date = Carbon::parse($employee->retirement_date);
-            $employment_retirement_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($employment_retirement_date);
-            $employment_retirement_convert_date = [
-                'era' => $employment_retirement_convert_date['japanese_calendar_era_string'],
-                'year' => $employment_retirement_convert_date['japanese_calendar_result']->year,
-                'month' => $employment_retirement_convert_date['japanese_calendar_result']->month,
-                'day' => $employment_retirement_convert_date['japanese_calendar_result']->day,
-            ];
-        }
-        if (!empty($employee->passed_away_date)) {
-            $passed_away_date = Carbon::parse($employee->passed_away_date);
-            $passed_away_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($passed_away_date);
-            $passed_away_convert_date = [
-                'era' => $passed_away_convert_date['japanese_calendar_era_string'],
-                'year' => $passed_away_convert_date['japanese_calendar_result']->year,
-                'month' => $passed_away_convert_date['japanese_calendar_result']->month,
-                'day' => $passed_away_convert_date['japanese_calendar_result']->day,
             ];
         }
 
@@ -198,11 +197,15 @@ class LedgerEmployeeList extends BaseTable
             'residential_status_value' => $residential_status_value ?? '',
             'birthday_convert_japan' => $birthday_convert_japan ?? '',
             'employment_insured_convert_date' => $employment_insured_convert_date ?? '',
-            'insurance_loss_convert_date' => $insurance_loss_convert_date ?? '',
-            'over_70_non_applicable_convert_date' => $over_70_non_applicable_convert_date ?? '',
             'employment_retirement_convert_date' => $employment_retirement_convert_date ?? '',
             'passed_away_convert_date' => $passed_away_convert_date ?? '',
             'spouse_birthday_convert_japan' => $spouse_birthday_convert_japan ?? '',
+            'employee_prefecture_data' => $employee_prefecture_data ?? '',
+            'branch_prefecture_data' => $branch_prefecture_data ?? '',
+            'headquarters_prefecture_data' => $headquarters_prefecture_data ?? '',
+            'spouse_prefecture_data' => $spouse_prefecture_data ?? '',
+            'insurance_loss_convert_date' => $insurance_loss_convert_date ?? '',
+            'over_70_non_applicable_convert_date' => $over_70_non_applicable_convert_date ?? '',
         ];
 
         $this->selected_id = $id;

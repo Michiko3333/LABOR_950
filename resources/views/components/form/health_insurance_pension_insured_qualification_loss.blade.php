@@ -6923,9 +6923,6 @@
                         min-width: 772px;
                         height: auto;
                         }
-
-                        
-
                         .egovuiForm-preview-style.egovuiForm-preview-legal-style select{
                         min-height: 10px;
                         min-width: 10px;
@@ -6955,6 +6952,28 @@
                         .preview-area input.checkboxs::before {
                             display: block;
                             border: solid 1px black;
+                        }
+                        .preview-area .egovuiForm-preview-style.egovuiForm-preview-legal-style .egov-tool-wrapper .c1 input[type="CHECKBOX"]:checked::after {
+                            position: absolute;
+                            content: '';
+                            width: 10px;
+                            height: 5px;
+                            top: -1.5px;
+                            left: -1.5px;
+                            border-left: 2px solid var(--color-blue);
+                            border-bottom: 2px solid var(--color-blue);
+                            transform: rotate(-45deg);
+                        }
+                        .preview-area .egovuiForm-preview-style.egovuiForm-preview-legal-style .egov-tool-wrapper .c2 input[type="CHECKBOX"]:checked::after {
+                            position: absolute;
+                            content: '';
+                            width: 10px;
+                            height: 5px;
+                            top: -2px;
+                            left: -2px;
+                            border-left: 2px solid var(--color-blue);
+                            border-bottom: 2px solid var(--color-blue);
+                            transform: rotate(-45deg);
                         }
                         @keyframes fadeIn {
                         from {opacity: 0;}
@@ -7220,7 +7239,7 @@
                                 </select>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 606px; top: 270px;">
-                                <input class="egov-tool-field-rect onImage" id="N28_P1" name="birthday_year" value="{{ old('birthday_year') }}" onfocus="addlength(this,2)" required="required" style="width: 41px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
+                                <input class="egov-tool-field-rect onImage" id="N28_P1" name="birthday_year" value="{{ old('birthday_year') }}" onfocus="addlength(this,2)" required="required" style="width: 39px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 648px; top: 270px;">
                                 <input class="egov-tool-field-rect onImage" id="N29_P1" name="birthday_month" value="{{ old('birthday_month') }}" onfocus="addlength(this,2)" required="required" style="width: 41px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
@@ -7244,39 +7263,39 @@
                                 </select>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 390px; top: 345px;">
-                                <input class="egov-tool-field-rect onImage" id="N34_P1" name="loss_year" value="{{ old('loss_year') }}" onfocus="addlength(this,2)" style="width: 41px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
+                                <input class="egov-tool-field-rect onImage" id="N34_P1" name="loss_year" value="{{ old('loss_year') }}" onfocus="addlength(this,2)" style="width: 39px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 433px; top: 345px;">
-                                <input class="egov-tool-field-rect onImage" id="N35_P1" name="loss_month" value="{{ old('loss_month') }}" onfocus="addlength(this,2)" style="width: 41px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
+                                <input class="egov-tool-field-rect onImage" id="N35_P1" name="loss_month" value="{{ old('loss_month') }}" onfocus="addlength(this,2)" style="width: 39px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 476px; top: 345px;">
-                                <input class="egov-tool-field-rect onImage" id="N36_P1" name="loss_day" value="{{ old('loss_day') }}" onfocus="addlength(this,2)" style="width: 41px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
+                                <input class="egov-tool-field-rect onImage" id="N36_P1" name="loss_day" value="{{ old('loss_day') }}" onfocus="addlength(this,2)" style="width: 40px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 526px; top: 325px; height:12px; background-color:#ddeeff;">
-                                <input id="N37_P1_0" name="loss_reason" required="required" type="radio" style="transform: scale(0.8);" value="4" <?php echo (old('loss_reason') == '4') ? 'checked' : ''; ?>/>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 525px; top: 326px; height:12px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N37_P1_0" name="loss_reason" required="required" type="radio" style="transform: scale(0.7);" value="4" <?php echo (old('loss_reason') == '4') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N37_P1_0" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 526px; top: 338px; height:12px; background-color:#ddeeff;">
-                                <input id="N37_P1_1" name="loss_reason" required="required" type="radio" style="transform: scale(0.8);" value="5" <?php echo (old('loss_reason') == '5') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 525px; top: 337px; height:12px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N37_P1_1" name="loss_reason" required="required" type="radio" style="transform: scale(0.7);" value="5" <?php echo (old('loss_reason') == '5') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N37_P1_1" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 526px; top: 351px; height:12px; background-color:#ddeeff;">
-                                <input id="N37_P1_2" name="loss_reason" required="required" type="radio" style="transform: scale(0.8);" value="7" <?php echo (old('loss_reason') == '7') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 525px; top: 350px; height:12px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N37_P1_2" name="loss_reason" required="required" type="radio" style="transform: scale(0.7);" value="7" <?php echo (old('loss_reason') == '7') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N37_P1_2" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 526px; top: 364px; height:12px; background-color:#ddeeff;">
-                                <input id="N37_P1_3" name="loss_reason" required="required" type="radio" style="transform: scale(0.8);" value="9" <?php echo (old('loss_reason') == '9') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 525px; top: 363px; height:12px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N37_P1_3" name="loss_reason" required="required" type="radio" style="transform: scale(0.7);" value="9" <?php echo (old('loss_reason') == '9') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N37_P1_3" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 526px; top: 377px; height:12px; background-color:#ddeeff;">
-                                <input id="N37_P1_4" name="loss_reason" required="required" type="radio" style="transform: scale(0.8);" value="11" <?php echo (old('loss_reason') == '11') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 525px; top: 376px; height:12px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N37_P1_4" name="loss_reason" required="required" type="radio" style="transform: scale(0.7);" value="11" <?php echo (old('loss_reason') == '11') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N37_P1_4" style="font-size: 12px;">
                                 </label>
-                            </div>
+                            </span>
                             <div class="egov-tool-field-origin" style="left: 570px; top: 326px;">
                                 <select class="egov-tool-field-rect onImage" id="N39_P1" name="retirement_date_era" style="width: 44px; height: 12px; font-size: 10px; text-align: left; line-height: 17px; padding: inherit; background-color:#ddeeff;">
                                     <option value="">
@@ -7319,21 +7338,21 @@
                             <div class="egov-tool-field-origin" style="left: 671px; top: 340px;">
                                 <input class="egov-tool-field-rect onImage" id="N47_P1" name="passed_away_date_day" value="{{ old('passed_away_date_day') }}" onfocus="addlength(this,2)" style="width: 21px; height: 10px; font-size: 10px; text-align: center; line-height: 17px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
-                            <div class="egov-tool-field-origin egovuiForm-checkbox-wrapper" style="left: 76px; top: 413px; height:10px; width:14px; background-color:#ddeeff;">
-                                <input id="N48_P1" name="loss_of_employees" type="checkbox" value="1" <?php echo (old('loss_of_employees') == '1') ? 'checked' : ''; ?>/>
+                            <span class="egov-tool-field-origin egovuiForm-checkbox-wrapper c2" style="left: 75px; top: 413px; height:12px; width:14px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N48_P1" name="loss_of_employees" type="checkbox" value="1" style="transform: scale(0.8);" <?php echo (old('loss_of_employees') == '1') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N48_P1" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-checkbox-wrapper" style="left: 76px; top: 427px; height:10px; width:14px; background-color:#ddeeff;">
-                                <input id="N49_P1" name="loss_of_continued_reemployment_after_retirement" type="checkbox" value="1" <?php echo (old('loss_of_continued_reemployment_after_retirement') == '1') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-checkbox-wrapper c2" style="left: 75px; top: 429px; height:10px; width:14px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N49_P1" name="loss_of_continued_reemployment_after_retirement" type="checkbox" value="1" style="transform: scale(0.8);" <?php echo (old('loss_of_continued_reemployment_after_retirement') == '1') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N49_P1" style="font-size: 12px;">
                                 </label>
-                            </div>
-                            <div class="egov-tool-field-origin egovuiForm-checkbox-wrapper" style="left: 76px; top: 441px; height:10px; width:14px; background-color:#ddeeff;">
-                                <input id="N50_P1" name="remarks_other" type="checkbox" value="1" <?php echo (old('remarks_other') == '1') ? 'checked' : ''; ?>/>
+                            </span>
+                            <span class="egov-tool-field-origin egovuiForm-checkbox-wrapper c2" style="left: 75px; top: 443px; height:10px; width:14px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N50_P1" name="remarks_other" type="checkbox" value="1" style="transform: scale(0.8);" <?php echo (old('remarks_other') == '1') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N50_P1" style="font-size: 12px;">
                                 </label>
-                            </div>
+                            </span>
                             <div class="egov-tool-field-origin" style="left: 120px; top: 440px;">
                                 <input class="egov-tool-field-rect onImage" id="N51_P1" maxlength="16" name="remarks_other_details" value="{{ old('remarks_other_details') }}" style="width: 160px; height: 17px; font-size: 10px; text-align: left; line-height: 19px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
@@ -7343,19 +7362,19 @@
                             <div class="egov-tool-field-origin" style="left: 365px; top: 438px;">
                                 <input class="egov-tool-field-rect onImage" id="N53_P1" maxlength="2" name="insurance_card_irrepayable" value="{{ old('insurance_card_irrepayable') }}" style="width: 49px; height: 14px; font-size: 10px; text-align: right; line-height: 21px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
-                            <div class="egov-tool-field-origin egovuiForm-checkbox-wrapper" style="left: 477px; top: 409px; height:10px; width:14px; background-color:#ddeeff;">
-                                <input id="N54_P1" name="over_70_applicable_flg" type="checkbox" value="1" <?php echo (old('over_70_applicable_flg') == '1') ? 'checked' : ''; ?>/>
+                            <span class="egov-tool-field-origin egovuiForm-checkbox-wrapper c1" style="left: 475px; top: 409px; height:12px; width:14px; background-color:#ddeeff; display: flex; justify-content: center; align-items: center;">
+                                <input id="N54_P1" name="over_70_applicable_flg" type="checkbox" value="1" style="transform: scale(0.8);" <?php echo (old('over_70_applicable_flg') == '1') ? 'checked' : ''; ?>/>
                                 <label class="egovuiForm-label" for="N54_P1" style="font-size: 12px;">
                                 </label>
-                            </div>
+                            </span>
                             <div class="egov-tool-field-origin" style="left: 557px; top: 433px;">
                                 <select class="egov-tool-field-rect onImage" id="N56_P1" name="over_70_non_applicable_date_era" style="width: 37px; height: 26px; font-size: 9px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff; letter-spacing: -1.5px;">
                                     <option value="" {{ old('over_70_non_applicable_date_era') == '' ? 'selected' : '' }}>
                                     </option>
-                                    <option value="7" {{ old('over_70_non_applicable_date_era') == '7' ? 'selected' : '' }}>
+                                    <option value="平成" {{ old('over_70_non_applicable_date_era') == '平成' ? 'selected' : '' }}>
                                     平成
                                     </option>
-                                    <option value="9" {{ old('over_70_non_applicable_date_era') == '9' ? 'selected' : '' }}>
+                                    <option value="令和" {{ old('over_70_non_applicable_date_era') == '令和' ? 'selected' : '' }}>
                                     令和
                                     </option>
                                 </select>

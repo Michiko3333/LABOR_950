@@ -12,11 +12,12 @@ use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
+use App\EgovAPI\MixXmlEgovSigner;
 
 class EmploymentInsuredQualificationGetController extends Controller
 {
     public function index(Request $request)
-    {
+    {   
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
@@ -178,6 +179,12 @@ class EmploymentInsuredQualificationGetController extends Controller
                 'apply_to_code' => $request->input('apply_to_code'),
                 'apply_to_name' => $request->input('apply_to_name')
             ];
+            $XML = new MixXmlEgovSigner($request);
+            $response = $XML->run($request);            
+            if ( $response[0] == false ){
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
