@@ -42,7 +42,7 @@ class CurrentUser extends Auth
 
     public static function currentCompany()
     {
-        $q = self::info()->first();
+        $q = self::info();
         $company_id = 0;
         if ($q->role_id === 999 || $q->role_id === 500) {
             $company_id = session()->get('company_id', 0);

@@ -1,8 +1,8 @@
 <header>
     @php
-    $user = Auth::user();
-    $employee = $user->employee()->first();
-    $name = !empty($employee) ? $employee->last_name . " " . $employee->first_name : '';
+        $user = Auth::user();
+        $employee = $user->employee()->first();
+        $name = !empty($employee) ? $employee->last_name . ' ' . $employee->first_name : '';
     @endphp
     <section class="left">
         <a id="sidebar-toggle">
@@ -16,10 +16,10 @@
                 <div class="user-icon">
                     <img src="{{ asset('/img/image.png') }}">
                 </div>
-                <div class="name">{{$name}}</div>
+                <div class="name">{{ $name }}</div>
                 <i class="dropdown icon"></i>
                 <div class="menu" style="width: auto; min-width: 120px;">
-                    <a class="item" href="#link1">個人設定</a>
+                    <a class="item" href="javascript:openUserModal()">個人設定</a>
                     <a class="item" id="menu-link-logout" href="{{ route('auth.logout') }}">ログアウト</a>
                 </div>
             </div>
