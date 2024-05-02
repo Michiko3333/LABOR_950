@@ -2,10 +2,10 @@
 <html lang="ja">
 
 @php
-$laborAlert = session()->get('labor-alert', false);
-$laborAlertTitle = session()->get('company_name', 'エラー');
-$useMenu = $useMenu ?? true;
-$useRightContent = $useRightContent ?? true;
+    $laborAlert = session()->get('labor-alert', false);
+    $laborAlertTitle = session()->get('company_name', 'エラー');
+    $useMenu = $useMenu ?? true;
+    $useRightContent = $useRightContent ?? true;
 @endphp
 
 <head>
@@ -131,6 +131,79 @@ $useRightContent = $useRightContent ?? true;
             margin-bottom: 2em;
         }
 
+        .user-modal .content {
+            width: 100%;
+        }
+
+        .user-modal .user-modal-content {
+            display: flex;
+            gap: 1em;
+            width: 100%;
+            min-height: 420px;
+            height: 420px;
+            max-height: 420px;
+        }
+
+        .user-modal .user-modal-content .left-content {
+            display: flex;
+            width: 180px;
+            height: 100%;
+            flex-direction: column;
+        }
+
+
+        .user-modal .user-modal-content .left-content .item.active {
+            background: #e8e8e8;
+        }
+
+        .user-modal .user-modal-content .center-content {
+            width: 1px;
+            border-right: solid 1px rgba(34, 36, 38, .15);
+        }
+
+        .user-modal .user-modal-content .right-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding-right: 8px;
+        }
+
+        .user-modal .user-modal-content .right-content .area {
+            width: 100%;
+            height: 100%;
+        }
+
+        .user-modal .user-modal-content .area input:read-only {
+            border-color: transparent;
+        }
+
+        .user-modal .user-modal-content .area.profile {
+            display: flex;
+            gap: 1em;
+        }
+
+        .user-modal .user-modal-content .area.profile .icon-content {}
+
+        .user-modal .user-modal-content .area.profile .information {
+            width: 100%;
+        }
+
+        .user-modal .user-modal-content .area.profile .user-icon {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .user-modal .user-modal-content .area.profile .user-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         @media screen and (max-width: 1250px) {
             .right-container {
                 display: none;
@@ -146,45 +219,67 @@ $useRightContent = $useRightContent ?? true;
         }
     </style>
     @if (isset($title))
-    <title>Karte - {{ $title }}</title>
+        <title>Karte - {{ $title }}</title>
     @else
-    <title>Karte</title>
+        <title>Karte</title>
     @endif
     <script type="module">
-        $.ajaxSetup({headers: { 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content") }});
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")
+            }
+        });
     </script>
     {{ $header ?? '' }}
 </head>
 
 <body>
     @if ($useMenu == true)
-    <x-menu></x-menu>
+        <x-menu></x-menu>
     @endif
     <div class="full-screen {{ $mode ?? '' }}">
         <div class="left-container">
             @if ($laborAlert == true)
-            <section class="content">
-                <x-labor-alert name="{{$laborAlertTitle}}" />
-            </section>
+                <section class="content">
+                    <x-labor-alert name="{{ $laborAlertTitle }}" />
+                </section>
             @endif
             {{ $slot }}
         </div>
-        @if($useRightContent)
-        <div class="right-container">{{ $side ?? '' }}</div>
+        @if ($useRightContent)
+            <div class="right-container">{{ $side ?? '' }}</div>
         @endif
     </div>
 
     {{ $footer ?? '' }}
     @if (session('post-success'))
-    <script type="module">
-        $.toast({
-            position: 'bottom right',
-            class: 'success',
-            message: `更新が完了しました`
-        });
-        $.ajax({url:'{{ route("toast.reset") }}', type:'post'});
-    </script>
+        <script type="module">
+            $.toast({
+                position: 'bottom right',
+                class: 'success',
+                message: `更新が完了しました`
+            });
+            $.ajax({
+                url: '{{ route('toast.reset') }}',
+                type: 'post'
+            });
+        </script>
     @endif
+
+    <!-- 個人設定 -->
+    <div class="ui modal user-modal">
+        <div class="header">個人設定</div>
+        <div class="content">
+            @livewire('user-modal-content')
+        </div>
+    </div>
+    <script type="module">
+        window.openUserModal = () => {
+            $('.user-modal').modal({
+                blurring: true
+            }).modal('show');
+        };
+    </script>
 </body>
 
 </html>

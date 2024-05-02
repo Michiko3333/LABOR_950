@@ -134,6 +134,11 @@ class Employee extends Model
         return $this->hasMany(Receptionist::class);
     }
 
+    public function managerial_position()
+    {
+        return $this->belongsTo(Managerial_position::class);
+    }
+
     public function employee_department()
     {
         return $this->hasMany(Employee_department::class);

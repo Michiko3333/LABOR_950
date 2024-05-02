@@ -1087,7 +1087,8 @@
 
                         if (first) {
                             //const def = @json($managerial_position_list);
-                            const v = {{ old('managerial_position_id', $employee->managerial_position_id) }};
+                            const v =
+                                {{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '') }};
                             if (v > 0) {
                                 $('select[name="managerial_position_id"] option[value=' + v +
                                     ']').prop(

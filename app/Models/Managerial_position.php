@@ -13,4 +13,9 @@ class Managerial_position extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }
