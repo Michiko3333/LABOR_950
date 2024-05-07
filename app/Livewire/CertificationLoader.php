@@ -68,7 +68,7 @@ class CertificationLoader extends Component
             $this->view = 0;
         }
 
-        //Storage::delete($path);
+        Storage::delete($path);
     }
 
     private function checkKey($file, $pass)

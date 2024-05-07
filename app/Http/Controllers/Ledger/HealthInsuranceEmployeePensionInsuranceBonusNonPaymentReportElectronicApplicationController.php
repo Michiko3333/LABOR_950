@@ -122,7 +122,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
                 
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);   
+            $response = $XML->runSeparate($request);
             if ( $response[0] == false ){
                         $errorMessage = $response[1];
                         return redirect()->back()->withErrors($errorMessage)->withInput();
