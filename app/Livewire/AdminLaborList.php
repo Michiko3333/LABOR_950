@@ -58,4 +58,8 @@ class AdminLaborList extends BaseTable
             redirect()->route('admin.employee_update', ['id' => $id]);
         }
     }
+    public function toPermission($id)
+    {
+        redirect()->route('labor_permission', ['id' => $id]);
+    }
 }

@@ -32,6 +32,9 @@
                 <td>@if($item->company_division == 1) 社労士 @elseif($item->company_division == 2) 顧客社員 @endif</td>
                 <td>{{$item->company_name}}</td>
                 <td class="right aligned collapsing">
+                    <button class="ui basic primary button" type="button" wire:click="toPermission({{ $item->id }})">
+                        権限
+                    </button>
                     <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
                         編集
                     </button>

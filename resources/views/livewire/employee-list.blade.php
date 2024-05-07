@@ -27,6 +27,9 @@
                     <td>{{ empty($item->position_name) ? '-' : $item->position_name }}</td>
                     <td>{{ $item->branch_name }}</td>
                     <td class="right aligned collapsing">
+                        <button class="ui basic primary button" type="button" wire:click="toPermission({{ $item->id }})">
+                            権限
+                        </button>
                         <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
                             編集
                         </button>

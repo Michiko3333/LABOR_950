@@ -40,6 +40,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
 use App\Http\Controllers\Contract\EmployeeContractController;
+use App\Http\Controllers\PermissionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -184,4 +185,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/employee/contract', [EmployeeContractController::class, 'index'])->name('contract.index');
     Route::post('/employee/contract/check', [EmployeeContractController::class, 'check'])->name('contract.check');
     Route::post('/employee/contract/download', [EmployeeContractController::class, 'downlaod'])->name('contract.download');
+
+    Route::get('/employee/permission/{id}', [PermissionController::class, 'employee_permission'])->name('employee_permission');
+    Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
+    Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
+    Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
 });

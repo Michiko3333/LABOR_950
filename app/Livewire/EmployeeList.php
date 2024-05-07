@@ -65,4 +65,8 @@ class EmployeeList extends BaseTable
         $items = $this->data['items'];
         redirect()->route('employee_update', ['id' => $id]);
     }
+    public function toPermission($id)
+    {
+        redirect()->route('employee_permission', ['id' => $id]);
+    }
 }
