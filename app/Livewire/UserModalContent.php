@@ -145,7 +145,6 @@ class UserModalContent extends Component
                 ];
                 $this->emergency_edit = $this->emergency;
             }
-            \Log::info(print_r($this->role_id, true));
         }
     }
     public function render()

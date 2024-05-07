@@ -64,12 +64,14 @@
                                 <div class="header">会社基本情報変更</div>
                             </div>
                         </a>
-                        <a href="{{ route('branch') }}" class="item">
-                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                            <div class="content">
-                                <div class="header">支店・営業所の追加、削除</div>
-                            </div>
-                        </a>
+                        @if (empty($userPermission->getReadFeaturePermissionById(2)))
+                            <a href="{{ route('branch') }}" class="item">
+                                <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
+                                <div class="content">
+                                    <div class="header">支店・営業所の追加、削除</div>
+                                </div>
+                            </a>
+                        @endif
                         <a href="{{ route('current_company_department_update') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">

@@ -23,6 +23,7 @@
             }
 
             span.tag {
+                display: inline-block;
                 background-color: #e8e8e8;
                 padding: 0.35em 0.7em;
                 line-height: 1;
