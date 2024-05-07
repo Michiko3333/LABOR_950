@@ -41,13 +41,16 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             'month' => $convertToday['japanese_calendar_result']->month,
             'day' => $convertToday['japanese_calendar_result']->day,
         ];
+        $egovAcount = $this->egovAcount();
+
         return view('ledger.employment_insurance_senior_continuation_allowance', [
             'company' => $company,
             'current_employee' => $currentEmployee,
             'current_branch' => $currentBranch,
             'todaySet' => $today,
             'certificate' => $certificate,
-            'procedureName' => $procedureName
+            'procedureName' => $procedureName,
+            'egovAcount' => $egovAcount
         ]);
     }
 
