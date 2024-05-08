@@ -21,12 +21,18 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
      */
     public function rules(): array
     {
-        return array_merge(
-            CaregiverLeaveBenefitApplicationRequest::rules(),
-            WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest::rules()
-        );
-    }
+        $rules = new CaregiverLeaveBenefitApplicationRequest;
+        $rules_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
 
+        return array_merge($rules->rules(),$rules_2->rules());
+    }
+    public function messages()
+    {
+        $messages = new CaregiverLeaveBenefitApplicationRequest;
+        $messages_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
+
+        return array_merge($messages->messages(),$messages_2->messages());
+    }
     public function attributes()
     {
         $attributes = new CaregiverLeaveBenefitApplicationRequest;

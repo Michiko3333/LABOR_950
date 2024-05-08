@@ -563,12 +563,12 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:168px; top:663px; width:23px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px;"><INPUT
             tabindex="66"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:23px; max-width:23px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J65_005F_8C8E" name="totayMonth" readonly></SPAN>
+            type="TEXT" id="J65_005F_8C8E" name="todayMonth" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:214px; top:663px; width:23px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px;"><INPUT
             tabindex="67"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:23px; max-width:23px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J66_005F_93FA" name="totayDay" readonly></SPAN>
+            type="TEXT" id="J66_005F_93FA" name="todayDay" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:495px; top:634px; width:217px; line-height:49px; height:49px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px;"><input
             tabindex="72"
@@ -612,13 +612,13 @@
             tabindex="80"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:left; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:310px; max-width:310px; height:14px; ime-mode:active;"
             type="TEXT" id="J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369"
-            value="{{ old('applicantFullnameKana') }}" name="applicantFullnameKana" maxlength="30"></SPAN>
+            value="{{ old('employeeFullnameKana') }}" name="employeeFullnameKana" maxlength="30" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:402px; top:757px; width:310px; line-height:28px; height:28px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="81"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:310px; height:27px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J79_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('applicantFullname') }}"
-            name="applicantFullname"></SPAN>
+            id="J79_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('employeeFullname') }}"
+            name="employeeFullname" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:70px; top:757px; width:114px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="78"

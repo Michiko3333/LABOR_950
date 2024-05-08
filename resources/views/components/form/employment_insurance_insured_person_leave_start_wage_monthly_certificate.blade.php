@@ -56,6 +56,13 @@
 		return false;
 	}
 
+	document.getElementById('J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91').addEventListener('click', function() {
+		document.getElementById('J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91').checked = !this.checked;
+	});
+
+	document.getElementById('J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91').addEventListener('click', function() {
+		document.getElementById('J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91').checked = !this.checked;
+	});
 </script>
 
 <style>

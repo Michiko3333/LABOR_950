@@ -7,12 +7,38 @@
     <input type="hidden"  id="accountLink"   />
     <link rel="stylesheet" href="{{asset('/css/health-and-pension-insured-bonus-payment-notification.css')}}">
     <div id="modal-recertification-bg" class="modal-recertification-bg"></div>
-      <script type="text/javascript">
-        function showValidMessage(errorMessage) {
-            $("#validationArea").addClass('egovui-validation-show');
-            $("#validationMessage").html(errorMessage);
-        }
-      </script>
+        <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const checkboxes = document.querySelectorAll('#N42_005F_8F8A_8DDD_926E, #N40_905C_90BF_8ED2, #N41_005F_96BC_8FCC');
+                      const inputField = document.getElementById('N43_947A_9242_8BC7_94D4');
+
+                      checkboxes.forEach(function(checkbox) {
+                          checkbox.addEventListener('click', function() {
+                              if (this.checked) {
+                                  if (this.id !== 'N42_005F_8F8A_8DDD_926E') {
+                                      inputField.value = "";
+                                      inputField.disabled = true;
+                                  } else{
+                                      inputField.disabled = false;
+                                  }
+                                  checkboxes.forEach(function(cb) {
+                                      if (cb !== checkbox) {
+                                          cb.checked = false;
+                                      }
+                                  });
+                              }
+                          });
+                      });
+
+                        document.getElementById('N5_005F_8C8E').addEventListener('click', function() {
+                            document.getElementById('N4_005F_944E').checked = !this.checked;
+                        });
+
+                        document.getElementById('N4_005F_944E').addEventListener('click', function() {
+                            document.getElementById('N5_005F_8C8E').checked = !this.checked;
+                        });
+                    });
+                </script>
     </div>
   </div>
   <main role="main" class="egovui-main-input-application">

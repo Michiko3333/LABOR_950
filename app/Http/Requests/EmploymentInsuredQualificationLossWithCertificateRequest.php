@@ -21,9 +21,22 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends FormReque
      */
     public function rules(): array
     {
-        return array_merge(
-            EmploymentInsuredQualificationLossRequest::rules(),
-            EmploymentInsuredRetirementCertificateRequest::rules()
-        );
+        $rules = new EmploymentInsuredQualificationLossRequest;
+        $rules_2 = new EmploymentInsuredRetirementCertificateRequest;
+
+        return array_merge($rules->rules(),$rules_2->rules());
+    }
+    public function messages()
+    {
+        $messages = new EmploymentInsuredQualificationLossRequest;
+        
+        return array_merge($messages->messages());
+    }
+    public function attributes()
+    {
+        $attributes = new EmploymentInsuredQualificationLossRequest;
+        $attributes_2 = new EmploymentInsuredRetirementCertificateRequest;
+
+        return array_merge($attributes->attributes(), $attributes_2->attributes());
     }
 }

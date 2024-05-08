@@ -92,6 +92,9 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
 
         try {
             $data = [
+                'title_different_types_of_health_insurance' => $request->input('title_different_types_of_health_insurance'),
+                'title_different_types_of_seafarers_insurance' => $request->input('title_different_types_of_seafarers_insurance'),
+                'title_types_of_welfare_pension_insurance' => $request->input('title_types_of_welfare_pension_insurance'),
                 'office_number_notification_number' => $request->input('office_number_notification_number'),
                 'labor_consultant_name' => $request->input('labor_consultant_name'),
                 'business_location_ship_owner_address' => $request->input('business_location_ship_owner_address'),

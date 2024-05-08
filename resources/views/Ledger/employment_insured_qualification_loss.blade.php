@@ -318,9 +318,9 @@
                     .last_name_kana + '　' : '') + (employee.first_name_kana ?? ''));
                 $('#J9_005F_97A3_9045_8ED2_8E81_96BC').val((employee.last_name ? employee.last_name + '　' : '') + (employee
                     .first_name ?? ''));
-                $('#J12_005F_944').val(intended_retirement_date_year);
-                $('#J13_005F_8C8').val(intended_retirement_date_month);
-                $('#J14_005F_93F').val(intended_retirement_date_day);
+                $('#J12_005F_944').val(employmentRetirementConvertDate['year'] ?? "");
+                $('#J13_005F_8C8').val(employmentRetirementConvertDate['month'] ?? "");
+                $('#J14_005F_93F').val(employmentRetirementConvertDate['day'] ?? "");
                 $('#J15_005F_96BC_8FCC').val(branch.name ?? '');
                 $('#J16_005F_8F8A_8DDD_926E').val((branch.address_prefecture ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
@@ -560,6 +560,7 @@
             });
             $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
                 $('#J9_005F_97A3_9045_8ED2_8E81_96BC').val($(this).val());
+                $('#J63_005F_97A3_9045_8ED2_8F90_96BC').val($(this).val());
             });
             $('#J45_005F_8F5A_8F8A_9694_82CD_8B8F_8F8A').on('input', function() {
                 $('#J22_005F_8F5A_8F8A').val($(this).val());

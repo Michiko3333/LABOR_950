@@ -190,6 +190,12 @@
                     $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
                 }
                 $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
+                    $('#J2_005F_8E81_96BC').val($(this).val());
+                });
+                $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
+                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val($(this).val());
+                });
             }
             Livewire.on('onSelectEmployee', ({
                 data

@@ -773,7 +773,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:453px; top:1021px; width:11px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">考</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:0px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:468px; top:857px; width:306px; line-height:183px; height:183px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
-            tabindex="-1" readonly
+            tabindex="-1" disabled
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); padding:0px 3px 0px 0px; font-size:11px; font-family:'ＭＳ 明朝', serif; width:304px; height:181px; ime-mode:active;"
             id="J80_005F_94F5_8D6C" name="note" value="{{ old('note') }}" type="text"></SPAN>
     <SPAN

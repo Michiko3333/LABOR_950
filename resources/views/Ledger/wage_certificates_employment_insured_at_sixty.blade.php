@@ -277,6 +277,7 @@
                     $('#J19_005F_8E73_93E0_8BC7_94D4').val("");
                     $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val("");
                 }
+                $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
                 $('#J17_005F_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
                 $('#birthdayEra').val(birthdayConvertJapan['era'] ?? "");
                 $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
@@ -304,15 +305,17 @@
             });
 
             document.getElementById('J121_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').addEventListener('input', function() {
-                document.getElementById('J9_005F_985A_8F5C_8DCE_82C9_9242_82B5_82BD_8ED2_82CC_8E81_96BC').value = this
-                    .value;
+                document.getElementById('J9_005F_985A_8F5C_8DCE_82C9_9242_82B5_82BD_8ED2_82CC_8E81_96BC').value = this.value;
+                document.getElementById('J79_005F_905C_90BF_8ED2_8E81_96BC').value = this.value;
             });
             document.getElementById('J122_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').addEventListener('input',
                 function() {
                     document.getElementById('J8_005F_8374_838A_834B_8369').value = this.value;
+                    document.getElementById('J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').value = this.value;
                 });
             document.getElementById('J67_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').addEventListener('input', function() {
                 document.getElementById('J29_005F_8F5A_8F8A').value = this.value;
+                document.getElementById('J11_005F_8F8A_8DDD_926E').value = this.value;
             });
             document.getElementById('J71_005F_8E96_8BC6_8EE5_8E81_96BC').addEventListener('input', function() {
                 document.getElementById('J30_005F_8E81_96BC').value = this.value; //
@@ -329,6 +332,9 @@
             });
             document.getElementById('J116_005F_89C1_93FC_8ED2_94D4_8D86').addEventListener('input', function() {
                 document.getElementById('J72_005F_89C1_93FC_8ED2_94D4_8D86').value = this.value;
+            });
+            document.getElementById('J120_005F_905C_90BF_8ED2_8F5A_8F8A').addEventListener('input', function() {
+                document.getElementById('J17_005F_8F5A_8F8A').value = this.value;
             });
             Livewire.on('onSelectEmployee', ({
                 data

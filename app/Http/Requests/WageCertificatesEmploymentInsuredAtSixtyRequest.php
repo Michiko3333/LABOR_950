@@ -21,9 +21,24 @@ class WageCertificatesEmploymentInsuredAtSixtyRequest extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge(
-            app(FirstSeniorEmploymentContinuationBenefitClaimFormRequest::class)->rules(),
-            app(EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest::class)->rules(),
-        );
+        $rules = new FirstSeniorEmploymentContinuationBenefitClaimFormRequest;
+        $rules_2 = new EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest;
+
+        return array_merge($rules->rules(),$rules_2->rules());
+    }
+    public function messages()
+    {
+        $messages = new FirstSeniorEmploymentContinuationBenefitClaimFormRequest;
+
+        return array_merge($messages->messages());
+    }
+
+
+    public function attributes()
+    {
+        $attributes = new FirstSeniorEmploymentContinuationBenefitClaimFormRequest;
+        $attributes_2 = new EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest;
+
+        return array_merge($attributes->attributes(),$attributes_2->attributes());
     }
 }

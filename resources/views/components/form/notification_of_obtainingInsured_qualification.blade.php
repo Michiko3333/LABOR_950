@@ -22,6 +22,13 @@
                                 }
                             });
                         });
+                        document.getElementById('N3_005F_944E_8D86').addEventListener('click', function() {
+                            document.getElementById('N4_005F_944E').checked = !this.checked;
+                        });
+
+                        document.getElementById('N4_005F_944E').addEventListener('click', function() {
+                            document.getElementById('N3_005F_944E_8D86').checked = !this.checked;
+                        });
                     });
                 </script>
                 <style>

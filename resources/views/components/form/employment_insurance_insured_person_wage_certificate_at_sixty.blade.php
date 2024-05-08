@@ -844,7 +844,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:212px; width:349px; line-height:26px; height:26px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="11"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:349px; height:25px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J11_005F_8F8A_8DDD_926E" value="{{ old('branchAddress') }}" name="branchAddress"></SPAN>
+            id="J11_005F_8F8A_8DDD_926E" value="{{ old('branchAddress') }}" name="branchAddress"　disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:242px; width:34px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="12"
@@ -885,7 +885,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:627px; top:200px; width:240px; line-height:38px; height:38px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="17"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:240px; height:37px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J17_005F_8F5A_8F8A" value="{{ old('address') }}" name="address"></SPAN>
+            id="J17_005F_8F5A_8F8A" value="{{ old('address') }}" name="address"　disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:669px; top:240px; width:35px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="18"
@@ -1916,7 +1916,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:723px; top:861px; width:77px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="-1" readonly
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:77px; max-width:77px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J55_005F_92C0_8BE0_8A7A_8C76_005F10" value="{{ old('totalWages1_10') }}" name="totalWages10"
+            type="TEXT" id="J55_005F_92C0_8BE0_8A7A_8C76_005F10" value="{{ old('totalWages1_10') }}" name="totalWages1_10"
             maxlength="8"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:518px; top:894px; width:68px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT

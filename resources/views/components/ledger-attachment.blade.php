@@ -55,7 +55,7 @@
     </div>
     @endforeach
     <div class="ui input {{ $errors->has('input_file_other') ? ' error' : '' }}" id="other_file_name" >
-        <input type="text" placeholder="その他添付ファイル名" name="input_file_other" value="{{ old('input_file_other') }}">
+        <input type="text" placeholder="その他添付書類の名称" name="input_file_other" value="{{ old('input_file_other') }}">
     </div>
 
     <script type="module">

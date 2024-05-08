@@ -299,6 +299,9 @@
             $('#J124_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
                 $('#employment_fullname_kana').val($(this).val());
             });
+            $('#employment_address').on('input', function() {
+                $('#J23_005F_8F5A_8F8A').val($(this).val());
+            });
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {

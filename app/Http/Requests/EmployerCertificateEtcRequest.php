@@ -82,4 +82,35 @@ class EmployerCertificateEtcRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
+    public function attributes()
+    {
+        return [
+            'certificate_checkbox_1' => '2枚目_提出チェックボックス',
+            'spouse_mynumber_card_no' => '2枚目_1_配偶者の個人番号',
+            'spouse_name' => '2枚目_2_配偶者の氏名',
+            'spouse_birthday_era_kanji' => '2枚目_3_配偶者生年月日_年号',
+            'spouse_birthday_year' => '2枚目_3_配偶者生年月日_年',
+            'spouse_birthday_month' => '2枚目_3_配偶者生年月日_月',
+            'spouse_birthday_day' => '2枚目_3_配偶者生年月日_日',
+            'mynumber_card_no' => '2枚目_4_個人番号',
+            'name' => '2枚目_5_被保険者氏名',
+            'name_kana' => '2枚目_5_被保険者氏名（フリガナ）',
+            'birthday_era_kanji' => '2枚目_6_被保険者の生年月日_年号',
+            'birthday_year' => '2枚目_6_被保険者の生年月日_年',
+            'birthday_month' => '2枚目_6_被保険者の生年月日_月',
+            'birthday_day' => '2枚目_6_被保険者の生年月日_日',
+            'headquarters_post_code_former' => '2枚目_7_事業主等_郵便番号3桁',
+            'headquarters_post_code_latter' => '2枚目_7_事業主等_郵便番号4桁',
+            'headquarters_address' => '2枚目_7_事業主等_所在地（住所）',
+            'company_name' => '2枚目_7_事業主等_名称（氏名）',
+            'headquarters_representative' => '2枚目_7_事業主等_事業主氏名（代表者氏名）',
+            'headquarters_tel_area_code' => '2枚目_7_事業主等_電話番号_市外局番',
+            'headquarters_tel_city_code' => '2枚目_7_事業主等_電話番号_市内局番',
+            'headquarters_tel_subscriber_code' => '2枚目_7_事業主等_電話番号_加入者番号',
+            'labor_consultant_name' => '2枚目_8_提出代行者名記載欄',
+            'submission_year' => '2枚目_提出年月日_年',
+            'submission_month' => '2枚目_提出年月日_月',
+            'submission_day' => '2枚目_提出年月日_日',
+        ];
+    }
 }

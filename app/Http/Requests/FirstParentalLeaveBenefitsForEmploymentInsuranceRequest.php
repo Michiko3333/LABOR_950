@@ -19,13 +19,22 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends FormReques
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
-        return array_merge(
-            ParentalLeaveBenefitsClaimFormRequest::rules(),
-            EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest::rules()
-        );
+        $rules = new ParentalLeaveBenefitsClaimFormRequest;
+        $rules_2 = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest;
+
+        return array_merge($rules->rules(), $rules_2->rules());
     }
+    public function messages()
+    {
+        $messages = new ParentalLeaveBenefitsClaimFormRequest;
+        $messages_2 = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest;
+
+        return array_merge($messages->messages(), $messages_2->messages());
+    }
+
 
     public function attributes()
     {
@@ -35,7 +44,6 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends FormReques
         $employmentRequest = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest();
         $attributes_2 = $employmentRequest->attributes();
     
-        // 属性を結合して返す
         return array_merge($attributes, $attributes_2);
     }
 }

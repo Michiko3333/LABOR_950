@@ -85,4 +85,38 @@ class MedicalInsurerCertificateRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
+    public function attributes()
+    {
+        return [
+            'certificate_checkbox_2' => '3枚目_提出チェックボックス',
+            'spouse_mynumber_card_no' => '3枚目_1_配偶者の個人番号',
+            'spouse_name' => '3枚目_2_配偶者の氏名',
+            'spouse_birthday_era_kanji' => '3枚目_3_配偶者生年月日_年号',
+            'spouse_birthday_year' => '3枚目_3_配偶者生年月日_年',
+            'spouse_birthday_month' => '3枚目_3_配偶者生年月日_月',
+            'spouse_birthday_day' => '3枚目_3_配偶者生年月日_日',
+            'mynumber_card_no' => '3枚目_4_個人番号',
+            'name' => '3枚目_5_被保険者氏名',
+            'name_kana' => '3枚目_5_被保険者氏名（フリガナ）',
+            'birthday_era_kanji' => '3枚目_6_被保険者の生年月日_年号',
+            'birthday_year' => '3枚目_6_被保険者の生年月日_年',
+            'birthday_month' => '3枚目_6_被保険者の生年月日_月',
+            'birthday_day' => '3枚目_6_被保険者の生年月日_日',
+            'certification_year' => '3枚目_7_認定年月日_年',
+            'certification_month' => '3枚目_7_認定年月日_月',
+            'certification_day' => '3枚目_7_認定年月日_日',
+            'medical_insurer_post_code_former' => '3枚目_8_事業主等_郵便番号3桁',
+            'medical_insurer_post_code_latter' => '3枚目_8_事業主等_郵便番号4桁',
+            'medical_insurer_address' => '3枚目_8_事業主等_所在地（住所）',
+            'medical_insurer_name' => '3枚目_8_事業主等_名称（氏名）',
+            'medical_insurer_representative' => '3枚目_8_事業主等_事業主氏名（代表者氏名）',
+            'medical_insurer_tel_area_code' => '3枚目_8_事業主等_電話番号_市外局番',
+            'medical_insurer_tel_city_code' => '3枚目_8_事業主等_電話番号_市内局番',
+            'medical_insurer_tel_subscriber_code' => '3枚目_8_事業主等_電話番号_加入者番号',
+            'labor_consultant_name' => '3枚目_9_提出代行者名記載欄',
+            'submission_year' => '3枚目_提出年月日_年',
+            'submission_month' => '3枚目_提出年月日_月',
+            'submission_day' => '3枚目_提出年月日_日',
+        ];
+    }
 }
