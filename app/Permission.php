@@ -16,11 +16,15 @@ class Permission
     private $employee_status = 0;
     private $department_permissions = [];
     private $features = [];
+    private $selectedCompanyFlg = false;
 
     public function __construct()
     {
         $user = Auth::user();
         if (!empty($user)) {
+            $currentCompany = CurrentUser::currentCompany();
+            $this->selectedCompanyFlg = !empty($currentCompany);
+
             if (session()->has('permissions')) {
                 \Log::info('CACHED DATA');
                 $d = session()->get('permissions');
@@ -60,6 +64,11 @@ class Permission
                 ]);
             }
         }
+    }
+
+    public function isSelectedCompany()
+    {
+        return $this->selectedCompanyFlg;
     }
 
     public function getRoleId()

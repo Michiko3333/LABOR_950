@@ -58,30 +58,30 @@
                 </div>
                 <div class="extra content">
                     <div class="ui middle aligned selection list">
-                        <a href="{{ route('company_edit', ['id' => $currentCompany->id]) }}" class="item">
+                        <a href="{{ route('company_edit') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
-                                <div class="header">会社基本情報変更</div>
+                                <div class="header">会社基本情報</div>
                             </div>
                         </a>
                         @if (empty($userPermission->getReadFeaturePermissionById(2)))
                             <a href="{{ route('branch') }}" class="item">
                                 <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                                 <div class="content">
-                                    <div class="header">支店・営業所の追加、削除</div>
+                                    <div class="header">支店・営業所情報</div>
                                 </div>
                             </a>
                         @endif
                         <a href="{{ route('current_company_department_update') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
-                                <div class="header">組織・部署マスタ変更</div>
+                                <div class="header">組織・部署マスタ</div>
                             </div>
                         </a>
                         <a href="{{ route('managerial_position') }}" class="item">
                             <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
                             <div class="content">
-                                <div class="header">役職マスタ登録</div>
+                                <div class="header">役職マスタ</div>
                             </div>
                         </a>
                     </div>

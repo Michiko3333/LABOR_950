@@ -105,7 +105,8 @@ class UserModalContent extends Component
                 $this->employee_id = $employee->id;
                 $this->role_id = $employee->role_id;
                 if ($this->role_id !== 999) {
-                    $this->profiles['company_name'] = CurrentUser::currentCompany()->name;
+                    $currentCompany = CurrentUser::currentCompany();
+                    if (!empty($currentCompany)) $this->profiles['company_name'] = $currentCompany->name;
                     $this->profiles['branch_name'] = $employee->branch->name;
                     $this->profiles['departments'] = Employee_department::select('name')
                         ->leftJoin('m_department as d', 'department_id', '=', 'd.id')

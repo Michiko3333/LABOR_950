@@ -26,25 +26,99 @@
         </div>
     </section>
 </header>
-<div id="sidebar">
-    <a class="item">
-        <i class="home icon"></i>
-        Home
-    </a>
-    <a class="item">
-        <i class="block layout icon"></i>
-        Topics
-    </a>
-    <a class="item">
-        <i class="smile icon"></i>
-        Friends
-    </a>
-    <a class="item">
-        <i class="calendar icon"></i>
-        History
-    </a>
-</div>
 <div id="menu-shadow"></div>
+<div id="sidebar">
+    <menu>
+        <li class="logo"><img src="{{ asset('/img/logo.png') }}"></li>
+        @if ($userPermission->isSelectedCompany())
+            <li class="item">
+                <a href="{{ route('home.index') }}" style="font-weight: bold;">
+                    <i class="home icon large blue-text"></i>
+                    ホーム</a>
+            </li>
+            <li class="title">会社情報</li>
+            <li class="item">
+                <a href="{{ route('company_edit') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    会社基本情報</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('branch') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    支店・営業所情報</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('current_company_department_update') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    組織・部署マスタ</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('managerial_position') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    役職マスタ</a>
+            </li>
+            <li class="title">社員管理</li>
+            <li class="item">
+                <a href="{{ route('employee') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    社員一覧</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('contract.index') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    労働契約書作成</a>
+            </li>
+            <li class="title">行政手続き</li>
+            <li class="item">
+                <a href="{{ route('ledger.index') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    帳票一覧</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('ledger.egov') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    役職マスタ</a>
+            </li>
+            <li class="title">スケジュール</li>
+            <li class="item">
+                <a href="{{ route('calendar.index') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    カレンダー</a>
+            </li>
+            <li class="item">
+                <a href="{{ route('managerial_position') }}">
+                    <i class="right caret right icon large blue-text"></i>
+                    カレンダー設定変更</a>
+            </li>
+            @if ($userPermission->isAdmin() || $userPermission->isLabor())
+                <li class="btn"><button class="ui button small yellow basic " type="button"
+                        onclick="location.href='{{ route('home.select') }}'">会社を変更</button></li>
+            @endif
+        @else
+            @if ($userPermission->isAdmin())
+                <li class="title">Karte管理</li>
+                <li class="item">
+                    <a href="{{ route('admin.company') }}">
+                        <i class="right caret right icon large blue-text"></i>
+                        会社管理</a>
+                </li>
+                <li class="item">
+                    <a href="{{ route('admin.labor') }}">
+                        <i class="right caret right icon large blue-text"></i>
+                        アカウント管理</a>
+                </li>
+            @endif
+            @if ($userPermission->isLabor())
+                <li class="title">社労士管理</li>
+                <li class="item">
+                    <a href="{{ route('labor_company_update') }}">
+                        <i class="right caret right icon large blue-text"></i>
+                        自社情報編集</a>
+                </li>
+            @endif
+        @endif
+    </menu>
+</div>
 <script type="module">
     let showMenu = false;
     $('.ui.dropdown.menu-user')
@@ -176,9 +250,73 @@
     #sidebar {
         position: fixed;
         top: 0;
-        width: 300px;
+        width: 0px;
         height: 100%;
-        visibility: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 102;
+        background-color: white;
+        transition: 0.5s;
+        box-shadow: 8px 0px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar.show {
+        width: 300px;
+        transition: 0.8s;
+    }
+
+    #sidebar menu {
+        width: 300px;
+        padding: 0;
+    }
+
+    #sidebar menu li {
+        list-style: none;
+        padding: 1em;
+        font-size: 1.2em;
+    }
+
+    #sidebar menu li.btn {
+        list-style: none;
+        padding: 1em;
+        font-size: 0.8em;
+        text-align: center;
+    }
+
+    #sidebar menu li.logo {
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    #sidebar menu li.title {
+
+        font-weight: bold;
+        border-bottom: solid 2px var(--color-red);
+    }
+
+    #sidebar menu li.item {
+        position: relative;
+        padding: 0;
+    }
+
+    #sidebar menu li.item a {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 1em;
+        padding-left: 3em;
+        color: var(--color-black);
+    }
+
+    #sidebar menu li.item a:hover {
+        background-color: #0000000d;
+    }
+
+    #sidebar menu li.item a>i {
+        position: absolute;
+        top: 0.5em;
+        left: 0.5em;
     }
 
     #menu-shadow {
