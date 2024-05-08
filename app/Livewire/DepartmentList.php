@@ -7,7 +7,6 @@ use App\Models\DepartmentPermission;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
-
 class DepartmentList extends Component
 {
     public $company_id = 0;
@@ -78,6 +77,10 @@ class DepartmentList extends Component
     #[On('onEditDepartment')]
     public function onEditDepartment()
     {
+        $this->validate([
+            'form_name' => 'required',
+        ]);
+
         if (!empty($this->form_id)) {
             Department::where('id', $this->form_id)->update([
                 'name' => $this->form_name,

@@ -55,8 +55,10 @@
     </section>
 
     <script type="module">
-        $('.modalbtn').click(_ => {
-            $('#editDepartment').modal({blurring: true}).modal('show');
-        });
+        window.openEditModal = () => {
+            $('#editDepartment').modal({
+                blurring: true
+            }).modal('show');
+        };
     </script>
 </x-layout>

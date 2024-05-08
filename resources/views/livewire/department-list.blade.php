@@ -42,7 +42,7 @@
                     <input type="hidden" wire:model='form_id'>
                     <div class="field required mb-2">
                         <label>部署名</label>
-                        <input type="text" placeholder="部署名" wire:model='form_name'>
+                        <input type="text" placeholder="部署名" wire:model='form_name' required>
                     </div>
                     <div class="field mb-2">
                         <label>部署権限</label>
