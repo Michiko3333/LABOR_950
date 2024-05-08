@@ -42,15 +42,15 @@
                     <input type="hidden" wire:model='form_id'>
                     <div class="field required mb-2">
                         <label>役職名</label>
-                        <input type="text" placeholder="役職名" wire:model='form_name'>
+                        <input type="text" placeholder="役職名" wire:model='form_name' required>
                     </div>
                     <div class="field required mb-2">
                         <label>役職名（カナ）</label>
-                        <input type="text" placeholder="役職名（カナ）" wire:model='form_name_kana'>
+                        <input type="text" placeholder="役職名（カナ）" wire:model='form_name_kana' required>
                     </div>
                     <div class="field required mb-2">
                         <label>ランク</label>
-                        <input type="number" placeholder="ランク" wire:model='form_rank' min="0" max="10">
+                        <input type="number" placeholder="ランク" wire:model='form_rank' min="0" max="10" required>
                     </div>
                     <div class="ui checkbox mr-1">
                         <input type="checkbox" name="form_representative_flg" value='1'

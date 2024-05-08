@@ -75,6 +75,12 @@ class ManagerialPositionList extends Component
     #[On('onEditManagerialPosition')]
     public function onEditManagerialPosition()
     {
+        $this->validate([
+            'form_name' => 'required',
+            'form_name_kana' => 'required',
+            'form_rank' => 'required',
+        ]);
+
         if (!empty($this->form_id)) {
             Managerial_position::where('id', $this->form_id)->update([
                 'company_id' => $this->company_id,
