@@ -18,16 +18,12 @@ use app\EgovAPI\Egov;
 class MixXmlEgovSigner
 {
     private $companyId;
-    private $signerFolderPath;
     private $password;
     private $pfxFilepath;
     private $procedureId;
     private $signer;
     private $workingDirectory;
     private $afterLedgerPath;
-    private $kousei_FolderPath;
-    private $F01_FolderPath;
-    private $T01_FolderPath;
     
     public function __construct($request)
     {
@@ -36,28 +32,16 @@ class MixXmlEgovSigner
         $this->procedureId = preg_replace('~^/.*?/~', '', $pathInfo);
         $this->signer = new Signer();
         $this->signer->makeDir();
-        $this->workingDirectory = $this->signer->getPath(); //"/var/www/karte/storage/app/ledger/2024042601124814"
+        $this->workingDirectory = $this->signer->getPath();
         preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
-        $this->afterLedgerPath = $matches[1];//app以降のアドレス取得 /ledger/~~
+        $this->afterLedgerPath = $matches[1];
     }
 
-    /* -- 実行内容 --
-     * 1. テンプレートフォルダを元に各xmlファイルに帳票内容を記載しinput_xmlフォルダに保存。保存先input_xmlフォルダパスを返却
-     * 2. 電子証明書登録よりテーブルに登録されたpfxファイル実体化
-     * 3. 署名用afterSignerフォルダにinput_xml内のxmlファイルのみコピー　返却値：afterSigner/フォルダパス
-     * 4. 添付ファイルをinput_xmlフォルダに配置
-     * 4. afterSignerフォルダ内のkousei.xmlに電子署名を行う
-     * 5. afterSignerフォルダをzip化し、base64バイナリ化
-     * 6. 申請データ送信を行う
-     * 
-     * -- 構成 --
-     * テンプレートフォルダ：storage\app\ledger-template\{手続ID}
-     * 処理後作業フォルダ：storage\app\ledger\{一意名}\...
-     *  {一意名} ━┳━━ input_xml ━━━ 署名ファイル
-     *            ┗━━ zip       ━━━ zipファイル
+    /* -- 引数説明 --
+     * $separaterをTrueにすることで個別ファイル署名形式として送信
+     * False or 設定しないことで標準形式での送信
     */
-    // 標準形式
-    public function run($request)
+    public function run($request, $separater=False)
     {
         Log::info(print_r('******************************** MixEgovSigner start ******************************', true));
         $inputFolderPath = $this->xmlInput($request);
@@ -66,54 +50,12 @@ class MixXmlEgovSigner
         $signerFolderPath = $this->workingDirectory . '/afterSigner/zip/';
         $this->copyFolder($inputFolderPath, $signerFolderPath);
         $this->putAttachment($request);
-        $this->egovSigner();
+        $this->egovSigner($separater);
         $kouseiFilePath = $signerFolderPath . "kousei.xml";
         $this->transformEmptyTags($kouseiFilePath);
         $base64Data = $this->zipBinary();
         $response = $this->sendProcedure($base64Data);
-        Log::info(print_r('******************************** MixEgovSigner end ********************************', true));
-        return $response;
-    }
-
-    // 個別ファイル署名形式 
-    public function runSeparate($request)
-    {
-        // $response = $this->devSosin($request, $separater=True);
-        // return $response;
-        Log::info(print_r('******************************** MixEgovSigner separate start ******************************', true));
-        $inputFolderPath = $this->xmlInput($request, $separater=True);
-        $this->getPfx();
-        Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/');
-        $signerFolderPath = $this->workingDirectory . '/afterSigner/';
-        $this->copyFolder($inputFolderPath, $signerFolderPath);
-        $this->putAttachment($request, $signerFolderPath, $separater=True);
-        $this->egovSigner($separater=True);
-        $base64Data = $this->zipBinary($separater=True);
-        $response = $this->sendProcedure($base64Data);
-        Log::info(print_r('******************************** MixEgovSigner separate end ********************************', true));
-        return $response;
-    }
-
-    // test用 署名直前・直後のメソッド分け
-    public function runAttachiment($request)
-    {
-        Log::info(print_r('******************************** MixEgovSigner start ******************************', true));
-        $inputFolderPath = $this->xmlInput($request);
-        $this->getPfx();
-        Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/');
-        $signerFolderPath = $this->workingDirectory . '/afterSigner/';
-        $this->copyFolder($inputFolderPath, $signerFolderPath);
-        $this->putAttachment($request);
-        return  [$this->workingDirectory, $this->pfxFilepath, $this->password];
-    }
-    public function runAttachimentSigner($request, $workingDirectory, $pfxFilepath, $password)
-    {
-        $this->workingDirectory = $workingDirectory;
-        $this->pfxFilepath = $pfxFilepath;
-        $this->password = $password;
-        $this->egovSigner();
-        $base64Data = $this->zipBinary();
-        $response = $this->sendProcedure($base64Data);
+        $this->signer->removeDir();
         Log::info(print_r('******************************** MixEgovSigner end ********************************', true));
         return $response;
     }
@@ -277,26 +219,7 @@ class MixXmlEgovSigner
         $attachments = $request->input('attachment');
         $attachmentPath = '';
         if ($attachments) {
-            if ($separater) {
-                $tempPath = substr($folderPath, 0, -1);
-                $tempFiles = $this->getAllFilesInFolder($tempPath);
-                foreach ($tempFiles as $tempFile) {
-                    $pathParts = explode('/', $tempFile);
-                    $foldername = $pathParts[count($pathParts) - 2];
-                    Log::info(print_r($tempFile, true));
-                    Log::info(print_r($foldername, true));
-                    if (strlen($foldername) < 3) {
-                        continue;
-                    }
-                    $lastThreeCharacters = substr($foldername, -3);
-                    if ($lastThreeCharacters === 'T01') {
-                        $attachmentPath = $tempFile;
-                        break;
-                    }
-                }
-            } else {
-                $attachmentPath = $outputPath . 'kousei.xml';
-            }
+            $attachmentPath = $outputPath . 'kousei.xml';
             $xml = new \DOMDocument();
             $xml->preserveWhiteSpace = true;
             $xml->formatOutput = true;
@@ -433,7 +356,7 @@ class MixXmlEgovSigner
     }
 
     //添付ファイルを/afterSignerフォルダに配置
-    public function putAttachment($request, $separater=False)
+    public function putAttachment($request)
     {
         if ($request->files->count() !== 0) {
             foreach ( $request->all() as $key => $value ) {
@@ -441,27 +364,8 @@ class MixXmlEgovSigner
                     $file_key = substr($key, strlen('radio_'));
                     $file = $request->file($file_key);
                     $attachment_file_name = $file->getClientOriginalName();
-                    if ($separater){
-                        $afterSignerFiles = $this->getAllFilesInFolder($this->workingDirectory . '/afterSigner');
-                        foreach ($afterSignerFiles as $afterSignerFile){
-                            $pathParts = explode('/', $afterSignerFile);
-                            $foldername = $pathParts[count($pathParts) - 2];
-                            Log::info(print_r($afterSignerFile, true));
-                            Log::info(print_r($foldername, true));
-                            if (strlen($foldername) < 3) {
-                                continue;
-                            }
-                            $lastThreeCharacters = substr($foldername, -3);
-                            if ($lastThreeCharacters === 'T01'){
-                                break;
-                            };
-                        }
-                        $putPath = $this->afterLedgerPath . '/afterSigner/' . $foldername;
-                        $putFullPath = $this->workingDirectory . '/afterSigner/' . $foldername;
-                    } else {
-                        $putPath = $this->afterLedgerPath . '/afterSigner/zip';
-                        $putFullPath = $this->workingDirectory . '/afterSigner/zip';
-                    }
+                    $putPath = $this->afterLedgerPath . '/afterSigner/zip';
+                    $putFullPath = $this->workingDirectory . '/afterSigner/zip';
                     $file->storeAs($putPath, $attachment_file_name);
                     Log::info(print_r('添付ファイルを配置しました filename:' . $attachment_file_name , true));
                     
@@ -484,40 +388,31 @@ class MixXmlEgovSigner
     }
 
     //署名
-    public function egovSigner($separater=False)
+    public function egovSigner($separater)
     {
-        $this->ledgerFolderDelete(); //ledgerフォルダ数の制限、指定値以上なら古い順にフォルダ削除　テスト用。完了した場合はディレクトリ削除メソッドを最後に追加
+        // 署名用フォルダ
+        $afterSignerFolder = $this->workingDirectory . '/afterSigner/zip';
         if ($separater){
-            $afterSignerFolder = $this->workingDirectory . '/afterSigner/';
-            $files = $this->getAllFilesInFolder($afterSignerFolder);
-            $kouseiPattern = '/^kousei.*$/i';
-            $folderPattern = '/F01$/';
-            foreach ($files as $file) {
-                $file = str_replace('//', '/', $file);
-                //対象のファイルのみ署名
-                $this->F01_FolderPath = dirname($file);
-                $folderName = basename($this->F01_FolderPath);
-                $evacuationName = basename($file);
-                if (preg_match($folderPattern, $folderName && preg_match($kouseiPattern, $evacuationName))){
-                    // 一時的にkousei.xmlにリネーム > 署名 > 命名戻す
-                    rename($file, $this->F01_FolderPath . '/kousei.xml'); 
-                    $signerBool = $this->signer->run($this->F01_FolderPath, $this->pfxFilepath, $this->password);
-                    rename($this->F01_FolderPath . '/kousei.xml' , $this->F01_FolderPath . '/' . $evacuationName);
-                    break;
-                }
-            }
-
-            if ( !isset($signerBool) ) {
+                $serchDirectory = $this->workingDirectory . '/afterSigner/zip/';
+                $filenamePattern = 'kousei' . date("Y") . '*.xml';
+                $files = glob($serchDirectory . $filenamePattern);
+                $signerTargetPath = $files[0];
+                rename($serchDirectory . 'kousei.xml', $serchDirectory . 'kousei_tmp.xml');
+                rename($signerTargetPath, $serchDirectory . 'kousei.xml');
+                $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password);
+                rename($serchDirectory . 'kousei.xml', $signerTargetPath);
+                rename($serchDirectory . 'kousei_tmp.xml', $serchDirectory . 'kousei.xml');
+            if ( $signerBool==False ) {
                 Log::error("個別ファイル署名形式の署名に失敗しました");
             }else{
                 Log::info(print_r('個別ファイル署名形式の署名に成功しました', true));
             }
         } else {
-            $inputPath = $this->workingDirectory . '/afterSigner/zip';
-            // 署名
-            $signerBool = $this->signer->run($inputPath, $this->pfxFilepath, $this->password);
+            Log::error("ｓｓ");
+            $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password);
             if ( $signerBool==False ) {
                 Log::error("標準形式の署名に失敗しました");
+                dd("miss");
             }else{
                 Log::info(print_r('標準形式の署名に成功しました', true));
             }
@@ -534,91 +429,29 @@ class MixXmlEgovSigner
     }
 
     //zip圧縮後、base64バイナリデータを返す
-    public function zipBinary($separater=False)
+    public function zipBinary()
     {
         $zipfilepath = $this->workingDirectory . '/zip/sent_data.zip';
         $zip = new \ZipArchive();
-        if ($separater){
-            $this->kousei_FolderPath =  $this->workingDirectory . '/afterSigner/' . $this->procedureId;
-            $this->workingDirectory = $this->workingDirectory . '/afterSigner/';
-            $files = $this->getAllFilesInFolder($this->workingDirectory);
-            $F01Pattern = '/F01$/'; //申請書フォルダをマッチング
-            $T01Pattern = '/T01$/'; //添付フォルダをマッチング
-            foreach ($files as $file) {
-                $file = str_replace('//', '/', $file);
-                // F01フォルダパスのみ取得
-                $folderPath = dirname($file);
-                $folderName = basename($folderPath);
-                if (preg_match($F01Pattern, $folderName)){
-                    $this->F01_FolderPath = dirname($file);
-                    continue;
-                }elseif (preg_match($T01Pattern, $folderName)){
-                    $this->T01_FolderPath = dirname($file);
-                    continue;
-                }
-            }
-        } else {
-            $this->workingDirectory = $this->workingDirectory . '/afterSigner/';
-        }
+        $this->workingDirectory = $this->workingDirectory . '/afterSigner/';
         if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
-            if ($separater){
-                // 申請書フォルダをZIPに追加
-                $filesIn_F01_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->F01_FolderPath));
-                foreach ($filesIn_F01_Folder as $file) {
-                    if (!$file->isDir()) {
-                        $filePath = $file->getRealPath();
-                        $F01_FolderName = basename($this->F01_FolderPath);
-                        $relativePath = substr($filePath, strlen($this->F01_FolderPath) + 1);
-                        $zip->addFile($filePath, $F01_FolderName .'/' . $relativePath);
-                    }
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($this->workingDirectory),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+            foreach ($files as $name => $file) {
+                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                if (!$file->isDir() && $extension !== 'pfx') {
+                    $filePath = $file->getRealPath();
+                    $relativePath = str_replace($this->workingDirectory, '', $filePath);
+                    $zip->addFile($filePath, $relativePath);
                 }
-                // 構成フォルダをZIPに追加
-                $filesIn_kousei_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->kousei_FolderPath));
-                foreach ($filesIn_kousei_Folder as $file) {
-                    if (!$file->isDir()) {
-                        $filePath = $file->getRealPath();
-                        $kousei_FolderName = basename($this->kousei_FolderPath);
-                        $relativePath = substr($filePath, strlen($this->kousei_FolderPath) + 1);
-                        $zip->addFile($filePath, $kousei_FolderName . '/' . $relativePath);
-                    }
-                }
-                // 添付フォルダをZIPに追加
-                if (isset($this->T01_FolderPath)){
-                    $filesIn_T01_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->T01_FolderPath));
-                    foreach ($filesIn_T01_Folder as $file) {
-                        if (!$file->isDir()) {
-                            $filePath = $file->getRealPath();
-                            $T01_FolderName = basename($this->T01_FolderPath);
-                            $relativePath = substr($filePath, strlen($this->T01_FolderPath) + 1);
-                            $zip->addFile($filePath, $T01_FolderName .'/' . $relativePath);
-                        }
-                    }
-                }        
-                $zip->close();
-                Log::info(print_r('個別zipファイル作成に成功しました', true));
-            } else {
-                $files = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($this->workingDirectory),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
-                );
-                foreach ($files as $name => $file) {
-                    $extension = pathinfo($file, PATHINFO_EXTENSION);
-                    if (!$file->isDir() && $extension !== 'pfx') {
-                        $filePath = $file->getRealPath();
-                        // $relativePath = substr($filePath, strlen($this->workingDirectory) + 1);
-                        // // dd($relativePath);
-                        // $zip->addFile($filePath, $relativePath);
-                        $relativePath = str_replace($this->workingDirectory, '', $filePath);
-                        $zip->addFile($filePath, $relativePath);
-                    }
-                }
-                $zip->close();
-                Log::info(print_r('標準zipファイル作成に成功しました', true));
             }
+            $zip->close();
+            Log::info(print_r('標準zipファイル作成に成功しました', true));
         } else {
             Log::error("zipファイル作成に失敗しました");
         }
-
         $base64Data = base64_encode(file_get_contents($zipfilepath));
         return $base64Data;
     }
@@ -723,44 +556,6 @@ class MixXmlEgovSigner
         ]);
     }
 
-    //ledgerフォルダ数の制限、指定値以上なら古い順にフォルダ削除 //最終的にはremoveDir()入れ替え。テスト中はこちらを使用
-    public function ledgerFolderDelete($quantity=20)
-    {
-        function deleteFolder($deleteFolderPath) {
-            if (!is_dir($deleteFolderPath)) {
-                return false;
-            }
-            $files = array_diff(scandir($deleteFolderPath), ['.', '..']);
-            foreach ($files as $file) {
-                $filePath = $deleteFolderPath . '/' . $file;
-                if (is_dir($filePath)) {
-                    deleteFolder($filePath);
-                } else {
-                    unlink($filePath);
-                }
-            }
-            return rmdir($deleteFolderPath);
-        }
-
-        $folderPath = Storage::path('ledger');
-        $maxFolders = $quantity;
-        $folders = scandir($folderPath, SCANDIR_SORT_ASCENDING);
-        $folders = array_values(array_diff($folders, ['.', '..']));
-        
-        if (count($folders) > $maxFolders) {
-            $foldersToDelete = count($folders) - $maxFolders;
-            for ($i = 0; $i < $foldersToDelete; $i++) {
-                $deleteFolderPath = $folderPath . '/' . $folders[$i];
-                deleteFolder($deleteFolderPath);
-                Log::info($deleteFolderPath . 'を削除しました');
-            }
-            Log::info('ledgerFolderDeleteによりフォルダを整理しました');
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     //空タグを署名用に変換
     public function transformEmptyTags($targetPath)
     {
@@ -785,272 +580,4 @@ class MixXmlEgovSigner
             Log::info('申請データ用のタグ変換が行われました');
         }
     }    
-
-    //develop用
-    public function TestMixEgovSigner() 
-    {
-        //inputxmlのみを行ってinput_xmlに作成された署名抜きxmlファイルをdevに手動コピー
-        //ここで自動設定できない分を手動変換（手動で署名情報を正規の形に改行など
-        //その後送信手続まで行う
-        Log::info(print_r('******************************** TestMixEgovSigner実行 ********************************', true));
-        // $signer = new Signer();constに移動
-        // $signer->makeDir(); //ledgerフォルダ内に手続IDフォルダ作成。手続IDフォルダ内にzipフォルダ作成　constに移動
-        $this->workingDirectory = Storage::path('ledger/dev/zip');            //署名元フォルダ
-        $this->signerFolderPath = Storage::path('ledger/dev_copy/zip'); //署名先フォルダ
-        
-        //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元
-        $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
-        $this->binarypfx = $pfx->file;
-        $this->password = $pfx->password;
-        $this->pfxFilepath = $this->signerFolderPath . '/certificate.pfx';
-        file_put_contents($this->pfxFilepath, $this->binarypfx);
-        
-        //input_xmlからコピー
-        $files = scandir($this->workingDirectory);
-        foreach ($files as $file) {
-            if ($file != '.' && $file != '..') {
-                $sourceDirectoryFilePath = $this->workingDirectory . '/' . $file;
-                $signerFilePath = $this->signerFolderPath . '/' . $file;
-                copy($sourceDirectoryFilePath, $signerFilePath);
-            }
-        }
-
-        //第一引数は署名前フォルダ
-        $signerBool = $this->signer->run($this->workingDirectory, $this->pfxFilepath, $this->password);
-        if ( $signerBool==False ) {
-            Log::error("署名に失敗しました");
-        }else{
-            Log::info(print_r('署名に成功しました', true));
-        }
-
-        $this->workingDirectory = Storage::path('ledger/dev');
-        //zip圧縮後、base64バイナリデータ取得
-        $zipfilepath = Storage::path('ledger/tmp/zip.zip');
-        $zip = new \ZipArchive();
-        if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($this->workingDirectory),
-                \RecursiveIteratorIterator::LEAVES_ONLY
-            );
-            foreach ($files as $name => $file) {
-                $extension = pathinfo($file, PATHINFO_EXTENSION);
-                if (!$file->isDir() && $extension !== 'pfx') {
-                    $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($this->workingDirectory) + 1);
-                    $zip->addFile($filePath, $relativePath);
-                }
-            }
-            $zip->close();
-            Log::info(print_r('zipファイル作成に成功しました', true));
-        } else {
-            Log::error("zipファイル作成に失敗しました");
-        }
-        $base64Data = base64_encode(file_get_contents($zipfilepath));
-
-        $send_file = new \stdClass();
-        $send_file->file_name = $this->procedureId . '.zip';
-        $send_file->file_data = $base64Data;
-
-        $counter = 0;
-        $returnData = [];
-        while (True){
-            $counter++;
-            $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
-            $api = Egov::accessToken($account->access_token);
-            $r = $api->ApplicationDataTransmission($this->procedureId, $send_file); //送信
-            $response = $r->toPsrResponse();
-            $body = $response->getBody()->getContents();
-            if (empty($body)) { //返却値が空だった場合、トークン再取得。
-                if ( $counter > 3 ){
-                    Log::error("予期せぬエラー：申請データ送信に失敗しました");
-                    Log::info(print_r($r->collect(), true));
-                    $returnData = [
-                        false, [ 'title' => '予期せぬエラー', 'detail' => '申請データ送信に失敗しました' ]
-                    ];
-                    break;
-                }
-                $this->useRefreshToAccess();
-            } else {
-                $jsonString = $r->getBody()->getContents();
-                $decodedArray = json_decode($jsonString, true);
-                Log::info(print_r('申請データ送信返却値 手続ID:' . $this->procedureId . PHP_EOL . $decodedArray, true));
-                $guzzleResponse = $r->toPsrResponse();
-                $statusCode = $guzzleResponse->getStatusCode();
-                $returnData = [
-                    false, [ 'title' => '', 'detail' => '' ]
-                ];
-                if ($statusCode == 200){
-                    Log::info(print_r('手続送信に成功しました', true));
-                    Log::info(print_r($r->collect(), true));
-                    $returnData[0] = true;
-                    $returnData[1]['detail'] = '手続送信に成功しました';
-                    $this->TableInsert($r);
-                    break;
-                }else{
-                    Log::error("返却値エラー：申請データ送信に失敗しました");
-                    Log::info(print_r($r->collect(), true));
-                    $returnData[1]['title'] = $r['title'];
-                    $returnData[1]['detail'] = $r['detail'];
-                    break;
-                }
-            }
-        }
-        return $returnData;
-    }
-
-    //develop用 署名作成済みxmlを元に成功再現
-    //標準の場合はdef/zipにファイルを配置。個別ならdev_separate配下にフォルダ類配置
-    public function devSosin($request, $separater=False)
-    {
-        //ledger/dev/zipを作成し、署名済xmlを配置
-        //run内で$this->devSosin();実行
-
-        // 初期設定
-        $pathInfo = $request->getPathInfo();
-        $procedureID = preg_replace('~^/.*?/~', '', $pathInfo);//手続ID
-        $procedureID = "4950013520873000";//19帳票にない場合は記載必須
-        
-
-        // $this->F01_FolderPath取得
-        if ($separater){
-            $this->kousei_FolderPath =  Storage::path('ledger/dev_separate/' . $procedureID);
-            $this->workingDirectory = Storage::path('ledger/dev_separate/');//参照フォルダ
-            $files = $this->getAllFilesInFolder($this->workingDirectory);
-            $F01Pattern = '/F01$/'; //申請書フォルダをマッチング
-            $T01Pattern = '/T01$/'; //添付フォルダをマッチング
-            foreach ($files as $file) {
-                $file = str_replace('//', '/', $file);
-                // F01フォルダパスのみ取得
-                $folderPath = dirname($file);
-                $folderName = basename($folderPath);
-                if (preg_match($F01Pattern, $folderName)){
-                    $this->F01_FolderPath = dirname($file);
-                    continue;
-                }elseif (preg_match($T01Pattern, $folderName)){
-                    $this->T01_FolderPath = dirname($file);
-                    continue;
-                }
-            }
-        } else {
-            $this->workingDirectory = Storage::path('ledger/dev');//参照フォルダ
-        }
-        //zipバイナリ化
-        $zipfilepath = Storage::path('ledger/tmp/zip.zip');
-        $zip = new \ZipArchive();
-        if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
-            if ($separater){
-                // 申請書フォルダをZIPに追加
-                $filesIn_F01_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->F01_FolderPath));
-                foreach ($filesIn_F01_Folder as $file) {
-                    if (!$file->isDir()) {
-                        $filePath = $file->getRealPath();
-                        $F01_FolderName = basename($this->F01_FolderPath);
-                        $relativePath = substr($filePath, strlen($this->F01_FolderPath) + 1);
-                        $zip->addFile($filePath, $F01_FolderName .'/' . $relativePath);
-                    }
-                }
-                // 構成フォルダをZIPに追加
-                $filesIn_kousei_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->kousei_FolderPath));
-                foreach ($filesIn_kousei_Folder as $file) {
-                    if (!$file->isDir()) {
-                        $filePath = $file->getRealPath();
-                        $kousei_FolderName = basename($this->kousei_FolderPath);
-                        $relativePath = substr($filePath, strlen($this->kousei_FolderPath) + 1);
-                        $zip->addFile($filePath, $kousei_FolderName . '/' . $relativePath);
-                    }
-                }
-                // 添付フォルダをZIPに追加
-                if (isset($this->T01_FolderPath)){
-                    $filesIn_T01_Folder = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->T01_FolderPath));
-                    foreach ($filesIn_T01_Folder as $file) {
-                        if (!$file->isDir()) {
-                            $filePath = $file->getRealPath();
-                            $T01_FolderName = basename($this->T01_FolderPath);
-                            $relativePath = substr($filePath, strlen($this->T01_FolderPath) + 1);
-                            $zip->addFile($filePath, $T01_FolderName .'/' . $relativePath);
-                        }
-                    }
-                }        
-                $zip->close();
-                Log::info(print_r('個別zipファイル作成に成功しました', true));
-            } else {
-                $files = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($this->workingDirectory),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
-                );
-                foreach ($files as $name => $file) {
-                    $extension = pathinfo($file, PATHINFO_EXTENSION);
-                    if (!$file->isDir() && $extension !== 'pfx') {
-                        $filePath = $file->getRealPath();
-                        $relativePath = substr($filePath, strlen($this->workingDirectory) + 1);
-                        $zip->addFile($filePath, $relativePath);
-                    }
-                }
-                $zip->close();
-                Log::info(print_r('標準zipファイル作成に成功しました', true));
-            }
-        } else {
-            Log::error("zipファイル作成に失敗しました");
-        }
-
-        $base64Data = base64_encode(file_get_contents($zipfilepath));
-
-        //手続送信
-        $send_file = new \stdClass();
-        $send_file->file_name = $procedureID . '.zip';
-        $send_file->file_data = $base64Data;
-
-        $counter = 0;
-        $returnData = [];
-        Log::info(print_r('111', true));
-        while (True){
-            $counter++;
-            $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
-            $api = Egov::accessToken($account->access_token);
-            // 送信
-            $r = $api->ApplicationDataTransmission($procedureID, $send_file);
-            $response = $r->toPsrResponse();
-            $body = $response->getBody()->getContents();
-            //　返却値が空だった場合、トークン再取得。
-            if (empty($body)) {
-                Log::info(print_r('112', true));
-                if ( $counter > 3 ){
-                    Log::error("予期せぬエラー：申請データ送信に失敗しました");
-                    Log::info(print_r($r->collect(), true));
-                    $returnData = [
-                        false, [ 'title' => '予期せぬエラー', 'detail' => '申請データ送信に失敗しました' ]
-                    ];
-                    break;
-                }
-                $this->useRefreshToAccess();
-            } else {
-                Log::info(print_r('113', true));
-                $jsonString = $r->getBody()->getContents();
-                $decodedArray = json_decode($jsonString, true);
-                Log::info(print_r('申請データ送信返却値 手続ID:' . $procedureID . PHP_EOL . $decodedArray, true));
-                $guzzleResponse = $r->toPsrResponse();
-                $statusCode = $guzzleResponse->getStatusCode();
-                $returnData = [
-                    false, [ 'title' => '', 'detail' => '' ]
-                ];
-                if ($statusCode == 200){
-                    Log::info(print_r('114', true));
-                    Log::info(print_r('手続送信に成功しました', true));
-                    Log::info(print_r($r->collect(), true));
-                    $returnData[0] = true;
-                    $returnData[1]['detail'] = '手続送信に成功しました';
-                    $this->TableInsert($r);
-                    break;
-                }else{
-                    Log::info(print_r('115', true));
-                    Log::error("返却値エラー：申請データ送信に失敗しました");
-                    Log::info(print_r($r->collect(), true));
-                    $returnData[1]['title'] = $r['title'];
-                    $returnData[1]['detail'] = $r['detail'];
-                    break;
-                }
-            }
-        }
-        return $returnData;
-    }
 }
