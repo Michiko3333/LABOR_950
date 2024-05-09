@@ -269,13 +269,36 @@ class AdminController extends Controller
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
-        $fax = '';
-        if ($request->input('br-fax1') || $request->input('br-fax2') || $request->input('br-fax3')) {
-            $fax1 = $request->input('br-fax1');
-            $fax2 = $request->input('br-fax2');
-            $fax3 = $request->input('br-fax3');
-            $fax = ($fax1[0] ? $fax1[0].'-' : '') . ($fax2[0] ? $fax2[0].'-' : '') . ($fax3[0] ?? '');
+
+        $fax = [];
+        $fax1 = $request->input('br-fax1') ?? null;
+        $fax2 = $request->input('br-fax2') ?? null;
+        $fax3 = $request->input('br-fax3') ?? null;
+        $fax1Index = count($request->input('br-fax1')) ?? null;
+        $fax2Index = count($request->input('br-fax2')) ?? null;
+        $fax3Index = count($request->input('br-fax3')) ?? null;
+
+        if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
+            $count = '';
+            if($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+                $count = $fax1Index;
+            } elseif($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+                $count = $fax2Index;
+            } else {
+                $count = $fax3Index;
+            }
+            
+            for ($i = 0; $i < $count; $i++) {
+                $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
+                $part2 = isset($fax2[$i]) ? $fax2[$i] : '';
+                $part3 = isset($fax3[$i]) ? $fax3[$i] : '';
+                if ($part1 === null && $part2 === null && $part3 === null) {
+                    continue;
+                }
+                $fax[] = ($part1 !== null ? $part1 . '-' : '') . ($part2 !== null ? $part2 . '-' : '') . ($part3 !== null ? $part3 : '');
+            }
         }
+
         return [
             'name' => $request->input('br-name')[$index],
             'company_id' => $company_id,
@@ -288,7 +311,7 @@ class AdminController extends Controller
             'tel_city_code' => $request->input('br-tel_city_code')[$index],
             'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
             'tel_overseas' => $request->input('br-tel_overseas')[$index],
-            'fax' => $fax,
+            'fax' => $fax[$index],
             'mail_address' => $request->input('br-mail_address')[$index],
             'place_type' => $request->input('br-place_type')[$index],
             'branch_type' => $request->input('br-branch_type')[$index],
