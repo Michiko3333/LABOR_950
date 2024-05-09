@@ -76,7 +76,7 @@ class AdminCompanyCreateRequest extends FormRequest
             "fax3" => 'array',
             "fax3.*" => 'nullable|integer|/[0-9]{3,4}$/',
             "br-email_address" => 'array',
-            "br-email_address.*" => '^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$',
+            "br-email_address.*" => 'required|regex:/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|string|max:20|regex:/^[0-9]{14}$/u',
             "br-labor_insurance_payment_method" => 'array',

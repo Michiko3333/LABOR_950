@@ -151,6 +151,7 @@ class LaborCompanyController extends Controller
             'tel_city_code' => $request->input('br-tel_city_code')[$index],
             'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
             'tel_overseas' => $request->input('br-tel_overseas')[$index],
+            'mail_address' => $request->input('br-mail_address')[$index],
             'place_type' => $request->input('br-place_type')[$index],
             'branch_type' => $request->input('br-branch_type')[$index],
             'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],

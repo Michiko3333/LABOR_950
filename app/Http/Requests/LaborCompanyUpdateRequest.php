@@ -68,6 +68,8 @@ class LaborCompanyUpdateRequest extends FormRequest
             "br-tel_subscriber_code.*" => 'nullable|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_overseas" => 'array',
             "br-tel_overseas.*" => 'nullable|max:15|regex:/\A[0-9]+\z/u',
+            "br-mail_address" => 'array',
+            "br-mail_address.*" => 'required|regex:/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|regex:/^\d{14}$/',
             "br-labor_insurance_payment_method" => 'array',
