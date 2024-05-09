@@ -24,7 +24,7 @@ class AdminEmployeeCreateRequest extends FormRequest
         return [
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
             'branch_id' => 'integer',
-            'managerial_position_id' => 'integer',
+            'managerial_position_id' => 'nullable|integer',
             'division_name' => 'nullable|string|max:255',
             'division_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'last_name' => 'string|max:255',
@@ -42,6 +42,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'name_common' => 'nullable|string|max:255',
             'name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'sex' => 'integer',
+            'birthday' => 'required|date',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
