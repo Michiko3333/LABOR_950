@@ -103,10 +103,23 @@
                     const authWindow = window.open(url, null, 'width=512,height=512');
                     const interval = setInterval(() => {
                         if (authWindow.closed) {
-                            clearInterval(interval);
-                            $('#connectBtn').prop('disabled', false);
-                            $('#notConnected').addClass('hide');
-                            $('#connected').removeClass('hide');
+                            $.ajax({
+                            url: '{{ route('get-egov-account') }}',
+                            type: 'get',
+                            success: function(data) {
+                                if(data.isConnected === true) {
+                                    clearInterval(interval);
+                                    $('#connectBtn').prop('disabled', false);
+                                    $('#notConnected').addClass('hide');
+                                    $('#connected').removeClass('hide');
+                                } else {
+                                    $('#connectBtn').prop('disabled', false);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
                         }
                     }, 1000);
                 }
