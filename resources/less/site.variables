@@ -1,0 +1,18 @@
+/*******************************
+     User Global Variables
+*******************************/
+// override after node_modules\fomantic-ui-less\themes\default\globals\site.variables
+@fontFamily : 'Noto Sans JP', sans-serif;
+@blue : #13265F;
+@primaryColor : @blue;
+@black : #2F323E;
+@secondaryColor: @black;
+@red : #B5131D;
+@yellow : #979100;
+
+:root {
+    --color-blue: @blue;
+    --color-black: @black;
+    --color-red: @red;
+    --color-yellow: @yellow;
+}

@@ -1,0 +1,54 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('m_company', function (Blueprint $table) {
+            $table->id()->autoIncrement()->comment('会社ID');
+            $table->string('name', 255)->nullable()->comment('会社名');
+            $table->string('name_kana', 255)->nullable()->comment('会社名（カナ）');
+            $table->string('name_en', 255)->nullable()->comment('会社名（英語表記）');
+            $table->string('name_abbreviation', 255)->nullable()->comment('会社名（略称表記）');
+            $table->string('company_no', 20)->nullable()->comment('法人番号');
+            $table->tinyInteger('company_type_id')->nullable()->comment('法人格');
+            $table->string('license_no', 255)->nullable()->comment('許認可番号');
+            $table->integer('business_type')->nullable()->comment('企業区分');
+            $table->integer('listed_type')->nullable()->comment('上場区分');
+            $table->string('stock_code', 20)->unique()->nullable()->comment('証券コード');
+            $table->date('founding_date')->nullable()->comment('創業年月');
+            $table->date('establishment_date')->nullable()->comment('設立年月');
+            $table->integer('capital')->nullable()->comment('資本金');
+            $table->integer('annual_sales')->nullable()->comment('年間売上高（連結）');
+            $table->integer('employee_sum')->nullable()->comment('従業員数');
+            $table->text('qualification')->nullable()->comment('保有資格');
+            $table->integer('authorized_shares')->nullable()->comment('発行可能株式総数');
+            $table->integer('issued_shares')->nullable()->comment('発行済株式総数');
+            $table->string('supplier_company', 255)->nullable()->comment('仕入先名称');
+            $table->string('outsourcing_company', 255)->nullable()->comment('外注先名称');
+            $table->string('sales_company', 255)->nullable()->comment('販売先名称');
+            $table->string('url', 255)->nullable()->comment('ホームページアドレス');
+            $table->text('purpose')->nullable()->comment('事業目的');
+            $table->integer('company_division')->nullable()->comment('会社区分');
+            $table->tinyInteger('procedure_hidden_flg')->default(0)->comment('行政手続非表示フラグ');
+            $table->tinyInteger('delete_flg')->default(0)->comment('削除フラグ');
+            $table->timestamps();
+            $table->comment('会社マスタ');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('m_company');
+    }
+};

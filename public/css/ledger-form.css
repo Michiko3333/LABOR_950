@@ -1,0 +1,234 @@
+.ui.steps {
+    width: 100%;
+}
+
+.ui.steps .step.active .title {
+    color: var(--color-blue);
+}
+
+.ui.fluid.dropdown {
+    height: 49px;
+    padding: 14px 16.8px;
+    border: 2px solid rgba(34, 36, 38, .15);
+}
+
+.ui.card .content {
+    padding: 0;
+}
+
+.ledger-twocol {
+    display: flex;
+    gap: 1em;
+}
+
+.ledger-twocol .left-col .ui.cards>.card,
+.ledger-twocol .left-col .ui.card {
+    width: 100%;
+}
+
+.ledger-twocol .left-col .ui.card>.content {
+    padding: 1em;
+}
+
+.ledger-twocol .right-col .ui.cards>.card,
+.ledger-twocol .right-col .ui.card {
+    width: 792px;
+}
+
+.ledger-twocol .right-col {
+    min-width: 795px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.ledger-twocol .left-col {
+    width: 100%;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.ledger-single {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.ledger-single .ui.card {
+    width: 792px;
+}
+
+.preview-area input,
+.ledger-twocol .right-col input {
+    border: none !important;
+    /* background-color: transparent !important; */
+    outline: none;
+}
+
+.preview-area input,
+.ledger-twocol .right-col input:not(.onImage) {
+    /* background-color: transparent !important; */
+}
+
+.preview-area textarea,
+.ledger-twocol .right-col textarea {
+    resize: none;
+    outline: none;
+}
+
+.preview-area select,
+.ledger-twocol .right-col select {
+    outline: none;
+}
+
+.preview-area input,
+.preview-area textarea {
+    color: var(--color-blue) !important;
+}
+
+.preview-area input[type="CHECKBOX"],
+.preview-area input[type="RADIO"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    pointer-events: none;
+}
+
+.preview-area input[type="CHECKBOX"]::before,
+.preview-area input[type="RADIO"]::before {
+    font-size: 10px;
+    position: absolute;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    content: '';
+    border: solid 1px black;
+    text-align: center;
+}
+
+.preview-area input[type="CHECKBOX"]:checked::after,
+.preview-area input[type="RADIO"]:checked::after {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 5px;
+    top: 0px;
+    left: 2px;
+    border-left: 2px solid var(--color-blue);
+    border-bottom: 2px solid var(--color-blue);
+    transform: rotate(-45deg);
+}
+
+
+.preview-area span {
+    background-color: transparent !important;
+}
+
+.preview-area select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    pointer-events: none;
+}
+
+.preview-area textarea,
+.preview-area input,
+.preview-area select {
+    background-color: transparent !important;
+    border: none !important;
+
+}
+
+.preview-area .no-border {
+    border: none !important;
+}
+
+div.small-pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+div.submit-btn,
+div.prevew-btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+}
+
+#ledger-step0.step-view {
+    position: relative;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+#ledger-step0.step-view.active {
+    opacity: 1;
+    max-height: 9999px;
+}
+
+#ledger-step1.step-view {
+    position: relative;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+#ledger-step1.step-view.active {
+    opacity: 1;
+    max-height: 9999px;
+}
+
+#ledger-step2.step-view {
+    position: relative;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+#ledger-step2.step-view.active {
+    opacity: 1;
+    max-height: 9999px;
+}
+
+#ledger-step2 .preview-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#ledger-step2 .ledger-card {
+    min-width: 795px;
+}
+
+.employee-select-area .list .item {
+    padding: 0.8em !important;
+}
+
+.employee-select-area .list .item.selected {
+    background: rgba(151, 145, 0, 0.1)
+}
+
+@media (max-width: 1630px) {
+    .ledger-twocol {
+        flex-direction: column-reverse;
+    }
+
+    .ledger-twocol .left-col {
+        width: 100%;
+    }
+
+    .ledger-twocol .right-col {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    div.submit-btn,
+    div.prevew-btn {
+        justify-content: center;
+    }
+}
