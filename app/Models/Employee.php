@@ -93,7 +93,6 @@ class Employee extends Model
         'retirement_date',
         'intended_retirement_date',
         'resignation_letter_request_flg',
-        'retired_reason_type',
         'insurance_loss_reason',
         'over_retired_insurance_loss_reason',
         'over_70_non_applicable_flg',

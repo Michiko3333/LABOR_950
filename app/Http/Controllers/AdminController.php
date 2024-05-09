@@ -631,7 +631,6 @@ class AdminController extends Controller
                 'retirement_date' => $this->formatDate($request->input('retirement_date')),
                 'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                 'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
-                'retired_reason_type' => $request->input('retired_reason_type'),
                 'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                 'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                 // 'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
@@ -816,7 +815,6 @@ class AdminController extends Controller
                     'retirement_date' => $this->formatDate($request->input('retirement_date')),
                     'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                     'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
-                    'retired_reason_type' => $request->input('retired_reason_type'),
                     'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                     'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                     //'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない

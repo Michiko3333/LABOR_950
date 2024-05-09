@@ -622,15 +622,11 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="contract_period_flg" checked="checked"
-                                        {{ isset($employee_id) && $employee->contract_period_flg == 0 ? 'checked' : '' }}
-                                        <?php echo old('contract_period_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_period_flg" value="1"
-                                        {{ isset($employee_id) && $employee->contract_period_flg == 1 ? 'checked' : '' }}
-                                        <?php echo old('contract_period_flg') == '1' ? 'checked' : ''; ?>>
+                                        <input type="radio" name="contract_period_flg" value="1">
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -640,15 +636,11 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="contract_renewal_flg" checked="checked"
-                                        {{ isset($employee_id) && $employee->contract_renewal_flg == 0 ? 'checked' : '' }}
-                                        <?php echo old('contract_renewal_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_renewal_flg" value="1"
-                                        {{ isset($employee_id) && $employee->contract_renewal_flg == 1 ? 'checked' : '' }}
-                                        <?php echo old('contract_renewal_flg') == '1' ? 'checked' : ''; ?>>
+                                        <input type="radio" name="contract_renewal_flg" value="1">
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -658,15 +650,11 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="resignation_letter_request_flg" checked="checked"
-                                        {{ isset($employee_id) && $employee->resignation_letter_request_flg == 0 ? 'checked' : '' }}
-                                        <?php echo old('resignation_letter_request_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" value="1"
-                                        {{ isset($employee_id) && $employee->resignation_letter_request_flg == 1 ? 'checked' : '' }}
-                                        <?php echo old('resignation_letter_request_flg') == '1' ? 'checked' : ''; ?>>
+                                        <input type="radio" name="resignation_letter_request_flg" value="1">
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -736,15 +724,6 @@
                                             value="{{ old('intended_retirement_date') }}">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'retired_reason_type') }}">
-                                <label for="retired_reason_type">離職理由</label>
-                                <select class="ui fluid dropdown" name="retired_reason_type"
-                                    value="{{ old('retired_reason_type', isset($employee_id) ? $employee->retired_reason_type : '') }}">
-                                    <option value="">未選択</option>
-                                </select>
                             </div>
                         </div>
                         <div class="three fields">
