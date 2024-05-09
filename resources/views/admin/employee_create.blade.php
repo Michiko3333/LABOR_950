@@ -253,15 +253,13 @@
                         <div class="three fields">
                             <div class="field">
                                 <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg" value='1'
-                                    {{ isset($employee_id) && $employee->spouse_flg == 1 ? 'checked' : '' }}
-                                    <?php echo old('spouse_flg') == '1' ? 'checked' : ''; ?>>
+                                    <input type="checkbox" name="spouse_flg"
+                                        value="{{ old('spouse_flg', isset($employee_id) ? $employee->spouse_flg : '') }}">
                                     <label>配偶者有</label>
                                 </div>
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg" value='1'
-                                    {{ isset($employee_id) && $employee->dependent_flg == 1 ? 'checked' : '' }}
-                                    <?php echo old('dependent_flg') == '1' ? 'checked' : ''; ?>>
+                                    <input type="checkbox" name="dependent_flg"
+                                        value="{{ old('dependent_flg', isset($employee_id) ? $employee->dependent_flg : '') }}">
                                     <label>扶養者有</label>
                                 </div>
                             </div>
@@ -624,11 +622,15 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="contract_period_flg" checked="checked"
+                                        {{ isset($employee_id) && $employee->contract_period_flg == 0 ? 'checked' : '' }}
+                                        <?php echo old('contract_period_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_period_flg" value="1">
+                                        <input type="radio" name="contract_period_flg" value="1"
+                                        {{ isset($employee_id) && $employee->contract_period_flg == 1 ? 'checked' : '' }}
+                                        <?php echo old('contract_period_flg') == '1' ? 'checked' : ''; ?>>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -638,11 +640,15 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="contract_renewal_flg" checked="checked"
+                                        {{ isset($employee_id) && $employee->contract_renewal_flg == 0 ? 'checked' : '' }}
+                                        <?php echo old('contract_renewal_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_renewal_flg" value="1">
+                                        <input type="radio" name="contract_renewal_flg" value="1"
+                                        {{ isset($employee_id) && $employee->contract_renewal_flg == 1 ? 'checked' : '' }}
+                                        <?php echo old('contract_renewal_flg') == '1' ? 'checked' : ''; ?>>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -652,11 +658,15 @@
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
                                         <input type="radio" name="resignation_letter_request_flg" checked="checked"
+                                        {{ isset($employee_id) && $employee->resignation_letter_request_flg == 0 ? 'checked' : '' }}
+                                        <?php echo old('resignation_letter_request_flg') == '0' ? 'checked' : ''; ?>
                                             value="0">
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" value="1">
+                                        <input type="radio" name="resignation_letter_request_flg" value="1"
+                                        {{ isset($employee_id) && $employee->resignation_letter_request_flg == 1 ? 'checked' : '' }}
+                                        <?php echo old('resignation_letter_request_flg') == '1' ? 'checked' : ''; ?>>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -802,9 +812,8 @@
                             </div>
                             <div class="field">
                                 <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
-                                    <input type="checkbox" name="external_advisor_flg" value='1'
-                                    {{ isset($employee_id) && $employee->external_advisor_flg == 1 ? 'checked' : '' }}
-                                    <?php echo old('external_advisor_flg') == '1' ? 'checked' : ''; ?>>
+                                    <input type="checkbox" name="external_advisor_flg"
+                                        value="{{ old('external_advisor_flg', isset($employee_id) ? $employee->external_advisor_flg : '') }}">
                                     <label>外部顧問</label>
                                 </div>
                             </div>
@@ -960,9 +969,8 @@
                             <div class="field">
                                 <div
                                     class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg" value='1'
-                                    {{ isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1 ? 'checked' : '' }}
-                                    <?php echo old('unauthorized_activities_permission_flg') == '1' ? 'checked' : ''; ?>>
+                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
+                                        value="{{ old('unauthorized_activities_permission_flg', isset($employee_id) ? $employee->unauthorized_activities_permission_flg : '') }}">
                                     <label>資格外活動許可</label>
                                 </div>
                             </div>
