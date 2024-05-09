@@ -22,12 +22,12 @@ class AdminLaborUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'last_name' => 'required|max:20',
-            'last_name_kana' => 'required|max:20',
-            'last_name_alphabet' => 'nullable|max:20',
-            'first_name' => 'required|max:20',
-            'first_name_kana' => 'required|max:20',
-            'first_name_alphabet' => 'nullable|max:20',
+            'last_name' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+$/u',
+            'last_name_kana' => 'required|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'first_name' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+$/u',
+            'first_name_kana' => 'required|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'employee_no' => 'required',
             'employee_type' => 'required',
             'company_id' => 'required|integer',
