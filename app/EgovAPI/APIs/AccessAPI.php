@@ -494,15 +494,16 @@ class AccessAPI extends EgovBase
      * 申請案件一覧取得
      * 期間等を指定して、申請案件の一覧情報を取得する。対象期間内の到達日時の申請案件を取得対象とする。
      * ※送信番号のみを指定または対象期間及び取得件数/ページを指定
+     * send_numberもしくはdate_from & date_to & limit & offsetのどちらかが必須
      *
      * @param string $send_number 送信番号 (半角数字、18桁、送信番号で取得する場合のみ指定)
-     * @param string $proc_id 手続識別子 (半角英数字、16桁)
      * @param string $date_from 取得対象期間開始日 (半角、10桁、YYYY-MM-DD形式、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
+     * @param string $date_to 取得対象期間終了日 (半角、10桁、YYYY-MM-DD形式、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
      * @param int $limit 取得件数 (数字、1-2桁、上限値50、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
      * @param int $offset 取得ページ番号 (数字、1-4桁、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
      * @return Response | null
      */
-    public function getListApplications(string $send_number, string $proc_id, string $date_from, int $limit, int $offset): Response|null
+    public function getListApplications(string $send_number = null, string $date_from = null, string $date_to = null, int $limit = null, int $offset = null): Response|null
     {
         if (!parent::requiredConfig(['dev']))
             return null;
@@ -511,13 +512,19 @@ class AccessAPI extends EgovBase
             return null;
         
         $path = parent::getAPIPath('/apply/lists');
-        $form = [
-            'send_number' => $send_number,
-            'proc_id' => $proc_id,
-            'date_from' => $date_from,
-            'limit' => $limit,
-            'offset' => $offset
-        ];
+        if ($send_number == null){
+            $form = [
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'limit' => $limit,
+                'offset' => $offset
+            ];
+        }else{
+            $form = [
+                'send_number' => $send_number
+            ];
+        }
+        
         $response = $this->request()->get($path, $form);
 
         return $response;
