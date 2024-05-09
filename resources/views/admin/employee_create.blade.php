@@ -253,13 +253,15 @@
                         <div class="three fields">
                             <div class="field">
                                 <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg"
-                                        value="{{ old('spouse_flg', isset($employee_id) ? $employee->spouse_flg : '') }}">
+                                    <input type="checkbox" name="spouse_flg" value='1'
+                                    {{ isset($employee_id) && $employee->spouse_flg == 1 ? 'checked' : '' }}
+                                    <?php echo old('spouse_flg') == '1' ? 'checked' : ''; ?>>
                                     <label>配偶者有</label>
                                 </div>
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg"
-                                        value="{{ old('dependent_flg', isset($employee_id) ? $employee->dependent_flg : '') }}">
+                                    <input type="checkbox" name="dependent_flg" value='1'
+                                    {{ isset($employee_id) && $employee->dependent_flg == 1 ? 'checked' : '' }}
+                                    <?php echo old('dependent_flg') == '1' ? 'checked' : ''; ?>>
                                     <label>扶養者有</label>
                                 </div>
                             </div>
@@ -267,7 +269,7 @@
                                 <label for="dependent_family_number">扶養人数</label>
                                 <input type="number" id="dependent_family_number" name="dependent_family_number"
                                     value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
-                                    min="0" max="99">
+                                    max="99">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -800,8 +802,9 @@
                             </div>
                             <div class="field">
                                 <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
-                                    <input type="checkbox" name="external_advisor_flg"
-                                        value="{{ old('external_advisor_flg', isset($employee_id) ? $employee->external_advisor_flg : '') }}">
+                                    <input type="checkbox" name="external_advisor_flg" value='1'
+                                    {{ isset($employee_id) && $employee->external_advisor_flg == 1 ? 'checked' : '' }}
+                                    <?php echo old('external_advisor_flg') == '1' ? 'checked' : ''; ?>>
                                     <label>外部顧問</label>
                                 </div>
                             </div>
@@ -957,8 +960,9 @@
                             <div class="field">
                                 <div
                                     class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
-                                        value="{{ old('unauthorized_activities_permission_flg', isset($employee_id) ? $employee->unauthorized_activities_permission_flg : '') }}">
+                                    <input type="checkbox" name="unauthorized_activities_permission_flg" value='1'
+                                    {{ isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1 ? 'checked' : '' }}
+                                    <?php echo old('unauthorized_activities_permission_flg') == '1' ? 'checked' : ''; ?>>
                                     <label>資格外活動許可</label>
                                 </div>
                             </div>
@@ -1087,8 +1091,7 @@
 
                         if (first) {
                             //const def = @json($managerial_position_list);
-                            const v =
-                                "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
+                            const v = "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
                             if (v > 0) {
                                 $('select[name="managerial_position_id"] option[value=' + v +
                                     ']').prop(
