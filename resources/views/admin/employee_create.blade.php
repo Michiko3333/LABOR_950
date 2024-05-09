@@ -267,7 +267,7 @@
                                 <label for="dependent_family_number">扶養人数</label>
                                 <input type="number" id="dependent_family_number" name="dependent_family_number"
                                     value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
-                                    max="99">
+                                    min="0" max="99">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -1087,7 +1087,8 @@
 
                         if (first) {
                             //const def = @json($managerial_position_list);
-                            const v = "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
+                            const v =
+                                "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
                             if (v > 0) {
                                 $('select[name="managerial_position_id"] option[value=' + v +
                                     ']').prop(
