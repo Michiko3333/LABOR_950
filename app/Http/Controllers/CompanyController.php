@@ -98,8 +98,7 @@ class CompanyController extends Controller
             'outsourcing_company' => $request->input('outsourcing_company'),
             'sales_company' => $request->input('sales_company'),
             'url' => $request->input('url'),
-            'purpose' => $request->input('purpose'),
-            'company_division' => $request->input('company_division'),
+            'purpose' => $request->input('purpose')
         ];
     }
 }
