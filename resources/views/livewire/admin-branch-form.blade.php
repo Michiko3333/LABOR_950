@@ -107,7 +107,7 @@
                             <input type="text" name="br-address_ward[]"
                                 wire:model.live="data.{{ $key }}.br-address_ward" placeholder="">
                         </div>
-                        <div class="field required {{ err_bind($errs, 'br-address_apartment', $key) }}">
+                        <div class="field {{ err_bind($errs, 'br-address_apartment', $key) }}">
                             <label for="br-address_apartment">住所（アパート・マンション名等）</label>
                             <input type="text" name="br-address_apartment[]"
                                 wire:model.live="data.{{ $key }}.br-address_apartment" placeholder="">
@@ -115,7 +115,7 @@
                     </div>
                     <div class="two fields">
                         <div class="ui unstackable three fields field" style="padding: 0;">
-                            <div class="field tel-hyphen required {{ err_bind($errs, 'br-tel_area_code', $key) }}"
+                            <div class="field tel-hyphen {{ err_bind($errs, 'br-tel_area_code', $key) }}"
                                 style="padding-right: 0.8em;">
                                 <label for="br-tel_area_code">電話番号</label>
                                 <input type="text" name="br-tel_area_code[]"
