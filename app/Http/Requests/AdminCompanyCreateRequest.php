@@ -40,6 +40,7 @@ class AdminCompanyCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'company_division' => 'required|integer|in:1,2',
             'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
             'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
@@ -62,7 +63,6 @@ class AdminCompanyCreateRequest extends FormRequest
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'procedure_hidden_flg' => 'nullable|integer|in:0,1',
-            'company_division' => 'integer',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:255',
             'br-branch_type' => 'required|array',

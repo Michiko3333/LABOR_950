@@ -77,7 +77,7 @@ class AdminCompanyUpdateRequest extends FormRequest
             'sales_company' => 'nullable|string|max:255',
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
-            'company_division' => 'integer',
+            'company_division' => 'required|integer|in:1,2',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:255',
             'br-branch_type' => 'required|array',
