@@ -1,4 +1,4 @@
-<!-- 4950013520733000 -->
+<!-- 4950013520991000 -->
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
