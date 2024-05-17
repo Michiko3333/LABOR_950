@@ -77,7 +77,7 @@
             <li class="item">
                 <a href="{{ route('ledger.egov') }}">
                     <i class="right caret right icon large blue-text"></i>
-                    役職マスタ</a>
+                    e-Gov連携</a>
             </li>
             <li class="title">スケジュール</li>
             <li class="item">
