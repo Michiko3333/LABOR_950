@@ -26,7 +26,7 @@
             <tr class="card">
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->company_division == 1 ? '社労士事務所' : '顧客企業' }}</td>
-                <td>{{ $businessTypes[$item->company_division] ?? 'E' }}</td>
+                <td>{{ $businessTypes[$item->business_type] ?? 'E' }}</td>
                 <td>{{ $company_type[$item->company_type_id] ?? 'E' }}</td>
                 <td>{{ $item->company_no }}</td>
                 <td>{{ $item->employee_sum }}</td>
