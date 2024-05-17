@@ -253,13 +253,13 @@
                         <div class="three fields">
                             <div class="field">
                                 <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg"
-                                        value="{{ old('spouse_flg', isset($employee_id) ? $employee->spouse_flg : '') }}">
+                                    <input type="checkbox" name="spouse_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->spouse_flg == 1) || (old('spouse_flg') == '1') ? 'checked' : '' }}>
                                     <label>配偶者有</label>
                                 </div>
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg"
-                                        value="{{ old('dependent_flg', isset($employee_id) ? $employee->dependent_flg : '') }}">
+                                    <input type="checkbox" name="dependent_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->dependent_flg == 1) || (old('dependent_flg') == '1') ? 'checked' : '' }}>
                                     <label>扶養者有</label>
                                 </div>
                             </div>
@@ -791,8 +791,8 @@
                             </div>
                             <div class="field">
                                 <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
-                                    <input type="checkbox" name="external_advisor_flg"
-                                        value="{{ old('external_advisor_flg', isset($employee_id) ? $employee->external_advisor_flg : '') }}">
+                                    <input type="checkbox" name="external_advisor_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || (old('external_advisor_flg') == '1') ? 'checked' : '' }}>
                                     <label>外部顧問</label>
                                 </div>
                             </div>
@@ -948,8 +948,8 @@
                             <div class="field">
                                 <div
                                     class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
-                                        value="{{ old('unauthorized_activities_permission_flg', isset($employee_id) ? $employee->unauthorized_activities_permission_flg : '') }}">
+                                    <input type="checkbox" name="unauthorized_activities_permission_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || (old('unauthorized_activities_permission_flg') == '1') ? 'checked' : '' }}>
                                     <label>資格外活動許可</label>
                                 </div>
                             </div>
