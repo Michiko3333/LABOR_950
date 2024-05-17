@@ -12,7 +12,7 @@ use App\Models\Values_branch_branch_type;
 class AdminBranchForm extends Component
 {
     public $data = [];
-    public $company;
+    public $company = null;
     public $branch_types = [];
     public $errs = [];
     public $prefectures = [];
@@ -21,10 +21,14 @@ class AdminBranchForm extends Component
     public $start_days_of_week = [];
     public $work_style_type = [];
 
-    public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id)
+    public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
-        $company = Company::find($id);
-        $this->company = $company;
+
+        if (!empty($id)) {
+            $company = Company::find($id);
+            $this->company = $company;
+        }
+
         $this->prefectures = $prefectures;
         $this->labor_insurance_payment_method = $labor_insurance_payment_method;
         $this->place_type = $place_type;
@@ -188,12 +192,12 @@ class AdminBranchForm extends Component
             'br-work_style_type' => '',
         ];
 
-        if($this->company !== null) {
+        if ($this->company !== null) {
             $companyID = $this->company->id;
 
             $headquarters = Branch::where('company_id', $companyID)
-                        ->where('branch_type', 1)
-                        ->exists();
+                ->where('branch_type', 1)
+                ->exists();
 
             if ($headquarters) {
                 $defaultValues['br-branch_type'] = 2;
