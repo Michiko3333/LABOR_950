@@ -344,8 +344,8 @@
                             </div>
                         </div>
 
-                        <div class="two fields {{ err($errors, 'business_type') }}">
-                            <div class="required field">
+                        <div class="two fields">
+                            <div class="required field {{err($errors, 'business_type')}}">
                                 <label>企業区分</label>
                                 <select class="ui fluid dropdown" name="business_type"
                                     value="{{ old('business_type') }}">
@@ -361,7 +361,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="field  {{ err($errors, 'license_type') }}">
+                            <div class="field  {{err($errors, 'listed_type')}}">
                                 <label>上場区分</label>
                                 <select class="ui fluid dropdown" name="listed_type"
                                     value="{{ old('listed_type') }}">
@@ -421,8 +421,8 @@
                 <div class="ui horizontal card card-shadow item-1">
                     <div class="content">
                         <h2>資本情報</h2>
-                        <div class="three fields {{ err($errors, 'capital') }}">
-                            <div class="field">
+                        <div class="three fields">
+                            <div class="field {{err($errors, 'capital')}}">
                                 <label for="capital">資本金</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="capital" name="capital"

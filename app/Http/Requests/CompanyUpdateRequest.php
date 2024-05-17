@@ -43,7 +43,7 @@ class CompanyUpdateRequest extends FormRequest
             'name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             'name_kana' => 'string|max:255|regex:/^[ァ-ヴー＆’，‐．・]+$/u',
             'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
-            'name_abbreviation' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            'name_abbreviation' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'company_type_id' => 'integer|between:1,17',
             'license_no' => 'nullable|string|max:255',
@@ -62,6 +62,35 @@ class CompanyUpdateRequest extends FormRequest
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'company_division' => 'integer',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => '会社名',
+            'name_kana' => '会社名（カナ）',
+            'name_en' => '会社名（英語表記）',
+            'name_abbreviation' => '会社名（略称表記）',
+            'company_no' => '法人番号',
+            'company_type_id' => '法人格',
+            'license_no' => '許認可番号',
+            'business_type' => '企業区分',
+            'listed_type' => '上場区分',
+            'stock_code' => '証券コード',
+            'capital' => '資本金',
+            'annual_sales' => '年間売上高（連結）',
+            'employee_sum' => '従業員数',
+            'qualification' => '保有資格',
+            'authorized_shares' => '発行可能株式総数',
+            'issued_shares' => '発行済株式総数',
+            'supplier_company' => '仕入先名称',
+            'outsourcing_company' => '外注先名称',
+            'sales_company' => '販売先名称',
+            'url' => 'ホームページアドレス',
+            'purpose' => '事業目的',
+            'procedure_hidden_flg' => '行政手続非表示フラグ',
+            'company_division' => '会社区分',
         ];
     }
 }
