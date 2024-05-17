@@ -109,10 +109,14 @@ class UserModalContent extends Component
                     if (!empty($currentCompany)) $this->profiles['company_name'] = $currentCompany->name;
                     $this->profiles['branch_name'] = $employee->branch->name;
                     $this->profiles['departments'] = Employee_department::select('name')
+                        ->where('m_employee_department.delete_flg', 0) 
                         ->leftJoin('m_department as d', 'department_id', '=', 'd.id')
                         ->where('employee_id', $employee->id)
                         ->pluck('name')->toArray();
-                    $this->profiles['managerial_position'] = $employee->managerial_position()->first();
+                    $this->profiles['managerial_position'] = $employee->managerial_position()->where('delete_flg', 0)->first();
+                } elseif ($this->role_id = 999){
+                    $this->profiles['branch_name'] = "-";
+                    $this->profiles['departments'] = ["-"];
                 }
 
                 $this->profiles['name'] = $employee->last_name . ' ' . $employee->first_name;
@@ -233,8 +237,11 @@ class UserModalContent extends Component
 
     public function loginEmailSave()
     {
-
-        $this->login_email_edit_flg = true;
+        User::where('id', $this->employee_id)->update([
+            'email' => $this->login_email_edit,
+        ]);
+        $this->login_email = $this->login_email_edit;
+        $this->login_email_edit_flg = false;
     }
 
     public function loginPassSave()
