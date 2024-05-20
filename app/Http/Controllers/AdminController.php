@@ -423,6 +423,10 @@ class AdminController extends Controller
                 'employee_id' => $employee_id
             ];
 
+            if (User::where('email', $request->input('user_email'))->exists()) {
+                return back()->withErrors('このメールアドレスは既に使用されています。')->withInput();
+            }
+
             User::create($data);
 
 
@@ -431,7 +435,7 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
-            return back()->withErrors('エラー');
+            return back()->withErrors('エラー')->withInput();
         }
         return redirect()->route('admin.labor');
     }
@@ -672,6 +676,10 @@ class AdminController extends Controller
                 'employee_id' => $employee_id
             ];
 
+            if (User::where('email', $request->input('user_email'))->exists()) {
+                return back()->withErrors('このメールアドレスは既に使用されています。')->withInput();
+            }
+
             User::create($data);
 
             DB::commit();
@@ -679,7 +687,7 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
-            return back()->withErrors('エラー');
+            return back()->withErrors('エラー')->withInput();
         }
         return redirect()->route('admin.labor');
     }

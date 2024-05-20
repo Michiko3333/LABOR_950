@@ -53,6 +53,7 @@ class Branch extends Model
         'holiday_legal',
         'holiday_not_logal',
         'work_style_type',
+        'mail_address',
     ];
 
     public function company()

@@ -45,6 +45,15 @@ class CertificationLoader extends Component
     public function loadCert()
     {
         if (empty($this->cert_file) || mb_strlen($this->cert_pass) > 20) {
+            $this->isError = true;
+            return;
+        }
+        
+        $fileName = $this->cert_file->getClientOriginalName();
+        $fileExtension = strtolower(pathinfo($fileName)['extension']);
+
+        if ($fileExtension !== 'pfx') {
+            $this->isError = true;
             return;
         }
 

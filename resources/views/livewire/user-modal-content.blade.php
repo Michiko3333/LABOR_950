@@ -50,7 +50,7 @@
                     <h3>{{ $profiles['company_name'] }}</h3>
                     <p>配属：{{ $profiles['branch_name'] }}</p>
                     <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
-                    <p>役職：{{ empty($profiles['managerial_position']) ? '' : $profiles['managerial_position']->name }}
+                    <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
                     </p>
                 </div>
             </section>

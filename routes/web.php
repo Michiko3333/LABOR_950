@@ -40,6 +40,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
 use App\Http\Controllers\Contract\EmployeeContractController;
+use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
 
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // EgovAPI
     Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
+
+    // EgovAPI 検証試験データ取得用
+    if (config('egov.test') == true) {
+        Route::get('/admin/egovtest', [EgovTestController::class, 'index'])->name('egovtest.index');
+        Route::post('/admin/egovtest/dl', [EgovTestController::class, 'download'])->name('egovtest.download');
+    }
 
     // Admin
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

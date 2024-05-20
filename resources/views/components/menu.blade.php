@@ -77,7 +77,7 @@
             <li class="item">
                 <a href="{{ route('ledger.egov') }}">
                     <i class="right caret right icon large blue-text"></i>
-                    役職マスタ</a>
+                    e-Gov連携</a>
             </li>
             <li class="title">スケジュール</li>
             <li class="item">
@@ -107,6 +107,13 @@
                         <i class="right caret right icon large blue-text"></i>
                         アカウント管理</a>
                 </li>
+                @if (config('egov.test') === true)
+                    <li class="item">
+                        <a href="{{ route('egovtest.index') }}">
+                            <i class="right caret right icon large blue-text"></i>
+                            e-Gov最終試験管理</a>
+                    </li>
+                @endif
             @endif
             @if ($userPermission->isLabor())
                 <li class="title">社労士管理</li>

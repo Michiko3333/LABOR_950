@@ -239,7 +239,7 @@
                             <div class="required field {{ err($errors, 'country_id') }}">
                                 <label>国籍</label>
                                 <select class="ui fluid dropdown" name="country_id">
-                                    <option value="">未選択</option>
+                                    <option value="">日本</option>
                                     @foreach ($country_type as $k => $item)
                                         <option value="{{ $k }}"
                                             {{ old('country_id') == $k || (isset($employee) && old('country_id', $employee->country_id) == $k)
@@ -253,13 +253,13 @@
                         <div class="three fields">
                             <div class="field">
                                 <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg"
-                                        value="{{ old('spouse_flg', isset($employee_id) ? $employee->spouse_flg : '') }}">
+                                    <input type="checkbox" name="spouse_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->spouse_flg == 1) || (old('spouse_flg') == '1') ? 'checked' : '' }}>
                                     <label>配偶者有</label>
                                 </div>
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg"
-                                        value="{{ old('dependent_flg', isset($employee_id) ? $employee->dependent_flg : '') }}">
+                                    <input type="checkbox" name="dependent_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->dependent_flg == 1) || (old('dependent_flg') == '1') ? 'checked' : '' }}>
                                     <label>扶養者有</label>
                                 </div>
                             </div>
@@ -267,7 +267,7 @@
                                 <label for="dependent_family_number">扶養人数</label>
                                 <input type="number" id="dependent_family_number" name="dependent_family_number"
                                     value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
-                                    max="99">
+                                    min="0" max="99">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -621,12 +621,13 @@
                                 <label>雇用契約期間の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_period_flg" checked="checked"
-                                            value="0">
+                                        <input type="radio" name="contract_period_flg" checked="checked" value="0"
+                                        {{ (isset($employee_id) && $employee->contract_period_flg == 0) || (old('contract_period_flg') == '0') ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_period_flg" value="1">
+                                        <input type="radio" name="contract_period_flg" value="1"
+                                        {{ (isset($employee_id) && $employee->contract_period_flg == 1) || (old('contract_period_flg') == '1') ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -635,12 +636,13 @@
                                 <label>契約更新条項の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_renewal_flg" checked="checked"
-                                            value="0">
+                                        <input type="radio" name="contract_renewal_flg" checked="checked" value="0"
+                                        {{ (isset($employee_id) && $employee->contract_renewal_flg == 0) || (old('contract_renewal_flg') == '0') ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_renewal_flg" value="1">
+                                        <input type="radio" name="contract_renewal_flg" value="1"
+                                        {{ (isset($employee_id) && $employee->contract_renewal_flg == 1) || (old('contract_renewal_flg') == '1') ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -649,12 +651,13 @@
                                 <label>離職票の交付希望の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" checked="checked"
-                                            value="0">
+                                        <input type="radio" name="resignation_letter_request_flg" checked="checked" value="0"
+                                        {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || (old('resignation_letter_request_flg') == '0') ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" value="1">
+                                        <input type="radio" name="resignation_letter_request_flg" value="1"
+                                        {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || (old('resignation_letter_request_flg') == '1') ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -791,8 +794,8 @@
                             </div>
                             <div class="field">
                                 <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
-                                    <input type="checkbox" name="external_advisor_flg"
-                                        value="{{ old('external_advisor_flg', isset($employee_id) ? $employee->external_advisor_flg : '') }}">
+                                    <input type="checkbox" name="external_advisor_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || (old('external_advisor_flg') == '1') ? 'checked' : '' }}>
                                     <label>外部顧問</label>
                                 </div>
                             </div>
@@ -948,8 +951,8 @@
                             <div class="field">
                                 <div
                                     class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
-                                        value="{{ old('unauthorized_activities_permission_flg', isset($employee_id) ? $employee->unauthorized_activities_permission_flg : '') }}">
+                                    <input type="checkbox" name="unauthorized_activities_permission_flg" value='1'
+                                    {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || (old('unauthorized_activities_permission_flg') == '1') ? 'checked' : '' }}>
                                     <label>資格外活動許可</label>
                                 </div>
                             </div>
