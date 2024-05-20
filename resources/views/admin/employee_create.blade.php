@@ -901,12 +901,12 @@
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
                                     placeholder="0123456789">
                             </div>
-                            <div class="field {{ err($errors, 'birthday') }}">
+                            <div class="field {{ err($errors, 'employment_insurance_applied_date_calendar') }}">
                                 <label>雇用保険届出日</label>
                                 <div class="ui calendar" id="employment_insurance_applied_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="birthday"
+                                        <input type="text" placeholder="Date" name="employment_insurance_applied_date"
                                             value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
                                         <input type="hidden" name="employment_insurance_applied_date"
                                             id="employment_insurance_applied_date"
@@ -914,12 +914,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="field {{ err($errors, 'birthday') }}">
+                            <div class="field {{ err($errors, 'employment_insured_date_calendar') }}">
                                 <label>雇用保険届出日</label>
                                 <div class="ui calendar" id="employment_insured_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="birthday"
+                                        <input type="text" placeholder="Date" name="employment_insured_date"
                                             value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
                                         <input type="hidden" name="employment_insured_date"
                                             id="employment_insured_date"

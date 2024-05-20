@@ -14,6 +14,23 @@ class BranchRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['br-address_ward'])) {
+            foreach ($data['br-address_ward'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'AS');
+            }
+        }
+        if (isset($data['br-address_apartment'])) {
+            foreach ($data['br-address_apartment'] as &$apartment) {
+                $apartment = mb_convert_kana($apartment, 'AS');
+            }
+        }
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

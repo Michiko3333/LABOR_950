@@ -33,17 +33,26 @@ class AdminCompanyUpdateRequest extends FormRequest
     {
         $data = $this->all();
 
-
-        $data = array_map(function($value) {
-            if (isset($value['br-address_ward'])) {
-                $value['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $value['br-address_ward']);
+        if (isset($data['name'])) {
+            $data['name'] = mb_convert_kana($data['name'], 'S');
+        }
+        if (isset($data['name_kana'])) {
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        }
+        if (isset($data['name_abbreviation'])) {
+            $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'AS');
+            $data['name_abbreviation'] = str_replace(['-', '－', '―'], '‐', $data['name_abbreviation']);
+        }
+        if (isset($data['br-address_ward'])) {
+            foreach ($data['br-address_ward'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'AS');
             }
-            if (isset($value['br-address_apartment'])) {
-                $value['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $value['br-address_apartment']);
+        }
+        if (isset($data['br-address_apartment'])) {
+            foreach ($data['br-address_apartment'] as &$apartment) {
+                $apartment = mb_convert_kana($apartment, 'AS');
             }
-            return $value;
-        }, $data);
-
+        }
         return $data;
     }
 
