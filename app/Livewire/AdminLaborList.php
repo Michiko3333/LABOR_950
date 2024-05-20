@@ -62,4 +62,8 @@ class AdminLaborList extends BaseTable
     {
         redirect()->route('labor_permission', ['id' => $id]);
     }
+    public function toAddCompany($id)
+    {
+        redirect()->route('admin.client', ['id' => $id]);
+    }
 }

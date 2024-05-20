@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
     Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
     Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
+    Route::get('/admin/labor/client/{id}', [AdminController::class, 'client'])->name('admin.client');
 
     ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
     Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');

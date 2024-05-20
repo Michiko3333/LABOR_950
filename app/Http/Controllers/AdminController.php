@@ -45,6 +45,7 @@ use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
+use App\Models\Receptionist;
 
 class AdminController extends Controller
 {
@@ -284,14 +285,14 @@ class AdminController extends Controller
 
         if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
             $count = '';
-            if($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+            if ($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
                 $count = $fax1Index;
-            } elseif($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+            } elseif ($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
                 $count = $fax2Index;
             } else {
                 $count = $fax3Index;
             }
-            
+
             for ($i = 0; $i < $count; $i++) {
                 $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
                 $part2 = isset($fax2[$i]) ? $fax2[$i] : '';
@@ -909,5 +910,22 @@ class AdminController extends Controller
             return back()->withErrors('エラー');
         }
         return redirect()->route('admin.labor');
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // 社労士顧客会社設定
+    // ---------------------------------------------------------------------------------------
+
+    public function client(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        if (empty($employee)) {
+            return redirect()->route('admin.labor');
+        }
+
+        $company = $employee->branch->company()->first();
+
+        return view('admin.client', ['employee' => $employee, 'company' => $company]);
     }
 }
