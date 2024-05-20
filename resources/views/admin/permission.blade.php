@@ -56,7 +56,7 @@
         </div>
         <h1>個別権限：{{ $employee->last_name }}　{{ $employee->first_name }}</h1>
         <p>各種機能に対してユーザー単位で指定した権限を<span class="ui text red">剥奪</span>します。</p>
-        <p>※更新した内容は当該イーザーの次回ログイン時に反映</p>
+        <p>※更新した内容は当該ユーザーの次回ログイン時に反映</p>
         <div class="ui card card-shadow item-0" style="width: 100%;">
             <div class="content">
                 <form method="post"

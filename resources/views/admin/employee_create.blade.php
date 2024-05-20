@@ -167,7 +167,7 @@
                                 </select>
                             </div>
                             <div class="required field {{ err($errors, 'employee_status') }}">
-                                <label>社員区分</label>
+                                <label>社員ステータス</label>
                                 <select class="ui fluid dropdown" name="employee_status">
                                     <option value="">未選択</option>
                                     @foreach ($employee_status_type as $k => $item)
