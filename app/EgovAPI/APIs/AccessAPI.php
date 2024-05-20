@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Log;
+use App\EgovAPI\EgovTestLog;
 
 use App\EgovAPI\APIs\EgovBase;
+use App\EgovAPI\EgovDebug;
+
 
 class AccessAPI extends EgovBase
 {
@@ -38,9 +41,10 @@ class AccessAPI extends EgovBase
             'token' => $this->access_token,
         ];
 
-        $response = Http::asForm()
-            ->withBasicAuth($this->config['client_id'], $this->config['api_key'])
-            ->post($path, $form);
+        $req = Http::asForm()
+            ->withBasicAuth($this->config['client_id'], $this->config['api_key']);
+        $req = EgovDebug::setMiddleware($req);
+        $response = $req->post($path, $form);
 
         return $response;
     }
@@ -61,6 +65,7 @@ class AccessAPI extends EgovBase
 
         $path = parent::getAPIPath('/share-setting/lists');
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('listShareSetting :' . $response, true));
 
         return $response;
     }
@@ -89,6 +94,7 @@ class AccessAPI extends EgovBase
             'post_doc_permission' => $post_doc_permission
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('createShareSetting :' . $response, true));
 
         return $response;
     }
@@ -117,6 +123,7 @@ class AccessAPI extends EgovBase
             'post_doc_permission' => $post_doc_permission
         ];
         $response = $this->request()->put($path, $form);
+        EgovTestLog::info(print_r('updateShareSetting :' . $response, true));
 
         return $response;
     }
@@ -141,6 +148,7 @@ class AccessAPI extends EgovBase
             'gbiz_id' => $gbiz_id,
         ];
         $response = $this->request()->delete($path, $form);
+        EgovTestLog::info(print_r('deleteShareSetting :' . $response, true));
 
         return $response;
     }
@@ -166,6 +174,7 @@ class AccessAPI extends EgovBase
             'share_acceptance' => $share_acceptance
         ];
         $response = $this->request()->delete($path, $form);
+        EgovTestLog::info(print_r('shareConfirmation :' . $response, true));
 
         return $response;
     }
@@ -194,6 +203,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('postApply :' . $response, true));
 
         return $response;
     }
@@ -215,6 +225,7 @@ class AccessAPI extends EgovBase
 
         $path = parent::getAPIPath('/post-apply/' . $arrive_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getPostApply :' . $response, true));
 
         return $response;
     }
@@ -244,6 +255,7 @@ class AccessAPI extends EgovBase
             'offset' => $offset
         ];
         $response = $this->request()->get($path, $form);
+        EgovTestLog::info(print_r('listPost :' . $response, true));
 
         return $response;
     }
@@ -265,6 +277,7 @@ class AccessAPI extends EgovBase
 
         $path = parent::getAPIPath('/post/' . $post_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getPost :' . $response, true));
 
         return $response;
     }
@@ -289,13 +302,17 @@ class AccessAPI extends EgovBase
             'post_id' => $post_id
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('getElectronicDeliveryInfo :' . $response, true));
 
         return $response;
     }
 
     private function request(): PendingRequest
     {
-        return Http::withHeaders(['X-eGovAPI-Trial' => $this->config['dev']])->withToken($this->access_token);
+        $req = Http::withHeaders(['X-eGovAPI-Trial' => $this->config['dev']])->withToken($this->access_token);
+        $req = EgovDebug::setMiddleware($req);
+
+        return $req;
     }
 
     /**
@@ -312,9 +329,10 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/procedure/' . $proc_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('procedureSelection :' . $response, true));
 
         return $response;
     }
@@ -347,6 +365,7 @@ class AccessAPI extends EgovBase
             'file_data' => $file_data
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('getPrePrintDataAcquisition :' . $response, true));
 
         return $response;
     }
@@ -375,6 +394,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('ApplicationDataTransmission :' . $response, true));
 
         return $response;
     }
@@ -401,6 +421,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('ApplicationDataBulkTransmission :' . $response, true));
 
         return $response;
     }
@@ -432,6 +453,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('CorrectionDataTransmission :' . $response, true));
 
         return $response;
     }
@@ -459,6 +481,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('WithdrawalRequestSent :' . $response, true));
 
         return $response;
     }
@@ -486,6 +509,7 @@ class AccessAPI extends EgovBase
             'send_file' => $send_file
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('ExecuteFormatCheck :' . $response, true));
 
         return $response;
     }
@@ -500,7 +524,7 @@ class AccessAPI extends EgovBase
      * @param string $date_from 取得対象期間開始日 (半角、10桁、YYYY-MM-DD形式、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
      * @param string $date_to 取得対象期間終了日 (半角、10桁、YYYY-MM-DD形式、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
      * @param int $limit 取得件数 (数字、1-2桁、上限値50、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
-     * @param int $offset 取得ページ番号 (数字、1-4桁、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定)
+     * @param int $offset 取得ページ番号 (数字、1-4桁、対象期間及び取得件数/ページオフセット件数で取得する場合のみ指定) 1ページ目は0
      * @return Response | null
      */
     public function getListApplications(string $send_number = null, string $date_from = null, string $date_to = null, int $limit = null, int $offset = null): Response|null
@@ -510,22 +534,23 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/apply/lists');
-        if ($send_number == null){
+        if ($send_number == null) {
             $form = [
                 'date_from' => $date_from,
                 'date_to' => $date_to,
                 'limit' => $limit,
                 'offset' => $offset
             ];
-        }else{
+        } else {
             $form = [
                 'send_number' => $send_number
             ];
         }
-        
+
         $response = $this->request()->get($path, $form);
+        EgovTestLog::info(print_r('getListApplications :' . $response, true));
 
         return $response;
     }
@@ -544,9 +569,10 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/apply/' . $arrive_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getMatterFiling :' . $response, true));
 
         return $response;
     }
@@ -572,7 +598,7 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/apply/report');
         $form = [
             'send_number' => $send_number,
@@ -582,6 +608,8 @@ class AccessAPI extends EgovBase
             'offset' => $offset
         ];
         $response = $this->request()->get($path, $form);
+        EgovTestLog::info(print_r('getErrorReport :' . $response, true));
+
         return $response;
     }
 
@@ -602,7 +630,7 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/message/lists');
         $form = [
             'date_from' => $date_from,
@@ -611,6 +639,8 @@ class AccessAPI extends EgovBase
             'offset' => $offset
         ];
         $response = $this->request()->get($path, $form);
+        EgovTestLog::info(print_r('getGuideList :' . $response, true));
+
         return $response;
     }
 
@@ -628,9 +658,11 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/message/' . $information_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getInformation :' . $response, true));
+
         return $response;
     }
 
@@ -651,7 +683,7 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/notice/lists');
         $form = [
             'date_from' => $date_from,
@@ -660,6 +692,8 @@ class AccessAPI extends EgovBase
             'offset' => $offset
         ];
         $response = $this->request()->get($path, $form);
+        EgovTestLog::info(print_r('getNotificationList :' . $response, true));
+
         return $response;
     }
 
@@ -678,9 +712,11 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/notice/' . $arrive_id . '/' . $notice_sub_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getNotificationInformation :' . $response, true));
+
         return $response;
     }
 
@@ -699,9 +735,16 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/official_document/' . $arrive_id . '/' . $notice_sub_id);
-        $response = $this->request()->get($path);
+        $response = $this->request()
+            ->beforeSending(function ($request) {
+                EgovTestLog::info(print_r('getToken Request Information:', true));
+                EgovTestLog::info(print_r($request, true));
+            })
+            ->get($path);
+        EgovTestLog::info(print_r('getOfficialDocument :' . $response, true));
+
         return $response;
     }
 
@@ -721,13 +764,21 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/official_document/');
         $form = [
             'arrive_id' => $arrive_id,
             'notice_sub_id' => $notice_sub_id
         ];
-        $response = $this->request()->post($path, $form);
+
+        $response = $this->request()
+            ->beforeSending(function ($request) {
+                EgovTestLog::info(print_r('getToken Request Information:', true));
+                EgovTestLog::info(print_r($request, true));
+            })
+            ->post($path, $form);
+        EgovTestLog::info(print_r('registerDatetimeOfOfficialDocument :' . $response, true));
+
         return $response;
     }
 
@@ -747,14 +798,22 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/official_document/verify');
         $form = [
             'file_name' => $file_name,
             'file_data' => $file_data,
             'sig_verification_xml_file_name' => $sig_verification_xml_file_name
         ];
-        $response = $this->request()->post($path, $form);
+
+        $response = $this->request()
+            ->beforeSending(function ($request) {
+                EgovTestLog::info(print_r('getToken Request Information:', true));
+                EgovTestLog::info(print_r($request, true));
+            })
+            ->post($path, $form);
+        EgovTestLog::info(print_r('signatureVerification :' . $response, true));
+
         return $response;
     }
 
@@ -771,9 +830,11 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/payment/lists');
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getPaymentLists :' . $response, true));
+
         return $response;
     }
 
@@ -791,9 +852,11 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/payment/' . $arrive_id);
         $response = $this->request()->get($path);
+        EgovTestLog::info(print_r('getPaymentInformation :' . $response, true));
+
         return $response;
     }
 
@@ -815,7 +878,7 @@ class AccessAPI extends EgovBase
 
         if (!parent::requiredAccessToken())
             return null;
-        
+
         $path = parent::getAPIPath('/payment');
         $form = [
             'arrive_id' => $arrive_id,
@@ -824,6 +887,8 @@ class AccessAPI extends EgovBase
             'proc_id' => $proc_id
         ];
         $response = $this->request()->post($path, $form);
+        EgovTestLog::info(print_r('getPaymentURL :' . $response, true));
+
         return $response;
     }
 }

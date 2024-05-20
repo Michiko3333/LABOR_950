@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\EgovAPI\Egov;
+use App\EgovAPI\EgovTestLog;
 use App\Models\CurrentUser;
 use App\Models\Egov_account;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class EgovController extends Controller
         return view('ledger.egov', compact('isConnected'));
     }
 
-    public function auth(Request $request)
+    public function auth()
     {
         $company = CurrentUser::currentCompany();
         $company_id = $company->id;
@@ -50,6 +51,9 @@ class EgovController extends Controller
         }
 
         $response = Egov::getToken($code);
+        if (isset($_SERVER['EGOV_TEST']) && $_SERVER['EGOV_TEST'] == 'true') {
+            EgovTestLog::info(print_r('アクセストークン取得：' . $response, true));
+        }
         if ($response->successful()) {
             $access_token = $response['access_token'];
             $refresh_token = $response['refresh_token'];

@@ -40,8 +40,10 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
 use App\Http\Controllers\Contract\EmployeeContractController;
+use App\Http\Controllers\FinalExamAfterLogoutController;
 use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\FinalExamController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -198,4 +200,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
     Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
     Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
+
+    //最終試験用
+    Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
 });

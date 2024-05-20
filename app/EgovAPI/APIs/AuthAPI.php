@@ -5,8 +5,9 @@ namespace App\EgovAPI\APIs;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Log;
-
+use App\EgovAPI\EgovTestLog;
 use App\EgovAPI\APIs\EgovBase;
+use App\EgovAPI\EgovDebug;
 
 class AuthAPI extends EgovBase
 {
@@ -76,11 +77,15 @@ class AuthAPI extends EgovBase
             'refresh_token' => ''
         ];
 
-        $response = Http::asForm()
-            ->withBasicAuth($this->config['client_id'], $this->config['api_key'])
-            ->post($path, $form);
+        $req = Http::asForm()
+            ->withBasicAuth($this->config['client_id'], $this->config['api_key']);
+        $req = EgovDebug::setMiddleware($req);
+        $response = $req->post($path, $form);
+
+        $status = $response->status();
+
+        EgovTestLog::info(print_r('response status code: ' . $status, true));
 
         return $response;
     }
-
 }
