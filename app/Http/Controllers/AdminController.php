@@ -551,6 +551,11 @@ class AdminController extends Controller
 
     public function employee_create_post(AdminEmployeeCreateRequest $request)
     {
+        $fax = implode('-', [
+            $request->input('fax1'),
+            $request->input('fax2'),
+            $request->input('fax3')
+        ]);
         DB::beginTransaction();
 
         try {
@@ -595,7 +600,7 @@ class AdminController extends Controller
                 'tel_area_code' => $request->input('tel_area_code'),
                 'tel_city_code' => $request->input('tel_city_code'),
                 'tel_subscriber_code' => $request->input('tel_subscriber_code'),
-                'fax' => $request->input('fax'),
+                'fax' => $fax,
                 'mail_address1' => $request->input('mail_address1'),
                 'mail_address2' => $request->input('mail_address2'),
                 'emergency_contact1' => $request->input('emergency_contact1'),
@@ -713,6 +718,12 @@ class AdminController extends Controller
         $employee->company_id = $company->id;
         $employee->branch_name = $branch->name;
 
+        if ($employee && !empty($employee->fax)) {
+            $faxParts = explode('-', $employee->fax);
+        } else {
+            $faxParts = ['', '', ''];
+        }
+        
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
         $sex_type = Values_sex::pluck('name', 'id');
         $prefectures = Prefecture::pluck('name', 'id');
@@ -740,12 +751,18 @@ class AdminController extends Controller
             'employment_insurance_type' => $employment_insurance_type,
             'insurance_loss_reason' => $insurance_loss_reason,
             'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
-            'occupation_type' => $occupation_type
+            'occupation_type' => $occupation_type,
+            'faxParts' => $faxParts,
         ]);
     }
 
     public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
+        $fax = implode('-', [
+            $request->input('fax1'),
+            $request->input('fax2'),
+            $request->input('fax3')
+        ]);
         DB::beginTransaction();
         try {
             $data = $request->validationData($request);
@@ -790,7 +807,7 @@ class AdminController extends Controller
                     'tel_area_code' => $request->input('tel_area_code'),
                     'tel_city_code' => $request->input('tel_city_code'),
                     'tel_subscriber_code' => $request->input('tel_subscriber_code'),
-                    'fax' => $request->input('fax'),
+                    'fax' => $fax,
                     'mail_address1' => $request->input('mail_address1'),
                     'mail_address2' => $request->input('mail_address2'),
                     'emergency_contact1' => $request->input('emergency_contact1'),

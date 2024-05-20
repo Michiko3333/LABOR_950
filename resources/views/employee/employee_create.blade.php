@@ -412,11 +412,22 @@
                                         placeholder="加入者番号" maxlength="4">
                                 </div>
                             </div>
-                            <div class="field {{ err($errors, 'fax') }}">
-                                <label for="fax">FAX</label>
-                                <input type="email" id="fax" name="fax"
-                                    value="{{ old('fax', isset($employee_id) ? $employee->fax : '') }}"
-                                    placeholder="karte_xxxx@xxx.com">
+                            <div class="ui unstackable three fields field" style="padding: 0;">
+                                <div class="field tel-hyphen {{ err($errors, 'fax1') }}" style="padding-right: 0.8em;">
+                                    <label for="fax">FAX</label>
+                                    <input type="text" name="fax1"
+                                    value="{{ old('fax', $faxParts[0]) }}">
+                                </div>
+                                <div class="field tel-hyphen {{ err($errors, 'fax2') }}" style="padding-right: 0.8em;">
+                                    <label for="fax2"></label>
+                                    <input type="text" name="fax2"
+                                    value="{{ old('fax2', $faxParts[1]) }}">
+                                </div>
+                                <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
+                                    <label for="fax3"></label>
+                                    <input type="text" name="fax3"
+                                    value="{{ old('fax3', $faxParts[2]) }}">
+                                </div>
                             </div>
                         </div>
                         <div class="fields">
