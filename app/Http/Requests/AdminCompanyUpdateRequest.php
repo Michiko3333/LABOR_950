@@ -40,8 +40,7 @@ class AdminCompanyUpdateRequest extends FormRequest
             $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
         }
         if (isset($data['name_abbreviation'])) {
-            $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'AS');
-            $data['name_abbreviation'] = str_replace(['-', '－', '―'], '‐', $data['name_abbreviation']);
+            $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'as');
         }
         if (isset($data['br-address_ward'])) {
             foreach ($data['br-address_ward'] as &$ward) {
@@ -68,7 +67,7 @@ class AdminCompanyUpdateRequest extends FormRequest
             'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
             'name_en' => 'nullable|string|max:255|regex:/^[\x20-\x7E]+$/',
-            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9]+$/',
+            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9., ]+$/',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'company_type_id' => 'integer',
             'license_no' => 'nullable|string|max:255',
