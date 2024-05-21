@@ -48,7 +48,13 @@ class AuthAPI extends EgovBase
 
         $data = parent::clean($data);
 
-        return $path . '?' . http_build_query($data);
+        $url = $path . '?' . http_build_query($data);
+        if (config('egov.test') == true) {
+            EgovDebug::$url = $url;
+            EgovDebug::outputForGetAuth();
+        }
+
+        return $url;
     }
 
     /**
@@ -77,10 +83,18 @@ class AuthAPI extends EgovBase
             'refresh_token' => ''
         ];
 
+        if (config('egov.test') == true) EgovDebug::$isActive = true;
+
         $req = Http::asForm()
             ->withBasicAuth($this->config['client_id'], $this->config['api_key']);
         $req = EgovDebug::setMiddleware($req);
         $response = $req->post($path, $form);
+
+
+        if (config('egov.test') == true) {
+            EgovDebug::recordResponse($response);
+            EgovDebug::output('02-1');
+        }
 
         $status = $response->status();
 

@@ -473,27 +473,8 @@ class FinalExamController extends Controller
     // ログ出力用専用メソッド
     public static function logoutput($r, $examNo)
     {
-        // 作成するごとに一意のフォルダを作成
-        $directoryNameBase = 'egov-test-log/' . $examNo;
-        $directoryName = $directoryNameBase;
-        $counter = 1;
-
-        while (Storage::exists($directoryName)) {
-            $directoryName = $directoryNameBase . '_' . $counter;
-            $counter++;
-        }
-
-        // フォルダ作成
-        Storage::makeDirectory($directoryName);
-        Storage::setVisibility($directoryName, 'public');
-
-        // ログ書込み
-        $body = $r->body();
-        $decodebody = json_decode($body);
-        $responseBody = json_encode($decodebody, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        Storage::put($directoryName . '/response.json', $responseBody);
-        Storage::put($directoryName . '/header.txt', EgovDebug::$requestHeader);
-        Storage::put($directoryName . '/body.txt', EgovDebug::$requestBody);
+        $body = EgovDebug::recordResponse($r);
+        EgovDebug::output($examNo);
 
         return $body;
     }

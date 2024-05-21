@@ -5,12 +5,15 @@ namespace App\EgovAPI;
 use Illuminate\Http\Client\PendingRequest;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Illuminate\Support\Facades\Storage;
 
 class EgovDebug
 {
     public static $isActive = false;
     public static $requestHeader = '';
     public static $requestBody = '';
+    public static $responseBody = '';
+    public static $url = '';
 
     // ログを記録
     public static function recordRequest($req)
@@ -31,10 +34,18 @@ class EgovDebug
         self::$requestBody = $req['Body'];
     }
 
+    public static function recordResponse($r)
+    {
+        $body = $r->body();
+        $decodebody = json_decode($body);
+        self::$responseBody = json_encode($decodebody, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return $body;
+    }
+
     public static function setMiddleware($req): PendingRequest
     {
         // for debug mode
-        if (config('egov.test') == true && EgovDebug::$isActive == true) {
+        if (config('egov.test') == true && self::$isActive == true) {
             $stack = HandlerStack::create();
             $stack->push(Middleware::mapRequest(function ($request) {
                 self::recordRequest([
@@ -49,5 +60,43 @@ class EgovDebug
         }
 
         return $req;
+    }
+
+    public static function output($suffix)
+    {
+        $directoryNameBase = 'egov-test-log/' . $suffix;
+        $directoryName = $directoryNameBase;
+        $counter = 1;
+
+        while (Storage::exists($directoryName)) {
+            $directoryName = $directoryNameBase . '_' . $counter;
+            $counter++;
+        }
+
+        // フォルダ作成
+        Storage::makeDirectory($directoryName);
+        Storage::setVisibility($directoryName, 'public');
+
+        // ログ書込み
+        Storage::put($directoryName . '/response.json', self::$responseBody);
+        Storage::put($directoryName . '/header.txt', self::$requestHeader);
+        Storage::put($directoryName . '/body.txt', self::$requestBody);
+    }
+
+    public static function outputForGetAuth()
+    {
+        $directoryNameBase = 'egov-test-log/01-1';
+        $directoryName = $directoryNameBase;
+        $counter = 1;
+
+        while (Storage::exists($directoryName)) {
+            $directoryName = $directoryNameBase . '_' . $counter;
+            $counter++;
+        }
+
+        // フォルダ作成
+        Storage::makeDirectory($directoryName);
+        Storage::setVisibility($directoryName, 'public');
+        Storage::put($directoryName . '/url.txt', self::$url);
     }
 }
