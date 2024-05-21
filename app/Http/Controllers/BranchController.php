@@ -40,12 +40,14 @@ class BranchController extends Controller
     {
         DB::beginTransaction();
         try {
+            $request->request->remove('_token');
+            $data = $request->validationData($request);
             $current_company = CurrentUser::currentCompany();
             $id = $current_company->id;
             $brids = $request->input('br-id');
             $excepts = [];
             foreach ($brids as $index => $brid) {
-                $brdata = $this->data_branch($request, $index);
+                $brdata = $this->data_branch($data, $index);
                 if ($brid > 0) {
                     Branch::where('id', $brid)->update($brdata);
                     $excepts[] = $brid;
@@ -64,68 +66,98 @@ class BranchController extends Controller
         return redirect()->route('branch');
     }
 
-    private function data_branch(Request $request, $index)
+    private function data_branch(array $requestData, $index)
     {
-        $input_date1 = $request->input('br-labor_insurance_establishment_date')[$index];
+        $input_date1 = $requestData['br-labor_insurance_establishment_date'][$index];
         if (!is_null($input_date1) && strtotime($input_date1) === false) {
             $formatted_br_labor_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
         } else {
             $formatted_br_labor_insurance_establishment_date = $input_date1;
         }
-        $input_date2 = $request->input('br-employment_insurance_establishment_date')[$index];
+        $input_date2 = $requestData['br-employment_insurance_establishment_date'][$index];
         if (!is_null($input_date2) && strtotime($input_date2) === false) {
             $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
+
+        $fax = [];
+        $fax1 = $requestData['br-fax1'] ?? null;
+        $fax2 = $requestData['br-fax2'] ?? null;
+        $fax3 = $requestData['br-fax3'] ?? null;
+        $fax1Index = count($requestData['br-fax1']) ?? null;
+        $fax2Index = count($requestData['br-fax2']) ?? null;
+        $fax3Index = count($requestData['br-fax3']) ?? null;
+
+        if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
+            $count = '';
+            if($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+                $count = $fax1Index;
+            } elseif($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+                $count = $fax2Index;
+            } else {
+                $count = $fax3Index;
+            }
+            
+            for ($i = 0; $i < $count; $i++) {
+                $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
+                $part2 = isset($fax2[$i]) ? $fax2[$i] : '';
+                $part3 = isset($fax3[$i]) ? $fax3[$i] : '';
+                if ($part1 === null && $part2 === null && $part3 === null) {
+                    continue;
+                }
+                $fax[] = ($part1 !== null ? $part1 . '-' : '') . ($part2 !== null ? $part2 . '-' : '') . ($part3 !== null ? $part3 : '');
+            }
+        }
         $current_company = CurrentUser::currentCompany();
         $company_id = $current_company->id;
         return [
-            'name' => $request->input('br-name')[$index],
+            'name' => $requestData['br-name'][$index],
             'company_id' => $company_id,
-            'post_code' => $request->input('br-post_code')[$index],
-            'address_prefecture' => $request->input('br-address_prefecture')[$index],
-            'address_city' => $request->input('br-address_city')[$index],
-            'address_ward' => $request->input('br-address_ward')[$index],
-            'address_apartment' => $request->input('br-address_apartment')[$index],
-            'tel_area_code' => $request->input('br-tel_area_code')[$index],
-            'tel_city_code' => $request->input('br-tel_city_code')[$index],
-            'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
-            'tel_overseas' => $request->input('br-tel_overseas')[$index],
-            'mail_address' => $request->input('br-mail_address')[$index],
-            'place_type' => $request->input('br-place_type')[$index],
-            'branch_type' => $request->input('br-branch_type')[$index],
-            'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],
-            'labor_insurance_payment_method' => $request->input('br-labor_insurance_payment_method')[$index],
+            'post_code' => $requestData['br-post_code'][$index],
+            'address_prefecture' => $requestData['br-address_prefecture'][$index],
+            'address_city' => $requestData['br-address_city'][$index],
+            'address_ward' => $requestData['br-address_ward'][$index],
+            'address_apartment' => $requestData['br-address_apartment'][$index],
+            'tel_area_code' => $requestData['br-tel_area_code'][$index],
+            'tel_city_code' => $requestData['br-tel_city_code'][$index],
+            'tel_subscriber_code' => $requestData['br-tel_subscriber_code'][$index],
+            'tel_overseas' => $requestData['br-tel_overseas'][$index],
+            'fax' => $fax[$index],
+            'mail_address' => $requestData['br-mail_address'][$index],
+            'place_type' => $requestData['br-place_type'][$index],
+            'branch_type' => $requestData['br-branch_type'][$index],
+            'labor_insurance_no' => $requestData['br-labor_insurance_no'][$index],
+            'labor_insurance_payment_method' => $requestData['br-labor_insurance_payment_method'][$index],
             'labor_insurance_establishment_date' => $formatted_br_labor_insurance_establishment_date,
-            'insurance_office_no' => $request->input('br-insurance_office_no')[$index],
-            'insurance_office_reference_no' => $request->input('br-insurance_office_reference_no')[$index],
-            'pension_office_no' => $request->input('br-pension_office_no')[$index],
-            'pension_office_id' => $request->input('br-pension_office_id')[$index],
-            'pension_office_reference_prefecture' => $request->input('br-pension_office_reference_prefecture')[$index],
-            'pension_office_reference_no_cities' => $request->input('br-pension_office_reference_no_cities')[$index],
-            'pension_office_reference_no_office' => $request->input('br-pension_office_reference_no_office')[$index],
-            'employment_insurance_office_no' => $request->input('br-employment_insurance_office_no')[$index],
+            'insurance_office_no' => $requestData['br-insurance_office_no'][$index],
+            'insurance_office_reference_no' => $requestData['br-insurance_office_reference_no'][$index],
+            'pension_office_no' => $requestData['br-pension_office_no'][$index],
+            'pension_office_id' => $requestData['br-pension_office_id'][$index],
+            'pension_office_reference_prefecture' => $requestData['br-pension_office_reference_prefecture'][$index],
+            'pension_office_reference_no_cities' => $requestData['br-pension_office_reference_no_cities'][$index],
+            'pension_office_reference_no_office' => $requestData['br-pension_office_reference_no_office'][$index],
+            'employment_insurance_office_no' => $requestData['br-employment_insurance_office_no'][$index],
             'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
-            'hello_work_id' => $request->input('br-hello_work_id')[$index],
-            'labor_bureau_id' => $request->input('br-labor_bureau_id')[$index],
-            'labor_supervision_id' => $request->input('br-labor_supervision_id')[$index],
-            'start_date_of_month' => $request->input('br-start_date_of_month')[$index],
-            'start_days_of_week' => $request->input('br-start_days_of_week')[$index],
-            'start_time_of_day' => $request->input('br-start_time_of_day')[$index],
-            'work_time_start' => $request->input('br-work_time_start')[$index],
-            'work_time_end' => $request->input('br-work_time_end')[$index],
-            'agreed_hours_year' => $request->input('br-agreed_hours_year')[$index],
-            'agreed_hours_month' => $request->input('br-agreed_hours_month')[$index],
-            'agreed_hours_week' => $request->input('br-agreed_hours_week')[$index],
-            'agreed_hours_day' => $request->input('br-agreed_hours_day')[$index],
-            'working_days_yearly' => $request->input('br-working_days_yearly')[$index],
-            'working_days_monthly' => $request->input('br-working_days_monthly')[$index],
-            'holiday_yearly' => $request->input('br-holiday_yearly')[$index],
-            'holiday_monthly' => $request->input('br-holiday_monthly')[$index],
-            'holiday_legal' => $request->input('br-holiday_legal')[$index],
-            'holiday_not_logal' => $request->input('br-holiday_not_logal')[$index],
-            'work_style_type' => $request->input('br-work_style_type')[$index],
+            'hello_work_id' => $requestData['br-hello_work_id'][$index],
+            'labor_bureau_id' => $requestData['br-labor_bureau_id'][$index],
+            'labor_supervision_id' => $requestData['br-labor_supervision_id'][$index],
+            'start_date_of_month' => $requestData['br-start_date_of_month'][$index],
+            'start_days_of_week' => $requestData['br-start_days_of_week'][$index],
+            'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
+            'work_time_start' => $requestData['br-work_time_start'][$index],
+            'work_time_end' => $requestData['br-work_time_end'][$index],
+            'agreed_hours_year' => $requestData['br-agreed_hours_year'][$index],
+            'agreed_hours_month' => $requestData['br-agreed_hours_month'][$index],
+            'agreed_hours_week' => $requestData['br-agreed_hours_week'][$index],
+            'agreed_hours_day' => $requestData['br-agreed_hours_day'][$index],
+            'working_days_yearly' => $requestData['br-working_days_yearly'][$index],
+            'working_days_monthly' => $requestData['br-working_days_monthly'][$index],
+            'holiday_yearly' => $requestData['br-holiday_yearly'][$index],
+            'holiday_monthly' => $requestData['br-holiday_monthly'][$index],
+            'holiday_legal' => $requestData['br-holiday_legal'][$index],
+            'holiday_not_logal' => $requestData['br-holiday_not_logal'][$index],
+            'work_style_type' => $requestData['br-work_style_type'][$index],
         ];
     }
 }

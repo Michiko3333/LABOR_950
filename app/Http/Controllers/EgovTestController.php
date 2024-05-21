@@ -54,7 +54,7 @@ class EgovTestController extends Controller
         $folderPath = 'egov-test-log/' . $request->input('target_no', '0');
 
         $zipFileName = $request->input('target_no', '0') . '-' . date('YmdHis', $request->input('target_date', '0')) . '.zip';
-        $zipFilePath = Storage::path($folderPath . '/' . $zipFileName);
+        $zipFilePath = sys_get_temp_dir() . '/' . $zipFileName;
 
         // ZipArchiveインスタンスを作成
         $zip = new ZipArchive();

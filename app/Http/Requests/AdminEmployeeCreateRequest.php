@@ -14,6 +14,31 @@ class AdminEmployeeCreateRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['address_ward'])) {
+            $data['address_ward'] = mb_convert_kana($data['address_ward'], 'AS');
+        }
+        if (isset($data['address_apartment'])) {
+            $data['address_apartment'] = mb_convert_kana($data['address_apartment'], 'AS');
+        }
+        if (isset($data['emergency_address_ward1'])) {
+            $data['emergency_address_ward1'] = mb_convert_kana($data['emergency_address_ward1'], 'AS');
+        }
+        if (isset($data['emergency_address_apartment1'])) {
+            $data['emergency_address_apartment1'] = mb_convert_kana($data['emergency_address_apartment1'], 'AS');
+        }
+        if (isset($data['emergency_address_ward2'])) {
+            $data['emergency_address_ward2'] = mb_convert_kana($data['emergency_address_ward2'], 'AS');
+        }
+        if (isset($data['emergency_address_apartment2'])) {
+            $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'AS');
+        }
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -42,7 +67,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'name_common' => 'nullable|string|max:255',
             'name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'sex' => 'integer',
-            'birthday' => 'required|date',
+            'birthday' => 'required',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
@@ -55,7 +80,9 @@ class AdminEmployeeCreateRequest extends FormRequest
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            'fax' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            "fax1" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
+            "fax2" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "fax3" => 'nullable|string|regex:/[0-9]{3,4}$/',
             'mail_address1' => 'nullable|string|max:255|email',
             'mail_address2' => 'nullable|string|max:255|email',
             'emergency_contact1' => 'nullable|string|max:255',
@@ -113,6 +140,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             //'bank_account_no' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
+            'employer_type' => 'integer',
             'employer_type' => 'integer',
         ];
     }

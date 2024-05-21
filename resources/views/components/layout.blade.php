@@ -273,6 +273,7 @@
             @livewire('user-modal-content')
         </div>
     </div>
+
     <script type="module">
         window.openUserModal = () => {
             $('.user-modal').modal({

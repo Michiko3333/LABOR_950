@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\EgovAPI\Egov;
 use App\EgovAPI\EgovTestLog;
+use App\Http\Controllers\FinalExamController;
 
 class MixXmlEgovSigner
 {
@@ -25,17 +26,36 @@ class MixXmlEgovSigner
     private $signer;
     private $workingDirectory;
     private $afterLedgerPath;
-    
-    public function __construct($request)
+
+    /* -- 引数説明 --
+     * 通常利用は$requestのみ設定
+     * コマンド利用時には$request=nullかつ、$companyIdを設定
+    */
+    public function __construct($request=null, $companyId=null)
     {
-        $this->companyId = $request->session()->get('company_id');
-        $pathInfo = $request->getPathInfo();
-        $this->procedureId = preg_replace('~^/.*?/~', '', $pathInfo);
-        $this->signer = new Signer();
-        $this->signer->makeDir();
-        $this->workingDirectory = $this->signer->getPath();
-        preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
-        $this->afterLedgerPath = $matches[1];
+        if ($request != null || $companyId === null) {
+            $this->companyId = $request->session()->get('company_id');
+            $pathInfo = $request->getPathInfo();
+            $this->procedureId = preg_replace('~^/.*?/~', '', $pathInfo);
+            $this->signer = new Signer();
+            $this->signer->makeDir();
+            $this->workingDirectory = $this->signer->getPath();
+            preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
+            $this->afterLedgerPath = $matches[1];
+        } else {
+            $this->companyId = $companyId;
+            $date = now()->format('YmdHi');
+            do {
+                $randomNumber = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+                $uniqueNumber = $date . $randomNumber;
+                $folderExists = Storage::exists('egov-test/temp/' . $uniqueNumber);
+            } while ($folderExists);
+            Storage::makeDirectory('egov-test/temp/' . $uniqueNumber);
+            $this->workingDirectory = Storage::path('egov-test/temp/' . $uniqueNumber);
+            preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
+            $this->afterLedgerPath = $matches[1];
+        }
+
     }
 
     /* -- 引数説明 --
@@ -44,6 +64,7 @@ class MixXmlEgovSigner
     */
     public function run($request, $separater=False)
     {
+        EgovTestLog::info(print_r('******************************** MixEgovSigner start ********************************', true));
         $inputFolderPath = $this->xmlInput($request);
         $this->getPfx();
         Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/zip/');
@@ -55,7 +76,9 @@ class MixXmlEgovSigner
         $this->transformEmptyTags($kouseiFilePath);
         $base64Data = $this->zipBinary();
         $response = $this->sendProcedure($base64Data);
-        $this->signer->removeDir();
+        if ((!isset($_SERVER['EGOV_TEST'])) or ($_SERVER['EGOV_TEST'] == 'false')) {
+            $this->signer->removeDir();
+        }
         EgovTestLog::info(print_r('******************************** MixEgovSigner end ********************************', true));
         return $response;
     }
@@ -112,7 +135,7 @@ class MixXmlEgovSigner
         // 連絡先情報の設定
         $user = CurrentUser::info();
         // 社労士の場合は社労士情報
-        if ( $user->role_id == 500 ) { 
+        if ( $user->role_id == 500 ) {
             $laborConsultantCompanyId = Branch::where('id', $user->branch_id)->where('delete_flg', 0)->pluck('company_id')->first();
             if (!is_null($laborConsultantCompanyId)){
                 $laborConsultantCompany = Company::where('id', $laborConsultantCompanyId)->where('delete_flg', 0)->first();
@@ -124,7 +147,7 @@ class MixXmlEgovSigner
             }
             if (!is_null($user->last_name) && !is_null($user->first_name)) $request->merge(['contact_name' => $user->last_name . '　' . $user->first_name]);
             if (!is_null($user->last_name_kana) && !is_null($user->first_name_kana)) $request->merge(['contact_name_kana' => $user->last_name_kana . '　' . $user->first_name_kana]);
-            
+
             if (!is_null($laborConsultantManagerialPositionName)) $request->merge(['contact_managerial_position' => $laborConsultantManagerialPositionName]);
             if (!is_null($laborConsultantCompany)){
                 if (!is_null($laborConsultantCompany->name)) $request->merge(['contact_corporate_name' => $laborConsultantCompany->name]);
@@ -183,7 +206,6 @@ class MixXmlEgovSigner
         $folderPath = storage_path('/app/ledger-template/' . $procedureID);
         Storage::makeDirectory($this->afterLedgerPath . '/input_xml/');
         $outputPath = $this->workingDirectory . '/input_xml/';
-        $this->kousei_FolderPath = $outputPath . $procedureID;
 
         $this->copyFolder($folderPath, $outputPath);
         EgovTestLog::info(print_r('テンプレートフォルダのコピーが成功しました', true));
@@ -224,29 +246,29 @@ class MixXmlEgovSigner
             $xml->preserveWhiteSpace = true;
             $xml->formatOutput = true;
             $xml->load($attachmentPath);
-        
+
             $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
-        
+
             foreach ($attachments as $attachment) {
                 $newElement = $xml->createElement('添付書類属性情報');
                 $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
-        
+
                 $newElement->appendChild($xml->createElement('添付種別', $attachment['attachment_type']));
                 $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
-        
+
                 $newElement->appendChild($xml->createElement('添付書類名称', $attachment['attached_document_name']));
                 $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
-        
+
                 $newElement->appendChild($xml->createElement('添付書類ファイル名称', $attachment['attachment_file_name']));
                 $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
-        
+
                 $newElement->appendChild($xml->createElement('提出情報', $attachment['submission_info']));
                 $newElement->appendChild($xml->createTextNode("\n\t\t"));
-        
+
                 $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
                 $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
             }
-        
+
             $xml->save($attachmentPath);
         }
 
@@ -263,7 +285,7 @@ class MixXmlEgovSigner
                 if ($tempFileName == $outputFileName){
                     $xmlA ->load($templateFile);
                     break;
-                }   
+                }
             }
             $xmlB ->load($file);
             $xpathA = new \DOMXPath($xmlA);
@@ -283,7 +305,7 @@ class MixXmlEgovSigner
                 // 値からタグをサーチ
                 $querySerch = "//*[text()='{$valueA}']";
                 $targetElementsSerch = $xpathA->query($querySerch);
-                $elementSerch = $targetElementsSerch->item(0); 
+                $elementSerch = $targetElementsSerch->item(0);
                 // 値よりタグ名取得
                 $tagName = $elementSerch->nodeName;
                 // 比較しないタグであれば次へ
@@ -342,8 +364,8 @@ class MixXmlEgovSigner
             }
         }
         return $files;
-    }    
-    
+    }
+
     //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する。パスワードとパスは署名で再利用
     public function getPfx()
     {
@@ -359,27 +381,25 @@ class MixXmlEgovSigner
     public function putAttachment($request)
     {
         if ($request->files->count() !== 0) {
-            foreach ( $request->all() as $key => $value ) {
-                if (strpos($key, 'radio_') === 0) {
-                    $file_key = substr($key, strlen('radio_'));
-                    $file = $request->file($file_key);
-                    $attachment_file_name = $file->getClientOriginalName();
-                    $putPath = $this->afterLedgerPath . '/afterSigner/zip';
-                    $putFullPath = $this->workingDirectory . '/afterSigner/zip';
-                    $file->storeAs($putPath, $attachment_file_name);
-                    EgovTestLog::info(print_r('添付ファイルを配置しました filename:' . $attachment_file_name , true));
-                    
-                    // ファイルが完全に移動するまでチェック
-                    $counter = 5;
-                    while (True) {
-                        sleep(1);
-                        if (file_exists($putFullPath . '/' . $attachment_file_name)) {
-                            break;
-                        } else {
-                            $counter--;
-                            if ($counter == 0){
-                                throw new \Exception('添付ファイルが正しく移動しませんでした');
-                            }
+            foreach ($request->file() as $key => $file) {
+                $file_key = substr($key, strlen('radio_'));
+                $file = $request->file($file_key);
+                $attachment_file_name = $file->getClientOriginalName();
+                $putPath = $this->afterLedgerPath . '/afterSigner/zip';
+                $putFullPath = $this->workingDirectory . '/afterSigner/zip';
+                $file->storeAs($putPath, $attachment_file_name);
+                EgovTestLog::info(print_r('添付ファイルを配置しました filename:' . $attachment_file_name , true));
+
+                // ファイルが完全に移動するまでチェック
+                $counter = 5;
+                while (True) {
+                    sleep(1);
+                    if (file_exists($putFullPath . '/' . $attachment_file_name)) {
+                        break;
+                    } else {
+                        $counter--;
+                        if ($counter == 0){
+                            throw new \Exception('添付ファイルが正しく移動しませんでした');
                         }
                     }
                 }
@@ -408,11 +428,9 @@ class MixXmlEgovSigner
                 EgovTestLog::info(print_r('個別ファイル署名形式の署名に成功しました', true));
             }
         } else {
-            EgovTestLog::error("ｓｓ");
             $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password);
             if ( $signerBool==False ) {
                 EgovTestLog::error("標準形式の署名に失敗しました");
-                dd("miss");
             }else{
                 EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
             }
@@ -471,8 +489,7 @@ class MixXmlEgovSigner
             $api = Egov::accessToken($account->access_token);
             // 送信
             $r = $api->ApplicationDataTransmission($this->procedureId, $send_file);
-            $response = $r->toPsrResponse();
-            $body = $response->getBody()->getContents();
+            $body = $r->body();
             //　返却値が空だった場合、トークン再取得。
             if (empty($body)) {
                 if ( $counter > 3 ){
@@ -490,6 +507,12 @@ class MixXmlEgovSigner
                 EgovTestLog::info(print_r('申請データ送信返却値 手続ID:' . $this->procedureId . PHP_EOL . $decodedArray, true));
                 $guzzleResponse = $r->toPsrResponse();
                 $statusCode = $guzzleResponse->getStatusCode();
+                $headers = $guzzleResponse->getHeaders();
+                $headersText = '';
+                foreach ($headers as $name => $values) {
+                    $headersText .= $name . ': ' . implode(",\n", $values) . "\n";
+                }
+                EgovTestLog::info(print_r('headers :' . $headersText, true));
                 $returnData = [
                     false, [ 'title' => '', 'detail' => '' ]
                 ];
@@ -516,13 +539,13 @@ class MixXmlEgovSigner
     //リフレッシュトークンを利用してアクセストークンの取得
     public function useRefreshToAccess()
     {
+        $title = "アクセストークン再取得";
         $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
         $r = Egov::refreshToken($account['refresh_token'])->getToken();
-        EgovTestLog::info(print_r($r, true));
-        EgovTestLog::info(print_r($r->collect(), true));
+        EgovTestLog::info(print_r($title . '返却値: ' . $r, true));
         $access_token = $r['access_token'];
         $refresh_token = $r['refresh_token'];
-        
+
         $account->access_token = $access_token;
         $account->refresh_token = $refresh_token;
         $account->delete_flg = 0;
@@ -569,7 +592,7 @@ class MixXmlEgovSigner
             '役職', '法人団体名', '法人団体名フリガナ', '部門名', '部門名フリガナ', '郵便番号',
             '住所', '住所フリガナ', '電話番号', 'FAX番号', '電子メールアドレス',
         ];
-        
+
         // マッチする行を置換して変換
         foreach ($elements as $element) {
             $xmlContent = preg_replace(
@@ -582,5 +605,182 @@ class MixXmlEgovSigner
             file_put_contents($targetPath, $xmlContent);
             EgovTestLog::info('申請データ用のタグ変換が行われました');
         }
-    }    
+    }
+
+     /**
+     * 最終確認試験用
+     * 記入済みの帳票を署名し、手続送信を行う
+     * 標準の場合はstorage/app/egov-test/zipにファイルを配置。個別なら配下にフォルダ類配置
+     *
+     * @param string $proc_id 手続ID（手続識別子
+     * @param int $signerNUM    1:標準形式
+     *                          2:個別ファイル署名形式
+     *                          0:署名なし
+     * 手続選択で取得したスケルトンデータにデータを記入したファイルを下記フォルダを作成して配置
+     * 標準：ledger/dev/zip
+     * 個別：dev_separate
+     * 共通：zip置き場のledgertmpフォルダ
+     */
+    public function runExam($proc_id, $signerNUM=1, $examNo)
+    {
+        EgovTestLog::info(print_r('******************************** MixEgovSigner exam start ********************************', true));
+        EgovTestLog::info(print_r($this->workingDirectory . $this->afterLedgerPath, true));
+
+        if ('getPfx') {
+            $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
+            $binarypfx = $pfx->file;
+            $this->password = $pfx->password;
+            $this->pfxFilepath = $this->workingDirectory . '/certificate.pfx';
+            file_put_contents($this->pfxFilepath, $binarypfx);
+            EgovTestLog::info(print_r('pfxファイルの復元に成功しました', true));
+        }
+        Storage::makeDirectory($this->afterLedgerPath . '/wordking');
+        Storage::makeDirectory($this->afterLedgerPath . '/wordking/zip/');
+        $workingPath = $this->workingDirectory . '/wordking/';
+        $signerFolderPath = $this->workingDirectory . '/wordking/zip/';
+
+        // egov-test/{手続ID}よりファイルをsignerFolderPathにコピー
+        if ('copy') {
+            $sourceFolder = Storage::path('egov-test/' . $proc_id);
+            // return $sourceFolder;
+            $files = scandir($sourceFolder);
+            foreach ($files as $file) {
+                $sourceFilePath = $sourceFolder . '/' . $file;
+                if (is_file($sourceFilePath)) {
+                    $destinationFilePath = $signerFolderPath . '/' . $file;
+                    copy($sourceFilePath, $destinationFilePath);
+                }
+            }
+        }
+
+        // 署名
+        if ('egovSigner') {
+            $signer = new Signer();
+            if ($signerNUM==2){
+                    $filenamePattern = 'kousei' . date("Y") . '*.xml';
+                    $files = glob($signerFolderPath . $filenamePattern);
+                    $signerTargetPath = $files[0];
+                    rename($signerFolderPath . 'kousei.xml', $signerFolderPath . 'kousei_tmp.xml');
+                    rename($signerTargetPath, $signerFolderPath . 'kousei.xml');
+                    $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
+                    rename($signerFolderPath . 'kousei.xml', $signerTargetPath);
+                    rename($signerFolderPath . 'kousei_tmp.xml', $signerFolderPath . 'kousei.xml');
+                if ( $signerBool==False ) {
+                    EgovTestLog::error("個別ファイル署名形式の署名に失敗しました");
+                }else{
+                    EgovTestLog::info(print_r('個別ファイル署名形式の署名に成功しました', true));
+                }
+            } elseif ($signerNUM==1){
+                $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
+                if ( $signerBool==False ) {
+                    EgovTestLog::error("標準形式の署名に失敗しました");
+                }else{
+                    EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
+                }
+            } elseif ($signerNUM==0){
+                //
+            }
+        }
+        $kouseiFilePath = $signerFolderPath . "kousei.xml";
+        $this->transformEmptyTags($kouseiFilePath);
+        // return 3;
+
+        //zip圧縮後、base64バイナリデータを返す
+        if ('zipBinary') {
+            $zipfilepath = $this->workingDirectory . '/send_data.zip';
+            $zip = new \ZipArchive();
+            if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+                $files = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($workingPath),
+                    \RecursiveIteratorIterator::LEAVES_ONLY
+                );
+                foreach ($files as $name => $file) {
+                    $extension = pathinfo($file, PATHINFO_EXTENSION);
+                    if (!$file->isDir() && $extension !== 'pfx') {
+                        $filePath = $file->getRealPath();
+                        $relativePath = str_replace($workingPath, '', $filePath);
+                        $zip->addFile($filePath, $relativePath);
+                    }
+                }
+                $zip->close();
+                EgovTestLog::info(print_r('標準zipファイル作成に成功しました', true));
+            } else {
+                EgovTestLog::error("zipファイル作成に失敗しました");
+            }
+            $base64Data = base64_encode(file_get_contents($zipfilepath));
+        }
+
+        // 申請データ送信
+        if ('sendProcedure') {
+            $send_file = new \stdClass();
+            $send_file->file_name = $proc_id . '.zip';
+            $send_file->file_data = $base64Data;
+
+            $counter = 0;
+            $response = null;
+            while (True){
+                $counter++;
+                $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
+                $api = Egov::accessToken($account->access_token);
+                // 送信
+                $r = $api->ApplicationDataTransmission($proc_id, $send_file);
+                // ログ作成
+                FinalExamController::logoutput($r, $examNo);
+                $body = $r->body();
+                //　返却値が空だった場合、トークン再取得。
+                if (empty($body)) {
+                    if ( $counter > 3 ){
+                        EgovTestLog::error("予期せぬエラー：申請データ送信に失敗しました");
+                        EgovTestLog::info(print_r($r->collect(), true));
+                        $returnData = [
+                            false, [ 'title' => '予期せぬエラー', 'detail' => '申請データ送信に失敗しました' ]
+                        ];
+                        break;
+                    }
+                    $this->useRefreshToAccess();
+                } else {
+                    $jsonString = $r->getBody()->getContents();
+                    $decodedArray = json_decode($jsonString, true);
+                    EgovTestLog::info(print_r('申請データ送信返却値 手続ID:' . $this->procedureId . PHP_EOL . $decodedArray, true));
+                    $guzzleResponse = $r->toPsrResponse();
+                    $statusCode = $guzzleResponse->getStatusCode();
+                    $headers = $guzzleResponse->getHeaders();
+                    $headersText = '';
+                    foreach ($headers as $name => $values) {
+                        $headersText .= $name . ': ' . implode(",\n", $values) . "\n";
+                    }
+                    EgovTestLog::info(print_r($proc_id . '/headers :' . $headersText, true));
+                    if ($statusCode == 200){
+                        EgovTestLog::info(print_r($r, true));
+                        EgovTestLog::info(print_r('手続送信に成功しました', true));
+                        EgovTestLog::info(print_r($r->collect(), true));
+                        $this->TableInsert($r);
+                        $decodedTitle = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
+                            return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
+                        }, $r->collect());
+                        $response = $decodedTitle;
+                        break;
+                    }else{
+                        EgovTestLog::error("返却値エラー：申請データ送信に失敗しました");
+                        EgovTestLog::info(print_r($r->collect(), true));
+                        $decodedTitle = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
+                            return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
+                        }, $r->collect());
+                        $response = $decodedTitle;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // 　一時ファイル削除
+        $files = Storage::files($this->workingDirectory);
+        foreach ($files as $file) {
+            Storage::delete($file);
+        }
+        Storage::deleteDirectory($this->workingDirectory);
+
+        EgovTestLog::info(print_r('******************************** MixEgovSigner exam end ********************************', true));
+        return $response;
+    }
 }

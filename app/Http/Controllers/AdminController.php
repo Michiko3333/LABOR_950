@@ -45,6 +45,7 @@ use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
+use App\Models\Receptionist;
 
 class AdminController extends Controller
 {
@@ -113,18 +114,20 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
-            $data = $this->data_company($request);
-            $company_id = Company::create($data)->id;
+            $request->request->remove('_token');
+            $data = $request->validationData($request);
+            $companyData = $this->data_company($data);
+            $company_id = Company::create($companyData)->id;
             $brname = $request->input('br-name');
             foreach ($brname as $index => $name) {
-                $brdata = $this->data_branch($request, $index, $company_id);
+                $brdata = $this->data_branch($data, $index, $company_id);
                 Branch::create($brdata);
             }
             DB::commit();
             $this->putSuccess($request);
         } catch (ValidationException $e) {
             DB::rollback();
-            return redirect()->back()->withErrors($e->errors())->withInput();
+            return redirect()->back()->withErrors($e->errors())->withInput($data->all());
         } catch (UniqueConstraintViolationException $e) {
             $errorString = $e->getMessage();
             DB::rollback();
@@ -132,7 +135,7 @@ class AdminController extends Controller
                 $errorMessage = '{"stock_code_unique":["入力された証券コードは既に登録されています."]}';
                 return redirect()->back()->withErrors(json_decode($errorMessage, true))->withInput();
             } else {
-                return redirect()->back()->withErrors("")->withInput();
+                return redirect()->back()->withErrors("")->withInput($data->all());
             }
         }
         return redirect()->route('admin.company');
@@ -169,12 +172,14 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
-            $data = $this->data_company($request);
-            Company::where('id', $id)->update($data);
+            $request->request->remove('_token');
+            $data = $request->validationData($request);
+            $companyData = $this->data_company($data);
+            Company::where('id', $id)->update($companyData);
             $brids = $request->input('br-id');
             $excepts = [];
             foreach ($brids as $index => $brid) {
-                $brdata = $this->data_branch($request, $index, $id);
+                $brdata = $this->data_branch($data, $index, $id);
                 if ($brid > 0) {
                     Branch::where('id', $brid)->update($brdata);
                     $excepts[] = $brid;
@@ -222,48 +227,48 @@ class AdminController extends Controller
         return $input ? Carbon::createFromFormat('Y年n月j日', $input)->format('Y-m-d') : null;
     }
 
-    private function data_company(Request $request)
+    private function data_company(array $requestData)
     {
-        $formatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
-        $formatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
+        $formatted_founding_date = $requestData['founding_date'] ? Carbon::createFromFormat('Y年n月j日', $requestData['founding_date'])->format('Y-m-d') : null;
+        $formatted_establishment_date = $requestData['establishment_date'] ? Carbon::createFromFormat('Y年n月j日', $requestData['establishment_date'])->format('Y-m-d') : null;
         return [
-            'company_division' => $request->input('company_division'),
-            'name' => $request->input('name'),
-            'name_kana' => $request->input('name_kana'),
-            'name_en' => $request->input('name_en'),
-            'name_abbreviation' => $request->input('name_abbreviation'),
-            'company_no' => $request->input('company_no'),
-            'company_type_id' => $request->input('company_type_id'),
-            'license_no' => $request->input('license_no'),
-            'business_type' => $request->input('business_type'),
-            'listed_type' => $request->input('listed_type'),
-            'stock_code' => $request->input('stock_code'),
+            'company_division' => $requestData['company_division'],
+            'name' => $requestData['name'],
+            'name_kana' => $requestData['name_kana'],
+            'name_en' => $requestData['name_en'],
+            'name_abbreviation' => $requestData['name_abbreviation'],
+            'company_no' => $requestData['company_no'],
+            'company_type_id' => $requestData['company_type_id'],
+            'license_no' => $requestData['license_no'],
+            'business_type' => $requestData['business_type'],
+            'listed_type' => $requestData['listed_type'],
+            'stock_code' => $requestData['stock_code'],
             'founding_date' => $formatted_founding_date,
             'establishment_date' => $formatted_establishment_date,
-            'capital' => $request->input('capital'),
-            'annual_sales' => $request->input('annual_sales'),
-            'employee_sum' => $request->input('employee_sum'),
-            'qualification' => $request->input('qualification'),
-            'authorized_shares' => $request->input('authorized_shares'),
-            'issued_shares' => $request->input('issued_shares'),
-            'supplier_company' => $request->input('supplier_company'),
-            'outsourcing_company' => $request->input('outsourcing_company'),
-            'sales_company' => $request->input('sales_company'),
-            'url' => $request->input('url'),
-            'purpose' => $request->input('purpose'),
-            'procedure_hidden_flg' => $request->input('procedure_hidden_flg'),
+            'capital' => $requestData['capital'],
+            'annual_sales' => $requestData['annual_sales'],
+            'employee_sum' => $requestData['employee_sum'],
+            'qualification' => $requestData['qualification'],
+            'authorized_shares' => $requestData['authorized_shares'],
+            'issued_shares' => $requestData['issued_shares'],
+            'supplier_company' => $requestData['supplier_company'],
+            'outsourcing_company' => $requestData['outsourcing_company'],
+            'sales_company' => $requestData['sales_company'],
+            'url' => $requestData['url'],
+            'purpose' => $requestData['purpose'],
+            'procedure_hidden_flg' => $requestData['procedure_hidden_flg'],
         ];
     }
 
-    private function data_branch(Request $request, $index, $company_id)
+    private function data_branch(array $requestData, $index, $company_id)
     {
-        $input_date1 = $request->input('br-labor_insurance_establishment_date')[$index];
+        $input_date1 = $requestData['br-labor_insurance_establishment_date'][$index];
         if (!is_null($input_date1) && strtotime($input_date1) === false) {
             $formatted_br_labor_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
         } else {
             $formatted_br_labor_insurance_establishment_date = $input_date1;
         }
-        $input_date2 = $request->input('br-employment_insurance_establishment_date')[$index];
+        $input_date2 = $requestData['br-employment_insurance_establishment_date'][$index];
         if (!is_null($input_date2) && strtotime($input_date2) === false) {
             $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
         } else {
@@ -271,23 +276,23 @@ class AdminController extends Controller
         }
 
         $fax = [];
-        $fax1 = $request->input('br-fax1') ?? null;
-        $fax2 = $request->input('br-fax2') ?? null;
-        $fax3 = $request->input('br-fax3') ?? null;
-        $fax1Index = count($request->input('br-fax1')) ?? null;
-        $fax2Index = count($request->input('br-fax2')) ?? null;
-        $fax3Index = count($request->input('br-fax3')) ?? null;
+        $fax1 = $requestData['br-fax1'] ?? null;
+        $fax2 = $requestData['br-fax2'] ?? null;
+        $fax3 = $requestData['br-fax3'] ?? null;
+        $fax1Index = count($requestData['br-fax1']) ?? null;
+        $fax2Index = count($requestData['br-fax2']) ?? null;
+        $fax3Index = count($requestData['br-fax3']) ?? null;
 
         if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
             $count = '';
-            if($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+            if ($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
                 $count = $fax1Index;
-            } elseif($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+            } elseif ($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
                 $count = $fax2Index;
             } else {
                 $count = $fax3Index;
             }
-            
+
             for ($i = 0; $i < $count; $i++) {
                 $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
                 $part2 = isset($fax2[$i]) ? $fax2[$i] : '';
@@ -300,52 +305,52 @@ class AdminController extends Controller
         }
 
         return [
-            'name' => $request->input('br-name')[$index],
+            'name' => $requestData['br-name'][$index],
             'company_id' => $company_id,
-            'post_code' => $request->input('br-post_code')[$index],
-            'address_prefecture' => $request->input('br-address_prefecture')[$index],
-            'address_city' => $request->input('br-address_city')[$index],
-            'address_ward' => $request->input('br-address_ward')[$index],
-            'address_apartment' => $request->input('br-address_apartment')[$index],
-            'tel_area_code' => $request->input('br-tel_area_code')[$index],
-            'tel_city_code' => $request->input('br-tel_city_code')[$index],
-            'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
-            'tel_overseas' => $request->input('br-tel_overseas')[$index],
+            'post_code' => $requestData['br-post_code'][$index],
+            'address_prefecture' => $requestData['br-address_prefecture'][$index],
+            'address_city' => $requestData['br-address_city'][$index],
+            'address_ward' => $requestData['br-address_ward'][$index],
+            'address_apartment' => $requestData['br-address_apartment'][$index],
+            'tel_area_code' => $requestData['br-tel_area_code'][$index],
+            'tel_city_code' => $requestData['br-tel_city_code'][$index],
+            'tel_subscriber_code' => $requestData['br-tel_subscriber_code'][$index],
+            'tel_overseas' => $requestData['br-tel_overseas'][$index],
             'fax' => $fax[$index],
-            'mail_address' => $request->input('br-mail_address')[$index],
-            'place_type' => $request->input('br-place_type')[$index],
-            'branch_type' => $request->input('br-branch_type')[$index],
-            'labor_insurance_no' => $request->input('br-labor_insurance_no')[$index],
-            'labor_insurance_payment_method' => $request->input('br-labor_insurance_payment_method')[$index],
+            'mail_address' => $requestData['br-mail_address'][$index],
+            'place_type' => $requestData['br-place_type'][$index],
+            'branch_type' => $requestData['br-branch_type'][$index],
+            'labor_insurance_no' => $requestData['br-labor_insurance_no'][$index],
+            'labor_insurance_payment_method' => $requestData['br-labor_insurance_payment_method'][$index],
             'labor_insurance_establishment_date' => $formatted_br_labor_insurance_establishment_date,
-            'insurance_office_no' => $request->input('br-insurance_office_no')[$index],
-            'insurance_office_reference_no' => $request->input('br-insurance_office_reference_no')[$index],
-            'pension_office_no' => $request->input('br-pension_office_no')[$index],
-            'pension_office_id' => $request->input('br-pension_office_id')[$index],
-            'pension_office_reference_prefecture' => $request->input('br-pension_office_reference_prefecture')[$index],
-            'pension_office_reference_no_cities' => $request->input('br-pension_office_reference_no_cities')[$index],
-            'pension_office_reference_no_office' => $request->input('br-pension_office_reference_no_office')[$index],
-            'employment_insurance_office_no' => $request->input('br-employment_insurance_office_no')[$index],
+            'insurance_office_no' => $requestData['br-insurance_office_no'][$index],
+            'insurance_office_reference_no' => $requestData['br-insurance_office_reference_no'][$index],
+            'pension_office_no' => $requestData['br-pension_office_no'][$index],
+            'pension_office_id' => $requestData['br-pension_office_id'][$index],
+            'pension_office_reference_prefecture' => $requestData['br-pension_office_reference_prefecture'][$index],
+            'pension_office_reference_no_cities' => $requestData['br-pension_office_reference_no_cities'][$index],
+            'pension_office_reference_no_office' => $requestData['br-pension_office_reference_no_office'][$index],
+            'employment_insurance_office_no' => $requestData['br-employment_insurance_office_no'][$index],
             'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
-            'hello_work_id' => $request->input('br-hello_work_id')[$index],
-            'labor_bureau_id' => $request->input('br-labor_bureau_id')[$index],
-            'labor_supervision_id' => $request->input('br-labor_supervision_id')[$index],
-            'start_date_of_month' => $request->input('br-start_date_of_month')[$index],
-            'start_days_of_week' => $request->input('br-start_days_of_week')[$index],
-            'start_time_of_day' => $request->input('br-start_time_of_day')[$index],
-            'work_time_start' => $request->input('br-work_time_start')[$index],
-            'work_time_end' => $request->input('br-work_time_end')[$index],
-            'agreed_hours_year' => $request->input('br-agreed_hours_year')[$index],
-            'agreed_hours_month' => $request->input('br-agreed_hours_month')[$index],
-            'agreed_hours_week' => $request->input('br-agreed_hours_week')[$index],
-            'agreed_hours_day' => $request->input('br-agreed_hours_day')[$index],
-            'working_days_yearly' => $request->input('br-working_days_yearly')[$index],
-            'working_days_monthly' => $request->input('br-working_days_monthly')[$index],
-            'holiday_yearly' => $request->input('br-holiday_yearly')[$index],
-            'holiday_monthly' => $request->input('br-holiday_monthly')[$index],
-            'holiday_legal' => $request->input('br-holiday_legal')[$index],
-            'holiday_not_logal' => $request->input('br-holiday_not_logal')[$index],
-            'work_style_type' => $request->input('br-work_style_type')[$index],
+            'hello_work_id' => $requestData['br-hello_work_id'][$index],
+            'labor_bureau_id' => $requestData['br-labor_bureau_id'][$index],
+            'labor_supervision_id' => $requestData['br-labor_supervision_id'][$index],
+            'start_date_of_month' => $requestData['br-start_date_of_month'][$index],
+            'start_days_of_week' => $requestData['br-start_days_of_week'][$index],
+            'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
+            'work_time_start' => $requestData['br-work_time_start'][$index],
+            'work_time_end' => $requestData['br-work_time_end'][$index],
+            'agreed_hours_year' => $requestData['br-agreed_hours_year'][$index],
+            'agreed_hours_month' => $requestData['br-agreed_hours_month'][$index],
+            'agreed_hours_week' => $requestData['br-agreed_hours_week'][$index],
+            'agreed_hours_day' => $requestData['br-agreed_hours_day'][$index],
+            'working_days_yearly' => $requestData['br-working_days_yearly'][$index],
+            'working_days_monthly' => $requestData['br-working_days_monthly'][$index],
+            'holiday_yearly' => $requestData['br-holiday_yearly'][$index],
+            'holiday_monthly' => $requestData['br-holiday_monthly'][$index],
+            'holiday_legal' => $requestData['br-holiday_legal'][$index],
+            'holiday_not_logal' => $requestData['br-holiday_not_logal'][$index],
+            'work_style_type' => $requestData['br-work_style_type'][$index],
         ];
     }
 
@@ -547,9 +552,21 @@ class AdminController extends Controller
 
     public function employee_create_post(AdminEmployeeCreateRequest $request)
     {
+        $fax = implode('-', [
+            $request->input('fax1'),
+            $request->input('fax2'),
+            $request->input('fax3')
+        ]);
         DB::beginTransaction();
 
         try {
+            $validationData = $request->validationData($request);
+            $address_ward = $validationData['address_ward'];
+            $address_apartment = $validationData['address_apartment'];
+            $emergency_address_ward1 = $validationData['emergency_address_ward1'];
+            $emergency_address_apartment1 = $validationData['emergency_address_apartment1'];
+            $emergency_address_ward2 = $validationData['emergency_address_ward2'];
+            $emergency_address_apartment2 = $validationData['emergency_address_apartment2'];
             $employee_id = Employee::create([
                 'employee_no' => $request->input('employee_no'),
                 'branch_id' => $request->input('branch_id'),
@@ -575,8 +592,8 @@ class AdminController extends Controller
                 'post_code' => $request->input('post_code'),
                 'address_prefecture' => $request->input('address_prefecture'),
                 'address_city' => $request->input('address_city'),
-                'address_ward' => $request->input('address_ward'),
-                'address_apartment' => $request->input('address_apartment'),
+                'address_ward' => $address_ward,
+                'address_apartment' => $address_apartment,
                 // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
                 'address_city_kana' => $request->input('address_city_kana'),
                 'address_ward_kana' => $request->input('address_ward_kana'),
@@ -584,7 +601,7 @@ class AdminController extends Controller
                 'tel_area_code' => $request->input('tel_area_code'),
                 'tel_city_code' => $request->input('tel_city_code'),
                 'tel_subscriber_code' => $request->input('tel_subscriber_code'),
-                'fax' => $request->input('fax'),
+                'fax' => $fax,
                 'mail_address1' => $request->input('mail_address1'),
                 'mail_address2' => $request->input('mail_address2'),
                 'emergency_contact1' => $request->input('emergency_contact1'),
@@ -592,15 +609,15 @@ class AdminController extends Controller
                 'emergency_tel1' => $request->input('emergency_tel1'),
                 'emergency_address_prefecture1' => $request->input('emergency_address_prefecture1'),
                 'emergency_address_city1' => $request->input('emergency_address_city1'),
-                'emergency_address_ward1' => $request->input('emergency_address_ward1'),
-                'emergency_address_apartment1' => $request->input('emergency_address_apartment1'),
+                'emergency_address_ward1' => $emergency_address_ward1,
+                'emergency_address_apartment1' => $emergency_address_apartment1,
                 'emergency_contact2' => $request->input('emergency_contact2'),
                 'emergency_relationship2' => $request->input('emergency_relationship2'),
                 'emergency_tel2' => $request->input('emergency_tel2'),
                 'emergency_address_prefecture2' => $request->input('emergency_address_prefecture2'),
                 'emergency_address_city2' => $request->input('emergency_address_city2'),
-                'emergency_address_ward2' => $request->input('emergency_address_ward2'),
-                'emergency_address_apartment2' => $request->input('emergency_address_apartment2'),
+                'emergency_address_ward2' => $emergency_address_ward2,
+                'emergency_address_apartment2' => $emergency_address_apartment2,
                 'spouse_flg' => $request->input('spouse_flg'),
                 'dependent_flg' => $request->input('dependent_flg'),
                 'dependent_family_number' => $request->input('dependent_family_number'),
@@ -702,6 +719,12 @@ class AdminController extends Controller
         $employee->company_id = $company->id;
         $employee->branch_name = $branch->name;
 
+        if ($employee && !empty($employee->fax)) {
+            $faxParts = explode('-', $employee->fax);
+        } else {
+            $faxParts = ['', '', ''];
+        }
+        
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
         $sex_type = Values_sex::pluck('name', 'id');
         $prefectures = Prefecture::pluck('name', 'id');
@@ -729,14 +752,27 @@ class AdminController extends Controller
             'employment_insurance_type' => $employment_insurance_type,
             'insurance_loss_reason' => $insurance_loss_reason,
             'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
-            'occupation_type' => $occupation_type
+            'occupation_type' => $occupation_type,
+            'faxParts' => $faxParts,
         ]);
     }
 
     public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
+        $fax = implode('-', [
+            $request->input('fax1'),
+            $request->input('fax2'),
+            $request->input('fax3')
+        ]);
         DB::beginTransaction();
         try {
+            $data = $request->validationData($request);
+            $address_ward = $data['address_ward'];
+            $address_apartment = $data['address_apartment'];
+            $emergency_address_ward1 = $data['emergency_address_ward1'];
+            $emergency_address_apartment1 = $data['emergency_address_apartment1'];
+            $emergency_address_ward2 = $data['emergency_address_ward2'];
+            $emergency_address_apartment2 = $data['emergency_address_apartment2'];
             Employee::where('id', $request->input('employee_id'))
                 ->update([
                     'employee_no' => $request->input('employee_no'),
@@ -763,8 +799,8 @@ class AdminController extends Controller
                     'post_code' => $request->input('post_code'),
                     'address_prefecture' => $request->input('address_prefecture'),
                     'address_city' => $request->input('address_city'),
-                    'address_ward' => $request->input('address_ward'),
-                    'address_apartment' => $request->input('address_apartment'),
+                    'address_ward' => $address_ward,
+                    'address_apartment' => $address_apartment,
                     // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
                     'address_city_kana' => $request->input('address_city_kana'),
                     'address_ward_kana' => $request->input('address_ward_kana'),
@@ -772,7 +808,7 @@ class AdminController extends Controller
                     'tel_area_code' => $request->input('tel_area_code'),
                     'tel_city_code' => $request->input('tel_city_code'),
                     'tel_subscriber_code' => $request->input('tel_subscriber_code'),
-                    'fax' => $request->input('fax'),
+                    'fax' => $fax,
                     'mail_address1' => $request->input('mail_address1'),
                     'mail_address2' => $request->input('mail_address2'),
                     'emergency_contact1' => $request->input('emergency_contact1'),
@@ -780,15 +816,15 @@ class AdminController extends Controller
                     'emergency_tel1' => $request->input('emergency_tel1'),
                     'emergency_address_prefecture1' => $request->input('emergency_address_prefecture1'),
                     'emergency_address_city1' => $request->input('emergency_address_city1'),
-                    'emergency_address_ward1' => $request->input('emergency_address_ward1'),
-                    'emergency_address_apartment1' => $request->input('emergency_address_apartment1'),
+                    'emergency_address_ward1' => $emergency_address_ward1,
+                    'emergency_address_apartment1' => $emergency_address_apartment1,
                     'emergency_contact2' => $request->input('emergency_contact2'),
                     'emergency_relationship2' => $request->input('emergency_relationship2'),
                     'emergency_tel2' => $request->input('emergency_tel2'),
                     'emergency_address_prefecture2' => $request->input('emergency_address_prefecture2'),
                     'emergency_address_city2' => $request->input('emergency_address_city2'),
-                    'emergency_address_ward2' => $request->input('emergency_address_ward2'),
-                    'emergency_address_apartment2' => $request->input('emergency_address_apartment2'),
+                    'emergency_address_ward2' => $emergency_address_ward2,
+                    'emergency_address_apartment2' => $emergency_address_apartment2,
                     'spouse_flg' => $request->input('spouse_flg'),
                     'dependent_flg' => $request->input('dependent_flg'),
                     'dependent_family_number' => $request->input('dependent_family_number'),
@@ -874,5 +910,22 @@ class AdminController extends Controller
             return back()->withErrors('エラー');
         }
         return redirect()->route('admin.labor');
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // 社労士顧客会社設定
+    // ---------------------------------------------------------------------------------------
+
+    public function client(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        if (empty($employee)) {
+            return redirect()->route('admin.labor');
+        }
+
+        $company = $employee->branch->company()->first();
+
+        return view('admin.client', ['employee' => $employee, 'company' => $company]);
     }
 }

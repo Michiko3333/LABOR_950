@@ -40,8 +40,10 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
 use App\Http\Controllers\Contract\EmployeeContractController;
+use App\Http\Controllers\FinalExamAfterLogoutController;
 use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\FinalExamController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -116,6 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
     Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
     Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
+    Route::get('/admin/labor/client/{id}', [AdminController::class, 'client'])->name('admin.client');
 
     ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
     Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
@@ -198,4 +201,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
     Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
     Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
+
+    //最終試験用
+    Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
 });

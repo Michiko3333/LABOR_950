@@ -50,9 +50,11 @@ class CompanyController extends Controller
     {
         DB::beginTransaction();
         try {
-            $data = $this->data_company($request);
+            $request->request->remove('_token');
+            $data = $request->validationData($request);
+            $companyData = $this->data_company($data);
             $currentCompany = CurrentUser::currentCompany();
-            $currentCompany->update($data);
+            $currentCompany->update($companyData);
             DB::commit();
             $this->putSuccess($request);
         } catch (ValidationException $e) {
@@ -71,34 +73,34 @@ class CompanyController extends Controller
         return redirect()->route('company_edit');
     }
 
-    private function data_company(Request $request)
+    private function data_company(array $requestData)
     {
-        $formmatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
-        $formmatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
+        $formatted_founding_date = $requestData['founding_date'] ? Carbon::createFromFormat('Y年n月j日', $requestData['founding_date'])->format('Y-m-d') : null;
+        $formatted_establishment_date = $requestData['establishment_date'] ? Carbon::createFromFormat('Y年n月j日', $requestData['establishment_date'])->format('Y-m-d') : null;
         return [
-            'name' => $request->input('name'),
-            'name_kana' => $request->input('name_kana'),
-            'name_en' => $request->input('name_en'),
-            'name_abbreviation' => $request->input('name_abbreviation'),
-            'company_no' => $request->input('company_no'),
-            'company_type_id' => $request->input('company_type_id'),
-            'license_no' => $request->input('license_no'),
-            'business_type' => $request->input('business_type'),
-            'listed_type' => $request->input('listed_type'),
-            'stock_code' => $request->input('stock_code'),
-            'founding_date' => $formmatted_founding_date,
-            'establishment_date' => $formmatted_establishment_date,
-            'capital' => $request->input('capital'),
-            'annual_sales' => $request->input('annual_sales'),
-            'employee_sum' => $request->input('employee_sum'),
-            'qualification' => $request->input('qualification'),
-            'authorized_shares' => $request->input('authorized_shares'),
-            'issued_shares' => $request->input('issued_shares'),
-            'supplier_company' => $request->input('supplier_company'),
-            'outsourcing_company' => $request->input('outsourcing_company'),
-            'sales_company' => $request->input('sales_company'),
-            'url' => $request->input('url'),
-            'purpose' => $request->input('purpose')
+            'name' => $requestData['name'],
+            'name_kana' => $requestData['name_kana'],
+            'name_en' => $requestData['name_en'],
+            'name_abbreviation' => $requestData['name_abbreviation'],
+            'company_no' => $requestData['company_no'],
+            'company_type_id' => $requestData['company_type_id'],
+            'license_no' => $requestData['license_no'],
+            'business_type' => $requestData['business_type'],
+            'listed_type' => $requestData['listed_type'],
+            'stock_code' => $requestData['stock_code'],
+            'founding_date' => $formatted_founding_date,
+            'establishment_date' => $formatted_establishment_date,
+            'capital' => $requestData['capital'],
+            'annual_sales' => $requestData['annual_sales'],
+            'employee_sum' => $requestData['employee_sum'],
+            'qualification' => $requestData['qualification'],
+            'authorized_shares' => $requestData['authorized_shares'],
+            'issued_shares' => $requestData['issued_shares'],
+            'supplier_company' => $requestData['supplier_company'],
+            'outsourcing_company' => $requestData['outsourcing_company'],
+            'sales_company' => $requestData['sales_company'],
+            'url' => $requestData['url'],
+            'purpose' => $requestData['purpose'],
         ];
     }
 }

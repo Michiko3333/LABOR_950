@@ -14,6 +14,24 @@ class BranchRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        $data = array_map(function($value) {
+            if (!is_array($value)) {
+                if (isset($value['br-address_ward'])) {
+                    $value['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $value['br-address_ward']);
+                }
+                if (isset($value['br-address_apartment'])) {
+                    $value['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $value['br-address_apartment']);
+                }
+            }
+            return $value;
+        }, $data);
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,11 +51,11 @@ class BranchRequest extends FormRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
+            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥]+\z/u',
             "br-address_ward" => 'required|array',
-            "br-address_ward.*" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            "br-address_ward.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９‐－]+\z/u',
             "br-address_apartment" => 'required|array',
-            "br-address_apartment.*" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９Ａ-Ｚ　‐]+\z/u',
+            "br-address_apartment.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ　‐－]+\z/u',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'required|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',
@@ -46,6 +64,12 @@ class BranchRequest extends FormRequest
             "br-tel_subscriber_code.*" => 'required|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_overseas" => 'array',
             "br-tel_overseas.*" => 'nullable|max:15|regex:/\A[0-9]+\z/u',
+            "br-fax1" => 'array',
+            "br-fax1.*" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
+            "br-fax2" => 'array',
+            "br-fax2.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "br-fax3" => 'array',
+            "br-fax3.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
             "br-mail_address" => 'array',
             "br-mail_address.*" => 'required|regex:/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
             "br-labor_insurance_no" => 'array',
