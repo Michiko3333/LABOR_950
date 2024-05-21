@@ -3,11 +3,9 @@
 namespace App\Livewire;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
-use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
-use App\Models\CurrentUser;
 use App\Models\Employee;
 use App\Models\Branch;
 use App\Models\Company;
@@ -143,22 +141,35 @@ class ClientModalContent extends BaseTable
 
     public function settingCompany()
     {
-        $this->validate([
-            'settingId.1' => 'required',
-            'startDate' => 'required',
-            'endDate' => 'required|gt:startDate',
-        ], [
-            'settingId.1.required' => '会社を選択してください',
-            'startDate.required' => '契約開始日は必須です。',
-            'endDate.required' => '契約終了日は必須です。',
-            'endDate.gt' => '契約終了日は契約開始日以降の日付でなければなりません。',
-        ]);
+        try {
+            $startDate = Carbon::createFromFormat('Y年n月j日', $this->startDate);
+            $endDate = Carbon::createFromFormat('Y年n月j日', $this->endDate);
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages([
+                'startDate' => '契約開始日は有効な日付でなければなりません。',
+                'endDate' => '契約終了日は有効な日付でなければなりません。',
+            ]);
+        }
 
         $employee_id = $this->settingId[0];
         $company_id = $this->settingId[1];
+        
+        $this->startDate = $startDate->format('Y-m-d');
+        $this->endDate = $endDate->format('Y-m-d');
 
-        $startDate = Carbon::createFromFormat('Y年n月j日', $this->startDate)->format('Y-m-d');
-        $endDate = Carbon::createFromFormat('Y年n月j日', $this->endDate)->format('Y-m-d');
+        
+        $this->validate([
+            'settingId.1' => 'required',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date|after:startDate',
+        ], [
+            'settingId.1.required' => '会社を選択してください',
+            'startDate.required' => '契約開始日は必須です',
+            'startDate.date' => '契約開始日は有効な日付でなければなりません',
+            'endDate.required' => '契約終了日は必須です',
+            'endDate.date' => '契約終了日は有効な日付でなければなりません',
+            'endDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
+        ]);
 
         try {
             Receptionist::create([
@@ -177,20 +188,32 @@ class ClientModalContent extends BaseTable
 
     public function contractUpdate()
     {
-        $this->validate([
-            'startDate' => 'required',
-            'endDate' => 'required|gt:startDate',
-        ], [
-            'startDate.required' => '契約開始日は必須です。',
-            'endDate.required' => '契約終了日は必須です。',
-            'endDate.gt' => '契約終了日は契約開始日以降の日付でなければなりません。',
-        ]);
+        try {
+            $startDate = Carbon::createFromFormat('Y年n月j日', $this->startDate);
+            $endDate = Carbon::createFromFormat('Y年n月j日', $this->endDate);
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages([
+                'startDate' => '契約開始日は有効な日付でなければなりません。',
+                'endDate' => '契約終了日は有効な日付でなければなりません。',
+            ]);
+        }
 
         $employee_id = $this->id;
         $company_id = $this->companyID;
+        
+        $this->startDate = $startDate->format('Y-m-d');
+        $this->endDate = $endDate->format('Y-m-d');
 
-        $startDate = Carbon::createFromFormat('Y年n月j日', $this->startDate)->format('Y-m-d');
-        $endDate = Carbon::createFromFormat('Y年n月j日', $this->endDate)->format('Y-m-d');
+        $this->validate([
+            'startDate' => 'required|date',
+            'endDate' => 'required|date|after:startDate',
+        ], [
+            'startDate.required' => '契約開始日は必須です',
+            'startDate.date' => '契約開始日は有効な日付でなければなりません',
+            'endDate.required' => '契約終了日は必須です',
+            'endDate.date' => '契約終了日は有効な日付でなければなりません',
+            'endDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
+        ]);
 
         try {
             Receptionist::where('employee_id', $employee_id)
@@ -199,7 +222,7 @@ class ClientModalContent extends BaseTable
                     'contract_start_date' => $startDate,
                     'contract_end_date' => $endDate
                 ]);
-
+                
             $this->dispatch('closeClientModal');
             $this->dispatch('contractSuccess');
         } catch (\Exception $e) {
