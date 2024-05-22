@@ -23,7 +23,6 @@ class AdminBranchForm extends Component
 
     public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
-
         if (!empty($id)) {
             $company = Company::find($id);
             $this->company = $company;

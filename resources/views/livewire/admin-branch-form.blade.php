@@ -37,7 +37,13 @@
         <div class="ui styled accordion card-shadow my-2" style="width: 100%;">
             <div class="title active">
                 <i class="dropdown icon"></i>
+                @if($key === 0 && !$this->company)
                 【{{ $branch_types[$item['br-branch_type']] }}】&nbsp;{{ $item['br-name'] }}
+                @elseif($key !== 0 && !$this->company)
+                【{{ $branch_types[2] }}】&nbsp;{{ $item['br-name'] }}
+                @else
+                【{{ $branch_types[$item['br-branch_type']] }}】&nbsp;{{ $item['br-name'] }}
+                @endif
             </div>
             <div data-accordion="{{ $key }}" class="{{ $item['br-class_content'] }}">
                 <input type="hidden" name="br-id[]" value="{{ $item['br-id'] }}" />
