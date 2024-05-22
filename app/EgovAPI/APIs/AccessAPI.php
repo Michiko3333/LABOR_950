@@ -309,9 +309,11 @@ class AccessAPI extends EgovBase
 
     private function request(): PendingRequest
     {
-        $req = Http::withHeaders(['X-eGovAPI-Trial' => $this->config['dev']])->withToken($this->access_token);
+        $req = Http::withToken($this->access_token);
+        if ($this->config['dev'] && config('egov.test') != true) {
+            $req = $req->withHeaders(['X-eGovAPI-Trial' => true]);
+        }
         $req = EgovDebug::setMiddleware($req);
-
         return $req;
     }
 
