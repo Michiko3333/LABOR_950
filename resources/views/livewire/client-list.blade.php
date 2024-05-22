@@ -80,20 +80,18 @@
         });
 
         window.openCancelModal = (receptionistId) => {
-            $('.cancel-modal').modal({
-                blurring: true,
-                onHidden: function() {
-                    location.reload();
-                }
-            }).modal('show');
-            $wire.dispatch('cancelModalOpened', { receptionistId: receptionistId });
+            $wire.dispatch('cancelModalOpened', { receptionistId: receptionistId, managerialPositionId: 0 });
+            setTimeout(() => {
+                $('.cancel-modal').modal({
+                    blurring: true
+                }).modal('show');
+            }, 200)
         };
         window.closeCancelModal = () => {
             $('.cancel-modal').modal('hide');
         };
         window.addEventListener('closeCancelModal', () => {
             $('.cancel-modal').modal('hide');
-
             location.reload();
         });
         
