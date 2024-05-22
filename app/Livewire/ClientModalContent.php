@@ -78,6 +78,7 @@ class ClientModalContent extends BaseTable
     {
         $search = $this->search;
 
+        $laborOffice = Company::where('company_division', 1);
         $employeeCompany = Company::join('m_branch', 'm_company.id', '=', 'm_branch.company_id')
             ->join('m_employee', 'm_branch.id', '=', 'm_employee.branch_id')
             ->select('m_company.id as employee_company_id')
@@ -87,6 +88,7 @@ class ClientModalContent extends BaseTable
             ->select('m_company.id as receptionist_company_id')
             ->where('m_receptionist.employee_id', $this->id);
 
+        $laborOffice = $laborOffice->pluck('id')->toArray();
         $employeeCompanyIds = $employeeCompany->pluck('employee_company_id')->toArray();
         $receptionistCompanyIds = $receptionistCompany->pluck('receptionist_company_id')->toArray();
 
@@ -94,7 +96,7 @@ class ClientModalContent extends BaseTable
             ->select('m_company.id', 'm_company.name')
             ->where('m_branch.branch_type', 1)
             ->where('m_company.delete_flg', 0)
-            ->whereNotIn('m_company.id', array_merge($employeeCompanyIds, $receptionistCompanyIds));
+            ->whereNotIn('m_company.id', array_merge($laborOffice, $employeeCompanyIds, $receptionistCompanyIds));
 
         if (!empty($search)) {
             $pat = '%' . addcslashes($search, '%_\\') . '%';
