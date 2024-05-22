@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Certificate;
 use App\Models\CurrentUser;
+use App\Models\Company;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
@@ -24,7 +26,7 @@ class CertificationLoader extends Component
 
     public function mount()
     {
-        $company = CurrentUser::currentCompany()->first();
+        $company = CurrentUser::currentCompany();
         $cert = Certificate::where('company_id', $company->id)->where('delete_flg', 0)->first();
         if (!empty($cert)) $this->view = 2;
     }
@@ -38,7 +40,7 @@ class CertificationLoader extends Component
     {
         $this->view = 0;
         $this->cert_pass = '';
-        $company = CurrentUser::currentCompany()->first();
+        $company = CurrentUser::currentCompany();
         Certificate::where('company_id', $company->id)->update(['delete_flg' => 1]);
     }
 
@@ -59,13 +61,13 @@ class CertificationLoader extends Component
 
         $this->view = 1;
 
-        $company = CurrentUser::currentCompany()->first();
+        $company = CurrentUser::currentCompany();
         $path = $this->cert_file->storeAs(path: 'tmp_loading_pfx', name: 'cert_' . $company->id . '_file.pfx');
         $file = Storage::get($path);
         $result = true;
         if ($result) {
             $this->isError = false;
-            $company = CurrentUser::currentCompany()->first();
+            $company = CurrentUser::currentCompany();
             if (Certificate::where('company_id', $company->id)->exists()) {
                 Certificate::where('company_id', $company->id)->update(['delete_flg' => 0, 'file' => $file, 'password' => $this->cert_pass]);
             } else {
