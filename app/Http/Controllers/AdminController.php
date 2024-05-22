@@ -729,7 +729,7 @@ class AdminController extends Controller
         } else {
             $faxParts = ['', '', ''];
         }
-        
+
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
         $sex_type = Values_sex::pluck('name', 'id');
         $prefectures = Prefecture::pluck('name', 'id');
