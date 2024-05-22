@@ -16,7 +16,7 @@ class Company extends Model
         'name_abbreviation',
         'company_no',
         'company_type_id',
-        'license_id',
+        'license_no',
         'business_type',
         'listed_type',
         'stock_code',
