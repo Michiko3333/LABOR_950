@@ -21,7 +21,10 @@ class EmployeeList extends BaseTable
         $condition = Employee::select(['m_employee.id', 'last_name', 'first_name', 'position.name as position_name', 'branch.name as branch_name'])
             ->leftJoin('m_branch as branch', 'm_employee.branch_id', '=', 'branch.id')
             ->leftJoin('m_company as company', 'branch.company_id', '=', 'company.id')
-            ->leftJoin('m_managerial_position as position', 'position.id', '=', 'managerial_position_id')
+            ->leftJoin('m_managerial_position as position', function($join) {
+                $join->on('position.id', '=', 'managerial_position_id')
+                    ->where('position.delete_flg', 0);
+            })            
             ->where('company.id', $currentCompanyId);
 
         /*
