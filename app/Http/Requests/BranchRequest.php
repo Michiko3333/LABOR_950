@@ -71,7 +71,7 @@ class BranchRequest extends FormRequest
             "br-fax3" => 'array',
             "br-fax3.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
             "br-mail_address" => 'array',
-            "br-mail_address.*" => 'required|regex:/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
+            "br-mail_address.*" => 'required|email',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|regex:/^\d{14}$/',
             "br-labor_insurance_payment_method" => 'array',
