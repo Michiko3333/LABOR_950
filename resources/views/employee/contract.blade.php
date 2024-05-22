@@ -126,10 +126,9 @@
     </section>
 
     <div class="ui mini modal">
-        <div class="header">ダウンロード...</div>
-        <div class="content">
-            <div class="ui active centered inline loader large"></div>
-        </div>
+        <div class="header">ダウンロードをしています...</div>
+        <div class="content" style="text-align: center; color: black; font-size: 1.25rem; font-weight: bold;">
+            ブラウザのダウンロード欄をご確認ください</div>
         <div class="actions">
             <div class="ui approve primary button">完了</div>
         </div>
