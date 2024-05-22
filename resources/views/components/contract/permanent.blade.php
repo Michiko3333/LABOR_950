@@ -26,6 +26,10 @@
                 -moz-appearance: textfield;
             }
 
+            .no-spin {
+                appearance: textfield;
+            }
+
             input,
             textarea {
                 border: none;
