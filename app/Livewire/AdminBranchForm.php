@@ -4,6 +4,10 @@ namespace App\Livewire;
 
 use App\Models\Company;
 use App\Models\Branch;
+use App\Models\Hello_work;
+use App\Models\Labor_bureau;
+use App\Models\Labor_supervision;
+use App\Models\Pension_office;
 use Illuminate\Support\MessageBag;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -20,6 +24,10 @@ class AdminBranchForm extends Component
     public $place_type = [];
     public $start_days_of_week = [];
     public $work_style_type = [];
+    public $hello_work_id = [];
+    public $labor_bureau_id = [];
+    public $labor_supervision_id = [];
+    public $pension_office_id = [];
 
     public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
@@ -27,13 +35,38 @@ class AdminBranchForm extends Component
             $company = Company::find($id);
             $this->company = $company;
         }
-
         $this->prefectures = $prefectures;
         $this->labor_insurance_payment_method = $labor_insurance_payment_method;
         $this->place_type = $place_type;
         $this->start_days_of_week = $start_days_of_week;
         $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
+        $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
+        $this->labor_bureau_id = Labor_bureau::select('submit_name_jk', 'department', 'section', 'id')->get()
+        ->map(function ($labor_bureau_id) {
+            return [
+                'submit_name_jk' => $labor_bureau_id->submit_name_jk,
+                'department' => $labor_bureau_id->department,
+                'section' => $labor_bureau_id->section,
+                'id' => $labor_bureau_id->id,
+            ];
+        })->toArray();
+        $this->labor_supervision_id = Labor_supervision::select('submit_name_hij', 'section', 'id')->get()
+        ->map(function ($labor_supervision_id) {
+            return [
+                'submit_name_hij' => $labor_supervision_id->submit_name_hij,
+                'section' => $labor_supervision_id->section,
+                'id' => $labor_supervision_id->id,
+            ];
+        })->toArray();
+        $this->pension_office_id = Pension_office::select('name', 'section', 'id')->get()
+        ->map(function ($pension_office_id) {
+            return [
+                'name' => $pension_office_id->name,
+                'section' => $pension_office_id->section,
+                'id' => $pension_office_id->id,
+            ];
+        })->toArray();
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
@@ -95,7 +128,7 @@ class AdminBranchForm extends Component
                 $d['br-working_days_yearly'] = $item->working_days_yearly;
                 $d['br-working_days_monthly'] = $item->working_days_monthly;
                 $d['br-holiday_yearly'] = $item->holiday_yearly;
-                $d['br-hoiday_monthly'] = $item->hoiday_monthly;
+                $d['br-holiday_monthly'] = $item->holiday_monthly;
                 $d['br-holiday_legal'] = $item->holiday_legal;
                 $d['br-holiday_not_logal'] = $item->holiday_not_logal;
                 $d['br-work_style_type'] = $item->work_style_type;
@@ -170,6 +203,9 @@ class AdminBranchForm extends Component
             'br-pension_office_id' => '',
             'br-employment_insurance_office_no' => '',
             'br-employment_insurance_establishment_date' => '',
+            'br-pension_office_reference_prefecture' => '',
+            'br-pension_office_reference_no_cities' => '',
+            'br-pension_office_reference_no_office' => '',
             'br-hello_work_id' => '',
             'br-labor_bureau_id' => '',
             'br-labor_supervision_id' => '',
@@ -185,7 +221,7 @@ class AdminBranchForm extends Component
             'br-working_days_yearly' => '',
             'br-working_days_monthly' => '',
             'br-holiday_yearly' => '',
-            'br-hoiday_monthly' => '',
+            'br-holiday_monthly' => '',
             'br-holiday_legal' => '',
             'br-holiday_not_logal' => '',
             'br-work_style_type' => '',

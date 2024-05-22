@@ -49,7 +49,7 @@ class Branch extends Model
         'working_days_yearly',
         'working_days_monthly',
         'holiday_yearly',
-        'hoiday_monthly',
+        'holiday_monthly',
         'holiday_legal',
         'holiday_not_logal',
         'work_style_type',

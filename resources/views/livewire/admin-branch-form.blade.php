@@ -269,27 +269,49 @@
                     </div>
                     <div class="ui divider my-2"></div>
                     <h3>管轄</h3>
-                    <div class="four fields">
-                        <div class="field {{ err_bind($errs, 'br-hello_work_id', $key) }}">
+                    <div class="two fields" wire:ignore>
+                        <div class="field {{ err_bind($errs, 'br-hello_work_id', $key) }}"
+                        x-init="setTimeout(function() { $('.ui.search.dropdown').dropdown(); }, 120);">
                             <label for="br-hello_work_id">公共職業安定所</label>
-                            <input type="text" name="br-hello_work_id[]"
-                                wire:model.live="data.{{ $key }}.br-hello_work_id" placeholder="">
+                            <select class="ui fluid search dropdown" name="br-hello_work_id[]"
+                            wire:model.live="data.{{ $key }}.br-hello_work_id">
+                                <option value="">未選択</option>
+                                @foreach ($hello_work_id as $k => $value)
+                                    <option value="{{ $k }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
                         </div>
-
                         <div class="field {{ err_bind($errs, 'br-labor_bureau_id', $key) }}">
                             <label for="br-labor_bureau_id">労働局</label>
-                            <input type="text" name="br-labor_bureau_id[]"
-                                wire:model.live="data.{{ $key }}.br-labor_bureau_id" placeholder="">
+                            <select class="ui fluid search dropdown" name="br-labor_bureau_id[]"
+                                wire:model.live="data.{{ $key }}.br-labor_bureau_id">
+                                <option value="">未選択</option>
+                                @foreach ($labor_bureau_id as $value)
+                                    <option value="{{ $value['id'] }}">{{ $value['submit_name_jk'] }} {{ $value['department'] }} {{ $value['section'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
+                    </div>
+                    <div class="two fields" wire:ignore>
                         <div class="field {{ err_bind($errs, 'br-labor_supervision_id', $key) }}">
                             <label for="br-labor_supervision_id">労働基準監督署</label>
-                            <input type="text" name="br-labor_supervision_id[]"
-                                wire:model.live="data.{{ $key }}.br-labor_supervision_id" placeholder="">
+                            <select class="ui fluid search dropdown" name="br-labor_supervision_id[]"
+                                wire:model.live="data.{{ $key }}.br-labor_supervision_id">
+                                <option value="">未選択</option>
+                                @foreach ($labor_supervision_id as $value)
+                                    <option value="{{ $value['id'] }}">{{ $value['submit_name_hij'] }} {{ $value['section'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="field {{ err_bind($errs, 'br-pension_office_id', $key) }}">
-                            <label for="br-pension_office_id">年金事務所ID</label>
-                            <input type="text" name="br-pension_office_id[]"
-                                wire:model.live="data.{{ $key }}.br-pension_office_id" placeholder="">
+                            <label for="br-pension_office_id">年金事務所</label>
+                            <select class="ui fluid search dropdown" name="br-pension_office_id[]"
+                                wire:model.live="data.{{ $key }}.br-pension_office_id">
+                                <option value="">未選択</option>
+                                @foreach ($pension_office_id as $value)
+                                    <option value="{{ $value['id'] }}">{{ $value['name'] }} {{ $value['section'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -300,7 +322,7 @@
                         <div class="field {{ err_bind($errs, 'br-start_date_of_month', $key) }}">
                             <label for="br-start_date_of_month">月</label>
                             <input type="text" name="br-start_date_of_month[]"
-                                wire:model.live="data.{{ $key }}.br-start_date_of_month" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-start_date_of_month" placeholder="1~12">
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-start_days_of_week', $key) }}">
@@ -317,7 +339,7 @@
                         <div class="field {{ err_bind($errs, 'br-start_time_of_day', $key) }}">
                             <label for="br-start_time_of_day">日</label>
                             <input type="text" name="br-start_time_of_day[]"
-                                wire:model.live="data.{{ $key }}.br-start_time_of_day" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-start_time_of_day" placeholder="00:00:00~23:59:59">
                         </div>
                     </div>
                     <h4>就労時間設定</h4>
@@ -325,38 +347,38 @@
                         <div class="field {{ err_bind($errs, 'br-work_time_start', $key) }}">
                             <label for="br-work_time_start">就業開始</label>
                             <input type="text" name="br-work_time_start[]"
-                                wire:model.live="data.{{ $key }}.br-work_time_start" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-work_time_start" placeholder="00:00:00~23:59:59">
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-work_time_end', $key) }}">
                             <label for="br-work_time_end">就業終了</label>
                             <input type="text" name="br-work_time_end[]"
-                                wire:model.live="data.{{ $key }}.br-work_time_end" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-work_time_end" placeholder="00:00:00~23:59:59">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field {{ err_bind($errs, 'br-agreed_hours_year', $key) }}">
                             <label for="br-agreed_hours_year">所定労働時間(年)</label>
                             <input type="text" name="br-agreed_hours_year[]"
-                                wire:model.live="data.{{ $key }}.br-agreed_hours_year" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-agreed_hours_year" placeholder="00:00~23:59">
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-agreed_hours_month', $key) }}">
                             <label for="br-agreed_hours_month">所定労働時間(月)</label>
                             <input type="text" name="br-agreed_hours_month[]"
-                                wire:model.live="data.{{ $key }}.br-agreed_hours_month" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-agreed_hours_month" placeholder="00:00~23:59">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field {{ err_bind($errs, 'br-agreed_hours_week', $key) }}">
                             <label for="br-agreed_hours_week">所定労働時間(週)</label>
                             <input type="text" name="br-agreed_hours_week[]"
-                                wire:model.live="data.{{ $key }}.br-agreed_hours_week" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-agreed_hours_week" placeholder="00:00~23:59">
                         </div>
                         <div class="field {{ err_bind($errs, 'br-agreed_hours_day', $key) }}">
                             <label for="br-agreed_hours_day">所定労働時間(日)</label>
                             <input type="text" name="br-agreed_hours_day[]"
-                                wire:model.live="data.{{ $key }}.br-agreed_hours_day" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-agreed_hours_day" placeholder="00:00~23:59">
                         </div>
                     </div>
                     <h4>休日設定</h4>
@@ -381,7 +403,7 @@
                                 wire:model.live="data.{{ $key }}.br-holiday_yearly" placeholder="">
                         </div>
 
-                        <div class="field {{ err_bind($errs, 'br-hoiday_monthly', $key) }}">
+                        <div class="field {{ err_bind($errs, 'br-holiday_monthly', $key) }}">
                             <label for="br-holiday_monthly">休日(月間)</label>
                             <input type="text" name="br-holiday_monthly[]"
                                 wire:model.live="data.{{ $key }}.br-holiday_monthly" placeholder="">
