@@ -198,7 +198,7 @@
                         </div>
                         <div class="field {{ err_bind($errs, 'br-labor_insurance_establishment_date', $key) }}">
                             <label for="br-labor_insurance_establishment_date">労働保険成立年月日</label>
-                            <div class="ui calendar branch-calendar">
+                            <div class="ui calendar branch-calendar" wire:ignore>
                                 <div class="ui fluid input left icon">
                                     <i class="calendar icon"></i>
                                     <input type="text" name="br-labor_insurance_establishment_date[]"
@@ -237,7 +237,7 @@
 
                         <div class="field {{ err_bind($errs, 'br-employment_insurance_establishment_date', $key) }}">
                             <label for="br-employment_insurance_establishment_date">雇用保険設立年月日</label>
-                            <div class="ui calendar branch-calendar">
+                            <div class="ui calendar branch-calendar" wire:ignore>
                                 <div class="ui fluid input left icon">
                                     <i class="calendar icon"></i>
                                     <input type="text" name="br-employment_insurance_establishment_date[]"

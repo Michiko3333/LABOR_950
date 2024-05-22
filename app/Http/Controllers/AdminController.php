@@ -270,7 +270,7 @@ class AdminController extends Controller
         }
         $input_date2 = $requestData['br-employment_insurance_establishment_date'][$index];
         if (!is_null($input_date2) && strtotime($input_date2) === false) {
-            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
