@@ -533,6 +533,7 @@ class AdminController extends Controller
         $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $faxParts = ['', '', ''];
 
         return view('admin.employee_create', [
             'departments' => [],
@@ -546,7 +547,8 @@ class AdminController extends Controller
             'employment_insurance_type' => $employment_insurance_type,
             'insurance_loss_reason' => $insurance_loss_reason,
             'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
-            'occupation_type' => $occupation_type
+            'occupation_type' => $occupation_type,
+            'faxParts' => $faxParts,
         ]);
     }
 
@@ -588,7 +590,7 @@ class AdminController extends Controller
                 'name_common' => $request->input('name_common'),
                 'name_common_kana' => $request->input('name_common_kana'),
                 'sex' => $request->input('sex'),
-                'birthday' => $this->formatDate($request->input('birthday')),
+                'birthday' => $this->formatDate($request->input('birthday_date')),
                 'post_code' => $request->input('post_code'),
                 'address_prefecture' => $request->input('address_prefecture'),
                 'address_city' => $request->input('address_city'),
@@ -633,6 +635,9 @@ class AdminController extends Controller
                 'social_insurance_no' => $request->input('social_insurance_no'),
                 'pension_office_no' => $request->input('pension_office_no'),
                 // 'pension_office_reference_no' => $request->input('pension_office_reference_no'),
+                'pension_office_reference_prefecture' => $request->input('pension_office_reference_prefecture'),
+                'pension_office_reference_no_cities' => $request->input('pension_office_reference_no_cities'),
+                'pension_office_reference_no_office' => $request->input('pension_office_reference_no_office'),
                 'pension_no' => $request->input('pension_no'),
                 'labor_insurance_type' => $request->input('labor_insurance_type'),
                 'employment_insurance_type' => $request->input('employment_insurance_type'),
@@ -795,7 +800,7 @@ class AdminController extends Controller
                     'name_common' => $request->input('name_common'),
                     'name_common_kana' => $request->input('name_common_kana'),
                     'sex' => $request->input('sex'),
-                    'birthday' => $this->formatDate($request->input('birthday')),
+                    'birthday' => $this->formatDate($request->input('birthday_date')),
                     'post_code' => $request->input('post_code'),
                     'address_prefecture' => $request->input('address_prefecture'),
                     'address_city' => $request->input('address_city'),
@@ -840,6 +845,9 @@ class AdminController extends Controller
                     'social_insurance_no' => $request->input('social_insurance_no'),
                     'pension_office_no' => $request->input('pension_office_no'),
                     //'pension_office_reference_no' => $request->input('pension_office_reference_no'),
+                    'pension_office_reference_prefecture' => $request->input('pension_office_reference_prefecture'),
+                    'pension_office_reference_no_cities' => $request->input('pension_office_reference_no_cities'),
+                    'pension_office_reference_no_office' => $request->input('pension_office_reference_no_office'),
                     'pension_no' => $request->input('pension_no'),
                     'labor_insurance_type' => $request->input('labor_insurance_type'),
                     'employment_insurance_type' => $request->input('employment_insurance_type'),

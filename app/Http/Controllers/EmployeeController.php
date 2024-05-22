@@ -108,6 +108,13 @@ class EmployeeController extends Controller
         ]);
         DB::beginTransaction();
         try {
+            $data = $request->validationData($request);
+            $address_ward = $data['address_ward'];
+            $address_apartment = $data['address_apartment'];
+            $emergency_address_ward1 = $data['emergency_address_ward1'];
+            $emergency_address_apartment1 = $data['emergency_address_apartment1'];
+            $emergency_address_ward2 = $data['emergency_address_ward2'];
+            $emergency_address_apartment2 = $data['emergency_address_apartment2'];
             Employee::where('id', $request->input('employee_id'))
                 ->update([
                     'employee_no' => $request->input('employee_no'),
@@ -130,12 +137,12 @@ class EmployeeController extends Controller
                     'name_common' => $request->input('name_common'),
                     'name_common_kana' => $request->input('name_common_kana'),
                     'sex' => $request->input('sex'),
-                    'birthday' => $this->formatDate($request->input('birthday')),
+                    'birthday' => $this->formatDate($request->input('birthday_date')),
                     'post_code' => $request->input('post_code'),
                     'address_prefecture' => $request->input('address_prefecture'),
                     'address_city' => $request->input('address_city'),
-                    'address_ward' => $request->input('address_ward'),
-                    'address_apartment' => $request->input('address_apartment'),
+                    'address_ward' => $address_ward,
+                    'address_apartment' => $address_apartment,
                     // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
                     'address_city_kana' => $request->input('address_city_kana'),
                     'address_ward_kana' => $request->input('address_ward_kana'),
@@ -151,15 +158,15 @@ class EmployeeController extends Controller
                     'emergency_tel1' => $request->input('emergency_tel1'),
                     'emergency_address_prefecture1' => $request->input('emergency_address_prefecture1'),
                     'emergency_address_city1' => $request->input('emergency_address_city1'),
-                    'emergency_address_ward1' => $request->input('emergency_address_ward1'),
-                    'emergency_address_apartment1' => $request->input('emergency_address_apartment1'),
+                    'emergency_address_ward1' => $emergency_address_ward1,
+                    'emergency_address_apartment1' => $emergency_address_apartment1,
                     'emergency_contact2' => $request->input('emergency_contact2'),
                     'emergency_relationship2' => $request->input('emergency_relationship2'),
                     'emergency_tel2' => $request->input('emergency_tel2'),
                     'emergency_address_prefecture2' => $request->input('emergency_address_prefecture2'),
                     'emergency_address_city2' => $request->input('emergency_address_city2'),
-                    'emergency_address_ward2' => $request->input('emergency_address_ward2'),
-                    'emergency_address_apartment2' => $request->input('emergency_address_apartment2'),
+                    'emergency_address_ward2' => $emergency_address_ward2,
+                    'emergency_address_apartment2' => $emergency_address_apartment2,
                     'spouse_flg' => $request->input('spouse_flg'),
                     'dependent_flg' => $request->input('dependent_flg'),
                     'dependent_family_number' => $request->input('dependent_family_number'),
@@ -175,6 +182,9 @@ class EmployeeController extends Controller
                     'social_insurance_no' => $request->input('social_insurance_no'),
                     'pension_office_no' => $request->input('pension_office_no'),
                     //'pension_office_reference_no' => $request->input('pension_office_reference_no'),
+                    'pension_office_reference_prefecture' => $request->input('pension_office_reference_prefecture'),
+                    'pension_office_reference_no_cities' => $request->input('pension_office_reference_no_cities'),
+                    'pension_office_reference_no_office' => $request->input('pension_office_reference_no_office'),
                     'pension_no' => $request->input('pension_no'),
                     'labor_insurance_type' => $request->input('labor_insurance_type'),
                     'employment_insurance_type' => $request->input('employment_insurance_type'),
