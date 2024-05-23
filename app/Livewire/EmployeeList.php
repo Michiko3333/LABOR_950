@@ -51,6 +51,7 @@ class EmployeeList extends BaseTable
         $items = $this->data['items'];
         foreach ($items as &$item) {
             $item->departments = Employee_department::select('name')
+                ->where('m_employee_department.delete_flg', 0) 
                 ->leftJoin('m_department as dep', 'm_employee_department.department_id', '=', 'dep.id')
                 ->where('employee_id', $item->id)
                 ->pluck('name');

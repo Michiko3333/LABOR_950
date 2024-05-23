@@ -449,10 +449,9 @@ class AdminController extends Controller
     {
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
         $employee = Employee::where('delete_flg', 0)->where('id', $id)->first();
-        $branch = Branch::find($employee->branch_id)->with('company')->first();
+        $branch = Branch::where('id', $employee->branch_id)->with('company')->first();
         $user = User::where('employee_id', $employee->id)->first();
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
-
 
         $employee->company_name = $branch->company->name;
         $employee->company_id = $branch->company->id;
@@ -537,6 +536,7 @@ class AdminController extends Controller
 
         return view('admin.employee_create', [
             'departments' => [],
+            'departments_list' => [],
             'managerial_position_list' => [],
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
@@ -741,11 +741,13 @@ class AdminController extends Controller
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
+        $departments_list = Department::select('id', 'name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
 
         return view('admin.employee_create', [
             'employee' => $employee,
             'departments' => $departments,
+            'departments_list' => $departments_list,
             'managerial_position_list' => $managerial_position_list,
             'employee_id' => $id,
             'employee_type' => $employee_type,
@@ -920,6 +922,22 @@ class AdminController extends Controller
         return redirect()->route('admin.labor');
     }
 
+
+    public function get_departments(Request $request)
+    {
+
+        $departments = Department::where('company_id', $request->company_id)->where('delete_flg', 0)->get(['id', 'name']);
+
+        return response()->json($departments);
+    }
+
+    public function get_position(Request $request)
+    {
+
+        $managerial_position = Managerial_position::where('company_id', $request->company_id)->where('delete_flg', 0)->get(['id', 'name']);
+
+        return response()->json($managerial_position);
+    }
     // ---------------------------------------------------------------------------------------
     // 社労士顧客会社設定
     // ---------------------------------------------------------------------------------------

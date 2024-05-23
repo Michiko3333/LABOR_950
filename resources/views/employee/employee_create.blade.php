@@ -360,24 +360,12 @@
                             <label for="departments[]">所属部署</label>
                             <select class="ui fluid search dropdown multiple clearable department_select"
                                 multiple="" name="departments[]">
-                                @foreach ($departments_list as $k => $value)
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                @endforeach
                             </select>
                         </div>
                         <div class="field {{ err($errors, 'managerial_position_id[]') }}">
                             <label for="managerial_position_id">役職</label>
                             <select class="ui fluid dropdown" name="managerial_position_id">
                                 <option value="">未選択</option>
-                                @foreach ($managerial_position_list as $k => $value)
-                                    <option value="{{ $k }}"
-                                        {{ old('managerial_position_id') == "$k" ||
-                                        (isset($employee) && old('managerial_position_id', $employee->managerial_position_id) == "$k")
-                                            ? 'selected'
-                                            : '' }}>
-                                        {{ $value }}
-                                    </option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -1051,7 +1039,27 @@
                         'selected', true);
                 });
             }
+            function getPositionList() {
+                $('select[name="managerial_position_id"]').empty();
+                let data = @json($managerial_position_list);
+                data = [{
+                            id: '',
+                            name: '未選択'
+                        }, ...data];
+                data.forEach(element => {
+                    $('<option>').attr({
+                        value: element.id
+                    }).text(element.name).appendTo('select[name="managerial_position_id"]');
+                });
+                const v = "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
+                if (v > 0) {
+                    $('select[name="managerial_position_id"] option[value=' + v +
+                        ']').prop(
+                        'selected', true);
+                }
+            }
             getDepartmentList();
+            getPositionList();
         });
     </script>
 </x-layout>

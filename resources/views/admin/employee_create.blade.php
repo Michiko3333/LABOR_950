@@ -383,15 +383,6 @@
                             <label for="managerial_position_id">役職</label>
                             <select class="ui fluid dropdown" name="managerial_position_id">
                                 <option value="">未選択</option>
-                                @foreach ($managerial_position_list as $k => $value)
-                                    <option value="{{ $k }}"
-                                        {{ old('managerial_position_id') == "$k" ||
-                                        (isset($employee) && old('managerial_position_id', $employee->managerial_position_id) == "$k")
-                                            ? 'selected'
-                                            : '' }}>
-                                        {{ $value }}
-                                    </option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -1095,7 +1086,6 @@
                                     ']').prop(
                                     'selected', true);
                             });
-
                         }
                     });
             }
@@ -1119,8 +1109,6 @@
                                 value: element.id
                             }).text(element.name).appendTo('select[name="managerial_position_id"]');
                         });
-                        $('.ui.dropdown.dropdown.multiple').dropdown('clear');
-
                         if (first) {
                             //const def = @json($managerial_position_list);
                             const v =
