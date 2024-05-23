@@ -28,6 +28,8 @@ class ClientModalContent extends BaseTable
     public $settingId = [];
     public $startDate;
     public $endDate;
+    public $formatStartDate;
+    public $formatEndDate;
 
     public $companyID;
 
@@ -76,6 +78,7 @@ class ClientModalContent extends BaseTable
     {
         $search = $this->search;
 
+        $laborOffice = Company::where('company_division', 1);
         $employeeCompany = Company::join('m_branch', 'm_company.id', '=', 'm_branch.company_id')
             ->join('m_employee', 'm_branch.id', '=', 'm_employee.branch_id')
             ->select('m_company.id as employee_company_id')
@@ -85,6 +88,7 @@ class ClientModalContent extends BaseTable
             ->select('m_company.id as receptionist_company_id')
             ->where('m_receptionist.employee_id', $this->id);
 
+        $laborOffice = $laborOffice->pluck('id')->toArray();
         $employeeCompanyIds = $employeeCompany->pluck('employee_company_id')->toArray();
         $receptionistCompanyIds = $receptionistCompany->pluck('receptionist_company_id')->toArray();
 
@@ -92,7 +96,7 @@ class ClientModalContent extends BaseTable
             ->select('m_company.id', 'm_company.name')
             ->where('m_branch.branch_type', 1)
             ->where('m_company.delete_flg', 0)
-            ->whereNotIn('m_company.id', array_merge($employeeCompanyIds, $receptionistCompanyIds));
+            ->whereNotIn('m_company.id', array_merge($laborOffice, $employeeCompanyIds, $receptionistCompanyIds));
 
         if (!empty($search)) {
             $pat = '%' . addcslashes($search, '%_\\') . '%';
@@ -142,33 +146,33 @@ class ClientModalContent extends BaseTable
     public function settingCompany()
     {
         try {
+            $employee_id = $this->settingId[0];
+            $company_id = $this->settingId[1];
             $startDate = Carbon::createFromFormat('Y年n月j日', $this->startDate);
             $endDate = Carbon::createFromFormat('Y年n月j日', $this->endDate);
         } catch (\Exception $e) {
             throw ValidationException::withMessages([
+                'settingId.1.required' => '会社を選択してください',
                 'startDate' => '契約開始日は有効な日付でなければなりません。',
                 'endDate' => '契約終了日は有効な日付でなければなりません。',
             ]);
         }
 
-        $employee_id = $this->settingId[0];
-        $company_id = $this->settingId[1];
-        
-        $this->startDate = $startDate->format('Y-m-d');
-        $this->endDate = $endDate->format('Y-m-d');
+        $this->formatStartDate = $startDate->format('Y-m-d');
+        $this->formatEndDate = $endDate->format('Y-m-d');
 
         
         $this->validate([
             'settingId.1' => 'required',
-            'startDate' => 'required|date',
-            'endDate' => 'required|date|after:startDate',
+            'formatStartDate' => 'required|date',
+            'formatEndDate' => 'required|date|after:formatStartDate',
         ], [
             'settingId.1.required' => '会社を選択してください',
-            'startDate.required' => '契約開始日は必須です',
-            'startDate.date' => '契約開始日は有効な日付でなければなりません',
-            'endDate.required' => '契約終了日は必須です',
-            'endDate.date' => '契約終了日は有効な日付でなければなりません',
-            'endDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
+            'formatStartDate.required' => '契約開始日は必須です',
+            'formatStartDate.date' => '契約開始日は有効な日付でなければなりません',
+            'formatEndDate.required' => '契約終了日は必須です',
+            'formatEndDate.date' => '契約終了日は有効な日付でなければなりません',
+            'formatEndDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
         ]);
 
         try {
@@ -201,18 +205,18 @@ class ClientModalContent extends BaseTable
         $employee_id = $this->id;
         $company_id = $this->companyID;
         
-        $this->startDate = $startDate->format('Y-m-d');
-        $this->endDate = $endDate->format('Y-m-d');
+        $this->formatStartDate = $startDate->format('Y-m-d');
+        $this->formatEndDate = $endDate->format('Y-m-d');
 
         $this->validate([
-            'startDate' => 'required|date',
-            'endDate' => 'required|date|after:startDate',
+            'formatStartDate' => 'required|date',
+            'formatEndDate' => 'required|date|after:formatStartDate',
         ], [
-            'startDate.required' => '契約開始日は必須です',
-            'startDate.date' => '契約開始日は有効な日付でなければなりません',
-            'endDate.required' => '契約終了日は必須です',
-            'endDate.date' => '契約終了日は有効な日付でなければなりません',
-            'endDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
+            'formatStartDate.required' => '契約開始日は必須です',
+            'formatStartDate.date' => '契約開始日は有効な日付でなければなりません',
+            'formatEndDate.required' => '契約終了日は必須です',
+            'formatEndDate.date' => '契約終了日は有効な日付でなければなりません',
+            'formatEndDate.after' => '契約終了日は契約開始日以降の日付でなければなりません',
         ]);
 
         try {

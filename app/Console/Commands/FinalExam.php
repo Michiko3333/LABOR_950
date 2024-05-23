@@ -2,18 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Console\Command;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\FinalExamAfterLogoutController;
-use App\Models\User;
-use App\Models\Employee;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\FinalExamController;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\EgovAPI\EgovDebug;
+
 
 class FinalExam extends Command
 {
@@ -59,8 +54,11 @@ class FinalExam extends Command
                         17-1.手続に関するご案内取得（テスト範囲外） \n
                         05-1.手続選択（テスト範囲外） \n
                         91.base64エンコードされたバイナリデータを保存（テスト範囲外 company_idを1で設定） \n
+                        88.【egov-test】指定手続IDを申請データ送信 標準形式の署名なし \n
                         99.【egov-test】指定手続IDを申請データ送信 標準形式の署名 \n
+                        888.【egov-test】指定手続IDを申請データ送信 個別ファイル署名形式なし\n
                         999.【egov-test】指定手続IDを申請データ送信 個別ファイル署名形式\n
+                        0000. 【最終確認試験用データのALL作成】\n
                         ");
         $examNumber = $this->ask('実施するテスト番号を入力してください');
 
@@ -71,6 +69,7 @@ class FinalExam extends Command
 
         try {
             $companyId = $this->asking('company_id');
+            // $companyId = 3;
             EgovDebug::$isActive = true;
             if ($examNumber == '03-1') {
                 $response = FinalExamController::getReToken_command($companyId, $examNumber);
@@ -79,7 +78,6 @@ class FinalExam extends Command
             } elseif ($examNumber == '04-2') {
                 $response = FinalExamController::tokenIntrospect_command($companyId, True, $examNumber);
             } elseif ($examNumber == '07-1') {
-                // $proc_id = $this->asking('proc_id');
                 $XML = new MixXmlEgovSigner(null, $companyId);
                 $response = $XML->runExam('950A010002012000', 1, $examNumber);
             } elseif ($examNumber == '07-2') {
@@ -134,14 +132,45 @@ class FinalExam extends Command
                 $response = FinalExamController::procedureSelection_command($companyId, $proc_id, $to_zip, $examNumber);
             } elseif ($examNumber == 91) {
                 $response = FinalExamController::binaryToZip();
+            } elseif ($examNumber == 88) {
+                $proc_id = $this->asking('proc_id');
+                $XML = new MixXmlEgovSigner(null, $companyId);
+                $response =$XML->runExam($proc_id, 0, $examNumber);
             } elseif ($examNumber == 99) {
                 $proc_id = $this->asking('proc_id');
                 $XML = new MixXmlEgovSigner(null, $companyId);
                 $response =$XML->runExam($proc_id, 1, $examNumber);
+            } elseif ($examNumber == 888) {
+                $proc_id = $this->asking('proc_id');
+                $XML = new MixXmlEgovSigner(null, $companyId);
+                $response =$XML->runExam($proc_id, 0, $examNumber);
             } elseif ($examNumber == 999) {
                 $proc_id = $this->asking('proc_id');
                 $XML = new MixXmlEgovSigner(null, $companyId);
                 $response =$XML->runExam($proc_id, 2, $examNumber);
+            } elseif ($examNumber == 0000) {
+                $outputData = [];
+                // 標準
+                $outputData = $this->run0000('900A010200001000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010002008000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010700003000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010002006000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A000100015000', 0, $companyId, $outputData);
+                // 個別
+                $outputData = $this->run0000('900A102810039000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810052000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810055000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102200047000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102200050000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A101810033000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102210049000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102800053000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810054000', 2, $companyId, $outputData);
+                $outputString = json_encode($outputData, JSON_PRETTY_PRINT);
+                $this->info($outputString);
+                $jsonData = json_encode($outputData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+                Storage::put('egov-test-log/arrive_id.json', $jsonData);
+                return;
             } else {
                 $this->info('存在しないテスト番号です');
                 return;
@@ -164,5 +193,18 @@ class FinalExam extends Command
         } else {
             return $r;
         }
+    }
+
+    public function run0000($proc_id, $signerNUM, $companyId, $outputData)
+    {
+        $XML = new MixXmlEgovSigner(null, $companyId);
+        $response =$XML->runExam($proc_id, $signerNUM, $proc_id);
+        $data = json_decode($response, true);
+        $outputData[] = [
+            ["proc_id" => $proc_id],
+            ["arrive_id" => $data["results"]["arrive_id"]]
+        ];
+        $this->info($response);
+        return $outputData;
     }
 }

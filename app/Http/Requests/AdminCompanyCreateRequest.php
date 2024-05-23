@@ -83,10 +83,10 @@ class AdminCompanyCreateRequest extends FormRequest
             'br-address_prefecture.*' => 'string|max:255',
             "br-address_city" => 'required|array',
             "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            "br-address_ward" => 'required|array',
-            "br-address_ward.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９－]+\z/u',
+            "br-address_ward" => 'array',
+            "br-address_ward.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９－]+\z/u',
             "br-address_apartment" => 'array',
-            "br-address_apartment.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ　－]+\z/u',
+            "br-address_apartment.*" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ　－]+\z/u',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'required|string|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',
@@ -153,8 +153,8 @@ class AdminCompanyCreateRequest extends FormRequest
             "br-working_days_monthly.*" => 'nullable|integer',
             "br-holiday_yearly" => 'array',
             "br-holiday_yearly.*" => 'nullable|integer',
-            "br-hoiday_monthly" => 'array',
-            "br-hoiday_monthly.*" => 'nullable|integer',
+            "br-holiday_monthly" => 'array',
+            "br-holiday_monthly.*" => 'nullable|integer',
             "br-work_style_type" => 'array',
             "br-work_style_type.*" => 'nullable|integer',
             "br-holiday_legal" => 'array',
@@ -231,7 +231,7 @@ class AdminCompanyCreateRequest extends FormRequest
             "br-working_days_yearly" => '労働日数(年間)',
             "br-working_days_monthly" => '労働日数(月間)',
             "br-holiday_yearly" => '休日日数(年間)',
-            "br-hoiday_monthly" => '休日日数(月間)',
+            "br-holiday_monthly" => '休日日数(月間)',
             "br-work_style_type" => '体制区分',
             "br-holiday_legal" => '休日内容(基本の法定休日)',
             "br-holiday_not_logal" => '休日内容(法定外休日)',
@@ -360,8 +360,8 @@ class AdminCompanyCreateRequest extends FormRequest
         foreach ($this->input('br-holiday_yearly', []) as $index => $value) {
             $Attributes["br-holiday_yearly.{$index}"] = ($index + 1) . "事業所_休日日数(年間)";
         }
-        foreach ($this->input('br-hoiday_monthly', []) as $index => $value) {
-            $Attributes["br-hoiday_monthly.{$index}"] = ($index + 1) . "事業所_休日日数(月間)";
+        foreach ($this->input('br-holiday_monthly', []) as $index => $value) {
+            $Attributes["br-holiday_monthly.{$index}"] = ($index + 1) . "事業所_休日日数(月間)";
         }
         foreach ($this->input('br-work_style_type', []) as $index => $value) {
             $Attributes["br-work_style_type.{$index}"] = ($index + 1) . "事業所_体制区分";

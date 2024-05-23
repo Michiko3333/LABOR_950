@@ -21,6 +21,8 @@ class BranchController extends Controller
     {
         $current_company = CurrentUser::currentCompany();
         $branch = $current_company->branch()->where('delete_flg', 0)->get();
+        $headquarters = $branch->where('branch_type', 1)->first();
+        $company_id = $headquarters->company_id;
         $prefectures = Prefecture::pluck('name', 'id');
         $labor_insurance_payment_method = Values_branch_labor_insurance_payment_method::pluck('name', 'id');
         $place_type = Values_branch_place_type::pluck('name', 'id');
@@ -28,6 +30,7 @@ class BranchController extends Controller
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
         return view('branch', [
             'branch' => $branch,
+            'company_id' => $company_id,
             'prefectures' => $prefectures,
             'labor_insurance_payment_method' => $labor_insurance_payment_method,
             'place_type' => $place_type,

@@ -45,7 +45,7 @@ class CompanyUpdateRequest extends FormRequest
             'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
             'name_abbreviation' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'company_type_id' => 'integer|between:1,17',
+            'company_type_id' => 'integer',
             'license_no' => 'nullable|string|max:255',
             'business_type' => 'integer|between:1,3',
             'listed_type' => 'nullable|integer|between:1,6',

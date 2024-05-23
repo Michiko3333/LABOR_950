@@ -224,15 +224,15 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="required field {{ err($errors, 'birthday') }}">
+                            <div class="required field {{ err($errors, 'birthday_date') }}">
                                 <label>生年月日</label>
                                 <div class="ui calendar" id="birthday_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="birthday"
+                                        <input type="text" placeholder="Date" name="birthday_date"
                                             value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}">
                                         <input type="hidden" name="formatted_birthday_date"
-                                            id="formatted_birthday_date" value="{{ old('birthday') }}">
+                                            id="formatted_birthday_date" value="{{ old('birthday_date') }}">
                                     </div>
                                 </div>
                             </div>
@@ -254,16 +254,16 @@
                             <div class="field">
                                 <div class="ui checkbox mr-1">
                                     <input type="checkbox" name="spouse_flg" value='1'
-                                    {{ (isset($employee_id) && $employee->spouse_flg == 1) || (old('spouse_flg') == '1') ? 'checked' : '' }}>
+                                        {{ (isset($employee_id) && $employee->spouse_flg == 1) || old('spouse_flg') == '1' ? 'checked' : '' }}>
                                     <label>配偶者有</label>
                                 </div>
                                 <div class="ui checkbox">
                                     <input type="checkbox" name="dependent_flg" value='1'
-                                    {{ (isset($employee_id) && $employee->dependent_flg == 1) || (old('dependent_flg') == '1') ? 'checked' : '' }}>
+                                        {{ (isset($employee_id) && $employee->dependent_flg == 1) || old('dependent_flg') == '1' ? 'checked' : '' }}>
                                     <label>扶養者有</label>
                                 </div>
                             </div>
-                            <div class="field {{ err($errors, '') }}">
+                            <div class="field {{ err($errors, 'dependent_family_number') }}">
                                 <label for="dependent_family_number">扶養人数</label>
                                 <input type="number" id="dependent_family_number" name="dependent_family_number"
                                     value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
@@ -354,7 +354,7 @@
                     <div class="content">
                         <h2>所属情報</h2>
                         <div class="two fields">
-                            <div class="required field {{ err($errors, 'company_id') }}">
+                            <div class="required field {{ err($errors, 'company_name') }}">
                                 <label for="company_name">会社</label>
                                 <input type="text" id="company_name" name="company_name" placeholder="会社名"
                                     readonly
@@ -428,20 +428,22 @@
                                 </div>
                             </div>
                             <div class="ui unstackable three fields field" style="padding: 0;">
-                                <div class="field tel-hyphen {{ err($errors, 'fax1') }}" style="padding-right: 0.8em;">
-                                    <label for="fax">FAX</label>
+                                <div class="field tel-hyphen {{ err($errors, 'fax1') }}"
+                                    style="padding-right: 0.8em;">
+                                    <label for="fax1">FAX</label>
                                     <input type="text" name="fax1"
-                                    value="{{ old('fax', $faxParts[0]) }}">
+                                        value="{{ old('fax1', $faxParts[0] ?? '') }}">
                                 </div>
-                                <div class="field tel-hyphen {{ err($errors, 'fax2') }}" style="padding-right: 0.8em;">
+                                <div class="field tel-hyphen {{ err($errors, 'fax2') }}"
+                                    style="padding-right: 0.8em;">
                                     <label for="fax2"></label>
                                     <input type="text" name="fax2"
-                                    value="{{ old('fax2', $faxParts[1]) }}">
+                                        value="{{ old('fax2', $faxParts[1] ?? '') }}">
                                 </div>
                                 <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
                                     <label for="fax3"></label>
                                     <input type="text" name="fax3"
-                                    value="{{ old('fax3', $faxParts[2]) }}">
+                                        value="{{ old('fax3', $faxParts[2] ?? '') }}">
                                 </div>
                             </div>
                         </div>
@@ -511,14 +513,22 @@
                                     value="{{ old('emergency_contact1', isset($employee_id) ? $employee->emergency_contact1 : '') }}"
                                     placeholder="田中 太郎">
                             </div>
-                            <div class="field {{ err($errors, 'emergency_relationship1') }}">
+                            <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
+                                <div class="field" style="padding-right: 0.8em;">
+                                    <label for="emergency_tel1">電話番号（ハイフン無し）</label>
+                                    <input type="tel" pattern="[0-9]{1,5}" id="emergency_tel1"
+                                        name="emergency_tel1"
+                                        value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="four wide field {{ err($errors, 'emergency_relationship1') }}">
                                 <label for="emergency_relationship1">続柄</label>
                                 <input type="text" id="emergency_relationship1" name="emergency_relationship1"
                                     value="{{ old('emergency_relationship1', isset($employee_id) ? $employee->emergency_relationship1 : '') }}"
                                     placeholder="父">
                             </div>
-                        </div>
-                        <div class="fields">
                             <div class="four wide field {{ err($errors, 'emergency_post_code1') }}">
                                 <label for="emergency_post_code1">郵便番号</label>
                                 <input type="text" name="emergency_post_code1"
@@ -571,14 +581,22 @@
                                     value="{{ old('emergency_contact2', isset($employee_id) ? $employee->emergency_contact2 : '') }}"
                                     placeholder="田中 太郎">
                             </div>
-                            <div class="field {{ err($errors, 'emergency_relationship2') }}">
+                            <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
+                                <div class="field" style="padding-right: 0.8em;">
+                                    <label for="emergency_tel2">電話番号（ハイフン無し）</label>
+                                    <input type="tel" pattern="[0-9]{1,5}" id="emergency_tel2"
+                                        name="emergency_tel2"
+                                        value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="four wide field {{ err($errors, 'emergency_relationship2') }}">
                                 <label for="emergency_relationship2">続柄</label>
                                 <input type="text" id="emergency_relationship2" name="emergency_relationship2"
                                     value="{{ old('emergency_relationship2', isset($employee_id) ? $employee->emergency_relationship2 : '') }}"
                                     placeholder="父">
                             </div>
-                        </div>
-                        <div class="fields">
                             <div class="four wide field {{ err($errors, 'emergency_post_code2') }}">
                                 <label for="emergency_post_code2">郵便番号</label>
                                 <input type="text" name="emergency_post_code2"
@@ -632,13 +650,14 @@
                                 <label>雇用契約期間の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_period_flg" checked="checked" value="0"
-                                        {{ (isset($employee_id) && $employee->contract_period_flg == 0) || (old('contract_period_flg') == '0') ? 'checked' : '' }}>
+                                        <input type="radio" name="contract_period_flg" checked="checked"
+                                            value="0"
+                                            {{ (isset($employee_id) && $employee->contract_period_flg == 0) || old('contract_period_flg') == '0' ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
                                         <input type="radio" name="contract_period_flg" value="1"
-                                        {{ (isset($employee_id) && $employee->contract_period_flg == 1) || (old('contract_period_flg') == '1') ? 'checked' : '' }}>
+                                            {{ (isset($employee_id) && $employee->contract_period_flg == 1) || old('contract_period_flg') == '1' ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -647,13 +666,14 @@
                                 <label>契約更新条項の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_renewal_flg" checked="checked" value="0"
-                                        {{ (isset($employee_id) && $employee->contract_renewal_flg == 0) || (old('contract_renewal_flg') == '0') ? 'checked' : '' }}>
+                                        <input type="radio" name="contract_renewal_flg" checked="checked"
+                                            value="0"
+                                            {{ (isset($employee_id) && $employee->contract_renewal_flg == 0) || old('contract_renewal_flg') == '0' ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
                                         <input type="radio" name="contract_renewal_flg" value="1"
-                                        {{ (isset($employee_id) && $employee->contract_renewal_flg == 1) || (old('contract_renewal_flg') == '1') ? 'checked' : '' }}>
+                                            {{ (isset($employee_id) && $employee->contract_renewal_flg == 1) || old('contract_renewal_flg') == '1' ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -662,13 +682,14 @@
                                 <label>離職票の交付希望の有無</label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" checked="checked" value="0"
-                                        {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || (old('resignation_letter_request_flg') == '0') ? 'checked' : '' }}>
+                                        <input type="radio" name="resignation_letter_request_flg" checked="checked"
+                                            value="0"
+                                            {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || old('resignation_letter_request_flg') == '0' ? 'checked' : '' }}>
                                         <label>無</label>
                                     </div>
                                     <div class="ui radio checkbox field mt-0">
                                         <input type="radio" name="resignation_letter_request_flg" value="1"
-                                        {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || (old('resignation_letter_request_flg') == '1') ? 'checked' : '' }}>
+                                            {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || old('resignation_letter_request_flg') == '1' ? 'checked' : '' }}>
                                         <label>有</label>
                                     </div>
                                 </div>
@@ -702,7 +723,7 @@
                             </div>
                         </div>
                         <div class="three fields">
-                            <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
+                            <div class="field {{ err($errors, 'formatted_hired_date') }}">
                                 <label>入社日</label>
                                 <div class="ui calendar" id="hired_date_calendar">
                                     <div class="ui input left icon">
@@ -806,7 +827,7 @@
                             <div class="field">
                                 <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
                                     <input type="checkbox" name="external_advisor_flg" value='1'
-                                    {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || (old('external_advisor_flg') == '1') ? 'checked' : '' }}>
+                                        {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || old('external_advisor_flg') == '1' ? 'checked' : '' }}>
                                     <label>外部顧問</label>
                                 </div>
                             </div>
@@ -837,20 +858,28 @@
                                     value="{{ old('pension_office_no', isset($employee_id) ? $employee->pension_office_no : '') }}"
                                     placeholder="01234">
                             </div>
-                            <div class="field {{ err($errors, 'pension_office_reference_no') }}">
-                                <label for="pension_office_reference_no">事業所整理番号（厚生年金）</label>
-                                <input type="text" id="pension_office_reference_no"
-                                    name="pension_office_reference_no"
-                                    value="{{ old('pension_office_reference_no', isset($employee_id) ? $employee->pension_office_reference_no : '') }}"
-                                    placeholder="001-イロハ">
-                            </div>
-                        </div>
-                        <div class="two fields">
                             <div class="field {{ err($errors, 'pension_no') }}">
                                 <label for="pension_no">基礎年金番号</label>
                                 <input type="text" id="pension_no" name="pension_no"
                                     value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
                                     placeholder="111122223333">
+                            </div>
+                        </div>
+                        <div class="three fields">
+                            <div class="field {{ err($errors, 'pension_office_reference_prefecture') }}">
+                                <label for="pension_office_reference_prefecture">事業所整理記号-都道府県コード</label>
+                                <input type="text" name="pension_office_reference_prefecture" placeholder="01"
+                                    value="{{ old('pension_office_reference_prefecture', isset($employee_id) ? $employee->pension_office_reference_prefecture : '') }}">
+                            </div>
+                            <div class="field {{ err($errors, 'pension_office_reference_no_cities') }}">
+                                <label for="pension_office_reference_no_cities">事業所整理記号-郡市区記号</label>
+                                <input type="text" name="pension_office_reference_no_cities" placeholder="11"
+                                    value="{{ old('pension_office_reference_no_cities', isset($employee_id) ? $employee->pension_office_reference_no_cities : '') }}">
+                            </div>
+                            <div class="field {{ err($errors, 'pension_office_reference_no_office') }}">
+                                <label for="pension_office_reference_no_office">事業所整理記号-事業所記号</label>
+                                <input type="text" name="pension_office_reference_no_office" placeholder="イロハ"
+                                    value="{{ old('pension_office_reference_no_office', isset($employee_id) ? $employee->pension_office_reference_no_office : '') }}">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -912,12 +941,13 @@
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
                                     placeholder="0123456789">
                             </div>
-                            <div class="field {{ err($errors, 'employment_insurance_applied_date_calendar') }}">
+                            <div class="field {{ err($errors, 'employment_insurance_applied_date') }}">
                                 <label>雇用保険届出日</label>
                                 <div class="ui calendar" id="employment_insurance_applied_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="employment_insurance_applied_date"
+                                        <input type="text" placeholder="Date"
+                                            name="employment_insurance_applied_date"
                                             value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
                                         <input type="hidden" name="employment_insurance_applied_date"
                                             id="employment_insurance_applied_date"
@@ -925,8 +955,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="field {{ err($errors, 'employment_insured_date_calendar') }}">
-                                <label>雇用保険届出日</label>
+                            <div class="field {{ err($errors, 'employment_insured_date') }}">
+                                <label>雇用保険資格取得日</label>
                                 <div class="ui calendar" id="employment_insured_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
@@ -962,8 +992,9 @@
                             <div class="field">
                                 <div
                                     class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg" value='1'
-                                    {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || (old('unauthorized_activities_permission_flg') == '1') ? 'checked' : '' }}>
+                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
+                                        value='1'
+                                        {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || old('unauthorized_activities_permission_flg') == '1' ? 'checked' : '' }}>
                                     <label>資格外活動許可</label>
                                 </div>
                             </div>
@@ -1092,7 +1123,8 @@
 
                         if (first) {
                             //const def = @json($managerial_position_list);
-                            const v = "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
+                            const v =
+                                "{{ old('managerial_position_id', isset($employee_id) ? $employee->managerial_position_id : '0') }}";
                             if (v > 0) {
                                 $('select[name="managerial_position_id"] option[value=' + v +
                                     ']').prop(

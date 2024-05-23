@@ -616,6 +616,7 @@ class MixXmlEgovSigner
      * @param int $signerNUM    1:標準形式
      *                          2:個別ファイル署名形式
      *                          0:署名なし
+     * @param int $examNo    最終確認試験の番号
      * 手続選択で取得したスケルトンデータにデータを記入したファイルを下記フォルダを作成して配置
      * 標準：ledger/dev/zip
      * 個別：dev_separate
@@ -677,13 +678,10 @@ class MixXmlEgovSigner
                 }else{
                     EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
                 }
-            } elseif ($signerNUM==0){
-                //
             }
         }
         $kouseiFilePath = $signerFolderPath . "kousei.xml";
         $this->transformEmptyTags($kouseiFilePath);
-        // return 3;
 
         //zip圧縮後、base64バイナリデータを返す
         if ('zipBinary') {
@@ -774,11 +772,11 @@ class MixXmlEgovSigner
         }
 
         // 　一時ファイル削除
-        $files = Storage::files($this->workingDirectory);
-        foreach ($files as $file) {
-            Storage::delete($file);
-        }
-        Storage::deleteDirectory($this->workingDirectory);
+        // $files = Storage::files($this->workingDirectory);
+        // foreach ($files as $file) {
+        //     Storage::delete($file);
+        // }
+        // Storage::deleteDirectory($this->workingDirectory);
 
         EgovTestLog::info(print_r('******************************** MixEgovSigner exam end ********************************', true));
         return $response;

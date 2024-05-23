@@ -39,8 +39,6 @@ class LedgerEmployeeList extends BaseTable
 
     public $selected_id = 0;
 
-    public $allDisable = false;
-
     public function render()
     {
         $currentCompany = CurrentUser::currentCompany();
@@ -210,12 +208,6 @@ class LedgerEmployeeList extends BaseTable
 
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
-    }
-
-    #[On('disableCmponent')]
-    public function disableComponent($bool = true)
-    {
-        $this->allDisable = $bool;
     }
 
     #[On('setDefault')]

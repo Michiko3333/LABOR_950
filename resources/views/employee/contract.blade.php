@@ -126,10 +126,9 @@
     </section>
 
     <div class="ui mini modal">
-        <div class="header">ダウンロード...</div>
-        <div class="content">
-            <div class="ui active centered inline loader large"></div>
-        </div>
+        <div class="header">ダウンロードをしています...</div>
+        <div class="content" style="text-align: center; color: black; font-size: 1.25rem; font-weight: bold;">
+            ブラウザのダウンロード欄をご確認ください</div>
         <div class="actions">
             <div class="ui approve primary button">完了</div>
         </div>
@@ -139,35 +138,22 @@
     <script type="module">
         $(document).ready(function() {
             $('input[name=contract_type]').change(function(e) {
-                $('.contract_type_area input').prop("disabled", true);
                 $('#step0-2').removeClass('hidden');
                 $('.contract-form').addClass('none');
                 if ($(this).val() == 1) {
                     $('.contract-form.permanent').removeClass('none');
+                    $('.contract-form.permanent input').prop("disabled", false);
+                    $('.contract-form.permanent textarea').prop("disabled", false);
                     $('.contract-form.flexterm input').prop("disabled", true);
                     $('.contract-form.flexterm textarea').prop("disabled", true);
                 } else {
                     $('.contract-form.flexterm').removeClass('none');
+                    $('.contract-form.flexterm input').prop("disabled", false);
+                    $('.contract-form.flexterm textarea').prop("disabled", false);
                     $('.contract-form.permanent input').prop("disabled", true);
                     $('.contract-form.permanent textarea').prop("disabled", true);
                 }
             });
-
-            if ($('#type_permenant ').prop('checked')) {
-                $('.contract_type_area input').prop("disabled", true);
-                $('#step0-2').removeClass('hidden');
-                $('.contract-form').addClass('none');
-                $('.contract-form.permanent').removeClass('none');
-                $('.contract-form.flexterm input').prop("disabled", true);
-                $('.contract-form.flexterm textarea').prop("disabled", true);
-            } else if ($('#type_flexterm').prop('checked')) {
-                $('.contract_type_area input').prop("disabled", true);
-                $('#step0-2').removeClass('hidden');
-                $('.contract-form').addClass('none');
-                $('.contract-form.flexterm').removeClass('none');
-                $('.contract-form.permanent input').prop("disabled", true);
-                $('.contract-form.permanent textarea').prop("disabled", true);
-            }
 
             Livewire.dispatch('setDefault', {
                 employee_id: '{{ old('employee_id', '') }}',
@@ -179,9 +165,6 @@
             @endif
         });
 
-        $('#ledger-edit-btn').click(() => {
-            $('.contract_type_area input').prop("disabled", true);
-        });
         $('#contract-submit-btn').click(() => {
             $('.contract_type_area input').prop("disabled", false);
             const form = document.getElementById('ledger-form');
@@ -229,7 +212,6 @@
                     $('#ledger-step1').addClass('active');
                     $('#ledger-step2').removeClass('active');
                     window.scrollTo(0, 0);
-                    $('.contract_type_area input').prop("disabled", true);
                 })
         });
     </script>
@@ -254,9 +236,6 @@
             data
         }) => {
             insertDataFromEmployee(data);
-            Livewire.dispatch('disableCmponent', {
-                bool: true
-            })
         });
     </script>
     <!-- 従業員・支店情報のセット ここまで -->

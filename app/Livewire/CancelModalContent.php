@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Employee;
 use App\Models\Receptionist;
+use App\Models\Managerial_position;
 use Livewire\Component;
 
 use Livewire\Attributes\On;
@@ -11,11 +12,16 @@ use Livewire\Attributes\On;
 class CancelModalContent extends BaseTable
 {
     public $receptionistId;
+    public $managerialPositionId;
 
     #[On('cancelModalOpened')]
-    public function cancelModalOpened($receptionistId)
+    public function cancelModalOpened($receptionistId, $managerialPositionId)
     {
-        $this->receptionistId = $receptionistId;
+        if(!$managerialPositionId) {
+            $this->receptionistId = $receptionistId;
+        } elseif(!$receptionistId) {
+            $this->managerialPositionId = $managerialPositionId;
+        }
     }
 
     public function render()
@@ -34,6 +40,14 @@ class CancelModalContent extends BaseTable
         if ($reception) {
             $reception->delete();
         }
+
+        $this->dispatch('closeCancelModal');
+    }
+
+    public function cancelManagerialPosition() {
+        Managerial_position::where('id', $this->managerialPositionId)->update([
+            'delete_flg' => 1
+        ]);
 
         $this->dispatch('closeCancelModal');
     }

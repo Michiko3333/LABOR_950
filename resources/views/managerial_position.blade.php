@@ -49,12 +49,4 @@
         <h1>役職マスタ登録：{{ $company_name }}</h1>
         <livewire:managerial-position-list :company_id="$company_id" />
     </section>
-
-    <script type="module">
-        window.openEditModal = () => {
-            $('#editManagerialPosition').modal({
-                blurring: true
-            }).modal('show');
-        };
-    </script>
 </x-layout>

@@ -605,7 +605,7 @@
             <!-- 支店情報 -->
             <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures"
                 :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
-                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''" />
+                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''"/>
 
             <div class="my-4" style="text-align: right; margin-right: 1em;">
                 <a class="ui button negative basic" href="{{ route('admin.company') }}"

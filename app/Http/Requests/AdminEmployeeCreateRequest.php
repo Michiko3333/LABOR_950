@@ -48,6 +48,7 @@ class AdminEmployeeCreateRequest extends FormRequest
     {
         return [
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
+            'company_name' => 'required',
             'branch_id' => 'integer',
             'managerial_position_id' => 'nullable|integer',
             'division_name' => 'nullable|string|max:255',
@@ -66,8 +67,8 @@ class AdminEmployeeCreateRequest extends FormRequest
             'old_first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'name_common' => 'nullable|string|max:255',
             'name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'sex' => 'integer',
-            'birthday' => 'required',
+            'sex' => 'required',
+            'birthday_date' => 'required',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
@@ -111,7 +112,9 @@ class AdminEmployeeCreateRequest extends FormRequest
             'mynumber_card_no' => 'nullable|string|max:20|regex:/^[0-9]{12}+\z/',
             'social_insurance_no' => 'nullable|string|max:10|regex:/\A[A-Z0-9]+\z/u',
             'pension_office_no' => 'nullable|string|max:5|regex:/\A[0-9]+\z/u',
-            'pension_office_reference_no' => 'nullable|string|max:10',
+            'pension_office_reference_prefecture' => 'nullable|string|max:2',
+            'pension_office_reference_no_cities' => 'nullable|integer|size:2',
+            'pension_office_reference_no_office' => 'nullable|string|regex:/\A[ぁ-んァ-ン]+\z/u',
             'pension_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
             'labor_insurance_type' => 'nullable|integer',
             'employment_insurance_type' => 'nullable|integer',
@@ -141,9 +144,14 @@ class AdminEmployeeCreateRequest extends FormRequest
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
-            "pension_office_reference_prefecture" => 'nullable|string|max:10',
-            "pension_office_reference_no_cities" => 'nullable|string|max:10',
-            "pension_office_reference_no_office" => 'nullable|string|max:10',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'company_name' => '会社を選択してください。',
+            'branch_id' => '支店を選択してください。',
         ];
     }
 
@@ -168,7 +176,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'name_common' => '通称名',
             'name_common_kana' => '通称名（カナ）',
             'sex' => '性別',
-            'birthday' => '生年月日',
+            'birthday_date' => '生年月日',
             'post_code' => '郵便番号（ハイフン無し）',
             'address_prefecture' => '住所（都道府県）',
             'address_city' => '住所（市区町村）',
