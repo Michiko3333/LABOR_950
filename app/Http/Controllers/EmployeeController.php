@@ -76,8 +76,7 @@ class EmployeeController extends Controller
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
         $departments_list = Department::select('id', 'name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
-        $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
-
+        $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->get();
 
         return view('employee.employee_create', [
             'employee' => $employee,

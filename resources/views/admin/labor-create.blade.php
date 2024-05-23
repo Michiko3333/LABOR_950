@@ -99,6 +99,11 @@
                 </ul>
             </div>
             @endif
+            
+            @if (isset($employee_id))
+                <input type="hidden" name="employee_id" value="{{ $employee_id }}">
+            @endif
+
             <div class="labor-data-area">
                 <div class="ui horizontal card card-shadow item-0">
                     <div class="content">
