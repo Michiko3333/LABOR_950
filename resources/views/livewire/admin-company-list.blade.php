@@ -29,7 +29,7 @@
                 <td>{{ $businessTypes[$item->business_type] ?? 'E' }}</td>
                 <td>{{ $company_type[$item->company_type_id] ?? 'E' }}</td>
                 <td>{{ $item->company_no }}</td>
-                <td>{{ $employeeSums[$item->id - 1] ?? '0'}} 名</td>
+                <td>{{ $item->employee_sum ?? '0' }} 名</td>
                 <td class="right aligned collapsing">
                     <button class="ui button" type="button" wire:click="toDepartment({{ $item->id }})">
                         部署編集
