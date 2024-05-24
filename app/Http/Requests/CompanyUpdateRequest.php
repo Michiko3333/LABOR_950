@@ -26,8 +26,7 @@ class CompanyUpdateRequest extends FormRequest
         }
 
         if (isset($data['name_abbreviation'])) {
-            $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'AS');
-            $data['name_abbreviation'] = str_replace(['-', '－', '―'], '‐', $data['name_abbreviation']);
+            $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'as');
         }
         return $data;
     }
@@ -43,7 +42,7 @@ class CompanyUpdateRequest extends FormRequest
             'name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             'name_kana' => 'string|max:255|regex:/^[ァ-ヴー＆’，‐．・]+$/u',
             'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
-            'name_abbreviation' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9., ]+$/',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'company_type_id' => 'integer',
             'license_no' => 'nullable|string|max:255',
