@@ -135,6 +135,8 @@
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const headquarters = data['headquarters'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const country_value = data['country_value'];
+                const residential_status_value = data['residential_status_value'];
                 $('#J2_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? '');
                 $('#J6_005F_8EE6_93BE').change(function() {
                     var selectedOption = $(this).val();
@@ -191,17 +193,18 @@
                 $('#J45_005F_8E96_8BC6_8F8A_96BC_8FCC').val(branch.name);
                 $('#J46_005F_94F5_8D6C').val(employee.insured_reason_details);
                 if (employee.country_id !== null) {
-                    $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').val((employee.first_name_alphabet ? employee.first_name_alphabet + '　' : '') + (employee.last_name_alphabet ?? '').toUpperCase());
+                    $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').val((employee.first_name_alphabet ? employee.first_name_alphabet + ' ' : '') + (employee.last_name_alphabet ?? '').toUpperCase());
                     $('#J87_005F_8DDD_97AF_834A_815B_8368_94D4_8D86').val(employee.residence_card_no ?? '');
                     if (employee.stay_date_period != null) {
-                        $('#J52_005F_944E').val(employee.stay_date_period.split('-')[0]);
-                        $('#J53_005F_8C8E').val(employee.stay_date_period.split('-')[1]);
-                        $('#J54_005F_93FA').val(employee.stay_date_period.split('-')[2]);
+                        const stayDatePeriod = employee.stay_date_period.split('-');
+                        $('#J52_005F_944E').val(stayDatePeriod[0].replace(/^0+/, ''));
+                        $('#J53_005F_8C8E').val(stayDatePeriod[1].replace(/^0+/, ''));
+                        $('#J54_005F_93FA').val(stayDatePeriod[2].replace(/^0+/, ''));
                     }
                     $('#J55_005F_8E91_8A69_8A4F_8A88_93AE_8B96_89C2_82CC_974C_96B3').val(employee.unauthorized_activities_permission_flg ?? '');
                     $('#J56_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').val(employee.employment_type ?? '');
-                    $('#J48_005F_8D91_90D0_005F_926E_88E6').val(employee.country_id ?? '');
-                    $('#J49_005F_8DDD_97AF_8E91_8A69').val(employee.residential_status_id ?? '');
+                    $('#J48_005F_8D91_90D0_005F_926E_88E6').val(country_value ?? '');
+                    $('#J49_005F_8DDD_97AF_8E91_8A69').val(residential_status_value ?? '');
                     $('#J50_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').val(employee.residential_status_unknown_reason ?? '');
                     $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A, #J87_005F_8DDD_97AF_834A_815B_8368_94D4_8D86,\
                         #J52_005F_944E, #J53_005F_8C8E, #J54_005F_93FA, #J55_005F_8E91_8A69_8A4F_8A88_93AE_8B96_89C2_82CC_974C_96B3,\
