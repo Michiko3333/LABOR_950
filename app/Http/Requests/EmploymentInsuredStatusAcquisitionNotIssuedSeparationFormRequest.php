@@ -43,10 +43,10 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'agreed_hours_week_hour' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'agreed_hours_week_minute' => 'int|between:0,60|regex:/^[0-9]{1,2}$/u',
             'replenishment_recruitment_plan_existence' => 'nullable|regex:/^1$/u',
-            'changed_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々々Ａ-Ｚ]+$/u',
+            'changed_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             'changed_fullname_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             'mynumber_card_no' => 'nullable|int|regex:/^[0-9]{12}$/u',
-            'insured_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々々Ａ-Ｚ]+$/u',
+            'insured_fullname' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             'insured_sex' => 'nullable|string|max:1',
             'insured_birthday_japan_era' => 'nullable|string|max:2',
             'insured_birthday_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -109,6 +109,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'insured_fullname.regex' => '被保険者氏名はカタカナで入力してください。',
         ];
     }
 

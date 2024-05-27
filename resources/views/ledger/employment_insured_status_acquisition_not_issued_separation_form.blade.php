@@ -193,7 +193,7 @@
                     $('#J23_005F_95AA').val(momentAgreedHoursWeek.substring(3, 5));
                 }
                 $('#J27_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? "");
-                $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeName);
+                $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeNameKana);
                 $('#J30_005F_90AB_95CA').val(employee.sex);
                 $('#J32_005F_944E_8D86').val(birthdayConvertJapan['era'] ?? "");
                 $('#J33_005F_944E').val(birthdayConvertJapan['year'] ?? "");
