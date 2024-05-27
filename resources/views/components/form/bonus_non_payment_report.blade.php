@@ -98,19 +98,3 @@
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:220px; top:104px; width:16px; line-height:21px; height:21px; text-align:left; font-size:21px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 30px; white-space:nowrap; background-color:#ddeeff;"><INPUT tabindex="2" value="1" style="position:absolute; top:2px; left:8px; box-sizing:border-box; -moz-box-sizing:border-box; width:16px; height:16px;" type="CHECKBOX" id="_9557_91E8x_9144_88F5_95DB_8CAF_82CC_95CA_002E2" name="title_different_types_of_seafarers_insurance" <?php echo old('title_different_types_of_seafarers_insurance') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:220px; top:83px; width:16px; line-height:21px; height:22px; text-align:left; font-size:22px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 30px; white-space:nowrap; background-color:#ddeeff;"><INPUT tabindex="1" value="1" style="position:absolute; top:3px; left:8px; box-sizing:border-box; -moz-box-sizing:border-box; width:16px; height:16px;" type="CHECKBOX" id="_9557_91E8x_8C92_8D4E_95DB_8CAF_82CC_95CA_002E1" name="title_different_types_of_health_insurance" <?php echo old('title_different_types_of_health_insurance') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 </DIV>                      
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('click', function() {
-                if (this.checked) {
-                    checkboxes.forEach(function(cb) {
-                        if (cb !== checkbox) {
-                            cb.checked = false;
-                        }
-                    });
-                }
-            });
-        });
-    });
-</script>
