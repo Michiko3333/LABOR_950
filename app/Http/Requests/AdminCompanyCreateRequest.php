@@ -76,17 +76,23 @@ class AdminCompanyCreateRequest extends FormRequest
             'br-branch_type' => 'required|array',
             'br-branch_type.*' => 'integer',
             'br-place_type' => 'required|array',
-            'br-place_type.*' => 'integer',
+            'br-place_type.*' => 'integer|regex:/^[12]+\z/',
             'br-post_code' => 'required|array',
             'br-post_code.*' => 'string|max:7|regex:/\A[0-9]+\z/u',
             'br-address_prefecture' => 'required|array',
-            'br-address_prefecture.*' => 'string|max:255',
+            'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥]+\z/u',
-            "br-address_ward" => 'array',
-            "br-address_ward.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９－]+\z/u',
+            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥]+\z/u',
+            "br-address_ward" => 'required|array',
+            "br-address_ward.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９‐－]+\z/u',
             "br-address_apartment" => 'array',
-            "br-address_apartment.*" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ　－]+\z/u',
+            "br-address_apartment.*" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ・‐－]+\z/u',
+            "br-address_city_kana" => 'required|array',
+            "br-address_city_kana.*" => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
+            "br-address_ward_kana" => 'array',
+            "br-address_ward_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー‐－]+\z/u',
+            "br-address_apartment_kana" => 'array',
+            "br-address_apartment_kana.*" => 'nullable|string|max:255|regex:/\A[ァ-ヴー・‐－]+\z/u',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'required|string|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',
@@ -198,6 +204,9 @@ class AdminCompanyCreateRequest extends FormRequest
             "br-address_city" => '住所（市区町村）',
             "br-address_ward" => '住所（丁目・番地）',
             "br-address_apartment" => '住所（アパート・マンション名等）',
+            "br-address_city_kana" => '住所（市区町村）（カナ）',
+            "br-address_ward_kana" => '住所（丁目・番地）（カナ）',
+            "br-address_apartment_kana" => '住所（アパート・マンション名等）（カナ）',
             "br-tel_area_code" => '電話番号（市外局番）',
             "br-tel_city_code" => '電話番号（市内局番）',
             "br-tel_subscriber_code" => '電話番号（加入者番号）',
@@ -260,6 +269,15 @@ class AdminCompanyCreateRequest extends FormRequest
         }
         foreach ($this->input('br-address_apartment', []) as $index => $value) {
             $Attributes["br-address_apartment.{$index}"] = ($index + 1) . "事業所_住所（アパート・マンション名等）";
+        }
+        foreach ($this->input('br-address_city_kana', []) as $index => $value) {
+            $Attributes["br-address_city_kana.{$index}"] = ($index + 1) . "事業所_住所（市区町村）（カナ）";
+        }
+        foreach ($this->input('br-address_ward_kana', []) as $index => $value) {
+            $Attributes["br-address_ward_kana.{$index}"] = ($index + 1) . "事業所_住所（丁目・番地）（カナ）";
+        }
+        foreach ($this->input('br-address_apartment_kana', []) as $index => $value) {
+            $Attributes["br-address_apartment_kana.{$index}"] = ($index + 1) . "事業所_住所（アパート・マンション名等）（カナ）";
         }
         foreach ($this->input('br-tel_area_code', []) as $index => $value) {
             $Attributes["br-tel_area_code.{$index}"] = ($index + 1) . "事業所_電話番号（市外局番）";

@@ -107,6 +107,7 @@ class LaborCompanyController extends Controller
         $formmatted_founding_date = $request->input('founding_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('founding_date'))->format('Y-m-d') : null;
         $formmatted_establishment_date = $request->input('establishment_date') ? Carbon::createFromFormat('Y年n月j日', $request->input('establishment_date'))->format('Y-m-d') : null;
         return [
+            'company_division' => $request->input('company_division'),
             'name' => $request->input('name'),
             'name_kana' => $request->input('name_kana'),
             'name_en' => $request->input('name_en'),
@@ -130,7 +131,6 @@ class LaborCompanyController extends Controller
             'sales_company' => $request->input('sales_company'),
             'url' => $request->input('url'),
             'purpose' => $request->input('purpose'),
-            'company_division' => $request->input('company_division'),
         ];
     }
 
@@ -147,6 +147,9 @@ class LaborCompanyController extends Controller
             'address_city' => $request->input('br-address_city')[$index],
             'address_ward' => $request->input('br-address_ward')[$index],
             'address_apartment' => $request->input('br-address_apartment')[$index],
+            'address_city_kana' => $request->input('br-address_city_kana')[$index],
+            'address_ward_kana' => $request->input('br-address_ward_kana')[$index],
+            'address_apartment_kana' => $request->input('br-address_apartment_kana')[$index],
             'tel_area_code' => $request->input('br-tel_area_code')[$index],
             'tel_city_code' => $request->input('br-tel_city_code')[$index],
             'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],

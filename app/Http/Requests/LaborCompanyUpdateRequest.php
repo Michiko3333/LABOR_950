@@ -14,6 +14,24 @@ class LaborCompanyUpdateRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        $data = array_map(function($value) {
+            if (!is_array($value)) {
+                if (isset($value['br-address_ward'])) {
+                    $value['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $value['br-address_ward']);
+                }
+                if (isset($value['br-address_apartment'])) {
+                    $value['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $value['br-address_apartment']);
+                }
+            }
+            return $value;
+        }, $data);
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,10 +40,11 @@ class LaborCompanyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'company_division' => 'required|integer|in:1',
             'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
-            'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
-            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9]+$/',
+            'name_en' => 'nullable|string|max:255|regex:/^[\x20-\x7E]+$/',
+            'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9., ]+$/',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'company_type_id' => 'integer',
             'license_no' => 'nullable|string|max:255',
@@ -43,7 +62,7 @@ class LaborCompanyUpdateRequest extends FormRequest
             'sales_company' => 'nullable|string|max:255',
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
-            'company_division' => 'integer',
+            'procedure_hidden_flg' => 'nullable|integer|in:0,1',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:255',
             'br-branch_type' => 'required|array',
@@ -55,27 +74,37 @@ class LaborCompanyUpdateRequest extends FormRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255',
+            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥]+\z/u',
             "br-address_ward" => 'required|array',
-            "br-address_ward.*" => 'string|max:255',
-            "br-address_apartment" => 'nullable|array',
-            "br-address_apartment.*" => 'nullable|string|max:255',
+            "br-address_ward.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９‐－]+\z/u',
+            "br-address_apartment" => 'array',
+            "br-address_apartment.*" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ・‐－]+\z/u',
+            "br-address_city_kana" => 'required|array',
+            "br-address_city_kana.*" => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
+            "br-address_ward_kana" => 'array',
+            "br-address_ward_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー‐－]+\z/u',
+            "br-address_apartment_kana" => 'array',
+            "br-address_apartment_kana.*" => 'nullable|string|max:255|regex:/\A[ァ-ヴー・‐－]+\z/u',
             "br-tel_area_code" => 'array',
-            "br-tel_area_code.*" => 'nullable|max:5|regex:/\A[0-9]+\z/u',
+            "br-tel_area_code.*" => 'required|string|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',
-            "br-tel_city_code.*" => 'nullable|max:5|regex:/\A[0-9]+\z/u',
+            "br-tel_city_code.*" => 'required|string|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_subscriber_code" => 'array',
-            "br-tel_subscriber_code.*" => 'nullable|max:5|regex:/\A[0-9]+\z/u',
+            "br-tel_subscriber_code.*" => 'required|string|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_overseas" => 'array',
-            "br-tel_overseas.*" => 'nullable|max:15|regex:/\A[0-9]+\z/u',
-            "br-mail_address" => 'array',
-            "br-mail_address.*" => 'required|regex:/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
+            "br-tel_overseas.*" => 'nullable|string|max:15|regex:/\A[0-9]+\z/u',
+            "br-fax1" => 'array',
+            "br-fax1.*" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
+            "br-fax2" => 'array',
+            "br-fax2.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "br-fax3" => 'array',
+            "br-fax3.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "br-mail_address" => 'required|array',
+            "br-mail_address.*" => 'email',
             "br-labor_insurance_no" => 'array',
-            "br-labor_insurance_no.*" => 'nullable|regex:/^\d{14}$/',
+            "br-labor_insurance_no.*" => 'nullable|string|max:20|regex:/^[0-9]{14}$/u',
             "br-labor_insurance_payment_method" => 'array',
             "br-labor_insurance_payment_method.*" => 'nullable|integer',
-            "br-insurance_type_id" => 'array',
-            "br-insurance_type_id.*" => 'nullable|integer',
             "br-insurance_office_no" => 'array',
             "br-insurance_office_no.*" => 'nullable|string|max:20',
             "br-insurance_office_reference_no" => 'array',
@@ -167,6 +196,9 @@ class LaborCompanyUpdateRequest extends FormRequest
             "br-address_city" => '住所（市区町村）',
             "br-address_ward" => '住所（丁目・番地）',
             "br-address_apartment" => '住所（アパート・マンション名等）',
+            "br-address_city_kana" => '住所（市区町村）（カナ）',
+            "br-address_ward_kana" => '住所（丁目・番地）（カナ）',
+            "br-address_apartment_kana" => '住所（アパート・マンション名等）（カナ）',
             "br-tel_area_code" => '電話番号（市外局番）',
             "br-tel_city_code" => '電話番号（市内局番）',
             "br-tel_subscriber_code" => '電話番号（加入者番号）',
@@ -229,6 +261,15 @@ class LaborCompanyUpdateRequest extends FormRequest
         }
         foreach ($this->input('br-address_apartment', []) as $index => $value) {
             $Attributes["br-address_apartment.{$index}"] = ($index + 1) . "事業所_住所（アパート・マンション名等）";
+        }
+        foreach ($this->input('br-address_city_kana', []) as $index => $value) {
+            $Attributes["br-address_city_kana.{$index}"] = ($index + 1) . "事業所_住所（市区町村）（カナ）";
+        }
+        foreach ($this->input('br-address_ward_kana', []) as $index => $value) {
+            $Attributes["br-address_ward_kana.{$index}"] = ($index + 1) . "事業所_住所（丁目・番地）（カナ）";
+        }
+        foreach ($this->input('br-address_apartment_kana', []) as $index => $value) {
+            $Attributes["br-address_apartment_kana.{$index}"] = ($index + 1) . "事業所_住所（アパート・マンション名等）（カナ）";
         }
         foreach ($this->input('br-tel_area_code', []) as $index => $value) {
             $Attributes["br-tel_area_code.{$index}"] = ($index + 1) . "事業所_電話番号（市外局番）";
