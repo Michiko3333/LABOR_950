@@ -43,7 +43,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "today_japan_era_day" => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "scheduled_year_of_bonus_payment" => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "scheduled_month_of_bonus_payment" => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "office_reference_symbol_office_symbol" => 'nullable|string|max:4|regex:/^[ァ-ヴー　]+\z/u',
+            "office_reference_symbol_office_symbol" => 'nullable|string|max:4',
             "office_arrangement_code_county_city_ward_code" => 'nullable|string|regex:/^[0-9]{1,4}+$/',
             "business_establishment_code_prefecture_code" => 'nullable|string|regex:/^[0-9]{1,2}+$/',
             "ship_owner_reference_code_ship_insurance_office_abbreviation_name" => 'nullable|string|max:3|regex:/^[一-龥々]+$/',

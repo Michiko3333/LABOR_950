@@ -21,7 +21,7 @@
 		<フリガナ>employment_fullname_kana</フリガナ>
 		<休業等を開始した者の氏名>employment_fullname</休業等を開始した者の氏名>
 		<休業等を開始した日の年月日>
-			<年号>caregiver_leave_start_date_year_japan_era</年号>
+			<年号>caregiver_leave_start_date_era</年号>
 			<年>caregiver_leave_start_date_year</年>
 			<月>caregiver_leave_start_date_month</月>
 			<日>caregiver_leave_start_date_day</日>
@@ -40,7 +40,7 @@
 				<配達局番号>post_code_3</配達局番号>
 				<町域番号>post_code_4</町域番号>
 			</郵便番号>
-			<住所>caregiver_leave_employee_address</住所>
+			<住所>employment_address</住所>
 			<電話番号>
 				<市外局番>employment_tel_area_code</市外局番>
 				<市内局番>employment_tel_city_code</市内局番>
@@ -434,8 +434,8 @@
 			<備考>note_1_15</備考>
 		</休業等を開始した日前の賃金支払状況等2>
 		<賃金に関する特記事項>wage_note_1</賃金に関する特記事項>
-		<休業開始時賃金月額証明書受理>1</休業開始時賃金月額証明書受理>
-		<所定労働時間短縮開始時賃金証明書受理>1</所定労働時間短縮開始時賃金証明書受理>
+		<休業開始時賃金月額証明書受理>leave_start_wage_monthly_certificate_accepted</休業開始時賃金月額証明書受理>
+		<所定労働時間短縮開始時賃金証明書受理>reduced_working_hours_wage_certificate_start_accepted</所定労働時間短縮開始時賃金証明書受理>
 		<受理年月日>
 			<年号/>
 			<年/>

@@ -45,7 +45,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
             'branch_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'insured_reference_number' => 'nullable|string|regex:/^[0-9]{6}$/u',
+            'insured_reference_number' => 'nullable|string|regex:/^[0-9]{1,6}$/u',
             'name_kana' =>  'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             'name' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             'birthday_era' => 'string|in:昭和,7,9',

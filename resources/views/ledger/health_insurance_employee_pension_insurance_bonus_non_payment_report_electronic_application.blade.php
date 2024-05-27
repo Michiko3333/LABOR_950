@@ -49,7 +49,7 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -143,7 +143,7 @@
                 if (postCode && postCode.length == 7) {
                     $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0, 3));
                     $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_8E71_94D4_8D86_002E14').val(postCode.substring(3, 7));
-                }            
+                }
                 $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(name ?? '');
                 $('#_9364_9862_94D4_8D86x_8E73_8A4F_8BC7_94D4_002E18').val(telAreaCode ?? '');

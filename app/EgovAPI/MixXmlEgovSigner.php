@@ -65,7 +65,7 @@ class MixXmlEgovSigner
     public function run($request, $separater=False)
     {
         EgovTestLog::info(print_r('******************************** MixEgovSigner start ********************************', true));
-        $inputFolderPath = $this->xmlInput($request);
+        $inputFolderPath = $this->xmlInput($request, $separater);
         $this->getPfx();
         Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/zip/');
         $signerFolderPath = $this->workingDirectory . '/afterSigner/zip/';
@@ -84,7 +84,7 @@ class MixXmlEgovSigner
     }
 
     // requestに沿ってxmlファイルを編集
-    public function xmlInput($request, $separater=False)
+    public function xmlInput($request, $separater)
     {
         // 申請者情報の設定
         $companyId = $request->session()->get('company_id');
@@ -200,7 +200,7 @@ class MixXmlEgovSigner
             }
         }
 
-        //手続IDとパスの取得
+        // 手続IDとパスの取得
         $pathInfo = $request->getPathInfo();
         $procedureID = preg_replace('~^/.*?/~', '', $pathInfo);
         $folderPath = storage_path('/app/ledger-template/' . $procedureID);
@@ -240,36 +240,49 @@ class MixXmlEgovSigner
         // 添付情報付与
         $attachments = $request->input('attachment');
         $attachmentPath = '';
+        $counter = 0;
         if ($attachments) {
             $attachmentPath = $outputPath . 'kousei.xml';
-            $xml = new \DOMDocument();
-            $xml->preserveWhiteSpace = true;
-            $xml->formatOutput = true;
-            $xml->load($attachmentPath);
+            while (True) {
+                $xml = new \DOMDocument();
+                $xml->preserveWhiteSpace = true;
+                $xml->formatOutput = true;
+                $xml->load($attachmentPath);
 
-            $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
+                $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
+                foreach ($attachments as $attachment) {
+                    $newElement = $xml->createElement('添付書類属性情報');
+                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-            foreach ($attachments as $attachment) {
-                $newElement = $xml->createElement('添付書類属性情報');
-                $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                    $newElement->appendChild($xml->createElement('添付種別', $attachment['attachment_type']));
+                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                $newElement->appendChild($xml->createElement('添付種別', $attachment['attachment_type']));
-                $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                    $newElement->appendChild($xml->createElement('添付書類名称', $attachment['attached_document_name']));
+                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                $newElement->appendChild($xml->createElement('添付書類名称', $attachment['attached_document_name']));
-                $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                    $newElement->appendChild($xml->createElement('添付書類ファイル名称', $attachment['attachment_file_name']));
+                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                $newElement->appendChild($xml->createElement('添付書類ファイル名称', $attachment['attachment_file_name']));
-                $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                    $newElement->appendChild($xml->createElement('提出情報', $attachment['submission_info']));
+                    $newElement->appendChild($xml->createTextNode("\n\t\t"));
 
-                $newElement->appendChild($xml->createElement('提出情報', $attachment['submission_info']));
-                $newElement->appendChild($xml->createTextNode("\n\t\t"));
-
-                $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
-                $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
+                    $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
+                    $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
+                }
+                $xml->save($attachmentPath);
+                if ($counter == 1) {
+                    break;
+                }
+                if ($separater) {
+                    $attachmentPath = $this->getAttachmentSignPath($outputPath, '申請種別', '添付書類署名');
+                    if ($attachmentPath==[]) {
+                        break;
+                    }
+                    $counter++;
+                    continue;
+                }
+                break;
             }
-
-            $xml->save($attachmentPath);
         }
 
         // 変換されなかったテンプレート値を空にする
@@ -366,7 +379,7 @@ class MixXmlEgovSigner
         return $files;
     }
 
-    //pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する。パスワードとパスは署名で再利用
+    //　pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する。パスワードとパスは署名で再利用
     public function getPfx()
     {
         $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
@@ -377,13 +390,11 @@ class MixXmlEgovSigner
         EgovTestLog::info(print_r('pfxファイルの復元に成功しました', true));
     }
 
-    //添付ファイルを/afterSignerフォルダに配置
+    //　添付ファイルを/afterSignerフォルダに配置
     public function putAttachment($request)
     {
         if ($request->files->count() !== 0) {
             foreach ($request->file() as $key => $file) {
-                $file_key = substr($key, strlen('radio_'));
-                $file = $request->file($file_key);
                 $attachment_file_name = $file->getClientOriginalName();
                 $putPath = $this->afterLedgerPath . '/afterSigner/zip';
                 $putFullPath = $this->workingDirectory . '/afterSigner/zip';
@@ -413,15 +424,12 @@ class MixXmlEgovSigner
         // 署名用フォルダ
         $afterSignerFolder = $this->workingDirectory . '/afterSigner/zip';
         if ($separater){
-                $serchDirectory = $this->workingDirectory . '/afterSigner/zip/';
-                $filenamePattern = 'kousei' . date("Y") . '*.xml';
-                $files = glob($serchDirectory . $filenamePattern);
-                $signerTargetPath = $files[0];
-                rename($serchDirectory . 'kousei.xml', $serchDirectory . 'kousei_tmp.xml');
-                rename($signerTargetPath, $serchDirectory . 'kousei.xml');
-                $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password);
-                rename($serchDirectory . 'kousei.xml', $signerTargetPath);
-                rename($serchDirectory . 'kousei_tmp.xml', $serchDirectory . 'kousei.xml');
+            $serchDirectory = $this->workingDirectory . '/afterSigner/zip/';
+            $filenamePattern = 'kousei' . date("Y") . '*.xml';
+            $files = glob($serchDirectory . $filenamePattern);
+            foreach ($files as $file) {
+                $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password, basename($file), basename($file));
+            }
             if ( $signerBool==False ) {
                 EgovTestLog::error("個別ファイル署名形式の署名に失敗しました");
             }else{
@@ -435,7 +443,6 @@ class MixXmlEgovSigner
                 EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
             }
         }
-
     }
 
     //不要なpfxファイルの削除
@@ -529,6 +536,16 @@ class MixXmlEgovSigner
                     EgovTestLog::info(print_r($r->collect(), true));
                     $returnData[1]['title'] = $r['title'];
                     $returnData[1]['detail'] = $r['detail'];
+                    $errorReport = [];
+                    $index= 0;
+                    foreach ($r->collect()['report_list'] as $report) {
+                        $index++;
+                        if (isset($report['item']) && isset($report['content'])) {
+                            $errorReport[] = 'エラー' . $index . ': ' . $report['item'];
+                            $errorReport[] = 'エラーメッセージ' . $index . ': ' . $report['content'];
+                        }
+                    }
+                    $returnData[1]['errorReport'] = $errorReport;
                     break;
                 }
             }
@@ -604,6 +621,54 @@ class MixXmlEgovSigner
         if (isset($xmlContent)){
             file_put_contents($targetPath, $xmlContent);
             EgovTestLog::info('申請データ用のタグ変換が行われました');
+        }
+    }
+
+
+     /**
+     * 個別署名での添付書類署名が必要なパスを取得
+     * フォルダ内のxmlファイルが指定タグと指定値を一致するパスの取得
+     * 再帰的に末端タグまで検索
+     * @param string $directory フォルダパス
+     * @param string $tagName タグ名
+     * @param string $tagValue タグ値
+     * @return string or array | null 一致パスが一つであればパスを返し、複数あれば配列で返す
+     */
+    public function getAttachmentSignPath($directory, $tagName, $tagValue)
+    {
+        function checkTagValue($node, $tagName, $tagValue) {
+            if ($node->nodeName === $tagName && $node->nodeValue === $tagValue) {
+                return true;
+            }
+            foreach ($node->childNodes as $child) {
+                if (checkTagValue($child, $tagName, $tagValue)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        $matchingFiles = [];
+        $dirIterator = new \DirectoryIterator($directory);
+
+        foreach ($dirIterator as $fileinfo) {
+            if ($fileinfo->isFile() && $fileinfo->getExtension() === 'xml') {
+                $filePath = $fileinfo->getPathname();
+
+                $doc = new \DOMDocument();
+                libxml_use_internal_errors(true);
+                if ($doc->load($filePath)) {
+                    if (checkTagValue($doc->documentElement, $tagName, $tagValue)) {
+                        $matchingFiles[] = $filePath;
+                    }
+                }
+                libxml_clear_errors();
+            }
+        }
+        if (count($matchingFiles) === 1) {
+            return $matchingFiles[0];
+        } else {
+            return $matchingFiles;
         }
     }
 

@@ -84,7 +84,7 @@ class EgovController extends Controller
     public function getEgovAccount(Request $request) {
         $company = CurrentUser::currentCompany();
         $isConnected = Egov_account::where('company_id', $company->id)->where('delete_flg', 0)->exists();
-        
+
         return response()->json(['isConnected' => $isConnected]);
     }
 

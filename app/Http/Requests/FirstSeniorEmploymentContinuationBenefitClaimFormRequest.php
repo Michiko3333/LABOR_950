@@ -44,11 +44,11 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "employmentInsuranceOfficeNo6digit" => 'string|regex:/^[0-9]{6}$/u',
             "employmentInsuranceOfficeNoCD" => 'string|regex:/^[0-9]{1}$/u',
             "benefitsType" => 'int|in:1,2',
-            "payerJapanEra1" => 'nullable|string|max:2',
-            "payerJapanEraYear1" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "payerMonth1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "wagesPaid1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            "wageReductionDays1" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            "payerJapanEra1" => 'string|max:2',
+            "payerJapanEraYear1" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            "payerMonth1" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "wagesPaid1" => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            "wageReductionDays1" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "payerJapanEra2" => 'nullable|string|max:2',
             "payerJapanEraYear2" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "payerMonth2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
@@ -99,7 +99,7 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "laborConsultantTelSubscriberCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "laborConsultantTelCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'apply_to_code' => 'required|string',
-            'apply_to_name' => 'required|string'
+            'apply_to_name' => 'required|string',
         ];
     }
 

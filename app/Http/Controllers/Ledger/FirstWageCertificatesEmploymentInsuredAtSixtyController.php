@@ -542,6 +542,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
+            return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

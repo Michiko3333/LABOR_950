@@ -28,7 +28,7 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends FormRequest
 
         return array_merge($rules->rules(), $rules_2->rules(), $rules_3->rules());
     }
-    
+
     public function messages()
     {
         $messages = new HealthInsuranceDependentChangeRequest;

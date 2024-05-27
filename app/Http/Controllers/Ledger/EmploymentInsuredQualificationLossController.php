@@ -78,7 +78,7 @@ class EmploymentInsuredQualificationLossController extends Controller
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
-                
+
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -597,7 +597,7 @@ class EmploymentInsuredQualificationLossController extends Controller
                 'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);
+            $response = $XML->run($request, $separater = True);
             if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();

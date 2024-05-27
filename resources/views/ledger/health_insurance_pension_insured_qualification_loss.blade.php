@@ -57,7 +57,7 @@
                                     'dependent' => '被扶養者証',
                                     'remote_dependent' => '遠隔地被扶養者証',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -138,9 +138,9 @@
                 $('#N34_P1').val(insurance_loss_convert_date['year'] ?? "");
                 $('#N35_P1').val(insurance_loss_convert_date['month'] ?? "");
                 $('#N36_P1').val(insurance_loss_convert_date['day'] ?? "");
-                $('#N9_P1').val(employee.pension_office_reference_prefecture || '');
-                $('#N10_P1').val(employee.pension_office_reference_no_cities || '');
-                $('#N11_P1').val(employee.pension_office_reference_no_office || '');
+                $('#N9_P1').val(branch.pension_office_reference_prefecture || '');
+                $('#N10_P1').val(branch.pension_office_reference_no_cities || '');
+                $('#N11_P1').val(branch.pension_office_reference_no_office || '');
                 $('#N12_P1').val(branch.insurance_office_no || '');
 
                 if (branch.post_code != null && employee.post_code.length == 7) {

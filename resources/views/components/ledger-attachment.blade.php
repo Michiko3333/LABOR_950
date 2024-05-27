@@ -1,7 +1,8 @@
 @props([
     'required_list' => [],
     'file_original_names' => [],
-    'extensions' => ''
+    'extensions' => '',
+    'separateDisabled' => false,
 ])
 
 <style>
@@ -33,10 +34,14 @@
                 <input type="radio" name="radio_file_{{$key}}" checked="checked" value="2" {{ old("radio_file_{$key}") == '2' ? 'checked' : '' }}>
                 <label>添付</label>
             </div>
-            <div class="ui radio checkbox">
-                <input type="radio" name="radio_file_{{$key}}" value="1" {{ old("radio_file_{$key}") == '1' ? 'checked' : '' }}>
-                <label>別送</label>
-            </div>
+            @if ($separateDisabled)
+                <lavel/>
+            @else
+                <div class="ui radio checkbox">
+                    <input type="radio" {{ $separateDisabled ? 'hidden' : '' }} name="radio_file_{{$key}}" value="1" {{ old("radio_file_{$key}") == '1' ? 'checked' : '' }}>
+                    <label>別送</label>
+                </div>
+            @endif
         </div>
         <div class="inline fields">
             <div class="field thirteen wide">
@@ -51,7 +56,7 @@
                     <label></label>
                 </div>
             </dic>
-        </div> 
+        </div>
     </div>
     @endforeach
     <div class="ui input {{ $errors->has('input_file_other') ? ' error' : '' }}" id="other_file_name" >
@@ -67,7 +72,7 @@
                 const other_name = $(this).data('input-other');
                 const bool = $(this).prop('checked');
                 $('input[name=' + name + '], input[name=' + label + '], input[name=' + radio + '], input[name=' + other_name + ']').prop('disabled', !bool);
-        
+
                 if (bool) {
                     const radioValue = $('input[name=' + radio + ']:checked').val();
                     if (radioValue === '1') {
@@ -76,11 +81,11 @@
                     }
                 }
             }
-        
+
             $('.file_check').change(function() {
                 updateFields.call(this);
             }).trigger('change');
-        
+
             $('input[type="radio"][name^="radio_file_"]').change(function() {
                 const fileInputField = $(this).closest('.field').find('input[type="file"]');
                 fileInputField.prop('disabled', $(this).val() === '1');
