@@ -484,7 +484,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             $totalSize = 0;
 
             if ($this->hasFile('file_wage_certificate_or_payment_status')) {
-                $totalSize += $this->file('file_wage_certificate')->getSize();
+                $totalSize += $this->file('file_wage_certificate_or_payment_status')->getSize();
             }
             if ($this->hasFile('file_childcare')) {
                 $totalSize += $this->file('file_childcare')->getSize();

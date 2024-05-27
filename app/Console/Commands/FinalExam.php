@@ -84,11 +84,8 @@ class FinalExam extends Command
                 $XML = new MixXmlEgovSigner(null, $companyId);
                 $response = $XML->runExam('900A010200001000', 1, $examNumber);
             } elseif ($examNumber == '09-1') {
-                $proc_id = $this->asking('proc_id');
-                $this->info('未完：再提出データを受け取ったら追加');
-                return;
                 $XML = new MixXmlEgovSigner(null, $companyId);
-                $response = $XML->runExam('', 1, $examNumber);
+                $response = $XML->runExam('900A102810039000', 2, $examNumber);
             } elseif ($examNumber == '13-2') {
                 $response = FinalExamController::getlist_command($companyId, $examNumber);
             } elseif ($examNumber == '14-1') {
@@ -97,7 +94,7 @@ class FinalExam extends Command
             } elseif ($examNumber == '18-1') {
                 $response = FinalExamController::get_notification_list_command($companyId, $examNumber);
             } elseif ($examNumber == '18-2') {
-                $arrive_id = $this->asking('arrive_id');
+                $arrive_id = '9002024000000417';
                 $response = FinalExamController::getNotificationInformation_command($companyId, $arrive_id, $examNumber);
             } elseif ($examNumber == '19-1') {
                 $arrive_id = $this->asking('arrive_id');
@@ -107,8 +104,6 @@ class FinalExam extends Command
                 $arrive_id = $this->asking('arrive_id');
                 $response = FinalExamController::registerDatetimeOfOfficialDocument_command($companyId, $arrive_id, $examNumber);
             } elseif ($examNumber == '21-1') {
-                $this->info('未完：19-1が完了後、追加');
-                return;
                 $response = FinalExamController::signatureVerification_command($companyId, $examNumber);
             } elseif ($examNumber == '25-1') {
                 $response = FinalExamController::logout_command($companyId, $examNumber);

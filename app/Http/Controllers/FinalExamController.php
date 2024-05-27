@@ -258,13 +258,14 @@ class FinalExamController extends Controller
     // 公文書署名検証要求　artisanコマンド
     public static function signatureVerification_command($companyId, $examNo)
     {
-        $file_name = "test";
-        $zipfilepath = storage_path('/koubunsho.zip');
+        $file_name = "koubunsho.zip";
+        $zipfilepath = Storage::path('egov-test/koubunsho.zip');
+        echo $zipfilepath;
         $file_data = base64_encode(file_get_contents($zipfilepath));
 
         $file_data = $file_data;
 
-        $sig_verification_xml_file_name = "filename";
+        $sig_verification_xml_file_name = "official_doc4.xml";
         $account = Egov_account::where('company_id', $companyId)->where('delete_flg', 0)->first();
         $api = Egov::accessToken($account->access_token);
         $r = $api->signatureVerification($file_name, $file_data, $sig_verification_xml_file_name);

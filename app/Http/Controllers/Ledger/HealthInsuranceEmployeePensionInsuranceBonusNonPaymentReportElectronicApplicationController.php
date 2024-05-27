@@ -88,7 +88,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             if (!$request->has($key)) {
                 $request->merge([$key => 0]);
             }
-        }    
+        }
 
         try {
             $data = [
@@ -122,7 +122,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
                 'bonus_name' => $request->input('bonus_name'),
                 'era_name' => $request->input('era_name'),
                 'payment_status' => $request->input('payment_status'),
-                
+
             ];
             $XML = new MixXmlEgovSigner($request);
             $response = $XML->run($request, True);

@@ -118,7 +118,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "accepted_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "accepted_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "employer_confirmation" => 'nullable|string|in:有',
-            "application_category" => 'string|max:10|in:該当,非該当,変更',
+            "application_category" => 'required|string|max:10|in:該当,非該当,変更',
             "insured_reference_number" => 'nullable|int',
             "name" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "name_kana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
@@ -270,7 +270,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_remarks" => 'nullable|string|max:255',
             "other_dependent2_confirmation_relationship_0" => 'nullable|string|in:確認済',
             'apply_to_code' => 'required|string',
-            'apply_to_name' => 'required|string'
+            'apply_to_name' => 'required|string',
         ];
     }
 
@@ -311,7 +311,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             }
         });
     }
-    
+
     public function messages()
     {
         return [

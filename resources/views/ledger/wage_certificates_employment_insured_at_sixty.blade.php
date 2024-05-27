@@ -82,7 +82,7 @@
                                     </a>
                                 </div>
                                 <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.first_senior_employment_continuation_benefit_claim_form />
+                                    <x-form.first_senior_employment_continuation_benefit_claim_form :isDisabled="true"/>
                                 </div>
                                 <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
                                     <x-form.employment_insurance_insured_person_wage_certificate_at_sixty />

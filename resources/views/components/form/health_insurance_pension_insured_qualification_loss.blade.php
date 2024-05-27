@@ -7369,14 +7369,9 @@
                             </span>
                             <div class="egov-tool-field-origin" style="left: 557px; top: 433px;">
                                 <select class="egov-tool-field-rect onImage" id="N56_P1" name="over_70_non_applicable_date_era" style="width: 37px; height: 26px; font-size: 9px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff; letter-spacing: -1.5px;">
-                                    <option value="" {{ old('over_70_non_applicable_date_era') == '' ? 'selected' : '' }}>
-                                    </option>
-                                    <option value="平成" {{ old('over_70_non_applicable_date_era') == '平成' ? 'selected' : '' }}>
-                                    平成
-                                    </option>
-                                    <option value="令和" {{ old('over_70_non_applicable_date_era') == '令和' ? 'selected' : '' }}>
-                                    令和
-                                    </option>
+                                <option value="" {{ old('over_70_non_applicable_date_era') == '' ? 'selected' : '' }}></option>
+                                    <option value="7" {{ old('over_70_non_applicable_date_era') == '7' ? 'selected' : '' }}>平成</option>
+                                    <option value="9" {{ old('over_70_non_applicable_date_era') == '9' ? 'selected' : '' }}>令和</option>
                                 </select>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 598px; top: 433px;">

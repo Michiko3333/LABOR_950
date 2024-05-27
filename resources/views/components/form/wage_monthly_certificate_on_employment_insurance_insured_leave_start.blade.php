@@ -3,33 +3,25 @@
     document.addEventListener("DOMContentLoaded", function() {
         var checkbox1 = document.getElementById("J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91");
         var checkbox2 = document.getElementById("J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91");
+        var checkbox3 = document.getElementById("J56_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91_8EF3_979D");
+        var checkbox4 = document.getElementById("J57_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91_8EF3_979D");
         checkbox1.addEventListener('click', function() {
             if (checkbox1.checked) {
                 checkbox2.checked = false;
+                checkbox3.value = 1;
+                checkbox4.value = "";
+
             }
         });
         checkbox2.addEventListener('click', function() {
             if (checkbox2.checked) {
                 checkbox1.checked = false;
+                checkbox3.value = "";
+                checkbox4.value = 1;
             }
         });
     })
 
-    function ctlChk_monthCertificate(f){
-		if (f.leave_start_wage_monthly_certificate.checked){
-			f.J56_休業開始時賃金月額証明書受理.checked = true;
-		} else {
-			f.J56_休業開始時賃金月額証明書受理.checked = false;
-		}
-	}
-	
-	function ctlChk_wagesCertificate(f){
-		if (f.reduced_working_hours_wage_certificate_start.checked){
-			f.J57_所定労働時間短縮開始時賃金証明書受理.checked = true;
-		} else {
-			f.J57_所定労働時間短縮開始時賃金証明書受理.checked = false;
-		}
-	}
 
     function calc1 (f) {
 		var nullFlg = true;
@@ -37,7 +29,7 @@
 		val = (f.wage_amountA.value - 0) + (f.wage_amountB.value - 0) ;
 
 		if(f.wage_amountA.value == "" && f.wage_amountB.value == ""){
-			nullFlg = false; 
+			nullFlg = false;
 		}
 
 		if (isNaN(val) == false && nullFlg == true) {
@@ -45,7 +37,7 @@
 		}else{
 			f.wage_amount_total_1.value = "";
 		}
-		
+
 		return false;
 	}
 
@@ -55,7 +47,7 @@
 		var total = (f.elements["wage_amountA_1_" + line].value - 0) + (f.elements["wage_amountB_1_" + line].value - 0);
 
 		if((f.elements["wage_amountA_1_" + line].value) == "" && (f.elements["wage_amountB_1_" + line].value) == ""){
-			nullFlg = false; 
+			nullFlg = false;
 		}
 
 		if (isNaN(total) == false && nullFlg == true) {
@@ -63,7 +55,7 @@
 		}else{
 			f.elements["wage_amount_total_1_" + line].value = "";
 		}
-		
+
 		return false;
 	}
 
@@ -81,10 +73,14 @@
 		}else{
 			f.elements["wage_amount_total_2_" + line].value = "";
 		}
-		
+
 		return false;
 	}
     </script>
+    
+
+    <input type="hidden" name="leave_start_wage_monthly_certificate_accepted" id="J56_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91_8EF3_979D" value="{{ old('leave_start_wage_monthly_certificate_accepted') }}">
+    <input type="hidden" name="reduced_working_hours_wage_certificate_start_accepted" id="J57_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91_8EF3_979D" value="{{ old('reduced_working_hours_wage_certificate_start_accepted') }}">
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:700px; top:435px; width:108px; height:34px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:16px 0px 0px 0px;"></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:2px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:2px solid rgb(0, 0, 0); left:56px; top:86px; width:78px; height:34px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:15px 0px 0px 0px;"></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:2px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:133px; top:86px; width:250px; height:34px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:15px 0px 0px 0px;"></SPAN>
@@ -605,8 +601,8 @@
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:677px; top:984px; width:183px; line-height:0px; height:0px;"></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:142px; top:446px; width:12px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">～</SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:358px; top:446px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">～</SPAN>
-    <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:968px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:12px; margin:auto;" type="CHECKBOX" id="J56_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91_8EF3_979D" name="J56_休業開始時賃金月額証明書受理"><SPAN style="font-size:10px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-    <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:984px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:12px; margin:auto;" type="CHECKBOX" id="J57_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91_8EF3_979D" name="J57_所定労働時間短縮開始時賃金証明書受理"><SPAN style="font-size:10px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+    <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:968px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:12px; margin:auto;" type="CHECKBOX" id="kjasdukhoaihef"><SPAN style="font-size:10px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+    <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:984px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:12px; margin:auto;" type="CHECKBOX" id="lkjhlfihlaf"><SPAN style="font-size:10px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:27px; width:25px; line-height:24px; height:25px; text-align:left; font-size:25px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="1" value="1" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91" name="leave_start_wage_monthly_certificate" <?php echo old('leave_start_wage_monthly_certificate') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:56px; width:25px; line-height:24px; height:24px; text-align:left; font-size:24px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="2" value="1" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91" name="reduced_working_hours_wage_certificate_start" <?php echo old('reduced_working_hours_wage_certificate_start') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:853px; top:93px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">月</SPAN>

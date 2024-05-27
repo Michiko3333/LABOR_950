@@ -47,10 +47,18 @@ class Signer
         return Storage::path('ledger/' . $this->id);
     }
 
-    public function run($workingDirectry, $pfx, $pass)
+    public function run($workingDirectry, $pfx, $pass, $basename=null, $outputname=null)
     {
         $envEgov = $_SERVER['EGOV_SIGNER_APP'];
-        $cmd = 'dotnet ' . $envEgov . ' ' . $workingDirectry . ' -i ' . $pfx . ' -p ' . $pass;
+        if ($basename!==null) {
+            if ($outputname!==null) {
+                $cmd = 'dotnet ' . $envEgov . ' ' . $workingDirectry . ' -i ' . $pfx . ' -p ' . $pass . ' -r ' . $basename . ' -w ' . $outputname;
+            } else {
+                $cmd = 'dotnet ' . $envEgov . ' ' . $workingDirectry . ' -i ' . $pfx . ' -p ' . $pass . ' -r ' . $basename;
+            }
+        } else {
+            $cmd = 'dotnet ' . $envEgov . ' ' . $workingDirectry . ' -i ' . $pfx . ' -p ' . $pass;
+        }
         exec($cmd, $output, $code);
         if ($code != 2000 && $code != 208) {
             return false;

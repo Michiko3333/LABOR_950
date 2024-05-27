@@ -366,7 +366,7 @@
             id="J41_005F_8CD9_9770_8C60_91D4" name="employment_status">
             <OPTION value="" selected="selected"></OPTION>
             @foreach($employmentStatuses as $employmentStatus)
-            <option value="{{ $employmentStatus->id }}" {{ (old('employment_status')==$employmentStatus->id ||
+            <option value="{{ $employmentStatus->name }}" {{ (old('employment_status')==$employmentStatus->name ||
                 old('employment_status') == $employmentStatus->name) ? 'selected' : '' }}>{{ $employmentStatus->name }}
             </option>
             @endforeach

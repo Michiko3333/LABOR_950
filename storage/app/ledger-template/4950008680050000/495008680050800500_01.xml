@@ -19,7 +19,7 @@
           <日/>
         </支給申請期間_末日>
       </支給申請期間>
-      <氏名>fullname_kana_number_symbol</氏名>
+      <氏名>fullname_kana</氏名>
       <被保険者番号>
         <被保険者番号4桁>employment_insured_no_4digit</被保険者番号4桁>
         <被保険者番号6桁>employment_insured_no_6digit</被保険者番号6桁>

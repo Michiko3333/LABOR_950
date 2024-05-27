@@ -10908,7 +10908,7 @@ div.popup {
        <input class="egov-tool-field-rect onImage" id="N24_P1" name="accepted_day" value="{{ old('accepted_day') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
       <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 593px; top: 356px;">
-       <input id="N25_P1_0" name="application_category" required="required" type="radio" value="該当" <?php echo (old('application_category') == '該当') ? 'checked' : ''; ?>/>
+       <input id="N25_P1_0" name="application_category" type="radio" value="該当" {{ old('application_category') == '該当' ? 'checked' : '' }}>
        <label class="egovuiForm-label" for="N25_P1_0" style="font-size: 12px;">
        </label>
       </span>

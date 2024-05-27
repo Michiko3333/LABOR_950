@@ -58,7 +58,7 @@
                                     'business_owner' => '事業主等証明書',
                                     'medical_insurer' => '医療保険者証明書',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -139,8 +139,6 @@
             </div>
         </div>
 
-
-        <!-- 会社情報のセット ここから -->
         <script type="module">
             $(document).ready(function() {
                 $('#N4_P1').val('{{ old('submission_year', $today['year']) }}');
@@ -157,9 +155,7 @@
                 $('#N33_1').val('{{ old('submission_date', $today['date']) }}');
             });
         </script>
-        <!-- 会社情報のセット ここまで -->
 
-        <!-- 従業員・支店情報のセット ここから -->
         <script type="module">
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
@@ -180,8 +176,6 @@
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 var spouseBirthdayEraValue = spouse_birthday_convert_japan['era'] ?? "";
                 var spouseBirthdayEra = eraMapping[spouseBirthdayEraValue] ?? "";
-                // ここに従業員と紐づく支店情報をinputに入れる処理
-                // 例：
                 $('#N7_P1').val(headquarters.pension_office_reference_prefecture ?? '');
                 $('#N8_P1').val(headquarters.pension_office_reference_no_cities ?? '');
                 $('#N9_P1').val(headquarters.pension_office_reference_no_office ?? '');
@@ -305,7 +299,6 @@
                     $('#N109_P1').val(spouse.special_requirements_non_applicable_reason ?? '');
                 }
 
-                // 帳票2枚目
                 if (spouse !== undefined && spouse !== null) {
                     $('#N2').val(spouse.mynumber_card_no ?? '');
                     $('#N3').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
@@ -332,7 +325,6 @@
                 $('#N24').val(headquarters.tel_city_code ?? '');
                 $('#N25').val(headquarters.tel_subscriber_code ?? '');
 
-                // 帳票3枚目
                 if (spouse !== undefined && spouse !== null) {
                     $('#N2_1').val(spouse.mynumber_card_no ?? '');
                     $('#N3_1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
@@ -360,7 +352,6 @@
                 $('#N29_1').val(headquarters.tel_subscriber_code ?? '');
             }
 
-            // 選択イベントを通してlivewireからデータを受け取る
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {
@@ -502,10 +493,8 @@
                 $('#N30').val($(this).val());
             });
         </script>
-        <!-- 従業員・支店情報のセット ここまで -->
 
         @slot('footer')
-            <!-- 帳票用の共通jsを読み込む -->
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {

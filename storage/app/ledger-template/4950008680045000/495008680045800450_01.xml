@@ -88,10 +88,10 @@
 		<その他賃金に関する特記事項2>specialNoteOnWages2</その他賃金に関する特記事項2>
 		<その他賃金に関する特記事項3>specialNoteOnWages3</その他賃金に関する特記事項3>
 		<証明年月日>
-			<年号>todayJapanEraYear</年号>
+			<年号>todayJapanEra</年号>
 			<年>todayJapanEraYear</年>
-			<月>totayMonth</月>
-			<日>totayDay</日>
+			<月>todayMonth</月>
+			<日>todayDay</日>
 		</証明年月日>
 		<事業所名_所在地>headquartersAddress</事業所名_所在地>
 		<事業所名_電話番号>
@@ -101,15 +101,15 @@
 		</事業所名_電話番号>
 		<事業主氏名>employer_company_managerial_position_name</事業主氏名>
 		<申請年月日>
-			<年号>todayJapanEraYear</年号>
+			<年号>todayJapanEra</年号>
 			<年>todayJapanEraYear</年>
-			<月>totayMonth</月>
-			<日>totayDay</日>
+			<月>todayMonth</月>
+			<日>todayDay</日>
 		</申請年月日>
 		<あて先>destination</あて先>
 		<申請者住所>address</申請者住所>
-		<申請者氏名_フリガナ>applicantFullnameKana</申請者氏名_フリガナ>
-		<申請者氏名>applicantFullname</申請者氏名>
+		<申請者氏名_フリガナ>employeeFullnameKana</申請者氏名_フリガナ>
+		<申請者氏名>employeeFullname</申請者氏名>
 		<払渡希望金融機関>
 			<金融機関フリガナ>financialInstitutionNameKana</金融機関フリガナ>
 			<金融機関名>financialInstitutionName</金融機関名>
