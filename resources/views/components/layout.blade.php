@@ -218,6 +218,7 @@
 
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('/css/schedule-sidebar.css') }}">
     @if (isset($title))
         <title>Karte - {{ $title }}</title>
     @else
@@ -247,7 +248,11 @@
             {{ $slot }}
         </div>
         @if ($useRightContent)
-            <div class="right-container">{{ $side ?? '' }}</div>
+            <div class="right-container">
+                <section class="schedule">
+                    @livewire('side-schedule')
+                </section>
+            </div>
         @endif
     </div>
 

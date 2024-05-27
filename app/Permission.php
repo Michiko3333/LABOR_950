@@ -26,7 +26,6 @@ class Permission
             $this->selectedCompanyFlg = !empty($currentCompany);
 
             if (session()->has('permissions')) {
-                \Log::info('CACHED DATA');
                 $d = session()->get('permissions');
                 $this->role_id = $d['role_id'];
                 $this->external_advsor = $d['external_advsor'];
