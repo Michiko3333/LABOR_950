@@ -40,4 +40,32 @@ class AdminLaborCreateRequest extends FormRequest
             'user_pass' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'company_id' => '会社を選択してください。',
+            'branch_id' => '支店を選択してください。',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'last_name' => '氏',
+            'last_name_kana' => '氏（カナ）',
+            'last_name_alphabet' => '氏（アルファベット）',
+            'first_name' => '名',
+            'first_name_kana' => '名（カナ）',
+            'first_name_alphabet' => '名（アルファベット）',
+            'employee_no' => '社員番号',
+            'employee_type' => '社員区分',
+            'tel_area_code' => '電話番号（市外局番）',
+            'tel_city_code' => '電話番号（市内局番）',
+            'tel_subscriber_code' => '電話番号（加入者番号）',
+            'mail_address2' => '連絡先_メールアドレス',
+            'user_email' => 'ログイン用_メールアドレス',
+            'user_pass' => 'パスワード',
+        ];
+    }
 }

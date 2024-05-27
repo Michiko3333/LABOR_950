@@ -144,6 +144,8 @@ class AdminEmployeeCreateRequest extends FormRequest
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
+            'user_email' => 'required|email',
+            'user_pass' => 'required',
         ];
     }
 
@@ -243,6 +245,8 @@ class AdminEmployeeCreateRequest extends FormRequest
             'passed_away_date' => '死亡日',
             'occupation_type' => '職種',
             'external_advisor_flg' => '外部顧問是否',
+            'user_email' => 'ログイン用_メールアドレス',
+            'user_pass' => 'パスワード',
         ];
     }
 }

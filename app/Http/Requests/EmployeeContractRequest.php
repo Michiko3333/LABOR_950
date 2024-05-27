@@ -51,4 +51,35 @@ class EmployeeContractRequest extends FormRequest
             'other_contract_matters_and_convenant' => 'nullable|string',
         ];
     }
+
+    
+    public function attributes()
+    {
+        return [
+            'era' => '契約年',
+            'month' => '契約月',
+            'day' => '契約日',
+            'title' => '契約書のタイトル',
+            'company_address' => '事業所所在地',
+            'company_name' => '事業所名',
+            'company_representative' => '使用者氏名',
+            'employment_period' => '雇用期間',
+            'work_place' => '勤務場所',
+            'employer_type' => '労働者種別',
+            'probation_period' => '試用期間',
+            'probation_period_detail' => '試用事項',
+            'duties' => '業務内容',
+            'duties_detail' => '業務内容の詳細事項',
+            'start_end_and_break_time' => '始業・終業　休憩の時間',
+            'holiday' => '休日',
+            'overtime_work' => '時間外勤務の有無',
+            'vacation' => '休暇',
+            'wages' => '賃金',
+            'renewal' => '更新の有無',
+            'matters_of_retirement' => '退職に関する事項',
+            'matters_of_retirement_and_premature_termination' => '退職および契約の中途解消に関する事項',
+            'other_contract_matters' => 'その他の契約事項',
+            'other_contract_matters_and_convenant' => 'その他の契約事項および誓約事項',
+        ];
+    }
 }
