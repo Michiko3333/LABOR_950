@@ -62,7 +62,7 @@
         }
     </style>
     <section class="content">
-        <div class="ui breadcrumb huge mt-2 mb-0">
+        <div class="ui breadcrumb huge mb-0">
             <a class="section" href="/">ホーム</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">e-Gov連携</div>
@@ -104,22 +104,22 @@
                     const interval = setInterval(() => {
                         if (authWindow.closed) {
                             $.ajax({
-                            url: '{{ route('get-egov-account') }}',
-                            type: 'get',
-                            success: function(data) {
-                                if(data.isConnected === true) {
-                                    clearInterval(interval);
-                                    $('#connectBtn').prop('disabled', false);
-                                    $('#notConnected').addClass('hide');
-                                    $('#connected').removeClass('hide');
-                                } else {
-                                    $('#connectBtn').prop('disabled', false);
+                                url: '{{ route('get-egov-account') }}',
+                                type: 'get',
+                                success: function(data) {
+                                    if (data.isConnected === true) {
+                                        clearInterval(interval);
+                                        $('#connectBtn').prop('disabled', false);
+                                        $('#notConnected').addClass('hide');
+                                        $('#connected').removeClass('hide');
+                                    } else {
+                                        $('#connectBtn').prop('disabled', false);
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
                                 }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error(error);
-                            }
-                        });
+                            });
                         }
                     }, 1000);
                 }

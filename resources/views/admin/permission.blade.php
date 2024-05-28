@@ -39,7 +39,7 @@
         </style>
     @endslot
     <section class="content">
-        <div class="ui huge breadcrumb mb-0 mt-2">
+        <div class="ui huge breadcrumb mb-0">
             @if (request()->route()->getName() === 'employee_permission')
                 <a class="section" href="{{ route('home.index') }}">ホーム</a>
                 <i class="right chevron icon divider"></i>

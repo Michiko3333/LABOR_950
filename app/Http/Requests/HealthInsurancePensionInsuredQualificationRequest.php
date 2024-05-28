@@ -23,6 +23,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
     {
         return [
             "file_insurance" => 'required_unless:radio_file_insurance,1|file|mimes:jpg,pdf|max:50000',
+            "radio_file_other" => 'nullable|string|in:2',
             "file_dependent" => 'required_unless:radio_file_dependent,1|file|mimes:jpg,pdf|max:50000',
             "file_remote_dependent" => 'required_if:radio_file_load,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
@@ -103,6 +104,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            "radio_file_other" => '当該帳票では添付ファイルに別送を選択することはできません。',
             'health_insurance.required_without' => 'タイトルのチェックボックスで健康保険、厚生年金保険のいずれかである必要があります。',
         ];
     }

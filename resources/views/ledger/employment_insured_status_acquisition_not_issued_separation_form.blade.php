@@ -2,25 +2,25 @@
 <x-layout title="{{ $procedureName }}">
     <section class="content">
         @slot('header')
-        <link rel="stylesheet" href="{{asset('/css/ledger-form.css')}}">
+            <link rel="stylesheet" href="{{ asset('/css/ledger-form.css') }}">
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
-        @if($certificate == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                電子証明書が登録されていません
-            </div>
+        @if ($certificate == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    電子証明書が登録されていません
+                </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -74,9 +74,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -122,8 +122,8 @@
                 @else
                     $('#J70_005F_944E_8D86').prop('disabled', true);
                     $('#J71_005F_944E, #J72_005F_8C8E, \
-                        #J73_005F_93FA, #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, \
-                        #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,#J79_005F_9574_8B4C_9793')
+                                #J73_005F_93FA, #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, \
+                                #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,#J79_005F_9574_8B4C_9793')
                         .prop('readonly', true);
                 @endif
             });
@@ -160,10 +160,14 @@
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const employeeName = (employee.last_name ? employee.last_name + '　' : "") + (employee.first_name ?? "");
-                const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee.first_name_kana ?? "");
-                const employeeNameAlphabet = (employee.last_name_alphabet ? employee.last_name_alphabet + ' ' : "") + (employee.first_name_alphabet ?? "");
-                const headquartersAddress = (headquarters_prefecture_data.name ?? "") + (headquarters.address_city ?? "") + (headquarters.address_ward ?? "") + (headquarters.address_apartment ?? "");
-                const employeeAddress = (employee_prefecture_data.name ?? "") + (employee.address_city ?? "") + (employee.address_ward ?? "") + (employee.address_apartment ?? "");
+                const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee
+                    .first_name_kana ?? "");
+                const employeeNameAlphabet = (employee.last_name_alphabet ? employee.last_name_alphabet + ' ' : "") + (employee
+                    .first_name_alphabet ?? "");
+                const headquartersAddress = (headquarters_prefecture_data.name ?? "") + (headquarters.address_city ?? "") + (
+                    headquarters.address_ward ?? "") + (headquarters.address_apartment ?? "");
+                const employeeAddress = (employee_prefecture_data.name ?? "") + (employee.address_city ?? "") + (employee
+                    .address_ward ?? "") + (employee.address_apartment ?? "");
 
                 if (employee.employment_insured_no && employee.employment_insured_no.length == 11) {
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
@@ -175,13 +179,13 @@
                     $('#J8_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
                     $('#J9_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10));
                 }
-                if(employmentInsuredConvertDate !== null) {
+                if (employmentInsuredConvertDate !== null) {
                     $('#J11_005F_944E_8D86').val(employmentInsuredConvertDate['era'] ?? "");
                     $('#J12_005F_944E').val(employmentInsuredConvertDate['year'] ?? "");
                     $('#J13_005F_8C8E').val(employmentInsuredConvertDate['month'] ?? "");
                     $('#J14_005F_93FA').val(employmentInsuredConvertDate['day'] ?? "");
                 }
-                if(employmentRetirementConvertDate !== null) {
+                if (employmentRetirementConvertDate !== null) {
                     $('#J16_005F_944E_8D86').val(employmentRetirementConvertDate['era'] ?? "");
                     $('#J17_005F_944E').val(employmentRetirementConvertDate['year'] ?? "");
                     $('#J18_005F_8C8E').val(employmentRetirementConvertDate['month'] ?? "");
@@ -211,14 +215,15 @@
                     }
                     $('#J53_005F_8D91_90D0_005F_926E_88E6').val(countryValue ?? "")
                     $('#J54_005F_8DDD_97AF_8E91_8A69').val(residentialStatusValue ?? "");
-                    $('#J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').val(employee.residential_status_unknown_reason ?? "");
+                    $('#J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').val(employee
+                        .residential_status_unknown_reason ?? "");
                     $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A, #J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86,\
-                        #J49_005F_944E, #J50_005F_8C8E, #J51_005F_93FA, #J53_005F_8D91_90D0_005F_926E_88E6, #J54_005F_8DDD_97AF_8E91_8A69,\
-                        #J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').prop('disabled',false);
+                                #J49_005F_944E, #J50_005F_8C8E, #J51_005F_93FA, #J53_005F_8D91_90D0_005F_926E_88E6, #J54_005F_8DDD_97AF_8E91_8A69,\
+                                #J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').prop('disabled', false);
                 } else {
                     $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A, #J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86,\
-                        #J49_005F_944E, #J50_005F_8C8E, #J51_005F_93FA, #J53_005F_8D91_90D0_005F_926E_88E6, #J54_005F_8DDD_97AF_8E91_8A69,\
-                        #J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').prop('disabled',true);
+                                #J49_005F_944E, #J50_005F_8C8E, #J51_005F_93FA, #J53_005F_8D91_90D0_005F_926E_88E6, #J54_005F_8DDD_97AF_8E91_8A69,\
+                                #J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').prop('disabled', true);
                 }
                 $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(headquarters.name);
                 $('#J45_005F_8F5A_8F8A_9694_82CD_8B8F_8F8A').val(employeeAddress);

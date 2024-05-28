@@ -434,8 +434,8 @@
 			<備考>note_1_15</備考>
 		</休業等を開始した日前の賃金支払状況等2>
 		<賃金に関する特記事項>wage_note_1</賃金に関する特記事項>
-		<休業開始時賃金月額証明書受理>leave_start_wage_monthly_certificate_accepted</休業開始時賃金月額証明書受理>
-		<所定労働時間短縮開始時賃金証明書受理>reduced_working_hours_wage_certificate_start_accepted</所定労働時間短縮開始時賃金証明書受理>
+		<休業開始時賃金月額証明書受理>leave_start_wage_monthly_certificate2</休業開始時賃金月額証明書受理>
+		<所定労働時間短縮開始時賃金証明書受理>reduced_working_hours_wage_certificate_start2</所定労働時間短縮開始時賃金証明書受理>
 		<受理年月日>
 			<年号/>
 			<年/>

@@ -6,7 +6,7 @@
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。
         </p>
         @if ($certificate == false)
@@ -16,12 +16,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -58,7 +58,7 @@
                                     'business_owner' => '事業主等証明書',
                                     'medical_insurer' => '医療保険者証明書',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
+                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true' />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -99,9 +99,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -183,7 +183,8 @@
                     $('#N10_P1').val(headquarters.post_code.substring(0, 3));
                     $('#N11_P1').val(headquarters.post_code.substring(3, 7));
                 }
-                $('#N12_P1').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N12_P1').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters
+                    .address_ward ?? '') + (headquarters.address_apartment ?? ''));
                 $('#N13_P1').val(headquarters.name ?? '');
                 $('#N16_P1').val(headquarters.tel_area_code ?? '');
                 $('#N17_P1').val(headquarters.tel_city_code ?? '');
@@ -205,7 +206,8 @@
                     $('#N42_P1').val(employee.post_code.substring(0, 3));
                     $('#N43_P1').val(employee.post_code.substring(3, 7));
                 }
-                $('#N44_P1').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
+                $('#N44_P1').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee
+                    .address_ward ?? '') + (employee.address_apartment ?? ''));
                 if (spouse !== undefined && spouse !== null) {
                     $('#N50_P1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
                     $('#N49_P1').val((spouse.last_name_kana ? spouse.last_name_kana + '　' : '') + (spouse.first_name_kana ??
@@ -239,7 +241,8 @@
                         $('#N63_P1').val(spouse.post_code.substring(0, 3));
                         $('#N64_P1').val(spouse.post_code.substring(3, 7));
                     }
-                    $('#N65_P1').val((spouse_prefecture_data.name ?? '') + (spouse.address_city ?? '') + (spouse.address_ward ?? '') + (spouse.address_apartment ?? ''));
+                    $('#N65_P1').val((spouse_prefecture_data.name ?? '') + (spouse.address_city ?? '') + (spouse.address_ward ??
+                        '') + (spouse.address_apartment ?? ''));
                     if (spouse.tel_type === 1) {
                         $('#N66_P1').val('自宅');
                     } else if (spouse.tel_type === 2) {
@@ -319,7 +322,8 @@
                     $('#N17').val(headquarters.post_code.substring(0, 3));
                     $('#N18').val(headquarters.post_code.substring(3, 7));
                 }
-                $('#N19').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N19').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters
+                    .address_ward ?? '') + (headquarters.address_apartment ?? ''));
                 $('#N20').val(headquarters.name ?? '');
                 $('#N23').val(headquarters.tel_area_code ?? '');
                 $('#N24').val(headquarters.tel_city_code ?? '');
@@ -345,7 +349,8 @@
                     $('#N21_1').val(headquarters.post_code.substring(0, 3));
                     $('#N22_1').val(headquarters.post_code.substring(3, 7));
                 }
-                $('#N23_1').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N23_1').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters
+                    .address_ward ?? '') + (headquarters.address_apartment ?? ''));
                 $('#N24_1').val(headquarters.name ?? '');
                 $('#N27_1').val(headquarters.tel_area_code ?? '');
                 $('#N28_1').val(headquarters.tel_city_code ?? '');

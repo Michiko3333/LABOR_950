@@ -41,7 +41,7 @@
         </style>
     @endslot
     <section class="content">
-        <h1 class="my-2">
+        <h1 class="mb-2">
             <i class="briefcase icon"></i>
             {{ $currentCompany->name }} {{ empty($branch) ? '' : $branch->name }}
         </h1>

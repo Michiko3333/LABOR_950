@@ -22,11 +22,12 @@
         }
     </style>
     <section class="content">
-        <div class="ui breadcrumb huge mt-2 mb-0">
+        <div class="ui breadcrumb huge mb-0">
             <a class="section" href="/">ホーム</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">帳票一覧</div>
         </div>
+        <h1>帳票一覧</h1>
         @if ($certificate == false)
             <div class="ui warning message">
                 <div class="header">
@@ -41,7 +42,10 @@
                 </div>
             </div>
         @endif
-        <h1>帳票一覧</h1>
-        <livewire:ledger-list />
+        <div class="ui card full card-shadow item-0">
+            <div class="content">
+                <livewire:ledger-list />
+            </div>
+        </div>
     </section>
 </x-layout>

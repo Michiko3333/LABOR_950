@@ -111,7 +111,7 @@
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:295px; top:1016px; width:10px; height:10px; text-align:center; font-size:8px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">無</SPAN>
     <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:310px; top:999px; width:63px; height:16px; font-size:8px;"><SELECT size="1" tabindex="" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:63px; height:16px;" id="" name="commuting_allowance_period">
     <OPTION value=""></OPTION>
-    <OPTION value="当月" {{ old('commuting_allowance_period')=="当月" ? 'selected' : '' }}>毎月</OPTION>
+    <OPTION value="毎月" {{ old('commuting_allowance_period')=="当月" ? 'selected' : '' }}>毎月</OPTION>
     <OPTION value="３か月" {{ old('commuting_allowance_period')=="３か月" ? 'selected' : '' }}>3ヵ月</OPTION>
     <OPTION value="６か月" {{ old('commuting_allowance_period')=="６か月" ? 'selected' : '' }}>6ヵ月</OPTION>
     <OPTION value="その他" {{ old('commuting_allowance_period')=="その他" ? 'selected' : '' }}>その他</OPTION>

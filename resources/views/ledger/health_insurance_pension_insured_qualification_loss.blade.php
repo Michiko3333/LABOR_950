@@ -10,7 +10,7 @@
                 }
             </style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
         @if ($certificate == false)
@@ -20,12 +20,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -57,7 +57,8 @@
                                     'dependent' => '被扶養者証',
                                     'remote_dependent' => '遠隔地被扶養者証',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
+                                ]" :extensions="'.jpg,.jpeg,.pdf'"
+                                    :separateDisabled='true' />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -79,9 +80,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -150,7 +151,8 @@
                     $('#N13_P1').val("");
                     $('#N14_P1').val("");
                 }
-                $('#N15_P1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
+                $('#N15_P1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ??
+                    '') + (branch.address_apartment ?? ''));
                 $('#N16_P1').val(branch.name || '');
                 $('#N19_P1').val(branch.tel_area_code || '');
                 $('#N20_P1').val(branch.tel_city_code || '');
