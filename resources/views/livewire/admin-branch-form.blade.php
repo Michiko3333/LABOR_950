@@ -31,6 +31,16 @@
                     });
                 },
             });
+
+            $(document).ready(function() {
+                $('.working_hours_calendar').calendar({
+                    type: 'time',
+                    formatter: {
+                        time: 'HH:mm',
+                        cellTime: 'HH:mm'
+                    }
+                });
+            });
         }
     </script>
     @foreach ($data as $key => $item)
@@ -347,17 +357,29 @@
                     <h4>開始設定</h4>
                     <div class="three fields">
                         <div class="field {{ err_bind($errs, 'br-start_date_of_month', $key) }}">
-                            <label for="br-start_date_of_month">月の始まり</label>
-                            <input type="text" name="br-start_date_of_month[]"
-                                wire:model.live="data.{{ $key }}.br-start_date_of_month"
-                                placeholder="1~12">
+                            <label for="br-start_date_of_month">初月</label>
+                            <select class="ui fluid dropdown" name="br-start_date_of_month[]"
+                                wire:model.live="data.{{ $key }}.br-start_date_of_month">
+                                <option value="">未選択</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-start_days_of_week', $key) }}">
                             <label for="br-start_days_of_week">週の始まり</label>
                             <select class="ui fluid dropdown" name="br-start_days_of_week[]"
                                 wire:model.live="data.{{ $key }}.br-start_days_of_week">
-                                <option value="">未選択</option>
                                 @foreach ($start_days_of_week as $k => $value)
                                     <option value="{{ $k }}">{{ $value }}</option>
                                 @endforeach
@@ -365,26 +387,40 @@
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-start_time_of_day', $key) }}">
-                            <label for="br-start_time_of_day">時間の始まり</label>
-                            <input type="text" name="br-start_time_of_day[]"
-                                wire:model.live="data.{{ $key }}.br-start_time_of_day"
-                                placeholder="00:00:00~23:59:59">
+                            <label for="br-start_time_of_day">日</label>
+                            <div class="ui calendar working_hours_calendar" wire:ignore>
+                                <div class="ui fluid input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" name="br-start_time_of_day[]"
+                                        wire:model.live="data.{{ $key }}.br-start_time_of_day"
+                                        placeholder="00:00">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <h4>就労時間設定</h4>
                     <div class="two fields">
                         <div class="field {{ err_bind($errs, 'br-work_time_start', $key) }}">
                             <label for="br-work_time_start">就業開始</label>
-                            <input type="text" name="br-work_time_start[]"
-                                wire:model.live="data.{{ $key }}.br-work_time_start"
-                                placeholder="00:00:00~23:59:59">
+                            <div class="ui calendar working_hours_calendar" wire:ignore>
+                                <div class="ui fluid input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" name="br-work_time_start[]"
+                                        wire:model.live="data.{{ $key }}.br-work_time_start"
+                                        placeholder="00:00">
+                                </div>
+                            </div>
                         </div>
-
                         <div class="field {{ err_bind($errs, 'br-work_time_end', $key) }}">
                             <label for="br-work_time_end">就業終了</label>
-                            <input type="text" name="br-work_time_end[]"
-                                wire:model.live="data.{{ $key }}.br-work_time_end"
-                                placeholder="00:00:00~23:59:59">
+                            <div class="ui calendar working_hours_calendar" wire:ignore>
+                                <div class="ui fluid input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" name="br-work_time_end[]"
+                                        wire:model.live="data.{{ $key }}.br-work_time_end"
+                                        placeholder="23:59">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="two fields">
