@@ -129,11 +129,43 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->sometimes('contract_end_era', 'in:令和', function ($input) {
+            return $input->contract_start_era === '令和';
+        });
+        $validator->sometimes('contract_end_year', 'gt:contract_start_year', function ($input) {
+            return $input->contract_start_era === $input->contract_end_era && $input->contract_start_year > $input->contract_end_year;
+        });
+        $validator->sometimes('contract_end_month', 'gt:contract_start_month', function ($input) {
+            return $input->contract_start_era === $input->contract_end_era && $input->contract_start_year === $input->contract_end_year && $input->contract_start_month > $input->contract_end_month;
+        });
+        $validator->sometimes('contract_end_day', 'gt:contract_start_day', function ($input) {
+            return $input->contract_start_era === $input->contract_end_era && $input->contract_start_year === $input->contract_end_year && $input->contract_start_month === $input->contract_end_month && $input->contract_start_day >= $input->contract_end_day;
+        });
+
+        $validator->sometimes('contract_start_month', 'gte:5', function ($input) {
+            return $input->contract_start_era === '令和' && $input->contract_start_year == 1;
+        });
+        $validator->sometimes('contract_start_day', 'gte:8', function ($input) {
+            return $input->contract_start_era === '平成' && $input->contract_start_year == 1 && $input->contract_start_month == 1;
+        });
+        $validator->sometimes('contract_start_month', 'between:1,4', function ($input) {
+            return $input->contract_start_era === '平成' && $input->contract_start_year >= 31;
+        });
+        $validator->sometimes('contract_start_day', 'between:1,30', function ($input) {
+            return $input->contract_start_era === '平成' && $input->contract_start_year >= 31 && $input->contract_start_month === 4;
+        });
+    }
     
     public function messages()
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'contract_end_year' => '契約期間_終了年月日_年は契約期間_開始年月日_年以降を入力してください。',
+            'contract_end_month' => '契約期間_終了年月日_月は契約期間_開始年月日_月以降を入力してください。',
+            'contract_end_day' => '契約期間_終了年月日_日は契約期間_開始年月日_日以降を入力してください。',
         ];
     }
 
