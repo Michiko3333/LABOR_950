@@ -6982,8 +6982,6 @@
                     </style>
                     <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        var c1_0 = document.getElementById("N3_P1");
-                        var c1_1 = document.getElementById("N4_P1");
                         var c2_0 = document.getElementById("N48_P1");
                         var c2_1 = document.getElementById("N49_P1");
                         var c2_2 = document.getElementById("N50_P1");
@@ -7014,36 +7012,20 @@
                         over70Year.disabled = true;
                         over70Month.disabled = true;
                         over70Day.disabled = true;
-                        c1_0.addEventListener("change", function() {
-                            if (c1_0.checked) {
-                                c1_1.checked = false;
-                            }
-                        });
-                        c1_1.addEventListener("change", function() {
-                            if (c1_1.checked) {
-                                c1_0.checked = false;
-                            }
-                        });
                         c2_0.addEventListener("change", function() {
                             if (c2_0.checked) {
-                                c2_1.checked = false;
-                                c2_2.checked = false;
                                 remarks.value = "";
                                 remarks.disabled = true;
                             }
                         });
                         c2_1.addEventListener("change", function() {
                             if (c2_1.checked) {
-                                c2_0.checked = false;
-                                c2_2.checked = false;
                                 remarks.value = "";
                                 remarks.disabled = true;
                             }
                         });
                         c2_2.addEventListener("change", function() {
                             if (c2_2.checked) {
-                                c2_0.checked = false;
-                                c2_1.checked = false;
                                 remarks.disabled = false;
                             }
                         });
@@ -7354,7 +7336,7 @@
                                 </label>
                             </span>
                             <div class="egov-tool-field-origin" style="left: 120px; top: 440px;">
-                                <input class="egov-tool-field-rect onImage" id="N51_P1" maxlength="16" name="remarks_other_details" value="{{ old('remarks_other_details') }}" style="width: 160px; height: 17px; font-size: 10px; text-align: left; line-height: 19px; padding: inherit; background-color:#ddeeff;" type="text"/>
+                                <input class="egov-tool-field-rect onImage" id="N51_P1" maxlength="16" disabled name="remarks_other_details" value="{{ old('remarks_other_details') }}" style="width: 160px; height: 17px; font-size: 10px; text-align: left; line-height: 19px; padding: inherit; background-color:#ddeeff;" type="text"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 365px; top: 422px;">
                                 <input class="egov-tool-field-rect onImage" id="N52_P1" maxlength="2" name="insurance_card_attached" value="{{ old('insurance_card_attached') }}" style="width: 49px; height: 14px; font-size: 10px; text-align: right; line-height: 21px; padding: inherit; background-color:#ddeeff;" type="text"/>
