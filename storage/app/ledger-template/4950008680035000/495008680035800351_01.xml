@@ -49,7 +49,7 @@
 		<事業主>
 			<住所>headquarters_address</住所>
 			<氏名_上段>company_name</氏名_上段>
-			<氏名_下段>employer_company_managerial_position_name</氏名_下段>
+			<氏名_下段>employer_managerial_position_name</氏名_下段>
 		</事業主>
 		<離職票交付>
 			<年号/>
