@@ -85,11 +85,6 @@
                     <i class="right caret right icon large blue-text"></i>
                     カレンダー</a>
             </li>
-            <li class="item">
-                <a href="{{ route('managerial_position') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    カレンダー設定変更</a>
-            </li>
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"
                         onclick="location.href='{{ route('home.select') }}'">会社を変更</button></li>

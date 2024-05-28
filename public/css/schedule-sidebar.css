@@ -1,0 +1,110 @@
+.schedule-area {
+    padding: 1.4em;
+}
+
+.schedule-area .schedule-date {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 1em 0 2em 0;
+    font-size: 1.2em;
+    flex-direction: column;
+}
+
+.schedule-area .schedule-date span.num {
+    font-size: 3em;
+}
+
+.schedule-area .schedule-date span.weekday {
+    font-size: 2em;
+}
+
+.schedule-list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.schedule-list .schedule-item {
+    width: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 4px;
+    padding: 1em 1em 1em 2em;
+    transition: 0.5s;
+    backdrop-filter: blur(20px);
+    color: black;
+    align-items: flex-start;
+}
+
+.schedule-list .schedule-item h2 {
+    font-size: 1.4em;
+}
+
+.schedule-list .schedule-item:hover {
+    background-color: rgba(255, 255, 255, .6);
+    transition: 0.5s;
+}
+
+.schedule-list .schedule-item::before {
+    position: absolute;
+    display: block;
+    content: "";
+    top: 1em;
+    right: 1em;
+    width: 10px;
+    height: 10px;
+    z-index: 20;
+    border-radius: 50%;
+}
+
+.schedule-list .schedule-item::before {
+    background-color: var(--color-blue);
+}
+
+.schedule-list .schedule-item.admin::before {
+    background-color: var(--color-red);
+}
+
+.schedule-list .schedule-item.labor::before {
+    background-color: var(--color-yellow);
+}
+
+.schedule-list .schedule-item.normal::before {
+    background-color: white;
+}
+
+.schedule-list .schedule-item .datetime,
+.schedule-list .schedule-item h2 {
+    margin-bottom: 0.2em;
+}
+
+.schedule-list .schedule-item .datetime {
+    font-weight: bold;
+}
+
+.schedule-area .button {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+.schedule-area .button a {
+    display: inline-block;
+    padding: .5em 2em;
+    backdrop-filter: blur(20px);
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-color: rgba(255, 255, 255, 0);
+
+}
+
+.schedule-area .button a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: 0.5s;
+}

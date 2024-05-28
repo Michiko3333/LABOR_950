@@ -236,15 +236,17 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:45px; top:674px; width:370px; height:19px; font-size:12px;"><SELECT size="1" tabindex="51" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:370px; height:18px;" id="J48_005F_8D91_90D0_005F_926E_88E6" name="country">
 <OPTION value=""></OPTION>
 @foreach($countries as $country)
-<option value="{{ $country->id }}" {{ (old('country') == $country->id || old('country') == $country->country_name) ? 'selected' : '' }}>
-        {{ $country->country_name }}
-    </option>@endforeach
+<option value="{{ $country->setting_value }}" {{ (old('country') == $country->setting_value || old('country') == $country->country_name) ? 'selected' : '' }}>
+    {{ $country->country_name }}
+</option>@endforeach
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:45px; top:701px; width:76px; height:11px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">23在留資格</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:45px; top:720px; width:420px; height:19px; font-size:12px;"><SELECT size="1" tabindex="52" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:420px; height:18px;" id="J49_005F_8DDD_97AF_8E91_8A69" name="residential_status">
 <OPTION value="" selected="selected"></OPTION>
 @foreach($residentials as $residential_status)
-<option value="{{ $residential_status->id }}" {{ (old('residential_status') == $residential_status->id || old('country') == $country->country_name) ? 'selected' : '' }}>{{ $residential_status->content }}</option>
+<option value="{{ $residential_status->setting_value }}" {{ (old('residential_status') == $residential_status->setting_value || old('residential_status') == $residential_status->content) ? 'selected' : '' }}>
+    {{ $residential_status->content }}
+</option>
 @endforeach
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:474px; top:682px; width:251px; height:11px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">「不明」等の場合はその理由を入力してください。</SPAN>

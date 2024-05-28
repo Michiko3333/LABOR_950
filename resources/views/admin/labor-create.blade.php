@@ -245,7 +245,7 @@
                         <div class="two fields">
                             <div class="required field {{err($errors, 'user_email')}}">
                                 <label for="user_email">メールアドレス</label>
-                                <input type="text" id="user_email" name="user_email" placeholder="会社名"
+                                <input type="text" id="user_email" name="user_email" placeholder="karte_xxxx@xxx.com"
                                     value="{{ old('user_email', isset($employee_id) ? $employee->user_email : '') }}">
                             </div>
                             <div class="required field {{err($errors, 'user_pass')}}">

@@ -88,6 +88,9 @@ class AdminBranchForm extends Component
                 $d['br-address_city'] = $item->address_city;
                 $d['br-address_ward'] = $item->address_ward;
                 $d['br-address_apartment'] = $item->address_apartment;
+                $d['br-address_city_kana'] = $item->address_city_kana;
+                $d['br-address_ward_kana'] = $item->address_ward_kana;
+                $d['br-address_apartment_kana'] = $item->address_apartment_kana;
                 $fax = $item->fax;
                 $fax_parts = preg_split('/-/', $fax);
                 $d['br-fax1'] = isset($fax_parts[0]) ? $fax_parts[0] : null;
@@ -183,6 +186,9 @@ class AdminBranchForm extends Component
             'br-address_city' => '',
             'br-address_ward' => '',
             'br-address_apartment' => '',
+            'br-address_city_kana' => '',
+            'br-address_ward_kana' => '',
+            'br-address_apartment_kana' => '',
             'br-fax1' => '',
             'br-fax2' => '',
             'br-fax3' => '',

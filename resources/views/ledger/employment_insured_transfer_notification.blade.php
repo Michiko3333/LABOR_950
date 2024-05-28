@@ -157,8 +157,8 @@
                     $('#J21_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employee.employment_insurance_office_no.substring(4, 10));
                     $('#J22_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employee.employment_insurance_office_no.substring(10));
                 }
-                const branchInfo = (branch.name || '') + ' ' + (branch_prefecture_data.name || '') + ' ' + (headquarters.address_city || '') + ' ' + (headquarters.address_ward || '') + ' ' + (headquarters.address_apartment || '');
-                const headquartersAddress = (headquarters_prefecture_data.name || '') + ' ' + (headquarters.address_city || '') + ' ' + (headquarters.address_ward || '') + ' ' + (headquarters.address_apartment || '');
+                const branchInfo = (branch.name || '') + (branch_prefecture_data.name || '') + (headquarters.address_city || '') + (headquarters.address_ward || '') + (headquarters.address_apartment || '');
+                const headquartersAddress = (headquarters_prefecture_data.name || '') + (headquarters.address_city || '') + (headquarters.address_ward || '') + (headquarters.address_apartment || '');
                 $('#J28_005F_935D_8BCE_914F_8E96_8BC6_8F8A_96BC_8FCC_8F8A_8DDD_926E').val(branchInfo);
                 $('#J60_005F_95CF_8D58_914F_8E81_96BC').val(employeeName);
                 $('#J59_005F_95CF_8D58_914F_8E81_96BC_8374_838A_834B_8369').val(employeeNameKana);

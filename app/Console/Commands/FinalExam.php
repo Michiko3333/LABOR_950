@@ -85,7 +85,7 @@ class FinalExam extends Command
                 $response = $XML->runExam('900A010200001000', 1, $examNumber);
             } elseif ($examNumber == '09-1') {
                 $XML = new MixXmlEgovSigner(null, $companyId);
-                $response = $XML->runExam('900A102810039000', 2, $examNumber);
+                $response = $XML->runExam('900A102810052000', 2, $examNumber);
             } elseif ($examNumber == '13-2') {
                 $response = FinalExamController::getlist_command($companyId, $examNumber);
             } elseif ($examNumber == '14-1') {

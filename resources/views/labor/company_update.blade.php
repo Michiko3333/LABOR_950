@@ -241,6 +241,7 @@
                 <div class="ui horizontal card card-shadow item-0">
                     <div class="content">
                         <h2>基本情報</h2>
+                        <input type="hidden" name="company_division" value="1">
                         <div class="two fields">
                             <div class="required field {{err($errors, 'name')}}">
                                 <label for="name">会社名</label>

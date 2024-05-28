@@ -2,32 +2,12 @@
             <div id="eGovForm">
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        const checkboxes = document.querySelectorAll('.check');
                         const otherCheckbox = document.getElementById('N49_005F_8E73_8A4F_8BC8');
                         const clearInput = document.getElementById('N50_005F_8E73_8A4F_8BC9');
 
-                        checkboxes.forEach(function(checkbox) {
-                            checkbox.addEventListener('click', function() {
-                                if (this.checked) {
-                                    checkboxes.forEach(function(cb) {
-                                        if (cb !== checkbox) {
-                                            cb.checked = false;
-                                            clearInput.value = "";
-                                            clearInput.disabled = true;
-                                        }
-                                        if(otherCheckbox === checkbox) {
-                                            clearInput.disabled = false;
-                                        }
-                                    });
-                                }
-                            });
-                        });
-                        document.getElementById('N3_005F_944E_8D86').addEventListener('click', function() {
-                            document.getElementById('N4_005F_944E').checked = !this.checked;
-                        });
-
-                        document.getElementById('N4_005F_944E').addEventListener('click', function() {
-                            document.getElementById('N3_005F_944E_8D86').checked = !this.checked;
+                        otherCheckbox.addEventListener('change', function() {
+                            clearInput.disabled = !otherCheckbox.checked;
+                            clearInput.value = "";
                         });
                     });
                 </script>

@@ -163,14 +163,6 @@
                             </div>
                         </a>
                     </div>
-                    <div class="ui middle aligned selection list">
-                        <a href="#" class="item">
-                            <i class="right caret right icon big blue-text" style="visibility: visible;"></i>
-                            <div class="content">
-                                <div class="header">カレンダー設定変更</div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
         </section>
