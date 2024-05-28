@@ -23,6 +23,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "radio_file_other" => 'nullable|string|in:2',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
@@ -63,6 +64,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            "radio_file_other" => '当該帳票では添付ファイルに別送を選択することはできません。',
             'title_different_types_of_health_insurance.required_without_all' => 'タイトルのチェックボックスで健康保険、船員保険、厚生年金保険のいずれかである必要があります。',
         ];
     }

@@ -313,8 +313,11 @@
             document.getElementById('J52_005F_89C1_93FC_8ED2_94D4_8D86').addEventListener('input', function() {
                 document.getElementById('J26_005F_89C1_93FC_8ED2_94D4_8D86').value = this.value;
             });
+            // document.getElementById('J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').addEventListener('input', function() {
+            //     document.getElementById('J17_005F_8F8A_8DDD_926E').value = this.value;
+            // });
             document.getElementById('J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').addEventListener('input', function() {
-                document.getElementById('J17_005F_8F8A_8DDD_926E').value = this.value;
+                document.getElementById('J27_005F_8F5A_8F8A').value = this.value;
             });
             document.getElementById('J154_005F_8E96_8BC6_8EE5_8E81_96BC').addEventListener('input', function() {
                 document.getElementById('J28_005F_8E81_96BC').value = this.value;
@@ -361,6 +364,7 @@
                 ).value;
                 const address = prefectureCity + addressWard + addressApartment;
                 document.getElementById('J23_005F_8F5A_8F8A').value = address;
+                document.getElementById('J23_005F_8F5A_8F8A').setAttribute('value', address);
             }
 
 

@@ -5,18 +5,6 @@
 	// ---------------------------------------------------------
 	// 表題と受理欄の入力制御
 	// ---------------------------------------------------------
-	function ctlChk_monthCertificate(f){
-		if (f.wage_monthly_certificate_on_leave_start.checked){
-			f.wage_certificate_working_hours_shortened_start.checked = false;
-		}
-	}
-	
-	function ctlChk_wagesCertificate(f){
-		if (f.wage_certificate_working_hours_shortened_start.checked){
-			f.wage_monthly_certificate_on_leave_start.checked = false;
-		}
-	}
-
 	function calc1 (f) {
 		var nullFlg = true;
 
@@ -70,6 +58,33 @@
 		
 		return false;
 	}
+
+	document.addEventListener("DOMContentLoaded", function() {
+			const checkbox1 = document.getElementById("J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91");
+			const checkbox2 = document.getElementById("J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91");
+			const checkbox3 = document.getElementById("emptySend_1");
+			const checkbox4 = document.getElementById("emptySend_2");
+			checkbox1.addEventListener('change', function() {
+					if (checkbox1.checked) {
+							checkbox3.checked = true;
+							checkbox3.value = 1;
+							checkbox2.checked = false;
+							checkbox2.value = "";
+							checkbox4.checked = false;
+							checkbox4.value = "";
+					}
+			});
+			checkbox2.addEventListener('change', function() {
+					if (checkbox2.checked) {
+							checkbox4.checked = true;
+							checkbox4.value = 1;
+							checkbox1.checked = false;
+							checkbox1.value = "";
+							checkbox3.checked = false;
+							checkbox3.value = "";
+					}
+			});
+	})
 </script>
 
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:700px; top:435px; width:108px; height:34px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:16px 0px 0px 0px;"></SPAN>
@@ -591,10 +606,10 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:677px; top:984px; width:183px; line-height:0px; height:0px;"></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:142px; top:446px; width:12px; height:11px; text-align:center; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">～</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:358px; top:446px; width:11px; height:11px; text-align:center; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">～</SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:968px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:11px; margin:auto;" type="CHECKBOX" id="J56_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91_8EF3_979D"><SPAN style="font-size:9px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:984px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:11px; margin:auto;" type="CHECKBOX" id="J57_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91_8EF3_979D"><SPAN style="font-size:9px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:27px; width:25px; line-height:24px; height:25px; text-align:left; font-size:25px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="1" onchange="ctlChk_monthCertificate(this.form);" value="1" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91" <?php echo (old('wage_monthly_certificate_on_leave_start')=='1' ) ? 'checked' : '' ; ?> name="wage_monthly_certificate_on_leave_start"><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:56px; width:25px; line-height:24px; height:24px; text-align:left; font-size:24px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="2" onchange="ctlChk_wagesCertificate(this.form);" value="1" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91" <?php echo (old('wage_certificate_working_hours_shortened_start')=='1' ) ? 'checked' : '' ; ?> name="wage_certificate_working_hours_shortened_start"><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:968px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:11px; margin:auto;" type="CHECKBOX" id="J56_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91_8EF3_979D" value="{{ old('wage_monthly_certificate_on_leave_start_acceptance') }}" name="wage_monthly_certificate_on_leave_start_acceptance"><SPAN style="font-size:9px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:660px; top:984px; width:13px; line-height:13px; height:13px; text-align:left; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="-1" disabled value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:11px; margin:auto;" type="CHECKBOX" id="J57_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91_8EF3_979D" value="{{ old('wage_certificate_working_hours_shortened_start_acceptance') }}" name="wage_certificate_working_hours_shortened_start_acceptance"><SPAN style="font-size:9px; height:10px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:27px; width:25px; line-height:24px; height:25px; text-align:left; font-size:25px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="1" value="1" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91" <?php echo (old('wage_monthly_certificate_on_leave_start')=='1' ) ? 'checked' : '' ; ?> name="wage_monthly_certificate_on_leave_start"><input type="hidden" id="emptySend_1" value="1" <?php echo (old('wage_monthly_certificate_on_leave_start_2')=='1' ) ? 'checked' : '' ; ?> name="wage_monthly_certificate_on_leave_start_2"><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:56px; width:25px; line-height:24px; height:24px; text-align:left; font-size:24px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="2" value="1" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:21px; height:21px; margin:auto;" type="CHECKBOX" id="J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91" <?php echo (old('wage_certificate_working_hours_shortened_start')=='1' ) ? 'checked' : '' ; ?> name="wage_certificate_working_hours_shortened_start"><input type="hidden" id="emptySend_2" value="1" <?php echo (old('wage_certificate_working_hours_shortened_start_2')=='1' ) ? 'checked' : '' ; ?> name="wage_certificate_working_hours_shortened_start_2"><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:853px; top:93px; width:11px; height:12px; text-align:center; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">月</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:889px; top:93px; width:12px; height:12px; text-align:center; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">日</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:656px; top:1033px; width:251px; line-height:0px; height:0px;"></SPAN>
