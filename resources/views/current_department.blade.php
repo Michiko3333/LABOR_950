@@ -41,7 +41,7 @@
         </style>
     @endslot
     <section class="content">
-        <div class="ui huge breadcrumb mb-0 mt-2">
+        <div class="ui huge breadcrumb mb-0">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">部署マスタ編集</div>

@@ -166,12 +166,13 @@
     }
 
     header .right {
-        width: 250px;
+        width: 375px;
         display: flex;
         flex-direction: row-reverse;
         flex-grow: 1;
         flex-shrink: 0;
         padding: 0.5em 1em;
+        background-color: transparent;
     }
 
     header .left #sidebar-toggle {
@@ -181,12 +182,15 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        filter: drop-shadow(5px 5px 5px gray);
     }
 
     header .left img {
         width: auto;
         height: 100%;
         padding: 1em;
+        filter: drop-shadow(5px 5px 5px gray);
+
     }
 
     header .right .ui.menu {
@@ -343,6 +347,24 @@
     @media screen and (max-width: 768px) {
         header .right .menu-user .name {
             display: none;
+        }
+
+
+    }
+
+    @media screen and (max-width: 1250px) {
+        header {
+            background-color: white;
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header .right .menu-user .name {
+            color: var(--color-black);
+            text-shadow: none;
+        }
+
+        header .right .ui.menu .item>i.dropdown.icon {
+            color: black;
         }
     }
 </style>

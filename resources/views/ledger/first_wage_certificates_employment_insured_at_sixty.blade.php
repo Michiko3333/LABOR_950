@@ -6,7 +6,7 @@
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
@@ -17,12 +17,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -95,9 +95,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -150,7 +150,7 @@
                 @else
                     $('#J64_005F_944E_8D86').prop('disabled', true);
                     $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                        #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
+                                        #J113_005F_8E81_96BC, #J114_005F_8E73_8A4F_8BC7_94D4, #J115_005F_8E73_93E0_8BC7_94D4, #J116_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                     $('#J65_005F_944E,#J66_005F_8C8E, #J67_005F_93FA, #J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,J73_005F_9574_8B4C_9793')
                         .prop('readonly', true);
@@ -240,7 +240,8 @@
                     headquarters.address_ward || "") + (headquarters.address_apartment || "");
                 $('#J67_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val(headquartersAddress);
                 $('#J29_005F_8F5A_8F8A').val(headquartersAddress);
-                const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch.address_ward ||
+                const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
+                    .address_ward ||
                     "") + (branch.address_apartment || "");
                 $('#J11_005F_8F8A_8DDD_926E').val(branchAddress);
                 const fullname = (employee.last_name || "") + "　" + (employee.first_name || "");

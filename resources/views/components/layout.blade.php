@@ -24,7 +24,7 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-
+            background-attachment: fixed;
             color: var(--color-black);
         }
 
@@ -217,6 +217,22 @@
             }
 
         }
+
+        @if ($useRightContent == false)
+            header {
+                background-color: white !important;
+                box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1) !important;
+            }
+
+            header .right .menu-user .name {
+                color: var(--color-black) !important;
+                text-shadow: none !important;
+            }
+
+            header .right .ui.menu .item>i.dropdown.icon {
+                color: black;
+            }
+        @endif
     </style>
     <link rel="stylesheet" href="{{ asset('/css/schedule-sidebar.css') }}">
     @if (isset($title))

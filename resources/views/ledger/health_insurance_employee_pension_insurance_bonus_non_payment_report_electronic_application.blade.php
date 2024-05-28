@@ -6,7 +6,7 @@
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください</p>
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
@@ -15,12 +15,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -49,7 +49,7 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true'/>
+                                ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true' />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -73,9 +73,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -141,10 +141,14 @@
                     '');
                 $('#_8E96_8BC6_8F8A_94D4_8D86x_8D90_926D_94D4_8D86_002E12').val(pensionOfficeNo ?? '');
                 if (postCode && postCode.length == 7) {
-                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0, 3));
-                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_8E71_94D4_8D86_002E14').val(postCode.substring(3, 7));
+                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0,
+                        3));
+                    $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_8E71_94D4_8D86_002E14').val(postCode.substring(3,
+                        7));
                 }
-                $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val((branch.address_prefecture ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
+                $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val((branch
+                    .address_prefecture ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch
+                    .address_apartment ?? ''));
                 $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(name ?? '');
                 $('#_9364_9862_94D4_8D86x_8E73_8A4F_8BC7_94D4_002E18').val(telAreaCode ?? '');
                 $('#_9364_9862_94D4_8D86x_8BC7_94D4_002E19').val(telCityCode ?? '');

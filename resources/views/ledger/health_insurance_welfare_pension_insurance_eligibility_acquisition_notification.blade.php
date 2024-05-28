@@ -6,7 +6,7 @@
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
         @if ($certificate == false)
@@ -16,12 +16,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -73,9 +73,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -162,7 +162,8 @@
                 $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch_insurance_office_no ?? '');
                 $('#N12_005F_905C_90BF_8ED2_8E81').val(branch_post_code_first ?? '');
                 $('#N13_005F_8374_838A_834B_8369').val(branch_post_code_last ?? '');
-                $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((headquarters_prefecture_data.name ?? '') + (headquarters
+                    .address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
                 $('#N16_005F_905C_90BF').val(branch_name ?? '');
                 $('#N18_005F_8CC2_906C_94D4').val(branch_tel_area_code ?? '');
                 $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch_tel_city_code ?? '');
@@ -178,7 +179,8 @@
                 $('#N36_005F_8E96_8BC6_8F8A').val(employee_mynumber_card_no ?? '');
                 $('#N51_005F_8E73_8A4F_8BC7').val(employee_post_code_first ?? '');
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
-                $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee_address_city ?? '') + (employee_address_ward ?? '') + (employee_address_apartment ?? ''));
+                $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee_address_city ?? '') + (
+                    employee_address_ward ?? '') + (employee_address_apartment ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

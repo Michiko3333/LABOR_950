@@ -6,7 +6,7 @@
 
             <style type="text/css"></style>
         @endslot
-        <h1 class="mt-2">{{ $procedureName }}</h1>
+        <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。<br>
         </p>
         @if ($certificate == false)
@@ -16,12 +16,12 @@
                 </div>
             </div>
         @endif
-        @if($egovAcount == false)
-        <div class="ui warning message" style="margin: 0;">
-            <div class="header">
-                e-Govアカウントが連携されていません
+        @if ($egovAcount == false)
+            <div class="ui warning message" style="margin: 0;">
+                <div class="header">
+                    e-Govアカウントが連携されていません
+                </div>
             </div>
-        </div>
         @endif
 
         <div id="ledger-step1" class="step-view active mb-2">
@@ -76,9 +76,9 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if($certificate == false || $egovAcount == false)
-                    <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
-                        disabled>確認</button>
+                    @if ($certificate == false || $egovAcount == false)
+                        <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
+                            disabled>確認</button>
                     @else
                         <button id="ledger-preview-btn" class="ui button primary" type="button"
                             style="width: 200px;">確認</button>
@@ -112,15 +112,16 @@
                 $('#J57_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
-                @if( $current_employee->role_id === 500 )
-                    $('#J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val( '{{$current_employee->last_name}}' + '　' + '{{$current_employee->first_name}}' );
-                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{$current_branch->tel_area_code}}');
-                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{$current_branch->tel_city_code}}');
-                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{$current_branch->tel_subscriber_code}}');
+                @if ($current_employee->role_id === 500)
+                    $('#J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val(
+                        '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
+                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
+                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
+                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                        #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
-                        #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
+                                #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
+                                #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86').prop('readonly', true);
                 @endif
             });
             document.addEventListener('DOMContentLoaded', function() {
@@ -177,7 +178,9 @@
                     $('#J52_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code);
                     $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
                 }
-                $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (
+                    headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters
+                    .address_apartment ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

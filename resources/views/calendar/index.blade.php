@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="{{ asset('custom/calendar.css') }}">
     @endslot
 
-    <section class="content">
+    <section class="content pb-3">
         <div class="ui huge breadcrumb mb-0 mb-2">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
