@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CurrentUser;
+use App\Permission;
 
 class CompanyDepartmentController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if (!$userPermission->isReadableFor(3)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
     public function current_company_department_update(Request $request)
     {
         $current_company = CurrentUser::currentCompany();

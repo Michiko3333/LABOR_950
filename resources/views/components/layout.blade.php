@@ -204,6 +204,12 @@
             object-fit: cover;
         }
 
+        .permission-readonly {
+            border: none !important;
+            color: var(--color-blue) !important;
+            padding: 0.8em 0 !important;
+        }
+
         @media screen and (max-width: 1250px) {
             .right-container {
                 display: none;
@@ -217,8 +223,9 @@
             }
 
         }
-
-        @if ($useRightContent == false)
+    </style>
+    @if ($useRightContent == false)
+        <style>
             header {
                 background-color: white !important;
                 box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1) !important;
@@ -232,8 +239,8 @@
             header .right .ui.menu .item>i.dropdown.icon {
                 color: black;
             }
-        @endif
-    </style>
+        </style>
+    @endif
     <link rel="stylesheet" href="{{ asset('/css/schedule-sidebar.css') }}">
     @if (isset($title))
         <title>Karte - {{ $title }}</title>
@@ -246,6 +253,19 @@
                 'X-CSRF-TOKEN': $("[name='csrf-token']").attr("content")
             }
         });
+
+        window.$sectionReadonly = () => {
+            $("section.content select").each(function() {
+                const selectedText = $(this).find("option:selected").text();
+                const inputText = $("<input>").attr("type", "text").val(selectedText.trim());
+                $(this).replaceWith(inputText);
+            });
+            $("section.content input").prop("readonly", true);
+            $("section.content input[type='checkbox']").prop("disabled", true);
+            $("section.content input[type='radio']").prop("disabled", true);
+            $("section.content input").prop("placeholder", '');
+            $("section.content input").addClass("permission-readonly");
+        }
     </script>
     {{ $header ?? '' }}
 </head>

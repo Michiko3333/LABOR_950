@@ -6,9 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Feature;
 use App\Models\Employee;
 use App\Models\Account_permission;
+use App\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            \Log::info(print_r($userPermission->isAdmin(), true));
+            if (!$userPermission->isAdmin() && $userPermission->getEmployeeType() != 1) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function employee_permission($id)
     {
         $features = Feature::all();

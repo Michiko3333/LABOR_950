@@ -179,7 +179,7 @@ class Controller extends BaseController
         $currentCompany = CurrentUser::currentCompany();
         $company_id = $currentCompany->id;
         $egovAcount = Egov_account::where('company_id', $company_id)->where('delete_flg', 0)->first();
-        if($egovAcount !== null) {
+        if ($egovAcount !== null) {
             $egovAcount = true;
         } else {
             $egovAcount = false;

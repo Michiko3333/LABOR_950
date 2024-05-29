@@ -16,15 +16,17 @@
         </thead>
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
-            <tr class="card">
-                <td>{{ $item->procedure_id }}</td>
-                <td>{{ $item->procedure_name }}</td>
-                <td class="right aligned collapsing">
-                    <a href="/ledger/{{ $item->procedure_id }}" class="ui basic primary button">
-                        作成
-                    </a>
-                </td>
-            </tr>
+                <tr class="card">
+                    <td>{{ $item->procedure_id }}</td>
+                    <td>{{ $item->procedure_name }}</td>
+                    <td class="right aligned collapsing">
+                        @if ($userPermission->isWritableFor(9))
+                            <a href="/ledger/{{ $item->procedure_id }}" class="ui basic primary button">
+                                作成
+                            </a>
+                        @endif
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

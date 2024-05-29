@@ -14,9 +14,21 @@ use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 use App\Models\Branch;
 use Carbon\Carbon;
+use App\Permission;
 
 class BranchController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if (!$userPermission->isReadableFor(2)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function branch(Request $request)
     {
         $current_company = CurrentUser::currentCompany();
@@ -41,6 +53,10 @@ class BranchController extends Controller
 
     public function branch_post(BranchRequest $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(2)) {
+            return redirect()->route('home.index');
+        }
         DB::beginTransaction();
         try {
             $request->request->remove('_token');
@@ -94,14 +110,14 @@ class BranchController extends Controller
 
         if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
             $count = '';
-            if($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+            if ($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
                 $count = $fax1Index;
-            } elseif($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+            } elseif ($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
                 $count = $fax2Index;
             } else {
                 $count = $fax3Index;
             }
-            
+
             for ($i = 0; $i < $count; $i++) {
                 $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
                 $part2 = isset($fax2[$i]) ? $fax2[$i] : '';

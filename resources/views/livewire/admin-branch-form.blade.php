@@ -504,28 +504,33 @@
                         </div>
                     </div>
                     @if ($key > 0)
-                        <div style="text-align: right;">
-                            <button class="ui negative button" type="button"
-                                wire:click="remove({{ $key }})">
-                                この事業所を削除
-                            </button>
-                        </div>
+                        @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
+                            <div style="text-align: right;">
+                                <button class="ui negative button" type="button"
+                                    wire:click="remove({{ $key }})">
+                                    この事業所を削除
+                                </button>
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
         </div>
     @endforeach
-    <button class="append-branch" type="button" wire:click="append" {{ count($data) > 9 ? 'disabled' : '' }}><i
-            class="plus circle icon"></i>事業所を追加</button>
+
+    @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
+        <button class="append-branch" type="button" wire:click="append"
+            {{ count($data) > 9 ? 'disabled' : '' }}><i class="plus circle icon"></i>事業所を追加</button>
+    @endif
     @script
         <script type="module">
+            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
             $(document).ready(function() {
-                branch();
+                if (notReadonly) branch();
             });
             $wire.on('form-appended', () => {
                 setTimeout(() => {
-                    branch();
-                    // window.scroll(0,$(document).height());
+                    if (notReadonly) branch();
                 }, 0);
             });
         </script>

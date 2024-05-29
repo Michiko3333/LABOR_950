@@ -352,9 +352,11 @@
                                     value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}">
                             </div>
                         </div>
-                        <div style="text-align:right;">
-                            <button class="ui button" type="button" id="branch_btn">支店検索</button>
-                        </div>
+                        @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
+                            <div style="text-align:right;">
+                                <button class="ui button" type="button" id="branch_btn">支店検索</button>
+                            </div>
+                        @endif
                         <div class="field {{ err($errors, 'departments[]') }}">
                             <label for="departments[]">所属部署</label>
                             <select class="ui fluid search dropdown multiple clearable department_select"
@@ -980,10 +982,13 @@
                     </div>
                 </div>
             </div>
-            <div class="my-4" style="text-align: right; margin-right: 1em;">
-                <a class="ui button negative basic" href="{{ route('employee') }}" style="width: 200px;">キャンセル</a>
-                <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
-            </div>
+            @if ($userPermission->isWritableFor(6))
+                <div class="my-4" style="text-align: right; margin-right: 1em;">
+                    <a class="ui button negative basic" href="{{ route('employee') }}"
+                        style="width: 200px;">キャンセル</a>
+                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                </div>
+            @endif
         </form>
 
     </section>
@@ -1011,18 +1016,6 @@
     <!-- カレンダー -->
     <script type="module">
         $(document).ready(function() {
-            $('.ui.calendar').calendar({
-                type: 'date',
-                formatter: {
-                    date: 'Y"年"M"月"D"日"'
-                },
-                text: {
-                    days: ['日', '月', '火', '水', '木', '金', '土'],
-                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                },
-                initialDate: "",
-            });
-            $('.ui.dropdown.dropdown.multiple').dropdown({});
 
             function getDepartmentList() {
                 $('select[name="departments[]"]').empty();
@@ -1060,8 +1053,26 @@
                         'selected', true);
                 }
             }
-            getDepartmentList();
-            getPositionList();
+
+            const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(6));
+            if (readonly) {
+                $sectionReadonly();
+            } else {
+                $('.ui.calendar').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    },
+                    initialDate: "",
+                });
+                $('.ui.dropdown.dropdown.multiple').dropdown({});
+                getDepartmentList();
+                getPositionList();
+            }
         });
     </script>
 </x-layout>
