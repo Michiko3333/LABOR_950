@@ -36,60 +36,101 @@
                     <i class="home icon large blue-text"></i>
                     ホーム</a>
             </li>
-            <li class="title">会社情報</li>
-            <li class="item">
-                <a href="{{ route('company_edit') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    会社基本情報</a>
-            </li>
-            <li class="item">
-                <a href="{{ route('branch') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    支店・営業所情報</a>
-            </li>
-            <li class="item">
-                <a href="{{ route('current_company_department_update') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    組織・部署マスタ</a>
-            </li>
-            <li class="item">
-                <a href="{{ route('managerial_position') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    役職マスタ</a>
-            </li>
-            <li class="title">社員管理</li>
-            <li class="item">
-                <a href="{{ route('employee') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    社員一覧</a>
-            </li>
-            <li class="item">
-                <a href="{{ route('contract.index') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    労働契約書作成</a>
-            </li>
-            <li class="title">行政手続き</li>
-            <li class="item">
-                <a href="{{ route('ledger.index') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    帳票一覧</a>
-            </li>
-            <li class="item">
-                <a href="{{ route('ledger.egov') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    e-Gov連携</a>
-            </li>
-            <li class="title">スケジュール</li>
-            <li class="item">
-                <a href="{{ route('calendar.index') }}">
-                    <i class="right caret right icon large blue-text"></i>
-                    カレンダー</a>
-            </li>
+            @if ($userPermission->getEmployeeStatus() != 1)
+                @if ($userPermission->isReadableAtleast([1, 2, 3, 4]))
+                    <li class="title">会社情報</li>
+                @endif
+                @if ($userPermission->isReadableFor(1))
+                    <li class="item">
+                        <a href="{{ route('company_edit') }}">
+                            <i class="right caret right icon large blue-text"></i>
+                            会社基本情報</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(2))
+                    <li class="item">
+                        <a href="{{ route('branch') }}">
+                            <i class="right caret right icon large blue-text"></i>
+                            支店・営業所情報</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(3))
+                    <li class="item">
+                        <a href="{{ route('current_company_department_update') }}">
+                            <i class="right caret right icon large blue-text"></i>
+                            組織・部署マスタ</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(4))
+                    <li class="item">
+                        <a href="{{ route('managerial_position') }}">
+                            <i class="right caret right icon large blue-text"></i>
+                            役職マスタ</a>
+                    </li>
+                @endif
+                @if ($userPermission->isBasicDepartment() && $userPermission->isReadableAtleast([5, 7]))
+                    <li class="title">社員管理</li>
+                    @if ($userPermission->isReadableFor(5))
+                        <li class="item">
+                            <a href="{{ route('employee') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                社員一覧</a>
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(7))
+                        <li class="item">
+                            <a href="{{ route('contract.index') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                労働契約書作成</a>
+                        </li>
+                    @endif
+                @endif
+                @if (
+                    !$userPermission->denyProcedure() &&
+                        $userPermission->isBasicDepartment() &&
+                        $userPermission->isReadableAtleast([8, 9, 10]))
+                    <li class="title">行政手続き</li>
+                    @if ($userPermission->isReadableFor(8))
+                        <li class="item">
+                            <a href="{{ route('ledger.index') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                帳票一覧</a>
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(9))
+                        <li class="item">
+                            <a href="{{ route('ledger.issues') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                申請案件一覧</a>
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(10))
+                        <li class="item">
+                            <a href="{{ route('ledger.egov') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                e-Gov連携</a>
+                        </li>
+                    @endif
+                @endif
+            @endif
+            @if ($userPermission->isReadableFor(11))
+                <li class="title">スケジュール</li>
+                <li class="item">
+                    <a href="{{ route('calendar.index') }}">
+                        <i class="right caret right icon large blue-text"></i>
+                        カレンダー</a>
+                </li>
+            @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"
                         onclick="location.href='{{ route('home.select') }}'">会社を変更</button></li>
             @endif
         @else
+            <li class="item">
+                <a href="{{ route('home.select') }}" style="font-weight: bold;">
+                    <i class="home icon large blue-text"></i>
+                    会社選択</a>
+            </li>
             @if ($userPermission->isAdmin())
                 <li class="title">Karte管理</li>
                 <li class="item">

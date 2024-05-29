@@ -42,8 +42,10 @@
         </script>
     @endscript
     <div class="mb-1">
-        <button class="ui button primary small" type="button" onclick="openEditCalendarModal()"
-            wire:click='new'>予定を追加</button>
+        @if ($userPermission->isWritableFor(11))
+            <button class="ui button primary small" type="button" onclick="openEditCalendarModal()"
+                wire:click='new'>予定を追加</button>
+        @endif
     </div>
     <div class="header">
         <div class="control">
@@ -161,7 +163,9 @@
         <div class="actions">
             <button class="ui negative button" type="button"
                 onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
-            <div class="ui primary button" onClick="javascript:$calendar_modal.onEdit()">登録</div>
+            @if ($userPermission->isWritableFor(11))
+                <div class="ui primary button" onClick="javascript:$calendar_modal.onEdit()">登録</div>
+            @endif
         </div>
     </div>
 

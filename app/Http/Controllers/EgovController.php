@@ -8,9 +8,20 @@ use App\EgovAPI\EgovTestLog;
 use App\Models\CurrentUser;
 use App\Models\Egov_account;
 use Carbon\Carbon;
+use App\Permission;
 
 class EgovController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(10) || !$userPermission->isWritableFor(10)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
 
     public function index(Request $request)
     {
@@ -81,7 +92,8 @@ class EgovController extends Controller
         return '<html><body><h1>連携が完了しました。</h1>' . $closeScript . '</body></html>';
     }
 
-    public function getEgovAccount(Request $request) {
+    public function getEgovAccount(Request $request)
+    {
         $company = CurrentUser::currentCompany();
         $isConnected = Egov_account::where('company_id', $company->id)->where('delete_flg', 0)->exists();
 

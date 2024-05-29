@@ -33,9 +33,19 @@
                                 権限
                             </button>
                         @endif
-                        <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
-                            編集
-                        </button>
+                        @if ($userPermission->isWritableFor(6) || $userPermission->isAdmin())
+                            <button class="ui basic primary button" type="button"
+                                wire:click="toEdit({{ $item->id }})">
+                                編集
+                            </button>
+                        @else
+                            @if ($userPermission->isReadableFor(6))
+                                <button class="ui basic primary button" type="button"
+                                    wire:click="toEdit({{ $item->id }})">
+                                    詳細
+                                </button>
+                            @endif
+                        @endif
                     </td>
                 </tr>
             @endforeach

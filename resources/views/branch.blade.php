@@ -219,9 +219,9 @@
         <div class="ui huge breadcrumb mb-0">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">支店・営業所の追加、削除</div>
+            <div class="active section">支店・営業所情報</div>
         </div>
-        <h2 class="pl-1">事業所情報</h2>
+        <h2 class="pl-1">支店・営業所情報</h2>
         <form name="edit-branch" action="{{ route('branch_post') }}" method="post">
             @csrf
             @if (session('errors'))
@@ -237,11 +237,22 @@
             <div class="ui form">
                 <livewire:admin-branch-form :branch="$branch" :errors="$errors" :prefectures="$prefectures" :labor_insurance_payment_method="$labor_insurance_payment_method"
                     :place_type="$place_type" :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :id="$company_id" />
-                <div class="my-4" style="text-align: right; margin-right: 1em;">
-                    <a class="ui button negative basic" href="{{ route('home.index') }}" style="width: 200px;">戻る</a>
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
-                </div>
+                @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
+                    <div class="my-4" style="text-align: right; margin-right: 1em;">
+                        <a class="ui button negative basic" href="{{ route('home.index') }}"
+                            style="width: 200px;">戻る</a>
+                        <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                    </div>
+                @endif
             </div>
         </form>
     </section>
+    <script type="module">
+        $(document).ready(function() {
+            const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(2));
+            if (readonly) {
+                $sectionReadonly();
+            }
+        });
+    </script>
 </x-layout>

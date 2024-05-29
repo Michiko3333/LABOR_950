@@ -12,10 +12,23 @@ use App\Models\Certificate;
 
 use Exception;
 
+use App\Permission;
+
 use function PHPUnit\Framework\throwException;
 
 class ListController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         $company = CurrentUser::currentCompany();
@@ -23,7 +36,7 @@ class ListController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;

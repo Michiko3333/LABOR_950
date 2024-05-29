@@ -15,21 +15,21 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Ledger\ListController;
 use App\Http\Controllers\Ledger\SampleController;
-use App\Http\Controllers\ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
+use App\Http\Controllers\Ledger\FirstWageCertificatesEmploymentInsuredAtSixtyController;
 use App\Http\Controllers\Ledger\HealthAndPensionInsuredBonusPaymentNotificationController;
 use App\Http\Controllers\Ledger\HealthInsurancePensionInsuredQualificationLossController;
-use App\Http\Controllers\ledger\WageCertificatesEmploymentInsuredAtSixtyController;
+use App\Http\Controllers\Ledger\WageCertificatesEmploymentInsuredAtSixtyController;
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationGetController;
 use App\Http\Controllers\Ledger\EmploymentInsuredTransferNotificationController;
 use App\Http\Controllers\Ledger\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
-use App\Http\Controllers\ledger\HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
+use App\Http\Controllers\Ledger\HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
 use App\Http\Controllers\Ledger\HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController;
-use App\Http\Controllers\ledger\FirstParentalLeaveBenefitsForEmploymentInsuranceController;
+use App\Http\Controllers\Ledger\FirstParentalLeaveBenefitsForEmploymentInsuranceController;
 use App\Http\Controllers\Ledger\EmploymentInsuredLeaveStartAmountMonthlyCertificateController;
-use App\Http\Controllers\ledger\ContinuousEmploymentBenefitsForOlderWorkersController;
-use App\Http\Controllers\ledger\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController;
+use App\Http\Controllers\Ledger\ContinuousEmploymentBenefitsForOlderWorkersController;
+use App\Http\Controllers\Ledger\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController;
 use App\Http\Controllers\Ledger\EmploymentInsuranceChildcareLeaveApplicationController;
-use App\Http\Controllers\ledger\EmploymentInsuranceSeniorContinuationAllowanceController;
+use App\Http\Controllers\Ledger\EmploymentInsuranceSeniorContinuationAllowanceController;
 use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController;
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
@@ -40,6 +40,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LaborCompanyController;
 use App\Http\Controllers\ManagerialPositionController;
 use App\Http\Controllers\Contract\EmployeeContractController;
+use App\Http\Controllers\EgovIssuesController;
 use App\Http\Controllers\FinalExamAfterLogoutController;
 use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
@@ -70,8 +71,6 @@ Route::group(['prefix' => 'healthcheck'], function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
-Route::post('/toast', [Controller::class, 'resetToast'])->name('toast.reset');
-
 
 /** ログイン必須ページ */
 Route::group(['middleware' => 'auth'], function () {
@@ -120,7 +119,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
     Route::get('/admin/labor/client/{id}', [AdminController::class, 'client'])->name('admin.client');
 
-    ///Route::get('/admin/employee', [AdminController::class, 'employee_list'])->name('admin.employee');
     Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
     Route::post('/admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
     Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
@@ -133,6 +131,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ledger/api/disconnect', [EgovController::class, 'disconnect'])->name('egov.disconnect');
     Route::get('/ledger/egov', [EgovController::class, 'index'])->name('ledger.egov');
     Route::get('/get-egov-account', [EgovController::class, 'getEgovAccount'])->name('get-egov-account');
+    Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
+    Route::get('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'detail'])->name('ledger.detail');
+    Route::post('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'getOfficial'])->name('ledger.detail_official');
+
     Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
     Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
     Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');

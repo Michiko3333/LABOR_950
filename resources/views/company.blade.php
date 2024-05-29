@@ -575,37 +575,46 @@
                     </div>
                 </div>
             </div>
-            <div class="my-4" style="text-align: right; margin-right: 1em;">
-                <a class="ui button negative basic" href="{{ route('home.index') }}" style="width: 200px;">キャンセル</a>
-                <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
-            </div>
+            @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
+                <div class="my-4" style="text-align: right; margin-right: 1em;">
+                    <a class="ui button negative basic" href="{{ route('home.index') }}"
+                        style="width: 200px;">キャンセル</a>
+                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                </div>
+            @endif
         </form>
     </section>
 
     <script type="module">
         $(document).ready(function() {
-            $('#founding_date_calendar').calendar({
-                type: 'date',
-                formatter: {
-                    date: 'Y"年"M"月"D"日"'
-                },
-                text: {
-                    days: ['日', '月', '火', '水', '木', '金', '土'],
-                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                },
-                initialDate: "",
-            })
-            $('#establishment_date_calendar').calendar({
-                type: 'date',
-                formatter: {
-                    date: 'Y"年"M"月"D"日"'
-                },
-                text: {
-                    days: ['日', '月', '火', '水', '木', '金', '土'],
-                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                },
-                initialDate: "",
-            })
+            const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(1));
+            if (readonly) {
+                $sectionReadonly();
+            } else {
+                $('#founding_date_calendar').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    },
+                    initialDate: "",
+                })
+                $('#establishment_date_calendar').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    },
+                    initialDate: "",
+                })
+            }
+
         });
     </script>
 </x-layout>

@@ -20,8 +20,21 @@ use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 
+use App\Permission;
+
 class CompanyController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if (!$userPermission->isReadableFor(1)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function company_edit()
     {
         $currentCompany = CurrentUser::currentCompany();
@@ -48,6 +61,10 @@ class CompanyController extends Controller
 
     public function company_edit_post(CompanyUpdateRequest $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(1)) {
+            return redirect()->route('home.index');
+        }
         DB::beginTransaction();
         try {
             $request->request->remove('_token');
@@ -56,7 +73,7 @@ class CompanyController extends Controller
             $currentCompany = CurrentUser::currentCompany();
             $currentCompany->update($companyData);
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->errors())->withInput();

@@ -17,6 +17,7 @@ class Permission
     private $department_permissions = [];
     private $features = [];
     private $selectedCompanyFlg = false;
+    private $procedure_hidden_flg = 0;
 
     public function __construct()
     {
@@ -24,6 +25,10 @@ class Permission
         if (!empty($user)) {
             $currentCompany = CurrentUser::currentCompany();
             $this->selectedCompanyFlg = !empty($currentCompany);
+
+            if ($this->selectedCompanyFlg) {
+                $this->procedure_hidden_flg = $currentCompany->procedure_hidden_flg;
+            }
 
             if (session()->has('permissions')) {
                 $d = session()->get('permissions');
@@ -34,7 +39,6 @@ class Permission
                 $this->department_permissions = $d['department_permissions'];
                 $this->features = $d['features'];
             } else {
-                \Log::info('NEW DATA');
                 $employee = CurrentUser::info();
                 $employee_id = $employee->id;
                 $this->role_id = $employee->role_id;
@@ -59,7 +63,7 @@ class Permission
                     'employee_type' => $this->employee_type,
                     'employee_status' => $this->employee_status,
                     'department_permissions' => $this->department_permissions,
-                    'features' => $this->features,
+                    'features' => $this->features
                 ]);
             }
         }
@@ -88,6 +92,21 @@ class Permission
     public function isExternalAdvisor()
     {
         return $this->external_advsor;
+    }
+
+    public function isGeneralAffair()
+    {
+        return $this->isAdmin() || $this->isLabor() || in_array(2, $this->department_permissions);
+    }
+
+    public function isAccounting()
+    {
+        return $this->isAdmin() || $this->isLabor() || in_array(3, $this->department_permissions);
+    }
+
+    public function isBasicDepartment()
+    {
+        return $this->isGeneralAffair() || $this->isAccounting();
     }
 
     public function getEmployeeType()
@@ -126,27 +145,54 @@ class Permission
             'write' => 0,
         ];
     }
-    public function getReadFeaturePermissionById($feature_id)
+    public function isReadableFor($feature_id)
     {
+        if ($this->isAdmin()) return 1;
         $permission = array_values(array_filter($this->features, function ($permission) use ($feature_id) {
             return $permission['feature_id'] === $feature_id;
         }));
 
         if (!empty($permission)) {
-            return $permission[0]['read'];
+            return !$permission[0]['read'];
         }
-        return 0;
+
+        return 1;
     }
 
-    public function getWriteFeaturePermissionById($feature_id)
+    public function isWritableFor($feature_id)
     {
+        if ($this->isAdmin()) return 1;
         $permission = array_values(array_filter($this->features, function ($permission) use ($feature_id) {
             return $permission['feature_id'] === $feature_id;
         }));
 
         if (!empty($permission)) {
-            return $permission[0]['write'];
+            return !$permission[0]['write'];
         }
-        return 0;
+        return 1;
+    }
+
+    public function isReadableAtleast($ids = [])
+    {
+        foreach ($ids as $id) {
+            $r = $this->isReadableFor($id);
+            if ($r) return true;
+        }
+        return false;
+    }
+
+    public function isWritableAtleast($ids = [])
+    {
+        foreach ($ids as $id) {
+            $r = $this->isWritableFor($id);
+            if ($r) return true;
+        }
+        return false;
+    }
+
+    public function denyProcedure()
+    {
+        if ($this->isAdmin() || $this->isLabor()) return 0;
+        return $this->procedure_hidden_flg == 1;
     }
 }

@@ -118,8 +118,8 @@
             </div>
             <div class="submit-btn py-2">
                 <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
-                <button id="contract-submit-btn" class="ui button yellow" type="button"
-                    style="width: 200px;">ダウンロード</button>
+                <button id="contract-submit-btn" class="ui button yellow" type="button" style="width: 200px;"
+                    {{ $userPermission->isWritableFor(7) == false ? 'disabled' : '' }}>ダウンロード</button>
             </div>
         </div>
 

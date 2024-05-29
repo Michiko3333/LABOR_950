@@ -21,16 +21,17 @@ use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
+use App\Permission;
 
 class LaborCompanyController extends Controller
 {
     public function __construct(Request $request)
     {
-        // Admin、社労士権限以外のコントローラー使用を拒否する
         $this->middleware(function ($request, $next) {
-            $role_id = CurrentUser::info()->role_id;
-            if ($role_id !== 999 and $role_id !== 500)
+            $userPermission = new Permission();
+            if (!$userPermission->isLabor()) {
                 return redirect()->route('auth.logout');
+            }
             return $next($request);
         });
     }
@@ -66,6 +67,7 @@ class LaborCompanyController extends Controller
 
     public function labor_company_update_post(LaborCompanyUpdateRequest $request)
     {
+        $userPermission = new Permission();
         DB::beginTransaction();
         try {
             $id = CurrentUser::branch()->value('company_id');
@@ -85,7 +87,7 @@ class LaborCompanyController extends Controller
             }
             Branch::where('company_id', $id)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->errors())->withInput();

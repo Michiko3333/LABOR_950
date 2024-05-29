@@ -16,8 +16,21 @@ use Carbon\Carbon;
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\IOFactory;
 
+use App\Permission;
+
 class EmployeeContractController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(7)) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         // 操作する会社が設定されているか
@@ -71,6 +84,11 @@ class EmployeeContractController extends Controller
 
     public function downlaod(EmployeeContractRequest $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(7)) {
+            return redirect()->route('home.index');
+        }
+
         $template_permanent = __DIR__ . '/template_permanent.docx';
         $template_flexterm = __DIR__ . '/template_flexterm.docx';
         if ($request->input('contract_type') == 1) {

@@ -27,6 +27,7 @@ use App\Models\Managerial_position;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Permission;
 
 class EmployeeController extends Controller
 {
@@ -37,6 +38,11 @@ class EmployeeController extends Controller
 
     public function employee_list(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(5)) {
+            return redirect()->route('home.index');
+        }
+
         $currentCompany = CurrentUser::CurrentCompany();
         $division = $currentCompany->company_division;
 
@@ -50,6 +56,11 @@ class EmployeeController extends Controller
 
     public function employee_update(Request $request, $id)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(6)) {
+            return redirect()->route('home.index');
+        }
+
         $employee = Employee::where('id', $id)->where('delete_flg', 0)->first();
         $branch = $employee->branch()->first();
         $company = $branch->company()->first();
@@ -63,7 +74,7 @@ class EmployeeController extends Controller
         } else {
             $faxParts = ['', '', ''];
         }
-        
+
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
         $sex_type = Values_sex::pluck('name', 'id');
         $prefectures = Prefecture::pluck('name', 'id');
@@ -100,6 +111,11 @@ class EmployeeController extends Controller
 
     public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(6) || !$userPermission->isWritableFor(6)) {
+            return redirect()->route('home.index');
+        }
+
         $fax = implode('-', [
             $request->input('fax1'),
             $request->input('fax2'),
@@ -249,7 +265,7 @@ class EmployeeController extends Controller
             }
 
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
