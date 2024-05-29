@@ -164,6 +164,15 @@
                                         </div>
                                     </a>
                                 @endif
+                                @if ($userPermission->isReadableFor(9))
+                                    <a href="{{ route('ledger.issues') }}" class="item">
+                                        <i class="right caret right icon big blue-text"
+                                            style="visibility: visible;"></i>
+                                        <div class="content">
+                                            <div class="header">申請案件一覧</div>
+                                        </div>
+                                    </a>
+                                @endif
                                 @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
                                     <a href="{{ route('ledger.egov') }}" class="item">
                                         <i class="right caret right icon big blue-text"

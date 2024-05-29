@@ -73,7 +73,7 @@ class CompanyController extends Controller
             $currentCompany = CurrentUser::currentCompany();
             $currentCompany->update($companyData);
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->errors())->withInput();

@@ -77,7 +77,7 @@ class BranchController extends Controller
             }
             Branch::where('company_id', $id)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (ValidationException $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->errors())->withInput();

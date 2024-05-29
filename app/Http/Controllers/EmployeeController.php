@@ -265,7 +265,7 @@ class EmployeeController extends Controller
             }
 
             DB::commit();
-            $this->putSuccess($request);
+            $this->putSuccess();
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);

@@ -293,17 +293,24 @@
     </div>
 
     {{ $footer ?? '' }}
+
     @if (session('post-success'))
         <script type="module">
             $.toast({
                 position: 'bottom right',
                 class: 'success',
-                message: `更新が完了しました`
-            });
-            $.ajax({
-                url: '{{ route('toast.reset') }}',
-                type: 'post'
-            });
+                message: `{{ session('post-success') }}`
+            })
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script type="module">
+            $.toast({
+                position: 'bottom right',
+                class: 'red',
+                message: `{{ session('error') }}`
+            })
         </script>
     @endif
 

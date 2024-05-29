@@ -97,6 +97,13 @@
                                 帳票一覧</a>
                         </li>
                     @endif
+                    @if ($userPermission->isReadableFor(9))
+                        <li class="item">
+                            <a href="{{ route('ledger.issues') }}">
+                                <i class="right caret right icon large blue-text"></i>
+                                申請案件一覧</a>
+                        </li>
+                    @endif
                     @if ($userPermission->isReadableFor(10))
                         <li class="item">
                             <a href="{{ route('ledger.egov') }}">

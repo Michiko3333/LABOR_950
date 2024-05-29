@@ -14,7 +14,6 @@ class PermissionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            \Log::info(print_r($userPermission->isAdmin(), true));
             if (!$userPermission->isAdmin() && $userPermission->getEmployeeType() != 1) {
                 return redirect()->route('home.index');
             }
@@ -49,7 +48,7 @@ class PermissionController extends Controller
                 ['read' => $readPermission, 'write' => $writePermission]
             );
         }
-        $this->putSuccess($request);
+        $this->putSuccess();
         return redirect()->route('employee_permission', ['id' => $id]);
     }
 
@@ -80,7 +79,7 @@ class PermissionController extends Controller
                 ['read' => $readPermission, 'write' => $writePermission]
             );
         }
-        $this->putSuccess($request);
+        $this->putSuccess();
         return redirect()->route('labor_permission', ['id' => $id]);
     }
 }

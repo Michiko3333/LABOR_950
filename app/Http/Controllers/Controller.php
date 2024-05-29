@@ -154,23 +154,9 @@ class Controller extends BaseController
             'japanese_calendar_result' => $japaneseCalendarResult,
         ];
     }
-
-    protected function isSuccess($request)
+    protected function putSuccess($msg = "更新が完了しました")
     {
-        $bool = $request->session()->get('post-success', false);
-        $request->session()->put('post-success', false);
-        return $bool;
-    }
-
-    protected function putSuccess($request, $bool = true)
-    {
-        $request->session()->put('post-success', $bool);
-    }
-
-    public function resetToast(Request $request)
-    {
-        $this->putSuccess($request, false);
-        return 0;
+        session()->flash('post-success', $msg);
     }
 
     public function egovAcount()
