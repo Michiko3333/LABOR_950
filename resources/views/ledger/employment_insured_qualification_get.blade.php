@@ -127,6 +127,19 @@
                                 #J79_005F_89C1_93FC_8ED2_94D4_8D86, #J80_005F_9574_8B4C_9793, #J80_005F_9574_8B4C_9793').prop(
                         'readonly', true);
                 @endif
+
+                $('#J6_005F_8EE6_93BE').change(function() {
+                    var selectedOption = $(this).val();
+                    if (selectedOption === '1') {
+                        $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('').prop('disabled', true);
+                        $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('').prop('disabled', true);
+                        $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('').prop('disabled', true);
+                    } else {
+                        $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').prop('disabled', false);
+                        $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').prop('disabled', false);
+                        $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('disabled', false);
+                    }
+                });
             })
         </script>
 
@@ -149,11 +162,11 @@
                     } else {
                         if (employee.employment_insured_no != null) {
                             $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no
-                                .substring(0, 4));
+                                .substring(0, 4)).prop('disabled', false);
                             $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no
-                                .substring(4, 10));
+                                .substring(4, 10)).prop('disabled', false);
                             $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(
-                                10, 11));
+                                10, 11)).prop('disabled', false);
                         }
                     }
                 });
