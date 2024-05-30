@@ -13,7 +13,7 @@ class CurrentUser extends Auth
     public static function info()
     {
         $user = Auth::user();
-        return Employee::find($user->id);
+        return Employee::find($user->employee_id);
     }
 
     public static function branch()
