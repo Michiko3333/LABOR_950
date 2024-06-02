@@ -32,7 +32,7 @@
                     <td>{{ $item->employee_sum ?? '0' }} 名</td>
                     <td class="right aligned collapsing">
                         <button class="ui button" type="button" wire:click="toDepartment({{ $item->id }})">
-                            部署編集
+                            部署
                         </button>
                         <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
                             編集

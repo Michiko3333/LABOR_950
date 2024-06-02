@@ -1,30 +1,26 @@
 <div>
-    <div style="padding: 1em 0;">
-        <button class="ui button primary" onclick="openManagerialPositionModal()" type="button" style="width: 100px;">追加</button>
-    </div>
-
-    @if ($managerial_position->isNotEmpty())
+    @if ($userPermission->isWritableFor(4) && $userPermission->isBasicDepartment())
+        <div style="padding: 1em 0;">
+            <button class="ui button primary" type="button" style="width: 100px;" wire:click='new'>追加</button>
+        </div>
+    @endif
+    @if (!empty($data))
         <div class="ui card full card-shadow item-0">
             <div class="content">
                 <ul class="list-table">
-                    @foreach ($groupedData as $rank => $items)
-                        <div class="rank-group">
-                            <h3>ランク： {{ $rank }}</h3>
-                            <ul class="group-list mb-3">
-                                @foreach ($items as $item)
-                                    <li class="item">
-                                        <div class="name">{{ $item['name'] }}</div>
-                                        <div class="actions">
-                                            <button class="ui button edit modalbtn" onclick="openEditModal('{{ $item['id'] }}')"
-                                                wire:click='edit("{{ $item['id'] }}")' type="button">編集</button>
-                                            <button class="ui button icon basic negative" type="button"
-                                                onclick="openCancelModal('{{ $item['id'] }}')"><i
-                                                    class="trash alternate outline icon"></i></button>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    @foreach ($data as $item)
+                        <li class="item">
+                            <div class="name">{{ $item['name'] }}</div>
+                            <div class="actions">
+                                @if ($userPermission->isWritableFor(4) && $userPermission->isBasicDepartment())
+                                    <button class="ui button edit" type="button"
+                                        wire:click='edit("{{ $item['id'] }}")'>編集</button>
+                                    <button class="ui button icon basic negative" type="button"
+                                        wire:click='remove({{ $item['id'] }}, "{{ $item['name'] }}")'><i
+                                            class="trash alternate outline icon"></i></button>
+                                @endif
+                            </div>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -33,62 +29,85 @@
         <h3>設定されていません</h3>
     @endif
 
-    <div id="editManagerialPosition" class="ui modal mini edit-department-modal">
+    <div id="editManagerial" class="ui modal mini edit-managerial-position-modal">
         <i class="close icon"></i>
-        <div class="header">役職の追加</div>
-        <div class="content">
-            <livewire:managerial-position-modal :company_id="$this->company_id" />
+        <div class="header">
+            役職の追加
         </div>
-    </div>
+        <div class="content" wire:ignore>
+            <form id="edit-managerial-position" name="edit-managerial-position">
+                <div class="ui form">
+                    <div class="ui error message hidden">
+                        <div class="header">入力エラー</div>
+                        <ul class="list">
+                            <li>必須項目が空欄か、フォーマットが正しくありません</li>
+                        </ul>
+                    </div>
+                    <input type="hidden" class="edit-managerial-position-form_id"
+                        name="edit-managerial-position-form_id">
+                    <div class="field required mb-2">
+                        <label>役職名</label>
+                        <input class="edit-managerial-position-form_name" name="edit-managerial-position-form_name"
+                            type="text" placeholder="役職名" maxlength="20">
+                    </div>
+                    <div class="field required mb-2">
+                        <label>役職名（カナ）</label>
+                        <input class="edit-managerial-position-form_name_kana"
+                            name="edit-managerial-position-form_name_kana" type="text" placeholder="役職名（カナ）"
+                            maxlength="50">
+                    </div>
+                    <div class="field required mb-2">
+                        <label>序列</label>
+                        <input type="number" class="edit-managerial-position-form_rank"
+                            name="edit-managerial-position-form_rank" placeholder="序列" min="1" max="10">
+                    </div>
+                    <div class="ui checkbox mr-1">
+                        <input type="checkbox" class="edit-managerial-position-form_representative_flg" value='1'
+                            name="edit-managerial-position-form_representative_flg">
+                        <label>代表取締役</label>
+                    </div>
+                </div>
 
-    <div class="ui tiny modal cancel-modal">
-        <div class="header">確認</div>
-        <div class="content">
-            <livewire:cancel-modal-content />
+            </form>
+        </div>
+        <div class="actions">
+            <button class="ui negative button" onClick="javascript:$lw.onCancel()" type="button">キャンセル</button>
+            <div class="ui primary button" onClick="javascript:$lw.onEdit()">登録</div>
         </div>
     </div>
 
     @script
         <script>
-            window.openManagerialPositionModal = () => {
-                $('#editManagerialPosition').modal({
-                    blurring: true,
-                    onHidden: function() {
-                        location.reload();
-                    }
-                }).modal('show');
-            };
-            window.openEditModal = (id) => {
-                $wire.dispatch('edit', { id: id });
-                setTimeout(() => {
-                    $('#editManagerialPosition').modal({
-                        blurring: true,
-                        onHidden: function() {
-                            location.reload();
-                        }
-                    }).modal('show');
-                }, 380);
-            };
-            window.addEventListener('closeManagerialPositionModal', () => {
-                $('#editManagerialPosition').modal('hide');
-                location.reload();
-            });
+            const onCancel = () => {
+                $wire.dispatch('onCancelManagerial');
+            }
+            const onEdit = () => {
+                const form_id = document.getElementsByClassName('edit-managerial-position-form_id')[1].value;
+                const form_name = document.getElementsByClassName('edit-managerial-position-form_name')[1].value;
+                const form_name_kana = document.getElementsByClassName('edit-managerial-position-form_name_kana')[1].value;
+                const form_rank = document.getElementsByClassName('edit-managerial-position-form_rank')[1].value;
+                const form_representative_flg = document.getElementsByClassName(
+                    'edit-managerial-position-form_representative_flg')[1].checked;
 
-            window.openCancelModal = (id) => {
-                $wire.dispatch('cancelModalOpened', { receptionistId: 0, managerialPositionId: id });
-                setTimeout(() => {
-                    $('.cancel-modal').modal({
-                        blurring: true
-                    }).modal('show');
-                }, 200);
+                const data = {
+                    form_id: form_id,
+                    form_name: form_name,
+                    form_name_kana: form_name_kana,
+                    form_rank: form_rank,
+                    form_representative_flg: form_representative_flg == 1 ? 1 : 0
+                };
+                $wire.dispatch('onEditManagerial', {
+                    data: data
+                });
+            }
+            const onRemove = (id) => {
+                $wire.dispatch('onRemoveManagerial');
             };
-            window.closeCancelModal = () => {
-                $('.cancel-modal').modal('hide');
+            window.$lw = {
+                onCancel: onCancel,
+                onEdit: onEdit,
+                onRemove: onRemove
             };
-            window.addEventListener('closeCancelModal', () => {
-                $('.cancel-modal').modal('hide');
-                location.reload();
-            });
         </script>
     @endscript
 </div>

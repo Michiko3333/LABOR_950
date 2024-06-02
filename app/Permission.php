@@ -106,7 +106,7 @@ class Permission
 
     public function isBasicDepartment()
     {
-        return $this->isGeneralAffair() || $this->isAccounting();
+        return $this->isGeneralAffair() || $this->isAccounting() || $this->getEmployeeType() < 3;
     }
 
     public function getEmployeeType()
