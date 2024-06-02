@@ -147,7 +147,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
             'user_email' => 'required|email',
-            'user_pass' => 'required',
+            'user_pass' => 'required|min:6|max:20',
         ];
     }
 
