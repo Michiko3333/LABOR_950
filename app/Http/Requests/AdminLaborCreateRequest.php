@@ -37,7 +37,7 @@ class AdminLaborCreateRequest extends FormRequest
             'tel_subscriber_code' => 'required',
             'mail_address2' => 'nullable|email',
             'user_email' => 'required|email',
-            'user_pass' => 'required',
+            'user_pass' => 'required|min:6|max:20',
         ];
     }
 

@@ -19,6 +19,11 @@ class IssuesList extends BaseTable
     {
         $this->page = $page;
         $this->search = $search;
+
+        $today = date('Y-m-d');
+        $current_date = date('Y', strtotime($today));
+        $this->date_from = date('Y-m-d', strtotime('-6 month', strtotime($current_date)));
+        $this->date_to = date('Y-m-d', strtotime($today));
     }
 
     public function render()
@@ -50,9 +55,18 @@ class IssuesList extends BaseTable
                 $resultset = $response['resultset'];
                 $results = $response['results']['apply_list'];
                 $this->data = $this->getDataFromAPI($resultset, $results);
+            } else {
+                $this->data = [
+                    'items' => [],
+                    'pagination' => [
+                        'totalItems' => 0,
+                        'currentPage' => 1,
+                        'pageSize' => $this->limit,
+                        'totalPages' => 1,
+                    ],
+                ];
             }
         }
-
         return view('livewire.issues-list');
     }
 

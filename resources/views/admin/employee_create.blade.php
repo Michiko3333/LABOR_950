@@ -474,7 +474,7 @@
                                     value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
                                     placeholder="">
                             </div>
-                            <div class="field {{ err($errors, 'address_apartment') }}">
+                            <div class="field required {{ err($errors, 'address_apartment') }}">
                                 <label for="address_apartment">住所（アパート・マンション名等）</label>
                                 <input type="text" name="address_apartment"
                                     value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"

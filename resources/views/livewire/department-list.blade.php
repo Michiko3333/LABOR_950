@@ -5,19 +5,36 @@
                 $wire.dispatch('onCancelDepartment');
             }
             const onEdit = () => {
-                $wire.dispatch('onEditDepartment');
+                const form_id = document.getElementsByClassName('edit-department-form_id')[1].value;
+                const form_name = document.getElementsByClassName('edit-department-form_name')[1].value;
+                const form_parent = document.getElementsByClassName('edit-department-form_parent')[1].value;
+                const form_permission = document.getElementsByClassName('edit-department-form_permission')[1].value;
+                const data = {
+                    form_id: form_id,
+                    form_name: form_name,
+                    form_parent: form_parent,
+                    form_permission: form_permission
+                };
+                $wire.dispatch('onEditDepartment', {
+                    data: data
+                });
             }
+            const onRemove = (id) => {
+                $wire.dispatch('onRemoveDepartment');
+            };
             window.$lw = {
                 onCancel: onCancel,
-                onEdit: onEdit
+                onEdit: onEdit,
+                onRemove: onRemove
             };
         </script>
     @endscript
 
-    <div style="padding: 1em 0;">
-        <button class="ui button primary" type="button" onclick="openEditModal()" wire:click='new'
-            style="width: 100px;">追加</button>
-    </div>
+    @if ($userPermission->isWritableFor(3) && $userPermission->isBasicDepartment())
+        <div style="padding: 1em 0;">
+            <button class="ui button primary" type="button" wire:click='new' style="width: 100px;">追加</button>
+        </div>
+    @endif
 
     @if ($departments->isNotEmpty())
         <div class="ui card full card-shadow item-0">
@@ -36,17 +53,25 @@
         <div class="header">
             部署の追加
         </div>
-        <div class="content">
-            <form name="edit-department">
+        <div class="content" wire:ignore>
+            <form id="edit-department" name="edit-department">
                 <div class="ui form">
-                    <input type="hidden" wire:model='form_id'>
+                    <div class="ui error message hidden">
+                        <div class="header">入力エラー</div>
+                        <ul class="list">
+                            <li>必須項目が空欄か、フォーマットが正しくありません</li>
+                        </ul>
+                    </div>
+                    <input type="hidden" class="edit-department-form_id" name="edit-department-form_id">
                     <div class="field required mb-2">
                         <label>部署名</label>
-                        <input type="text" placeholder="部署名" wire:model='form_name' required>
+                        <input class="edit-department-form_name" name="edit-department-form_name" type="text"
+                            placeholder="部署名" maxlength="15">
                     </div>
                     <div class="field mb-2">
                         <label>部署権限</label>
-                        <select class="ui fluid dropdown" wire:model='form_permission'>
+                        <select class="ui fluid dropdown edit-department-form_permission"
+                            name="edit-department-form_permission">
                             @foreach ($permission_list as $k => $value)
                                 <option value="{{ $k }}">{{ $value }}</option>
                             @endforeach
@@ -54,11 +79,8 @@
                     </div>
                     <div class="field">
                         <label>上位部署</label>
-                        <select class="ui fluid dropdown" wire:model='form_parent'>
-                            <option value="">指定なし</option>
-                            @foreach ($parent_list as $k => $name)
-                                <option value="{{ $k }}">{{ $name }}</option>
-                            @endforeach
+                        <select class="ui fluid dropdown edit-department-form_parent"
+                            name="edit-department-form_parent">
                         </select>
                     </div>
                 </div>

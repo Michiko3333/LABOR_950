@@ -11,7 +11,6 @@ class CalendarController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            \Log::info(print_r($userPermission->isAdmin(), true));
             if (!$userPermission->isReadableFor(11)) {
                 return redirect()->route('home.index');
             }

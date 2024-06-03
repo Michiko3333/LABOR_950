@@ -177,7 +177,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // 顧客画面
     Route::get('/company/department', [CompanyDepartmentController::class, 'current_company_department_update'])->name('current_company_department_update');
-    Route::post('/company/department', [CompanyDepartmentController::class, 'current_company_department_update_post'])->name('current_company_department_update_post');
 
     Route::get('/company', [CompanyController::class, 'company_edit'])->name('company_edit');
     Route::post('/company', [CompanyController::class, 'company_edit_post'])->name('company_edit_post');
@@ -192,8 +191,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/employee/edit/{id}', [EmployeeController::class, 'employee_update'])->name('employee_update');
     Route::post('/employee/edit/{id}', [EmployeeController::class, 'employee_update_post'])->name('employee_update_post');
 
-    Route::get('/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
-    Route::post('/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
+    Route::get('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
+    Route::post('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
 
     Route::get('/employee/contract', [EmployeeContractController::class, 'index'])->name('contract.index');
     Route::post('/employee/contract/check', [EmployeeContractController::class, 'check'])->name('contract.check');

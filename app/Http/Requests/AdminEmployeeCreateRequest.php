@@ -73,7 +73,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
             'address_ward' => 'required|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'address_apartment' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'address_apartment' => 'required|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
             // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
             'address_city_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
             'address_ward_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
@@ -147,7 +147,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
             'user_email' => 'required|email',
-            'user_pass' => 'required',
+            'user_pass' => 'required|min:6|max:20',
         ];
     }
 
