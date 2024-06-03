@@ -111,6 +111,10 @@
                 $('#N6_P1').val('{{ $todaySet['year'] }}');
                 $('#N7_P1').val('{{ $todaySet['month'] }}');
                 $('#N8_P1').val('{{ $todaySet['day'] }}');
+                @if ($current_employee->role_id === 500)
+                @else
+                    $('#N22_P1').prop('readonly', false);
+                @endif
             });
         </script>
 

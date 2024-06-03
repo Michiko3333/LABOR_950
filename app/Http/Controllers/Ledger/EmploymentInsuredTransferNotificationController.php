@@ -9,6 +9,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
+use App\Models\Branch;
 
 class EmploymentInsuredTransferNotificationController extends Controller
 {
@@ -29,6 +30,7 @@ class EmploymentInsuredTransferNotificationController extends Controller
             $certificate = false;
         }
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
@@ -40,7 +42,15 @@ class EmploymentInsuredTransferNotificationController extends Controller
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.employment_insured_transfer_notification', ['company' => $company, 'today' => $today, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee, 'egovAcount' => $egovAcount]);
+        return view('ledger.employment_insured_transfer_notification', [
+            'company' => $company,
+            'today' => $today,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'current_employee' => $current_employee,
+            'egovAcount' => $egovAcount,
+            'current_branch' => $current_branch,
+        ]);
     }
 
     public function post(EmploymentInsuredTransferNotificationRequest $request)

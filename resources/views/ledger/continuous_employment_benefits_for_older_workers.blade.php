@@ -119,15 +119,9 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
                 @if ($current_employee->role_id === 500)
-                    // $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val(
-                        '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_employee->tel_area_code }}');
-                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
-                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
-                    $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                            #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
-                        .prop('readonly', true);
+                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
+                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
+                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
                                             #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')

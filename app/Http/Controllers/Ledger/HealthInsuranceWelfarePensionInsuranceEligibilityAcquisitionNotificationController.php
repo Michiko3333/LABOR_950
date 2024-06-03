@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
+use App\Models\Branch;
 
 class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
 {
@@ -35,6 +36,8 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -46,7 +49,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount'));
+        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount', 'current_employee', 'current_branch'));
     }
 
     public function post(NotificationOfObtainingInsuredQualificationRequest $request)

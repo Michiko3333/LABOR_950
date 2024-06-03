@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
+use App\Models\Branch;
 
 class HealthInsuranceDependentChangeController extends Controller
 {
@@ -42,6 +43,8 @@ class HealthInsuranceDependentChangeController extends Controller
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $today = [
@@ -69,7 +72,9 @@ class HealthInsuranceDependentChangeController extends Controller
             'yesterday' => $yesterday,
             'certificate' => $certificate,
             'egovAcount' => $egovAcount,
-            'procedureName' => $procedureName
+            'procedureName' => $procedureName,
+            'current_employee' => $current_employee,
+            'current_branch' => $current_branch,
         ]);
     }
 

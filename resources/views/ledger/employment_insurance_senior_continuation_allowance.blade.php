@@ -113,8 +113,6 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
                 @if ($current_employee->role_id === 500)
-                    $('#J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val(
-                        '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
                     $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
                     $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
                     $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');

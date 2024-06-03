@@ -9,6 +9,7 @@ use App\Http\Requests\FirstParentalLeaveBenefitsForEmploymentInsuranceRequest;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Branch;
 
 use function Laravel\Prompts\text;
 
@@ -31,6 +32,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
             $certificate = false;
         }
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -47,7 +49,15 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.first_parental_leave_benefits_for_employment_insurance', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee, 'egovAcount' => $egovAcount]);
+        return view('ledger.first_parental_leave_benefits_for_employment_insurance', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'current_employee' => $current_employee,
+            'egovAcount' => $egovAcount,
+            'current_branch' => $current_branch,
+        ]);
     }
 
     public function post(FirstParentalLeaveBenefitsForEmploymentInsuranceRequest $request)

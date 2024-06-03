@@ -11,6 +11,7 @@ use App\Http\Requests\HealthInsurancePensionInsuredQualificationRequest;
 use App\EgovAPI\MixXmlEgovSigner;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
+use App\Models\Branch;
 
 class HealthInsurancePensionInsuredQualificationLossController extends Controller
 {
@@ -38,6 +39,8 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
@@ -49,7 +52,16 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_pension_insured_qualification_loss', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view('ledger.health_insurance_pension_insured_qualification_loss', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'dataUri' => $dataUri,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'egovAcount' => $egovAcount,
+            'current_employee' => $current_employee,
+            'current_branch' => $current_branch,
+        ]);
     }
 
     public function post(HealthInsurancePensionInsuredQualificationRequest $request)

@@ -153,6 +153,12 @@
                 $('#N31_1').val('{{ old('submission_year', $today['year']) }}');
                 $('#N32_1').val('{{ old('submission_month', $today['month']) }}');
                 $('#N33_1').val('{{ old('submission_date', $today['date']) }}');
+                @if ($current_employee->role_id === 500)
+                @else
+                    $('#N22_P1').prop('readonly', false);
+                    $('#N30').prop('readonly', false);
+                    $('#N34_1').prop('readonly', false);
+                @endif
             });
         </script>
 

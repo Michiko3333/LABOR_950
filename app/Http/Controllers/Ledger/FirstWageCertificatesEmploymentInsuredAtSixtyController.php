@@ -9,6 +9,7 @@ use App\Http\Requests\FirstWageCertificatesEmploymentInsuredAtSixtyRequest;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Branch;
 
 class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
 {
@@ -29,6 +30,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
             $certificate = false;
         }
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -45,7 +47,15 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.first_wage_certificates_employment_insured_at_sixty', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee, 'egovAcount' => $egovAcount]);
+        return view('ledger.first_wage_certificates_employment_insured_at_sixty', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'current_employee' => $current_employee,
+            'egovAcount' => $egovAcount,
+            'current_branch' => $current_branch,
+        ]);
     }
 
     public function post(FirstWageCertificatesEmploymentInsuredAtSixtyRequest $request)
