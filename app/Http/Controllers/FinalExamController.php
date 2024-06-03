@@ -219,11 +219,11 @@ class FinalExamController extends Controller
     }
 
     // 公文書取得完了　artisanコマンド
-    public static function registerDatetimeOfOfficialDocument_command($companyId, $arrive_id, $examNo)
+    public static function registerDatetimeOfOfficialDocument_command($companyId, $arrive_id, $notice_sub_id, $examNo)
     {
         $account = Egov_account::where('company_id', $companyId)->where('delete_flg', 0)->first();
         $api = Egov::accessToken($account->access_token);
-        $notice_sub_id = 1;
+        // $notice_sub_id = 1;
         $r = $api->registerDatetimeOfOfficialDocument($arrive_id, $notice_sub_id);
 
         $body = self::logoutput($r, $examNo);

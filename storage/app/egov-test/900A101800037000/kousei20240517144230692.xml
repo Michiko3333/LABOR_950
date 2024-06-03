@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="999000000000000001.xsl" type="text/xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="999000000000000009.xsl" type="text/xsl"?>
 <DataRoot>
-	<様式ID>999000000000000001</様式ID>
+	<様式ID>999000000000000009</様式ID>
 	<様式バージョン>0001</様式バージョン>
-	<STYLESHEET>999000000000000001.xsl</STYLESHEET>
+	<STYLESHEET>999000000000000009.xsl</STYLESHEET>
 	<構成情報 ID="構成情報">
 		<管理情報>
 			<手続番号>

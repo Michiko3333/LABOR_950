@@ -681,6 +681,8 @@ class MixXmlEgovSigner
      * @param int $signerNUM    1:標準形式
      *                          2:個別ファイル署名形式
      *                          0:署名なし
+     *                          3:連署式　標準
+     *                          9:申請のみ行う
      * @param int $examNo    最終確認試験の番号
      * 手続選択で取得したスケルトンデータにデータを記入したファイルを下記フォルダを作成して配置
      * 標準：ledger/dev/zip
@@ -692,7 +694,7 @@ class MixXmlEgovSigner
         EgovTestLog::info(print_r('******************************** MixEgovSigner exam start ********************************', true));
         EgovTestLog::info(print_r($this->workingDirectory . $this->afterLedgerPath, true));
 
-        if ('getPfx') {
+        if ('getPfx' && $signerNUM!=9) {
             $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
             $binarypfx = $pfx->file;
             $this->password = $pfx->password;
@@ -706,7 +708,7 @@ class MixXmlEgovSigner
         $signerFolderPath = $this->workingDirectory . '/wordking/zip/';
 
         // egov-test/{手続ID}よりファイルをsignerFolderPathにコピー
-        if ('copy') {
+        if ('copy' && $signerNUM!=9) {
             $sourceFolder = Storage::path('egov-test/' . $proc_id);
             // return $sourceFolder;
             $files = scandir($sourceFolder);
@@ -720,7 +722,7 @@ class MixXmlEgovSigner
         }
 
         // 署名
-        if ('egovSigner') {
+        if ('egovSigner' && $signerNUM!=9) {
             $signer = new Signer();
             if ($signerNUM==2){
                     $filenamePattern = 'kousei' . date("Y") . '*.xml';
@@ -743,14 +745,26 @@ class MixXmlEgovSigner
                 }else{
                     EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
                 }
+            } elseif ($signerNUM==3){
+                $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
+                $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
+                if ( $signerBool==False ) {
+                    EgovTestLog::error("標準形式の連署式署名に失敗しました");
+                }else{
+                    EgovTestLog::info(print_r('標準形式の連署式署名に成功しました', true));
+                }
             }
+            $kouseiFilePath = $signerFolderPath . "kousei.xml";
+            $this->transformEmptyTags($kouseiFilePath);
         }
-        $kouseiFilePath = $signerFolderPath . "kousei.xml";
-        $this->transformEmptyTags($kouseiFilePath);
 
         //zip圧縮後、base64バイナリデータを返す
         if ('zipBinary') {
+            if ($signerNUM==9) {
+                $workingPath = Storage::path('egov-test/temp/onlySendData');
+            }
             $zipfilepath = $this->workingDirectory . '/send_data.zip';
+
             $zip = new \ZipArchive();
             if ($zip->open($zipfilepath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
                 $files = new \RecursiveIteratorIterator(
