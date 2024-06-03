@@ -24,6 +24,16 @@ class IssuesList extends BaseTable
         $current_date = date('Y', strtotime($today));
         $this->date_from = date('Y-m-d', strtotime('-6 month', strtotime($current_date)));
         $this->date_to = date('Y-m-d', strtotime($today));
+
+        $this->data = [
+            'items' => [],
+            'pagination' => [
+                'totalItems' => 0,
+                'currentPage' => 1,
+                'pageSize' => $this->limit,
+                'totalPages' => 1,
+            ],
+        ];
     }
 
     public function render()

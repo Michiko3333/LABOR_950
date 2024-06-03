@@ -68,6 +68,9 @@ class EgovController extends Controller
         if ($response->successful()) {
             $access_token = $response['access_token'];
             $refresh_token = $response['refresh_token'];
+            $expires_in = $response['expires_in'];
+            $refresh_expires_in = $response['refresh_expires_in'];
+            $not_before_policy = $response['not-before-policy'];
 
             $q = Egov_account::where('company_id', $company->id);
 
@@ -75,6 +78,9 @@ class EgovController extends Controller
                 $q->update([
                     'access_token' => $access_token,
                     'refresh_token' => $refresh_token,
+                    'expires_in' => $expires_in,
+                    'refresh_expires_in' => $refresh_expires_in,
+                    'not_before_policy' => date('Y-m-d H:i:s', $not_before_policy),
                     'delete_flg' => 0
                 ]);
             } else {
@@ -82,6 +88,9 @@ class EgovController extends Controller
                     'company_id' => $company->id,
                     'access_token' => $access_token,
                     'refresh_token' => $refresh_token,
+                    'expires_in' => $expires_in,
+                    'refresh_expires_in' => $refresh_expires_in,
+                    'not_before_policy' => date('Y-m-d H:i:s', $not_before_policy),
                     'delete_flg' => 0
                 ]);
             }
@@ -103,9 +112,17 @@ class EgovController extends Controller
     public function disconnect(Request $request)
     {
         $company = CurrentUser::currentCompany();
+        $account = Egov_account::select('refresh_token')->where('company_id', $company->id)->first();
+        try {
+            Egov::refreshToken($account->refresh_token)->logout();
+        } catch (\Exception $err) {
+            \Log::error($err);
+        }
+
         Egov_account::where('company_id', $company->id)->update([
             'delete_flg' => 1
         ]);
+
         return true;
     }
 

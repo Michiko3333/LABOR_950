@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\CurrentUser;
 
 use App\EgovAPI\Egov;
+use App\Models\Egov_account;
 use Exception;
 
 use function PHPUnit\Framework\throwException;
@@ -30,8 +31,23 @@ class HomeController extends Controller
 
         $small = false;
         $prevurl = url()->previous();
-        if ($prevurl === route('home.select') || $prevurl === route('auth.login'))
+        if ($prevurl === route('home.select') || $prevurl === route('auth.login')) {
+            $account = Egov_account::select('refresh_token')->where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
+            if (!empty($account)) {
+                try {
+                    $r = Egov::refreshToken($account->refresh_token)->tokenIntrospect();
+                    $j = $r->json();
+                    $isActive = $j['active'];
+                    if (!$isActive) {
+                        Egov::refreshToken($account->refresh_token)->logout();
+                        Egov_account::where('company_id', $currentCompany->id)->update(['delete_flg' => 1]);
+                    }
+                } catch (\Exception $err) {
+                    \Log::error($err);
+                }
+            }
             $small = true;
+        }
 
         $body = [
             'mode' => $small ? 'small' : '',
