@@ -139,6 +139,10 @@
                 grid-area: 3 / 4 / 4 / 5;
             }
 
+            .ui.basic.label {
+                padding-top: 1.2em !important;
+            }
+
             @media (max-width: 1245px) {
                 .company-data-area .ui.card.item-0 {
                     grid-area: 1 / 1 / 4 / 4;

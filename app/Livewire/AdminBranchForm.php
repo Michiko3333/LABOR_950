@@ -43,30 +43,30 @@ class AdminBranchForm extends Component
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
         $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
         $this->labor_bureau_id = Labor_bureau::select('submit_name_jk', 'department', 'section', 'id')->get()
-        ->map(function ($labor_bureau_id) {
-            return [
-                'submit_name_jk' => $labor_bureau_id->submit_name_jk,
-                'department' => $labor_bureau_id->department,
-                'section' => $labor_bureau_id->section,
-                'id' => $labor_bureau_id->id,
-            ];
-        })->toArray();
+            ->map(function ($labor_bureau_id) {
+                return [
+                    'submit_name_jk' => $labor_bureau_id->submit_name_jk,
+                    'department' => $labor_bureau_id->department,
+                    'section' => $labor_bureau_id->section,
+                    'id' => $labor_bureau_id->id,
+                ];
+            })->toArray();
         $this->labor_supervision_id = Labor_supervision::select('submit_name_hij', 'section', 'id')->get()
-        ->map(function ($labor_supervision_id) {
-            return [
-                'submit_name_hij' => $labor_supervision_id->submit_name_hij,
-                'section' => $labor_supervision_id->section,
-                'id' => $labor_supervision_id->id,
-            ];
-        })->toArray();
+            ->map(function ($labor_supervision_id) {
+                return [
+                    'submit_name_hij' => $labor_supervision_id->submit_name_hij,
+                    'section' => $labor_supervision_id->section,
+                    'id' => $labor_supervision_id->id,
+                ];
+            })->toArray();
         $this->pension_office_id = Pension_office::select('name', 'section', 'id')->get()
-        ->map(function ($pension_office_id) {
-            return [
-                'name' => $pension_office_id->name,
-                'section' => $pension_office_id->section,
-                'id' => $pension_office_id->id,
-            ];
-        })->toArray();
+            ->map(function ($pension_office_id) {
+                return [
+                    'name' => $pension_office_id->name,
+                    'section' => $pension_office_id->section,
+                    'id' => $pension_office_id->id,
+                ];
+            })->toArray();
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
@@ -124,10 +124,14 @@ class AdminBranchForm extends Component
                 $d['br-start_time_of_day'] = $item->start_time_of_day;
                 $d['br-work_time_start'] = $item->work_time_start;
                 $d['br-work_time_end'] = $item->work_time_end;
-                $d['br-agreed_hours_year'] = $item->agreed_hours_year;
-                $d['br-agreed_hours_month'] = $item->agreed_hours_month;
-                $d['br-agreed_hours_week'] = $item->agreed_hours_week;
-                $d['br-agreed_hours_day'] = $item->agreed_hours_day;
+                $d['br-agreed_hours_year_h'] = $item->agreed_hours_year_h;
+                $d['br-agreed_hours_year_m'] = $item->agreed_hours_year_m;
+                $d['br-agreed_hours_month_h'] = $item->agreed_hours_month_h;
+                $d['br-agreed_hours_month_m'] = $item->agreed_hours_month_m;
+                $d['br-agreed_hours_week_h'] = $item->agreed_hours_week_h;
+                $d['br-agreed_hours_week_m'] = $item->agreed_hours_week_m;
+                $d['br-agreed_hours_day_h'] = $item->agreed_hours_day_h;
+                $d['br-agreed_hours_day_m'] = $item->agreed_hours_day_m;
                 $d['br-working_days_yearly'] = $item->working_days_yearly;
                 $d['br-working_days_monthly'] = $item->working_days_monthly;
                 $d['br-holiday_yearly'] = $item->holiday_yearly;
@@ -220,10 +224,14 @@ class AdminBranchForm extends Component
             'br-start_time_of_day' => '',
             'br-work_time_start' => '',
             'br-work_time_end' => '',
-            'br-agreed_hours_year' => '',
-            'br-agreed_hours_month' => '',
-            'br-agreed_hours_week' => '',
-            'br-agreed_hours_day' => '',
+            'br-agreed_hours_year_h' => '',
+            'br-agreed_hours_year_m' => '',
+            'br-agreed_hours_month_h' => '',
+            'br-agreed_hours_month_m' => '',
+            'br-agreed_hours_week_h' => '',
+            'br-agreed_hours_week_m' => '',
+            'br-agreed_hours_day_h' => '',
+            'br-agreed_hours_day_m' => '',
             'br-working_days_yearly' => '',
             'br-working_days_monthly' => '',
             'br-holiday_yearly' => '',
