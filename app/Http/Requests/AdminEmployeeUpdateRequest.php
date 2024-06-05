@@ -81,9 +81,9 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            "fax1" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
-            "fax2" => 'nullable|string|regex:/[0-9]{3,4}$/',
-            "fax3" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax2',
+            "fax2" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:fax1,fax3',
+            "fax3" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:fax1,fax2',
             'mail_address1' => 'nullable|string|max:255|email',
             'mail_address2' => 'nullable|string|max:255|email',
             'emergency_post_code1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
@@ -146,6 +146,15 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'fax1.required_with' => 'FAX番号_1を入力してください。',
+            'fax2.required_with' => 'FAX番号_2を入力してください。',
+            'fax3.required_with' => 'FAX番号_3を入力してください。',
         ];
     }
 

@@ -300,7 +300,7 @@ class AdminController extends Controller
                 if ($part1 === null && $part2 === null && $part3 === null) {
                     continue;
                 }
-                $fax[] = ($part1 !== null ? $part1 . '-' : '') . ($part2 !== null ? $part2 . '-' : '') . ($part3 !== null ? $part3 : '');
+                $fax[] = ($part1 !== '' ? $part1 . '-' : '') . ($part2 !== '' ? $part2 . '-' : '') . ($part3 !== '' ? $part3 : '');
             }
         }
 
@@ -561,11 +561,15 @@ class AdminController extends Controller
 
     public function employee_create_post(AdminEmployeeCreateRequest $request)
     {
-        $fax = implode('-', [
-            $request->input('fax1'),
-            $request->input('fax2'),
-            $request->input('fax3')
-        ]);
+        if (!empty($request->input('fax1')) && !empty($request->input('fax2')) && !empty($request->input('fax3'))) {
+            $fax = implode('-', [
+                $request->input('fax1'),
+                $request->input('fax2'),
+                $request->input('fax3')
+            ]);
+        } else{
+            $fax = null;
+        };
         DB::beginTransaction();
 
         try {
@@ -775,11 +779,15 @@ class AdminController extends Controller
 
     public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
-        $fax = implode('-', [
-            $request->input('fax1'),
-            $request->input('fax2'),
-            $request->input('fax3')
-        ]);
+        if (!empty($request->input('fax1')) && !empty($request->input('fax2')) && !empty($request->input('fax3'))) {
+            $fax = implode('-', [
+                $request->input('fax1'),
+                $request->input('fax2'),
+                $request->input('fax3')
+            ]);
+        } else{
+            $fax = null;
+        };
         DB::beginTransaction();
         try {
             $data = $request->validationData($request);

@@ -102,11 +102,11 @@ class AdminCompanyCreateRequest extends FormRequest
             "br-tel_overseas" => 'array',
             "br-tel_overseas.*" => 'nullable|string|max:15|regex:/\A[0-9]+\z/u',
             "br-fax1" => 'array',
-            "br-fax1.*" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
+            "br-fax1.*" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:br-fax2.*,br-fax3.*',
             "br-fax2" => 'array',
-            "br-fax2.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "br-fax2.*" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:br-fax1.*,br-fax3.*',
             "br-fax3" => 'array',
-            "br-fax3.*" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "br-fax3.*" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:br-fax2.*,br-fax1.*',
             "br-mail_address" => 'required|array',
             "br-mail_address.*" => 'email',
             "br-labor_insurance_no" => 'array',
@@ -178,6 +178,21 @@ class AdminCompanyCreateRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        foreach ($this->input('br-fax1', []) as $index => $value) {
+            $messages["br-fax1.{$index}.required_with"] = ($index + 1) . "事業所のFAX番号_1を入力してください。";
+        }
+        foreach ($this->input('br-fax2', []) as $index => $value) {
+            $messages["br-fax2.{$index}.required_with"] = ($index + 1) . "事業所のFAX番号_2を入力してください。";
+        }
+        foreach ($this->input('br-fax3', []) as $index => $value) {
+            $messages["br-fax3.{$index}.required_with"] = ($index + 1) . "事業所のFAX番号_3を入力してください。";
+        }
+    
+        return $messages;
+    }
+    
     public function attributes()
     {
         $Attributes = [

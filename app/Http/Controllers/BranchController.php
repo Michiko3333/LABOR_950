@@ -125,7 +125,7 @@ class BranchController extends Controller
                 if ($part1 === null && $part2 === null && $part3 === null) {
                     continue;
                 }
-                $fax[] = ($part1 !== null ? $part1 . '-' : '') . ($part2 !== null ? $part2 . '-' : '') . ($part3 !== null ? $part3 : '');
+                $fax[] = ($part1 !== '' ? $part1 . '-' : '') . ($part2 !== '' ? $part2 . '-' : '') . ($part3 !== '' ? $part3 : '');
             }
         }
         $current_company = CurrentUser::currentCompany();

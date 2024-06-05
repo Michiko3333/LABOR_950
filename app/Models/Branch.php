@@ -23,6 +23,7 @@ class Branch extends Model
         'tel_city_code',
         'tel_subscriber_code',
         'tel_overseas',
+        'fax',
         'place_type',
         'branch_type',
         'labor_insurance_no',
