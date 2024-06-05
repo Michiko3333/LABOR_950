@@ -12,7 +12,7 @@ class ManagerialPositionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(4)) {
+            if (!$userPermission->isReadableFor(4) || !$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);

@@ -399,7 +399,7 @@
                         </div>
                     </div>
                     <h4>就労時間設定</h4>
-                    <div class="two fields">
+                    <div class="two fields unstackable ">
                         <div class="field {{ err_bind($errs, 'br-work_time_start', $key) }}">
                             <label for="br-work_time_start">就業開始</label>
                             <div class="ui calendar working_hours_calendar" wire:ignore>
@@ -423,112 +423,104 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_year_h', $key) }}">
-                                <label for="br-agreed_hours_year_h">所定労働時間(年)</label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="1680" min="0" max="8760"
-                                        name="br-agreed_hours_year_h[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_year_h">
-                                    <div class="ui basic label">
-                                        時間
-                                    </div>
+                    <div class="two fields unstackable ">
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_year_h', $key) }}">
+                            <label for="br-agreed_hours_year_h">所定労働時間(年)</label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="1680" min="0" max="8760"
+                                    name="br-agreed_hours_year_h[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_year_h">
+                                <div class="ui basic label">
+                                    時間
                                 </div>
                             </div>
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_year_m', $key) }}">
-                                <label for="br-agreed_hours_year_m"></label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="30" min="0" max="59"
-                                        name="br-agreed_hours_year_m[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_year_m">
-                                    <div class="ui basic label">
-                                        分
-                                    </div>
+                        </div>
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_year_m', $key) }}">
+                            <label for="br-agreed_hours_year_m"></label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="30" min="0" max="59"
+                                    name="br-agreed_hours_year_m[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_year_m">
+                                <div class="ui basic label">
+                                    分
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_month_h', $key) }}">
-                                <label for="br-agreed_hours_month_h">所定労働時間(月)</label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="140" min="0" max="744"
-                                        name="br-agreed_hours_month_h[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_month_h">
-                                    <div class="ui basic label">
-                                        時間
-                                    </div>
+                    <div class="two fields unstackable">
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_month_h', $key) }}">
+                            <label for="br-agreed_hours_month_h">所定労働時間(月)</label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="140" min="0" max="744"
+                                    name="br-agreed_hours_month_h[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_month_h">
+                                <div class="ui basic label">
+                                    時間
                                 </div>
                             </div>
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_month_m', $key) }}">
-                                <label for="br-agreed_hours_month_m"></label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="30" min="0" max="59"
-                                        name="br-agreed_hours_month_m[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_month_m">
-                                    <div class="ui basic label">
-                                        分
-                                    </div>
+                        </div>
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_month_m', $key) }}">
+                            <label for="br-agreed_hours_month_m"></label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="30" min="0" max="59"
+                                    name="br-agreed_hours_month_m[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_month_m">
+                                <div class="ui basic label">
+                                    分
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_week_h', $key) }}">
-                                <label for="br-agreed_hours_week_h">所定労働時間(週)</label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="40" min="0" max="168"
-                                        name="br-agreed_hours_week_h[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_week_h">
-                                    <div class="ui basic label">
-                                        時間
-                                    </div>
+                    <div class="two fields unstackable">
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_week_h', $key) }}">
+                            <label for="br-agreed_hours_week_h">所定労働時間(週)</label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="40" min="0" max="168"
+                                    name="br-agreed_hours_week_h[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_week_h">
+                                <div class="ui basic label">
+                                    時間
                                 </div>
                             </div>
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_week_m', $key) }}">
-                                <label for="br-agreed_hours_week_m"></label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="30" min="0" max="59"
-                                        name="br-agreed_hours_week_m[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_week_m">
-                                    <div class="ui basic label">
-                                        分
-                                    </div>
+                        </div>
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_week_m', $key) }}">
+                            <label for="br-agreed_hours_week_m"></label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="30" min="0" max="59"
+                                    name="br-agreed_hours_week_m[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_week_m">
+                                <div class="ui basic label">
+                                    分
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_day_h', $key) }}">
-                                <label for="br-agreed_hours_day_h">所定労働時間(日)</label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="8" min="0" max="168"
-                                        name="br-agreed_hours_day_h[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_day_h">
-                                    <div class="ui basic label">
-                                        時間
-                                    </div>
+                    <div class="two fields unstackable">
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_day_h', $key) }}">
+                            <label for="br-agreed_hours_day_h">所定労働時間(日)</label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="8" min="0" max="168"
+                                    name="br-agreed_hours_day_h[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_day_h">
+                                <div class="ui basic label">
+                                    時間
                                 </div>
                             </div>
-                            <div class="field {{ err_bind($errs, 'br-agreed_hours_day_m', $key) }}">
-                                <label for="br-agreed_hours_day_m"></label>
-                                <div class="ui right labeled input">
-                                    <input type="number" placeholder="30" min="0" max="59"
-                                        name="br-agreed_hours_day_m[]"
-                                        wire:model.live="data.{{ $key }}.br-agreed_hours_day_m">
-                                    <div class="ui basic label">
-                                        分
-                                    </div>
+                        </div>
+                        <div class="field {{ err_bind($errs, 'br-agreed_hours_day_m', $key) }}">
+                            <label for="br-agreed_hours_day_m"></label>
+                            <div class="ui right labeled input">
+                                <input type="number" placeholder="30" min="0" max="59"
+                                    name="br-agreed_hours_day_m[]"
+                                    wire:model.live="data.{{ $key }}.br-agreed_hours_day_m">
+                                <div class="ui basic label">
+                                    分
                                 </div>
                             </div>
                         </div>
                     </div>
                     <h4>休日設定</h4>
-                    <div class="two fields">
+                    <div class="two fields unstackable">
                         <div class="field {{ err_bind($errs, 'br-working_days_yearly', $key) }}">
                             <label for="br-working_days_yearly">労働(年間)</label>
                             <div class="ui right labeled input">
@@ -554,7 +546,7 @@
                         </div>
                     </div>
 
-                    <div class="two fields">
+                    <div class="two fields unstackable">
                         <div class="field {{ err_bind($errs, 'br-holiday_yearly', $key) }}">
                             <label for="br-holiday_yearly">休日(年間)</label>
                             <div class="ui right labeled input">

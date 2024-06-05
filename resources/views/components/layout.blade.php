@@ -191,6 +191,7 @@
         }
 
         .user-modal .user-modal-content .area.profile .user-icon {
+            position: relative;
             width: 180px;
             height: 180px;
             border-radius: 50%;
@@ -202,6 +203,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .user-modal .user-modal-content .area.profile .user-icon::before {
+            content: "";
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .permission-readonly {

@@ -16,7 +16,7 @@ class EgovController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(10) || !$userPermission->isWritableFor(10)) {
+            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(10) || !$userPermission->isWritableFor(10) || !$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);

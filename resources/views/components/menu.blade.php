@@ -31,7 +31,7 @@
     <menu>
         <li class="logo"><img src="{{ asset('/img/logo.png') }}"></li>
         @if ($userPermission->isSelectedCompany())
-            <li class="item">
+            <li class="item icon">
                 <a href="{{ route('home.index') }}" style="font-weight: bold;">
                     <i class="home icon large blue-text"></i>
                     ホーム</a>
@@ -43,28 +43,28 @@
                 @if ($userPermission->isReadableFor(1))
                     <li class="item">
                         <a href="{{ route('company_edit') }}">
-                            <i class="right caret right icon large blue-text"></i>
+
                             会社基本情報</a>
                     </li>
                 @endif
                 @if ($userPermission->isReadableFor(2))
                     <li class="item">
                         <a href="{{ route('branch') }}">
-                            <i class="right caret right icon large blue-text"></i>
+
                             支店・営業所情報</a>
                     </li>
                 @endif
                 @if ($userPermission->isReadableFor(3))
                     <li class="item">
                         <a href="{{ route('current_company_department_update') }}">
-                            <i class="right caret right icon large blue-text"></i>
+
                             組織・部署マスタ</a>
                     </li>
                 @endif
                 @if ($userPermission->isReadableFor(4))
                     <li class="item">
                         <a href="{{ route('managerial_position') }}">
-                            <i class="right caret right icon large blue-text"></i>
+
                             役職マスタ</a>
                     </li>
                 @endif
@@ -73,14 +73,14 @@
                     @if ($userPermission->isReadableFor(5))
                         <li class="item">
                             <a href="{{ route('employee') }}">
-                                <i class="right caret right icon large blue-text"></i>
+
                                 社員一覧</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(7))
                         <li class="item">
                             <a href="{{ route('contract.index') }}">
-                                <i class="right caret right icon large blue-text"></i>
+
                                 労働契約書作成</a>
                         </li>
                     @endif
@@ -93,21 +93,21 @@
                     @if ($userPermission->isReadableFor(8))
                         <li class="item">
                             <a href="{{ route('ledger.index') }}">
-                                <i class="right caret right icon large blue-text"></i>
+
                                 帳票一覧</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(9))
                         <li class="item">
                             <a href="{{ route('ledger.issues') }}">
-                                <i class="right caret right icon large blue-text"></i>
+
                                 申請案件一覧</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(10))
                         <li class="item">
                             <a href="{{ route('ledger.egov') }}">
-                                <i class="right caret right icon large blue-text"></i>
+
                                 e-Gov連携</a>
                         </li>
                     @endif
@@ -117,7 +117,7 @@
                 <li class="title">スケジュール</li>
                 <li class="item">
                     <a href="{{ route('calendar.index') }}">
-                        <i class="right caret right icon large blue-text"></i>
+
                         カレンダー</a>
                 </li>
             @endif
@@ -126,7 +126,7 @@
                         onclick="location.href='{{ route('home.select') }}'">会社を変更</button></li>
             @endif
         @else
-            <li class="item">
+            <li class="item icon">
                 <a href="{{ route('home.select') }}" style="font-weight: bold;">
                     <i class="home icon large blue-text"></i>
                     会社選択</a>
@@ -135,18 +135,18 @@
                 <li class="title">Karte管理</li>
                 <li class="item">
                     <a href="{{ route('admin.company') }}">
-                        <i class="right caret right icon large blue-text"></i>
+
                         会社管理</a>
                 </li>
                 <li class="item">
                     <a href="{{ route('admin.labor') }}">
-                        <i class="right caret right icon large blue-text"></i>
+
                         アカウント管理</a>
                 </li>
                 @if (config('egov.test') === true)
                     <li class="item">
                         <a href="{{ route('egovtest.index') }}">
-                            <i class="right caret right icon large blue-text"></i>
+
                             e-Gov最終試験管理</a>
                     </li>
                 @endif
@@ -155,7 +155,7 @@
                 <li class="title">社労士管理</li>
                 <li class="item">
                     <a href="{{ route('labor_company_update') }}">
-                        <i class="right caret right icon large blue-text"></i>
+
                         自社情報編集</a>
                 </li>
             @endif
@@ -338,7 +338,7 @@
     #sidebar menu li.title {
 
         font-weight: bold;
-        border-bottom: solid 2px var(--color-red);
+        border-bottom: solid 4px var(--color-red);
     }
 
     #sidebar menu li.item {
@@ -354,6 +354,16 @@
         padding: 1em;
         padding-left: 3em;
         color: var(--color-black);
+    }
+
+    #sidebar menu li.item:not(.icon) a::before {
+        position: absolute;
+        content: "";
+        top: calc(50% - 4px);
+        left: 1.2em;
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-red);
     }
 
     #sidebar menu li.item a:hover {

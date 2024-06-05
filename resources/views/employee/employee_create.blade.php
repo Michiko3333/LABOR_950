@@ -85,7 +85,23 @@
                 grid-area: g;
             }
 
-            @media (max-width: 1245px) {
+            @media (max-width: 1400px) {
+                .labor-data-area {
+                    display: grid;
+                    gap: 0.8em;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(6, auto);
+                    grid-template-areas:
+                        "a b"
+                        "a c"
+                        "g c"
+                        "e c"
+                        "e d"
+                        ". f";
+                }
+            }
+
+            @media (max-width: 1100px) {
                 .labor-data-area {
                     display: grid;
                     gap: 0.8em;
@@ -96,7 +112,9 @@
                         "b"
                         "c"
                         "d"
-                        "e";
+                        "e"
+                        "f"
+                        "g";
                 }
             }
         </style>
@@ -455,7 +473,7 @@
                                     value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
                                     placeholder="">
                             </div>
-                            <div class="field required {{ err($errors, 'address_apartment') }}">
+                            <div class="field {{ err($errors, 'address_apartment') }}">
                                 <label for="address_apartment">住所（アパート・マンション名等）</label>
                                 <input type="text" name="address_apartment"
                                     value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
