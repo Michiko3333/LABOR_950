@@ -4517,13 +4517,13 @@
                                                 <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="today_japan_era_day" required="required" style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 27px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('today_japan_era_day') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 144px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" maxlength="2" name="business_establishment_code_prefecture_code" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('business_establishment_code_prefecture_code') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" maxlength="2" name="pension_office_reference_prefecture" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('pension_office_reference_prefecture') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 195.5px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" maxlength="2" name="office_arrangement_code_county_city_ward_code" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('office_arrangement_code_county_city_ward_code') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" maxlength="2" name="pension_office_reference_no_cities" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('pension_office_reference_no_cities') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 246.5px; top: 80px;">
-                                                <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="4" name="office_reference_symbol_office_symbol" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('office_reference_symbol_office_symbol') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="4" name="pension_office_reference_no_office" required="required" style="width: 50px; height: 24px; font-size: 12px; text-align: left; line-height: 37px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('pension_office_reference_no_office') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 154px; top: 106px;">
                                                 <input class="egov-tool-field-rect onImage" id="N9_005F_8C8E" maxlength="3" name="post_code_former" required="required" style="width: 40px; height: 17px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('post_code_former') }}"/>
@@ -4609,7 +4609,7 @@
                                                 <input class="egov-tool-field-rect onImage" id="N31__005F_89C1_93FC" maxlength="4" name="previous_standard_monthly_remuneration_employees_pension" style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('previous_standard_monthly_remuneration_employees_pension') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 216px; top: 327px;">
-                                                <input class="egov-tool-field-rect onImage" id="N33_005F_8E73_8A4F" name="previous_revision_year" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('previous_revision_year') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N33_005F_8E73_8A4F" name="previous_revision_year" maxlength="4" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('previous_revision_year') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N34_93E0_8BC7_94D4" name="previous_revision_month" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('previous_revision_month') }}"/>
@@ -4677,9 +4677,6 @@
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 430px; top: 425px;">
                                                 <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7" name="adjusted_average_amount" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('adjusted_average_amount') }}"/>
-                                            </div>
-                                            <div class="egov-tool-field-origin" style="left: 555px; top: 267px;">
-                                                <input class="egov-tool-field-rect onImage" id="N54_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="12" name="my_number_or_basic_pension_number" style="width: 142px; height: 40px; font-size: 12px; text-align: left; line-height: 63px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('my_number_or_basic_pension_number') }}"/>
                                             </div>
 
 

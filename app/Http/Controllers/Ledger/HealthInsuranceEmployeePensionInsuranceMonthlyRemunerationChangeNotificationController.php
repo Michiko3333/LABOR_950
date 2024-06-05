@@ -5,18 +5,21 @@ namespace App\Http\Controllers\Ledger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest;
 use Illuminate\Support\Facades\File;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Csv_count;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
+use App\EgovAPI\CsvFormatter;
 
 class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $imagePath = public_path('img/tyohyo158.png');
+        $imagePath = public_path('img/4950013520990000.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;
@@ -53,13 +56,34 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     {
         $attachment = [];
 
+        $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        if(!DB::table('m_csv_count')->where('company_id', $companyId)->exists()) {
+            Csv_count::create(['company_id' => $companyId, 'count' => 0]);
+        }
+        $csv_count = Csv_count::select('count')->where('company_id', $companyId)->first();
+        $count = $csv_count->count;
+        if($count === 999) {
+            $count = 1;
+        } else {
+            $count++;
+        }
+        Csv_count::where('company_id', $companyId)->update(['count' => $count]);
+        $csvFormatter = new CsvFormatter('4950013520990000', $count);
+        $csvFormatter->setKanri($request);
+        $csvFormatter->setData($request);
+        $csvText = $csvFormatter->getCsvText();
+        $csvData = $csvFormatter->setCSVSummaryTable($request);
+
+        $request->merge($csvData);
+
         $data = $request->all();
 
         foreach ($data as $key => $value) {
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
-                
+
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -157,7 +181,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                 'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);
+            $response = $XML->run($request, false, $csvText);
             if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();

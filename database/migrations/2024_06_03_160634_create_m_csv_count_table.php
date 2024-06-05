@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('m_csv_count', function (Blueprint $table) {
             $table->id();
             $table->integer('company_id')->comment('会社ID');
-            $table->string('count')->comment('媒体通番カウント');
+            $table->integer('count')->comment('媒体通番カウント');
             $table->timestamps();
         });
     }

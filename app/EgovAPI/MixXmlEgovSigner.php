@@ -62,7 +62,7 @@ class MixXmlEgovSigner
      * $separaterをTrueにすることで個別ファイル署名形式として送信
      * False or 設定しないことで標準形式での送信
     */
-    public function run($request, $separater=False)
+    public function run($request, $separater=False, $csvText=null)
     {
         EgovTestLog::info(print_r('******************************** MixEgovSigner start ********************************', true));
         $inputFolderPath = $this->xmlInput($request, $separater);
@@ -71,6 +71,7 @@ class MixXmlEgovSigner
         $signerFolderPath = $this->workingDirectory . '/afterSigner/zip/';
         $this->copyFolder($inputFolderPath, $signerFolderPath);
         $this->putAttachment($request);
+        $this->putcsv($csvText);
         $this->egovSigner($separater);
         $kouseiFilePath = $signerFolderPath . "kousei.xml";
         $this->transformEmptyTags($kouseiFilePath);
@@ -97,7 +98,7 @@ class MixXmlEgovSigner
             ->where('employee_type', 1)
             ->where('delete_flg', 0)
             ->orderBy('id', 'asc')
-            ->select('last_name', 'last_name_kana', 'first_name', 'first_name_kana', 'managerial_position_id', 'division_name', 'division_name_kana') 
+            ->select('last_name', 'last_name_kana', 'first_name', 'first_name_kana', 'managerial_position_id', 'division_name', 'division_name_kana')
             ->first();
         if (!is_null($headquarter)){
             $prefectures = Prefecture::where('id', $headquarter->address_prefecture)->get('name', 'nama_kana')->first();
@@ -109,7 +110,7 @@ class MixXmlEgovSigner
         if (!is_null($president)){
             if (!is_null($president->last_name) && !is_null($president->first_name)) $request->merge(['applicant_name' => $president->last_name . '　' . $president->first_name]);
             if (!is_null($president->last_name_kana) && !is_null($president->first_name_kana)) $request->merge(['applicant_name_kana' => $president->last_name_kana . '　' . $president->first_name_kana]);
-            if (!is_null($managerialPositionName)) $request->merge(['applicant_managerial_position' => $managerialPositionName]);  
+            if (!is_null($managerialPositionName)) $request->merge(['applicant_managerial_position' => $managerialPositionName]);
             if (!is_null($president->division_name)) $request->merge(['applicant_division_name' => $president->division_name]);
             if (!is_null($president->division_name_kana)) $request->merge(['applicant_division_name_kana' => $president->division_name_kana]);
         }
@@ -239,10 +240,9 @@ class MixXmlEgovSigner
 
         // 添付情報付与
         $attachments = $request->input('attachment');
-        $attachmentPath = '';
+        $attachmentPath = $outputPath . 'kousei.xml';
         $counter = 0;
         if ($attachments) {
-            $attachmentPath = $outputPath . 'kousei.xml';
             while (True) {
                 $xml = new \DOMDocument();
                 $xml->preserveWhiteSpace = true;
@@ -624,6 +624,42 @@ class MixXmlEgovSigner
         }
     }
 
+    // csvファイルの配置と添付情報の付与
+    public function putcsv($csvText=null)
+    {
+        if ($csvText == null) {
+            return;
+        }
+        $csvName = 'SHFD0006.csv';
+        Storage::put($this->afterLedgerPath . '/afterSigner/zip/' . $csvName, $csvText);
+        $attachmentPath =  $this->workingDirectory . '/afterSigner/zip/kousei.xml';
+
+        $xml = new \DOMDocument();
+        $xml->preserveWhiteSpace = true;
+        $xml->formatOutput = true;
+        $xml->load($attachmentPath);
+
+        $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
+        $newElement = $xml->createElement('添付書類属性情報');
+        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+
+        $newElement->appendChild($xml->createElement('添付種別', '添付'));
+        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+
+        $newElement->appendChild($xml->createElement('添付書類名称', 'csvファイル'));
+        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+
+        $newElement->appendChild($xml->createElement('添付書類ファイル名称', $csvName));
+        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+
+        $newElement->appendChild($xml->createElement('提出情報', 1));
+        $newElement->appendChild($xml->createTextNode("\n\t\t"));
+
+        $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
+        $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
+
+        $xml->save($attachmentPath);
+    }
 
      /**
      * 個別署名での添付書類署名が必要なパスを取得

@@ -6,18 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsRequest;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Csv_count;
 use Carbon\Carbon;
+use App\EgovAPI\CsvFormatter;
 
 class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController extends Controller
 {
     public function index(Request $request)
     {
-        $imagePath = public_path('img/tyohyo159.png');
+        $imagePath = public_path('img/4950013520989000.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;
@@ -54,6 +56,27 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     {
         $attachment = [];
 
+        $company = CurrentUser::currentCompany();
+        $companyId = $company->id;
+        if(!DB::table('m_csv_count')->where('company_id', $companyId)->exists()) {
+            Csv_count::create(['company_id' => $companyId, 'count' => 0]);
+        }
+        $csv_count = Csv_count::select('count')->where('company_id', $companyId)->first();
+        $count = $csv_count->count;
+        if($count === 999) {
+            $count = 1;
+        } else {
+            $count++;
+        }
+        Csv_count::where('company_id', $companyId)->update(['count' => $count]);
+        $csvFormatter = new CsvFormatter('4950013520989000', $count);
+        $csvFormatter->setKanri($request);
+        $csvFormatter->setData($request);
+        $csvText = $csvFormatter->getCsvText();
+        $csvData = $csvFormatter->setCSVSummaryTable($request);
+
+        $request->merge($csvData);
+
         $data = $request->all();
 
         foreach ($data as $key => $value) {
@@ -84,7 +107,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             $request->merge(['attachment' => $attachment]);
         }
 
-        $radio_keys = ["radio_file_other"];
+        $radio_keys = ["radio_file_wage_ledger", "radio_file_attendance_record", "radio_file_other"];
 
         foreach ($radio_keys as $key) {
             if (!$request->has($key)) {
@@ -97,9 +120,9 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 "today_japan_era_year"  => $request->input('today_japan_era_year'),
                 "today_japan_era_month"  => $request->input('today_japan_era_month'),
                 "today_japan_era_day"  => $request->input('today_japan_era_day'),
-                "business_establishment_code_prefecture_code"  => $request->input('business_establishment_code_prefecture_code'),
-                "office_arrangement_code_county_city_ward_code"  => $request->input('office_arrangement_code_county_city_ward_code'),
-                "office_reference_symbol_office_symbol"  => $request->input('office_reference_symbol_office_symbol'),
+                "pension_office_reference_prefecture"  => $request->input('pension_office_reference_prefecture'),
+                "pension_office_reference_no_cities"  => $request->input('pension_office_reference_no_cities'),
+                "pension_office_reference_no_office"  => $request->input('pension_office_reference_no_office'),
                 "post_code_former"  => $request->input('post_code_former'),
                 "post_code_latter"  => $request->input('post_code_latter'),
                 "business_location"  => $request->input('business_location'),
@@ -158,7 +181,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 'apply_to_name' => $request->input('apply_to_name'),
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);
+            $response = $XML->run($request, false, $csvText);
             if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();

@@ -33,7 +33,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "pension_office_reference_no_cities" => 'required|string|regex:/^[0-9]{1,2}+$/',
             "pension_office_reference_no_office" => 'required|string|regex:/\A[ァ-ヴー0-9A-Z]{1,4}+\z/u',
             "branch_post_code_parent" => 'required|string|regex:/^[0-9]{3}+$/',
-            "branch_post_code_child" => 'required|string|regex:/^[0-9]{3}+$/',
+            "branch_post_code_child" => 'required|string|regex:/^[0-9]{4}+$/',
             "branch_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
             "branch_name" => 'required|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "employer_company_managerial_position_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
@@ -53,7 +53,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "revision_date_month" => 'required|int|between:1,12|regex:/^[0-9]+$/',
             "previous_average_monthly_salary_health_insurance" => 'nullable|int|between:1,9999|regex:/^[0-9]{1,4}+$/',
             "previous_average_monthly_salary_pension" => 'nullable|int|between:1,9999|regex:/^[0-9]{1,4}+$/',
-            "before_revision_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}+$/',
+            "before_revision_date_year" => 'nullable|int|between:1989,9999|regex:/^[0-9]{1,4}+$/',
             "before_revision_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "salary_raise_and_reduction_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "salary_raise_and_reduction" => 'nullable|string|in:昇給,降給',
@@ -68,7 +68,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "monthly_salary_currency1" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "monthly_salary_currency2" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "monthly_salary_currency3" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_salary_in_kind1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7+$/',
+            "monthly_salary_in_kind1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "monthly_salary_in_kind2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "monthly_salary_in_kind3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "monthly_salary_sum1" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
@@ -78,6 +78,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
+            "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
             "remarks_over_70_monthly_salary_change" => 'nullable|int|in:1',
             "remarks_multi_work" => 'nullable|int|in:1',
             "remarks_part_time_workers" => 'nullable|int|in:1',
@@ -97,10 +98,10 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             $totalSize = 0;
 
             if ($this->hasFile('file_wage_ledger')) {
-                $totalSize += $this->file('file_form1')->getSize();
+                $totalSize += $this->file('file_wage_ledger')->getSize();
             }
             if ($this->hasFile('file_attendance_record')) {
-                $totalSize += $this->file('file_form2')->getSize();
+                $totalSize += $this->file('file_attendance_record')->getSize();
             }
             if ($this->hasFile('file_other')) {
                 $totalSize += $this->file('file_other')->getSize();

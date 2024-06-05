@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="495013520991030712.xsl"?>
+<DataRoot>
+	<様式ID>495013520991030712</様式ID>
+	<様式バージョン>1</様式バージョン>
+	<STYLESHEET>495013520991030712.xsl</STYLESHEET>
+	<様式コピー情報>0</様式コピー情報>
+	<Doctype>1</Doctype>
+	<A-330469-001_1>
+		<識別情報x提出元ID>identification_information_1</識別情報x提出元ID>
+		<識別情報x通番>identification_information_2</識別情報x通番>
+		<作成年月日>
+			<年>csv_create_date_year</年>
+			<月>csv_create_date_month</月>
+			<日>csv_create_date_day</日>
+		</作成年月日>
+		<事業所整理記号x都道府県コード>business_serial_number_prefecture</事業所整理記号x都道府県コード>
+		<事業所整理記号x郡市区記号>business_serial_number_city</事業所整理記号x郡市区記号>
+		<事業所整理記号x事業所記号>business_serial_number_office</事業所整理記号x事業所記号>
+		<事業所番号>csv_pension_office_no</事業所番号>
+		<届書総件数x資格取得届70歳以上被用者該当届>qualifications_sheets</届書総件数x資格取得届70歳以上被用者該当届>
+		<届書数x被扶養者異動国年3号被保険者関係届>change_in_dependents_sheets</届書数x被扶養者異動国年3号被保険者関係届>
+		<届書数x資格喪失届70歳以上被用者不該当届>disqualification_sheets</届書数x資格喪失届70歳以上被用者不該当届>
+		<届書数x月額変更届70歳以上被用者月額変更届>monthly_change_sheets</届書数x月額変更届70歳以上被用者月額変更届>
+		<届書数x算定基礎届70歳以上被用者算定基礎届>basis_of_calculation_sheets</届書数x算定基礎届70歳以上被用者算定基礎届>
+		<届書数x賞与支払届70歳以上被用者賞与支払届>bonus_payment_sheets</届書数x賞与支払届70歳以上被用者賞与支払届>
+		<届書数x育児休業等取得者申出書終了届>childcare_leave_sheets</届書数x育児休業等取得者申出書終了届>
+		<届書数x産前産後休業取得者申出書変更届>maternity_leave_sheets</届書数x産前産後休業取得者申出書変更届>
+		<届書総件数x届書合計>csv_sheets_total</届書総件数x届書合計>
+		<届書総件数x国年x国民年金第3号被保険者関係届>national_pension_sheets</届書総件数x国年x国民年金第3号被保険者関係届>
+		<届書総件数x国年x届書合計>sheets_total</届書総件数x国年x届書合計>
+		<備考>csv_remarks</備考>
+		<事業所所在地x郵便番号x親番号>csv_post_code_first</事業所所在地x郵便番号x親番号>
+		<事業所所在地x郵便番号x子番号>csv_post_code_last</事業所所在地x郵便番号x子番号>
+		<事業所所在地>csv_business_address</事業所所在地>
+		<事業所名称>csv_business_name</事業所名称>
+		<事業主氏名>csv_business_owner</事業主氏名>
+		<電話番号>
+			<市外局番>csv_tel_area_code</市外局番>
+			<局番>csv_tel_city_code</局番>
+			<番号>csv_tel_subscriber_code</番号>
+		</電話番号>
+		<提出年月日>
+			<年>csv_application_year</年>
+			<月>csv_application_month</月>
+			<日>csv_application_day</日>
+		</提出年月日>
+		<社会保険労務士の提出代行者名>csv_submission_agent</社会保険労務士の提出代行者名>
+		<通知書希望形式>1</通知書希望形式>
+		<添付書類>
+			<郵送>radio_file_wage_ledger_1</郵送>
+			<電子>1</電子>
+			<なし></なし>
+		</添付書類>
+		<Xmit>0</Xmit>
+	</A-330469-001_1>
+</DataRoot>

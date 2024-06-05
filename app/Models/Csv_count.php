@@ -8,7 +8,7 @@ class Csv_count extends Model
 {
     protected $table = 'm_csv_count';
     protected $primaryKey = 'id';
-    protected $fillable = ['count'];
+    protected $fillable = ['company_id', 'count'];
 
     public function company()
     {
