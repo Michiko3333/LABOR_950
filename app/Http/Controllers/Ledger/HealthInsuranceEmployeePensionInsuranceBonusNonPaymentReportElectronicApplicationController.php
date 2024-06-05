@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest;
-
+use App\Models\Branch;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use App\EgovAPI\MixXmlEgovSigner;
@@ -29,6 +29,8 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         } else {
             $certificate = false;
         }
+        $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -45,7 +47,15 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', [
+            'company' => $company, 
+            'todaySet' => $todaySet, 
+            'certificate' => $certificate, 
+            'procedureName' => $procedureName, 
+            'egovAcount' => $egovAcount, 
+            'current_employee' => $current_employee,
+            'current_branch' => $current_branch,
+        ]);
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest $request)
@@ -127,10 +137,9 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             $XML = new MixXmlEgovSigner($request);
             $response = $XML->run($request, True);
             if ( $response[0] == false ){
-                        $errorMessage = $response[1];
-                        return redirect()->back()->withErrors($errorMessage)->withInput();
-                    }
-
+                $errorMessage = $response[1];
+                return redirect()->back()->withErrors($errorMessage)->withInput();
+            }
             return view('admin.companies', ['send_data' => $data]);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

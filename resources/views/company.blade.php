@@ -115,57 +115,58 @@
                 grid-template-rows: repeat(5, auto);
             }
 
-            .company-data-area .ui.card.item-0 {
-                grid-area: 1 / 1 / 4 / 3;
-                min-width: 650px;
-            }
-
-            .company-data-area .ui.card.item-1 {
-                grid-area: 2 / 3 / 3 / 5;
-            }
-
-            .company-data-area .ui.card.item-2 {
-                grid-area: 1 / 3 / 2 / 4;
-            }
-
-            .company-data-area .ui.card.item-3 {
-                grid-area: 1 / 4 / 2 / 5;
-            }
-
-            .company-data-area .ui.card.item-4 {
-                grid-area: 3 / 3 / 4 / 4;
-            }
-
-            .company-data-area .ui.card.item-5 {
-                grid-area: 3 / 4 / 4 / 5;
-            }
-
-            @media (max-width: 1245px) {
+            /*
                 .company-data-area .ui.card.item-0 {
-                    grid-area: 1 / 1 / 4 / 4;
-                    min-width: 450px;
+                    grid-area: 1 / 1 / 4 / 3;
+                    min-width: 650px;
                 }
 
                 .company-data-area .ui.card.item-1 {
-                    grid-area: 4 / 1 / 5 / 3;
-                    min-width: 460px;
+                    grid-area: 2 / 3 / 3 / 5;
                 }
 
                 .company-data-area .ui.card.item-2 {
-                    grid-area: 1 / 4 / 2 / 5;
+                    grid-area: 1 / 3 / 2 / 4;
                 }
 
                 .company-data-area .ui.card.item-3 {
-                    grid-area: 2 / 4 / 3 / 5;
+                    grid-area: 1 / 4 / 2 / 5;
                 }
 
                 .company-data-area .ui.card.item-4 {
-                    grid-area: 3 / 4 / 4 / 5;
+                    grid-area: 3 / 3 / 4 / 4;
                 }
 
                 .company-data-area .ui.card.item-5 {
-                    grid-area: 4 / 3 / 5 / 5;
+                    grid-area: 3 / 4 / 4 / 5;
                 }
+
+                */
+
+            .company-data-area .ui.card.item-0 {
+                grid-area: 1 / 1 / 4 / 4;
+                min-width: 450px;
+            }
+
+            .company-data-area .ui.card.item-1 {
+                grid-area: 4 / 1 / 5 / 3;
+                min-width: 460px;
+            }
+
+            .company-data-area .ui.card.item-2 {
+                grid-area: 1 / 4 / 2 / 5;
+            }
+
+            .company-data-area .ui.card.item-3 {
+                grid-area: 2 / 4 / 3 / 5;
+            }
+
+            .company-data-area .ui.card.item-4 {
+                grid-area: 3 / 4 / 4 / 5;
+            }
+
+            .company-data-area .ui.card.item-5 {
+                grid-area: 4 / 3 / 5 / 5;
             }
 
             @media (max-width: 820px) {

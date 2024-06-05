@@ -9,6 +9,7 @@ use App\Http\Requests\EmploymentInsuranceChildcareLeaveApplicationRequest;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Branch;
 
 use function Laravel\Prompts\text;
 
@@ -31,6 +32,7 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             $certificate = false;
         }
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
 
         $japanEra = '令和';
         $year = date("Y");
@@ -47,7 +49,15 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.employment_insurance_childcare_leave_application', ['company' => $company, 'todaySet' => $todaySet, 'certificate' => $certificate, 'procedureName' => $procedureName, 'current_employee' => $current_employee,  'egovAcount' => $egovAcount]);
+        return view('ledger.employment_insurance_childcare_leave_application', [
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'current_employee' => $current_employee, 
+            'egovAcount' => $egovAcount,
+            'current_branch' => $current_branch
+        ]);
     }
 
     public function post(EmploymentInsuranceChildcareLeaveApplicationRequest $request)

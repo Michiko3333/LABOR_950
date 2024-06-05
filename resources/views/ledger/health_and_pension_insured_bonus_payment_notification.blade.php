@@ -45,10 +45,36 @@
                         </div>
                         <div class="ui card card-shadow">
                             <div class="content">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <h2>70歳以上</h2>
+                                    <div class="field four wide" style="margin-top: 5px;">
+                                        <div class="ui toggle checkbox">
+                                            <input id="over_70_check" type="checkbox" name="over_70_check" {{ old("over_70_check") ? 'checked' : '' }}>
+                                            <label></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 12px; font-weight: 700;">70歳以上の方は下記のいずれかが必須です</p>
+                                <div id="over_70" style="display: flex;">
+                                    <div class="ui input" style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
+                                        <label style="font-size: 11.2px;">個人番号</label>
+                                        <input id="personal_number" maxlength="12" type="text" placeholder="" name="mynumber_no_or_pension_no" value="{{ old('mynumber_no_or_pension_no') }}" value="">
+                                    </div>
+                                    <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
+                                        <label style="font-size: 11.2px;">基礎年金番号</label>
+                                        <input id="basic_pension_number" maxlength="10" type="text" placeholder="" name="basic_pension_number" value="{{ old('basic_pension_number') }}" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui card card-shadow">
+                            <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
+                                    'wage_ledger' => '健康保険　標準賞与額累計申出書（エクセル）',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                                ]" :extensions="'.jpg,.jpeg,.pdf'"
+                                :separateDisabled="true" />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -101,6 +127,56 @@
                 $('#N6_005F_93FA').val('{{ old('today_year', $todaySet['year']) }}');
                 $('#N7_005F_944E_8D86').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N8_005F_944E').val('{{ old('today_date', $todaySet['date']) }}');
+
+                checkOver70();
+                $('#over_70_check').change(function(){
+                    checkOver70();
+                });
+                $('#N40_905C_90BF_8ED2').change(function(){
+                    checkOver70_2();
+                });
+                function checkOver70() {
+                    if($('#over_70_check').prop('checked')) {
+                        $('#personal_number, #basic_pension_number').prop('disabled', false);
+                    } else {
+                        $('#personal_number, #basic_pension_number').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number').val('');
+                    }
+                }
+                function checkOver70_2() {
+                    if($('#N40_905C_90BF_8ED2').prop('checked')) {
+                        $('#personal_number, #basic_pension_number').prop('disabled', false);
+                    } else {
+                        $('#personal_number, #basic_pension_number').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number').val('');
+                    }
+                }
+            });
+            $(function(){
+                $('#personal_number').change(function(){
+                    $('#basic_pension_number').val('');
+                });
+                $('#basic_pension_number').change(function(){
+                    $('#personal_number').val('');
+                });
+            });
+            $(function(){
+                var cb1 = $('#over_70_check'); 
+                var cb2 = $('#N40_905C_90BF_8ED2');
+                cb1.change(function(){
+                    if(cb1.prop('checked')){
+                        cb2.prop('checked', true);
+                    }else{
+                        cb2.prop('checked', false);
+                    }
+                });
+                cb2.change(function(){
+                    if(cb2.prop('checked')){
+                        cb1.prop('checked', true);
+                    }else{
+                        cb1.prop('checked', false);
+                    }
+                });
             });
         </script>
 

@@ -22,7 +22,7 @@ class BranchController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(2)) {
+            if (!$userPermission->isReadableFor(2) || !$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -125,7 +125,7 @@ class BranchController extends Controller
                 if ($part1 === null && $part2 === null && $part3 === null) {
                     continue;
                 }
-                $fax[] = ($part1 !== null ? $part1 . '-' : '') . ($part2 !== null ? $part2 . '-' : '') . ($part3 !== null ? $part3 : '');
+                $fax[] = ($part1 !== '' ? $part1 . '-' : '') . ($part2 !== '' ? $part2 . '-' : '') . ($part3 !== '' ? $part3 : '');
             }
         }
         $current_company = CurrentUser::currentCompany();
@@ -169,10 +169,14 @@ class BranchController extends Controller
             'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
             'work_time_start' => $requestData['br-work_time_start'][$index],
             'work_time_end' => $requestData['br-work_time_end'][$index],
-            'agreed_hours_year' => $requestData['br-agreed_hours_year'][$index],
-            'agreed_hours_month' => $requestData['br-agreed_hours_month'][$index],
-            'agreed_hours_week' => $requestData['br-agreed_hours_week'][$index],
-            'agreed_hours_day' => $requestData['br-agreed_hours_day'][$index],
+            'agreed_hours_year_h' => $requestData['br-agreed_hours_year_h'][$index],
+            'agreed_hours_year_m' => $requestData['br-agreed_hours_year_m'][$index],
+            'agreed_hours_month_h' => $requestData['br-agreed_hours_month_h'][$index],
+            'agreed_hours_month_m' => $requestData['br-agreed_hours_month_m'][$index],
+            'agreed_hours_week_h' => $requestData['br-agreed_hours_week_h'][$index],
+            'agreed_hours_week_m' => $requestData['br-agreed_hours_week_m'][$index],
+            'agreed_hours_day_h' => $requestData['br-agreed_hours_day_h'][$index],
+            'agreed_hours_day_m' => $requestData['br-agreed_hours_day_m'][$index],
             'working_days_yearly' => $requestData['br-working_days_yearly'][$index],
             'working_days_monthly' => $requestData['br-working_days_monthly'][$index],
             'holiday_yearly' => $requestData['br-holiday_yearly'][$index],

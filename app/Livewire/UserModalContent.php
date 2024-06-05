@@ -237,7 +237,7 @@ class UserModalContent extends Component
 
     public function loginEmailSave()
     {
-        User::where('id', $this->employee_id)->update([
+        User::where('employee_id', $this->employee_id)->update([
             'email' => $this->login_email_edit,
         ]);
         $this->login_email = $this->login_email_edit;

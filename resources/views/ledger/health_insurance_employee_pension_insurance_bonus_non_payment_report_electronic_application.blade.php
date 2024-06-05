@@ -104,6 +104,10 @@
                 $('#_944E_002E4').val('{{ $todaySet['japanEraYear'] }}');
                 $('#_8C8E_002E5').val('{{ $todaySet['month'] }}');
                 $('#_93FA_002E6').val('{{ $todaySet['day'] }}');
+                @if ($current_employee->role_id === 500)
+                @else
+                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E21').prop('readonly', false);
+                @endif
             });
             document.addEventListener('DOMContentLoaded', function() {
                 const tabs = document.querySelectorAll('.ui.tabular.menu .item');

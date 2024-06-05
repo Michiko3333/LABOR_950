@@ -109,12 +109,9 @@
                     $('#J43_005F_944E').val('{{ old('labor_consultant_today_year', $today['year']) }}');
                     $('#J44_005F_8C8E').val('{{ old('labor_consultant_today_month', $today['month']) }}');
                     $('#J45_005F_93FA').val('{{ old('labor_consultant_today_date', $today['date']) }}');
-                    // $('#J46_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#J47_005F_8E81_96BC').val('{{ $current_employee->last_name }}' + '　' +
-                        '{{ $current_employee->first_name }}');
-                    $('#J48_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_employee->tel_area_code }}');
-                    $('#J49_005F_8E73_93E0_8BC7_94D4').val('{{ $current_employee->tel_city_code }}');
-                    $('#J50_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_employee->tel_subscriber_code }}');
+                    $('#J48_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
+                    $('#J49_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
+                    $('#J50_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
                 @else
                     $('#J42_005F_944E_8D86').prop('disabled', true);
                     $('#J43_005F_944E, #J44_005F_8C8E, #J45_005F_93FA, #J46_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\

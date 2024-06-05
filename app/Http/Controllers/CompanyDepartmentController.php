@@ -12,7 +12,7 @@ class CompanyDepartmentController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(3)) {
+            if (!$userPermission->isReadableFor(3) || !$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);

@@ -49,13 +49,13 @@
                     <input type="file" name="file_{{$key}}" accept="{{$extensions}}">
                 </div>
             </div>
-            <dic class="field four wide {{ err($errors, "checked_{$key}") }}">
+            <div class="field four wide {{ err($errors, "checked_{$key}") }}">
                 <div class="ui toggle checkbox">
                     <input class="file_check" type="checkbox" data-input="file_{{$key}}" data-label="label_file_{{$key}}" data-radio="radio_file_{{$key}}" data-input-other="input_file_{{$key}}" name="checked_{{$key}}"
                     {{ old("checked_{$key}") ? 'checked' : '' }}>
                     <label></label>
                 </div>
-            </dic>
+            </div>
         </div>
     </div>
     @endforeach

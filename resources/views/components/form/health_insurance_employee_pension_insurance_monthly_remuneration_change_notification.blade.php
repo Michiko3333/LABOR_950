@@ -4869,7 +4869,7 @@
                                             <input class="egov-tool-field-rect onImage" id="N34_93E0_8BC7_94D4" maxlength="4" value="{{ old('previous_average_monthly_salary_pension') }}" name="previous_average_monthly_salary_pension" style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
                                         </div>
                                         <div class="egov-tool-field-origin" style="left: 216px; top: 327px;">
-                                            <input class="egov-tool-field-rect onImage" id="N35_94D4_8D86" value="{{ old('before_revision_date_year') }}" name="before_revision_date_year" onfocus="addlength(this,2)" style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
+                                            <input class="egov-tool-field-rect onImage" id="N35_94D4_8D86" value="{{ old('before_revision_date_year') }}" name="before_revision_date_year" onfocus="addlength(this,4)" style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
                                         </div>
                                         <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                                             <input class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A" value="{{ old('before_revision_date_month') }}" name="before_revision_date_month" onfocus="addlength(this,2)" style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
@@ -4947,9 +4947,6 @@
                                         <div class="egov-tool-field-origin" style="left: 430px; top: 424px;">
                                             <input class="egov-tool-field-rect onImage" id="N58_005F_8E73_8A4F_8BC7_9410" maxlength="7" value="{{ old('adjusted_average_amount') }}" name="adjusted_average_amount" style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
                                         </div>
-                                        <div class="egov-tool-field-origin" style="left: 555px; top: 267px;">
-                                            <input class="egov-tool-field-rect onImage" id="N59_005F_8E73_8A4F_8BC7_9412" maxlength="12" value="{{ old('mynumber_no_or_pension_no') }}" name="mynumber_no_or_pension_no" style="width: 142px; height: 40px; font-size: 12px; text-align: left; line-height: 62px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
-                                        </div>
 
                                         <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left: 533px; top: 326px; width: 13px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
                                             <INPUT tabindex="48" value="1" <?php echo old('remarks_over_70_monthly_salary_change') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N60_005F_8E73_8A4F_8BC7_9432" name="remarks_over_70_monthly_salary_change">
@@ -5007,92 +5004,6 @@
                                     ele.setAttribute("maxlength", ml);
                                     }
                                 }
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    var c1_0 = document.getElementById("N60_005F_8E73_8A4F_8BC7_9432");
-                                    var c1_1 = document.getElementById("N61_005F_8E73_8A4F_8BC7_94DD");
-                                    var c1_2 = document.getElementById("N62_005F_8E73_8A4F_8BC7_94DC");
-                                    var c1_3 = document.getElementById("N63_005F_8E73_8A4F_8BC7_9467");
-                                    var c1_4 = document.getElementById("N64_005F_8F5A_8F8A");
-                                    var c1_5 = document.getElementById("N65_005F_8F5A_8F8B");
-                                    var remarks1 = document.getElementById("remarks_salary_raise_and_reduction_reasons_text");
-                                    var remarks2 = document.getElementById("remarks_others");
-                                    c1_0.addEventListener("change", function() {
-                                        if (c1_0.checked) {
-                                            c1_1.checked = false;
-                                            c1_2.checked = false;
-                                            c1_3.checked = false;
-                                            c1_4.checked = false;
-                                            c1_5.checked = false;
-                                            remarks1.value = "";
-                                            remarks2.value = "";
-                                            remarks1.disabled = true;
-                                            remarks2.disabled = true;
-                                        }
-                                    });
-                                    c1_1.addEventListener("change", function() {
-                                        if (c1_1.checked) {
-                                            c1_0.checked = false;
-                                            c1_2.checked = false;
-                                            c1_3.checked = false;
-                                            c1_4.checked = false;
-                                            c1_5.checked = false;
-                                            remarks1.value = "";
-                                            remarks2.value = "";
-                                            remarks1.disabled = true;
-                                            remarks2.disabled = true;
-                                        }
-                                    });
-                                    c1_2.addEventListener("change", function() {
-                                        if (c1_2.checked) {
-                                            c1_1.checked = false;
-                                            c1_0.checked = false;
-                                            c1_3.checked = false;
-                                            c1_4.checked = false;
-                                            c1_5.checked = false;
-                                            remarks1.value = "";
-                                            remarks2.value = "";
-                                            remarks1.disabled = true;
-                                            remarks2.disabled = true;
-                                        }
-                                    });
-                                    c1_3.addEventListener("change", function() {
-                                        if (c1_3.checked) {
-                                            c1_1.checked = false;
-                                            c1_2.checked = false;
-                                            c1_0.checked = false;
-                                            c1_4.checked = false;
-                                            c1_5.checked = false;
-                                            remarks2.value = "";
-                                            remarks2.disabled = true;
-                                            remarks1.disabled = false;
-                                        }
-                                    });
-                                    c1_4.addEventListener("change", function() {
-                                        if (c1_4.checked) {
-                                            c1_1.checked = false;
-                                            c1_0.checked = false;
-                                            c1_3.checked = false;
-                                            c1_0.checked = false;
-                                            c1_5.checked = false;
-                                            remarks1.value = "";
-                                            remarks2.value = "";
-                                            remarks1.disabled = true;
-                                            remarks2.disabled = true;
-                                        }
-                                    });
-                                    c1_5.addEventListener("change", function() {
-                                        if (c1_5.checked) {
-                                            c1_1.checked = false;
-                                            c1_2.checked = false;
-                                            c1_0.checked = false;
-                                            c1_4.checked = false;
-                                            c1_3.checked = false;
-                                            remarks1.value = "";
-                                            remarks1.disabled = true;
-                                            remarks2.disabled = false;
-                                        }
-                                    });
-                                });
                             </script>
                         </div>
                     </div>

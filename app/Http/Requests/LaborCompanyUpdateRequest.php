@@ -18,7 +18,7 @@ class LaborCompanyUpdateRequest extends FormRequest
     {
         $data = $this->all();
 
-        $data = array_map(function($value) {
+        $data = array_map(function ($value) {
             if (!is_array($value)) {
                 if (isset($value['br-address_ward'])) {
                     $value['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $value['br-address_ward']);
@@ -137,14 +137,22 @@ class LaborCompanyUpdateRequest extends FormRequest
             "br-work_time_start.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]:[0-5][0-9]/',
             "br-work_time_end" => 'array',
             "br-work_time_end.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]:[0-5][0-9]/',
-            "br-agreed_hours_year" => 'array',
-            "br-agreed_hours_year.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]/',
-            "br-agreed_hours_month" => 'array',
-            "br-agreed_hours_month.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]/',
-            "br-agreed_hours_week" => 'array',
-            "br-agreed_hours_week.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]/',
-            "br-agreed_hours_day" => 'array',
-            "br-agreed_hours_day.*" => 'nullable|regex:/^[0-2][0-4]:[0-5][0-9]/',
+            "br-agreed_hours_year_h" => 'array',
+            "br-agreed_hours_year_h.*" => 'nullable|integer',
+            "br-agreed_hours_month_h" => 'array',
+            "br-agreed_hours_month_h.*" => 'nullable|integer',
+            "br-agreed_hours_week_h" => 'array',
+            "br-agreed_hours_week_h.*" => 'nullable|integer',
+            "br-agreed_hours_day_h" => 'array',
+            "br-agreed_hours_day_h.*" => 'nullable|integer',
+            "br-agreed_hours_year_m" => 'array',
+            "br-agreed_hours_year_m.*" => 'nullable|integer',
+            "br-agreed_hours_month_m" => 'array',
+            "br-agreed_hours_month_m.*" => 'nullable|integer',
+            "br-agreed_hours_week_m" => 'array',
+            "br-agreed_hours_week_m.*" => 'nullable|integer',
+            "br-agreed_hours_day_m" => 'array',
+            "br-agreed_hours_day_m.*" => 'nullable|integer',
             "br-working_days_yearly" => 'array',
             "br-working_days_yearly.*" => 'nullable|integer',
             "br-working_days_monthly" => 'array',
@@ -225,10 +233,14 @@ class LaborCompanyUpdateRequest extends FormRequest
             "br-start_time_of_day" => '開始設定(日の始まり)',
             "br-work_time_start" => '就業時間(開始)',
             "br-work_time_end" => '就業時間(終了)',
-            "br-agreed_hours_year" => '所定労働時間(年)',
-            "br-agreed_hours_month" => '所定労働時間(月)',
-            "br-agreed_hours_week" => '所定労働時間(週)',
-            "br-agreed_hours_day" => '所定労働時間(日)',
+            "br-agreed_hours_year_h" => '所定労働時間(年)-時間',
+            "br-agreed_hours_month_h" => '所定労働時間(月)-時間',
+            "br-agreed_hours_week_h" => '所定労働時間(週)-時間',
+            "br-agreed_hours_day_h" => '所定労働時間(日)-時間',
+            "br-agreed_hours_year_m" => '所定労働時間(年)-分',
+            "br-agreed_hours_month_m" => '所定労働時間(月)-分',
+            "br-agreed_hours_week_m" => '所定労働時間(週)-分',
+            "br-agreed_hours_day_m" => '所定労働時間(日)-分',
             "br-working_days_yearly" => '労働日数(年間)',
             "br-working_days_monthly" => '労働日数(月間)',
             "br-holiday_yearly" => '休日日数(年間)',
@@ -349,17 +361,29 @@ class LaborCompanyUpdateRequest extends FormRequest
         foreach ($this->input('br-work_time_end', []) as $index => $value) {
             $Attributes["br-work_time_end.{$index}"] = ($index + 1) . "事業所_就業時間(終了)";
         }
-        foreach ($this->input('br-agreed_hours_year', []) as $index => $value) {
-            $Attributes["br-agreed_hours_year.{$index}"] = ($index + 1) . "事業所_所定労働時間(年)";
+        foreach ($this->input('br-agreed_hours_year_h', []) as $index => $value) {
+            $Attributes["br-agreed_hours_year_h.{$index}"] = ($index + 1) . "事業所_所定労働時間(年)";
         }
-        foreach ($this->input('br-agreed_hours_month', []) as $index => $value) {
-            $Attributes["br-agreed_hours_month.{$index}"] = ($index + 1) . "事業所_所定労働時間(月)";
+        foreach ($this->input('br-agreed_hours_month_h', []) as $index => $value) {
+            $Attributes["br-agreed_hours_month_h.{$index}"] = ($index + 1) . "事業所_所定労働時間(月)";
         }
-        foreach ($this->input('br-agreed_hours_week', []) as $index => $value) {
-            $Attributes["br-agreed_hours_week.{$index}"] = ($index + 1) . "事業所_所定労働時間(週)";
+        foreach ($this->input('br-agreed_hours_week_h', []) as $index => $value) {
+            $Attributes["br-agreed_hours_week_h.{$index}"] = ($index + 1) . "事業所_所定労働時間(週)";
         }
-        foreach ($this->input('br-agreed_hours_day', []) as $index => $value) {
-            $Attributes["br-agreed_hours_day.{$index}"] = ($index + 1) . "事業所_所定労働時間(日)";
+        foreach ($this->input('br-agreed_hours_day_h', []) as $index => $value) {
+            $Attributes["br-agreed_hours_day_h.{$index}"] = ($index + 1) . "事業所_所定労働時間(日)";
+        }
+        foreach ($this->input('br-agreed_hours_year_m', []) as $index => $value) {
+            $Attributes["br-agreed_hours_year_m.{$index}"] = ($index + 1) . "事業所_所定労働時間(年)";
+        }
+        foreach ($this->input('br-agreed_hours_month_m', []) as $index => $value) {
+            $Attributes["br-agreed_hours_month_m.{$index}"] = ($index + 1) . "事業所_所定労働時間(月)";
+        }
+        foreach ($this->input('br-agreed_hours_week_m', []) as $index => $value) {
+            $Attributes["br-agreed_hours_week_m.{$index}"] = ($index + 1) . "事業所_所定労働時間(週)";
+        }
+        foreach ($this->input('br-agreed_hours_day_m', []) as $index => $value) {
+            $Attributes["br-agreed_hours_day_m.{$index}"] = ($index + 1) . "事業所_所定労働時間(日)";
         }
         foreach ($this->input('br-working_days_yearly', []) as $index => $value) {
             $Attributes["br-working_days_yearly.{$index}"] = ($index + 1) . "事業所_労働日数(年間)";

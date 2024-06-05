@@ -138,9 +138,6 @@
                 $('#J81_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
                 $('#J82_005F_93FA').val('{{ old('notification_date', $today['date']) }}');
                 @if ($current_employee->role_id === 500)
-                    // $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val( '{{ $today['era'] }}' + '{{ $today['year'] }}' + "年" + '{{ $today['month'] }}' + "月" + '{{ $today['date'] }}' + "日\n" + '{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#J114_005F_8E81_96BC').val('{{ $current_employee->last_name }}' + '　' +
-                        '{{ $current_employee->first_name }}');
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
@@ -153,9 +150,6 @@
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
-                    // $('#J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#J79_005F_8E81_96BC').val('{{ $current_employee->last_name }}' + '　' +
-                        '{{ $current_employee->first_name }}');
                     $('#J80_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
                     $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
@@ -306,6 +300,18 @@
             });
             $('#employment_address').on('input', function() {
                 $('#J23_005F_8F5A_8F8A').val($(this).val());
+            });
+            $('#J114_005F_8E81_96BC').on('change', function() {
+                $('#J79_005F_8E81_96BC').val($(this).val());
+            });
+            $('#J76_005F_8E73_8A4F_8BC7_94D4').on('change', function() {
+                $('#J80_005F_8E73_8A4F_8BC7_94D4').val($(this).val());
+            });
+            $('#J77_005F_8E73_93E0_8BC7_94D4').on('change', function() {
+                $('#J81_005F_8E73_93E0_8BC7_94D4').val($(this).val());
+            });
+            $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').on('change', function() {
+                $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val($(this).val());
             });
             Livewire.on('onSelectEmployee', ({
                 data

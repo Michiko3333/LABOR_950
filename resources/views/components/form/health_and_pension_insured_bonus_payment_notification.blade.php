@@ -7,38 +7,6 @@
     <input type="hidden"  id="accountLink"   />
     <link rel="stylesheet" href="{{asset('/css/health-and-pension-insured-bonus-payment-notification.css')}}">
     <div id="modal-recertification-bg" class="modal-recertification-bg"></div>
-        <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                      const checkboxes = document.querySelectorAll('#N42_005F_8F8A_8DDD_926E, #N40_905C_90BF_8ED2, #N41_005F_96BC_8FCC');
-                      const inputField = document.getElementById('N43_947A_9242_8BC7_94D4');
-
-                      checkboxes.forEach(function(checkbox) {
-                          checkbox.addEventListener('click', function() {
-                              if (this.checked) {
-                                  if (this.id !== 'N42_005F_8F8A_8DDD_926E') {
-                                      inputField.value = "";
-                                      inputField.disabled = true;
-                                  } else{
-                                      inputField.disabled = false;
-                                  }
-                                  checkboxes.forEach(function(cb) {
-                                      if (cb !== checkbox) {
-                                          cb.checked = false;
-                                      }
-                                  });
-                              }
-                          });
-                      });
-
-                        document.getElementById('N5_005F_8C8E').addEventListener('click', function() {
-                            document.getElementById('N4_005F_944E').checked = !this.checked;
-                        });
-
-                        document.getElementById('N4_005F_944E').addEventListener('click', function() {
-                            document.getElementById('N5_005F_8C8E').checked = !this.checked;
-                        });
-                    });
-                </script>
     </div>
   </div>
   <main role="main" class="egovui-main-input-application">
@@ -61,18 +29,6 @@
               <div class="egovuiForm-preview-style egovuiForm-preview-legal-style">
 
                 <div class="egov-tool-wrapper">
-                  <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left: 200px; top: 14px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                    <INPUT tabindex="48" value="1" <?php echo old('title_health_insurance') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N4_005F_944E" name="title_health_insurance">
-                      <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
-                        &nbsp;
-                      </SPAN>
-                  </SPAN>
-                  <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left: 200px; top: 38.5px; width:18px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">
-                    <INPUT tabindex="48" value="1" <?php echo old('title_pension_insurance') == '1' ? 'checked' : ''; ?> style="position:absolute; top:1px; left:4px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="CHECKBOX" id="N5_005F_8C8E" name="title_pension_insurance">
-                      <SPAN style="font-size:11px; height:11px; vertical-align:middle;">
-                        &nbsp;
-                      </SPAN>
-                  </SPAN>
                   <div class="egov-tool-field-origin" style="left: 83px; top: 70px;">
                     <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" name="today_year" value="{{ old('today_year') }}" onfocus="addlength(this,2)" required="required" style="width: 20px; height: 18px; font-size: 10px; text-align: center; line-height: 18px; padding: inherit; background-color:#ddeeff;" type="text" />
                   </div>
@@ -101,7 +57,7 @@
                     <input class="egov-tool-field-rect onImage" id="N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC" maxlength="75" value="{{ old('branch_address') }}" name="branch_address" required="required" style="width: 254px; height: 32px; font-size: 12px; text-align: left; line-height: 32px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" />
                   </div>
                   <div class="egov-tool-field-origin" style="left: 135px; top: 166px;">
-                    <input class="egov-tool-field-rect onImage" id="N16_005F_905C_90BF" maxlength="50" value="{{ old('branch_name') }}" name="branch_name" required="required" style="width: 254px; height: 28px; font-size: 12px; text-align: left; line-height: 28px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" />
+                    <input class="egov-tool-field-rect onImage" id="N16_005F_905C_90BF" maxlength="50" value="{{ old('branch_name') }}" name="branch_name" required="required" style="width: 254px; height: 27px; font-size: 12px; text-align: left; line-height: 27px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" />
                   </div>
                   <div class="egov-tool-field-origin" style="left: 135px; top: 194.5px;">
                     <input class="egov-tool-field-rect onImage" id="N17_005F_985A_8F5C_8DCE_82C9" maxlength="25" value="{{ old('employer_company_managerial_position_name') }}" name="employer_company_managerial_position_name" required="required" style="width: 254px; height: 27px; font-size: 12px; text-align: left; line-height: 27px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" />
@@ -182,9 +138,6 @@
                   </div>
                   <div class="egov-tool-field-origin" style="left: 371px; top: 359px;">
                     <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E" maxlength="4" value="{{ old('bonus_payment_sum') }}" name="bonus_payment_sum" required="required" style="width: 50px; height: 36.5px; font-size: 12px; text-align: right; line-height: 36.5px; padding: inherit; background-color:#ddeeff;" type="text" />
-                  </div>
-                  <div class="egov-tool-field-origin" style="left: 533px; top: 278px;">
-                    <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF" maxlength="12" value="{{ old('mynumber_no_or_pension_no') }}" name="mynumber_no_or_pension_no" style="width: 164px; height: 38px; font-size: 12px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;" type="text" />
                   </div>
 
                   <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left: 533px; top: 336px; width:13px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">

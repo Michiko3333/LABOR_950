@@ -11,7 +11,7 @@ class CalendarController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(11)) {
+            if (!$userPermission->isReadableFor(11) || !$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);

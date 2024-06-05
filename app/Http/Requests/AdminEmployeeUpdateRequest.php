@@ -73,7 +73,7 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255',
             'address_ward' => 'required|string|max:255',
-            'address_apartment' => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'address_apartment' => 'string|max:100',
             // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
             'address_city_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
             'address_ward_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
@@ -81,9 +81,9 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            "fax1" => 'nullable|string|regex:/^0[0-9]{0,2}$/',
-            "fax2" => 'nullable|string|regex:/[0-9]{3,4}$/',
-            "fax3" => 'nullable|string|regex:/[0-9]{3,4}$/',
+            "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax2',
+            "fax2" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:fax1,fax3',
+            "fax3" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:fax1,fax2',
             'mail_address1' => 'nullable|string|max:255|email',
             'mail_address2' => 'nullable|string|max:255|email',
             'emergency_post_code1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
@@ -93,7 +93,7 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'emergency_address_prefecture1' => 'nullable|string',
             'emergency_address_city1' => 'nullable|string',
             'emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_address_apartment1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_address_apartment1' => 'nullable|string|max:100',
             'emergency_post_code2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_contact2' => 'nullable|string|max:255',
             'emergency_relationship2' => 'nullable|string|max:255',
@@ -101,7 +101,7 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'emergency_address_prefecture2' => 'nullable|string|max:255',
             'emergency_address_city2' => 'nullable|string|max:255',
             'emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_address_apartment2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_address_apartment2' => 'nullable|string|max:100',
             'spouse_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',
@@ -146,6 +146,15 @@ class AdminEmployeeUpdateRequest extends FormRequest
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'fax1.required_with' => 'FAX番号_1を入力してください。',
+            'fax2.required_with' => 'FAX番号_2を入力してください。',
+            'fax3.required_with' => 'FAX番号_3を入力してください。',
         ];
     }
 

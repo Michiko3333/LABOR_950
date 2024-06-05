@@ -24,8 +24,6 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
-            "title_health_insurance" => 'nullable|int|in:1|required_without:title_pension_insurance',
-            "title_pension_insurance" => 'nullable|int|in:1',
             "today_year" => 'int|between:1,99|regex:/^[0-9]{1,2}+$/',
             "today_month" => 'int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "today_date" => 'int|between:1,31|regex:/^[0-9]{1,2}+$/',
@@ -59,7 +57,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "remarks_over_70_insured" => 'nullable|int|in:1',
             "remarks_more_than_twice_work" => 'nullable|int|in:1',
             "remarks_bonus_sum_in_months" => 'nullable|int|in:1',
-            "remarks_first_payment_date" => 'int|between:1,31|regex:/^[0-9]{1,2}+$/',
+            "remarks_first_payment_date" => 'required_if:remarks_bonus_sum_in_months,1|nullable|int|between:1,31|regex:/^[0-9]{1,2}+$/',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];
@@ -78,8 +76,6 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
         return [
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
-            'title_health_insurance' => '健康保険_最上部チェックボックス',
-            'title_pension_insurance' => '厚生年金保険_最上部チェックボックス',
             'today_year' => '提出日_年',
             'today_month' => '提出日_月',
             'today_date' => '提出日_日',

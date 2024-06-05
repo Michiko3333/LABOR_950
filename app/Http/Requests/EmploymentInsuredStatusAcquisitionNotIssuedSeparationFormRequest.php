@@ -79,9 +79,9 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'labor_consultant_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'labor_consultant_display' => 'nullable|string|max:12|regex:/\A[ぁ-んァ-ンー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_fullname' => 'nullable|nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
-            'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
-            'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{5}$/u',
+            'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_note' => 'nullable|string|max:255',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'

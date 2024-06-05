@@ -52,10 +52,14 @@ return new class extends Migration
             $table->time('work_time_start')->nullable()->comment('就業時間(開始)');
             $table->time('work_time_end')->nullable()->comment('就業時間(終了)');
             $table->integer('work_time_standards_id')->nullable()->comment('年金事務所ID');
-            $table->string('agreed_hours_year', 255)->nullable()->comment('所定労働時間(年)');
-            $table->time('agreed_hours_month')->nullable()->comment('所定労働時間(月)');
-            $table->time('agreed_hours_week')->nullable()->comment('所定労働時間(週)');
-            $table->time('agreed_hours_day')->nullable()->comment('所定労働時間(日)');
+            $table->integer('agreed_hours_year_h')->nullable()->comment('所定労働時間(年)-時間');
+            $table->integer('agreed_hours_month_h')->nullable()->comment('所定労働時間(月)-時間');
+            $table->integer('agreed_hours_week_h')->nullable()->comment('所定労働時間(週)-時間');
+            $table->integer('agreed_hours_day_h')->nullable()->comment('所定労働時間(日)-時間');
+            $table->integer('agreed_hours_year_m')->nullable()->comment('所定労働時間(年)-分');
+            $table->integer('agreed_hours_month_m')->nullable()->comment('所定労働時間(月)-分');
+            $table->integer('agreed_hours_week_m')->nullable()->comment('所定労働時間(週)-分');
+            $table->integer('agreed_hours_day_m')->nullable()->comment('所定労働時間(日)-分');
             $table->integer('working_days_yearly')->nullable()->comment('労働日数(年間)');
             $table->tinyInteger('working_days_monthly')->nullable()->comment('労働日数(月間)');
             $table->integer('holiday_yearly')->nullable()->comment('休日日数(年間)');
@@ -79,4 +83,3 @@ return new class extends Migration
         Schema::dropIfExists('m_branch');
     }
 };
-
