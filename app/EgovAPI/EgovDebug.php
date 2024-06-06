@@ -78,9 +78,22 @@ class EgovDebug
         Storage::setVisibility($directoryName, 'public');
 
         // ログ書込み
-        Storage::put($directoryName . '/response.json', self::$responseBody);
+        $responsePath = $directoryName . '/response.json';
+        Storage::put($responsePath, self::$responseBody);
         Storage::put($directoryName . '/header.txt', self::$requestHeader);
         Storage::put($directoryName . '/body.txt', self::$requestBody);
+
+        // 日時とステータスコードの追加
+        $newData = [
+            'time' => date('Y/m/d H:i'),
+            "HTTP status_code" => 200
+        ];
+        $existingData = [];
+        $existingContent = Storage::get($responsePath);
+        $existingData = json_decode($existingContent, true);
+        $combinedData = [$existingData, $newData];
+        $newContent = json_encode($combinedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        Storage::put($responsePath, $newContent);
     }
 
     public static function outputForGetAuth()

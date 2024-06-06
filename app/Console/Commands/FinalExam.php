@@ -61,10 +61,11 @@ class FinalExam extends Command
                         999.【egov-test】指定手続IDを申請データ送信 個別ファイル署名形式\n
                         \n
                         1111. 【公文書用arrive_id全データ作成作成】\n
-                        0000. 【最終確認試験用データのALL作成】\n
+                        0000. 【 ^v^】\n
+                        5656. 【最終確認試験用データのALL作成】\n
                         ");
         $examNumber = $this->ask('実施するテスト番号を入力してください');
-        // $examNumber = '1111';
+        // $examNumber = '5656';
 
         if (empty($examNumber)) {
             $this->info('正しい番号を入れてください');
@@ -153,29 +154,6 @@ class FinalExam extends Command
                 $proc_id = $this->asking('proc_id');
                 $XML = new MixXmlEgovSigner(null, $companyId);
                 $response =$XML->runExam($proc_id, 2, $examNumber);
-            } elseif ($examNumber == 0000) {
-                $outputData = [];
-                // 標準
-                $outputData = $this->run0000('900A010200001000', 1, $companyId, $outputData);
-                $outputData = $this->run0000('900A010002008000', 1, $companyId, $outputData);
-                $outputData = $this->run0000('900A010700003000', 1, $companyId, $outputData);
-                $outputData = $this->run0000('900A010002006000', 1, $companyId, $outputData);
-                $outputData = $this->run0000('900A000100015000', 0, $companyId, $outputData);
-                // 個別
-                $outputData = $this->run0000('900A102810039000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102810052000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102810055000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102200047000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102200050000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A101810033000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102210049000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102800053000', 2, $companyId, $outputData);
-                $outputData = $this->run0000('900A102810054000', 2, $companyId, $outputData);
-                $outputString = json_encode($outputData, JSON_PRETTY_PRINT);
-                $this->info($outputString);
-                $jsonData = json_encode($outputData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-                Storage::put('egov-test-log/arrive_id.json', $jsonData);
-                return;
             } elseif ($examNumber == 1111) {
                 $total = 132;
                 $doneCount = 0;
@@ -278,6 +256,133 @@ class FinalExam extends Command
                 $this->info($outputString);
                 $jsonData = json_encode($outputData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 Storage::put('egov-test-log/ALL_arrive_id.txt', $jsonData);
+                return;
+            } elseif ($examNumber == 0000) {
+                $outputData = [];
+                // 標準
+                $outputData = $this->run0000('900A010200001000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010002008000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010700003000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A010002006000', 1, $companyId, $outputData);
+                $outputData = $this->run0000('900A000100015000', 0, $companyId, $outputData);
+                // 個別
+                $outputData = $this->run0000('900A102810039000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810052000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810055000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102200047000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102200050000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A101810033000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102210049000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102800053000', 2, $companyId, $outputData);
+                $outputData = $this->run0000('900A102810054000', 2, $companyId, $outputData);
+                $outputString = json_encode($outputData, JSON_PRETTY_PRINT);
+                $this->info($outputString);
+                $jsonData = json_encode($outputData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+                Storage::put('egov-test-log/arrive_id.json', $jsonData);
+                return;
+            } elseif ($examNumber == 5656) {
+
+                $response = FinalExamController::getReToken_command($companyId, '03-1');
+                $this->info($response);
+
+                $response = FinalExamController::tokenIntrospect_command($companyId, False, '04-1');
+                $this->info($response);
+
+                $response = FinalExamController::tokenIntrospect_command($companyId, True, '04-2');
+                $this->info($response);
+
+                $XML = new MixXmlEgovSigner(null, $companyId);
+                $response = $XML->runExam('950A010002012000', 1, '07-1');
+                $this->info($response);
+                $data = json_decode($response, true);
+                $arriveId_07_1 = $data['results']['arrive_id'];
+
+                $XML = new MixXmlEgovSigner(null, $companyId);
+                $response = $XML->runExam('900A010200001000', 1, '07-2');
+                $this->info($response);
+
+                $XML = new MixXmlEgovSigner(null, $companyId);
+                $response = $XML->runExam('900A010000005000', 1, '09-1');//再提出 この手続きIDは一意であること900A010000007000は一意
+                $this->info($response);
+
+                $response = FinalExamController::getlist_command($companyId, '13-2');
+                $this->info($response);
+
+                $response = FinalExamController::get_matter_filing_command($companyId, $arriveId_07_1, '14-1');//07-1指定arrive_id
+                $this->info($response);
+
+                $response = FinalExamController::get_notification_list_command($companyId, '18-1');
+                $this->info($response);
+
+                $arrive_id = '9002024000001284';
+                $response = FinalExamController::getNotificationInformation_command($companyId, $arrive_id, '18-2');//これも通知もらってから
+                $this->info($response);
+
+                $arrive_id = '9002024000001249';
+                $notice_sub_id = '2';
+                $response = FinalExamController::get_official_document_commnad($companyId, $arrive_id, $notice_sub_id, '19-1');//公文書　いずれも決め打ちにする、受け取ってから
+                $this->info($response);
+
+                if ('xml_to_zip') {
+                    // 21-1用にファイル化
+                    $data = json_decode($response, true);
+                    $binaryData = $data['results']['file_data'];
+                    $decodedData = base64_decode($binaryData);
+                    $zipFilePath = Storage::path('egov-test/koubunshoALLIn.zip');
+                    file_put_contents($zipFilePath, $decodedData);
+                    // zipよりxmlファイルだけを抽出
+                    $extractToPath = Storage::path('egov-test/extract/');
+                    Storage::makeDirectory('egov-test/extract/');
+
+                    $zip = new \ZipArchive;
+                    if ($zip->open($zipFilePath) === TRUE) {
+                        for ($i = 0; $i < $zip->numFiles; $i++) {
+                            $filename = $zip->getNameIndex($i);
+                            if (pathinfo($filename, PATHINFO_EXTENSION) === 'xml') {
+                                $zip->extractTo($extractToPath, $filename);
+                                $xmlFileName = $filename;
+                                echo $xmlFileName;
+                            }
+                        }
+                        $zip->close();
+                        echo 'XMLファイルの抽出が完了しました。';
+                    } else {
+                        echo 'ZIPファイルを開けませんでした。';
+                        exit;
+                    }
+                    // 抽出したファイルをzip化
+                    $newZipFilePath = Storage::path('egov-test/koubunsho.zip');
+                    $newZip = new \ZipArchive;
+                    if ($newZip->open($newZipFilePath, \ZipArchive::CREATE) === TRUE) {
+                        // 抽出されたXMLファイルを追加
+                        $files = glob($extractToPath . '*.xml');
+                        foreach ($files as $file) {
+                            $newZip->addFile($file, basename($file));
+                        }
+                        $newZip->close();
+                        echo '新しいZIPファイルが作成されました。';
+                    } else {
+                        echo '新しいZIPファイルを作成できませんでした。';
+                    }
+                    // 一時ファイルを削除
+                    $extractedFiles = Storage::allFiles('egov-test/extract');
+                    foreach ($extractedFiles as $extractFile) {
+                        Storage::delete($extractFile);
+                    }
+                    Storage::deleteDirectory('egov-test/extract');
+                }
+
+                $response = FinalExamController::signatureVerification_command($companyId, '21-1', $xmlFileName);// 20-1で取得した公文書を復元して送る。処理が必要
+                $this->info($response);
+
+                $response = FinalExamController::registerDatetimeOfOfficialDocument_command($companyId, $arrive_id, $notice_sub_id, '20-1'); //公文書取得完了　19-1から引数を引き継ぎ
+                $this->info($response);
+
+                $response = FinalExamController::logout_command($companyId, '25-1');
+                $this->info($response);
+
+                $response = FinalExamController::logoutRetokenIntrospect($companyId, '26-1');
+                $this->info($response);
                 return;
             } else {
                 $this->info('存在しないテスト番号です');
