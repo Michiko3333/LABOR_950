@@ -128,6 +128,10 @@
                 $('#N7_005F_944E_8D86').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N8_005F_944E').val('{{ old('today_date', $todaySet['date']) }}');
 
+                @if ($current_employee->role_id !== 500)
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('disabled', true);
+                @endif
+
                 checkOver70();
                 $('#over_70_check').change(function(){
                     checkOver70();

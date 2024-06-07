@@ -135,7 +135,7 @@ class FinalExamController extends Controller
     // 申請案件一覧取得　artisanコマンド
     public static function getlist_command($companyId, $examNo)
     {
-        $date_from = '2024-05-16';
+        $date_from = '2024-05-30';
         $today = new \DateTime();
         $date_to = $today->format('Y-m-d');
 
@@ -256,16 +256,16 @@ class FinalExamController extends Controller
     }
 
     // 公文書署名検証要求　artisanコマンド
-    public static function signatureVerification_command($companyId, $examNo)
+    public static function signatureVerification_command($companyId, $examNo, $sig_verification_xml_file_name=null)
     {
         $file_name = "koubunsho.zip";
         $zipfilepath = Storage::path('egov-test/koubunsho.zip');
         echo $zipfilepath;
         $file_data = base64_encode(file_get_contents($zipfilepath));
 
-        $file_data = $file_data;
-
-        $sig_verification_xml_file_name = "official_doc4.xml";
+        if ($sig_verification_xml_file_name==null) {
+            $sig_verification_xml_file_name = "official_doc4.xml";
+        }
         $account = Egov_account::where('company_id', $companyId)->where('delete_flg', 0)->first();
         $api = Egov::accessToken($account->access_token);
         $r = $api->signatureVerification($file_name, $file_data, $sig_verification_xml_file_name);
@@ -297,7 +297,7 @@ class FinalExamController extends Controller
     public static function get_notification_list_command($companyId, $examNo)
     {
         $title = '申請案件に関する通知一覧取得';
-        $date_from = '2024-05-16';
+        $date_from = '2024-05-30';
         $today = new \DateTime();
         $date_to = $today->format('Y-m-d');
         $account = Egov_account::where('company_id', $companyId)->where('delete_flg', 0)->first();

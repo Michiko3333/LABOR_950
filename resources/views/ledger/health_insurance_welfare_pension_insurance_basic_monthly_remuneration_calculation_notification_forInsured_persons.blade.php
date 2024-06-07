@@ -133,6 +133,10 @@
                 $('#N4_005F_944E').val('{{ old('today_japan_era_month', $todaySet['month']) }}');
                 $('#N5_005F_8C8E').val('{{ old('today_japan_era_date', $todaySet['date']) }}');
 
+                @if ($current_employee->role_id !== 500)
+                    $('#N18_005F_8CC2_906C_94D4').prop('disabled', true);
+                @endif
+
                 checkOver70();
                 $('#over_70_check').change(function(){
                     checkOver70();

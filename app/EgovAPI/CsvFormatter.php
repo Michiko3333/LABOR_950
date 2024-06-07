@@ -53,7 +53,7 @@ class CsvFormatter
             '郡市区符号' => $request->input('pension_office_reference_no_cities'),
             '事業所記号' => mb_convert_kana($request->input('pension_office_reference_no_office'), 'k'),
             '媒体通番' => str_pad($this->medium, 3, '0', STR_PAD_LEFT),
-            '作成年月日' => now()->addDay(3)->format('Ymd'),
+            '作成年月日' => now()->format('Ymd'),
             '代表届書コード' => 22223
         ];
 

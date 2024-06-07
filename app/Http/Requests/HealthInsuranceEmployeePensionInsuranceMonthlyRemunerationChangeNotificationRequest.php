@@ -22,6 +22,9 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     public function rules(): array
     {
         return [
+            "over_70_check" => 'nullable|string|in:on',
+            "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
+            "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
             "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:jpg,pdf|max:50000',
             "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
@@ -34,13 +37,13 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "pension_office_reference_no_office" => 'required|string|regex:/\A[ァ-ヴー0-9A-Z]{1,4}+\z/u',
             "branch_post_code_parent" => 'required|string|regex:/^[0-9]{3}+$/',
             "branch_post_code_child" => 'required|string|regex:/^[0-9]{4}+$/',
-            "branch_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "branch_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐－]+\z/u',
             "branch_name" => 'required|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "employer_company_managerial_position_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_submission_agent_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
             "insurer_reference_no" => 'nullable|string|regex:/^[0-9]{6}+$/',
             "insured_fullname_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "insured_fullname" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
@@ -77,8 +80,6 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "sum" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
-            "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
             "remarks_over_70_monthly_salary_change" => 'nullable|int|in:1',
             "remarks_multi_work" => 'nullable|int|in:1',
             "remarks_part_time_workers" => 'nullable|int|in:1',
@@ -110,11 +111,17 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                 $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
             }
         });
+
+        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
+            return $input->over_70_check === 'on';
+        });
     }
 
     public function messages()
     {
         return [
+            'mynumber_no_or_pension_no.required_without_all' => '',
+            'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
         ];
     }
@@ -123,6 +130,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
 
     {
         return [
+            "over_70_check" => '70歳以上チェック',
             "file_wage_ledger" => '添付ファイル_賃金台帳のコピー',
             "file_attendance_record" => '添付ファイル_出勤簿のコピー',
             'file_other' => '添付ファイル_その他の添付書類',
@@ -178,7 +186,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             'sum' => '総計',
             'average_amount' => '平均額',
             'adjusted_average_amount' => '修正平均額',
-            'mynumber_no_or_pension_no' => '個人番号（または基礎年金番号）',
+            'mynumber_no_or_pension_no' => '個人番号',
+            'basic_pension_number' => '基礎年金番号',
             'remarks_over_70_monthly_salary_change' => '備考_70歳以上被用者月額変更',
             'remarks_multi_work' => '備考_二以上勤務',
             'remarks_part_time_workers' => '備考_短時間労働者（特定適用事業所のみ）',
