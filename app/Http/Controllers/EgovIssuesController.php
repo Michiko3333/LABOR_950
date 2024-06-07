@@ -122,7 +122,6 @@ class EgovIssuesController extends Controller
         $account = Egov_account::where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
 
         try {
-            throw new \Exception('ゼロによる除算。');
             $api = Egov::accessToken($account->access_token);
             $r = $this->call_official($api, $arrive_id, $notice_sub_id);
             if ($r->status() == 401) {
