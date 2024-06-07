@@ -22,6 +22,9 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     public function rules(): array
     {
         return [
+            "over_70_check" => 'nullable|string|in:on',
+            "my_number_or_basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
+            "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "today_japan_era_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -38,7 +41,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_name" => 'nullable|string|max:255',
             "Insured_person_reference_number" => 'nullable|string|regex:/^[0-9]{1,6}+$/',
             "insured_person_name_in_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "Insured_person_name_in_kanji" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
@@ -71,8 +74,6 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "grand_total" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "my_number_or_basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
-            "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "remarks_and_calculation_of_employees_aged_70_and_over" => 'nullable|int|in:1',
             "remarks_and_two_or_more_jobs" => 'nullable|int|in:1',
             "remarks_and_scheduled_monthly_changes" => 'nullable|int|in:1',
@@ -89,10 +90,19 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'apply_to_name' => 'required|string'
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
+            return $input->over_70_check === 'on';
+        });
+    }
     
     public function messages()
     {
         return [
+            'my_number_or_basic_pension_number.required_without_all' => '',
+            'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
         ];
     }
@@ -149,7 +159,8 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'grand_total' => '総計',
             'average_amount' => '平均額',
             'adjusted_average_amount' => '修正平均額',
-            'my_number_or_basic_pension_number' => '個人番号（または基礎年金番号）',
+            'my_number_or_basic_pension_number' => '個人番号',
+            'basic_pension_number' => '基礎年金番号',
             'remarks_and_calculation_of_employees_aged_70_and_over' => '備考_70歳以上被用者算定',
             'remarks_and_two_or_more_jobs=>' => '備考_二以上勤務',
             'remarks_and_scheduled_monthly_changes=>' => '備考_途中入社',

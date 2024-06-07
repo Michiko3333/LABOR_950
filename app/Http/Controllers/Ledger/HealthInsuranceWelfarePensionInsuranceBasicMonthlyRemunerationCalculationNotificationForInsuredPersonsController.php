@@ -39,6 +39,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             $certificate = false;
         }
 
+        $current_employee = CurrentUser::info();
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -49,7 +50,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'current_employee' => $current_employee, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
     }
 
     public function post(HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsRequest $request)

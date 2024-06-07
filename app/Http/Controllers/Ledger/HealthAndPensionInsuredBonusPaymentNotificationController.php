@@ -38,6 +38,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
             $certificate = false;
         }
 
+        $current_employee = CurrentUser::info();
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -48,7 +49,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'current_employee' => $current_employee, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
     }
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)

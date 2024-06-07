@@ -22,6 +22,9 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "over_70_check" => 'nullable|string|in:on',
+            "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
+            "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "today_year" => 'int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -38,7 +41,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_submission_agent_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
             "employment_insured_no" => 'nullable|int|regex:/^[0-9]{1,6}+$/',
             "insured_fullname_kana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             "insured_fullname" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
@@ -53,7 +56,6 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "bonus_payment_currency" => 'int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "bonus_payment_goods" => 'int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
             "bonus_payment_sum" => 'int|between:1,9999|regex:/^[0-9]{1,4}+$/',
-            "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "remarks_over_70_insured" => 'nullable|int|in:1',
             "remarks_more_than_twice_work" => 'nullable|int|in:1',
             "remarks_bonus_sum_in_months" => 'nullable|int|in:1',
@@ -63,11 +65,19 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
+            return $input->over_70_check === 'on';
+        });
+    }
+
     public function messages()
     {
         return [
+            'mynumber_no_or_pension_no.required_without_all' => '',
+            'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
-            'title_health_insurance.required_without' => 'タイトルのチェックボックスで健康保険、厚生年金保険のいずれかである必要があります。',
         ];
     }
 
@@ -105,7 +115,8 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             'bonus_payment_currency' => '賞与支払額_通貨',
             'bonus_payment_goods' => '賞与支払額_現物',
             'bonus_payment_sum' => '賞与支払額_合計',
-            'mynumber_no_or_pension_no' => '個人番号（または基礎年金番号）',
+            'mynumber_no_or_pension_no' => '個人番号',
+            'basic_pension_number' => '基礎年金番号',
             'remarks_over_70_insured' => '備考_70歳以上被用者',
             'remarks_more_than_twice_work' => '備考_二以上勤務',
             'remarks_bonus_sum_in_months' => '備考_同一月内の賞与合計',
