@@ -135,7 +135,7 @@ class FinalExamController extends Controller
     // 申請案件一覧取得　artisanコマンド
     public static function getlist_command($companyId, $examNo)
     {
-        $date_from = '2024-05-16';
+        $date_from = '2024-05-30';
         $today = new \DateTime();
         $date_to = $today->format('Y-m-d');
 
@@ -297,7 +297,7 @@ class FinalExamController extends Controller
     public static function get_notification_list_command($companyId, $examNo)
     {
         $title = '申請案件に関する通知一覧取得';
-        $date_from = '2024-05-16';
+        $date_from = '2024-05-30';
         $today = new \DateTime();
         $date_to = $today->format('Y-m-d');
         $account = Egov_account::where('company_id', $companyId)->where('delete_flg', 0)->first();
