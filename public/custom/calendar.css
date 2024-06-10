@@ -81,6 +81,18 @@
     cursor: pointer;
 }
 
+.edit-calendar-modal .remove-link.hidden {
+    display: none;
+}
+
+.edit-calendar-modal .remove-link button {
+    color: #4183c4;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 /* Colors */
 .calendar .days .day_num .event.labor {
     background-color: var(--color-yellow);

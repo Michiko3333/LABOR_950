@@ -88,10 +88,11 @@ class UserModalContent extends Component
     public $login_email = '';
     public $login_email_edit = '';
     public $login_email_edit_flg = false;
+    public $login_email_error = false;
 
     public $login_pass_edit = '';
     public $login_pass_confirm_edit = '';
-    public $login_pass_edit_flg = true;
+    public $login_pass_edit_flg = false;
     public $login_pass_valid = ['filled' => true, 'unknown' => true, 'confirm' => true];
     public $login_pass_success = false;
     public function mount()
@@ -109,12 +110,12 @@ class UserModalContent extends Component
                     if (!empty($currentCompany)) $this->profiles['company_name'] = $currentCompany->name;
                     $this->profiles['branch_name'] = $employee->branch->name;
                     $this->profiles['departments'] = Employee_department::select('name')
-                        ->where('m_employee_department.delete_flg', 0) 
+                        ->where('m_employee_department.delete_flg', 0)
                         ->leftJoin('m_department as d', 'department_id', '=', 'd.id')
                         ->where('employee_id', $employee->id)
                         ->pluck('name')->toArray();
                     $this->profiles['managerial_position'] = $employee->managerial_position()->where('delete_flg', 0)->first();
-                } elseif ($this->role_id = 999){
+                } elseif ($this->role_id = 999) {
                     $this->profiles['branch_name'] = "-";
                     $this->profiles['departments'] = ["-"];
                 }
@@ -167,6 +168,7 @@ class UserModalContent extends Component
     {
         $this->names_edit = $this->names;
         $this->names_edit_flg = false;
+        $this->resetErrorBag();
     }
 
     public function namesEdit()
@@ -176,6 +178,18 @@ class UserModalContent extends Component
 
     public function namesSave()
     {
+
+        $validated = $this->validate([
+            'names_edit.old_last_name' => 'nullable|string|max:255',
+            'names_edit.old_first_name' => 'nullable|string|max:255',
+            'names_edit.old_last_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'names_edit.old_first_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'names_edit.old_last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'names_edit.old_first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'names_edit.name_common' => 'nullable|string|max:255',
+            'names_edit.name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+        ]);
+
         Employee::where('id', $this->employee_id)->update([
             'old_last_name' => $this->names_edit['old_last_name'],
             'old_first_name' => $this->names_edit['old_first_name'],
@@ -194,6 +208,7 @@ class UserModalContent extends Component
     {
         $this->emergency_edit = $this->emergency;
         $this->emergency_edit_flg = false;
+        $this->resetErrorBag();
     }
 
     public function emergencyEdit()
@@ -203,6 +218,25 @@ class UserModalContent extends Component
 
     public function emergencySave()
     {
+
+        $validated = $this->validate([
+            'emergency_edit.emergency_contact1' => 'nullable|string|max:255',
+            'emergency_edit.emergency_relationship1' => 'nullable|string|max:255',
+            'emergency_edit.emergency_tel1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            'emergency_edit.emergency_address_prefecture1' => 'nullable|string',
+            'emergency_edit.emergency_address_city1' => 'nullable|string',
+            'emergency_edit.emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_edit.emergency_address_apartment1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+
+            'emergency_edit.emergency_contact2' => 'nullable|string|max:255',
+            'emergency_edit.emergency_relationship2' => 'nullable|string|max:255',
+            'emergency_edit.emergency_tel2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            'emergency_edit.emergency_address_prefecture2' => 'nullable|string',
+            'emergency_edit.emergency_address_city2' => 'nullable|string',
+            'emergency_edit.emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_edit.emergency_address_apartment2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+        ]);
+
         Employee::where('id', $this->employee_id)->update([
             'emergency_contact1' => $this->emergency_edit['emergency_contact1'],
             'emergency_relationship1' => $this->emergency_edit['emergency_relationship1'],
@@ -228,6 +262,8 @@ class UserModalContent extends Component
     {
         $this->login_email_edit = $this->login_email;
         $this->login_email_edit_flg = false;
+        $this->login_email_error = false;
+        $this->resetErrorBag();
     }
 
     public function loginEmailEdit()
@@ -237,6 +273,15 @@ class UserModalContent extends Component
 
     public function loginEmailSave()
     {
+        $validated = $this->validate([
+            'login_email_edit' => 'required|email|max:255',
+        ]);
+
+        if (User::where('email', $this->login_email_edit)->exists()) {
+            $this->login_email_error = true;
+            return;
+        }
+
         User::where('employee_id', $this->employee_id)->update([
             'email' => $this->login_email_edit,
         ]);
@@ -246,6 +291,11 @@ class UserModalContent extends Component
 
     public function loginPassSave()
     {
+        $validated = $this->validate([
+            'login_pass_edit' => 'required|min:6|max:20|regex:/^[!-~]+$/',
+            'login_pass_confirm_edit' => 'required|min:6|max:20|regex:/^[!-~]+$/',
+        ]);
+
         $this->login_pass_success = false;
         $empty = empty($this->login_pass_edit) || empty($this->login_pass_confirm_edit);
         $isEqualconfirm = $this->login_pass_edit === $this->login_pass_confirm_edit;
@@ -266,5 +316,20 @@ class UserModalContent extends Component
         }
 
         $this->login_pass_valid = ['filled' => !$empty, 'unknown' => $unknown, 'confirm' => $isEqualconfirm];
+    }
+
+    public function loginPassCancel()
+    {
+        $this->login_pass_edit = '';
+        $this->login_pass_confirm_edit = '';
+        $this->login_pass_success = true;
+        $this->login_pass_edit_flg = false;
+        $this->resetErrorBag();
+    }
+
+    public function loginPassEdit()
+    {
+        $this->login_pass_edit_flg = true;
+        $this->login_pass_valid = ['filled' => true, 'unknown' => true, 'confirm' => true];
     }
 }

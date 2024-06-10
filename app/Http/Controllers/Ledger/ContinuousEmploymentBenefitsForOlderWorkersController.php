@@ -24,7 +24,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -44,7 +44,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
             "month" => $month,
             "day" => $day
         );
-        $egovAcount = $this->egovAcount();        
+        $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.continuous_employment_benefits_for_older_workers', [
@@ -171,7 +171,8 @@ class ContinuousEmploymentBenefitsForOlderWorkersController extends Controller
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
-            return view('admin.companies', ['send_data' => $data]);
+            $this->putSuccess("送信に成功しました");
+            return view('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

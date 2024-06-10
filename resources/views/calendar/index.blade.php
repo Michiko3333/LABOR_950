@@ -29,6 +29,14 @@
             months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         };
 
+        const calendar_edit_modal = $('#editCalendar').modal({
+            blurring: true,
+        });
+
+        const calendar_detail_modal = $('#detailCalendar').modal({
+            blurring: true,
+        });
+
         function formatUnixTime(unixTime) {
             const date = new Date(unixTime * 1000); // Unixタイムスタンプはミリ秒ではなく秒単位なので、1000倍する
             const year = date.getFullYear();
@@ -42,7 +50,7 @@
 
         window.openEditCalendarModal = () => {
             $('.edit-calendar-modal .ui.error.message').addClass('hidden');
-            $('#editCalendar').modal({
+            calendar_edit_modal.modal({
                 allowMultiple: true,
                 onShow: () => {
                     //$('').remove();
@@ -54,28 +62,32 @@
             }).modal('show');
         };
         Livewire.on('modal-closeCalendarModal', () => {
-            $('.edit-calendar-modal').modal('hide');
+            calendar_edit_modal.modal('hide');
         });
         Livewire.on('modal-onSubmitError', () => {
             $('.edit-calendar-modal .ui.error.message').removeClass('hidden');
         });
         Livewire.on('modal-onEditModal', (d) => {
+            const data = d[0];
+            $('.ui.calendar.from_date_calendar').calendar('clear').calendar('destroy');
+            $('.ui.calendar.to_date_calendar').calendar('clear').calendar('destroy');
+            $('.edit-calendar-modal .ui.error.message').addClass('hidden');
             window.$_calendar = {
                 calendar_date_from: '',
                 calendar_date_to: ''
             };
 
             let initial_date_from = '';
-            if (d.date[0]) {
-                window.$_calendar.calendar_date_from = d.date[0];
-                const milliseconds = d.date[0] * 1000;
+            if (data['from']) {
+                window.$_calendar.calendar_date_from = data['from'];
+                const milliseconds = data['from'] * 1000;
                 initial_date_from = new Date(milliseconds);
             }
 
-            let initial_date_to = '';
-            if (d.date[1]) {
-                window.$_calendar.calendar_date_to = d.date[1];
-                const milliseconds = d.date[1] * 1000;
+            let initial_date_to = null;
+            if (data['to']) {
+                window.$_calendar.calendar_date_to = data['to'];
+                const milliseconds = data['to'] * 1000;
                 initial_date_to = new Date(milliseconds);
             }
 
@@ -92,20 +104,32 @@
                 initialDate: initial_date_to,
                 onSelect: $calendar_modal.onChangeTo
             });
+
+            $('.edit-calendar-inputs_name').val(data['inputs_name']);
+            $('.edit-calendar-inputs_category').val(data['inputs_category']);
+            $('.edit-calendar-inputs_contents').val(data['inputs_contents']);
+
+            if (data['inputs_edit_id'] > 0) {
+                $('.edit-calendar-inputs_edit_id').val(data['inputs_edit_id']);
+                $('.edit-calendar-modal .remove-link').removeClass('hidden');
+            } else {
+                $('.edit-calendar-modal .remove-link').addClass('hidden');
+            }
         });
 
         Livewire.on('modal-onDetailModal', (d) => {
             const info = d.info;
             if (info.from) info.from = formatUnixTime(info.from);
             if (info.to) info.to = formatUnixTime(info.to);
-            $('#detailCalendar').modal({
+
+            calendar_detail_modal.modal({
                 blurring: true,
                 onHidden: () => {
                     $('.detail-calendar-modal').remove();
                     window.$calendar_modal.onClose();
                 },
                 onShow: () => {
-                    $('#detailCalendar .header').removeClass('admin');
+                    $('.detail-calendar-modal .header').removeClass('admin');
                     $('#detailCalendar .header').removeClass('labor');
                     $('#detailCalendar .header').removeClass('employee');
 
@@ -126,7 +150,7 @@
                     }
                     if (info.own) {
                         $('#detailCalendar .actions').addClass('own');
-                        $('#detailCalendar .actions>button')[0].addEventListener('click', () => {
+                        $('#detailCalendar .actions>button').on('click', () => {
                             window.$calendar_modal.onStartEdit(info.edit_id);
                             window.openEditCalendarModal(false);
                         });
