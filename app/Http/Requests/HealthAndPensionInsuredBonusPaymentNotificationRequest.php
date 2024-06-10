@@ -25,6 +25,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
+            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "title_health_insurance" => 'nullable|int|in:1',
@@ -136,6 +137,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     public function attributes()
     {
         return [
+            "file_wage_ledger" => '健康保険　標準賞与額累計申出書',
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
             'today_year' => '提出日_年',

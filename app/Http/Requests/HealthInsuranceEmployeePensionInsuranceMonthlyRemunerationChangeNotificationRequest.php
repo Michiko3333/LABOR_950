@@ -25,8 +25,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
-            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:jpg,pdf|max:50000',
-            "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:jpg,pdf|max:50000',
+            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
+            "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "today_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -195,8 +195,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     {
         return [
             "over_70_check" => '70歳以上チェック',
-            "file_wage_ledger" => '添付ファイル_賃金台帳のコピー',
-            "file_attendance_record" => '添付ファイル_出勤簿のコピー',
+            "file_wage_ledger" => '（様式1）年間報酬の平均で算定することの申立書（随時改定用）',
+            "file_attendance_record" => '（様式2）健康保険厚生年金保険被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書（随時改定用）',
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
             'today_year' => '提出年月日_年',

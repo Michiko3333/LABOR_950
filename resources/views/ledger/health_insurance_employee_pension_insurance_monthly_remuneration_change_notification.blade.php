@@ -77,7 +77,7 @@
                                     'wage_ledger' => '（様式1）年間報酬の平均で算定することの申立書（随時改定用）',
                                     'attendance_record' => '（様式2）健康保険厚生年金保険被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書（随時改定用）',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'"
+                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'"
                                 :separateDisabled="true" />
                             </div>
                         </div>

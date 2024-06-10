@@ -25,6 +25,8 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "over_70_check" => 'nullable|string|in:on',
             "my_number_or_basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
+            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
+            "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "today_japan_era_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -170,6 +172,10 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     public function attributes()
     {
         return [
+            "over_70_check" => '70歳以上チェック',
+            "file_wage_ledger" => '（様式1）年間報酬の平均で算定することの申立書',
+            "file_attendance_record" => '（様式2）保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書等',
+            'file_other' => '添付ファイル_その他の添付書類',
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
             'today_japan_era_year' => '提出年月日_年',
