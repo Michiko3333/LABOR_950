@@ -67,25 +67,25 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'full_time_leave_days_1' => 'int|between:1,99|regex:/^[0-9]{1,7}$/u',
             'paid_wage_amount_1' => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'pay_target_period_era_2' => 'nullable|string|max:2',
-            'pay_target_period_year_start_2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_month_start_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_day_start_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_month_end_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_day_end_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'pay_target_period_year_start_2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
+            'pay_target_period_month_start_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_year_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
+            'pay_target_period_day_start_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_year_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
+            'pay_target_period_month_end_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_year_start_2,pay_target_period_day_end_2',
+            'pay_target_period_day_end_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_year_start_2',
             'full_time_leave_days_2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,7}$/u',
             'paid_wage_amount_2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'pay_target_period_era_3' => 'nullable|string|max:2',
-            'pay_target_period_year_start_3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_month_start_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_day_start_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_month_end_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'pay_target_period_day_end_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'pay_target_period_year_start_3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
+            'pay_target_period_month_start_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_year_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
+            'pay_target_period_day_start_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_year_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
+            'pay_target_period_month_end_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_year_start_3,pay_target_period_day_end_3',
+            'pay_target_period_day_end_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_year_start_3',
             'full_time_leave_days_3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,7}$/u',
             'paid_wage_amount_3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'caregiver_leave_end_date_era' => 'nullable|string|max:2',
-            'caregiver_leave_end_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'caregiver_leave_end_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'caregiver_leave_end_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'caregiver_leave_end_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_end_date_month,caregiver_leave_end_date_day',
+            'caregiver_leave_end_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_end_date_year,caregiver_leave_end_date_year',
+            'caregiver_leave_end_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_end_date_month,caregiver_leave_end_date_year',
             'caregiver_leave_end_reason' => 'nullable|string|max:255',
             'verification_date_era' => 'nullable|string|max:2',
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -128,6 +128,237 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $employment_insured_date_era = $data['employment_insured_date_era'];
+            $employment_insured_date_year = $data['employment_insured_date_year'];
+            $employment_insured_date_month = $data['employment_insured_date_month'];
+            $employment_insured_date_day = $data['employment_insured_date_day'];
+            $caregiver_leave_start_date_era = $data['caregiver_leave_start_date_era'];
+            $caregiver_leave_start_date_year = $data['caregiver_leave_start_date_year'];
+            $caregiver_leave_start_date_month = $data['caregiver_leave_start_date_month'];
+            $caregiver_leave_start_date_day = $data['caregiver_leave_start_date_day'];
+            $care_target_family_birthday_era = $data['care_target_family_birthday_era'];
+            $care_target_family_birthday_year = $data['care_target_family_birthday_year'];
+            $care_target_family_birthday_month = $data['care_target_family_birthday_month'];
+            $care_target_family_birthday_day = $data['care_target_family_birthday_day'];
+            $pay_target_period_era_1 = $data['pay_target_period_era_1'];
+            $pay_target_period_year_start_1 = $data['pay_target_period_year_start_1'];
+            $pay_target_period_month_start_1 = $data['pay_target_period_month_start_1'];
+            $pay_target_period_day_start_1 = $data['pay_target_period_day_start_1'];
+            $pay_target_period_month_end_1 = $data['pay_target_period_month_end_1'];
+            $pay_target_period_day_end_1 = $data['pay_target_period_day_end_1'];
+            $pay_target_period_era_2 = $data['pay_target_period_era_2'];
+            $pay_target_period_year_start_2 = $data['pay_target_period_year_start_2'];
+            $pay_target_period_month_start_2 = $data['pay_target_period_month_start_2'];
+            $pay_target_period_day_start_2 = $data['pay_target_period_day_start_2'];
+            $pay_target_period_month_end_2 = $data['pay_target_period_month_end_2'];
+            $pay_target_period_day_end_2 = $data['pay_target_period_day_end_2'];
+            $pay_target_period_era_3 = $data['pay_target_period_era_3'];
+            $pay_target_period_year_start_3 = $data['pay_target_period_year_start_3'];
+            $pay_target_period_month_start_3 = $data['pay_target_period_month_start_3'];
+            $pay_target_period_day_start_3 = $data['pay_target_period_day_start_3'];
+            $pay_target_period_month_end_3 = $data['pay_target_period_month_end_3'];
+            $pay_target_period_day_end_3 = $data['pay_target_period_day_end_3'];
+            $caregiver_leave_end_date_era = $data['caregiver_leave_end_date_era'];
+            $caregiver_leave_end_date_year = $data['caregiver_leave_end_date_year'];
+            $caregiver_leave_end_date_month = $data['caregiver_leave_end_date_month'];
+            $caregiver_leave_end_date_day = $data['caregiver_leave_end_date_day'];
+
+            if(!empty($employment_insured_date_month) && !empty($employment_insured_date_day)){
+                if (!checkdate($employment_insured_date_month, $employment_insured_date_day, '2000')) {
+                    $validator->errors()->add('employment_insured_date_day','1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($employment_insured_date_era === '平成') {
+                if (
+                    ($employment_insured_date_year == 1 && ($employment_insured_date_month < 1 || ($employment_insured_date_month == 1 && $employment_insured_date_day < 8))) ||
+                    ($employment_insured_date_year == 31 && ($employment_insured_date_month > 4 || ($employment_insured_date_month == 4 && $employment_insured_date_day > 30))) ||
+                    ($employment_insured_date_year > 31)
+                ) {
+                    $validator->errors()->add('employment_insured_date_day', '1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($employment_insured_date_era === '令和') {
+                if ($employment_insured_date_year == 1 && ($employment_insured_date_month < 5 || ($employment_insured_date_month == 5 && $employment_insured_date_day < 1))) {
+                    $validator->errors()->add('employment_insured_date_day', '1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($caregiver_leave_start_date_month) && !empty($caregiver_leave_start_date_day)){
+                if (!checkdate($caregiver_leave_start_date_month, $caregiver_leave_start_date_day, '2000')) {
+                    $validator->errors()->add('caregiver_leave_start_date_day','1枚目_介護休業開始年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($caregiver_leave_start_date_era === '平成') {
+                if (
+                    ($caregiver_leave_start_date_year == 1 && ($caregiver_leave_start_date_month < 1 || ($caregiver_leave_start_date_month == 1 && $caregiver_leave_start_date_day < 8))) ||
+                    ($caregiver_leave_start_date_year == 31 && ($caregiver_leave_start_date_month > 4 || ($caregiver_leave_start_date_month == 4 && $caregiver_leave_start_date_day > 30))) ||
+                    ($caregiver_leave_start_date_year > 31)
+                ) {
+                    $validator->errors()->add('caregiver_leave_start_date_day', '1枚目_介護休業開始年月日は正しい日付を入力してください。');
+                }
+            } elseif ($caregiver_leave_start_date_era === '令和') {
+                if ($caregiver_leave_start_date_year == 1 && ($caregiver_leave_start_date_month < 5 || ($caregiver_leave_start_date_month == 5 && $caregiver_leave_start_date_day < 1))) {
+                    $validator->errors()->add('caregiver_leave_start_date_day', '1枚目_介護休業開始年月日は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($care_target_family_birthday_month) && !empty($care_target_family_birthday_day)){
+                if (!checkdate($care_target_family_birthday_month, $care_target_family_birthday_day, '2000')) {
+                    $validator->errors()->add('care_target_family_birthday_day','1枚目_介護対象家族の生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($care_target_family_birthday_era === '大正') {
+                if (
+                    ($care_target_family_birthday_year == 1 && $care_target_family_birthday_month < 7) ||
+                    ($care_target_family_birthday_year == 15 && ($care_target_family_birthday_month == 12 && $care_target_family_birthday_day > 25)) ||
+                    ($care_target_family_birthday_year > 15)
+                ) {
+                    $validator->errors()->add('birthday_day', '1枚目_介護対象家族の生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($care_target_family_birthday_era === '平成') {
+                if (
+                    ($care_target_family_birthday_year == 1 && ($care_target_family_birthday_month < 1 || ($care_target_family_birthday_month == 1 && $care_target_family_birthday_day < 8))) ||
+                    ($care_target_family_birthday_year == 31 && ($care_target_family_birthday_month > 4 || ($care_target_family_birthday_month == 4 && $care_target_family_birthday_day > 30))) ||
+                    ($care_target_family_birthday_year > 31)
+                ) {
+                    $validator->errors()->add('care_target_family_birthday_day', '1枚目_介護対象家族の生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($care_target_family_birthday_era === '令和') {
+                if ($care_target_family_birthday_year == 1 && ($care_target_family_birthday_month < 5 || ($care_target_family_birthday_month == 5 && $care_target_family_birthday_day < 1))) {
+                    $validator->errors()->add('care_target_family_birthday_day', '1枚目_介護対象家族の生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_start_1) && !empty($pay_target_period_day_start_1)){
+                if (!checkdate($pay_target_period_month_start_1, $pay_target_period_day_start_1, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_start_1','1枚目_支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($pay_target_period_era_1 === '平成') {
+                if (
+                    ($pay_target_period_year_start_1 == 1 && ($pay_target_period_month_start_1 < 1 || ($pay_target_period_month_start_1 == 1 && $pay_target_period_day_start_1 < 8))) ||
+                    ($pay_target_period_year_start_1 == 31 && ($pay_target_period_month_start_1 > 4 || ($pay_target_period_month_start_1 == 4 && $pay_target_period_day_start_1 > 30))) ||
+                    ($pay_target_period_year_start_1 > 31)
+                ) {
+                    $validator->errors()->add('pay_target_period_day_start_1', '1枚目_支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($pay_target_period_era_1 === '令和') {
+                if ($pay_target_period_year_start_1 == 1 && ($pay_target_period_month_start_1 < 5 || ($pay_target_period_month_start_1 == 5 && $pay_target_period_day_start_1 < 1))) {
+                    $validator->errors()->add('pay_target_period_day_start_1', '1枚目_支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_1) && !empty($pay_target_period_day_end_1)){
+                if (!checkdate($pay_target_period_month_end_1, $pay_target_period_day_end_1, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_end_1','1枚目_支給単位期間その１（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_1) && !empty($pay_target_period_day_end_1) && !empty($pay_target_period_day_start_1) && !empty($pay_target_period_month_start_1)){
+                if ($pay_target_period_month_end_1 === $pay_target_period_month_start_1) {
+                    if($pay_target_period_day_start_1 > $pay_target_period_day_end_1){
+                        $validator->errors()->add('pay_target_period_day_end_1','1枚目_支給単位期間その１（末日）は1枚目_支給単位期間その１（初日）以降を入力してください。');
+                    }
+                } elseif ($pay_target_period_month_start_1 > $pay_target_period_month_end_1){
+                    $validator->errors()->add('pay_target_period_day_end_1','1枚目_支給単位期間その１（末日）は1枚目_支給単位期間その１（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_start_2) && !empty($pay_target_period_day_start_2)){
+                if (!checkdate($pay_target_period_month_start_2, $pay_target_period_day_start_2, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_start_2','1枚目_支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($pay_target_period_era_2 === '平成') {
+                if (
+                    ($pay_target_period_year_start_2 == 1 && ($pay_target_period_month_start_2 < 1 || ($pay_target_period_month_start_2 == 1 && $pay_target_period_day_start_2 < 8))) ||
+                    ($pay_target_period_year_start_2 == 31 && ($pay_target_period_month_start_2 > 4 || ($pay_target_period_month_start_2 == 4 && $pay_target_period_day_start_2 > 30))) ||
+                    ($pay_target_period_year_start_2 > 31)
+                ) {
+                    $validator->errors()->add('pay_target_period_day_start_2', '1枚目_支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($pay_target_period_era_2 === '令和') {
+                if ($pay_target_period_year_start_2 == 1 && $pay_target_period_month_start_2 < 5) {
+                    $validator->errors()->add('pay_target_period_day_start_2', '1枚目_支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_2) && !empty($pay_target_period_day_end_2)){
+                if (!checkdate($pay_target_period_month_end_2, $pay_target_period_day_end_2, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_end_2','1枚目_支給単位期間その２（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_2) && !empty($pay_target_period_day_end_2) && !empty($pay_target_period_day_start_2) && !empty($pay_target_period_month_start_2)){
+                if ($pay_target_period_month_end_2 === $pay_target_period_month_start_2) {
+                    if($pay_target_period_day_start_2 > $pay_target_period_day_end_2){
+                        $validator->errors()->add('pay_target_period_day_end_2','1枚目_支給単位期間その２（末日）は1枚目_支給単位期間その２（初日）以降を入力してください。');
+                    }
+                } elseif ($pay_target_period_month_start_2 > $pay_target_period_month_end_2){
+                    $validator->errors()->add('pay_target_period_day_end_2','1枚目_支給単位期間その２（末日）は1枚目_支給単位期間その２（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_start_3) && !empty($pay_target_period_day_start_3)){
+                if (!checkdate($pay_target_period_month_start_3, $pay_target_period_day_start_3, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_start_3','1枚目_支給単位期間その３（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($pay_target_period_era_3 === '平成') {
+                if (
+                    ($pay_target_period_year_start_3 == 1 && ($pay_target_period_month_start_3 < 1 || ($pay_target_period_month_start_3 == 1 && $pay_target_period_day_start_3 < 8))) ||
+                    ($pay_target_period_year_start_3 == 31 && ($pay_target_period_month_start_3 > 4 || ($pay_target_period_month_start_3 == 4 && $pay_target_period_day_start_3 > 30))) ||
+                    ($pay_target_period_year_start_3 > 31)
+                ) {
+                    $validator->errors()->add('pay_target_period_day_start_3', '1枚目_支給単位期間その３（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($pay_target_period_era_3 === '令和') {
+                if ($pay_target_period_year_start_3 == 1 && $pay_target_period_month_start_3 < 5) {
+                    $validator->errors()->add('pay_target_period_day_start_3', '1枚目_支給単位期間その３（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_3) && !empty($pay_target_period_day_end_3)){
+                if (!checkdate($pay_target_period_month_end_3, $pay_target_period_day_end_3, '2000')) {
+                    $validator->errors()->add('pay_target_period_day_end_3','1枚目_支給単位期間その３（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($pay_target_period_month_end_3) && !empty($pay_target_period_day_end_3) && !empty($pay_target_period_day_start_3) && !empty($pay_target_period_month_start_3)){
+                if ($pay_target_period_month_end_3 === $pay_target_period_month_start_3) {
+                    if($pay_target_period_day_start_3 > $pay_target_period_day_end_3){
+                        $validator->errors()->add('pay_target_period_day_end_3','1枚目_支給単位期間その３（末日）は1枚目_支給単位期間その３（初日）以降を入力してください。');
+                    }
+                } elseif ($pay_target_period_month_start_3 > $pay_target_period_month_end_3){
+                    $validator->errors()->add('pay_target_period_day_end_3','1枚目_支給単位期間その３（末日）は1枚目_支給単位期間その３（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($caregiver_leave_end_date_month) && !empty($caregiver_leave_end_date_day)){
+                if (!checkdate($caregiver_leave_end_date_month, $caregiver_leave_end_date_day, '2000')) {
+                    $validator->errors()->add('caregiver_leave_end_date_day3','1枚目_介護休業終了年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($caregiver_leave_end_date_era === '平成') {
+                if (
+                    ($caregiver_leave_end_date_year == 1 && ($caregiver_leave_end_date_month < 1 || ($caregiver_leave_end_date_month == 1 && $caregiver_leave_end_date_day < 8))) ||
+                    ($caregiver_leave_end_date_year == 31 && ($caregiver_leave_end_date_month > 4 || ($caregiver_leave_end_date_month == 4 && $caregiver_leave_end_date_day > 30))) ||
+                    ($caregiver_leave_end_date_year > 33)
+                ) {
+                    $validator->errors()->add('caregiver_leave_end_date_day3', '1枚目_介護休業終了年月日は正しい日付を入力してください。');
+                }
+            } elseif ($caregiver_leave_end_date_era === '令和') {
+                if ($caregiver_leave_end_date_year == 1 && $caregiver_leave_end_date_month < 5) {
+                    $validator->errors()->add('caregiver_leave_end_date_day3', '1枚目_介護休業終了年月日は正しい日付を入力してください。');
+                }
+            }
 
             if ($this->hasFile('file_nursing_facts')) {
                 $totalSize += $this->file('file_nursing_facts')->getSize();
@@ -154,6 +385,19 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'pay_target_period_year_start_2.required_with' => '1枚目_支給単位期間その２（初日）_年を入力してください。',
+            'pay_target_period_month_start_2.required_with' => '1枚目_支給単位期間その２（初日）_月を入力してください。',
+            'pay_target_period_day_start_2.required_with' => '1枚目_支給単位期間その２（初日）_日を入力してください。',
+            'pay_target_period_month_end_2.required_with' => '1枚目_支給単位期間その２（末日）_月を入力してください。',
+            'pay_target_period_day_end_2.required_with' => '1枚目_支給単位期間その２（末日）_日を入力してください。',
+            'pay_target_period_year_start_3.required_with' => '1枚目_支給単位期間その３（初日）_年を入力してください。',
+            'pay_target_period_month_start_3.required_with' => '1枚目_支給単位期間その３（初日）_月を入力してください。',
+            'pay_target_period_day_start_3.required_with' => '1枚目_支給単位期間その３（初日）_日を入力してください。',
+            'pay_target_period_month_end_3.required_with' => '1枚目_支給単位期間その３（末日）_月を入力してください。',
+            'pay_target_period_day_end_3.required_with' => '1枚目_支給単位期間その３（末日）_日を入力してください。',
+            'caregiver_leave_end_date_year.required_with' => '1枚目_介護休業終了年月日_年を入力してください。',
+            'caregiver_leave_end_date_month.required_with' => '1枚目_介護休業終了年月日_月を入力してください。',
+            'caregiver_leave_end_date_day.required_with' => '1枚目_介護休業終了年月日_日を入力してください。',
         ];
     }
 

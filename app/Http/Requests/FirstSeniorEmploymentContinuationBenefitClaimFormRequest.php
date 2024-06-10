@@ -49,14 +49,14 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "payerMonth1" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "wagesPaid1" => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "wageReductionDays1" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "payerJapanEra2" => 'nullable|string|max:2',
-            "payerJapanEraYear2" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "payerMonth2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "payerJapanEra2" => 'nullable|string|max:2|required_with:payerJapanEraYear2,payerMonth2',
+            "payerJapanEraYear2" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payerJapanEra2,payerMonth2',
+            "payerMonth2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payerJapanEraYear2,payerJapanEra2',
             "wagesPaid2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "wageReductionDays2" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "payerJapanEra3" => 'nullable|string|max:2',
-            "payerJapanEraYear3" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "payerMonth3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "payerJapanEra3" => 'nullable|string|max:2|required_with:payerJapanEraYear3,payerMonth3',
+            "payerJapanEraYear3" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payerJapanEra3,payerMonth3',
+            "payerMonth3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payerJapanEraYear3,payerJapanEra3',
             "wagesPaid3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "wageReductionDays3" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "specialNoteOnWages1" => 'nullable|string|max:255',
@@ -107,6 +107,22 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $qualificationsJapanEra = $data['qualificationsJapanEra'];
+            $qualificationsJapanEraYear = $data['qualificationsJapanEraYear'];
+            $qualificationsMonth = $data['qualificationsMonth'];
+            $qualificationsDay = $data['qualificationsDay'];
+            if(isset($data['payerJapanEra1'])){
+                $payerJapanEra1 = $data['payerJapanEra1'];
+                $payerJapanEraYear1 = $data['payerJapanEraYear1'];
+                $payerMonth1 = $data['payerMonth1'];
+                $payerJapanEra2 = $data['payerJapanEra2'];
+                $payerJapanEraYear2 = $data['payerJapanEraYear2'];
+                $payerMonth2 = $data['payerMonth2'];
+                $payerJapanEra3 = $data['payerJapanEra3'];
+                $payerJapanEraYear3 = $data['payerJapanEraYear3'];
+                $payerMonth3 = $data['payerMonth3'];
+            };
 
             if ($this->hasFile('file_wage_payment_status')) {
                 $totalSize += $this->file('file_wage_payment_status')->getSize();
@@ -129,6 +145,61 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             if ($totalSize > 99 * 1024 * 1024) {
                 $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
             }
+            if(!empty($qualificationsMonth) && !empty($qualificationsDay)){
+                if (!checkdate($qualificationsMonth, $qualificationsDay, '2000')) {
+                    $validator->errors()->add('qualificationsDay','1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($qualificationsJapanEra === '昭和') {
+                if (
+                    ($qualificationsJapanEraYear == 1 && ($qualificationsMonth < 12 || ($qualificationsMonth == 12 && $qualificationsDay < 25))) ||
+                    ($qualificationsJapanEraYear == 64 && ($qualificationsMonth > 1 || ($qualificationsMonth == 1 && $qualificationsDay > 7))) ||
+                    ($qualificationsJapanEraYear > 64)
+                ) {
+                    $validator->errors()->add('qualificationsDay', '1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualificationsJapanEra === '平成') {
+                if (
+                    ($qualificationsJapanEraYear == 1 && ($qualificationsMonth < 1 || ($qualificationsMonth == 1 && $qualificationsDay < 8))) ||
+                    ($qualificationsJapanEraYear == 31 && ($qualificationsMonth > 4 || ($qualificationsMonth == 4 && $qualificationsDay > 30))) ||
+                    ($qualificationsJapanEraYear > 31)
+                ) {
+                    $validator->errors()->add('qualificationsDay', '1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualificationsJapanEra === '令和') {
+                if ($qualificationsJapanEraYear == 1 && ($qualificationsMonth < 5 || ($qualificationsMonth == 5 && $qualificationsDay < 1))) {
+                    $validator->errors()->add('qualificationsDay', '1枚目_資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if(isset($data['payerJapanEra1'])){
+                if ($payerJapanEra1 === '平成') {
+                    if (($payerJapanEraYear1 == 31 && $payerMonth1 > 4) || ($payerJapanEraYear1 > 31)) {
+                        $validator->errors()->add('payerJapanEra1', '1枚目_７欄の支給対象年月その１は正しい日付を入力してください。');
+                    }
+                } elseif ($payerJapanEra1 === '令和') {
+                    if ($payerJapanEraYear1 == 1 && $payerMonth1 < 5) {
+                        $validator->errors()->add('payerJapanEra1', '1枚目_７欄の支給対象年月その１は正しい日付を入力してください。');
+                    }
+                }
+                if ($payerJapanEra2 === '平成') {
+                    if (($payerJapanEraYear2 == 31 && $payerMonth2 > 4) || ($payerJapanEraYear2 > 31)) {
+                        $validator->errors()->add('payerJapanEra2', '1枚目_１１欄の支給対象年月その２は正しい日付を入力してください。');
+                    }
+                } elseif ($payerJapanEra2 === '令和') {
+                    if ($payerJapanEraYear2 == 1 && $payerMonth2 < 5) {
+                        $validator->errors()->add('payerJapanEra2', '1枚目_１１欄の支給対象年月その２は正しい日付を入力してください。');
+                    }
+                }
+                if ($payerJapanEra3 === '平成') {
+                    if (($payerJapanEraYear3 == 31 && $payerMonth3 > 4) || ($payerJapanEraYear3 > 31)) {
+                        $validator->errors()->add('payerJapanEra3', '1枚目_１５欄の支給対象年月その３は正しい日付を入力してください。');
+                    }
+                } elseif ($payerJapanEra3 === '令和') {
+                    if ($payerJapanEraYear3 == 1 && $payerMonth3 < 5) {
+                        $validator->errors()->add('payerJapanEra3', '1枚目_１５欄の支給対象年月その３は正しい日付を入力してください。');
+                    }
+                }
+            }
         });
     }
 
@@ -136,6 +207,12 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'payerJapanEra2.required_with' => '1枚目_支給対象年月その２_年号を入力してください。',
+            'payerJapanEraYear2.required_with' => '1枚目_支給対象年月その２_年を入力してください。',
+            'payerMonth2.required_with' => '1枚目_支給対象年月その２_月を入力してください。',
+            'payerJapanEra3.required_with' => '1枚目_支給対象年月その３_年号を入力してください。',
+            'payerJapanEraYear3.required_with' => '1枚目_支給対象年月その３_年を入力してください。',
+            'payerMonth3.required_with' => '1枚目_支給対象年月その３_月を入力してください。',
         ];
     }
 

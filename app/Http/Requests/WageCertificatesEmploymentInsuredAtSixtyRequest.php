@@ -29,10 +29,20 @@ class WageCertificatesEmploymentInsuredAtSixtyRequest extends FormRequest
     public function messages()
     {
         $messages = new FirstSeniorEmploymentContinuationBenefitClaimFormRequest;
+        $messages_2 = new EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest;
 
-        return array_merge($messages->messages());
+        return array_merge($messages->messages(),$messages_2->messages());
     }
 
+    public function withValidator($validator)
+    {
+        $validator_1 = new FirstSeniorEmploymentContinuationBenefitClaimFormRequest;
+        $validator_2 = new EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest;
+        $validator_1->withValidator($validator);
+        $validator_2->withValidator($validator);
+
+        return $validator;
+    }
 
     public function attributes()
     {

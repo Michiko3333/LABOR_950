@@ -35,13 +35,13 @@ class CreateAccount extends Command
         $email = $this->ask('Email Address?');
 
         if (empty($email)) {
-            $this->info('メールアドレスを入力してください');
+            $this->info('メールアドレスを入力してください。');
             return;
         }
 
         $pass = $this->ask('Password?');
         if (empty($pass) || mb_strlen($pass) < 6) {
-            $this->info('パスワードを6文字以上で入力してください');
+            $this->info('パスワードを6文字以上で入力してください。');
             return;
         }
 

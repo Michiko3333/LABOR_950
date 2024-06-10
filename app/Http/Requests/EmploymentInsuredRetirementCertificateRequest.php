@@ -90,373 +90,373 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
             "company_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
             "employer_managerial_position_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
-            "the_day_after_retirement_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "the_day_after_retirement_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "the_day_after_retirement_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:the_day_after_retirement_date_day',
+            "the_day_after_retirement_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:the_day_after_retirement_date_month',
+            "insured_period_start_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day',
+            "insured_period_start_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month',
             "basic_days_for_salary_payment_of_insured_period" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day',
+            "salary_payment_period_start_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month',
             "basic_days_of_salary_payment_period" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo" => 'nullable|string|max:255',
-            "insured_period_start_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_1',
+            "insured_period_start_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_1',
+            "insured_period_end_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_1',
+            "insured_period_end_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_1',
             "insured_period_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_1',
+            "salary_payment_period_start_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_1',
+            "salary_payment_period_end_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_1',
+            "salary_payment_period_end_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_1',
             "basic_days_of_salary_payment_period_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_1" => 'nullable|string|max:255',
-            "insured_period_start_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_2',
+            "insured_period_start_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_2',
+            "insured_period_end_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_2',
+            "insured_period_end_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_2',
             "insured_period_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_2',
+            "salary_payment_period_start_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_2',
+            "salary_payment_period_end_month_2" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_2',
+            "salary_payment_period_end_day_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_2',
             "basic_days_of_salary_payment_period_2" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_2" => 'nullable|string|max:255',
-            "insured_period_start_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_3',
+            "insured_period_start_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_3',
+            "insured_period_end_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_3',
+            "insured_period_end_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_3',
             "insured_period_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_3',
+            "salary_payment_period_start_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_3',
+            "salary_payment_period_end_month_3" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_3',
+            "salary_payment_period_end_day_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_3',
             "basic_days_of_salary_payment_period_3" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_3" => 'nullable|string|max:255',
-            "insured_period_start_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_4',
+            "insured_period_start_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_4',
+            "insured_period_end_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_4',
+            "insured_period_end_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_4',
             "insured_period_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_4',
+            "salary_payment_period_start_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_4',
+            "salary_payment_period_end_month_4" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_4',
+            "salary_payment_period_end_day_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_4',
             "basic_days_of_salary_payment_period_4" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_4" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_4" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_4" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_4" => 'nullable|string|max:255',
-            "insured_period_start_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_5',
+            "insured_period_start_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_5',
+            "insured_period_end_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_5',
+            "insured_period_end_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_5',
             "insured_period_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_5',
+            "salary_payment_period_start_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_5',
+            "salary_payment_period_end_month_5" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_5',
+            "salary_payment_period_end_day_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_5',
             "basic_days_of_salary_payment_period_5" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_5" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_5" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_5" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_5" => 'nullable|string|max:255',
-            "insured_period_start_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_6',
+            "insured_period_start_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_6',
+            "insured_period_end_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_6',
+            "insured_period_end_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_6',
             "insured_period_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_6',
+            "salary_payment_period_start_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_6',
+            "salary_payment_period_end_month_6" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_6',
+            "salary_payment_period_end_day_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_6',
             "basic_days_of_salary_payment_period_6" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_6" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_6" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_6" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_6" => 'nullable|string|max:255',
-            "insured_period_start_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_7',
+            "insured_period_start_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_7',
+            "insured_period_end_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_7',
+            "insured_period_end_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_7',
             "insured_period_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_7',
+            "salary_payment_period_start_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_7',
+            "salary_payment_period_end_month_7" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_7',
+            "salary_payment_period_end_day_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_7',
             "basic_days_of_salary_payment_period_7" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_7" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_7" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_7" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_7" => 'nullable|string|max:255',
-            "insured_period_start_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_8',
+            "insured_period_start_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_8',
+            "insured_period_end_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_8',
+            "insured_period_end_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_8',
             "insured_period_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_8',
+            "salary_payment_period_start_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_8',
+            "salary_payment_period_end_month_8" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_8',
+            "salary_payment_period_end_day_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_8',
             "basic_days_of_salary_payment_period_8" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_8" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_8" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_8" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_8" => 'nullable|string|max:255',
-            "insured_period_start_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_9',
+            "insured_period_start_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_9',
+            "insured_period_end_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_9',
+            "insured_period_end_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_9',
             "insured_period_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_9',
+            "salary_payment_period_start_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_9',
+            "salary_payment_period_end_month_9" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_9',
+            "salary_payment_period_end_day_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_9',
             "basic_days_of_salary_payment_period_9" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_9" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_9" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_9" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_9" => 'nullable|string|max:255',
-            "insured_period_start_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_10',
+            "insured_period_start_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_10',
+            "insured_period_end_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_10',
+            "insured_period_end_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_10',
             "insured_period_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_10',
+            "salary_payment_period_start_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_10',
+            "salary_payment_period_end_month_10" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_10',
+            "salary_payment_period_end_day_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_10',
             "basic_days_of_salary_payment_period_10" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_10" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_10" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_10" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_10" => 'nullable|string|max:255',
-            "insured_period_start_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_11',
+            "insured_period_start_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_11',
+            "insured_period_end_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_11',
+            "insured_period_end_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_11',
             "insured_period_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_11',
+            "salary_payment_period_start_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_11',
+            "salary_payment_period_end_month_11" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_11',
+            "salary_payment_period_end_day_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_11',
             "basic_days_of_salary_payment_period_11" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_11" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_11" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_11" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_11" => 'nullable|string|max:255',
-            "insured_period_start_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_12',
+            "insured_period_start_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_12',
+            "insured_period_end_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_12',
+            "insured_period_end_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_12',
             "insured_period_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_12',
+            "salary_payment_period_start_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_12',
+            "salary_payment_period_end_month_12" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_12',
+            "salary_payment_period_end_day_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_12',
             "basic_days_of_salary_payment_period_12" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_12" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_12" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_12" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_12" => 'nullable|string|max:255',
-            "insured_period_start_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_13',
+            "insured_period_start_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_13',
+            "insured_period_end_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_13',
+            "insured_period_end_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_13',
             "insured_period_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_13',
+            "salary_payment_period_start_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_13',
+            "salary_payment_period_end_month_13" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_13',
+            "salary_payment_period_end_day_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_13',
             "basic_days_of_salary_payment_period_13" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_13" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_13" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_13" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_13" => 'nullable|string|max:255',
-            "insured_period_start_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_14',
+            "insured_period_start_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_14',
+            "insured_period_end_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_14',
+            "insured_period_end_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_14',
             "insured_period_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_14',
+            "salary_payment_period_start_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_14',
+            "salary_payment_period_end_month_14" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_14',
+            "salary_payment_period_end_day_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_14',
             "basic_days_of_salary_payment_period_14" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_14" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_14" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_14" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_14" => 'nullable|string|max:255',
-            "insured_period_start_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_15',
+            "insured_period_start_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_15',
+            "insured_period_end_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_15',
+            "insured_period_end_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_15',
             "insured_period_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_15',
+            "salary_payment_period_start_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_15',
+            "salary_payment_period_end_month_15" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_15',
+            "salary_payment_period_end_day_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_15',
             "basic_days_of_salary_payment_period_15" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_15" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_15" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_15" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_15" => 'nullable|string|max:255',
-            "insured_period_start_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_16',
+            "insured_period_start_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_16',
+            "insured_period_end_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_16',
+            "insured_period_end_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_16',
             "insured_period_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_16',
+            "salary_payment_period_start_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_16',
+            "salary_payment_period_end_month_16" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_16',
+            "salary_payment_period_end_day_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_16',
             "basic_days_of_salary_payment_period_16" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_16" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_16" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_16" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_16" => 'nullable|string|max:255',
-            "insured_period_start_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_17',
+            "insured_period_start_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_17',
+            "insured_period_end_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_17',
+            "insured_period_end_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_17',
             "insured_period_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_17',
+            "salary_payment_period_start_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_17',
+            "salary_payment_period_end_month_17" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_17',
+            "salary_payment_period_end_day_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_17',
             "basic_days_of_salary_payment_period_17" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_17" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_17" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_17" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_17" => 'nullable|string|max:255',
-            "insured_period_start_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_18',
+            "insured_period_start_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_18',
+            "insured_period_end_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_18',
+            "insured_period_end_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_18',
             "insured_period_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_18',
+            "salary_payment_period_start_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_18',
+            "salary_payment_period_end_month_18" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_18',
+            "salary_payment_period_end_day_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_18',
             "basic_days_of_salary_payment_period_18" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_18" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_18" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_18" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_18" => 'nullable|string|max:255',
-            "insured_period_start_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_19',
+            "insured_period_start_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_19',
+            "insured_period_end_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_19',
+            "insured_period_end_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_19',
             "insured_period_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_19',
+            "salary_payment_period_start_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_19',
+            "salary_payment_period_end_month_19" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_19',
+            "salary_payment_period_end_day_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_19',
             "basic_days_of_salary_payment_period_19" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_19" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_19" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_19" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_19" => 'nullable|string|max:255',
-            "insured_period_start_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_20',
+            "insured_period_start_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_20',
+            "insured_period_end_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_20',
+            "insured_period_end_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_20',
             "insured_period_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_20',
+            "salary_payment_period_start_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_20',
+            "salary_payment_period_end_month_20" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_20',
+            "salary_payment_period_end_day_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_20',
             "basic_days_of_salary_payment_period_20" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_20" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_20" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_20" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_20" => 'nullable|string|max:255',
-            "insured_period_start_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_21',
+            "insured_period_start_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_21',
+            "insured_period_end_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_21',
+            "insured_period_end_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_21',
+            "insured_period_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:',
             "basic_days_for_salary_payment_of_insured_period_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_21',
+            "salary_payment_period_start_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_21',
+            "salary_payment_period_end_month_21" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_21',
+            "salary_payment_period_end_day_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_21',
             "basic_days_of_salary_payment_period_21" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_21" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_21" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_21" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_21" => 'nullable|string|max:255',
-            "insured_period_start_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_22',
+            "insured_period_start_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_22',
+            "insured_period_end_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_22',
+            "insured_period_end_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_22',
             "insured_period_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_22',
+            "salary_payment_period_start_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_22',
+            "salary_payment_period_end_month_22" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_22',
+            "salary_payment_period_end_day_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_22',
             "basic_days_of_salary_payment_period_22" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_22" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_22" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_22" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_22" => 'nullable|string|max:255',
-            "insured_period_start_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_23',
+            "insured_period_start_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_23',
+            "insured_period_end_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_23',
+            "insured_period_end_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_23',
             "insured_period_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_23',
+            "salary_payment_period_start_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_23',
+            "salary_payment_period_end_month_23" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_23',
+            "salary_payment_period_end_day_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_23',
             "basic_days_of_salary_payment_period_23" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_23" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_23" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_23" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "memo_23" => 'nullable|string|max:255',
-            "insured_period_start_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_start_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "insured_period_end_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "insured_period_start_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_day_24',
+            "insured_period_start_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_start_month_24',
+            "insured_period_end_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_day_24',
+            "insured_period_end_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_period_end_month_24',
             "insured_period_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "basic_days_for_salary_payment_of_insured_period_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_start_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "salary_payment_period_end_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "salary_payment_period_start_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_day_24',
+            "salary_payment_period_start_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_24',
+            "salary_payment_period_end_month_24" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_24',
+            "salary_payment_period_end_day_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_24',
             "basic_days_of_salary_payment_period_24" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_24" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_24" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
@@ -514,6 +514,814 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
+
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+
+            if(!empty($data['the_day_after_retirement_date_month']) && !empty($data['the_day_after_retirement_date_day'])){
+                if (!checkdate($data['the_day_after_retirement_date_month'], $data['the_day_after_retirement_date_day'], '2000')) {
+                    $validator->errors()->add('the_day_after_retirement_date_month','2枚目_算定対象期間_離職日の翌日は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month']) && !empty($data['insured_period_start_day'])){
+                if (!checkdate($data['insured_period_start_month'], $data['insured_period_start_day'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day','2枚目_8_算定対象期間_A_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_1']) && !empty($data['insured_period_start_day_1'])){
+                if (!checkdate($data['insured_period_start_month_1'], $data['insured_period_start_day_1'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_1','2枚目_8_算定対象期間_A_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_2']) && !empty($data['insured_period_start_day_2'])){
+                if (!checkdate($data['insured_period_start_month_2'], $data['insured_period_start_day_2'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_2','2枚目_8_算定対象期間_A_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_3']) && !empty($data['insured_period_start_day_3'])){
+                if (!checkdate($data['insured_period_start_month_3'], $data['insured_period_start_day_3'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_3','2枚目_8_算定対象期間_A_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_4']) && !empty($data['insured_period_start_day_4'])){
+                if (!checkdate($data['insured_period_start_month_4'], $data['insured_period_start_day_4'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_4','2枚目_8_算定対象期間_A_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_5']) && !empty($data['insured_period_start_day_5'])){
+                if (!checkdate($data['insured_period_start_month_5'], $data['insured_period_start_day_5'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_5','2枚目_8_算定対象期間_A_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['insured_period_start_month_6']) && !empty($data['insured_period_start_day_6'])){
+                if (!checkdate($data['insured_period_start_month_6'], $data['insured_period_start_day_6'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_6','2枚目_8_算定対象期間_A_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_7']) && !empty($data['insured_period_start_day_7'])){
+                if (!checkdate($data['insured_period_start_month_7'], $data['insured_period_start_day_7'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_7','2枚目_8_算定対象期間_A_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_8']) && !empty($data['insured_period_start_day_8'])){
+                if (!checkdate($data['insured_period_start_month_8'], $data['insured_period_start_day_8'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_8','2枚目_8_算定対象期間_A_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_9']) && !empty($data['insured_period_start_day_9'])){
+                if (!checkdate($data['insured_period_start_month_9'], $data['insured_period_start_day_9'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_9','2枚目_8_算定対象期間_A_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_10']) && !empty($data['insured_period_start_day_10'])){
+                if (!checkdate($data['insured_period_start_month_10'], $data['insured_period_start_day_10'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_10','2枚目_8_算定対象期間_A_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_11']) && !empty($data['insured_period_start_day_11'])){
+                if (!checkdate($data['insured_period_start_month_11'], $data['insured_period_start_day_11'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_11','2枚目_8_算定対象期間_A_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_12']) && !empty($data['insured_period_start_day_12'])){
+                if (!checkdate($data['insured_period_start_month_12'], $data['insured_period_start_day_12'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_12','2枚目_8_算定対象期間_A_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_1']) && !empty($data['insured_period_end_day_1'])){
+                if (!checkdate($data['insured_period_end_month_1'], $data['insured_period_end_day_1'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_1','2枚目_8_算定対象期間_A_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+                
+            if(!empty($data['insured_period_end_month_2']) && !empty($data['insured_period_end_day_2'])){
+                if (!checkdate($data['insured_period_end_month_2'], $data['insured_period_end_day_2'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_2','2枚目_8_算定対象期間_A_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['insured_period_end_month_3']) && !empty($data['insured_period_end_day_3'])){
+                if (!checkdate($data['insured_period_end_month_3'], $data['insured_period_end_day_3'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_3','2枚目_8_算定対象期間_A_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_4']) && !empty($data['insured_period_end_day_4'])){
+                if (!checkdate($data['insured_period_end_month_4'], $data['insured_period_end_day_4'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_4','2枚目_8_算定対象期間_A_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_5']) && !empty($data['insured_period_end_day_5'])){
+                if (!checkdate($data['insured_period_end_month_5'], $data['insured_period_end_day_5'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_5','2枚目_8_算定対象期間_A_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_6']) && !empty($data['insured_period_end_day_6'])){
+                if (!checkdate($data['insured_period_end_month_6'], $data['insured_period_end_day_6'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_6','2枚目_8_算定対象期間_A_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_7']) && !empty($data['insured_period_end_day_7'])){
+                if (!checkdate($data['insured_period_end_month_7'], $data['insured_period_end_day_7'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_7','2枚目_8_算定対象期間_A_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_8']) && !empty($data['insured_period_end_day_8'])){
+                if (!checkdate($data['insured_period_end_month_8'], $data['insured_period_end_day_8'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_8','2枚目_8_算定対象期間_A_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_9']) && !empty($data['insured_period_end_day_9'])){
+                if (!checkdate($data['insured_period_end_month_9'], $data['insured_period_end_day_9'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_9','2枚目_8_算定対象期間_A_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_10']) && !empty($data['insured_period_end_day_10'])){
+                if (!checkdate($data['insured_period_end_month_10'], $data['insured_period_end_day_10'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_10','2枚目_8_算定対象期間_A_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_11']) && !empty($data['insured_period_end_day_11'])){
+                if (!checkdate($data['insured_period_end_month_11'], $data['insured_period_end_day_11'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_11','2枚目_8_算定対象期間_A_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_12']) && !empty($data['insured_period_end_day_12'])){
+                if (!checkdate($data['insured_period_end_month_12'], $data['insured_period_end_day_12'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_12','2枚目_8_算定対象期間_A_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+                
+            if(!empty($data['salary_payment_period_start_month']) && !empty($data['salary_payment_period_start_day'])){
+                if (!checkdate($data['salary_payment_period_start_month'], $data['salary_payment_period_start_day'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day','2枚目_10_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['salary_payment_period_start_month_1']) && !empty($data['salary_payment_period_start_day_1'])){
+                if (!checkdate($data['salary_payment_period_start_month_1'], $data['salary_payment_period_start_day_1'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_1','2枚目_10_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_2']) && !empty($data['salary_payment_period_start_day_2'])){
+                if (!checkdate($data['salary_payment_period_start_month_2'], $data['salary_payment_period_start_day_2'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_2','2枚目_10_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_3']) && !empty($data['salary_payment_period_start_day_3'])){
+                if (!checkdate($data['salary_payment_period_start_month_3'], $data['salary_payment_period_start_day_3'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_3','2枚目_10_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_4']) && !empty($data['salary_payment_period_start_day_4'])){
+                if (!checkdate($data['salary_payment_period_start_month_4'], $data['salary_payment_period_start_day_4'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_4','2枚目_10_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_5']) && !empty($data['salary_payment_period_start_day_5'])){
+                if (!checkdate($data['salary_payment_period_start_month_5'], $data['salary_payment_period_start_day_5'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_5','2枚目_10_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_6']) && !empty($data['salary_payment_period_start_day_6'])){
+                if (!checkdate($data['salary_payment_period_start_month_6'], $data['salary_payment_period_start_day_6'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_6','2枚目_10_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_7']) && !empty($data['salary_payment_period_start_day_7'])){
+                if (!checkdate($data['salary_payment_period_start_month_7'], $data['salary_payment_period_start_day_7'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_7','2枚目_10_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_8']) && !empty($data['salary_payment_period_start_day_8'])){
+                if (!checkdate($data['salary_payment_period_start_month_8'], $data['salary_payment_period_start_day_8'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_8','2枚目_10_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_9']) && !empty($data['salary_payment_period_start_day_9'])){
+                if (!checkdate($data['salary_payment_period_start_month_9'], $data['salary_payment_period_start_day_9'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_9','2枚目_10_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_10']) && !empty($data['salary_payment_period_start_day_10'])){
+                if (!checkdate($data['salary_payment_period_start_month_10'], $data['salary_payment_period_start_day_10'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_10','2枚目_10_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_11']) && !empty($data['salary_payment_period_start_day_11'])){
+                if (!checkdate($data['salary_payment_period_start_month_11'], $data['salary_payment_period_start_day_11'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_11','2枚目_10_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_12']) && !empty($data['salary_payment_period_start_day_12'])){
+                if (!checkdate($data['salary_payment_period_start_month_12'], $data['salary_payment_period_start_day_12'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_12','2枚目_10_賃金支払対象期間_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_1']) && !empty($data['salary_payment_period_end_day_1'])){
+                if (!checkdate($data['salary_payment_period_end_month_1'], $data['salary_payment_period_end_day_1'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_1','2枚目_10_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_2']) && !empty($data['salary_payment_period_end_day_2'])){
+                if (!checkdate($data['salary_payment_period_end_month_2'], $data['salary_payment_period_end_day_2'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_2','2枚目_10_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['salary_payment_period_end_month_3']) && !empty($data['salary_payment_period_end_day_3'])){
+                if (!checkdate($data['salary_payment_period_end_month_3'], $data['salary_payment_period_end_day_3'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_3','2枚目_10_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_4']) && !empty($data['salary_payment_period_end_day_4'])){
+                if (!checkdate($data['salary_payment_period_end_month_4'], $data['salary_payment_period_end_day_4'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_4','2枚目_10_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_5']) && !empty($data['salary_payment_period_end_day_5'])){
+                if (!checkdate($data['salary_payment_period_end_month_5'], $data['salary_payment_period_end_day_5'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_5','2枚目_10_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_6']) && !empty($data['salary_payment_period_end_day_6'])){
+                if (!checkdate($data['salary_payment_period_end_month_6'], $data['salary_payment_period_end_day_6'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_6','2枚目_10_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_7']) && !empty($data['salary_payment_period_end_day_7'])){
+                if (!checkdate($data['salary_payment_period_end_month_7'], $data['salary_payment_period_end_day_7'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_7','2枚目_10_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_8']) && !empty($data['salary_payment_period_end_day_8'])){
+                if (!checkdate($data['salary_payment_period_end_month_8'], $data['salary_payment_period_end_day_8'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_8','2枚目_10_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_9']) && !empty($data['salary_payment_period_end_day_9'])){
+                if (!checkdate($data['salary_payment_period_end_month_9'], $data['salary_payment_period_end_day_9'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_9','2枚目_10_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_10']) && !empty($data['salary_payment_period_end_day_10'])){
+                if (!checkdate($data['salary_payment_period_end_month_10'], $data['salary_payment_period_end_day_10'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_10','2枚目_10_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_11']) && !empty($data['salary_payment_period_end_day_11'])){
+                if (!checkdate($data['salary_payment_period_end_month_11'], $data['salary_payment_period_end_day_11'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_11','2枚目_10_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_12']) && !empty($data['salary_payment_period_end_day_12'])){
+                if (!checkdate($data['salary_payment_period_end_month_12'], $data['salary_payment_period_end_day_12'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_12','2枚目_10_賃金支払対象期間_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_13']) && !empty($data['insured_period_start_day_13'])){
+                if (!checkdate($data['insured_period_start_month_13'], $data['insured_period_start_day_13'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_13','2枚目(続紙)_8_算定対象期間_A_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_14']) && !empty($data['insured_period_start_day_14'])){
+                if (!checkdate($data['insured_period_start_month_14'], $data['insured_period_start_day_14'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_14','2枚目(続紙)_8_算定対象期間_A_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_15']) && !empty($data['insured_period_start_day_15'])){
+                if (!checkdate($data['insured_period_start_month_15'], $data['insured_period_start_day_15'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_15','2枚目(続紙)_8_算定対象期間_A_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_16']) && !empty($data['insured_period_start_day_16'])){
+                if (!checkdate($data['insured_period_start_month_16'], $data['insured_period_start_day_16'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_16','2枚目(続紙)_8_算定対象期間_A_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_17']) && !empty($data['insured_period_start_day_17'])){
+                if (!checkdate($data['insured_period_start_month_17'], $data['insured_period_start_day_17'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_17','2枚目(続紙)_8_算定対象期間_A_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_18']) && !empty($data['insured_period_start_day_18'])){
+                if (!checkdate($data['insured_period_start_month_18'], $data['insured_period_start_day_18'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_18','2枚目(続紙)_8_算定対象期間_A_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_19']) && !empty($data['insured_period_start_day_19'])){
+                if (!checkdate($data['insured_period_start_month_19'], $data['insured_period_start_day_19'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_19','2枚目(続紙)_8_算定対象期間_A_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_20']) && !empty($data['insured_period_start_day_20'])){
+                if (!checkdate($data['insured_period_start_month_20'], $data['insured_period_start_day_20'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_20','2枚目(続紙)_8_算定対象期間_A_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_21']) && !empty($data['insured_period_start_day_21'])){
+                if (!checkdate($data['insured_period_start_month_21'], $data['insured_period_start_day_21'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_21','2枚目(続紙)_8_算定対象期間_A_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_22']) && !empty($data['insured_period_start_day_22'])){
+                if (!checkdate($data['insured_period_start_month_22'], $data['insured_period_start_day_22'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_22','2枚目(続紙)_8_算定対象期間_A_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_23']) && !empty($data['insured_period_start_day_23'])){
+                if (!checkdate($data['insured_period_start_month_23'], $data['insured_period_start_day_23'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_23','2枚目(続紙)_8_算定対象期間_A_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_start_month_24']) && !empty($data['insured_period_start_day_24'])){
+                if (!checkdate($data['insured_period_start_month_24'], $data['insured_period_start_day_24'], '2000')) {
+                    $validator->errors()->add('insured_period_start_day_24','2枚目(続紙)_8_算定対象期間_A_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_13']) && !empty($data['insured_period_end_day_13'])){
+                if (!checkdate($data['insured_period_end_month_13'], $data['insured_period_end_day_13'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_13','2枚目(続紙)_8_算定対象期間_A_終了日付_1行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_14']) && !empty($data['insured_period_end_day_14'])){
+                if (!checkdate($data['insured_period_end_month_14'], $data['insured_period_end_day_14'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_14','2枚目(続紙)_8_算定対象期間_A_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_15']) && !empty($data['insured_period_end_day_15'])){
+                if (!checkdate($data['insured_period_end_month_15'], $data['insured_period_end_day_15'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_15','2枚目(続紙)_8_算定対象期間_A_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_16']) && !empty($data['insured_period_end_day_16'])){
+                if (!checkdate($data['insured_period_end_month_16'], $data['insured_period_end_day_16'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_16','2枚目(続紙)_8_算定対象期間_A_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_17']) && !empty($data['insured_period_end_day_17'])){
+               if (!checkdate($data['insured_period_end_month_17'], $data['insured_period_end_day_17'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_17','2枚目(続紙)_8_算定対象期間_A_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_18']) && !empty($data['insured_period_end_day_18'])){
+                if (!checkdate($data['insured_period_end_month_18'], $data['insured_period_end_day_18'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_18','2枚目(続紙)_8_算定対象期間_A_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_19']) && !empty($data['insured_period_end_day_19'])){
+                if (!checkdate($data['insured_period_end_month_19'], $data['insured_period_end_day_19'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_19','2枚目(続紙)_8_算定対象期間_A_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_20']) && !empty($data['insured_period_end_day_20'])){
+                if (!checkdate($data['insured_period_end_month_20'], $data['insured_period_end_day_20'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_20','2枚目(続紙)_8_算定対象期間_A_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_21']) && !empty($data['insured_period_end_day_21'])){
+                if (!checkdate($data['insured_period_end_month_21'], $data['insured_period_end_day_21'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_21','2枚目(続紙)_8_算定対象期間_A_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_22']) && !empty($data['insured_period_end_day_22'])){
+                if (!checkdate($data['insured_period_end_month_22'], $data['insured_period_end_day_22'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_22','2枚目(続紙)_8_算定対象期間_A_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_23']) && !empty($data['insured_period_end_day_23'])){
+                if (!checkdate($data['insured_period_end_month_23'], $data['insured_period_end_day_23'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_23','2枚目(続紙)_8_算定対象期間_A_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['insured_period_end_month_24']) && !empty($data['insured_period_end_day_24'])){
+                if (!checkdate($data['insured_period_end_month_24'], $data['insured_period_end_day_24'], '2000')) {
+                    $validator->errors()->add('insured_period_end_day_24','2枚目(続紙)_8_算定対象期間_A_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_13']) && !empty($data['salary_payment_period_start_day_13'])){
+                if (!checkdate($data['salary_payment_period_start_month_13'], $data['salary_payment_period_start_day_13'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_13','2枚目(続紙)_10_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_14']) && !empty($data['salary_payment_period_start_day_14'])){
+                if (!checkdate($data['salary_payment_period_start_month_14'], $data['salary_payment_period_start_day_14'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_14','2枚目(続紙)_10_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_15']) && !empty($data['salary_payment_period_start_day_15'])){
+                if (!checkdate($data['salary_payment_period_start_month_15'], $data['salary_payment_period_start_day_15'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_15','2枚目(続紙)_10_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_16']) && !empty($data['salary_payment_period_start_day_16'])){
+                if (!checkdate($data['salary_payment_period_start_month_16'], $data['salary_payment_period_start_day_16'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_16','2枚目(続紙)_10_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_17']) && !empty($data['salary_payment_period_start_day_17'])){
+                if (!checkdate($data['salary_payment_period_start_month_17'], $data['salary_payment_period_start_day_17'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_17','2枚目(続紙)_10_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_18']) && !empty($data['salary_payment_period_start_day_18'])){
+                if (!checkdate($data['salary_payment_period_start_month_18'], $data['salary_payment_period_start_day_18'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_18','2枚目(続紙)_10_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_19']) && !empty($data['salary_payment_period_start_day_19'])){
+                if (!checkdate($data['salary_payment_period_start_month_19'], $data['salary_payment_period_start_day_19'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_19','2枚目(続紙)_10_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_20']) && !empty($data['salary_payment_period_start_day_20'])){
+                if (!checkdate($data['salary_payment_period_start_month_20'], $data['salary_payment_period_start_day_20'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_20','2枚目(続紙)_10_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_21']) && !empty($data['salary_payment_period_start_day_21'])){
+                if (!checkdate($data['salary_payment_period_start_month_21'], $data['salary_payment_period_start_day_21'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_21','2枚目(続紙)_10_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_22']) && !empty($data['salary_payment_period_start_day_22'])){
+                if (!checkdate($data['salary_payment_period_start_month_22'], $data['salary_payment_period_start_day_22'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_22','2枚目(続紙)_10_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_23']) && !empty($data['salary_payment_period_start_day_23'])){
+                if (!checkdate($data['salary_payment_period_start_month_23'], $data['salary_payment_period_start_day_23'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_23','2枚目(続紙)_10_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_start_month_24']) && !empty($data['salary_payment_period_start_day_24'])){
+                if (!checkdate($data['salary_payment_period_start_month_24'], $data['salary_payment_period_start_day_24'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_start_day_24','2枚目(続紙)_10_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_13']) && !empty($data['salary_payment_period_end_day_13'])){
+                if (!checkdate($data['salary_payment_period_end_month_13'], $data['salary_payment_period_end_day_13'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_13','2枚目(続紙)_10_賃金支払対象期間_終了日付_1行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_14']) && !empty($data['salary_payment_period_end_day_14'])){
+                if (!checkdate($data['salary_payment_period_end_month_14'], $data['salary_payment_period_end_day_14'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_14','2枚目(続紙)_10_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_15']) && !empty($data['salary_payment_period_end_day_15'])){
+                if (!checkdate($data['salary_payment_period_end_month_15'], $data['salary_payment_period_end_day_15'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_15','2枚目(続紙)_10_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_16']) && !empty($data['salary_payment_period_end_day_16'])){
+                if (!checkdate($data['salary_payment_period_end_month_16'], $data['salary_payment_period_end_day_16'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_16','2枚目(続紙)_10_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_17']) && !empty($data['salary_payment_period_end_day_17'])){
+                if (!checkdate($data['salary_payment_period_end_month_17'], $data['salary_payment_period_end_day_17'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_17','2枚目(続紙)_10_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_18']) && !empty($data['salary_payment_period_end_day_18'])){
+                if (!checkdate($data['salary_payment_period_end_month_18'], $data['salary_payment_period_end_day_18'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_18','2枚目(続紙)_10_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_19']) && !empty($data['salary_payment_period_end_day_19'])){
+                if (!checkdate($data['salary_payment_period_end_month_19'], $data['salary_payment_period_end_day_19'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_19','2枚目(続紙)_10_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_20']) && !empty($data['salary_payment_period_end_day_20'])){
+                if (!checkdate($data['salary_payment_period_end_month_20'], $data['salary_payment_period_end_day_20'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_20','2枚目(続紙)_10_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_21']) && !empty($data['salary_payment_period_end_day_21'])){
+                if (!checkdate($data['salary_payment_period_end_month_21'], $data['salary_payment_period_end_day_21'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_21','2枚目(続紙)_10_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_22']) && !empty($data['salary_payment_period_end_day_22'])){
+                if (!checkdate($data['salary_payment_period_end_month_22'], $data['salary_payment_period_end_day_22'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_22','2枚目(続紙)_10_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_23']) && !empty($data['salary_payment_period_end_day_23'])){
+                if (!checkdate($data['salary_payment_period_end_month_23'], $data['salary_payment_period_end_day_23'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_23','2枚目(続紙)_10_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['salary_payment_period_end_month_24']) && !empty($data['salary_payment_period_end_day_24'])){
+                if (!checkdate($data['salary_payment_period_end_month_24'], $data['salary_payment_period_end_day_24'], '2000')) {
+                    $validator->errors()->add('salary_payment_period_end_day_24','2枚目(続紙)_10_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        });
+    }
+
+    
+    public function messages()
+    {
+        return[
+            'the_day_after_retirement_date_month.required_with' => '2枚目_算定対象期間_離職日の翌日_月を入力してください。',
+            'the_day_after_retirement_date_day.required_with' => '2枚目_算定対象期間_離職日の翌日_日を入力してください。',
+            'insured_period_start_month.required_with' => '2枚目_8_算定対象期間_A_開始月_1行目を入力してください。',
+            'insured_period_start_month_1.required_with' => '2枚目_8_算定対象期間_A_開始月_2行目を入力してください。',
+            'insured_period_start_month_2.required_with' => '2枚目_8_算定対象期間_A_開始月_3行目を入力してください。',
+            'insured_period_start_month_3.required_with' => '2枚目_8_算定対象期間_A_開始月_4行目を入力してください。',
+            'insured_period_start_month_4.required_with' => '2枚目_8_算定対象期間_A_開始月_5行目を入力してください。',
+            'insured_period_start_month_5.required_with' => '2枚目_8_算定対象期間_A_開始月_6行目を入力してください。',
+            'insured_period_start_month_6.required_with' => '2枚目_8_算定対象期間_A_開始月_7行目を入力してください。',
+            'insured_period_start_month_7.required_with' => '2枚目_8_算定対象期間_A_開始月_8行目を入力してください。',
+            'insured_period_start_month_8.required_with' => '2枚目_8_算定対象期間_A_開始月_9行目を入力してください。',
+            'insured_period_start_month_9.required_with' => '2枚目_8_算定対象期間_A_開始月_10行目を入力してください。',
+            'insured_period_start_month_10.required_with' => '2枚目_8_算定対象期間_A_開始月_11行目を入力してください。',
+            'insured_period_start_month_11.required_with' => '2枚目_8_算定対象期間_A_開始月_12行目を入力してください。',
+            'insured_period_start_month_12.required_with' => '2枚目_8_算定対象期間_A_開始月_13行目を入力してください。',
+            'insured_period_start_day.required_with' => '2枚目_8_算定対象期間_A_開始日_1行目を入力してください。',
+            'insured_period_start_day_1.required_with' => '2枚目_8_算定対象期間_A_開始日_2行目を入力してください。',
+            'insured_period_start_day_2.required_with' => '2枚目_8_算定対象期間_A_開始日_3行目を入力してください。',
+            'insured_period_start_day_3.required_with' => '2枚目_8_算定対象期間_A_開始日_4行目を入力してください。',
+            'insured_period_start_day_4.required_with' => '2枚目_8_算定対象期間_A_開始日_5行目を入力してください。',
+            'insured_period_start_day_5.required_with' => '2枚目_8_算定対象期間_A_開始日_6行目を入力してください。',
+            'insured_period_start_day_6.required_with' => '2枚目_8_算定対象期間_A_開始日_7行目を入力してください。',
+            'insured_period_start_day_7.required_with' => '2枚目_8_算定対象期間_A_開始日_8行目を入力してください。',
+            'insured_period_start_day_8.required_with' => '2枚目_8_算定対象期間_A_開始日_9行目を入力してください。',
+            'insured_period_start_day_9.required_with' => '2枚目_8_算定対象期間_A_開始日_10行目を入力してください。',
+            'insured_period_start_day_10.required_with' => '2枚目_8_算定対象期間_A_開始日_11行目を入力してください。',
+            'insured_period_start_day_11.required_with' => '2枚目_8_算定対象期間_A_開始日_12行目を入力してください。',
+            'insured_period_start_day_12.required_with' => '2枚目_8_算定対象期間_A_開始日_13行目を入力してください。',
+            'insured_period_end_month_1.required_with' => '2枚目_8_算定対象期間_A_終了月_2行目を入力してください。',
+            'insured_period_end_month_2.required_with' => '2枚目_8_算定対象期間_A_終了月_3行目を入力してください。',
+            'insured_period_end_month_3.required_with' => '2枚目_8_算定対象期間_A_終了月_4行目を入力してください。',
+            'insured_period_end_month_4.required_with' => '2枚目_8_算定対象期間_A_終了月_5行目を入力してください。',
+            'insured_period_end_month_5.required_with' => '2枚目_8_算定対象期間_A_終了月_6行目を入力してください。',
+            'insured_period_end_month_6.required_with' => '2枚目_8_算定対象期間_A_終了月_7行目を入力してください。',
+            'insured_period_end_month_7.required_with' => '2枚目_8_算定対象期間_A_終了月_8行目を入力してください。',
+            'insured_period_end_month_8.required_with' => '2枚目_8_算定対象期間_A_終了月_9行目を入力してください。',
+            'insured_period_end_month_9.required_with' => '2枚目_8_算定対象期間_A_終了月_10行目を入力してください。',
+            'insured_period_end_month_10.required_with' => '2枚目_8_算定対象期間_A_終了月_11行目を入力してください。',
+            'insured_period_end_month_11.required_with' => '2枚目_8_算定対象期間_A_終了月_12行目を入力してください。',
+            'insured_period_end_month_12.required_with' => '2枚目_8_算定対象期間_A_終了月_13行目を入力してください。',
+            'insured_period_end_day_1.required_with' => '2枚目_8_算定対象期間_A_終了日_2行目を入力してください。',
+            'insured_period_end_day_2.required_with' => '2枚目_8_算定対象期間_A_終了日_3行目を入力してください。',
+            'insured_period_end_day_3.required_with' => '2枚目_8_算定対象期間_A_終了日_4行目を入力してください。',
+            'insured_period_end_day_4.required_with' => '2枚目_8_算定対象期間_A_終了日_5行目を入力してください。',
+            'insured_period_end_day_5.required_with' => '2枚目_8_算定対象期間_A_終了日_6行目を入力してください。',
+            'insured_period_end_day_6.required_with' => '2枚目_8_算定対象期間_A_終了日_7行目を入力してください。',
+            'insured_period_end_day_7.required_with' => '2枚目_8_算定対象期間_A_終了日_8行目を入力してください。',
+            'insured_period_end_day_8.required_with' => '2枚目_8_算定対象期間_A_終了日_9行目を入力してください。',
+            'insured_period_end_day_9.required_with' => '2枚目_8_算定対象期間_A_終了日_10行目を入力してください。',
+            'insured_period_end_day_10.required_with' => '2枚目_8_算定対象期間_A_終了日_11行目を入力してください。',
+            'insured_period_end_day_11.required_with' => '2枚目_8_算定対象期間_A_終了日_12行目を入力してください。',
+            'insured_period_end_day_12.required_with' => '2枚目_8_算定対象期間_A_終了日_13行目を入力してください。',
+            'salary_payment_period_start_month.required_with' => '2枚目_10_賃金支払対象期間_開始月_1行目を入力してください。',
+            'salary_payment_period_start_month_1.required_with' => '2枚目_10_賃金支払対象期間_開始月_2行目を入力してください。',
+            'salary_payment_period_start_month_2.required_with' => '2枚目_10_賃金支払対象期間_開始月_3行目を入力してください。',
+            'salary_payment_period_start_month_3.required_with' => '2枚目_10_賃金支払対象期間_開始月_4行目を入力してください。',
+            'salary_payment_period_start_month_4.required_with' => '2枚目_10_賃金支払対象期間_開始月_5行目を入力してください。',
+            'salary_payment_period_start_month_5.required_with' => '2枚目_10_賃金支払対象期間_開始月_6行目を入力してください。',
+            'salary_payment_period_start_month_6.required_with' => '2枚目_10_賃金支払対象期間_開始月_7行目を入力してください。',
+            'salary_payment_period_start_month_7.required_with' => '2枚目_10_賃金支払対象期間_開始月_8行目を入力してください。',
+            'salary_payment_period_start_month_8.required_with' => '2枚目_10_賃金支払対象期間_開始月_9行目を入力してください。',
+            'salary_payment_period_start_month_9.required_with' => '2枚目_10_賃金支払対象期間_開始月_10行目を入力してください。',
+            'salary_payment_period_start_month_10.required_with' => '2枚目_10_賃金支払対象期間_開始月_11行目を入力してください。',
+            'salary_payment_period_start_month_11.required_with' => '2枚目_10_賃金支払対象期間_開始月_12行目を入力してください。',
+            'salary_payment_period_start_month_12.required_with' => '2枚目_10_賃金支払対象期間_開始月_13行目を入力してください。',
+            'salary_payment_period_start_day.required_with' => '2枚目_10_賃金支払対象期間_開始日_1行目を入力してください。',
+            'salary_payment_period_start_day_1.required_with' => '2枚目_10_賃金支払対象期間_開始日_2行目を入力してください。',
+            'salary_payment_period_start_day_2.required_with' => '2枚目_10_賃金支払対象期間_開始日_3行目を入力してください。',
+            'salary_payment_period_start_day_3.required_with' => '2枚目_10_賃金支払対象期間_開始日_4行目を入力してください。',
+            'salary_payment_period_start_day_4.required_with' => '2枚目_10_賃金支払対象期間_開始日_5行目を入力してください。',
+            'salary_payment_period_start_day_5.required_with' => '2枚目_10_賃金支払対象期間_開始日_6行目を入力してください。',
+            'salary_payment_period_start_day_6.required_with' => '2枚目_10_賃金支払対象期間_開始日_7行目を入力してください。',
+            'salary_payment_period_start_day_7.required_with' => '2枚目_10_賃金支払対象期間_開始日_8行目を入力してください。',
+            'salary_payment_period_start_day_8.required_with' => '2枚目_10_賃金支払対象期間_開始日_9行目を入力してください。',
+            'salary_payment_period_start_day_9.required_with' => '2枚目_10_賃金支払対象期間_開始日_10行目を入力してください。',
+            'salary_payment_period_start_day_10.required_with' => '2枚目_10_賃金支払対象期間_開始日_11行目を入力してください。',
+            'salary_payment_period_start_day_11.required_with' => '2枚目_10_賃金支払対象期間_開始日_12行目を入力してください。',
+            'salary_payment_period_start_day_12.required_with' => '2枚目_10_賃金支払対象期間_開始日_13行目を入力してください。',
+            'salary_payment_period_end_month_1.required_with' => '2枚目_10_賃金支払対象期間_終了月_2行目を入力してください。',
+            'salary_payment_period_end_month_2.required_with' => '2枚目_10_賃金支払対象期間_終了月_3行目を入力してください。',
+            'salary_payment_period_end_month_3.required_with' => '2枚目_10_賃金支払対象期間_終了月_4行目を入力してください。',
+            'salary_payment_period_end_month_4.required_with' => '2枚目_10_賃金支払対象期間_終了月_5行目を入力してください。',
+            'salary_payment_period_end_month_5.required_with' => '2枚目_10_賃金支払対象期間_終了月_6行目を入力してください。',
+            'salary_payment_period_end_month_6.required_with' => '2枚目_10_賃金支払対象期間_終了月_7行目を入力してください。',
+            'salary_payment_period_end_month_7.required_with' => '2枚目_10_賃金支払対象期間_終了月_8行目を入力してください。',
+            'salary_payment_period_end_month_8.required_with' => '2枚目_10_賃金支払対象期間_終了月_9行目を入力してください。',
+            'salary_payment_period_end_month_9.required_with' => '2枚目_10_賃金支払対象期間_終了月_10行目を入力してください。',
+            'salary_payment_period_end_month_10.required_with' => '2枚目_10_賃金支払対象期間_終了月_11行目を入力してください。',
+            'salary_payment_period_end_month_11.required_with' => '2枚目_10_賃金支払対象期間_終了月_12行目を入力してください。',
+            'salary_payment_period_end_month_12.required_with' => '2枚目_10_賃金支払対象期間_終了月_13行目を入力してください。',
+            'salary_payment_period_end_day_1.required_with' => '2枚目_10_賃金支払対象期間_終了日_2行目を入力してください。',
+            'salary_payment_period_end_day_2.required_with' => '2枚目_10_賃金支払対象期間_終了日_3行目を入力してください。',
+            'salary_payment_period_end_day_3.required_with' => '2枚目_10_賃金支払対象期間_終了日_4行目を入力してください。',
+            'salary_payment_period_end_day_4.required_with' => '2枚目_10_賃金支払対象期間_終了日_5行目を入力してください。',
+            'salary_payment_period_end_day_5.required_with' => '2枚目_10_賃金支払対象期間_終了日_6行目を入力してください。',
+            'salary_payment_period_end_day_6.required_with' => '2枚目_10_賃金支払対象期間_終了日_7行目を入力してください。',
+            'salary_payment_period_end_day_7.required_with' => '2枚目_10_賃金支払対象期間_終了日_8行目を入力してください。',
+            'salary_payment_period_end_day_8.required_with' => '2枚目_10_賃金支払対象期間_終了日_9行目を入力してください。',
+            'salary_payment_period_end_day_9.required_with' => '2枚目_10_賃金支払対象期間_終了日_10行目を入力してください。',
+            'salary_payment_period_end_day_10.required_with' => '2枚目_10_賃金支払対象期間_終了日_11行目を入力してください。',
+            'salary_payment_period_end_day_11.required_with' => '2枚目_10_賃金支払対象期間_終了日_12行目を入力してください。',
+            'salary_payment_period_end_day_12.required_with' => '2枚目_10_賃金支払対象期間_終了日_13行目を入力してください。',
+            'insured_period_start_month_13.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_1行目を入力してください。',
+            'insured_period_start_month_14.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_2行目を入力してください。',
+            'insured_period_start_month_15.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_3行目を入力してください。',
+            'insured_period_start_month_16.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_4行目を入力してください。',
+            'insured_period_start_month_17.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_5行目を入力してください。',
+            'insured_period_start_month_18.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_6行目を入力してください。',
+            'insured_period_start_month_19.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_7行目を入力してください。',
+            'insured_period_start_month_20.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_8行目を入力してください。',
+            'insured_period_start_month_21.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_9行目を入力してください。',
+            'insured_period_start_month_22.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_10行目を入力してください。',
+            'insured_period_start_month_23.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_11行目を入力してください。',
+            'insured_period_start_month_24.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始月_12行目を入力してください。',
+            'insured_period_start_day_13.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_1行目を入力してください。',
+            'insured_period_start_day_14.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_2行目を入力してください。',
+            'insured_period_start_day_15.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_3行目を入力してください。',
+            'insured_period_start_day_16.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_4行目を入力してください。',
+            'insured_period_start_day_17.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_5行目を入力してください。',
+            'insured_period_start_day_18.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_6行目を入力してください。',
+            'insured_period_start_day_19.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_7行目を入力してください。',
+            'insured_period_start_day_20.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_8行目を入力してください。',
+            'insured_period_start_day_21.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_9行目を入力してください。',
+            'insured_period_start_day_22.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_10行目を入力してください。',
+            'insured_period_start_day_23.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_11行目を入力してください。',
+            'insured_period_start_day_24.required_with' => '2枚目(続紙)_8_算定対象期間_A_開始日_12行目を入力してください。',
+            'insured_period_end_month_13.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_1行目を入力してください。',
+            'insured_period_end_month_14.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_2行目を入力してください。',
+            'insured_period_end_month_15.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_3行目を入力してください。',
+            'insured_period_end_month_16.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_4行目を入力してください。',
+            'insured_period_end_month_17.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_5行目を入力してください。',
+            'insured_period_end_month_18.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_6行目を入力してください。',
+            'insured_period_end_month_19.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_7行目を入力してください。',
+            'insured_period_end_month_20.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_8行目を入力してください。',
+            'insured_period_end_month_21.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_9行目を入力してください。',
+            'insured_period_end_month_22.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_10行目を入力してください。',
+            'insured_period_end_month_23.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_11行目を入力してください。',
+            'insured_period_end_month_24.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了月_12行目を入力してください。',
+            'insured_period_end_day_13.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_1行目を入力してください。',
+            'insured_period_end_day_14.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_2行目を入力してください。',
+            'insured_period_end_day_15.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_3行目を入力してください。',
+            'insured_period_end_day_16.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_4行目を入力してください。',
+            'insured_period_end_day_17.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_5行目を入力してください。',
+            'insured_period_end_day_18.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_6行目を入力してください。',
+            'insured_period_end_day_19.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_7行目を入力してください。',
+            'insured_period_end_day_20.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_8行目を入力してください。',
+            'insured_period_end_day_21.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_9行目を入力してください。',
+            'insured_period_end_day_22.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_10行目を入力してください。',
+            'insured_period_end_day_23.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_11行目を入力してください。',
+            'insured_period_end_day_24.required_with' => '2枚目(続紙)_8_算定対象期間_A_終了日_12行目を入力してください。',
+            'salary_payment_period_start_month_13.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_1行目を入力してください。',
+            'salary_payment_period_start_month_14.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_2行目を入力してください。',
+            'salary_payment_period_start_month_15.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_3行目を入力してください。',
+            'salary_payment_period_start_month_16.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_4行目を入力してください。',
+            'salary_payment_period_start_month_17.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_5行目を入力してください。',
+            'salary_payment_period_start_month_18.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_6行目を入力してください。',
+            'salary_payment_period_start_month_19.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_7行目を入力してください。',
+            'salary_payment_period_start_month_20.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_8行目を入力してください。',
+            'salary_payment_period_start_month_21.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_9行目を入力してください。',
+            'salary_payment_period_start_month_22.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_10行目を入力してください。',
+            'salary_payment_period_start_month_23.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_11行目を入力してください。',
+            'salary_payment_period_start_month_24.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始月_12行目を入力してください。',
+            'salary_payment_period_start_day_13.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_1行目を入力してください。',
+            'salary_payment_period_start_day_14.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_2行目を入力してください。',
+            'salary_payment_period_start_day_15.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_3行目を入力してください。',
+            'salary_payment_period_start_day_16.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_4行目を入力してください。',
+            'salary_payment_period_start_day_17.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_5行目を入力してください。',
+            'salary_payment_period_start_day_18.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_6行目を入力してください。',
+            'salary_payment_period_start_day_19.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_7行目を入力してください。',
+            'salary_payment_period_start_day_20.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_8行目を入力してください。',
+            'salary_payment_period_start_day_21.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_9行目を入力してください。',
+            'salary_payment_period_start_day_22.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_10行目を入力してください。',
+            'salary_payment_period_start_day_23.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_11行目を入力してください。',
+            'salary_payment_period_start_day_24.required_with' => '2枚目(続紙)_10_賃金支払対象期間_開始日_12行目を入力してください。',
+            'salary_payment_period_end_month_13.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_1行目を入力してください。',
+            'salary_payment_period_end_month_14.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_2行目を入力してください。',
+            'salary_payment_period_end_month_15.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_3行目を入力してください。',
+            'salary_payment_period_end_month_16.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_4行目を入力してください。',
+            'salary_payment_period_end_month_17.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_5行目を入力してください。',
+            'salary_payment_period_end_month_18.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_6行目を入力してください。',
+            'salary_payment_period_end_month_19.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_7行目を入力してください。',
+            'salary_payment_period_end_month_20.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_8行目を入力してください。',
+            'salary_payment_period_end_month_21.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_9行目を入力してください。',
+            'salary_payment_period_end_month_22.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_10行目を入力してください。',
+            'salary_payment_period_end_month_23.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_11行目を入力してください。',
+            'salary_payment_period_end_month_24.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了月_12行目を入力してください。',
+            'salary_payment_period_end_day_13.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_1行目を入力してください。',
+            'salary_payment_period_end_day_14.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_2行目を入力してください。',
+            'salary_payment_period_end_day_15.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_3行目を入力してください。',
+            'salary_payment_period_end_day_16.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_4行目を入力してください。',
+            'salary_payment_period_end_day_17.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_5行目を入力してください。',
+            'salary_payment_period_end_day_18.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_6行目を入力してください。',
+            'salary_payment_period_end_day_19.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_7行目を入力してください。',
+            'salary_payment_period_end_day_20.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_8行目を入力してください。',
+            'salary_payment_period_end_day_21.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_9行目を入力してください。',
+            'salary_payment_period_end_day_22.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_10行目を入力してください。',
+            'salary_payment_period_end_day_23.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_11行目を入力してください。',
+            'salary_payment_period_end_day_24.required_with' => '2枚目(続紙)_10_賃金支払対象期間_終了日_12行目を入力してください。',
+        ];
+    }
+
     public function attributes()
     {
         return [

@@ -32,10 +32,6 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'insurance_office_no_cd' => 'nullable|string|regex:/^[0-9]{1}$/u',
             'employment_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+\z/u',
             'employment_fullname_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'caregiver_leave_start_date_era' => 'nullable|string|max:2',
-            'caregiver_leave_start_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'caregiver_leave_start_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'caregiver_leave_start_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'branch_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'branch_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
             'branch_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -49,68 +45,70 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'employment_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'entrepreneur_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
             'entrepreneur_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'calculation_month_start_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'caregiver_leave_start_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_start_date_day',
+            'caregiver_leave_start_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_start_date_month',
+            'calculation_month_start_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1',
+            'calculation_day_start_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1',
+            'calculation_month_start_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_1',
+            'calculation_day_start_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_1',
+            'calculation_month_end_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_1',
+            'calculation_day_end_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_1',
+            'calculation_month_start_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_2',
+            'calculation_day_start_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_2',
+            'calculation_month_end_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_2',
+            'calculation_day_end_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_2',
+            'calculation_month_start_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_3',
+            'calculation_day_start_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_3',
+            'calculation_month_end_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_3',
+            'calculation_day_end_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_3',
+            'calculation_month_start_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_4',
+            'calculation_day_start_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_4',
+            'calculation_month_end_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_4',
+            'calculation_day_end_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_4',
+            'calculation_month_start_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_5',
+            'calculation_day_start_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_5',
+            'calculation_month_end_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_5',
+            'calculation_day_end_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_5',
+            'calculation_month_start_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_6',
+            'calculation_day_start_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_6',
+            'calculation_month_end_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_6',
+            'calculation_day_end_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_6',
+            'calculation_month_start_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_7',
+            'calculation_day_start_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_7',
+            'calculation_month_end_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_7',
+            'calculation_day_end_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_7',
+            'calculation_month_start_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_8',
+            'calculation_day_start_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_8',
+            'calculation_month_end_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_8',
+            'calculation_day_end_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_8',
+            'calculation_month_start_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_9',
+            'calculation_day_start_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_9',
+            'calculation_month_end_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_9',
+            'calculation_day_end_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_9',
+            'calculation_month_start_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_10',
+            'calculation_day_start_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_10',
+            'calculation_month_end_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_10',
+            'calculation_day_end_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_10',
+            'calculation_month_start_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_11',
+            'calculation_day_start_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_11',
+            'calculation_month_end_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_11',
+            'calculation_day_end_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_11',
+            'calculation_month_start_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_12',
+            'calculation_day_start_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_12',
+            'calculation_month_end_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_12',
+            'calculation_day_end_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_12',
+            'calculation_month_start_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_13',
+            'calculation_day_start_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_13',
+            'calculation_month_end_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_13',
+            'calculation_day_end_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_13',
+            'calculation_month_start_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_14',
+            'calculation_day_start_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_14',
+            'calculation_month_end_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_14',
+            'calculation_day_end_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_14',
+            'calculation_month_start_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_1_15',
+            'calculation_day_start_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_1_15',
+            'calculation_month_end_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_1_15',
+            'calculation_day_end_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_1_15',
             'calculation_basic_period_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -127,68 +125,68 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'calculation_basic_period_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'payment_month_start_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1',
+            'payment_day_start_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1',
+            'payment_month_start_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_1',
+            'payment_day_start_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_1',
+            'payment_month_end_1_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_1',
+            'payment_day_end_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_1',
+            'payment_month_start_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_2',
+            'payment_day_start_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_2',
+            'payment_month_end_1_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_2',
+            'payment_day_end_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_2',
+            'payment_month_start_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_3',
+            'payment_day_start_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_3',
+            'payment_month_end_1_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_3',
+            'payment_day_end_1_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_3',
+            'payment_month_start_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_4',
+            'payment_day_start_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_4',
+            'payment_month_end_1_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_4',
+            'payment_day_end_1_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_4',
+            'payment_month_start_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_5',
+            'payment_day_start_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_5',
+            'payment_month_end_1_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_5',
+            'payment_day_end_1_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_5',
+            'payment_month_start_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_6',
+            'payment_day_start_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_6',
+            'payment_month_end_1_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_6',
+            'payment_day_end_1_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_6',
+            'payment_month_start_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_7',
+            'payment_day_start_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_7',
+            'payment_month_end_1_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_7',
+            'payment_day_end_1_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_7',
+            'payment_month_start_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_8',
+            'payment_day_start_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_8',
+            'payment_month_end_1_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_8',
+            'payment_day_end_1_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_8',
+            'payment_month_start_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_9',
+            'payment_day_start_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_9',
+            'payment_month_end_1_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_9',
+            'payment_day_end_1_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_9',
+            'payment_month_start_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_10',
+            'payment_day_start_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_10',
+            'payment_month_end_1_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_10',
+            'payment_day_end_1_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_10',
+            'payment_month_start_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_11',
+            'payment_day_start_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_11',
+            'payment_month_end_1_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_11',
+            'payment_day_end_1_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_11',
+            'payment_month_start_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_12',
+            'payment_day_start_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_12',
+            'payment_month_end_1_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_12',
+            'payment_day_end_1_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_12',
+            'payment_month_start_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_13',
+            'payment_day_start_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_13',
+            'payment_month_end_1_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_13',
+            'payment_day_end_1_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_13',
+            'payment_month_start_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_14',
+            'payment_day_start_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_14',
+            'payment_month_end_1_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_14',
+            'payment_day_end_1_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_14',
+            'payment_month_start_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_1_15',
+            'payment_day_start_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_1_15',
+            'payment_month_end_1_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_1_15',
+            'payment_day_end_1_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_1_15',
             'payment_basic_period_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'payment_basic_period_1_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'payment_basic_period_1_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -272,9 +270,9 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'wage_note_1' => 'nullable|string|max:255',
             'employment_period_regulation' => 'nullable|string|in:定めなし,定めあり',
             'employment_period_japan_era' => 'nullable|string|max:2',
-            'employment_period_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'employment_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'employment_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'employment_period_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:employment_period_day,employment_period_month',
+            'employment_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:employment_period_year,employment_period_day',
+            'employment_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:employment_period_year,employment_period_month',
             'including_leave_start_date_year' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'including_leave_start_date_month' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'labor_consultant_note' => 'nullable|string|max:255',
@@ -287,66 +285,66 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'calculation_month_start_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_start_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_start_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'calculation_month_end_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'calculation_day_end_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'calculation_month_start_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_1',
+            'calculation_day_start_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_1',
+            'calculation_month_end_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_1',
+            'calculation_day_end_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_1',
+            'calculation_month_start_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_2',
+            'calculation_day_start_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_2',
+            'calculation_month_end_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_2',
+            'calculation_day_end_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_2',
+            'calculation_month_start_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_3',
+            'calculation_day_start_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_3',
+            'calculation_month_end_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_3',
+            'calculation_day_end_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_3',
+            'calculation_month_start_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_4',
+            'calculation_day_start_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_4',
+            'calculation_month_end_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_4',
+            'calculation_day_end_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_4',
+            'calculation_month_start_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_5',
+            'calculation_day_start_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_5',
+            'calculation_month_end_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_5',
+            'calculation_day_end_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_5',
+            'calculation_month_start_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_6',
+            'calculation_day_start_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_6',
+            'calculation_month_end_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_6',
+            'calculation_day_end_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_6',
+            'calculation_month_start_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_7',
+            'calculation_day_start_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_7',
+            'calculation_month_end_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_7',
+            'calculation_day_end_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_7',
+            'calculation_month_start_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_8',
+            'calculation_day_start_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_8',
+            'calculation_month_end_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_8',
+            'calculation_day_end_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_8',
+            'calculation_month_start_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_9',
+            'calculation_day_start_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_9',
+            'calculation_month_end_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_9',
+            'calculation_day_end_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_9',
+            'calculation_month_start_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_10',
+            'calculation_day_start_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_10',
+            'calculation_month_end_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_10',
+            'calculation_day_end_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_10',
+            'calculation_month_start_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_11',
+            'calculation_day_start_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_11',
+            'calculation_month_end_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_11',
+            'calculation_day_end_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_11',
+            'calculation_month_start_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_12',
+            'calculation_day_start_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_12',
+            'calculation_month_end_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_12',
+            'calculation_day_end_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_12',
+            'calculation_month_start_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_13',
+            'calculation_day_start_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_13',
+            'calculation_month_end_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_13',
+            'calculation_day_end_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_13',
+            'calculation_month_start_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_14',
+            'calculation_day_start_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_14',
+            'calculation_month_end_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_14',
+            'calculation_day_end_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_14',
+            'calculation_month_start_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_start_2_15',
+            'calculation_day_start_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_start_2_15',
+            'calculation_month_end_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_day_end_2_15',
+            'calculation_day_end_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:calculation_month_end_2_15',
             'calculation_basic_period_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -362,66 +360,66 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'calculation_basic_period_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'calculation_basic_period_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_start_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_start_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_month_end_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_day_end_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'payment_month_start_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_1',
+            'payment_day_start_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_1',
+            'payment_month_end_2_1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_1',
+            'payment_day_end_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_1',
+            'payment_month_start_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_2',
+            'payment_day_start_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_2',
+            'payment_month_end_2_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_2',
+            'payment_day_end_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_2',
+            'payment_month_start_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_3',
+            'payment_day_start_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_3',
+            'payment_month_end_2_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_3',
+            'payment_day_end_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_3',
+            'payment_month_start_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_4',
+            'payment_day_start_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_4',
+            'payment_month_end_2_4' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_4',
+            'payment_day_end_2_4' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_4',
+            'payment_month_start_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_5',
+            'payment_day_start_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_5',
+            'payment_month_end_2_5' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_5',
+            'payment_day_end_2_5' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_5',
+            'payment_month_start_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_6',
+            'payment_day_start_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_6',
+            'payment_month_end_2_6' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_6',
+            'payment_day_end_2_6' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_6',
+            'payment_month_start_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_7',
+            'payment_day_start_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_7',
+            'payment_month_end_2_7' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_7',
+            'payment_day_end_2_7' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_7',
+            'payment_month_start_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_8',
+            'payment_day_start_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_8',
+            'payment_month_end_2_8' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_8',
+            'payment_day_end_2_8' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_8',
+            'payment_month_start_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_9',
+            'payment_day_start_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_9',
+            'payment_month_end_2_9' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_9',
+            'payment_day_end_2_9' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_9',
+            'payment_month_start_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_10',
+            'payment_day_start_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_10',
+            'payment_month_end_2_10' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_10',
+            'payment_day_end_2_10' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_10',
+            'payment_month_start_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_11',
+            'payment_day_start_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_11',
+            'payment_month_end_2_11' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_11',
+            'payment_day_end_2_11' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_11',
+            'payment_month_start_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_12',
+            'payment_day_start_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_12',
+            'payment_month_end_2_12' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_12',
+            'payment_day_end_2_12' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_12',
+            'payment_month_start_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_13',
+            'payment_day_start_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_13',
+            'payment_month_end_2_13' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_13',
+            'payment_day_end_2_13' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_13',
+            'payment_month_start_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_14',
+            'payment_day_start_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_14',
+            'payment_month_end_2_14' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_14',
+            'payment_day_end_2_14' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_14',
+            'payment_month_start_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_start_2_15',
+            'payment_day_start_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_start_2_15',
+            'payment_month_end_2_15' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_day_end_2_15',
+            'payment_day_end_2_15' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_month_end_2_15',
             'payment_basic_period_2_1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'payment_basic_period_2_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'payment_basic_period_2_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -503,10 +501,1017 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+        
+            if(!empty($data['employment_period_month']) && !empty($data['employment_period_day'])){
+                if (!checkdate($data['employment_period_month'], $data['employment_period_day'], '2000')) {
+                    $validator->errors()->add('employment_period_month','2枚目_14_（休業開始時における）雇用期間は正しい日付を入力してください。');
+                }
+            }
+            if ($data['employment_period_japan_era'] === '平成') {
+                if (
+                    ($$data['employment_period_japan_era_year'] == 1 && ($data['employment_period_month'] < 1 || ($data['employment_period_month'] == 1 && $data['employment_period_day'] < 8))) ||
+                    ($$data['employment_period_japan_era_year'] == 31 && ($data['employment_period_month'] > 4 || ($data['employment_period_month'] == 4 && $data['employment_period_day'] > 30))) ||
+                    ($$data['employment_period_japan_era_year'] > 31)
+                ) {
+                    $validator->errors()->add('dateOfAttainmentage60Day', '2枚目_6_60歳に達した日の年の年月日は正しい日付を入力してください。');
+                }
+            } elseif($data['employment_period_japan_era'] === '令和'){
+                if ($$data['employment_period_japan_era_year'] == 1 && $data['employment_period_month'] < 5) {
+                    $validator->errors()->add('dateOfAttainmentage60Day', '2枚目_6_60歳に達した日の年の年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_1']) && !empty($data['calculation_day_start_1'])){
+                if (!checkdate($data['calculation_month_start_1'], $data['calculation_day_start_1'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1','2枚目_7_算定対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_1_1']) && !empty($data['calculation_day_start_1_1'])){
+                if (!checkdate($data['calculation_month_start_1_1'], $data['calculation_day_start_1_1'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_1','2枚目_7_算定対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_1_2']) && !empty($data['calculation_day_start_1_2'])){
+                if (!checkdate($data['calculation_month_start_1_2'], $data['calculation_day_start_1_2'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_2','2枚目_7_算定対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_3']) && !empty($data['calculation_day_start_1_3'])){
+                if (!checkdate($data['calculation_month_start_1_3'], $data['calculation_day_start_1_3'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_3','2枚目_7_算定対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_4']) && !empty($data['calculation_day_start_1_4'])){
+                if (!checkdate($data['calculation_month_start_1_4'], $data['calculation_day_start_1_4'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_4','2枚目_7_算定対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_5']) && !empty($data['calculation_day_start_1_5'])){
+                if (!checkdate($data['calculation_month_start_1_5'], $data['calculation_day_start_1_5'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_5','2枚目_7_算定対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_6']) && !empty($data['calculation_day_start_1_6'])){
+                if (!checkdate($data['calculation_month_start_1_6'], $data['calculation_day_start_1_6'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_6','2枚目_7_算定対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_7']) && !empty($data['calculation_day_start_1_7'])){
+                if (!checkdate($data['calculation_month_start_1_7'], $data['calculation_day_start_1_7'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_7','2枚目_7_算定対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_8']) && !empty($data['calculation_day_start_1_8'])){
+                if (!checkdate($data['calculation_month_start_1_8'], $data['calculation_day_start_1_8'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_8','2枚目_7_算定対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_9']) && !empty($data['calculation_day_start_1_9'])){
+                if (!checkdate($data['calculation_month_start_1_9'], $data['calculation_day_start_1_9'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_9','2枚目_7_算定対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_10']) && !empty($data['calculation_day_start_1_10'])){
+                if (!checkdate($data['calculation_month_start_1_10'], $data['calculation_day_start_1_10'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_10','2枚目_7_算定対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_11']) && !empty($data['calculation_day_start_1_11'])){
+                if (!checkdate($data['calculation_month_start_1_11'], $data['calculation_day_start_1_11'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_11','2枚目_7_算定対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_12']) && !empty($data['calculation_day_start_1_12'])){
+                if (!checkdate($data['calculation_month_start_1_12'], $data['calculation_day_start_1_12'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_12','2枚目_7_算定対象期間_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_1_13']) && !empty($data['calculation_day_start_1_13'])){
+                if (!checkdate($data['calculation_month_start_1_13'], $data['calculation_day_start_1_13'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_13','2枚目_7_算定対象期間_開始日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_1_14']) && !empty($data['calculation_day_start_1_14'])){
+                if (!checkdate($data['calculation_month_start_1_14'], $data['calculation_day_start_1_14'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_14','2枚目_7_算定対象期間_開始日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_1_15']) && !empty($data['calculation_day_start_1_15'])){
+                if (!checkdate($data['calculation_month_start_1_15'], $data['calculation_day_start_1_15'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_1_15','2枚目_7_算定対象期間_開始日付_16行目は正しい日付を入力してください。');
+                }
+            }
+        
+            
+            if(!empty($data['calculation_month_end_1_1']) && !empty($data['calculation_day_end_1_1'])){
+                if (!checkdate($data['calculation_month_end_1_1'], $data['calculation_day_end_1_1'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_1','2枚目_7_算定対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_end_1_2']) && !empty($data['calculation_day_end_1_2'])){
+                if (!checkdate($data['calculation_month_end_1_2'], $data['calculation_day_end_1_2'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_2','2枚目_7_算定対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_3']) && !empty($data['calculation_day_end_1_3'])){
+                if (!checkdate($data['calculation_month_end_1_3'], $data['calculation_day_end_1_3'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_3','2枚目_7_算定対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_4']) && !empty($data['calculation_day_end_1_4'])){
+                if (!checkdate($data['calculation_month_end_1_4'], $data['calculation_day_end_1_4'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_4','2枚目_7_算定対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_5']) && !empty($data['calculation_day_end_1_5'])){
+                if (!checkdate($data['calculation_month_end_1_5'], $data['calculation_day_end_1_5'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_5','2枚目_7_算定対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_6']) && !empty($data['calculation_day_end_1_6'])){
+                if (!checkdate($data['calculation_month_end_1_6'], $data['calculation_day_end_1_6'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_6','2枚目_7_算定対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_7']) && !empty($data['calculation_day_end_1_7'])){
+                if (!checkdate($data['calculation_month_end_1_7'], $data['calculation_day_end_1_7'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_7','2枚目_7_算定対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_8']) && !empty($data['calculation_day_end_1_8'])){
+                if (!checkdate($data['calculation_month_end_1_8'], $data['calculation_day_end_1_8'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_8','2枚目_7_算定対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_9']) && !empty($data['calculation_day_end_1_9'])){
+                if (!checkdate($data['calculation_month_end_1_9'], $data['calculation_day_end_1_9'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_9','2枚目_7_算定対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_10']) && !empty($data['calculation_day_end_1_10'])){
+                if (!checkdate($data['calculation_month_end_1_10'], $data['calculation_day_end_1_10'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_10','2枚目_7_算定対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_11']) && !empty($data['calculation_day_end_1_11'])){
+                if (!checkdate($data['calculation_month_end_1_11'], $data['calculation_day_end_1_11'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_11','2枚目_7_算定対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_12']) && !empty($data['calculation_day_end_1_12'])){
+                if (!checkdate($data['calculation_month_end_1_12'], $data['calculation_day_end_1_12'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_12','2枚目_7_算定対象期間_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_1_13']) && !empty($data['calculation_day_end_1_13'])){
+                if (!checkdate($data['calculation_month_end_1_13'], $data['calculation_day_end_1_13'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_13','2枚目_7_算定対象期間_終了日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_end_1_14']) && !empty($data['calculation_day_end_1_14'])){
+                if (!checkdate($data['calculation_month_end_1_14'], $data['calculation_day_end_1_14'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_14','2枚目_7_算定対象期間_終了日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_end_1_15']) && !empty($data['calculation_day_end_1_15'])){
+                if (!checkdate($data['calculation_month_end_1_15'], $data['calculation_day_end_1_15'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_1_15','2枚目_7_算定対象期間_終了日付_16行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1']) && !empty($data['payment_day_start_1'])){
+                if (!checkdate($data['payment_month_start_1'], $data['payment_day_start_1'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1','2枚目_9_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_start_1_1']) && !empty($data['payment_day_start_1_1'])){
+                if (!checkdate($data['payment_month_start_1_1'], $data['payment_day_start_1_1'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_1','2枚目_9_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_2']) && !empty($data['payment_day_start_1_2'])){
+                if (!checkdate($data['payment_month_start_1_2'], $data['payment_day_start_1_2'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_2','2枚目_9_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_3']) && !empty($data['payment_day_start_1_3'])){
+                if (!checkdate($data['payment_month_start_1_3'], $data['payment_day_start_1_3'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_3','2枚目_9_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_4']) && !empty($data['payment_day_start_1_4'])){
+                if (!checkdate($data['payment_month_start_1_4'], $data['payment_day_start_1_4'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_4','2枚目_9_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_5']) && !empty($data['payment_day_start_1_5'])){
+                if (!checkdate($data['payment_month_start_1_5'], $data['payment_day_start_1_5'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_5','2枚目_9_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_6']) && !empty($data['payment_day_start_1_6'])){
+                if (!checkdate($data['payment_month_start_1_6'], $data['payment_day_start_1_6'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_6','2枚目_9_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_7']) && !empty($data['payment_day_start_1_7'])){
+                if (!checkdate($data['payment_month_start_1_7'], $data['payment_day_start_1_7'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_7','2枚目_9_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_8']) && !empty($data['payment_day_start_1_8'])){
+                if (!checkdate($data['payment_month_start_1_8'], $data['payment_day_start_1_8'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_8','2枚目_9_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_9']) && !empty($data['payment_day_start_1_9'])){
+                if (!checkdate($data['payment_month_start_1_9'], $data['payment_day_start_1_9'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_9','2枚目_9_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_10']) && !empty($data['payment_day_start_1_10'])){
+                if (!checkdate($data['payment_month_start_1_10'], $data['payment_day_start_1_10'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_10','2枚目_9_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_11']) && !empty($data['payment_day_start_1_11'])){
+                if (!checkdate($data['payment_month_start_1_11'], $data['payment_day_start_1_11'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_11','2枚目_9_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_12']) && !empty($data['payment_day_start_1_12'])){
+                if (!checkdate($data['payment_month_start_1_12'], $data['payment_day_start_1_12'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_12','2枚目_9_賃金支払対象期間_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_1_13']) && !empty($data['payment_day_start_1_13'])){
+                if (!checkdate($data['payment_month_start_1_13'], $data['payment_day_start_1_13'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_13','2枚目_9_賃金支払対象期間_開始日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_start_1_14']) && !empty($data['payment_day_start_1_14'])){
+                if (!checkdate($data['payment_month_start_1_14'], $data['payment_day_start_1_14'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_14','2枚目_9_賃金支払対象期間_開始日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_start_1_15']) && !empty($data['payment_day_start_1_15'])){
+                if (!checkdate($data['payment_month_start_1_15'], $data['payment_day_start_1_15'], '2000')) {
+                    $validator->errors()->add('payment_day_start_1_15','2枚目_9_賃金支払対象期間_開始日付_16行目は正しい日付を入力してください。');
+                }
+            }
+        
+            
+            if(!empty($data['payment_month_end_1_1']) && !empty($data['payment_day_end_1_1'])){
+                if (!checkdate($data['payment_month_end_1_1'], $data['payment_day_end_1_1'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_1','2枚目_9_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_1_2']) && !empty($data['payment_day_end_1_2'])){
+                if (!checkdate($data['payment_month_end_1_2'], $data['payment_day_end_1_2'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_2','2枚目_9_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_3']) && !empty($data['payment_day_end_1_3'])){
+                if (!checkdate($data['payment_month_end_1_3'], $data['payment_day_end_1_3'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_3','2枚目_9_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_4']) && !empty($data['payment_day_end_1_4'])){
+                if (!checkdate($data['payment_month_end_1_4'], $data['payment_day_end_1_4'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_4','2枚目_9_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_5']) && !empty($data['payment_day_end_1_5'])){
+                if (!checkdate($data['payment_month_end_1_5'], $data['payment_day_end_1_5'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_5','2枚目_9_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_6']) && !empty($data['payment_day_end_1_6'])){
+                if (!checkdate($data['payment_month_end_1_6'], $data['payment_day_end_1_6'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_6','2枚目_9_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_7']) && !empty($data['payment_day_end_1_7'])){
+                if (!checkdate($data['payment_month_end_1_7'], $data['payment_day_end_1_7'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_7','2枚目_9_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_8']) && !empty($data['payment_day_end_1_8'])){
+                if (!checkdate($data['payment_month_end_1_8'], $data['payment_day_end_1_8'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_8','2枚目_9_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_9']) && !empty($data['payment_day_end_1_9'])){
+                if (!checkdate($data['payment_month_end_1_9'], $data['payment_day_end_1_9'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_9','2枚目_9_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_10']) && !empty($data['payment_day_end_1_10'])){
+                if (!checkdate($data['payment_month_end_1_10'], $data['payment_day_end_1_10'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_10','2枚目_9_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_11']) && !empty($data['payment_day_end_1_11'])){
+                if (!checkdate($data['payment_month_end_1_11'], $data['payment_day_end_1_11'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_11','2枚目_9_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_12']) && !empty($data['payment_day_end_1_12'])){
+                if (!checkdate($data['payment_month_end_1_12'], $data['payment_day_end_1_12'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_12','2枚目_9_賃金支払対象期間_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_1_13']) && !empty($data['payment_day_end_1_13'])){
+                if (!checkdate($data['payment_month_end_1_13'], $data['payment_day_end_1_13'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_13','2枚目_9_賃金支払対象期間_終了日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_1_14']) && !empty($data['payment_day_end_1_14'])){
+                if (!checkdate($data['payment_month_end_1_14'], $data['payment_day_end_1_14'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_14','2枚目_9_賃金支払対象期間_終了日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_1_15']) && !empty($data['payment_day_end_1_15'])){
+                if (!checkdate($data['payment_month_end_1_15'], $data['payment_day_end_1_15'], '2000')) {
+                    $validator->errors()->add('payment_day_end_1_15','2枚目_9_賃金支払対象期間_終了日付_16行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_2_1']) && !empty($data['calculation_day_start_2_1'])){
+                if (!checkdate($data['calculation_month_start_2_1'], $data['calculation_day_start_2_1'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_1','2枚目_続紙_7_算定対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_2_2']) && !empty($data['calculation_day_start_2_2'])){
+                if (!checkdate($data['calculation_month_start_2_2'], $data['calculation_day_start_2_2'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_2','2枚目_続紙_7_算定対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_3']) && !empty($data['calculation_day_start_2_3'])){
+                if (!checkdate($data['calculation_month_start_2_3'], $data['calculation_day_start_2_3'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_3','2枚目_続紙_7_算定対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_4']) && !empty($data['calculation_day_start_2_4'])){
+                if (!checkdate($data['calculation_month_start_2_4'], $data['calculation_day_start_2_4'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_4','2枚目_続紙_7_算定対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_5']) && !empty($data['calculation_day_start_2_5'])){
+                if (!checkdate($data['calculation_month_start_2_5'], $data['calculation_day_start_2_5'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_5','2枚目_続紙_7_算定対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_6']) && !empty($data['calculation_day_start_2_6'])){
+                if (!checkdate($data['calculation_month_start_2_6'], $data['calculation_day_start_2_6'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_6','2枚目_続紙_7_算定対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_7']) && !empty($data['calculation_day_start_2_7'])){
+                if (!checkdate($data['calculation_month_start_2_7'], $data['calculation_day_start_2_7'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_7','2枚目_続紙_7_算定対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_8']) && !empty($data['calculation_day_start_2_8'])){
+                if (!checkdate($data['calculation_month_start_2_8'], $data['calculation_day_start_2_8'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_8','2枚目_続紙_7_算定対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_9']) && !empty($data['calculation_day_start_2_9'])){
+                if (!checkdate($data['calculation_month_start_2_9'], $data['calculation_day_start_2_9'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_9','2枚目_続紙_7_算定対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_10']) && !empty($data['calculation_day_start_2_10'])){
+                if (!checkdate($data['calculation_month_start_2_10'], $data['calculation_day_start_2_10'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_10','2枚目_続紙_7_算定対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_11']) && !empty($data['calculation_day_start_2_11'])){
+                if (!checkdate($data['calculation_month_start_2_11'], $data['calculation_day_start_2_11'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_11','2枚目_続紙_7_算定対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_12']) && !empty($data['calculation_day_start_2_12'])){
+                if (!checkdate($data['calculation_month_start_2_12'], $data['calculation_day_start_2_12'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_12','2枚目_続紙_7_算定対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_start_2_13']) && !empty($data['calculation_day_start_2_13'])){
+                if (!checkdate($data['calculation_month_start_2_13'], $data['calculation_day_start_2_13'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_13','2枚目_続紙_7_算定対象期間_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_2_14']) && !empty($data['calculation_day_start_2_14'])){
+                if (!checkdate($data['calculation_month_start_2_14'], $data['calculation_day_start_2_14'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_14','2枚目_続紙_7_算定対象期間_開始日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_start_2_15']) && !empty($data['calculation_day_start_2_15'])){
+                if (!checkdate($data['calculation_month_start_2_15'], $data['calculation_day_start_2_15'], '2000')) {
+                    $validator->errors()->add('calculation_day_start_2_15','2枚目_続紙_7_算定対象期間_開始日付_15行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_1']) && !empty($data['calculation_day_end_2_1'])){
+                if (!checkdate($data['calculation_month_end_2_1'], $data['calculation_day_end_2_1'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_1','2枚目_続紙_7_算定対象期間_終了日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_end_2_2']) && !empty($data['calculation_day_end_2_2'])){
+                if (!checkdate($data['calculation_month_end_2_2'], $data['calculation_day_end_2_2'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_2','2枚目_続紙_7_算定対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_3']) && !empty($data['calculation_day_end_2_3'])){
+                if (!checkdate($data['calculation_month_end_2_3'], $data['calculation_day_end_2_3'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_3','2枚目_続紙_7_算定対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_4']) && !empty($data['calculation_day_end_2_4'])){
+                if (!checkdate($data['calculation_month_end_2_4'], $data['calculation_day_end_2_4'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_4','2枚目_続紙_7_算定対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_5']) && !empty($data['calculation_day_end_2_5'])){
+                if (!checkdate($data['calculation_month_end_2_5'], $data['calculation_day_end_2_5'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_5','2枚目_続紙_7_算定対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_6']) && !empty($data['calculation_day_end_2_6'])){
+               if (!checkdate($data['calculation_month_end_2_6'], $data['calculation_day_end_2_6'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_6','2枚目_続紙_7_算定対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_7']) && !empty($data['calculation_day_end_2_7'])){
+                if (!checkdate($data['calculation_month_end_2_7'], $data['calculation_day_end_2_7'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_7','2枚目_続紙_7_算定対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_8']) && !empty($data['calculation_day_end_2_8'])){
+                if (!checkdate($data['calculation_month_end_2_8'], $data['calculation_day_end_2_8'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_8','2枚目_続紙_7_算定対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_9']) && !empty($data['calculation_day_end_2_9'])){
+                if (!checkdate($data['calculation_month_end_2_9'], $data['calculation_day_end_2_9'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_9','2枚目_続紙_7_算定対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_10']) && !empty($data['calculation_day_end_2_10'])){
+                if (!checkdate($data['calculation_month_end_2_10'], $data['calculation_day_end_2_10'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_10','2枚目_続紙_7_算定対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_11']) && !empty($data['calculation_day_end_2_11'])){
+                if (!checkdate($data['calculation_month_end_2_11'], $data['calculation_day_end_2_11'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_11','2枚目_続紙_7_算定対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_12']) && !empty($data['calculation_day_end_2_12'])){
+                if (!checkdate($data['calculation_month_end_2_12'], $data['calculation_day_end_2_12'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_12','2枚目_続紙_7_算定対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_13']) && !empty($data['calculation_day_end_2_13'])){
+                if (!checkdate($data['calculation_month_end_2_13'], $data['calculation_day_end_2_13'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_13','2枚目_続紙_7_算定対象期間_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['calculation_month_end_2_14']) && !empty($data['calculation_day_end_2_14'])){
+                if (!checkdate($data['calculation_month_end_2_14'], $data['calculation_day_end_2_14'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_14','2枚目_続紙_7_算定対象期間_終了日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['calculation_month_end_2_15']) && !empty($data['calculation_day_end_2_15'])){
+                if (!checkdate($data['calculation_month_end_2_15'], $data['calculation_day_end_2_15'], '2000')) {
+                    $validator->errors()->add('calculation_day_end_2_15','2枚目_続紙_7_算定対象期間_終了日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_start_2_1']) && !empty($data['payment_day_start_2_1'])){
+                if (!checkdate($data['payment_month_start_2_1'], $data['payment_day_start_2_1'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_1','2枚目_続紙_9_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_start_2_2']) && !empty($data['payment_day_start_2_2'])){
+                if (!checkdate($data['payment_month_start_2_2'], $data['payment_day_start_2_2'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_2','2枚目_続紙_9_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_3']) && !empty($data['payment_day_start_2_3'])){
+                if (!checkdate($data['payment_month_start_2_3'], $data['payment_day_start_2_3'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_3','2枚目_続紙_9_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_4']) && !empty($data['payment_day_start_2_4'])){
+                if (!checkdate($data['payment_month_start_2_4'], $data['payment_day_start_2_4'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_4','2枚目_続紙_9_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_5']) && !empty($data['payment_day_start_2_5'])){
+                if (!checkdate($data['payment_month_start_2_5'], $data['payment_day_start_2_5'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_5','2枚目_続紙_9_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_6']) && !empty($data['payment_day_start_2_6'])){
+                if (!checkdate($data['payment_month_start_2_6'], $data['payment_day_start_2_6'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_6','2枚目_続紙_9_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_7']) && !empty($data['payment_day_start_2_7'])){
+                if (!checkdate($data['payment_month_start_2_7'], $data['payment_day_start_2_7'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_7','2枚目_続紙_9_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_8']) && !empty($data['payment_day_start_2_8'])){
+                if (!checkdate($data['payment_month_start_2_8'], $data['payment_day_start_2_8'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_8','2枚目_続紙_9_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_9']) && !empty($data['payment_day_start_2_9'])){
+                if (!checkdate($data['payment_month_start_2_9'], $data['payment_day_start_2_9'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_9','2枚目_続紙_9_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_10']) && !empty($data['payment_day_start_2_10'])){
+                if (!checkdate($data['payment_month_start_2_10'], $data['payment_day_start_2_10'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_10','2枚目_続紙_9_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_11']) && !empty($data['payment_day_start_2_11'])){
+                if (!checkdate($data['payment_month_start_2_11'], $data['payment_day_start_2_11'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_11','2枚目_続紙_9_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_12']) && !empty($data['payment_month_start_2_12'])){
+                if (!checkdate($data['payment_month_start_2_12'], $data['payment_month_start_2_12'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_12','2枚目_続紙_9_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_start_2_13']) && !empty($data['payment_day_start_2_13'])){
+                if (!checkdate($data['payment_month_start_2_13'], $data['payment_day_start_2_13'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_13','2枚目_続紙_9_賃金支払対象期間_開始日付_13行目は正しい日付を入力してください。');
+                }
+            }
+         
+            if(!empty($data['payment_month_start_2_14']) && !empty($data['payment_day_start_2_14'])){
+                if (!checkdate($data['payment_month_start_2_14'], $data['payment_day_start_2_14'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_14','2枚目_続紙_9_賃金支払対象期間_開始日付_14行目は正しい日付を入力してください。');
+                }
+            } 
+
+            if(!empty($data['payment_month_start_2_15']) && !empty($data['payment_day_start_2_15'])){
+                if (!checkdate($data['payment_month_start_2_15'], $data['payment_day_start_2_15'], '2000')) {
+                    $validator->errors()->add('payment_day_start_2_15','2枚目_続紙_9_賃金支払対象期間_開始日付_15行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_2_1']) && !empty($data['payment_day_end_2_1'])){
+                if (!checkdate($data['payment_month_end_2_1'], $data['payment_day_end_2_1'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_1','2枚目_続紙_9_賃金支払対象期間_終了日付_1行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_2_2']) && !empty($data['payment_day_end_2_2'])){
+                if (!checkdate($data['payment_month_end_2_2'], $data['payment_day_end_2_2'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_2','2枚目_続紙_9_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_3']) && !empty($data['payment_day_end_2_3'])){
+                if (!checkdate($data['payment_month_end_2_3'], $data['payment_day_end_2_3'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_3','2枚目_続紙_9_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_4']) && !empty($data['payment_day_end_2_4'])){
+                if (!checkdate($data['payment_month_end_2_4'], $data['payment_day_end_2_4'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_4','2枚目_続紙_9_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_5']) && !empty($data['payment_day_end_2_5'])){
+                if (!checkdate($data['payment_month_end_2_5'], $data['payment_day_end_2_5'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_5','2枚目_続紙_9_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_6']) && !empty($data['payment_day_end_2_6'])){
+                if (!checkdate($data['payment_month_end_2_6'], $data['payment_day_end_2_6'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_6','2枚目_続紙_9_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_7']) && !empty($data['payment_day_end_2_7'])){
+                if (!checkdate($data['payment_month_end_2_7'], $data['payment_day_end_2_7'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_7','2枚目_続紙_9_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_8']) && !empty($data['payment_day_end_2_8'])){
+                if (!checkdate($data['payment_month_end_2_8'], $data['payment_day_end_2_8'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_8','2枚目_続紙_9_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_9']) && !empty($data['payment_day_end_2_9'])){
+                if (!checkdate($data['payment_month_end_2_9'], $data['payment_day_end_2_9'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_9','2枚目_続紙_9_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_10']) && !empty($data['payment_day_end_2_10'])){
+                if (!checkdate($data['payment_month_end_2_10'], $data['payment_day_end_2_10'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_10','2枚目_続紙_9_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_11']) && !empty($data['payment_day_end_2_11'])){
+                if (!checkdate($data['payment_month_end_2_11'], $data['payment_day_end_2_11'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_11','2枚目_続紙_9_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_12']) && !empty($data['payment_month_end_2_12'])){
+                if (!checkdate($data['payment_month_end_2_12'], $data['payment_month_end_2_12'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_12','2枚目_続紙_9_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($data['payment_month_end_2_13']) && !empty($data['payment_day_end_2_13'])){
+                if (!checkdate($data['payment_month_end_2_13'], $data['payment_day_end_2_13'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_13','2枚目_続紙_9_賃金支払対象期間_終了日付_13行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_2_14']) && !empty($data['payment_day_end_2_14'])){
+                if (!checkdate($data['payment_month_end_2_14'], $data['payment_day_end_2_14'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_14','2枚目_続紙_9_賃金支払対象期間_終了日付_14行目は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['payment_month_end_2_15']) && !empty($data['payment_day_end_2_15'])){
+                if (!checkdate($data['payment_month_end_2_15'], $data['payment_day_end_2_15'], '2000')) {
+                    $validator->errors()->add('payment_day_end_2_15','2枚目_続紙_9_賃金支払対象期間_終了日付_15行目は正しい日付を入力してください。');
+                }
+            }
+        });
+    }
+
     public function messages()
     {
         return [
             'leave_start_wage_monthly_certificate.required_without' => '2枚目_最上部チェックボックスで休業開始時賃金月額証明書、所定労働時間短縮開始時賃金証明書のいずれかである必要があります。',
+            'employment_period_year.required_with' => '2枚目_14_（休業開始時における）雇用期間_年を入力してください。',
+            'employment_period_month.required_with' => '2枚目_14_（休業開始時における）雇用期間_月を入力してください。',
+            'employment_period_day.required_with' => '2枚目_14_（休業開始時における）雇用期間_日を入力してください。',
+            'calculation_month_start_1.required_with' => '2枚目_7_算定対象期間_開始月_1行目を入力してください。',
+            'calculation_month_start_1_1.required_with' => '2枚目_7_算定対象期間_開始月_2行目を入力してください。',
+            'calculation_month_start_1_2.required_with' => '2枚目_7_算定対象期間_開始月_3行目を入力してください。',
+            'calculation_month_start_1_3.required_with' => '2枚目_7_算定対象期間_開始月_4行目を入力してください。',
+            'calculation_month_start_1_4.required_with' => '2枚目_7_算定対象期間_開始月_5行目を入力してください。',
+            'calculation_month_start_1_5.required_with' => '2枚目_7_算定対象期間_開始月_6行目を入力してください。',
+            'calculation_month_start_1_6.required_with' => '2枚目_7_算定対象期間_開始月_7行目を入力してください。',
+            'calculation_month_start_1_7.required_with' => '2枚目_7_算定対象期間_開始月_8行目を入力してください。',
+            'calculation_month_start_1_8.required_with' => '2枚目_7_算定対象期間_開始月_9行目を入力してください。',
+            'calculation_month_start_1_9.required_with' => '2枚目_7_算定対象期間_開始月_10行目を入力してください。',
+            'calculation_month_start_1_10.required_with' => '2枚目_7_算定対象期間_開始月_11行目を入力してください。',
+            'calculation_month_start_1_11.required_with' => '2枚目_7_算定対象期間_開始月_12行目を入力してください。',
+            'calculation_month_start_1_12.required_with' => '2枚目_7_算定対象期間_開始月_13行目を入力してください。',
+            'calculation_month_start_1_13.required_with' => '2枚目_7_算定対象期間_開始月_14行目を入力してください。',
+            'calculation_month_start_1_14.required_with' => '2枚目_7_算定対象期間_開始月_15行目を入力してください。',
+            'calculation_month_start_1_15.required_with' => '2枚目_7_算定対象期間_開始月_16行目を入力してください。',
+            'calculation_day_start_1.required_with' => '2枚目_7_算定対象期間_開始日_1行目を入力してください。',
+            'calculation_day_start_1_1.required_with' => '2枚目_7_算定対象期間_開始日_2行目を入力してください。',
+            'calculation_day_start_1_2.required_with' => '2枚目_7_算定対象期間_開始日_3行目を入力してください。',
+            'calculation_day_start_1_3.required_with' => '2枚目_7_算定対象期間_開始日_4行目を入力してください。',
+            'calculation_day_start_1_4.required_with' => '2枚目_7_算定対象期間_開始日_5行目を入力してください。',
+            'calculation_day_start_1_5.required_with' => '2枚目_7_算定対象期間_開始日_6行目を入力してください。',
+            'calculation_day_start_1_6.required_with' => '2枚目_7_算定対象期間_開始日_7行目を入力してください。',
+            'calculation_day_start_1_7.required_with' => '2枚目_7_算定対象期間_開始日_8行目を入力してください。',
+            'calculation_day_start_1_8.required_with' => '2枚目_7_算定対象期間_開始日_9行目を入力してください。',
+            'calculation_day_start_1_9.required_with' => '2枚目_7_算定対象期間_開始日_10行目を入力してください。',
+            'calculation_day_start_1_10.required_with' => '2枚目_7_算定対象期間_開始日_11行目を入力してください。',
+            'calculation_day_start_1_11.required_with' => '2枚目_7_算定対象期間_開始日_12行目を入力してください。',
+            'calculation_day_start_1_12.required_with' => '2枚目_7_算定対象期間_開始日_13行目を入力してください。',
+            'calculation_day_start_1_13.required_with' => '2枚目_7_算定対象期間_開始日_14行目を入力してください。',
+            'calculation_day_start_1_14.required_with' => '2枚目_7_算定対象期間_開始日_15行目を入力してください。',
+            'calculation_day_start_1_15.required_with' => '2枚目_7_算定対象期間_開始日_16行目を入力してください。',
+            'calculation_month_end_1_1.required_with' => '2枚目_7_算定対象期間_終了月_2行目を入力してください。',
+            'calculation_month_end_1_2.required_with' => '2枚目_7_算定対象期間_終了月_3行目を入力してください。',
+            'calculation_month_end_1_3.required_with' => '2枚目_7_算定対象期間_終了月_4行目を入力してください。',
+            'calculation_month_end_1_4.required_with' => '2枚目_7_算定対象期間_終了月_5行目を入力してください。',
+            'calculation_month_end_1_5.required_with' => '2枚目_7_算定対象期間_終了月_6行目を入力してください。',
+            'calculation_month_end_1_6.required_with' => '2枚目_7_算定対象期間_終了月_7行目を入力してください。',
+            'calculation_month_end_1_7.required_with' => '2枚目_7_算定対象期間_終了月_8行目を入力してください。',
+            'calculation_month_end_1_8.required_with' => '2枚目_7_算定対象期間_終了月_9行目を入力してください。',
+            'calculation_month_end_1_9.required_with' => '2枚目_7_算定対象期間_終了月_10行目を入力してください。',
+            'calculation_month_end_1_10.required_with' => '2枚目_7_算定対象期間_終了月_11行目を入力してください。',
+            'calculation_month_end_1_11.required_with' => '2枚目_7_算定対象期間_終了月_12行目を入力してください。',
+            'calculation_month_end_1_12.required_with' => '2枚目_7_算定対象期間_終了月_13行目を入力してください。',
+            'calculation_month_end_1_13.required_with' => '2枚目_7_算定対象期間_終了月_14行目を入力してください。',
+            'calculation_month_end_1_14.required_with' => '2枚目_7_算定対象期間_終了月_15行目を入力してください。',
+            'calculation_month_end_1_15.required_with' => '2枚目_7_算定対象期間_終了月_16行目を入力してください。',
+            'calculation_day_end_1_1.required_with' => '2枚目_7_算定対象期間_終了日_2行目を入力してください。',
+            'calculation_day_end_1_2.required_with' => '2枚目_7_算定対象期間_終了日_3行目を入力してください。',
+            'calculation_day_end_1_3.required_with' => '2枚目_7_算定対象期間_終了日_4行目を入力してください。',
+            'calculation_day_end_1_4.required_with' => '2枚目_7_算定対象期間_終了日_5行目を入力してください。',
+            'calculation_day_end_1_5.required_with' => '2枚目_7_算定対象期間_終了日_6行目を入力してください。',
+            'calculation_day_end_1_6.required_with' => '2枚目_7_算定対象期間_終了日_7行目を入力してください。',
+            'calculation_day_end_1_7.required_with' => '2枚目_7_算定対象期間_終了日_8行目を入力してください。',
+            'calculation_day_end_1_8.required_with' => '2枚目_7_算定対象期間_終了日_9行目を入力してください。',
+            'calculation_day_end_1_9.required_with' => '2枚目_7_算定対象期間_終了日_10行目を入力してください。',
+            'calculation_day_end_1_10.required_with' => '2枚目_7_算定対象期間_終了日_11行目を入力してください。',
+            'calculation_day_end_1_11.required_with' => '2枚目_7_算定対象期間_終了日_12行目を入力してください。',
+            'calculation_day_end_1_12.required_with' => '2枚目_7_算定対象期間_終了日_13行目を入力してください。',
+            'calculation_day_end_1_13.required_with' => '2枚目_7_算定対象期間_終了日_14行目を入力してください。',
+            'calculation_day_end_1_14.required_with' => '2枚目_7_算定対象期間_終了日_15行目を入力してください。',
+            'calculation_day_end_1_15.required_with' => '2枚目_7_算定対象期間_終了日_16行目を入力してください。',
+            'payment_month_start_1.required_with' => '2枚目_9_賃金支払対象期間_開始月_1行目を入力してください。',
+            'payment_month_start_1_1.required_with' => '2枚目_9_賃金支払対象期間_開始月_2行目を入力してください。',
+            'payment_month_start_1_2.required_with' => '2枚目_9_賃金支払対象期間_開始月_3行目を入力してください。',
+            'payment_month_start_1_3.required_with' => '2枚目_9_賃金支払対象期間_開始月_4行目を入力してください。',
+            'payment_month_start_1_4.required_with' => '2枚目_9_賃金支払対象期間_開始月_5行目を入力してください。',
+            'payment_month_start_1_5.required_with' => '2枚目_9_賃金支払対象期間_開始月_6行目を入力してください。',
+            'payment_month_start_1_6.required_with' => '2枚目_9_賃金支払対象期間_開始月_7行目を入力してください。',
+            'payment_month_start_1_7.required_with' => '2枚目_9_賃金支払対象期間_開始月_8行目を入力してください。',
+            'payment_month_start_1_8.required_with' => '2枚目_9_賃金支払対象期間_開始月_9行目を入力してください。',
+            'payment_month_start_1_9.required_with' => '2枚目_9_賃金支払対象期間_開始月_10行目を入力してください。',
+            'payment_month_start_1_10.required_with' => '2枚目_9_賃金支払対象期間_開始月_11行目を入力してください。',
+            'payment_month_start_1_11.required_with' => '2枚目_9_賃金支払対象期間_開始月_12行目を入力してください。',
+            'payment_month_start_1_12.required_with' => '2枚目_9_賃金支払対象期間_開始月_13行目を入力してください。',
+            'payment_month_start_1_13.required_with' => '2枚目_9_賃金支払対象期間_開始月_14行目を入力してください。',
+            'payment_month_start_1_14.required_with' => '2枚目_9_賃金支払対象期間_開始月_15行目を入力してください。',
+            'payment_month_start_1_15.required_with' => '2枚目_9_賃金支払対象期間_開始月_16行目を入力してください。',
+            'payment_day_start_1.required_with' => '2枚目_9_賃金支払対象期間_開始日_1行目を入力してください。',
+            'payment_day_start_1_1.required_with' => '2枚目_9_賃金支払対象期間_開始日_2行目を入力してください。',
+            'payment_day_start_1_2.required_with' => '2枚目_9_賃金支払対象期間_開始日_3行目を入力してください。',
+            'payment_day_start_1_3.required_with' => '2枚目_9_賃金支払対象期間_開始日_4行目を入力してください。',
+            'payment_day_start_1_4.required_with' => '2枚目_9_賃金支払対象期間_開始日_5行目を入力してください。',
+            'payment_day_start_1_5.required_with' => '2枚目_9_賃金支払対象期間_開始日_6行目を入力してください。',
+            'payment_day_start_1_6.required_with' => '2枚目_9_賃金支払対象期間_開始日_7行目を入力してください。',
+            'payment_day_start_1_7.required_with' => '2枚目_9_賃金支払対象期間_開始日_8行目を入力してください。',
+            'payment_day_start_1_8.required_with' => '2枚目_9_賃金支払対象期間_開始日_9行目を入力してください。',
+            'payment_day_start_1_9.required_with' => '2枚目_9_賃金支払対象期間_開始日_10行目を入力してください。',
+            'payment_day_start_1_10.required_with' => '2枚目_9_賃金支払対象期間_開始日_11行目を入力してください。',
+            'payment_day_start_1_11.required_with' => '2枚目_9_賃金支払対象期間_開始日_12行目を入力してください。',
+            'payment_day_start_1_12.required_with' => '2枚目_9_賃金支払対象期間_開始日_13行目を入力してください。',
+            'payment_day_start_1_13.required_with' => '2枚目_9_賃金支払対象期間_開始日_14行目を入力してください。',
+            'payment_day_start_1_14.required_with' => '2枚目_9_賃金支払対象期間_開始日_15行目を入力してください。',
+            'payment_day_start_1_15.required_with' => '2枚目_9_賃金支払対象期間_開始日_16行目を入力してください。',
+            'payment_month_end_1_1.required_with' => '2枚目_9_賃金支払対象期間_終了月_2行目を入力してください。',
+            'payment_month_end_1_2.required_with' => '2枚目_9_賃金支払対象期間_終了月_3行目を入力してください。',
+            'payment_month_end_1_3.required_with' => '2枚目_9_賃金支払対象期間_終了月_4行目を入力してください。',
+            'payment_month_end_1_4.required_with' => '2枚目_9_賃金支払対象期間_終了月_5行目を入力してください。',
+            'payment_month_end_1_5.required_with' => '2枚目_9_賃金支払対象期間_終了月_6行目を入力してください。',
+            'payment_month_end_1_6.required_with' => '2枚目_9_賃金支払対象期間_終了月_7行目を入力してください。',
+            'payment_month_end_1_7.required_with' => '2枚目_9_賃金支払対象期間_終了月_8行目を入力してください。',
+            'payment_month_end_1_8.required_with' => '2枚目_9_賃金支払対象期間_終了月_9行目を入力してください。',
+            'payment_month_end_1_9.required_with' => '2枚目_9_賃金支払対象期間_終了月_10行目を入力してください。',
+            'payment_month_end_1_10.required_with' => '2枚目_9_賃金支払対象期間_終了月_11行目を入力してください。',
+            'payment_month_end_1_11.required_with' => '2枚目_9_賃金支払対象期間_終了月_12行目を入力してください。',
+            'payment_month_end_1_12.required_with' => '2枚目_9_賃金支払対象期間_終了月_13行目を入力してください。',
+            'payment_month_end_1_13.required_with' => '2枚目_9_賃金支払対象期間_終了月_14行目を入力してください。',
+            'payment_month_end_1_14.required_with' => '2枚目_9_賃金支払対象期間_終了月_15行目を入力してください。',
+            'payment_month_end_1_15.required_with' => '2枚目_9_賃金支払対象期間_終了月_16行目を入力してください。',
+            'payment_day_end_1_1.required_with' => '2枚目_9_賃金支払対象期間_終了日_2行目を入力してください。',
+            'payment_day_end_1_2.required_with' => '2枚目_9_賃金支払対象期間_終了日_3行目を入力してください。',
+            'payment_day_end_1_3.required_with' => '2枚目_9_賃金支払対象期間_終了日_4行目を入力してください。',
+            'payment_day_end_1_4.required_with' => '2枚目_9_賃金支払対象期間_終了日_5行目を入力してください。',
+            'payment_day_end_1_5.required_with' => '2枚目_9_賃金支払対象期間_終了日_6行目を入力してください。',
+            'payment_day_end_1_6.required_with' => '2枚目_9_賃金支払対象期間_終了日_7行目を入力してください。',
+            'payment_day_end_1_7.required_with' => '2枚目_9_賃金支払対象期間_終了日_8行目を入力してください。',
+            'payment_day_end_1_8.required_with' => '2枚目_9_賃金支払対象期間_終了日_9行目を入力してください。',
+            'payment_day_end_1_9.required_with' => '2枚目_9_賃金支払対象期間_終了日_10行目を入力してください。',
+            'payment_day_end_1_10.required_with' => '2枚目_9_賃金支払対象期間_終了日_11行目を入力してください。',
+            'payment_day_end_1_11.required_with' => '2枚目_9_賃金支払対象期間_終了日_12行目を入力してください。',
+            'payment_day_end_1_12.required_with' => '2枚目_9_賃金支払対象期間_終了日_13行目を入力してください。',
+            'payment_day_end_1_13.required_with' => '2枚目_9_賃金支払対象期間_終了日_14行目を入力してください。',
+            'payment_day_end_1_14.required_with' => '2枚目_9_賃金支払対象期間_終了日_15行目を入力してください。',
+            'payment_day_end_1_15.required_with' => '2枚目_9_賃金支払対象期間_終了日_16行目を入力してください。',
+            'calculation_month_start_2_1.required_with' => '2枚目_続紙_7_算定対象期間_開始月_1行目を入力してください。',
+            'calculation_month_start_2_2.required_with' => '2枚目_続紙_7_算定対象期間_開始月_2行目を入力してください。',
+            'calculation_month_start_2_3.required_with' => '2枚目_続紙_7_算定対象期間_開始月_3行目を入力してください。',
+            'calculation_month_start_2_4.required_with' => '2枚目_続紙_7_算定対象期間_開始月_4行目を入力してください。',
+            'calculation_month_start_2_5.required_with' => '2枚目_続紙_7_算定対象期間_開始月_5行目を入力してください。',
+            'calculation_month_start_2_6.required_with' => '2枚目_続紙_7_算定対象期間_開始月_6行目を入力してください。',
+            'calculation_month_start_2_7.required_with' => '2枚目_続紙_7_算定対象期間_開始月_7行目を入力してください。',
+            'calculation_month_start_2_8.required_with' => '2枚目_続紙_7_算定対象期間_開始月_8行目を入力してください。',
+            'calculation_month_start_2_9.required_with' => '2枚目_続紙_7_算定対象期間_開始月_9行目を入力してください。',
+            'calculation_month_start_2_10.required_with' => '2枚目_続紙_7_算定対象期間_開始月_10行目を入力してください。',
+            'calculation_month_start_2_11.required_with' => '2枚目_続紙_7_算定対象期間_開始月_11行目を入力してください。',
+            'calculation_month_start_2_12.required_with' => '2枚目_続紙_7_算定対象期間_開始月_12行目を入力してください。',
+            'calculation_month_start_2_13.required_with' => '2枚目_続紙_7_算定対象期間_開始月_13行目を入力してください。',
+            'calculation_month_start_2_14.required_with' => '2枚目_続紙_7_算定対象期間_開始月_14行目を入力してください。',
+            'calculation_month_start_2_15.required_with' => '2枚目_続紙_7_算定対象期間_開始月_15行目を入力してください。',
+            'calculation_day_start_2_1.required_with' => '2枚目_続紙_7_算定対象期間_開始日_1行目を入力してください。',
+            'calculation_day_start_2_2.required_with' => '2枚目_続紙_7_算定対象期間_開始日_2行目を入力してください。',
+            'calculation_day_start_2_3.required_with' => '2枚目_続紙_7_算定対象期間_開始日_3行目を入力してください。',
+            'calculation_day_start_2_4.required_with' => '2枚目_続紙_7_算定対象期間_開始日_4行目を入力してください。',
+            'calculation_day_start_2_5.required_with' => '2枚目_続紙_7_算定対象期間_開始日_5行目を入力してください。',
+            'calculation_day_start_2_6.required_with' => '2枚目_続紙_7_算定対象期間_開始日_6行目を入力してください。',
+            'calculation_day_start_2_7.required_with' => '2枚目_続紙_7_算定対象期間_開始日_7行目を入力してください。',
+            'calculation_day_start_2_8.required_with' => '2枚目_続紙_7_算定対象期間_開始日_8行目を入力してください。',
+            'calculation_day_start_2_9.required_with' => '2枚目_続紙_7_算定対象期間_開始日_9行目を入力してください。',
+            'calculation_day_start_2_10.required_with' => '2枚目_続紙_7_算定対象期間_開始日_10行目を入力してください。',
+            'calculation_day_start_2_11.required_with' => '2枚目_続紙_7_算定対象期間_開始日_11行目を入力してください。',
+            'calculation_day_start_2_12.required_with' => '2枚目_続紙_7_算定対象期間_開始日_12行目を入力してください。',
+            'calculation_day_start_2_13.required_with' => '2枚目_続紙_7_算定対象期間_開始日_13行目を入力してください。',
+            'calculation_day_start_2_13.required_with' => '2枚目_続紙_7_算定対象期間_開始日_13行目を入力してください。',
+            'calculation_day_start_2_13.required_with' => '2枚目_続紙_7_算定対象期間_開始日_15行目を入力してください。',
+            'calculation_month_end_2_1.required_with' => '2枚目_続紙_7_算定対象期間_終了月_1行目を入力してください。',
+            'calculation_month_end_2_2.required_with' => '2枚目_続紙_7_算定対象期間_終了月_2行目を入力してください。',
+            'calculation_month_end_2_3.required_with' => '2枚目_続紙_7_算定対象期間_終了月_3行目を入力してください。',
+            'calculation_month_end_2_4.required_with' => '2枚目_続紙_7_算定対象期間_終了月_4行目を入力してください。',
+            'calculation_month_end_2_5.required_with' => '2枚目_続紙_7_算定対象期間_終了月_5行目を入力してください。',
+            'calculation_month_end_2_6.required_with' => '2枚目_続紙_7_算定対象期間_終了月_6行目を入力してください。',
+            'calculation_month_end_2_7.required_with' => '2枚目_続紙_7_算定対象期間_終了月_7行目を入力してください。',
+            'calculation_month_end_2_8.required_with' => '2枚目_続紙_7_算定対象期間_終了月_8行目を入力してください。',
+            'calculation_month_end_2_9.required_with' => '2枚目_続紙_7_算定対象期間_終了月_9行目を入力してください。',
+            'calculation_month_end_2_10.required_with' => '2枚目_続紙_7_算定対象期間_終了月_10行目を入力してください。',
+            'calculation_month_end_2_11.required_with' => '2枚目_続紙_7_算定対象期間_終了月_11行目を入力してください。',
+            'calculation_month_end_2_12.required_with' => '2枚目_続紙_7_算定対象期間_終了月_12行目を入力してください。',
+            'calculation_month_end_2_13.required_with' => '2枚目_続紙_7_算定対象期間_終了月_13行目を入力してください。',
+            'calculation_month_end_2_14.required_with' => '2枚目_続紙_7_算定対象期間_終了月_14行目を入力してください。',
+            'calculation_month_end_2_15.required_with' => '2枚目_続紙_7_算定対象期間_終了月_15行目を入力してください。',
+            'calculation_day_end_2_1.required_with' => '2枚目_続紙_7_算定対象期間_終了日_1行目を入力してください。',
+            'calculation_day_end_2_2.required_with' => '2枚目_続紙_7_算定対象期間_終了日_2行目を入力してください。',
+            'calculation_day_end_2_3.required_with' => '2枚目_続紙_7_算定対象期間_終了日_3行目を入力してください。',
+            'calculation_day_end_2_4.required_with' => '2枚目_続紙_7_算定対象期間_終了日_4行目を入力してください。',
+            'calculation_day_end_2_5.required_with' => '2枚目_続紙_7_算定対象期間_終了日_5行目を入力してください。',
+            'calculation_day_end_2_6.required_with' => '2枚目_続紙_7_算定対象期間_終了日_6行目を入力してください。',
+            'calculation_day_end_2_7.required_with' => '2枚目_続紙_7_算定対象期間_終了日_7行目を入力してください。',
+            'calculation_day_end_2_8.required_with' => '2枚目_続紙_7_算定対象期間_終了日_8行目を入力してください。',
+            'calculation_day_end_2_9.required_with' => '2枚目_続紙_7_算定対象期間_終了日_9行目を入力してください。',
+            'calculation_day_end_2_10.required_with' => '2枚目_続紙_7_算定対象期間_終了日_10行目を入力してください。',
+            'calculation_day_end_2_11.required_with' => '2枚目_続紙_7_算定対象期間_終了日_11行目を入力してください。',
+            'calculation_day_end_2_12.required_with' => '2枚目_続紙_7_算定対象期間_終了日_12行目を入力してください。',
+            'calculation_day_end_2_13.required_with' => '2枚目_続紙_7_算定対象期間_終了日_13行目を入力してください。',
+            'calculation_day_end_2_14.required_with' => '2枚目_続紙_7_算定対象期間_終了日_14行目を入力してください。',
+            'calculation_day_end_2_15.required_with' => '2枚目_続紙_7_算定対象期間_終了日_15行目を入力してください。',
+            'payment_month_start_2_1.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_1行目を入力してください。',
+            'payment_month_start_2_2.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_2行目を入力してください。',
+            'payment_month_start_2_3.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_3行目を入力してください。',
+            'payment_month_start_2_4.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_4行目を入力してください。',
+            'payment_month_start_2_5.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_5行目を入力してください。',
+            'payment_month_start_2_6.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_6行目を入力してください。',
+            'payment_month_start_2_7.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_7行目を入力してください。',
+            'payment_month_start_2_8.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_8行目を入力してください。',
+            'payment_month_start_2_9.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_9行目を入力してください。',
+            'payment_month_start_2_10.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_10行目を入力してください。',
+            'payment_month_start_2_11.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_11行目を入力してください。',
+            'payment_month_start_2_12.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_12行目を入力してください。',
+            'payment_month_start_2_13.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_13行目を入力してください。',
+            'payment_month_start_2_14.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_14行目を入力してください。',
+            'payment_month_start_2_15.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始月_15行目を入力してください。',
+            'payment_day_start_2_1.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_1行目を入力してください。',
+            'payment_day_start_2_2.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_2行目を入力してください。',
+            'payment_day_start_2_3.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_3行目を入力してください。',
+            'payment_day_start_2_4.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_4行目を入力してください。',
+            'payment_day_start_2_5.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_5行目を入力してください。',
+            'payment_day_start_2_6.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_6行目を入力してください。',
+            'payment_day_start_2_7.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_7行目を入力してください。',
+            'payment_day_start_2_8.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_8行目を入力してください。',
+            'payment_day_start_2_9.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_9行目を入力してください。',
+            'payment_day_start_2_10.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_10行目を入力してください。',
+            'payment_day_start_2_11.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_11行目を入力してください。',
+            'payment_day_start_2_12.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_12行目を入力してください。',
+            'payment_day_start_2_13.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_13行目を入力してください。',
+            'payment_day_start_2_14.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_14行目を入力してください。',
+            'payment_day_start_2_15.required_with' => '2枚目_続紙_9_賃金支払対象期間_開始日_15行目を入力してください。',
+            'payment_month_end_2_1.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_1行目を入力してください。',
+            'payment_month_end_2_2.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_2行目を入力してください。',
+            'payment_month_end_2_3.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_3行目を入力してください。',
+            'payment_month_end_2_4.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_4行目を入力してください。',
+            'payment_month_end_2_5.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_5行目を入力してください。',
+            'payment_month_end_2_6.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_6行目を入力してください。',
+            'payment_month_end_2_7.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_7行目を入力してください。',
+            'payment_month_end_2_8.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_8行目を入力してください。',
+            'payment_month_end_2_9.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_9行目を入力してください。',
+            'payment_month_end_2_10.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_10行目を入力してください。',
+            'payment_month_end_2_11.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_11行目を入力してください。',
+            'payment_month_end_2_12.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_12行目を入力してください。',
+            'payment_month_end_2_13.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_13行目を入力してください。',
+            'payment_month_end_2_14.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_14行目を入力してください。',
+            'payment_month_end_2_15.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了月_15行目を入力してください。',
+            'payment_day_end_2_1.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_1行目を入力してください。',
+            'payment_day_end_2_2.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_2行目を入力してください。',
+            'payment_day_end_2_3.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_3行目を入力してください。',
+            'payment_day_end_2_4.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_4行目を入力してください。',
+            'payment_day_end_2_5.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_5行目を入力してください。',
+            'payment_day_end_2_6.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_6行目を入力してください。',
+            'payment_day_end_2_7.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_7行目を入力してください。',
+            'payment_day_end_2_8.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_8行目を入力してください。',
+            'payment_day_end_2_9.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_9行目を入力してください。',
+            'payment_day_end_2_10.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_10行目を入力してください。',
+            'payment_day_end_2_11.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_11行目を入力してください。',
+            'payment_day_end_2_12.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_12行目を入力してください。',
+            'payment_day_end_2_13.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_13行目を入力してください。',
+            'payment_day_end_2_14.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_14行目を入力してください。',
+            'payment_day_end_2_15.required_with' => '2枚目_続紙_9_賃金支払対象期間_終了日_15行目を入力してください。',
         ];
     }
     
@@ -527,8 +1532,6 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'employment_tel_subscriber_code' => '2枚目_6_休業等を開始した者の電話番号_加入者番号',
             'entrepreneur_address' => '2枚目_事業主住所',
             'entrepreneur_name' => '2枚目_事業主氏名',
-            'leave_start_date_month' => '2枚目_7_休業等を開始した日_月',
-            'leave_start_date_day' => '2枚目_7_休業等を開始した日_日',
             'calculation_month_start_1_1' => '2枚目_7_算定対象期間_開始月_1行目',
             'calculation_day_start_1_1' => '2枚目_7_算定対象期間_開始日_1行目',
             'calculation_month_end_1_1' => '2枚目_7_算定対象期間_終了月_1行目',

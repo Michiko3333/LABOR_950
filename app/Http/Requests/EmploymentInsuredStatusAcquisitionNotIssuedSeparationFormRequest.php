@@ -48,10 +48,10 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'mynumber_card_no' => 'nullable|int|regex:/^[0-9]{12}$/u',
             'insured_fullname' => 'nullable|string|max:255|regex:/^[０-９＋‐－ー＃￥＆．，：＊　ァ-ヴヵヶＡ-Ｚａ-ｚ]+[　][０-９＋‐－ー＃￥＆．，：＊　ァ-ヴヵヶＡ-Ｚａ-ｚ]+$/u',
             'insured_sex' => 'nullable|string|max:1',
-            'insured_birthday_japan_era' => 'nullable|string|max:2',
-            'insured_birthday_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'insured_birthday_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'insured_birthday_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'insured_birthday_japan_era' => 'nullable|string|max:2|required_with:insured_birthday_year,insured_birthday_month,insured_birthday_day',
+            'insured_birthday_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:insured_birthday_japan_era,insured_birthday_month,insured_birthday_day',
+            'insured_birthday_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_birthday_year,insured_birthday_japan_era,insured_birthday_day',
+            'insured_birthday_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_birthday_year,insured_birthday_month,insured_birthday_japan_era',
             'hello_work_office_no' => 'nullable|string|regex:/^[0-9]{5}$/u',
             'employment_status' => 'nullable|string|in:日雇,派遣,パートタイム,有期契約労働者,季節的雇用,船員,その他',
             'branch_name_abbreviation' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
@@ -59,9 +59,9 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'insured_loss_reason' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　]+\z/u',
             'insured_fullname_alphabet' => 'nullable|string|max:255|regex:/^[a-zA-Z]+[ ][a-zA-Z]+$/u',
             'residence_card_no' => 'nullable|string|regex:/^[a-zA-Z]{2}\d{8}[a-zA-Z]{2}$/',
-            'stay_date_period_year' => 'nullable|int|between:1,9999|regex:/^[0-9]{1,4}$/u',
-            'stay_date_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'stay_date_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'stay_date_period_year' => 'nullable|int|max:2100|required_with:stay_date_period_month,stay_date_period_day',
+            'stay_date_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_year,stay_date_period_day',
+            'stay_date_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_month,stay_date_period_year',
             'residential_status_unknown_reason' => 'nullable|string|max:48|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
             'notification_date_japan_era' => 'string|max:2',
             'notification_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -91,6 +91,106 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $birthdayEra = $data['insured_birthday_japan_era'];
+            $birthdayYear = $data['insured_birthday_year'];
+            $birthdayMonth = $data['insured_birthday_month'];
+            $birthdayDay = $data['insured_birthday_day'];
+            $insuredEra = $data['employment_insured_japan_era'];
+            $insuredYear = $data['employment_insured_year'];
+            $insuredMonth = $data['employment_insured_month'];
+            $insuredDay = $data['employment_insured_day'];
+            $retirementEra = $data['retirement_japan_era'];
+            $retirementYear = $data['retirement_year'];
+            $retirementMonth = $data['retirement_month'];
+            $retirementDay = $data['retirement_day'];
+            
+            if ($birthdayEra === '大正') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 7 || ($birthdayMonth == 7 && $birthdayDay < 30))) ||
+                    ($birthdayYear == 15 && ($birthdayMonth == 12 && $birthdayDay > 25)) ||
+                    ($birthdayYear > 15)
+                ) {
+                    $validator->errors()->add('insured_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '昭和') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 12 || ($birthdayMonth == 12 && $birthdayDay < 25))) ||
+                    ($birthdayYear == 64 && ($birthdayMonth > 1 || ($birthdayMonth == 1 && $birthdayDay > 7))) ||
+                    ($birthdayYear > 64)
+                ) {
+                    $validator->errors()->add('insured_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '平成') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 1 || ($birthdayMonth == 1 && $birthdayDay < 8))) ||
+                    ($birthdayYear == 31 && ($birthdayMonth > 4 || ($birthdayMonth == 4 && $birthdayDay > 30))) ||
+                    ($birthdayYear > 31)
+                ) {
+                    $validator->errors()->add('insured_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '令和') {
+                if ($birthdayYear == 1 && ($birthdayMonth < 5 || ($birthdayMonth == 5 && $birthdayDay < 1))) {
+                    $validator->errors()->add('insured_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($birthdayMonth) && !empty($birthdayDay)){
+                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                    $validator->errors()->add('insured_birthday_day','生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($insuredEra === '昭和') {
+                if (
+                    ($insuredYear == 1 && ($insuredMonth < 12 || ($insuredMonth == 12 && $insuredDay < 25))) ||
+                    ($insuredYear == 64 && ($insuredMonth > 1 || ($insuredMonth == 1 && $insuredDay > 7))) ||
+                    ($insuredYear > 64)
+                ) {
+                    $validator->errors()->add('employment_insured_japan_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif($insuredEra === '平成') {
+                if (
+                    ($insuredYear == 1 && ($insuredMonth < 1 || ($insuredMonth == 1 && $insuredDay < 8))) ||
+                    ($insuredYear == 31 && ($insuredMonth > 4 || ($insuredMonth == 4 && $insuredDay > 30))) ||
+                    ($insuredYear > 31)
+                ) {
+                    $validator->errors()->add('employment_insured_japan_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($insuredEra === '令和') {
+                if ($insuredYear == 1 && ($insuredMonth < 5 || ($insuredMonth == 5 && $insuredDay < 1))) {
+                    $validator->errors()->add('employment_insured_japan_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($insuredMonth) && !empty($insuredDay)){
+                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                    $validator->errors()->add('employment_insured_japan_era','資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($retirementEra === '平成') {
+                if (
+                    ($retirementYear == 1 && ($retirementMonth < 1 || ($retirementMonth == 1 && $retirementDay < 8))) ||
+                    ($retirementYear == 31 && ($retirementMonth > 4 || ($retirementMonth == 4 && $retirementDay > 30))) ||
+                    ($retirementYear > 31)
+                ) {
+                    $validator->errors()->add('retirement_japan_era', '離職年月日は正しい日付を入力してください。');
+                }
+            } elseif ($retirementEra === '令和') {
+                if ($retirementYear == 1 && ($retirementMonth < 5 || ($retirementMonth == 5 && $retirementDay < 1))) {
+                    $validator->errors()->add('retirement_japan_era', '離職年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($retirementMonth) && !empty($retirementDay)){
+                if (!checkdate($retirementMonth, $retirementDay, '2000')) {
+                    $validator->errors()->add('retirement_japan_era','離職年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
+                if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
+                    $validator->errors()->add('stay_date_period_year','在留期間は正しい日付を入力してください。');
+                }
+            }
 
             if ($this->hasFile('file_disqualification_status')) {
                 $totalSize += $this->file('file_disqualification_status')->getSize();
@@ -110,6 +210,13 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
             'insured_fullname.regex' => '被保険者氏名はカタカナで入力してください。',
+            'insured_birthday_japan_era.required_with' => '生年月日_年号を入力してください。',
+            'insured_birthday_year.required_with' => '生年月日_年を入力してください。',
+            'insured_birthday_month.required_with' => '生年月日_月を入力してください。',
+            'insured_birthday_day.required_with' => '生年月日_日を入力してください。',
+            'stay_date_period_year.required_with' => '在留期間_年を入力してください。',
+            'stay_date_period_month.required_with' => '在留期間_月を入力してください。',
+            'stay_date_period_day.required_with' => '在留期間_日を入力してください。',
         ];
     }
 

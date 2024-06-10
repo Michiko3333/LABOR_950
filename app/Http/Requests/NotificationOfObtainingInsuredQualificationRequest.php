@@ -24,7 +24,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
-            "health_insurance" => 'nullable|int|in:1|required_without:welfare_pension_insurance',
+            "health_insurance" => 'nullable|int|in:1',
             "welfare_pension_insurance" => 'nullable|int|in:1',
             "input_date_japan_era_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "input_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
@@ -79,9 +79,70 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
-            'health_insurance.required_without' => 'タイトルのチェックボックスで健康保険、厚生年金保険のいずれかである必要があります。',
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            $employee_birthday_japan_era = $data['employee_birthday_japan_era'];
+            $employee_birthday_japan_era_year = $data['employee_birthday_japan_era_year'];
+            $employee_birthday_month = $data['employee_birthday_month'];
+            $employee_birthday_day = $data['employee_birthday_day'];
+            $employee_employment_insured_date_japan_era = $data['employee_employment_insured_date_japan_era'];
+            $employee_employment_insured_date_japan_era_year = $data['employee_employment_insured_date_japan_era_year'];
+            $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'];
+            $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'];
+
+            if(!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)){
+                if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {
+                    $validator->errors()->add('employee_employment_insured_date_day','取得（該当）年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($employee_employment_insured_date_japan_era === '7') {
+                if (
+                    ($employee_employment_insured_date_japan_era_year == 1 && ($employee_employment_insured_date_month < 1 || ($employee_employment_insured_date_month == 1 && $employee_employment_insured_date_day < 8))) ||
+                    ($employee_employment_insured_date_japan_era_year == 31 && ($employee_employment_insured_date_month > 4 || ($employee_employment_insured_date_month == 4 && $employee_employment_insured_date_day > 30))) ||
+                    ($employee_employment_insured_date_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('employee_employment_insured_date_day', '取得（該当）年月日は正しい日付を入力してください。');
+                }
+            } elseif ($employee_employment_insured_date_japan_era === '9') {
+                if ($employee_employment_insured_date_japan_era_year == 1 && ($employee_employment_insured_date_month < 5 || ($employee_employment_insured_date_month == 5 && $employee_employment_insured_date_day < 1))) {
+                    $validator->errors()->add('employee_employment_insured_date_day', '取得（該当）年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($employee_birthday_month) && !empty($employee_birthday_day)){
+                if (!checkdate($employee_birthday_month, $employee_birthday_day, '2000')) {
+                    $validator->errors()->add('employee_birthday_day','生年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($employee_birthday_japan_era === '5') {
+                if (
+                    ($employee_birthday_japan_era_year == 1 && ($employee_birthday_month < 12 || ($employee_birthday_month == 12 && $employee_birthday_day < 25))) ||
+                    ($employee_birthday_japan_era_year == 64 && ($employee_birthday_month > 1 || ($employee_birthday_month == 1 && $employee_birthday_day > 7))) ||
+                    ($employee_birthday_japan_era_year > 64)
+                ) {
+                    $validator->errors()->add('employee_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($employee_birthday_japan_era === '7') {
+                if (
+                    ($employee_birthday_japan_era_year == 1 && ($employee_birthday_month < 1 || ($employee_birthday_month == 1 && $employee_birthday_day < 8))) ||
+                    ($employee_birthday_japan_era_year == 31 && ($employee_birthday_month > 4 || ($employee_birthday_month == 4 && $employee_birthday_day > 30))) ||
+                    ($employee_birthday_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('employee_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($employee_birthday_japan_era === '9') {
+                if ($employee_birthday_japan_era_year == 1 && ($employee_birthday_month < 5 || ($employee_birthday_month == 5 && $employee_birthday_day < 1))) {
+                    $validator->errors()->add('employee_birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            }
+        });
+    }
+
     public function attributes()
     {
         return [

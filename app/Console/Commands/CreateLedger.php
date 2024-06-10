@@ -27,7 +27,7 @@ class CreateLedger extends Command
     {
         $name = $this->argument('name');
         if (!$this->isPascalCase($name)) {
-            $this->info('パスカルケースで入力してください');
+            $this->info('パスカルケースで入力してください。');
             return 0;
         }
         $name_snake = $this->toSnakeCase($name);

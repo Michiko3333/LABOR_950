@@ -51,10 +51,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'office_before_transfer' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ－‐　]+\z/u',
             'name_before_changed_kanji' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+$/u',
             'name_before_changed_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'name_changed_date_era' => 'nullable|in:平成,令和',
-            'name_changed_date_year' => 'nullable|int|between:1,99',
-            'name_changed_date_month' => 'nullable|int|between:1,12',
-            'name_changed_date_date' => 'nullable|int|between:1,31',
+            'name_changed_date_era' => 'nullable|in:平成,令和|required_with:name_changed_date_year,name_changed_date_month,name_changed_date_date',
+            'name_changed_date_year' => 'nullable|int|between:1,99|required_with:name_changed_date_era,name_changed_date_month,name_changed_date_date',
+            'name_changed_date_month' => 'nullable|int|between:1,12|required_with:name_changed_date_year,name_changed_date_era,name_changed_date_date',
+            'name_changed_date_date' => 'nullable|int|between:1,31|required_with:name_changed_date_year,name_changed_date_month,name_changed_date_era',
             'remarks' => 'nullable|string|max:255',
             'headquarter_address' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９Ａ-Ｚ－‐]+\z/u',
             'headquarter_name' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+$/u',
@@ -80,10 +80,139 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
+    
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            $birthdayEra = $data['birthday_era'];
+            $birthdayYear = $data['birthday_year'];
+            $birthdayMonth = $data['birthday_month'];
+            $birthdayDay = $data['birthday_day'];
+            $insuredEra = $data['employment_insured_date_era'];
+            $insuredYear = $data['employment_insured_date_year'];
+            $insuredMonth = $data['employment_insured_date_month'];
+            $insuredDay = $data['employment_insured_date_date'];
+            $transferEra = $data['transfer_date_era'];
+            $transferYear = $data['transfer_date_year'];
+            $transferMonth = $data['transfer_date_month'];
+            $transferDay = $data['transfer_date_date'];
+            $name_changedEra = $data['name_changed_date_era'];
+            $name_changedYear = $data['name_changed_date_year'];
+            $name_changedMonth = $data['name_changed_date_month'];
+            $name_changedDay = $data['name_changed_date_date'];
+            
+            if ($birthdayEra === '大正') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 7 || ($birthdayMonth == 7 && $birthdayDay < 30))) ||
+                    ($birthdayYear == 15 && ($birthdayMonth == 12 && $birthdayDay > 25)) ||
+                    ($birthdayYear > 15)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '昭和') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 12 || ($birthdayMonth == 12 && $birthdayDay < 25))) ||
+                    ($birthdayYear == 64 && ($birthdayMonth > 1 || ($birthdayMonth == 1 && $birthdayDay > 7))) ||
+                    ($birthdayYear > 64)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '平成') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 1 || ($birthdayMonth == 1 && $birthdayDay < 8))) ||
+                    ($birthdayYear == 31 && ($birthdayMonth > 4 || ($birthdayMonth == 4 && $birthdayDay > 30))) ||
+                    ($birthdayYear > 31)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '令和') {
+                if ($birthdayYear == 1 && ($birthdayMonth < 5 || ($birthdayMonth == 5 && $birthdayDay < 1))) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($birthdayMonth) && !empty($birthdayDay)){
+                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                    $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($insuredEra === '昭和') {
+                if (
+                    ($insuredYear == 1 && ($insuredMonth < 12 || ($insuredMonth == 12 && $insuredDay < 25))) ||
+                    ($insuredYear == 64 && ($insuredMonth > 1 || ($insuredMonth == 1 && $insuredDay > 7))) ||
+                    ($insuredYear > 64)
+                ) {
+                    $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif($insuredEra === '平成') {
+                if (
+                    ($insuredYear == 1 && ($insuredMonth < 1 || ($insuredMonth == 1 && $insuredDay < 8))) ||
+                    ($insuredYear == 31 && ($insuredMonth > 4 || ($insuredMonth == 4 && $insuredDay > 30))) ||
+                    ($insuredYear > 31)
+                ) {
+                    $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($insuredEra === '令和') {
+                if ($insuredYear == 1 && ($insuredMonth < 5 || ($insuredMonth == 5 && $insuredDay < 1))) {
+                    $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($insuredMonth) && !empty($insuredDay)){
+                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                    $validator->errors()->add('employment_insured_date_era','資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($transferEra === '平成') {
+                if (
+                    ($transferYear == 1 && ($transferMonth < 1 || ($transferMonth == 1 && $transferDay < 8))) ||
+                    ($transferYear == 31 && ($transferMonth > 4 || ($transferMonth == 4 && $transferDay > 30))) ||
+                    ($transferYear > 31)
+                ) {
+                    $validator->errors()->add('transfer_date_era', '転勤年月日は正しい日付を入力してください。');
+                }
+            } elseif ($transferEra === '令和') {
+                if ($transferYear == 1 && ($transferMonth < 5 || ($transferMonth == 5 && $transferDay < 1))) {
+                    $validator->errors()->add('transfer_date_era', '転勤年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($transferMonth) && !empty($transferDay)){
+                if (!checkdate($transferMonth, $transferDay, '2000')) {
+                    $validator->errors()->add('transfer_date_era','転勤年月日は正しい日付を入力してください。');
+                }
+            }
+
+            
+            if ($name_changedEra === '平成') {
+                if (
+                    ($name_changedYear == 1 && ($name_changedMonth < 1 || ($name_changedMonth == 1 && $name_changedDay < 8))) ||
+                    ($name_changedYear == 31 && ($name_changedMonth > 4 || ($name_changedMonth == 4 && $name_changedDay > 30))) ||
+                    ($name_changedYear > 31)
+                ) {
+                    $validator->errors()->add('name_changed_date_era', '氏名変更年月日は正しい日付を入力してください。');
+                }
+            } elseif ($name_changedEra === '令和') {
+                if ($name_changedYear == 1 && ($name_changedMonth < 5 || ($name_changedMonth == 5 && $name_changedDay < 1))) {
+                    $validator->errors()->add('name_changed_date_era', '氏名変更年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($name_changedMonth) && !empty($name_changedDay)){
+                if (!checkdate($name_changedMonth, $name_changedDay, '2000')) {
+                    $validator->errors()->add('name_changed_date_era','氏名変更年月日は正しい日付を入力してください。');
+                }
+            }
+        });
+    }
     public function messages()
     {
         return [
-            'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',  
+            'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'insured_fullname.regex' => '被保険者氏名はカタカナで入力してください。',
+            'name_changed_date_era.required_with' => '氏名変更年月日_年号を入力してください。',
+            'name_changed_date_year.required_with' => '氏名変更年月日_年を入力してください。',
+            'name_changed_date_month.required_with' => '氏名変更年月日_月を入力してください。',
+            'name_changed_date_date.required_with' => '氏名変更年月日_日を入力してください。',
         ];
     }
 
@@ -119,10 +248,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'office_before_transfer' => '転勤前事業所名称・所在地',
             'name_before_changed_kanji' => '変更前氏名',
             'name_before_changed_kana' => '変更前氏名（フリガナ）',
-            'name_changed_date_era' => '氏名変更年月_年号',
-            'name_changed_date_year' => '氏名変更年月_年',
-            'name_changed_date_month' => '氏名変更年月_月',
-            'name_changed_date_date' => '氏名変更年月_日',
+            'name_changed_date_era' => '氏名変更年月日_年号',
+            'name_changed_date_year' => '氏名変更年月日_年',
+            'name_changed_date_month' => '氏名変更年月日_月',
+            'name_changed_date_date' => '氏名変更年月日_日',
             'remarks' => '備考',
             'headquarter_address' => '事業主住所',
             'headquarter_name' => '事業主氏名',

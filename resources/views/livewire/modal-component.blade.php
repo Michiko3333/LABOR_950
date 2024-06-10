@@ -28,6 +28,6 @@
 <script>
 btn.addEventListener('click', function() {
   
-  prompt('名前を入力してください', '例：佐藤');
+  prompt('名前を入力してください。', '例：佐藤');
 
 });

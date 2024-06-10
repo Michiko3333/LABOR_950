@@ -102,17 +102,17 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "submission_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "submission_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "submission_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "pension_office_reference_prefecture" => 'string|regex:/^[0-9]{2}$/u',
-            "pension_office_reference_no_cities" => 'string|regex:/^[0-9]{2}$/u',
-            "pension_office_reference_no_office" => 'string|regex:/^[ァ-ン]{1,4}$/u',
-            "headquarters_post_code_former" => 'string|regex:/^[0-9]{3}$/u',
-            "headquarters_post_code_latter" => 'string|regex:/^[0-9]{4}$/u',
-            "company_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
-            "headquarters_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
-            "headquarters_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
-            "headquarters_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',
-            "headquarters_representative" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "pension_office_reference_prefecture" => 'required|string|regex:/^[0-9]{2}$/u',
+            "pension_office_reference_no_cities" => 'required|string|regex:/^[0-9]{2}$/u',
+            "pension_office_reference_no_office" => 'required|string|regex:/^[ァ-ン]{1,4}$/u',
+            "headquarters_post_code_former" => 'required|string|regex:/^[0-9]{3}$/u',
+            "headquarters_post_code_latter" => 'required|string|regex:/^[0-9]{4}$/u',
+            "company_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            "headquarters_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
+            "headquarters_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
+            "headquarters_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
+            "headquarters_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
+            "headquarters_representative" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "accepted_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "accepted_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
@@ -120,31 +120,31 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "employer_confirmation" => 'nullable|string|in:有',
             "application_category" => 'required|string|max:10|in:該当,非該当,変更',
             "insured_reference_number" => 'nullable|int',
-            "name" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
-            "name_kana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            "birthday_era" => 'int|in:5,7,9',
-            "birthday_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "birthday_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "birthday_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
+            "name_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
+            "birthday_era" => 'required|int|in:5,7,9',
+            "birthday_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            "birthday_month" => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "birthday_day" => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "sex" => 'string|in:男,女',
             "mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
-            "acquisition_era" => 'int|in:5,7,9',
-            "acquisition_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "acquisition_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "acquisition_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "acquisition_era" => 'nullable|int|in:5,7,9|required_with:acquisition_year,acquisition_month,acquisition_day',
+            "acquisition_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:acquisition_era,acquisition_month,acquisition_day',
+            "acquisition_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:acquisition_year,acquisition_era,acquisition_day',
+            "acquisition_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:acquisition_year,acquisition_month,acquisition_era',
             "annual_income" => 'int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             "employee_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "employee_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
             "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
-            "notification_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "notification_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "notification_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "notification_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:notification_month,notification_day',
+            "notification_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:notification_year,notification_day',
+            "notification_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:notification_month,notification_year',
             "spouse_name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "spouse_name_kana" => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            "spouse_birthday_era" => 'nullable|int|in:5,7,9',
-            "spouse_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_birthday_era" => 'nullable|int|in:5,7,9|required_with:spouse_birthday_year,spouse_birthday_month,spouse_birthday_day',
+            "spouse_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_birthday_era,spouse_birthday_month,spouse_birthday_day',
+            "spouse_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_birthday_year,spouse_birthday_era,spouse_birthday_day',
+            "spouse_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_birthday_year,spouse_birthday_month,spouse_birthday_era',
             "spouse_sex" => 'nullable|int|in:1,2,3,4',
             "spouse_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
             "appointment" => 'nullable|string|in:有',
@@ -160,47 +160,47 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "spouse_tel_city_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "spouse_tel_subscriber_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "confirmation_notification_0" => 'nullable|int|in:1',
-            "spouse_become_date_era" => 'nullable|int|in:7,9',
-            "spouse_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_become_date_era" => 'nullable|int|in:7,9|required_with:spouse_become_date_year,spouse_become_date_month,spouse_become_date_day',
+            "spouse_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_become_date_era,spouse_become_date_month,spouse_become_date_day',
+            "spouse_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_become_date_year,spouse_become_date_era,spouse_become_date_day',
+            "spouse_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_become_date_year,spouse_become_date_month,spouse_become_date_era',
             "spouse_reason_type" => 'nullable|string|in:配偶者の就職,婚姻,離職,収入減少,死亡,離婚,就職・収入増加,75歳到達,障害認定,その他',
-            "spouse_remove_date_era" => 'nullable|int|in:7,9',
-            "spouse_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "spouse_passed_away_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_passed_away_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_passed_away_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_remove_date_era" => 'nullable|int|in:7,9|required_with:spouse_remove_date_year,spouse_remove_date_month,spouse_remove_date_day',
+            "spouse_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_remove_date_era,spouse_remove_date_month,spouse_remove_date_day',
+            "spouse_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_remove_date_year,spouse_remove_date_era,spouse_remove_date_day',
+            "spouse_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_remove_date_year,spouse_remove_date_month,spouse_remove_date_era',
+            "spouse_passed_away_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_passed_away_date_month,spouse_passed_away_date_day',
+            "spouse_passed_away_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_passed_away_date_year,spouse_passed_away_date_day',
+            "spouse_passed_away_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_passed_away_date_month,spouse_passed_away_date_year',
             "spouse_reason" => 'nullable|string|max:255',
             "spouse_occupation_type" => 'nullable|string|in:無職,パート,年金受給者,その他',
             "spouse_occupation" => 'nullable|string|max:255',
             "dependent_annual_income" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             "spouse_special_requirements_applicable_flg" => 'nullable|int|in:1,2',
             "spouse_special_requirements_applicable_date_era" => 'nullable|string|in:9',
-            "spouse_special_requirements_applicable_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_special_requirements_applicable_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_special_requirements_applicable_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_special_requirements_applicable_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_applicable_date_month,spouse_special_requirements_applicable_date_day',
+            "spouse_special_requirements_applicable_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_applicable_date_year,spouse_special_requirements_applicable_date_day',
+            "spouse_special_requirements_applicable_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_applicable_date_month,spouse_special_requirements_applicable_date_year',
             "spouse_special_requirements_applicable_reason_type" => 'nullable|int|in:1,2,3,4,5',
             "spouse_special_requirements_applicable_reason" => 'nullable|string|max:255',
             "spouse_special_requirements_non_applicable_date_era" => 'nullable|int|in:9',
-            "spouse_special_requirements_non_applicable_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_special_requirements_non_applicable_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_special_requirements_non_applicable_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_special_requirements_non_applicable_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_non_applicable_date_month,spouse_special_requirements_non_applicable_date_day',
+            "spouse_special_requirements_non_applicable_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_non_applicable_date_year,spouse_special_requirements_non_applicable_date_day',
+            "spouse_special_requirements_non_applicable_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_special_requirements_non_applicable_date_month,spouse_special_requirements_non_applicable_date_year',
             "spouse_special_requirements_non_applicable_reason_type" => 'nullable|int|in:1,2',
-            "spouse_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "spouse_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "spouse_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "spouse_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:spouse_domestic_transfer_date_month,spouse_domestic_transfer_date_day',
+            "spouse_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_domestic_transfer_date_year,spouse_domestic_transfer_date_day',
+            "spouse_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_domestic_transfer_date_month,spouse_domestic_transfer_date_year',
             "spouse_special_requirements_non_applicable_reason" => 'nullable|string|max:255',
             "spouse_remarks" => 'nullable|string|max:255',
             "spouse_confirmation_relationship_0" => 'nullable|string|in:確認済',
             "spouse_annual_income" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             "other_dependent1_name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "other_dependent1_name_kana" => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            "other_dependent1_birthday_era" => 'nullable|string|max:10',
-            "other_dependent1_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent1_birthday_era" => 'nullable|string|in:5,7,9|required_with:other_dependent1_birthday_year,other_dependent1_birthday_month,other_dependent1_birthday_day',
+            "other_dependent1_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_birthday_era,other_dependent1_birthday_month,other_dependent1_birthday_day',
+            "other_dependent1_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_birthday_year,other_dependent1_birthday_era,other_dependent1_birthday_day',
+            "other_dependent1_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_birthday_year,other_dependent1_birthday_month,other_dependent1_birthday_era',
             "other_dependent1_sex" => 'nullable|int|in:1,2',
             "other_dependent1_relationship" => 'nullable|string|in:実子・養子,実子養子以外,父母・養父母,義父母,弟妹,兄姉,祖父母,曽祖父母,孫,その他',
             "other_dependent1_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
@@ -208,15 +208,15 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent1_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "other_dependent1_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
             "other_dependent1_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
-            "other_dependent1_become_date_era" => 'nullable|string|in:7,9',
-            "other_dependent1_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent1_become_date_era" => 'nullable|string|in:7,9|required_with:other_dependent1_become_date_year,other_dependent1_become_date_month,other_dependent1_become_date_day',
+            "other_dependent1_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_era,other_dependent1_become_date_month,other_dependent1_become_date_day',
+            "other_dependent1_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_year,other_dependent1_become_date_era,other_dependent1_become_date_day',
+            "other_dependent1_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_year,other_dependent1_become_date_month,other_dependent1_become_date_era',
             "other_dependent1_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,死亡,離婚,就職,収入増加,75歳到達,障害認定,その他',
-            "other_dependent1_remove_date_era" => 'nullable|string|in:7,9',
-            "other_dependent1_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent1_remove_date_era" => 'nullable|string|in:7,9|required_with:other_dependent1_remove_date_year,other_dependent1_remove_date_month,other_dependent1_remove_date_day',
+            "other_dependent1_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_remove_date_era,other_dependent1_remove_date_month,other_dependent1_remove_date_day',
+            "other_dependent1_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_remove_date_year,other_dependent1_remove_date_era,other_dependent1_remove_date_day',
+            "other_dependent1_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_remove_date_year,other_dependent1_remove_date_month,other_dependent1_remove_date_era',
             "other_dependent1_reason" => 'nullable|string|max:255',
             "other_dependent1_occupation_type" => 'nullable|string|in:無職,パート,年金受給者,小・中学生以下,高・大学生,その他',
             "other_dependent1_occupation" => 'nullable|string|max:255',
@@ -226,18 +226,18 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent1_special_requirements_applicable_reason_type" => 'nullable|int|in:1,2,3,4,5',
             "other_dependent1_special_requirements_applicable_reason" => 'nullable|string|max:255',
             "other_dependent1_special_requirements_non_applicable_reason_type" => 'nullable|int|in:1,2',
-            "other_dependent1_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent1_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent1_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_domestic_transfer_date_month,other_dependent1_domestic_transfer_date_day',
+            "other_dependent1_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_domestic_transfer_date_year,other_dependent1_domestic_transfer_date_day',
+            "other_dependent1_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_domestic_transfer_date_month,other_dependent1_domestic_transfer_date_year',
             "other_dependent1_special_requirements_non_applicable_reason" => 'nullable|string|max:255',
             "other_dependent1_remarks" => 'nullable|string|max:255',
             "other_dependent1_confirmation_relationship_0" => 'nullable|string|in:確認済',
             "other_dependent2_name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "other_dependent2_name_kana" => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            "other_dependent2_birthday_era" => 'nullable|string|max:10',
-            "other_dependent2_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent2_birthday_era" => 'nullable|string|in:5,7,9|required_with:other_dependent2_birthday_year,other_dependent2_birthday_month,other_dependent2_birthday_day',
+            "other_dependent2_birthday_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_birthday_era,other_dependent2_birthday_month,other_dependent2_birthday_day',
+            "other_dependent2_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_birthday_year,other_dependent2_birthday_era,other_dependent2_birthday_day',
+            "other_dependent2_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_birthday_year,other_dependent2_birthday_month,other_dependent2_birthday_era',
             "other_dependent2_sex" => 'nullable|int|in:1,2',
             "other_dependent2_relationship" => 'nullable|string|in:実子・養子,実子養子以外,父母・養父母,義父母,弟妹,兄姉,祖父母,曽祖父母,孫,その他',
             "other_dependent2_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
@@ -245,15 +245,15 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "other_dependent2_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
             "other_dependent2_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
-            "other_dependent2_become_date_era" => 'nullable|int|in:7,9',
-            "other_dependent2_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent2_become_date_era" => 'nullable|int|in:7,9|required_with:other_dependent2_become_date_year,other_dependent2_become_date_month,other_dependent2_become_date_day',
+            "other_dependent2_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_era,other_dependent2_become_date_month,other_dependent2_become_date_day',
+            "other_dependent2_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_year,other_dependent2_become_date_era,other_dependent2_become_date_day',
+            "other_dependent2_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_year,other_dependent2_become_date_month,other_dependent2_become_date_era',
             "other_dependent2_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,死亡,離婚,就職,収入増加,75歳到達,障害認定,その他',
-            "other_dependent2_remove_date_era" => 'nullable|int|in:7,9',
-            "other_dependent2_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent2_remove_date_era" => 'nullable|int|in:7,9|required_with:other_dependent2_remove_date_year,other_dependent2_remove_date_month,other_dependent2_remove_date_day',
+            "other_dependent2_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_remove_date_era,other_dependent2_remove_date_month,other_dependent2_remove_date_day',
+            "other_dependent2_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_remove_date_year,other_dependent2_remove_date_era,other_dependent2_remove_date_day',
+            "other_dependent2_remove_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_remove_date_year,other_dependent2_remove_date_month,other_dependent2_remove_date_era',
             "other_dependent2_reason" => 'nullable|string|max:255',
             "other_dependent2_occupation_type" => 'nullable|string|in:無職,パート,年金受給者,小・中学生以下,高・大学生,その他',
             "other_dependent2_occupation" => 'nullable|string|max:255',
@@ -263,9 +263,9 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_special_requirements_applicable_reason_type" => 'nullable|int|in:1,2,3,4,5',
             "other_dependent2_special_requirements_applicable_reason" => 'nullable|string|max:255',
             "other_dependent2_special_requirements_non_applicable_reason_type" => 'nullable|int|in:1,2',
-            "other_dependent2_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            "other_dependent2_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            "other_dependent2_domestic_transfer_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_domestic_transfer_date_month,other_dependent2_domestic_transfer_date_day',
+            "other_dependent2_domestic_transfer_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_domestic_transfer_date_year,other_dependent2_domestic_transfer_date_day',
+            "other_dependent2_domestic_transfer_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_domestic_transfer_date_month,other_dependent2_domestic_transfer_date_year',
             "other_dependent2_special_requirements_non_applicable_reason" => 'nullable|string|max:255',
             "other_dependent2_remarks" => 'nullable|string|max:255',
             "other_dependent2_confirmation_relationship_0" => 'nullable|string|in:確認済',
@@ -278,6 +278,363 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $birthday_era = $data['birthday_era'];
+            $birthday_year = $data['birthday_year'];
+            $birthday_month = $data['birthday_month'];
+            $birthday_day = $data['birthday_day'];
+            $acquisition_era = $data['acquisition_era'];
+            $acquisition_year = $data['acquisition_year'];
+            $acquisition_month = $data['acquisition_month'];
+            $acquisition_day = $data['acquisition_day'];
+            $spouse_birthday_era = $data['spouse_birthday_era'];
+            $spouse_birthday_year = $data['spouse_birthday_year'];
+            $spouse_birthday_month = $data['spouse_birthday_month'];
+            $spouse_birthday_day = $data['spouse_birthday_day'];
+            $spouse_become_date_era = $data['spouse_become_date_era'];
+            $spouse_become_date_year = $data['spouse_become_date_year'];
+            $spouse_become_date_month = $data['spouse_become_date_month'];
+            $spouse_become_date_day = $data['spouse_become_date_day'];
+            $spouse_remove_date_era = $data['spouse_remove_date_era'];
+            $spouse_remove_date_year = $data['spouse_remove_date_year'];
+            $spouse_remove_date_month = $data['spouse_remove_date_month'];
+            $spouse_remove_date_day = $data['spouse_remove_date_day'];
+            $other_dependent1_birthday_era = $data['other_dependent1_birthday_era'];
+            $other_dependent1_birthday_year = $data['other_dependent1_birthday_year'];
+            $other_dependent1_birthday_month = $data['other_dependent1_birthday_month'];
+            $other_dependent1_birthday_day = $data['other_dependent1_birthday_day'];
+            $other_dependent1_become_date_era = $data['other_dependent1_become_date_era'];
+            $other_dependent1_become_date_year = $data['other_dependent1_become_date_year'];
+            $other_dependent1_become_date_month = $data['other_dependent1_become_date_month'];
+            $other_dependent1_become_date_day = $data['other_dependent1_become_date_day'];
+            $other_dependent1_remove_date_era = $data['other_dependent1_remove_date_era'];
+            $other_dependent1_remove_date_year = $data['other_dependent1_remove_date_year'];
+            $other_dependent1_remove_date_month = $data['other_dependent1_remove_date_month'];
+            $other_dependent1_remove_date_day = $data['other_dependent1_remove_date_day'];
+            $other_dependent2_birthday_era = $data['other_dependent2_birthday_era'];
+            $other_dependent2_birthday_year = $data['other_dependent2_birthday_year'];
+            $other_dependent2_birthday_month = $data['other_dependent2_birthday_month'];
+            $other_dependent2_birthday_day = $data['other_dependent2_birthday_day'];
+            $other_dependent2_become_date_era = $data['other_dependent2_become_date_era'];
+            $other_dependent2_become_date_year = $data['other_dependent2_become_date_year'];
+            $other_dependent2_become_date_month = $data['other_dependent2_become_date_month'];
+            $other_dependent2_become_date_day = $data['other_dependent2_become_date_day'];
+            $other_dependent2_remove_date_era = $data['other_dependent2_remove_date_era'];
+            $other_dependent2_remove_date_year = $data['other_dependent2_remove_date_year'];
+            $other_dependent2_remove_date_month = $data['other_dependent2_remove_date_month'];
+            $other_dependent2_remove_date_day = $data['other_dependent2_remove_date_day'];
+
+            if(!empty($birthday_month) && !empty($birthday_day)){
+                if (!checkdate($birthday_month, $birthday_day, '2000')) {
+                    $validator->errors()->add('birthday_day','1枚目_7_生年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($birthday_era === '5') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_day < 25))) ||
+                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_day > 7))) ||
+                    ($birthday_year > 64)
+                ) {
+                    $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '7') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_day < 8))) ||
+                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_day > 30))) ||
+                    ($birthday_year > 31)
+                ) {
+                    $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '9') {
+                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_day < 1))) {
+                    $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
+                }
+            }
+            
+            if(!empty($acquisition_month) && !empty($acquisition_day)){
+                if (!checkdate($acquisition_month, $acquisition_day, '2000')) {
+                    $validator->errors()->add('acquisition_day','1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($acquisition_era === '5') {
+                if (
+                    ($acquisition_year == 1 && ($acquisition_month < 12 || ($acquisition_month == 12 && $acquisition_day < 25))) ||
+                    ($acquisition_year == 64 && ($acquisition_month > 1 || ($acquisition_month == 1 && $acquisition_day > 7))) ||
+                    ($acquisition_year > 64)
+                ) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($acquisition_era === '7') {
+                if (
+                    ($acquisition_year == 1 && ($acquisition_month < 1 || ($acquisition_month == 1 && $acquisition_day < 8))) ||
+                    ($acquisition_year == 31 && ($acquisition_month > 4 || ($acquisition_month == 4 && $acquisition_day > 30))) ||
+                    ($acquisition_year > 31)
+                ) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($acquisition_era === '9') {
+                if ($acquisition_year == 1 && ($acquisition_month < 5 || ($acquisition_month == 5 && $acquisition_day < 1))) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['notification_month']) && !empty($data['notification_day'])){
+                if (!checkdate($data['notification_month'], $data['notification_day'], '2000')) {
+                    $validator->errors()->add('notification_day','1枚目_13_氏名_日付は正しい日付を入力してください。');
+                }
+            }
+            if ($data['notification_year'] == 1 && ($data['notification_month'] < 5 )) {
+                    $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
+            }
+
+            if(!empty($spouse_birthday_month) && !empty($spouse_birthday_day)){
+                if (!checkdate($spouse_birthday_month, $spouse_birthday_day, '2000')) {
+                    $validator->errors()->add('spouse_birthday_day','1枚目_14_生年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($spouse_birthday_era === '5') {
+                if (
+                    ($spouse_birthday_year == 1 && ($spouse_birthday_month < 12 || ($spouse_birthday_month == 12 && $spouse_birthday_day < 25))) ||
+                    ($spouse_birthday_year == 64 && ($spouse_birthday_month > 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day > 7))) ||
+                    ($spouse_birthday_year > 64)
+                ) {
+                    $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($spouse_birthday_era === '7') {
+                if (
+                    ($spouse_birthday_year == 1 && ($spouse_birthday_month < 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day < 8))) ||
+                    ($spouse_birthday_year == 31 && ($spouse_birthday_month > 4 || ($spouse_birthday_month == 4 && $spouse_birthday_day > 30))) ||
+                    ($spouse_birthday_year > 31)
+                ) {
+                    $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($spouse_birthday_era === '9') {
+                if ($spouse_birthday_year == 1 && ($spouse_birthday_month < 5 || ($spouse_birthday_month == 5 && $spouse_birthday_day < 1))) {
+                    $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
+                }
+            }
+            
+            if(!empty($spouse_become_date_month) && !empty($spouse_become_date_day)){
+                if (!checkdate($spouse_become_date_month, $spouse_become_date_day, '2000')) {
+                    $validator->errors()->add('spouse_become_date_day','1枚目_22_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+            if ($spouse_become_date_era === '7') {
+                if (
+                    ($spouse_become_date_year == 1 && ($spouse_become_date_month < 1 || ($spouse_become_date_month == 1 && $spouse_become_date_day < 8))) ||
+                    ($spouse_become_date_year == 31 && ($spouse_become_date_month > 4 || ($spouse_become_date_month == 4 && $spouse_become_date_day > 30))) ||
+                    ($spouse_become_date_year > 31)
+                ) {
+                    $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
+                }
+            } elseif ($spouse_become_date_era === '9') {
+                if ($spouse_become_date_year == 1 && ($spouse_become_date_month < 5 || ($spouse_become_date_month == 5 && $spouse_become_date_day < 1))) {
+                    $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day)){
+                if (!checkdate($spouse_remove_date_month, $spouse_remove_date_day, '2000')) {
+                    $validator->errors()->add('spouse_remove_date_day','1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+            if ($spouse_remove_date_era === '7') {
+                if (
+                    ($spouse_remove_date_year == 1 && ($spouse_remove_date_month < 1 || ($spouse_remove_date_month == 1 && $spouse_remove_date_day < 8))) ||
+                    ($spouse_remove_date_year == 31 && ($spouse_remove_date_month > 4 || ($spouse_remove_date_month == 4 && $spouse_remove_date_day > 30))) ||
+                    ($spouse_remove_date_year > 31)
+                ) {
+                    $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            } elseif ($spouse_remove_date_era === '9') {
+                if ($spouse_remove_date_year == 1 && ($spouse_remove_date_month < 5 || ($spouse_remove_date_month == 5 && $spouse_remove_date_day < 1))) {
+                    $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['spouse_passed_away_date_month']) && !empty($data['spouse_passed_away_date_day'])){
+                if (!checkdate($data['spouse_passed_away_date_month'], $data['spouse_passed_away_date_day'], '2000')) {
+                    $validator->errors()->add('spouse_passed_away_date_day','1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['spouse_passed_away_date_year'] == 1 && ($data['spouse_passed_away_date_month'] < 5 )) {
+                    $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
+            }
+
+            if(!empty($data['spouse_special_requirements_applicable_date_month']) && !empty($data['spouse_special_requirements_applicable_date_day'])){
+                if (!checkdate($data['spouse_special_requirements_applicable_date_month'], $data['spouse_special_requirements_applicable_date_day'], '2000')) {
+                    $validator->errors()->add('spouse_special_requirements_applicable_date_day','1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['spouse_special_requirements_applicable_date_year'] == 1 && ($data['spouse_special_requirements_applicable_date_month'] < 5 )) {
+                    $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
+            }
+            
+            if(!empty($data['spouse_special_requirements_non_applicable_date_month']) && !empty($data['spouse_special_requirements_non_applicable_date_day'])){
+                if (!checkdate($data['spouse_special_requirements_non_applicable_date_month'], $data['spouse_special_requirements_non_applicable_date_day'], '2000')) {
+                    $validator->errors()->add('spouse_special_requirements_non_applicable_date_day','1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['spouse_special_requirements_non_applicable_date_year'] == 1 && ($data['spouse_special_requirements_non_applicable_date_month'] < 5 )) {
+                    $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
+            }
+
+            if(!empty($data['spouse_domestic_transfer_date_month']) && !empty($data['spouse_domestic_transfer_date_day'])){
+                if (!checkdate($data['spouse_domestic_transfer_date_month'], $data['spouse_domestic_transfer_date_day'], '2000')) {
+                    $validator->errors()->add('spouse_domestic_transfer_date_day','1枚目_30_理由_国内転入日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['spouse_domestic_transfer_date_year'] == 1 && ($data['spouse_domestic_transfer_date_month'] < 5 )) {
+                    $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
+            }
+
+            if(!empty($other_dependent1_birthday_month) && !empty($other_dependent1_birthday_day)){
+                if (!checkdate($other_dependent1_birthday_month, $other_dependent1_birthday_day, '2000')) {
+                    $validator->errors()->add('other_dependent1_birthday_day','1枚目_34_生年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent1_birthday_era === '5') {
+                if (
+                    ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 12 || ($other_dependent1_birthday_month == 12 && $other_dependent1_birthday_day < 25))) ||
+                    ($other_dependent1_birthday_year == 64 && ($other_dependent1_birthday_month > 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day > 7))) ||
+                    ($other_dependent1_birthday_year > 64)
+                ) {
+                    $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent1_birthday_era === '7') {
+                if (
+                    ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day < 8))) ||
+                    ($other_dependent1_birthday_year == 31 && ($other_dependent1_birthday_month > 4 || ($other_dependent1_birthday_month == 4 && $other_dependent1_birthday_day > 30))) ||
+                    ($other_dependent1_birthday_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent1_birthday_era === '9') {
+                if ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 5 || ($other_dependent1_birthday_month == 5 && $other_dependent1_birthday_day < 1))) {
+                    $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day)){
+                if (!checkdate($other_dependent1_become_date_month, $other_dependent1_become_date_day, '2000')) {
+                    $validator->errors()->add('other_dependent1_become_date_day','1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent1_become_date_era === '7') {
+                if (
+                    ($other_dependent1_become_date_year == 1 && ($other_dependent1_become_date_month < 1 || ($other_dependent1_become_date_month == 1 && $other_dependent1_become_date_day < 8))) ||
+                    ($other_dependent1_become_date_year == 31 && ($other_dependent1_become_date_month > 4 || ($other_dependent1_become_date_month == 4 && $other_dependent1_become_date_day > 30))) ||
+                    ($other_dependent1_become_date_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent1_become_date_era === '9') {
+                if ($other_dependent1_become_date_year == 1 && ($other_dependent1_become_date_month < 5 || ($other_dependent1_become_date_month == 5 && $other_dependent1_become_date_day < 1))) {
+                    $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day)){
+                if (!checkdate($other_dependent1_remove_date_month, $other_dependent1_remove_date_day, '2000')) {
+                    $validator->errors()->add('other_dependent1_remove_date_day','1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent1_remove_date_era === '7') {
+                if (
+                    ($other_dependent1_remove_date_year == 1 && ($other_dependent1_remove_date_month < 1 || ($other_dependent1_remove_date_month == 1 && $other_dependent1_remove_date_day < 8))) ||
+                    ($other_dependent1_remove_date_year == 31 && ($other_dependent1_remove_date_month > 4 || ($other_dependent1_remove_date_month == 4 && $other_dependent1_remove_date_day > 30))) ||
+                    ($other_dependent1_remove_date_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent1_remove_date_era === '9') {
+                if ($other_dependent1_remove_date_year == 1 && ($other_dependent1_remove_date_month < 5 || ($other_dependent1_remove_date_month == 5 && $other_dependent1_remove_date_day < 1))) {
+                    $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['other_dependent1_domestic_transfer_date_month']) && !empty($data['other_dependent1_domestic_transfer_date_day'])){
+                if (!checkdate($data['other_dependent1_domestic_transfer_date_month'], $data['other_dependent1_domestic_transfer_date_day'], '2000')) {
+                    $validator->errors()->add('other_dependent1_domestic_transfer_date_day','1枚目_47_国内転入日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['other_dependent1_domestic_transfer_date_year'] == 1 && ($data['other_dependent1_domestic_transfer_date_month'] < 5 )) {
+                    $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
+            }
+
+            if(!empty($other_dependent2_birthday_month) && !empty($other_dependent2_birthday_day)){
+                if (!checkdate($other_dependent2_birthday_month, $other_dependent2_birthday_day, '2000')) {
+                    $validator->errors()->add('other_dependent2_birthday_day','1枚目_49_生年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent2_birthday_era === '5') {
+                if (
+                    ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 12 || ($other_dependent2_birthday_month == 12 && $other_dependent2_birthday_day < 25))) ||
+                    ($other_dependent2_birthday_year == 64 && ($other_dependent2_birthday_month > 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day > 7))) ||
+                    ($other_dependent2_birthday_year > 64)
+                ) {
+                    $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent2_birthday_era === '7') {
+                if (
+                    ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day < 8))) ||
+                    ($other_dependent2_birthday_year == 31 && ($other_dependent2_birthday_month > 4 || ($other_dependent2_birthday_month == 4 && $other_dependent2_birthday_day > 30))) ||
+                    ($other_dependent2_birthday_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent2_birthday_era === '9') {
+                if ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 5 || ($other_dependent2_birthday_month == 5 && $other_dependent2_birthday_day < 1))) {
+                    $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day)){
+                if (!checkdate($other_dependent2_become_date_month, $other_dependent2_become_date_day, '2000')) {
+                    $validator->errors()->add('other_dependent2_become_date_day','1枚目_54_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent2_become_date_era === '7') {
+                if (
+                    ($other_dependent2_become_date_year == 1 && ($other_dependent2_become_date_month < 1 || ($other_dependent2_become_date_month == 1 && $other_dependent2_become_date_day < 8))) ||
+                    ($other_dependent2_become_date_year == 31 && ($other_dependent2_become_date_month > 4 || ($other_dependent2_become_date_month == 4 && $other_dependent2_become_date_day > 30))) ||
+                    ($other_dependent2_become_date_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent2_become_date_era === '9') {
+                if ($other_dependent2_become_date_year == 1 && ($other_dependent2_become_date_month < 5 || ($other_dependent2_become_date_month == 5 && $other_dependent2_become_date_day < 1))) {
+                    $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day)){
+                if (!checkdate($other_dependent2_remove_date_month, $other_dependent2_remove_date_day, '2000')) {
+                    $validator->errors()->add('other_dependent2_remove_date_day','1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+            if ($other_dependent2_remove_date_era === '7') {
+                if (
+                    ($other_dependent2_remove_date_year == 1 && ($other_dependent2_remove_date_month < 1 || ($other_dependent2_remove_date_month == 1 && $other_dependent2_remove_date_day < 8))) ||
+                    ($other_dependent2_remove_date_year == 31 && ($other_dependent2_remove_date_month > 4 || ($other_dependent2_remove_date_month == 4 && $other_dependent2_remove_date_day > 30))) ||
+                    ($other_dependent2_remove_date_year > 31)
+                ) {
+                    $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            } elseif ($other_dependent2_remove_date_era === '9') {
+                if ($other_dependent2_remove_date_year == 1 && ($other_dependent2_remove_date_month < 5 || ($other_dependent2_remove_date_month == 5 && $other_dependent2_remove_date_day < 1))) {
+                    $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['other_dependent2_domestic_transfer_date_month']) && !empty($data['other_dependent2_domestic_transfer_date_day'])){
+                if (!checkdate($data['other_dependent2_domestic_transfer_date_month'], $data['other_dependent2_domestic_transfer_date_day'], '2000')) {
+                    $validator->errors()->add('other_dependent2_domestic_transfer_date_day','1枚目_62_国内転入日は正しい日付を入力してください。');
+                }
+            }
+            if ($data['other_dependent2_domestic_transfer_date_year'] == 1 && ($data['other_dependent2_domestic_transfer_date_month'] < 5 )) {
+                    $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
+            }
 
             if ($this->hasFile('file_insurance')) {
                 $totalSize += $this->file('file_insurance')->getSize();
@@ -337,6 +694,67 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             'other_dependent2_special_requirements_applicable_reason_type' => '1枚目_61_理由は留学,同行旅行,特定活動,海外婚姻,その他のいずれかである必要があります。',
             'other_dependent2_special_requirements_non_applicable_reason_type' => '1枚目_62_理由は国内転入,その他のいずれかである必要があります。',
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'acquisition_era.required_with' => '1枚目_10_取得年月日_年号を入力してください。',
+            'acquisition_year.required_with' => '1枚目_10_取得年月日_年を入力してください。',
+            'acquisition_month.required_with' => '1枚目_10_取得年月日_月を入力してください。',
+            'acquisition_day.required_with' => '1枚目_10_取得年月日_日を入力してください。',
+            'notification_year.required_with' => '1枚目_13_氏名_日付_年を入力してください。',
+            'notification_month.required_with' => '1枚目_13_氏名_日付_月を入力してください。',
+            'notification_day.required_with' => '1枚目_13_氏名_日付_日を入力してください。',
+            'spouse_birthday_era.required_with' => '1枚目_14_生年月日_年号を入力してください。',
+            'spouse_birthday_year.required_with' => '1枚目_14_生年月日_年を入力してください。',
+            'spouse_birthday_month.required_with' => '1枚目_14_生年月日_月を入力してください。',
+            'spouse_birthday_day.required_with' => '1枚目_14_生年月日_日を入力してください。',
+            'spouse_become_date_era.required_with' => '1枚目_22_被扶養者になった日_年号を入力してください。',
+            'spouse_become_date_year.required_with' => '1枚目_22_被扶養者になった日_年を入力してください。',
+            'spouse_become_date_month.required_with' => '1枚目_22_被扶養者になった日_月を入力してください。',
+            'spouse_become_date_day.required_with' => '1枚目_22_被扶養者になった日_日を入力してください。',
+            'spouse_remove_date_era.required_with' => '1枚目_26_被扶養者でなくなった日_年号を入力してください。',
+            'spouse_remove_date_year.required_with' => '1枚目_26_被扶養者でなくなった日_年を入力してください。',
+            'spouse_remove_date_month.required_with' => '1枚目_26_被扶養者でなくなった日_月を入力してください。',
+            'spouse_remove_date_day.required_with' => '1枚目_26_被扶養者でなくなった日_日を入力してください。',
+            'spouse_passed_away_date_year.required_with' => '1枚目_23_理由_死亡年月日_年を入力してください。',
+            'spouse_passed_away_date_month.required_with' => '1枚目_23_理由_死亡年月日_月を入力してください。',
+            'spouse_passed_away_date_day.required_with' => '1枚目_23_理由_死亡年月日_日を入力してください。',
+            'spouse_special_requirements_applicable_date_year.required_with' => '1枚目_27_海外特例要件に該当した日_年を入力してください。',
+            'spouse_special_requirements_applicable_date_month.required_with' => '1枚目_27_海外特例要件に該当した日_月を入力してください。',
+            'spouse_special_requirements_applicable_date_day.required_with' => '1枚目_27_海外特例要件に該当した日_日を入力してください。',
+            'spouse_special_requirements_non_applicable_date_year.required_with' => '1枚目_29_海外特例要件に非該当となった日_年を入力してください。',
+            'spouse_special_requirements_non_applicable_date_month.required_with' => '1枚目_29_海外特例要件に非該当となった日_月を入力してください。',
+            'spouse_special_requirements_non_applicable_date_day.required_with' => '1枚目_29_海外特例要件に非該当となった日_日を入力してください。',
+            'spouse_domestic_transfer_date_year.required_with' => '1枚目_30_理由_国内転入日_年を入力してください。',
+            'spouse_domestic_transfer_date_month.required_with' => '1枚目_30_理由_国内転入日_月を入力してください。',
+            'spouse_domestic_transfer_date_day.required_with' => '1枚目_30_理由_国内転入日_日を入力してください。',
+            'other_dependent1_birthday_era.required_with' => '1枚目_34_生年月日_年号を入力してください。',
+            'other_dependent1_birthday_year.required_with' => '1枚目_34_生年月日_年を入力してください。',
+            'other_dependent1_birthday_month.required_with' => '1枚目_34_生年月日_月を入力してください。',
+            'other_dependent1_birthday_day.required_with' => '1枚目_34_生年月日_日を入力してください。',
+            'other_dependent1_become_date_era.required_with' => '1枚目_39_被扶養者になった日1枚目_42_被扶養者でなくなった日_年号を入力してください。',
+            'other_dependent1_become_date_year.required_with' => '1枚目_39_被扶養者になった日1枚目_42_被扶養者でなくなった日_年を入力してください。',
+            'other_dependent1_become_date_month.required_with' => '1枚目_39_被扶養者になった日1枚目_42_被扶養者でなくなった日_月を入力してください。',
+            'other_dependent1_become_date_day.required_with' => '1枚目_39_被扶養者になった日1枚目_42_被扶養者でなくなった日_日を入力してください。',
+            'other_dependent1_remove_date_era.required_with' => '1枚目_42_被扶養者でなくなった日_年号を入力してください。',
+            'other_dependent1_remove_date_year.required_with' => '1枚目_42_被扶養者でなくなった日_年を入力してください。',
+            'other_dependent1_remove_date_month.required_with' => '1枚目_42_被扶養者でなくなった日_月を入力してください。',
+            'other_dependent1_remove_date_day.required_with' => '1枚目_42_被扶養者でなくなった日_日を入力してください。',
+            'other_dependent1_domestic_transfer_date_year.required_with' => '1枚目_47_国内転入日1枚目_49_生年月日_年を入力してください。',
+            'other_dependent1_domestic_transfer_date_month.required_with' => '1枚目_47_国内転入日1枚目_49_生年月日_月を入力してください。',
+            'other_dependent1_domestic_transfer_date_day.required_with' => '1枚目_47_国内転入日1枚目_49_生年月日_日を入力してください。',
+            'other_dependent2_birthday_era.required_with' => '1枚目_49_生年月日_年号を入力してください。',
+            'other_dependent2_birthday_year.required_with' => '1枚目_49_生年月日_年を入力してください。',
+            'other_dependent2_birthday_month.required_with' => '1枚目_49_生年月日_月を入力してください。',
+            'other_dependent2_birthday_day.required_with' => '1枚目_49_生年月日_日を入力してください。',
+            'other_dependent2_become_date_era.required_with' => '1枚目_54_被扶養者になった日_年号を入力してください。',
+            'other_dependent2_become_date_year.required_with' => '1枚目_54_被扶養者になった日_年を入力してください。',
+            'other_dependent2_become_date_month.required_with' => '1枚目_54_被扶養者になった日_月を入力してください。',
+            'other_dependent2_become_date_day.required_with' => '1枚目_54_被扶養者になった日_日を入力してください。',
+            'other_dependent2_remove_date_era.required_with' => '1枚目_57_被扶養者でなくなった日_年号を入力してください。',
+            'other_dependent2_remove_date_year.required_with' => '1枚目_57_被扶養者でなくなった日_年を入力してください。',
+            'other_dependent2_remove_date_month.required_with' => '1枚目_57_被扶養者でなくなった日_月を入力してください。',
+            'other_dependent2_remove_date_day.required_with' => '1枚目_57_被扶養者でなくなった日_日を入力してください。',
+            'other_dependent2_domestic_transfer_date_year.required_with' => '1枚目_62_国内転入日_年を入力してください。',
+            'other_dependent2_domestic_transfer_date_month.required_with' => '1枚目_62_国内転入日_月を入力してください。',
+            'other_dependent2_domestic_transfer_date_day.required_with' => '1枚目_62_国内転入日_日を入力してください。',
         ];
     }
     public function attributes()
