@@ -59,12 +59,12 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
 
         $company = CurrentUser::currentCompany();
         $companyId = $company->id;
-        if(!DB::table('m_csv_count')->where('company_id', $companyId)->exists()) {
+        if (!DB::table('m_csv_count')->where('company_id', $companyId)->exists()) {
             Csv_count::create(['company_id' => $companyId, 'count' => 0]);
         }
         $csv_count = Csv_count::select('count')->where('company_id', $companyId)->first();
         $count = $csv_count->count;
-        if($count === 999) {
+        if ($count === 999) {
             $count = 1;
         } else {
             $count++;
@@ -84,7 +84,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
-                
+
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -187,7 +187,8 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
-            return view('admin.companies', ['send_data' => $data]);
+            $this->putSuccess("送信に成功しました");
+            return view('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

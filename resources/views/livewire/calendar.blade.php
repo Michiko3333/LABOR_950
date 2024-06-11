@@ -10,10 +10,30 @@
             }
 
             const onEdit = () => {
+                const inputs_name = document.getElementsByClassName('edit-calendar-inputs_name')[1].value;
+                const inputs_category = document.getElementsByClassName('edit-calendar-inputs_category')[1].value;
+                const inputs_contents = document.getElementsByClassName('edit-calendar-inputs_contents')[1].value;
+                const inputs_edit_id = document.getElementsByClassName('edit-calendar-inputs_edit_id')[1].value;
+
+                const from = document.getElementsByClassName('edit-calendar-from')[1].value;
+                const to = document.getElementsByClassName('edit-calendar-to')[1].value;
+
+                const data = {
+                    inputs_name: inputs_name,
+                    inputs_category: inputs_category,
+                    inputs_contents: inputs_contents,
+                    inputs_edit_id: inputs_edit_id,
+                    from: from ? $_calendar.calendar_date_from : '',
+                    to: to ? $_calendar.calendar_date_to : '',
+                };
+
                 $wire.dispatch('onSubmitCalendar', {
-                    from: window.$_calendar.calendar_date_from,
-                    to: window.$_calendar.calendar_date_to
+                    data: data
                 });
+            }
+
+            const onRemove = () => {
+                $wire.dispatch('onRemoveCalendar');
             }
 
             const onStartEdit = (edit_id) => {
@@ -37,7 +57,8 @@
                 onEdit: onEdit,
                 onChangeFrom: onChangeFrom,
                 onChangeTo: onChangeTo,
-                onClose: onClose
+                onClose: onClose,
+                onRemove: onRemove
             };
         </script>
     @endscript
@@ -114,10 +135,11 @@
                             <li>必須項目が空欄か、指定した日時が不正です。</li>
                         </ul>
                     </div>
-                    <input type="hidden" wire:model='inputs_edit_id'>
+                    <input type="hidden" class='edit-calendar-inputs_edit_id'>
                     <div class="required field">
                         <label for="event-title">タイトル</label>
-                        <input type="text" name="event-title" wire:model='inputs_name' maxlength="20">
+                        <input type="text" name="event-title" class='edit-calendar-inputs_name' maxlength="20"
+                            wire:ignore>
                     </div>
                     <div class="two fields">
                         <div class="required field">
@@ -126,8 +148,8 @@
                                 <div class="ui input left icon">
                                     <i class="calendar icon"></i>
                                     <input type="text" placeholder="Date" name="from_date" class="from_date">
-                                    <input type="hidden" name="formatted_from_date" class="formatted_from_date"
-                                        id="formatted_from_date">
+                                    <input type="hidden" name="formatted_from_date"
+                                        class="formatted_from_date edit-calendar-from" id="formatted_from_date">
                                 </div>
                             </div>
                         </div>
@@ -137,7 +159,8 @@
                                 <div class="ui input left icon">
                                     <i class="calendar icon"></i>
                                     <input type="text" placeholder="Date" name="to_date">
-                                    <input type="hidden" name="formatted_to_date" id="formatted_to_date">
+                                    <input type="hidden" name="formatted_to_date" id="formatted_to_date"
+                                        class="edit-calendar-to" wire:ignore>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +168,7 @@
                     <div class="two fields">
                         <div class="required field">
                             <label>カテゴリ</label>
-                            <select class="ui fluid dropdown" wire:model='inputs_category'>
+                            <select class="ui fluid dropdown edit-calendar-inputs_category">
                                 <option value="">未選択</option>
                                 @foreach ($category_types as $index => $cat)
                                     <option value="{{ $index }}">{{ $cat }}</option>
@@ -155,10 +178,13 @@
                     </div>
                     <div class="field">
                         <label for="event-title">内容・詳細</label>
-                        <textarea name="event-contents" cols="30" rows="6" wire:model='inputs_contents'></textarea>
+                        <textarea name="event-contents" cols="30" rows="6" class='edit-calendar-inputs_contents'></textarea>
                     </div>
                 </div>
             </form>
+            <div class="remove-link mt-2 ui hidden">
+                <button type="button" onClick="$calendar_modal.onRemove()">この予定を削除する</button>
+            </div>
         </div>
         <div class="actions">
             <button class="ui negative button" type="button"

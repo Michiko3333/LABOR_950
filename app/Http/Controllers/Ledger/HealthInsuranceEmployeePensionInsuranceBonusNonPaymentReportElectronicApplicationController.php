@@ -24,7 +24,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
-        if($certificate !== null) {
+        if ($certificate !== null) {
             $certificate = true;
         } else {
             $certificate = false;
@@ -48,11 +48,11 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $procedureName = $this->getProcedureName($request);
 
         return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', [
-            'company' => $company, 
-            'todaySet' => $todaySet, 
-            'certificate' => $certificate, 
-            'procedureName' => $procedureName, 
-            'egovAcount' => $egovAcount, 
+            'company' => $company,
+            'todaySet' => $todaySet,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'egovAcount' => $egovAcount,
             'current_employee' => $current_employee,
             'current_branch' => $current_branch,
         ]);
@@ -136,11 +136,12 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             ];
             $XML = new MixXmlEgovSigner($request);
             $response = $XML->run($request, True);
-            if ( $response[0] == false ){
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
-            return view('admin.companies', ['send_data' => $data]);
+            $this->putSuccess("送信に成功しました");
+            return view('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

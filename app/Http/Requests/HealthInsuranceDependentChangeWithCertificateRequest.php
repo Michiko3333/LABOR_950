@@ -29,11 +29,22 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends FormRequest
         return array_merge($rules->rules(), $rules_2->rules(), $rules_3->rules());
     }
 
+    public function withValidator($validator)
+    {
+        $validator_1 = new HealthInsuranceDependentChangeRequest;
+        $validator_2 = new MedicalInsurerCertificateRequest;
+        $validator_1->withValidator($validator);
+        $validator_2->withValidator($validator);
+
+        return $validator;
+    }
+
     public function messages()
     {
         $messages = new HealthInsuranceDependentChangeRequest;
+        $messages_2 = new MedicalInsurerCertificateRequest;
 
-        return array_merge($messages->messages());
+        return array_merge($messages->messages(),$messages_2->messages());
     }
 
     public function attributes()

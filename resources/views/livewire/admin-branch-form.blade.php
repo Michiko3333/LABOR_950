@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div class="two fields">
-                        <div class="field {{ err_bind($errs, 'br-pension_office_no', $key) }}">
+                        <div class="field required {{ err_bind($errs, 'br-pension_office_no', $key) }}">
                             <label for="br-pension_office_no">事業所番号（厚生年金）</label>
                             <input type="text" name="br-pension_office_no[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_no" placeholder="">
@@ -283,19 +283,19 @@
                         </div>
                     </div>
                     <div class="three fields">
-                        <div class="field {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
+                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
                             <label for="br-pension_office_reference_prefecture">事業所整理記号-都道府県コード</label>
                             <input type="text" name="br-pension_office_reference_prefecture[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_prefecture"
                                 placeholder="">
                         </div>
-                        <div class="field {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
+                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
                             <label for="br-pension_office_reference_no_cities">事業所整理記号-郡市区記号</label>
                             <input type="text" name="br-pension_office_reference_no_cities[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_no_cities"
                                 placeholder="">
                         </div>
-                        <div class="field {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
+                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
                             <label for="br-pension_office_reference_no_office">事業所整理記号-事業所記号</label>
                             <input type="text" name="br-pension_office_reference_no_office[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_no_office"

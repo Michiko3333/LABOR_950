@@ -43,12 +43,12 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
             'payer_month1' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'wages_paid1' => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'wage_reduction_days1' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payer_month2,payer_japan_era2',
+            'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2,payer_japan_era2',
             'wages_paid2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'wage_reduction_days2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payer_japan_era_year3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payer_month3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            'payer_japan_era_year3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payer_month3,payer_japan_era3',
+            'payer_month3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year3,payer_japan_era3',
             'wages_paid3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'wage_reduction_days3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'note' => 'nullable|string|max:255',
@@ -85,8 +85,8 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
             'branch_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'payer_japan_era1' => 'nullable|string|max:2',
-            'payer_japan_era2' => 'nullable|string|max:2',
-            'payer_japan_era3' => 'nullable|string|max:2',
+            'payer_japan_era2' => 'nullable|string|max:2|required_with:payer_japan_era_year2,payer_month2',
+            'payer_japan_era3' => 'nullable|string|max:2|required_with:payer_japan_era_year3,payer_month3',
             'today_japan_era' => 'string|max:2',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
@@ -96,6 +96,75 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $qualifications_japan_era = $data['qualifications_japan_era'];
+            $qualifications_japan_era_year = $data['qualifications_japan_era_year'];
+            $qualifications_month = $data['qualifications_month'];
+            $qualifications_day = $data['qualifications_day'];
+            $payer_japan_era1 = $data['payer_japan_era1'];
+            $payer_japan_era_year1 = $data['payer_japan_era_year1'];
+            $payer_month1 = $data['payer_month1'];
+            $payer_japan_era2 = $data['payer_japan_era2'];
+            $payer_japan_era_year2 = $data['payer_japan_era_year2'];
+            $payer_month2 = $data['payer_month2'];
+            $payer_japan_era3 = $data['payer_japan_era3'];
+            $payer_japan_era_year3 = $data['payer_japan_era_year3'];
+            $payer_month3 = $data['payer_month3'];
+
+            if(!empty($qualifications_month) && !empty($qualifications_day)){
+                if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
+                    $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($qualifications_japan_era === '昭和') {
+                if (
+                    ($qualifications_japan_era_year == 1 && ($qualifications_month < 12 || ($qualifications_month == 12 && $qualifications_day < 25))) ||
+                    ($qualifications_japan_era_year == 64 && ($qualifications_month > 1 || ($qualifications_month == 1 && $qualifications_day > 7))) ||
+                    ($qualifications_japan_era_year > 64)
+                ) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualifications_japan_era === '平成') {
+                if (
+                    ($qualifications_japan_era_year == 1 && ($qualifications_month < 1 || ($qualifications_month == 1 && $qualifications_day < 8))) ||
+                    ($qualifications_japan_era_year == 31 && ($qualifications_month > 4 || ($qualifications_month == 4 && $qualifications_day > 30))) ||
+                    ($qualifications_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualifications_japan_era === '令和') {
+                if ($qualifications_japan_era_year == 1 && ($qualifications_month < 5 || ($qualifications_month == 5 && $qualifications_day < 1))) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if ($payer_japan_era1 === '平成') {
+                if (($payer_japan_era_year1 == 31 && $payer_month1 > 4) || ($payer_japan_era_year1 > 31)) {
+                    $validator->errors()->add('payer_japan_era1', '支給対象年月その１は正しい日付を入力してください。');
+                }
+            } elseif ($payer_japan_era1 === '令和') {
+                if ($payer_japan_era_year1 == 1 && $payer_month1 < 5) {
+                    $validator->errors()->add('payer_japan_era1', '支給対象年月その１は正しい日付を入力してください。');
+                }
+            }
+            if ($payer_japan_era2 === '平成') {
+                if (($payer_japan_era_year2 == 31 && $payer_month2 > 4) || ($payer_japan_era_year2 > 31)) {
+                    $validator->errors()->add('payer_japan_era2', '支給対象年月その２は正しい日付を入力してください。');
+                }
+            } elseif ($payer_japan_era2 === '令和') {
+                if ($payer_japan_era_year2 == 1 && $payer_month2 < 5) {
+                    $validator->errors()->add('payer_japan_era2', '支給対象年月その２は正しい日付を入力してください。');
+                }
+            }
+            if ($payer_japan_era3 === '平成') {
+                if (($payer_japan_era_year3 == 31 && $payer_month3 > 4) || ($payer_japan_era_year3 > 31)) {
+                    $validator->errors()->add('payer_japan_era3', '支給対象年月その３は正しい日付を入力してください。');
+                }
+            } elseif ($payer_japan_era3 === '令和') {
+                if ($payer_japan_era_year3 == 1 && $payer_month3 < 5) {
+                    $validator->errors()->add('payer_japan_era3', '支給対象年月その３は正しい日付を入力してください。');
+                }
+            }
 
             if ($this->hasFile('file_wage_amount')) {
                 $totalSize += $this->file('file_wage_amount')->getSize();
@@ -122,6 +191,12 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'payer_japan_era2.required_with' => '支給対象年月その２_年号を入力してください。',
+            'payer_japan_era_year2.required_with' => '支給対象年月その２_年を入力してください。',
+            'payer_month2.required_with' => '支給対象年月その２_月を入力してください。',
+            'payer_japan_era3.required_with' => '支給対象年月その３_年号を入力してください。',
+            'payer_japan_era_year3.required_with' => '支給対象年月その３_年を入力してください。',
+            'payer_month3.required_with' => '支給対象年月その３_月を入力してください。',
         ];
     }
 

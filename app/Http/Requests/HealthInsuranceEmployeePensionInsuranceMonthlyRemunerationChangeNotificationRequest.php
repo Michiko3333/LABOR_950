@@ -25,8 +25,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
-            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:jpg,pdf|max:50000',
-            "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:jpg,pdf|max:50000',
+            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
+            "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "today_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -97,6 +97,70 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $birthday_era = $data['birthday_era'];
+            $birthday_year = $data['birthday_year'];
+            $birthday_month = $data['birthday_month'];
+            $birthday_date = $data['birthday_date'];
+            $revision_date_era = $data['revision_date_era'];
+            $revision_date_year = $data['revision_date_year'];
+            $revision_date_month = $data['revision_date_month'];
+
+            if ($birthday_era === '1') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
+                    ($birthday_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
+                    ($birthday_year > 45)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif($birthday_era === '2') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
+                    ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
+                    ($birthday_year > 15)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '5') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
+                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
+                    ($birthday_year > 64)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '7') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
+                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
+                    ($birthday_year > 31)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '9') {
+                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($birthday_month) && !empty($birthday_date)){
+                if (!checkdate($birthday_month, $birthday_date, '2000')) {
+                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($revision_date_era === '7') {
+                if (
+                    ($revision_date_year == 31 && $revision_date_month > 4) ||
+                    ($revision_date_year > 31)
+                ) {
+                    $validator->errors()->add('revision_date_day', '改定年月は正しい日付を入力してください。');
+                }
+            } elseif ($revision_date_era === '9') {
+                if ($revision_date_year == 1 && ($revision_date_month < 5)) {
+                    $validator->errors()->add('revision_date_day', '改定年月は正しい日付を入力してください。');
+                }
+            }
 
             if ($this->hasFile('file_wage_ledger')) {
                 $totalSize += $this->file('file_wage_ledger')->getSize();
@@ -131,8 +195,8 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     {
         return [
             "over_70_check" => '70歳以上チェック',
-            "file_wage_ledger" => '添付ファイル_賃金台帳のコピー',
-            "file_attendance_record" => '添付ファイル_出勤簿のコピー',
+            "file_wage_ledger" => '（様式1）年間報酬の平均で算定することの申立書（随時改定用）',
+            "file_attendance_record" => '（様式2）健康保険厚生年金保険被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書（随時改定用）',
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
             'today_year' => '提出年月日_年',

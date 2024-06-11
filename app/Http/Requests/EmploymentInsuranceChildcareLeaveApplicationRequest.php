@@ -46,9 +46,9 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'employment_insurance_office_no_CD' => 'nullable|string|regex:/^[0-9]{1}$/u',
             'jurisdiction' => 'nullable|int|regex:/^[0-9]{1}$/u',
             'birth_date_japan_era' => 'nullable|string|max:2',
-            'birth_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'birth_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'birth_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'birth_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:birth_date_month,birth_date_day',
+            'birth_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:birth_date_japan_era_year,birth_date_day',
+            'birth_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:birth_date_month,birth_date_japan_era_year',
             'fullname' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             'fullname_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             'payer_japan_era1' => 'required|string|max:2',
@@ -61,34 +61,34 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'working_hours1' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
             'wages_paid1' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'payer_japan_era2' => 'nullable|string|max:2',
-            'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payer_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payer_end_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payer_end_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:payer_month2,payer_day2,payer_month_end2,payer_day_end2',
+            'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_day2,payer_month_end2,payer_day_end2',
+            'payer_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_month_end2,payer_day_end2',
+            'payer_month_end2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_day2,payer_day_end2',
+            'payer_day_end2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_day2,payer_month_end2',
             'workday_count2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'working_hours2' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
             'wages_paid2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'last_payer_japan_era' => 'nullable|string|max:2',
-            'last_payer_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'last_payer_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'last_payer_japan_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'last_payer_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'last_payer_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'last_payer_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_end_month,last_payer_end_day',
+            'last_payer_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:last_payer_japan_era_year,last_payer_japan_day,last_payer_end_month,last_payer_end_day',
+            'last_payer_japan_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_era_year,last_payer_end_month,last_payer_end_day',
+            'last_payer_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_japan_era_year,last_payer_end_day',
+            'last_payer_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_end_month,last_payer_japan_era_year',
             'workday_count3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'working_hours3' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
             'wages_paid3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             'return_from_resignation_japan_era' => 'nullable|string|max:2',
-            'return_from_resignation_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'return_from_resignation_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'return_from_resignation_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'return_from_resignation_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:return_from_resignation_month,return_from_resignation_day',
+            'return_from_resignation_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:return_from_resignation_japan_era_year,return_from_resignation_day',
+            'return_from_resignation_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:return_from_resignation_japan_era_year,return_from_resignation_month',
             'payment_period_extension_reason' => 'nullable|int|between:1,6|regex:/^[0-6]{1}$/u',
             'payment_period_extension_japan_era' => 'nullable|string|max:2',
-            'payment_period_extension_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'payment_period_extension_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_period_extension_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'payment_period_extension_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'payment_period_extension_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'payment_period_extension_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:payment_period_extension_month,payment_period_extension_day,payment_period_extension_end_month,payment_period_extension_end_day',
+            'payment_period_extension_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payment_period_extension_japan_era_year,payment_period_extension_day,payment_period_extension_end_month,payment_period_extension_end_day',
+            'payment_period_extension_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payment_period_extension_japan_era_year,payment_period_extension_month,payment_period_extension_end_month,payment_period_extension_end_day',
+            'payment_period_extension_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payment_period_extension_japan_era_year,payment_period_extension_month,payment_period_extension_day,payment_period_extension_end_day',
+            'payment_period_extension_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payment_period_extension_japan_era_year,payment_period_extension_month,payment_period_extension_day,payment_period_extension_end_month',
             'partner_childcare_leave_taken' => 'nullable|int|regex:/^1$/u',
             'partner_insured_no_4digit' => 'nullable|string|regex:/^[0-9]{4}$/u',
             'partner_insured_no_6digit' => 'nullable|string|regex:/^[0-9]{6}$/u',
@@ -116,9 +116,9 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'commuting_allowance_period' => 'nullable|string|max:4',
             'commuting_allowance_period_other' => 'nullable|string|max:4',
             'unsettled_japan_era' => 'nullable|string|max:2',
-            'unsettled_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'unsettled_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'unsettled_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'unsettled_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:unsettled_month,unsettled_day',
+            'unsettled_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:unsettled_japan_era_year,unsettled_day',
+            'unsettled_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:unsettled_month,unsettled_japan_era_year',
             'note' => 'nullable|string|max:255',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
@@ -128,6 +128,303 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            $data = $validator->getData();
+            $qualifications_japan_era = $data['qualifications_japan_era'];
+            $qualifications_japan_era_year = $data['qualifications_japan_era_year'];
+            $qualifications_month = $data['qualifications_month'];
+            $qualifications_day = $data['qualifications_day'];
+            $childcare_start_date_japan_era = $data['childcare_start_date_japan_era'];
+            $childcare_start_date_japan_era_year = $data['childcare_start_date_japan_era_year'];
+            $childcare_start_date_month = $data['childcare_start_date_month'];
+            $childcare_start_date_day = $data['childcare_start_date_day'];
+            $birth_date_japan_era = $data['birth_date_japan_era'];
+            $birth_date_japan_era_year = $data['birth_date_japan_era_year'];
+            $birth_date_month = $data['birth_date_month'];
+            $birth_date_day = $data['birth_date_day'];
+            $payer_japan_era1 = $data['payer_japan_era1'];
+            $payer_japan_era_year1 = $data['payer_japan_era_year1'];
+            $payer_month1 = $data['payer_month1'];
+            $payer_day1 = $data['payer_day1'];
+            $payer_end_month1 = $data['payer_end_month1'];
+            $payer_end_day1 = $data['payer_end_day1'];
+            $payer_japan_era2 = $data['payer_japan_era2'];
+            $payer_japan_era_year2 = $data['payer_japan_era_year2'];
+            $payer_month2 = $data['payer_month2'];
+            $payer_day2 = $data['payer_day2'];
+            $payer_end_month2 = $data['payer_end_month2'];
+            $payer_end_day2 = $data['payer_end_day2'];
+            $payment_period_last_japan_era = $data['last_payer_japan_era'];
+            $payment_period_last_japan_era_year = $data['last_payer_japan_era_year'];
+            $payment_period_last_month = $data['last_payer_month'];
+            $payment_period_last_day = $data['last_payer_japan_day'];
+            $payment_period_last_month_end = $data['last_payer_end_month'];
+            $payment_period_last_day_end = $data['last_payer_end_day'];
+            $return_from_resignation_date_japan_era = $data['return_from_resignation_japan_era'];
+            $return_from_resignation_date_japan_era_year = $data['return_from_resignation_japan_era_year'];
+            $return_from_resignation_date_month = $data['return_from_resignation_month'];
+            $return_from_resignation_date_day = $data['return_from_resignation_day'];
+            $payment_period_extension_japan_era = $data['payment_period_extension_japan_era'];
+            $payment_period_extension_japan_era_year = $data['payment_period_extension_japan_era_year'];
+            $payment_period_extension_month = $data['payment_period_extension_month'];
+            $payment_period_extension_day = $data['payment_period_extension_day'];
+            $payment_period_extension_last_month = $data['payment_period_extension_end_month'];
+            $payment_period_extension_last_day = $data['payment_period_extension_end_day'];
+            $unsettled_japan_era = $data['unsettled_japan_era'];
+            $unsettled_japan_era_year = $data['unsettled_japan_era_year'];
+            $unsettled_month = $data['unsettled_month'];
+            $unsettled_day = $data['unsettled_day'];
+
+            if(!empty($qualifications_month) && !empty($qualifications_day)){
+                if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
+                    $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($qualifications_japan_era === '昭和') {
+                if (
+                    ($qualifications_japan_era_year == 1 && ($qualifications_month < 12 || ($qualifications_month == 12 && $qualifications_day < 25))) ||
+                    ($qualifications_japan_era_year == 64 && ($qualifications_month > 1 || ($qualifications_month == 1 && $qualifications_day > 7))) ||
+                    ($qualifications_japan_era_year > 64)
+                ) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualifications_japan_era === '平成') {
+                if (
+                    ($qualifications_japan_era_year == 1 && ($qualifications_month < 1 || ($qualifications_month == 1 && $qualifications_day < 8))) ||
+                    ($qualifications_japan_era_year == 31 && ($qualifications_month > 4 || ($qualifications_month == 4 && $qualifications_day > 30))) ||
+                    ($qualifications_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($qualifications_japan_era === '令和') {
+                if ($qualifications_japan_era_year == 1 && ($qualifications_month < 5 || ($qualifications_month == 5 && $qualifications_day < 1))) {
+                    $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($childcare_start_date_month) && !empty($childcare_start_date_day)){
+                if (!checkdate($childcare_start_date_month, $childcare_start_date_day, '2000')) {
+                    $validator->errors()->add('childcare_start_date_day','育児休業開始年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($childcare_start_date_japan_era === '平成') {
+                if (
+                    ($childcare_start_date_japan_era_year == 1 && ($childcare_start_date_month < 1 || ($childcare_start_date_month == 1 && $childcare_start_date_day < 8))) ||
+                    ($childcare_start_date_japan_era_year == 31 && ($childcare_start_date_month > 4 || ($childcare_start_date_month == 4 && $childcare_start_date_day > 30))) ||
+                    ($childcare_start_date_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('childcare_start_date_day', '育児休業開始年月日は正しい日付を入力してください。');
+                }
+            } elseif ($childcare_start_date_japan_era === '令和') {
+                if ($childcare_start_date_japan_era_year == 1 && ($childcare_start_date_month < 5 || ($childcare_start_date_month == 5 && $childcare_start_date_day < 1))) {
+                    $validator->errors()->add('childcare_start_date_day', '育児休業開始年月日は正しい日付を入力してください。');
+                }
+            }
+        
+            if(!empty($birth_date_month) && !empty($birth_date_day)){
+                if (!checkdate($birth_date_month, $birth_date_day, '2000')) {
+                    $validator->errors()->add('birth_date_day','出産年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($birth_date_japan_era === '平成') {
+                if (
+                    ($birth_date_japan_era_year == 1 && ($birth_date_month < 1 || ($birth_date_month == 1 && $birth_date_day < 8))) ||
+                    ($birth_date_japan_era_year == 31 && ($birth_date_month > 4 || ($birth_date_month == 4 && $birth_date_day > 30))) ||
+                    ($birth_date_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('birth_date_day', '出産年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birth_date_japan_era === '令和') {
+                if ($birth_date_japan_era_year == 1 && ($birth_date_month < 5 || ($birth_date_month == 5 && $birth_date_day < 1))) {
+                    $validator->errors()->add('birth_date_day', '出産年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payer_month1) && !empty($payer_day1)){
+                if (!checkdate($payer_month1, $payer_day1, '2000')) {
+                    $validator->errors()->add('payer_day1','支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($payer_japan_era1 === '平成') {
+                if (
+                    ($payer_japan_era_year1 == 1 && ($payer_month1 < 1 || ($payer_month1 == 1 && $payer_day1 < 8))) ||
+                    ($payer_japan_era_year1 == 31 && ($payer_month1 > 4 || ($payer_month1 == 4 && $payer_day1 > 30))) ||
+                    ($payer_japan_era_year1 > 31)
+                ) {
+                    $validator->errors()->add('payer_day1', '支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($payer_japan_era1 === '令和') {
+                if ($payer_japan_era_year1 == 1 && ($payer_month1 < 5 || ($payer_month1 == 5 && $payer_day1 < 1))) {
+                    $validator->errors()->add('payer_day1', '支給単位期間その１（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payer_end_month1) && !empty($payer_end_day1)){
+                if (!checkdate($payer_end_month1, $payer_end_day1, '2000')) {
+                    $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payer_end_month1) && !empty($payer_end_day1) && !empty($payer_day1) && !empty($payer_month1)){
+                if ($payer_end_month1 === $payer_month1) {
+                    if($payer_day1 > $payer_end_day1){
+                        $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
+                    }
+                } elseif ($payer_month1 > $payer_end_month1){
+                    $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($payer_month2) && !empty($payer_day2)){
+                if (!checkdate($payer_month2, $payer_day2, '2000')) {
+                    $validator->errors()->add('payer_day2','支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($payer_japan_era2 === '平成') {
+                if (
+                    ($payer_japan_era_year2 == 1 && ($payer_month2 < 1 || ($payer_month2 == 1 && $payer_day2 < 8))) ||
+                    ($payer_japan_era_year2 == 31 && ($payer_month2 > 4 || ($payer_month2 == 4 && $payer_day2 > 30))) ||
+                    ($payer_japan_era_year2 > 31)
+                ) {
+                    $validator->errors()->add('payer_day2', '支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($payer_japan_era2 === '令和') {
+                if ($payer_japan_era_year2 == 1 && $payer_month2 < 5) {
+                    $validator->errors()->add('payer_day2', '支給単位期間その２（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payer_end_month2) && !empty($payer_end_day2)){
+                if (!checkdate($payer_end_month2, $payer_end_day2, '2000')) {
+                    $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payer_end_month2) && !empty($payer_end_day2) && !empty($payer_day2) && !empty($payer_month2)){
+                if ($payer_end_month2 === $payer_month2) {
+                    if($payer_day2 > $payer_end_day2){
+                        $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
+                    }
+                } elseif ($payer_month2 > $payer_end_month2){
+                    $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($payment_period_last_month) && !empty($payment_period_last_day)){
+                if (!checkdate($payment_period_last_month, $payment_period_last_day, '2000')) {
+                    $validator->errors()->add('payment_period_last_day','最終支給単位期間（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if ($payment_period_last_japan_era === '平成') {
+                if (
+                    ($payment_period_last_japan_era_year == 1 && ($payment_period_last_month < 1 || ($payment_period_last_month == 1 && $payment_period_last_day < 8))) ||
+                    ($payment_period_last_japan_era_year == 31 && ($payment_period_last_month > 4 || ($payment_period_last_month == 4 && $payment_period_last_day > 30))) ||
+                    ($payment_period_last_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('payment_period_last_day', '最終支給単位期間（初日）は正しい日付を入力してください。');
+                }
+            } elseif ($payment_period_last_japan_era === '令和') {
+                if ($payment_period_last_japan_era_year == 1 && ($payment_period_last_month < 5)) {
+                    $validator->errors()->add('payment_period_last_day', '最終支給単位期間（初日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end)){
+                if (!checkdate($payment_period_last_month_end, $payment_period_last_day_end, '2000')) {
+                    $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end) && !empty($payment_period_last_day) && !empty($payment_period_last_month)){
+                if ($payment_period_last_month_end === $payment_period_last_month) {
+                    if($payment_period_last_day > $payment_period_last_day_end){
+                        $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
+                    }
+                } elseif ($payment_period_last_month > $payment_period_last_month_end){
+                    $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
+                }
+            }
+
+            if(!empty($return_from_resignation_date_month) && !empty($return_from_resignation_date_day)){
+                if (!checkdate($return_from_resignation_date_month, $return_from_resignation_date_day, '2000')) {
+                    $validator->errors()->add('return_from_resignation_date_day3','職場復帰年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($return_from_resignation_date_japan_era === '平成') {
+                if (
+                    ($return_from_resignation_date_japan_era_year == 1 && ($return_from_resignation_date_month < 1 || ($return_from_resignation_date_month == 1 && $return_from_resignation_date_day < 8))) ||
+                    ($return_from_resignation_date_japan_era_year == 31 && ($return_from_resignation_date_month > 4 || ($return_from_resignation_date_month == 4 && $return_from_resignation_date_day > 30))) ||
+                    ($return_from_resignation_date_japan_era_year > 33)
+                ) {
+                    $validator->errors()->add('return_from_resignation_date_day3', '職場復帰年月日は正しい日付を入力してください。');
+                }
+            } elseif ($return_from_resignation_date_japan_era === '令和') {
+                if ($return_from_resignation_date_japan_era_year == 1 && $return_from_resignation_date_month < 5) {
+                    $validator->errors()->add('return_from_resignation_date_day3', '職場復帰年月日は正しい日付を入力してください。');
+                }
+            }
+            
+            if(!empty($payment_period_extension_month) && !empty($payment_period_extension_day)){
+                if (!checkdate($payment_period_extension_month, $payment_period_extension_day, '2000')) {
+                    $validator->errors()->add('payment_period_extension_day','支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
+                }
+            }
+
+            if ($payment_period_extension_japan_era === '平成') {
+                if (
+                    ($payment_period_extension_japan_era_year == 1 && ($payment_period_extension_month < 1 || ($payment_period_extension_month == 1 && $payment_period_extension_day < 8))) ||
+                    ($payment_period_extension_japan_era_year == 31 && ($payment_period_extension_month > 4 || ($payment_period_extension_month == 4 && $payment_period_extension_day > 30))) ||
+                    ($payment_period_extension_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('payment_period_extension_day', '支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
+                }
+            } elseif ($payment_period_extension_japan_era === '令和') {
+                if ($payment_period_extension_japan_era_year == 1 && $payment_period_extension_month < 5) {
+                    $validator->errors()->add('payment_period_extension_day', '支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day)){
+                if (!checkdate($payment_period_extension_last_month, $payment_period_extension_last_day, '2000')) {
+                    $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day) && !empty($payment_period_extension_day) && !empty($payment_period_extension_month)){
+                if ($payment_period_extension_last_month === $payment_period_extension_month) {
+                    if($payment_period_extension_day > $payment_period_extension_last_day){
+                        $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
+                    }
+                } elseif ($payment_period_extension_month > $payment_period_extension_last_month){
+                    $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
+                }
+            }
+
+            if(!empty($unsettled_month) && !empty($unsettled_day)){
+                if (!checkdate($unsettled_month, $unsettled_day, '2000')) {
+                    $validator->errors()->add('unsettled_day','備考欄_雇用期間_年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($unsettled_japan_era === '平成') {
+                if (
+                    ($unsettled_japan_era_year == 1 && ($unsettled_month < 1 || ($unsettled_month == 1 && $unsettled_day < 8))) ||
+                    ($unsettled_japan_era_year == 31 && ($unsettled_month > 4 || ($unsettled_month == 4 && $unsettled_day > 30))) ||
+                    ($unsettled_japan_era_year > 31)
+                ) {
+                    $validator->errors()->add('unsettled_day', '備考欄_雇用期間_年月日は正しい日付を入力してください。');
+                }
+            } elseif ($unsettled_japan_era === '令和') {
+                if ($unsettled_japan_era_year == 1 && $unsettled_month < 5) {
+                    $validator->errors()->add('unsettled_day', '備考欄_雇用期間_年月日は正しい日付を入力してください。');
+                }
+            }
 
             if ($this->hasFile('file_amount_days_time')) {
                 $totalSize += $this->file('file_amount_days_time')->getSize();
@@ -157,6 +454,30 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
+            'birth_date_japan_era_year.required_with' => '出産年月日_年を入力してください。',
+            'birth_date_month.required_with' => '出産年月日_月を入力してください。',
+            'birth_date_day.required_with' => '出産年月日_日を入力してください。',
+            'payer_japan_era_year2.required_with' => '支給単位期間その２（初日）_年を入力してください。',
+            'payer_month2.required_with' => '支給単位期間その２（初日）_月を入力してください。',
+            'payer_day2.required_with' => '支給単位期間その２（初日）_日を入力してください。',
+            'payer_month_end2.required_with' => '支給単位期間その２（末日）_月を入力してください。',
+            'payer_day_end2.required_with' => '支給単位期間その２（末日）_日を入力してください。',
+            'payment_period_last_japan_era_year.required_with' => '最終支給単位期間（初日）初日_年を入力してください。',
+            'payment_period_last_month.required_with' => '最終支給単位期間（初日）初日_月を入力してください。',
+            'payment_period_last_day.required_with' => '最終支給単位期間（初日）初日_日を入力してください。',
+            'payment_period_last_month.required_with' => '最終支給単位期間（末日）_月を入力してください。',
+            'payment_period_last_day.required_with' => '最終支給単位期間（末日）_日を入力してください。',
+            'return_from_resignation_date_japan_era_year.required_with' => '職場復帰年月日_年を入力してください。',
+            'return_from_resignation_date_month.required_with' => '職場復帰年月日_月を入力してください。',
+            'return_from_resignation_date_day.required_with' => '職場復帰年月日_日を入力してください。',
+            'payment_period_extension_japan_era_year.required_with' => '支給対象となる期間の延長事由－期間_開始日付_年を入力してください。',
+            'payment_period_extension_month.required_with' => '支給対象となる期間の延長事由－期間_開始日付_月を入力してください。',
+            'payment_period_extension_day.required_with' => '支給対象となる期間の延長事由－期間_開始日付_日を入力してください。',
+            'payment_period_extension_month.required_with' => '支給対象となる期間の延長事由－期間_終了日付_月を入力してください。',
+            'payment_period_extension_day.required_with' => '支給対象となる期間の延長事由－期間_終了日付_日を入力してください。',
+            'unsettled_japan_era_year.required_with' => '備考欄_雇用期間_年月日_年を入力してください。',
+            'unsettled_month.required_with' => '備考欄_雇用期間_年月日_月を入力してください。',
+            'unsettled_day.required_with' => '備考欄_雇用期間_年月日_日を入力してください。',
         ];
     }
 

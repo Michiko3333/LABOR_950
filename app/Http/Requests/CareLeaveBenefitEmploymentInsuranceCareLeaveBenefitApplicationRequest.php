@@ -26,6 +26,15 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
 
         return array_merge($rules->rules(),$rules_2->rules());
     }
+    public function withValidator($validator)
+    {
+        $validator_1 = new CaregiverLeaveBenefitApplicationRequest;
+        $validator_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
+        $validator_1->withValidator($validator);
+        $validator_2->withValidator($validator);
+
+        return $validator;
+    }
     public function messages()
     {
         $messages = new CaregiverLeaveBenefitApplicationRequest;

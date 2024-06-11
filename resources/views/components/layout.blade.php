@@ -326,6 +326,7 @@
 
     <!-- 個人設定 -->
     <div class="ui modal user-modal">
+        <i class="close icon"></i>
         <div class="header">個人設定</div>
         <div class="content">
             @livewire('user-modal-content')
@@ -333,10 +334,11 @@
     </div>
 
     <script type="module">
+        const user_modal = $('.user-modal').modal({
+            blurring: true
+        });
         window.openUserModal = () => {
-            $('.user-modal').modal({
-                blurring: true
-            }).modal('show');
+            user_modal.modal('show');
         };
     </script>
 </body>

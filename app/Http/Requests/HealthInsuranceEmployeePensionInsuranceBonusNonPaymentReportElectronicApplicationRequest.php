@@ -54,18 +54,30 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "payment_status" => 'nullable|int|in:1',
             "title_types_of_welfare_pension_insurance" => 'nullable|int|in:1',
             "title_different_types_of_seafarers_insurance" => 'nullable|int|in:1',
-            "title_different_types_of_health_insurance" => 'nullable|int|in:1|required_without_all:title_different_types_of_seafarers_insurance,title_types_of_welfare_pension_insurance',
+            "title_different_types_of_health_insurance" => 'nullable|int|in:1',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'];
+            $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'];
+
+            if ($scheduled_year_of_bonus_payment == 1 && ($scheduled_month_of_bonus_payment < 5)) {
+                $validator->errors()->add('scheduled_year_of_bonus_payment', '賞与支払（予定）年月は正しい日付を入力してください。');
+            }
+        });
+    }
+    
     public function messages()
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
             "radio_file_other" => '当該帳票では添付ファイルに別送を選択することはできません。',
-            'title_different_types_of_health_insurance.required_without_all' => 'タイトルのチェックボックスで健康保険、船員保険、厚生年金保険のいずれかである必要があります。',
         ];
     }
 

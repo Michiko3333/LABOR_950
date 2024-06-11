@@ -17,7 +17,7 @@ use App\EgovAPI\MixXmlEgovSigner;
 class EmploymentInsuredQualificationGetController extends Controller
 {
     public function index(Request $request)
-    {   
+    {
         if (!$this->isSelectedCompany()) {
             return redirect()->route('home.select');
         }
@@ -71,7 +71,7 @@ class EmploymentInsuredQualificationGetController extends Controller
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
-                
+
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -180,12 +180,13 @@ class EmploymentInsuredQualificationGetController extends Controller
                 'apply_to_name' => $request->input('apply_to_name')
             ];
             $XML = new MixXmlEgovSigner($request);
-            $response = $XML->run($request);            
-            if ( $response[0] == false ){
+            $response = $XML->run($request);
+            if ($response[0] == false) {
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
-            return view('admin.companies', ['send_data' => $data]);
+            $this->putSuccess("送信に成功しました");
+            return view('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

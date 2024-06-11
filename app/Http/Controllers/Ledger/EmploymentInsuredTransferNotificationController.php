@@ -63,7 +63,7 @@ class EmploymentInsuredTransferNotificationController extends Controller
             if (strpos($key, 'radio_') === 0) {
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
-                
+
                 $attachment_type = ($value === '2') ? '添付' : '別送';
 
                 $attached_document_name = $request->input($label_key);
@@ -158,7 +158,8 @@ class EmploymentInsuredTransferNotificationController extends Controller
                 $errorMessage = $response[1];
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
-            return view('admin.companies', ['send_data' => $data]);
+            $this->putSuccess("送信に成功しました");
+            return view('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

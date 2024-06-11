@@ -71,9 +71,9 @@
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
-                                    'wage_ledger' => '健康保険　標準賞与額累計申出書（エクセル）',
+                                    'wage_ledger' => '健康保険　標準賞与額累計申出書',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'"
+                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'"
                                 :separateDisabled="true" />
                             </div>
                         </div>

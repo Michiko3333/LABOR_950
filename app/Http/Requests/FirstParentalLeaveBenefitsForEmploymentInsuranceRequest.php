@@ -35,6 +35,15 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends FormReques
         return array_merge($messages->messages(), $messages_2->messages());
     }
 
+    public function withValidator($validator)
+    {
+        $validator_1 = new ParentalLeaveBenefitsClaimFormRequest;
+        $validator_2 = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest;
+        $validator_1->withValidator($validator);
+        $validator_2->withValidator($validator);
+
+        return $validator;
+    }
 
     public function attributes()
     {

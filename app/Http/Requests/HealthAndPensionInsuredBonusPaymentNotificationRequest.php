@@ -25,8 +25,11 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
+            "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "title_health_insurance" => 'nullable|int|in:1',
+            "title_pension_insurance" => 'nullable|int|in:1',
             "today_year" => 'int|between:1,99|regex:/^[0-9]{1,2}+$/',
             "today_month" => 'int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "today_date" => 'int|between:1,31|regex:/^[0-9]{1,2}+$/',
@@ -69,6 +72,56 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     {
         $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
             return $input->over_70_check === 'on';
+            
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            $birthday_era = $data['employee_birthday_era'];
+            $birthday_year = $data['employee_birthday_year'];
+            $birthday_month = $data['employee_birthday_month'];
+            $birthday_date = $data['employee_birthday_date'];
+
+            if ($birthday_era === '1') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
+                    ($birthday_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
+                    ($birthday_year > 45)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif($birthday_era === '2') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
+                    ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
+                    ($birthday_year > 15)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '5') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
+                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
+                    ($birthday_year > 64)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '7') {
+                if (
+                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
+                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
+                    ($birthday_year > 31)
+                ) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthday_era === '9') {
+                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
+                    $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($birthday_month) && !empty($birthday_date)){
+                if (!checkdate($birthday_month, $birthday_date, '2000')) {
+                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                }
+            }
         });
     }
 
@@ -84,6 +137,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     public function attributes()
     {
         return [
+            "file_wage_ledger" => '健康保険　標準賞与額累計申出書',
             'file_other' => '添付ファイル_その他の添付書類',
             'input_file_other' => '添付ファイル_その他添付書類の名称',
             'today_year' => '提出日_年',

@@ -305,6 +305,18 @@ class Calendar extends Component
         $this->inputs_error = false;
     }
 
+    public function setData($from, $to)
+    {
+        return [
+            'inputs_edit_id' => $this->inputs_edit_id,
+            'inputs_name' => $this->inputs_name,
+            'inputs_category' => $this->inputs_category,
+            'inputs_contents' => $this->inputs_contents,
+            'from' => $from,
+            'to' => $to
+        ];
+    }
+
     public function detail($id = 0)
     {
         if ($this->isOpen) return;
@@ -351,18 +363,18 @@ class Calendar extends Component
                 $this->inputs_edit_id = $id;
                 $this->inputs_name = $d->name;
 
-                $form = empty($d->from) ? '' : strtotime($d->from);
+                $from = empty($d->from) ? '' : strtotime($d->from);
                 $to = empty($d->to) ? '' : strtotime($d->to);
 
                 $this->inputs_category = $d->category_type;
                 $this->inputs_contents = $d->contents;
 
-                $this->dispatch('modal-onEditModal', date: [$form, $to]);
+                $this->dispatch('modal-onEditModal', $this->setData($from, $to));
             } else {
                 \Log::error('no content');
             }
         } else {
-            $this->dispatch('modal-onEditModal', date: ['', '']);
+            $this->dispatch('modal-onEditModal', $this->setData('', ''));
         }
     }
 
@@ -379,18 +391,18 @@ class Calendar extends Component
     }
 
     #[On('onSubmitCalendar')]
-    public function submit($from = '', $to = '')
+    public function submit($data)
     {
         // validation
-        $this->inputs_error = !$this->valid($from, $to);
+        $this->inputs_error = !$this->valid($data);
         if ($this->inputs_error) {
             $this->dispatch('modal-onSubmitError');
             return false;
         }
 
         // convert date
-        $from_date = empty($from) ? null : Carbon::createFromTimestamp($from)->toDateTimeString();
-        $to_date = empty($to) ? null : Carbon::createFromTimestamp($to)->toDateTimeString();
+        $from_date = empty($data['from']) ? null : Carbon::createFromTimestamp($data['from'])->toDateTimeString();
+        $to_date = empty($data['to']) ? null : Carbon::createFromTimestamp($data['to'])->toDateTimeString();
 
         $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
@@ -399,19 +411,19 @@ class Calendar extends Component
             Calendar_event::insert([
                 'employee_id' => $current_user->id,
                 'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                'name' => $this->inputs_name,
-                'category_type' => $this->inputs_category,
+                'name' => $data['inputs_name'],
+                'category_type' => $data['inputs_category'],
                 'from' => $from_date,
                 'to' => $to_date,
-                'contents' => $this->inputs_contents,
+                'contents' => $data['inputs_contents'],
             ]);
         } else {
             $res = Calendar_event::where('id', $this->inputs_edit_id)->update([
-                'name' => $this->inputs_name,
-                'category_type' => $this->inputs_category,
+                'name' => $data['inputs_name'],
+                'category_type' => $data['inputs_category'],
                 'from' => $from_date,
                 'to' => $to_date,
-                'contents' => $this->inputs_contents,
+                'contents' => $data['inputs_contents'],
             ]);
         }
         $this->resetForm();
@@ -419,12 +431,23 @@ class Calendar extends Component
         return true;
     }
 
-    public function valid($from, $to)
+    #[On('onRemoveCalendar')]
+    public function onRemove()
     {
-        if (!empty($to)) {
-            if ($from > $to) return false;
+        Calendar_event::where('id', $this->inputs_edit_id)->update([
+            'delete_flg' => 1
+        ]);
+
+        $this->resetForm();
+        $this->dispatch('modal-closeCalendarModal');
+    }
+
+    public function valid($data)
+    {
+        if (!empty($data['to'])) {
+            if ($data['from'] > $data['to']) return false;
         }
-        return !empty($this->inputs_name) && !empty($from)  && !empty($this->inputs_category);
+        return !empty($data['inputs_name']) && !empty($data['from'])  && !empty($data['inputs_category']);
     }
 
     public function translateDate($d)

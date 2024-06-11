@@ -84,22 +84,22 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'agreed_hours_week_hour' => 'string|between:0,168|regex:/^[0-9]{1,3}$/u',
             'agreed_hours_week_minute' => 'string|between:0,60|regex:/^[0-9]{1,2}$/u',
             'contract_period_flg' => 'string|in:有,無',
-            'contract_start_era' => 'nullable|string|in:平成,令和',
-            'contract_start_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'contract_start_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'contract_start_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'contract_start_era' => 'nullable|string|in:平成,令和|required_with:contract_start_year,contract_start_month,contract_start_day',
+            'contract_start_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:contract_start_era,contract_start_month,contract_start_day',
+            'contract_start_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:contract_start_year,contract_start_era,contract_start_day',
+            'contract_start_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:contract_start_year,contract_start_month,contract_start_era',
             'contract_renewal_flg' => 'nullable|string|in:有,無',
-            'contract_end_era' => 'nullable|string|in:平成,令和',
-            'contract_end_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'contract_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'contract_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'contract_end_era' => 'nullable|string|in:平成,令和|required_with:contract_end_year,contract_end_month,contract_end_day',
+            'contract_end_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:contract_end_era,contract_end_month,contract_end_day',
+            'contract_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_era,contract_end_day',
+            'contract_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_month,contract_end_era',
             'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
             'insured_reason_detail' => 'nullable|string|max:255',
             'first_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z ]+\z/u',
             'residence_card_no' => 'nullable|string|max:12|regex:/\A[0-9A-Z　]+\z/u',
-            'stay_date_period_year' => 'nullable|int|max:2100',
-            'stay_date_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'stay_date_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'stay_date_period_year' => 'nullable|int|max:2100|required_with:stay_date_period_month,stay_date_period_day',
+            'stay_date_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_year,stay_date_period_day',
+            'stay_date_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_month,stay_date_period_year',
             'unauthorized_activities_permission_flg' => 'nullable|string|in:有,無',
             'employment_type' => 'nullable|int|in:1,2',
             'country' => 'nullable|string|regex:/^[0-9]{1,3}$/u',
@@ -132,6 +132,78 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
 
     public function withValidator($validator)
     {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            $birthdayEra = $data['birthday_era'];
+            $birthdayYear = $data['birthday_year'];
+            $birthdayMonth = $data['birthday_month'];
+            $birthdayDay = $data['birthday_day'];
+            $insuredEra = $data['insured_date_era'];
+            $insuredYear = $data['insured_date_year'];
+            $insuredMonth = $data['insured_date_month'];
+            $insuredDay = $data['insured_date_day'];
+
+            if ($birthdayEra === '大正') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 7 || ($birthdayMonth == 7 && $birthdayDay < 30))) ||
+                    ($birthdayYear == 15 && ($birthdayMonth == 12 && $birthdayDay > 25)) ||
+                    ($birthdayYear > 15)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '昭和') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 12 || ($birthdayMonth == 12 && $birthdayDay < 25))) ||
+                    ($birthdayYear == 64 && ($birthdayMonth > 1 || ($birthdayMonth == 1 && $birthdayDay > 7))) ||
+                    ($birthdayYear > 64)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '平成') {
+                if (
+                    ($birthdayYear == 1 && ($birthdayMonth < 1 || ($birthdayMonth == 1 && $birthdayDay < 8))) ||
+                    ($birthdayYear == 31 && ($birthdayMonth > 4 || ($birthdayMonth == 4 && $birthdayDay > 30))) ||
+                    ($birthdayYear > 31)
+                ) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            } elseif ($birthdayEra === '令和') {
+                if ($birthdayYear == 1 && ($birthdayMonth < 5 || ($birthdayMonth == 5 && $birthdayDay < 1))) {
+                    $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($birthdayMonth) && !empty($birthdayDay)){
+                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                    $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if ($insuredEra === '平成') {
+                if (
+                    ($insuredYear == 1 && ($insuredMonth < 1 || ($insuredMonth == 1 && $insuredDay < 8))) ||
+                    ($insuredYear == 31 && ($insuredMonth > 4 || ($insuredMonth == 4 && $insuredDay > 30))) ||
+                    ($insuredYear > 31)
+                ) {
+                    $validator->errors()->add('insured_date_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($insuredEra === '令和') {
+                if ($insuredYear == 1 && ($insuredMonth < 5 || ($insuredMonth == 5 && $insuredDay < 1))) {
+                    $validator->errors()->add('insured_date_era', '資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($insuredMonth) && !empty($insuredDay)){
+                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                    $validator->errors()->add('insured_date_era','資格取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
+                if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
+                    $validator->errors()->add('stay_date_period_year','在留期間は正しい日付を入力してください。');
+                }
+            }
+        });
+
         $validator->sometimes('contract_end_era', 'in:令和', function ($input) {
             return $input->contract_start_era === '令和';
         });
@@ -166,6 +238,17 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'contract_end_year' => '契約期間_終了年月日_年は契約期間_開始年月日_年以降を入力してください。',
             'contract_end_month' => '契約期間_終了年月日_月は契約期間_開始年月日_月以降を入力してください。',
             'contract_end_day' => '契約期間_終了年月日_日は契約期間_開始年月日_日以降を入力してください。',
+            'contract_start_era.required_with' => '契約期間_開始年月日_年号を入力してください。',
+            'contract_start_year.required_with' => '契約期間_開始年月日_年を入力してください。',
+            'contract_start_month.required_with' => '契約期間_開始年月日_月を入力してください。',
+            'contract_start_day.required_with' => '契約期間_開始年月日_日を入力してください。',
+            'contract_end_era.required_with' => '契約期間_終了年月日_年号を入力してください。',
+            'contract_end_year.required_with' => '契約期間_終了年月日_年を入力してください。',
+            'contract_end_month.required_with' => '契約期間_終了年月日_月を入力してください。',
+            'contract_end_day.required_with' => '契約期間_終了年月日_日を入力してください。',
+            'stay_date_period_year.required_with' => '在留期間_年を入力してください。',
+            'stay_date_period_month.required_with' => '在留期間_月を入力してください。',
+            'stay_date_period_day.required_with' => '在留期間_日を入力してください。',
         ];
     }
 
