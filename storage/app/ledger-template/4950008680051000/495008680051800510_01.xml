@@ -126,7 +126,7 @@
 		<市内局番>branch_tel_city_code</市内局番>
 		<加入者番号>branch_tel_subscriber_code</加入者番号>
 	</事業所名_電話番号>
-	<事業所名_所在地>branch_address</事業所名_所在地>
+	<事業所名_所在地>branch</事業所名_所在地>
 	<事業主名>entrepreneur_name</事業主名>
 	<申請年月日>
 		<年号>application_date_era</年号>

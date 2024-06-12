@@ -513,15 +513,15 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             }
             if ($data['employment_period_japan_era'] === '平成') {
                 if (
-                    ($$data['employment_period_japan_era_year'] == 1 && ($data['employment_period_month'] < 1 || ($data['employment_period_month'] == 1 && $data['employment_period_day'] < 8))) ||
-                    ($$data['employment_period_japan_era_year'] == 31 && ($data['employment_period_month'] > 4 || ($data['employment_period_month'] == 4 && $data['employment_period_day'] > 30))) ||
-                    ($$data['employment_period_japan_era_year'] > 31)
+                    ($data['employment_period_year'] == 1 && ($data['employment_period_month'] < 1 || ($data['employment_period_month'] == 1 && $data['employment_period_day'] < 8))) ||
+                    ($data['employment_period_year'] == 31 && ($data['employment_period_month'] > 4 || ($data['employment_period_month'] == 4 && $data['employment_period_day'] > 30))) ||
+                    ($data['employment_period_year'] > 31)
                 ) {
-                    $validator->errors()->add('dateOfAttainmentage60Day', '2枚目_6_60歳に達した日の年の年月日は正しい日付を入力してください。');
+                    $validator->errors()->add('employment_period_month', '2枚目_14_（休業開始時における）雇用期間は正しい日付を入力してください。');
                 }
             } elseif($data['employment_period_japan_era'] === '令和'){
-                if ($$data['employment_period_japan_era_year'] == 1 && $data['employment_period_month'] < 5) {
-                    $validator->errors()->add('dateOfAttainmentage60Day', '2枚目_6_60歳に達した日の年の年月日は正しい日付を入力してください。');
+                if ($data['employment_period_year'] == 1 && $data['employment_period_month'] < 5) {
+                    $validator->errors()->add('employment_period_month', '2枚目_14_（休業開始時における）雇用期間は正しい日付を入力してください。');
                 }
             }
 
