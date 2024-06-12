@@ -93,4 +93,9 @@ class Branch extends Model
     {
         return $this->hasMany(Work_contract::class);
     }
+
+    public function csv_count()
+    {
+        return $this->hasOne(Csv_count::class);
+    }
 }

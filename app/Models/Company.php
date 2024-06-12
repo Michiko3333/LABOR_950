@@ -91,11 +91,5 @@ class Company extends Model
         return $this->hasOne(Egov_account::class);
     }
 
-    public function csv_count()
-    {
-        return $this->hasOne(Csv_count::class);
-    }
-
-
 }
 

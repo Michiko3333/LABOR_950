@@ -8,10 +8,10 @@ class Csv_count extends Model
 {
     protected $table = 'm_csv_count';
     protected $primaryKey = 'id';
-    protected $fillable = ['company_id', 'count'];
+    protected $fillable = ['branch_id', 'employee_id', 'count'];
 
-    public function company()
+    public function branch()
     {
-        return $this->hasMany(Company::class, 'company_id');
+        return $this->hasMany(Branch::class, 'branch_id');
     }
 }

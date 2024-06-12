@@ -35,7 +35,8 @@ class AdminLaborUpdateRequest extends FormRequest
             'tel_area_code' => 'required',
             'tel_city_code' => 'required',
             'tel_subscriber_code' => 'required',
-            'mail_address2' => 'nullable|email'
+            'mail_address2' => 'nullable|email',
+            'labor_and_social_security_attorney_registration_no' => 'required|string|regex:/^[0-9]{8}$/u',
         ];
     }
     
@@ -62,6 +63,7 @@ class AdminLaborUpdateRequest extends FormRequest
             'tel_city_code' => '電話番号（市内局番）',
             'tel_subscriber_code' => '電話番号（加入者番号）',
             'mail_address2' => '連絡先_メールアドレス',
+            'labor_and_social_security_attorney_registration_no' => '社会保険労務士登録番号',
         ];
     }
 }

@@ -47,6 +47,12 @@
                   <div class="egov-tool-field-origin" style="left: 247px; top: 90px;">
                     <input class="egov-tool-field-rect onImage" id="N11_005F_94ED_95DB_8CAF_8ED2_8E81" maxlength="4" value="{{ old('pension_office_reference_no_office') }}" name="pension_office_reference_no_office" required="required" style="width: 49px; height: 24px; font-size: 12px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" />
                   </div>
+                  <div class="egov-tool-field-origin" style="left: 298px; top: 89px; width: 45px; height: 25.5px; border-top: 1px solid #2f323e; border-right: 1px solid #2f323e;">
+                      <p style="margin-left: 2px; font-size: 8px; font-weight: 500; line-height: 25px;">事業所番号</p>
+                  </div>
+                  <div class="egov-tool-field-origin" style="left: 343px; top: 89px; width:48px; height: 25.5px; border-top: 1px solid #2f323e; border-right: 1px solid #2f323e;">
+                      <input class="egov-tool-field-rect onImage" id="N9_005F_8C8E0" maxlength="5" value="{{ old('csv_pension_office_no') }}" name="csv_pension_office_no" required="required" style="width: 47px; height: 24px; font-size: 10px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;" type="text" value=""/>
+                  </div>
                   <div class="egov-tool-field-origin" style="left: 152px; top: 116px;">
                     <input class="egov-tool-field-rect onImage" id="N12_005F_905C_90BF_8ED2_8E81" maxlength="3" value="{{ old('branch_post_code_parent') }}" name="branch_post_code_parent" required="required" style="width: 48px; height: 16px; font-size: 10px; text-align: center; line-height: 16px; padding: inherit; background-color:#ddeeff;" type="text" />
                   </div>
@@ -73,6 +79,7 @@
                   </div>
                   <div class="egov-tool-field-origin" style="left: 399px; top: 203px;">
                     <input class="egov-tool-field-rect onImage" id="N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD" maxlength="40" value="{{ old('labor_consultant_submission_agent_name') }}" name="labor_consultant_submission_agent_name" style="width: 293px; height: 34px; font-size: 12px; text-align: left; line-height: 40px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" />
+                    <input id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851" value="{{ old('labor_and_social_security_attorney_registration_no') }}" name="labor_and_social_security_attorney_registration_no" type="hidden" value=""/>
                   </div>
                   <div class="egov-tool-field-origin" style="left: 63px; top: 277px;">
                     <input class="egov-tool-field-rect onImage" id="N23_005F_94ED" value="{{ old('employment_insured_no') }}" name="employment_insured_no" onfocus="addlength(this,6)" style="width: 97px; height: 39px; font-size: 12px; text-align: center; line-height: 39px; padding: inherit; background-color:#ddeeff;" type="text" />

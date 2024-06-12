@@ -87,6 +87,7 @@ class Employee extends Model
         'employment_insured_date',
         'employee_type',
         'employee_status',
+        'labor_and_social_security_attorney_registration_no',
         'contract_period_flg',
         'contract_start_date',
         'contract_end_date',
@@ -323,5 +324,10 @@ class Employee extends Model
     public function work_contract()
     {
         return $this->hasOne(Work_contract::class);
+    }
+
+    public function csv_count()
+    {
+        return $this->hasOne(Csv_count::class);
     }
 }

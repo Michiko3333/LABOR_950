@@ -416,6 +416,7 @@ class AdminController extends Controller
                 'tel_city_code' => $request->input('tel_city_code'),
                 'tel_subscriber_code' => $request->input('tel_subscriber_code'),
                 'mail_address2' => $request->input('mail_address2'),
+                'labor_and_social_security_attorney_registration_no' => $request->input('labor_and_social_security_attorney_registration_no'),
             ])->id;
 
             Employee::where('id', $employee_id)->update(['role_id' => 500]);
@@ -492,6 +493,7 @@ class AdminController extends Controller
                 'tel_city_code' => $request->input('tel_city_code'),
                 'tel_subscriber_code' => $request->input('tel_subscriber_code'),
                 'mail_address2' => $request->input('mail_address2'),
+                'labor_and_social_security_attorney_registration_no' => $request->input('labor_and_social_security_attorney_registration_no'),
             ]);
 
             $departments = $request->input('departments', []);
@@ -791,6 +793,7 @@ class AdminController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->validationData($request);
+            $address_city = $data['address_city'];
             $address_ward = $data['address_ward'];
             $address_apartment = $data['address_apartment'];
             $emergency_address_ward1 = $data['emergency_address_ward1'];
@@ -822,7 +825,7 @@ class AdminController extends Controller
                     'birthday' => $this->formatDate($request->input('birthday_date')),
                     'post_code' => $request->input('post_code'),
                     'address_prefecture' => $request->input('address_prefecture'),
-                    'address_city' => $request->input('address_city'),
+                    'address_city' => $address_city,
                     'address_ward' => $address_ward,
                     'address_apartment' => $address_apartment,
                     // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
