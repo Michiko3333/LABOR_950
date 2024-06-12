@@ -15,7 +15,7 @@ return [
 
     'accepted' => 'The :attribute field must be accepted.',
     'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
-    'active_url' => 'The :attribute field must be a valid URL.',
+    'active_url' => ':attributeは正しいURL形式ではありません。',
     'after' => 'The :attribute field must be a date after :date.',
     'after_or_equal' => 'The :attribute field must be a date after or equal to :date.',
     'alpha' => 'The :attribute field must only contain letters.',
@@ -154,7 +154,7 @@ return [
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
     'uppercase' => 'The :attribute field must be uppercase.',
-    'url' => 'The :attribute field must be a valid URL.',
+    'url' => ':attributeは正しいURL形式ではありません。',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
 
