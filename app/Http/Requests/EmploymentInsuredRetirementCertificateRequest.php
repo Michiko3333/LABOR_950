@@ -14,47 +14,6 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
         return true;
     }
 
-    public function validationData()
-    {
-        $data = $this->all();
-
-        if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
-        }
-        if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
-        }
-        if (isset($data['branch_name'])) {
-            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
-            $data['branch_name'] = str_replace(['-', '－', '―'], '‐', $data['branch_name']);
-        }
-        if (isset($data['company_name'])) {
-            $data['company_name'] = mb_convert_kana($data['company_name'], 'AS');
-            $data['company_name'] = str_replace(['-', '－', '―'], '‐', $data['company_name']);
-        }
-        if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
-            $data['headquarters_address'] = str_replace(['-', '－', '―'], '‐', $data['headquarters_address']);
-        }
-        if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
-            $data['employee_address'] = str_replace(['-', '－', '―'], '‐', $data['employee_address']);
-        }
-        if (isset($data['branch_address'])) {
-            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
-            $data['branch_address'] = str_replace(['-', '－', '―'], '‐', $data['branch_address']);
-        }
-        if (isset($data['labor_consultant_acting_as_agent_name'])) {
-            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'S');
-        }
-        if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
-        }
-
-
-        return $data;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -77,18 +36,18 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
             "retirement_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "retirement_date_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "branch_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            "branch_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "branch_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "employee_post_code_former" => 'string|regex:/^[0-9]{3}$/u',
             "employee_post_code_latter" => 'string|regex:/^[0-9]{4}$/u',
-            "employee_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－‐]+\z/u',
+            "employee_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "employee_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "employee_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "employee_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "company_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "employer_managerial_position_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
             "the_day_after_retirement_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:the_day_after_retirement_date_day',
             "the_day_after_retirement_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:the_day_after_retirement_date_month',

@@ -207,7 +207,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
                 'branch_tel_subscriber_code' => $request->input('branch_tel_subscriber_code'),
                 'post_code_3' => $request->input('post_code_3'),
                 'post_code_4' => $request->input('post_code_4'),
-                'caregiver_leave_employee_address' => $request->input('caregiver_leave_employee_address'),
+                'employment_address' => $request->input('employment_address'),
                 'employment_tel_area_code' => $request->input('employment_tel_area_code'),
                 'employment_tel_city_code' => $request->input('employment_tel_city_code'),
                 'employment_tel_subscriber_code' => $request->input('employment_tel_subscriber_code'),

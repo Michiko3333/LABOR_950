@@ -14,36 +14,6 @@ class MedicalInsurerCertificateRequest extends FormRequest
         return true;
     }
 
-    public function validationData()
-    {
-        $data = $this->all();
-
-        if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
-        }
-        if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
-        }
-        if (isset($data['spouse_name'])) {
-            $data['spouse_name'] = mb_convert_kana($data['spouse_name'], 'S');
-        }
-        if (isset($data['medical_insurer_name'])) {
-            $data['medical_insurer_name'] = mb_convert_kana($data['medical_insurer_name'], 'AS');
-            $data['medical_insurer_name'] = str_replace(['-', '－', '―'], '‐', $data['medical_insurer_name']);
-        }
-        if (isset($data['medical_insurer_address'])) {
-            $data['medical_insurer_address'] = mb_convert_kana($data['medical_insurer_address'], 'AS');
-            $data['medical_insurer_address'] = str_replace(['-', '－', '―'], '‐', $data['medical_insurer_address']);
-        }
-        if (isset($data['medical_insurer_representative'])) {
-            $data['medical_insurer_representative'] = mb_convert_kana($data['medical_insurer_representative'], 'S');
-        }
-        if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
-        }
-
-        return $data;
-    }
     /**
      * Get the validation rules that apply to the request.
      *

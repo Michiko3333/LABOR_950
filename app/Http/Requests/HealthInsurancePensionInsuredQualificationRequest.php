@@ -14,6 +14,33 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['name'])) {
+            $data['name'] = mb_convert_kana($data['name'], 'S');
+        }
+        if (isset($data['name_kana'])) {
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        }
+        if (isset($data['branch_name'])) {
+            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
+        }
+        if (isset($data['entrepreneur_name'])) {
+            $data['entrepreneur_name'] = mb_convert_kana($data['entrepreneur_name'], 'S');
+        }
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -39,7 +66,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
             'insurance_office_no' => 'string|regex:/^[0-9]{5}$/u',
             'post_code_former' => 'string|regex:/^[0-9]{3}$/u',
             'post_code_latter' => 'string|regex:/^[0-9]{4}$/u',
-            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'entrepreneur_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'branch_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',

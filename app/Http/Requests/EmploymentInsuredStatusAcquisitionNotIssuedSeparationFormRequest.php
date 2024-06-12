@@ -14,6 +14,43 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['changed_fullname'])) {
+            $data['changed_fullname'] = mb_convert_kana($data['changed_fullname'], 'S');
+        }
+        if (isset($data['changed_fullname_kana'])) {
+            $data['changed_fullname_kana'] = mb_convert_kana($data['changed_fullname_kana'], 'S');
+        }
+        if (isset($data['insured_fullname'])) {
+            $data['insured_fullname'] = mb_convert_kana($data['insured_fullname'], 'S');
+        }
+        if (isset($data['branch_name_abbreviation'])) {
+            $data['branch_name_abbreviation'] = mb_convert_kana($data['branch_name_abbreviation'], 'S');
+        }
+        if (isset($data['insured_fullname_alphabet'])) {
+            $data['insured_fullname_alphabet'] = mb_convert_kana($data['insured_fullname_alphabet'], 'as');
+        }
+        if (isset($data['entrepreneur_name'])) {
+            $data['entrepreneur_name'] = mb_convert_kana($data['entrepreneur_name'], 'S');
+        }
+        if (isset($data['labor_consultant_fullname'])) {
+            $data['labor_consultant_fullname'] = mb_convert_kana($data['labor_consultant_fullname'], 'S');
+        }
+        if (isset($data['insured_address'])) {
+            $data['insured_address'] = mb_convert_kana($data['insured_address'], 'AS');
+            $data['insured_address'] = str_replace(['-', '‐', '―'], '－', $data['insured_address']);
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -55,7 +92,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'hello_work_office_no' => 'nullable|string|regex:/^[0-9]{5}$/u',
             'employment_status' => 'nullable|string|in:日雇,派遣,パートタイム,有期契約労働者,季節的雇用,船員,その他',
             'branch_name_abbreviation' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            'insured_address' => 'string|max:110|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　－‐]+\z/u',
+            'insured_address' => 'string|max:110|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　－]+\z/u',
             'insured_loss_reason' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　]+\z/u',
             'insured_fullname_alphabet' => 'nullable|string|max:255|regex:/^[a-zA-Z]+[ ][a-zA-Z]+$/u',
             'residence_card_no' => 'nullable|string|regex:/^[a-zA-Z]{2}\d{8}[a-zA-Z]{2}$/',
@@ -67,7 +104,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'notification_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'notification_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'notification_date_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch_address' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
+            'branch_address' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　－]+\z/u',
             'entrepreneur_name' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
             'branch_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',

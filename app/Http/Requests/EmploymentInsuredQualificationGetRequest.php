@@ -13,6 +13,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
     {
         return true;
     }
+
     public function validationData()
     {
         $data = $this->all();
@@ -31,11 +32,11 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
         }
         if (isset($data['branch_name'])) {
             $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
-            $data['branch_name'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['branch_name']);
+            $data['branch_name'] = str_replace(['-', '‐', '―'], '－', $data['branch_name']);
         }
         if (isset($data['headquarters_address'])) {
             $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
-            $data['headquarters_address'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['headquarters_address']);
+            $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
         if (isset($data['agent_name'])) {
             $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
@@ -93,7 +94,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'contract_end_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:contract_end_era,contract_end_month,contract_end_day',
             'contract_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_era,contract_end_day',
             'contract_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_month,contract_end_era',
-            'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'insured_reason_detail' => 'nullable|string|max:255',
             'first_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z ]+\z/u',
             'residence_card_no' => 'nullable|string|max:12|regex:/\A[0-9A-Z　]+\z/u',
@@ -105,7 +106,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'country' => 'nullable|string|regex:/^[0-9]{1,3}$/u',
             'residential_status' => 'nullable|string|regex:/^[0-9]{1,3}$/u',
             'residential_status_unknown_reason' => 'nullable|string|max:255',
-            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'employer_company_managerial_position_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'headquarters_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',
