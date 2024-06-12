@@ -73,13 +73,13 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
     {
         $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
             return $input->over_70_check === 'on';
-            
+        });
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $birthday_era = $data['employee_birthday_era'];
-            $birthday_year = $data['employee_birthday_year'];
-            $birthday_month = $data['employee_birthday_month'];
-            $birthday_date = $data['employee_birthday_date'];
+            $birthday_era = $data['employee_birthday_era'] ?? "";
+            $birthday_year = $data['employee_birthday_year'] ?? "";
+            $birthday_month = $data['employee_birthday_month'] ?? "";
+            $birthday_date = $data['employee_birthday_date'] ?? "";
 
             if ($birthday_era === '1') {
                 if (

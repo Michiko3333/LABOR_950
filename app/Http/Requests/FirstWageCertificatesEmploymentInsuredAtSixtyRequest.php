@@ -14,6 +14,51 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['employeeFullname'])) {
+            $data['employeeFullname'] = mb_convert_kana($data['employeeFullname'], 'S');
+        }
+        if (isset($data['employeeFullnameKana'])) {
+            $data['employeeFullnameKana'] = mb_convert_kana($data['employeeFullnameKana'], 'S');
+        }
+        if (isset($data['employer_company_managerial_position_name'])) {
+            $data['employer_company_managerial_position_name'] = mb_convert_kana($data['employer_company_managerial_position_name'], 'S');
+        }
+        if (isset($data['financialInstitutionNameKana'])) {
+            $data['financialInstitutionNameKana'] = mb_convert_kana($data['financialInstitutionNameKana'], 'S');
+        }
+        if (isset($data['financialInstitutionName'])) {
+            $data['financialInstitutionName'] = mb_convert_kana($data['financialInstitutionName'], 'S');
+        }
+        if (isset($data['address'])) {
+            $data['address'] = mb_convert_kana($data['address'], 'AS');
+            $data['address'] = str_replace(['-', '‐', '―'], '－', $data['address']);
+        }
+        if (isset($data['headquartersAddress'])) {
+            $data['headquartersAddress'] = mb_convert_kana($data['headquartersAddress'], 'AS');
+            $data['headquartersAddress'] = str_replace(['-', '‐', '―'], '－', $data['headquartersAddress']);
+        }
+        if (isset($data['laborConsultantName'])) {
+            $data['laborConsultantName'] = mb_convert_kana($data['laborConsultantName'], 'S');
+        }
+        if (isset($data['branchName'])) {
+            $data['branchName'] = mb_convert_kana($data['branchName'], 'S');
+        }
+        if (isset($data['company_managerial_employer_name'])) {
+            $data['company_managerial_employer_name'] = mb_convert_kana($data['company_managerial_employer_name'], 'S');
+        }
+        if (isset($data['branchAddress'])) {
+            $data['branchAddress'] = mb_convert_kana($data['branchAddress'], 'AS');
+            $data['branchAddress'] = str_replace(['-', '‐', '―'], '－', $data['branchAddress']);
+        }
+
+        return $data;
+    }
+
+
     /**
      * Get the validation rules that apply to the request.
      *

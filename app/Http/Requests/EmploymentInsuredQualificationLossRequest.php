@@ -14,47 +14,6 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
         return true;
     }
 
-    public function validationData()
-    {
-        $data = $this->all();
-
-        if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
-        }
-        if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
-        }
-        if (isset($data['new_name'])) {
-            $data['new_name'] = mb_convert_kana($data['new_name'], 'S');
-        }
-        if (isset($data['new_name_kana'])) {
-            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
-        }
-        if (isset($data['company_name_abbreviation'])) {
-            $data['company_name_abbreviation'] = mb_convert_kana($data['company_name_abbreviation'], 'AS');
-            $data['company_name_abbreviation'] = str_replace(['-', '－', '―'], '‐', $data['company_name_abbreviation']);
-        }
-        if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
-            $data['headquarters_address'] = str_replace(['-', '－', '―'], '‐', $data['headquarters_address']);
-        }
-        if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
-            $data['employee_address'] = str_replace(['-', '－', '―'], '‐', $data['employee_address']);
-        }
-        if (isset($data['labor_consultant_acting_as_agent_name'])) {
-            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'S');
-        }
-        if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
-        }
-        if (isset($data['name_alphabet'])) {
-            $data['name_alphabet'] = mb_convert_kana($data['name_alphabet'], 's');
-        }
-
-        return $data;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -97,7 +56,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "hello_work_office_no" => 'nullable|string|regex:/^[0-9]{5}$/u',
             "employment_status" => 'string',
             "company_name_abbreviation" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            "employee_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－‐]+\z/u',
+            "employee_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "insured_reason" => 'string|max:255',
             "name_alphabet" => 'nullable|string|max:255|regex:/^[A-Z]+[ ][A-Z]+$/u',
             "residence_card_no" => 'nullable|string|regex:/^[A-Z]{2}[0-9]{8}[A-Z]{2}$/u',
@@ -112,7 +71,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "notification_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "notification_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "notification_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'employer_managerial_position_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
             "headquarters_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquarters_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
@@ -138,18 +97,18 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthdayEra = $data['birthday_era'];
-            $birthdayYear = $data['birthday_year'];
-            $birthdayMonth = $data['birthday_month'];
-            $birthdayDay = $data['birthday_day'];
-            $insuredEra = $data['insured_date_era'];
-            $insuredYear = $data['insured_date_year'];
-            $insuredMonth = $data['insured_date_month'];
-            $insuredDay = $data['insured_date_day'];
-            $retirementEra = $data['retirement_date_era'];
-            $retirementYear = $data['retirement_date_year'];
-            $retirementMonth = $data['retirement_date_month'];
-            $retirementDay = $data['retirement_date_day'];
+            $birthdayEra = $data['birthday_era'] ?? "";
+            $birthdayYear = $data['birthday_year'] ?? "";
+            $birthdayMonth = $data['birthday_month'] ?? "";
+            $birthdayDay = $data['birthday_day'] ?? "";
+            $insuredEra = $data['insured_date_era'] ?? "";
+            $insuredYear = $data['insured_date_year'] ?? "";
+            $insuredMonth = $data['insured_date_month'] ?? "";
+            $insuredDay = $data['insured_date_day'] ?? "";
+            $retirementEra = $data['retirement_date_era'] ?? "";
+            $retirementYear = $data['retirement_date_year'] ?? "";
+            $retirementMonth = $data['retirement_date_month'] ?? "";
+            $retirementDay = $data['retirement_date_day'] ?? "";
             
             if ($birthdayEra === '大正') {
                 if (

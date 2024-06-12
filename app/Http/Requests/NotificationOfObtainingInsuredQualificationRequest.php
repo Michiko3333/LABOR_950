@@ -14,6 +14,34 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['branch_name'])) {
+            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
+        }
+        if (isset($data['employee_name_kana'])) {
+            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'S');
+        }
+        if (isset($data['employee_name'])) {
+            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'S');
+        }
+        if (isset($data['new_name_kana'])) {
+            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+        if (isset($data['employee_address'])) {
+            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
+            $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
+        }
+        
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -35,7 +63,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "branch_insurance_office_no" => 'string|regex:/^[0-9]{5}$/u',
             "branch_post_code_first" => 'string|regex:/^[0-9]{3}$/u',
             "branch_post_code_last" => 'string|regex:/^[0-9]{4}$/u',
-            "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "branch_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "company_representative" => 'string|max:255',
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
@@ -67,7 +95,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             "note_others_in" => 'nullable|string|max:255',
             "employee_post_code_first" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "employee_post_code_last" => 'nullable|string|regex:/^[0-9]{4}$/u',
-            "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "acquisition_reason" => 'nullable|string|in:海外在住,短期在留,その他',
             "other_acquisition_reason" =>   'nullable|string|max:255',
             'apply_to_code' => 'required|string',
@@ -86,14 +114,14 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $employee_birthday_japan_era = $data['employee_birthday_japan_era'];
-            $employee_birthday_japan_era_year = $data['employee_birthday_japan_era_year'];
-            $employee_birthday_month = $data['employee_birthday_month'];
-            $employee_birthday_day = $data['employee_birthday_day'];
-            $employee_employment_insured_date_japan_era = $data['employee_employment_insured_date_japan_era'];
-            $employee_employment_insured_date_japan_era_year = $data['employee_employment_insured_date_japan_era_year'];
-            $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'];
-            $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'];
+            $employee_birthday_japan_era = $data['employee_birthday_japan_era'] ?? "";
+            $employee_birthday_japan_era_year = $data['employee_birthday_japan_era_year'] ?? "";
+            $employee_birthday_month = $data['employee_birthday_month'] ?? "";
+            $employee_birthday_day = $data['employee_birthday_day'] ?? "";
+            $employee_employment_insured_date_japan_era = $data['employee_employment_insured_date_japan_era'] ?? "";
+            $employee_employment_insured_date_japan_era_year = $data['employee_employment_insured_date_japan_era_year'] ?? "";
+            $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'] ?? "";
+            $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'] ?? "";
 
             if(!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)){
                 if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {

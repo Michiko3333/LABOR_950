@@ -14,6 +14,46 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['name_kanji'])) {
+            $data['name_kanji'] = mb_convert_kana($data['name_kanji'], 'S');
+        }
+        if (isset($data['name_kana'])) {
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        }
+        if (isset($data['name_alphabet'])) {
+            $data['name_alphabet'] = mb_convert_kana($data['name_alphabet'], 's');
+        }
+        if (isset($data['name_before_changed_kanji'])) {
+            $data['name_before_changed_kanji'] = mb_convert_kana($data['name_before_changed_kanji'], 'S');
+        }
+        if (isset($data['name_before_changed_kana'])) {
+            $data['name_before_changed_kana'] = mb_convert_kana($data['name_before_changed_kana'], 'S');
+        }
+        if (isset($data['headquarter_name'])) {
+            $data['headquarter_name'] = mb_convert_kana($data['headquarter_name'], 'S');
+        }
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+        }
+        if (isset($data['office_before_transfer'])) {
+            $data['office_before_transfer'] = mb_convert_kana($data['office_before_transfer'], 'AS');
+            $data['office_before_transfer'] = str_replace(['-', '‐', '―'], '－', $data['office_before_transfer']);
+        }
+        if (isset($data['headquarter_address'])) {
+            $data['headquarter_address'] = mb_convert_kana($data['headquarter_address'], 'AS');
+            $data['headquarter_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarter_address']);
+        }
+        if (isset($data['agent_name'])) {
+            $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -48,7 +88,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'transfer_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'transfer_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'transfer_date_date' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'office_before_transfer' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ－‐　]+\z/u',
+            'office_before_transfer' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             'name_before_changed_kanji' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+$/u',
             'name_before_changed_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             'name_changed_date_era' => 'nullable|in:平成,令和|required_with:name_changed_date_year,name_changed_date_month,name_changed_date_date',
@@ -56,7 +96,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'name_changed_date_month' => 'nullable|int|between:1,12|required_with:name_changed_date_year,name_changed_date_era,name_changed_date_date',
             'name_changed_date_date' => 'nullable|int|between:1,31|required_with:name_changed_date_year,name_changed_date_month,name_changed_date_era',
             'remarks' => 'nullable|string|max:255',
-            'headquarter_address' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９Ａ-Ｚ－‐]+\z/u',
+            'headquarter_address' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９Ａ-Ｚ－　]+\z/u',
             'headquarter_name' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+$/u',
             'headquarter_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'headquarter_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',
@@ -85,22 +125,22 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $birthdayEra = $data['birthday_era'];
-            $birthdayYear = $data['birthday_year'];
-            $birthdayMonth = $data['birthday_month'];
-            $birthdayDay = $data['birthday_day'];
-            $insuredEra = $data['employment_insured_date_era'];
-            $insuredYear = $data['employment_insured_date_year'];
-            $insuredMonth = $data['employment_insured_date_month'];
-            $insuredDay = $data['employment_insured_date_date'];
-            $transferEra = $data['transfer_date_era'];
-            $transferYear = $data['transfer_date_year'];
-            $transferMonth = $data['transfer_date_month'];
-            $transferDay = $data['transfer_date_date'];
-            $name_changedEra = $data['name_changed_date_era'];
-            $name_changedYear = $data['name_changed_date_year'];
-            $name_changedMonth = $data['name_changed_date_month'];
-            $name_changedDay = $data['name_changed_date_date'];
+            $birthdayEra = $data['birthday_era'] ?? "";
+            $birthdayYear = $data['birthday_year'] ?? "";
+            $birthdayMonth = $data['birthday_month'] ?? "";
+            $birthdayDay = $data['birthday_day'] ?? "";
+            $insuredEra = $data['employment_insured_date_era'] ?? "";
+            $insuredYear = $data['employment_insured_date_year'] ?? "";
+            $insuredMonth = $data['employment_insured_date_month'] ?? "";
+            $insuredDay = $data['employment_insured_date_date'] ?? "";
+            $transferEra = $data['transfer_date_era'] ?? "";
+            $transferYear = $data['transfer_date_year'] ?? "";
+            $transferMonth = $data['transfer_date_month'] ?? "";
+            $transferDay = $data['transfer_date_date'] ?? "";
+            $name_changedEra = $data['name_changed_date_era'] ?? "";
+            $name_changedYear = $data['name_changed_date_year'] ?? "";
+            $name_changedMonth = $data['name_changed_date_month'] ?? "";
+            $name_changedDay = $data['name_changed_date_date'] ?? "";
             
             if ($birthdayEra === '大正') {
                 if (

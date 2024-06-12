@@ -31,13 +31,13 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
             "employeeFullname" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "employeeFullnameKana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             "branchName" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "branchAddress" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "branchAddress" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "branchTelAreaCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "branchTelCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "branchTelSubscriberCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "postCodeFormer" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "postCodeLatter" => 'nullable|string|regex:/^[0-9]{4}$/u',
-            "address" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "address" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "telAreaCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "telCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "telSubscriberCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -49,7 +49,7 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
             "birthdayYear" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:birthdayMonth,birthdayDay',
             "birthdayMonth" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:birthdayYear,birthdayDay',
             "birthdayDay" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:birthdayYear,birthdayMonth',
-            "headquartersAddress" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "headquartersAddress" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "company_managerial_employer_name" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "dayAfter60Month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:dayAfter60Day',
             "dayAfter60Day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:dayAfter60Month',
@@ -420,14 +420,14 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $dateOfAttainmentage60JapanEra = $data['dateOfAttainmentage60JapanEra'];
-            $dateOfAttainmentage60JapanEraYear = $data['dateOfAttainmentage60JapanEraYear'];
-            $dateOfAttainmentage60Month = $data['dateOfAttainmentage60Month'];
-            $dateOfAttainmentage60Day = $data['dateOfAttainmentage60Day'];
-            $birthdayEra = $data['birthdayEra'];
-            $birthdayYear = $data['birthdayYear'];
-            $birthdayMonth = $data['birthdayMonth'];
-            $birthdayDay = $data['birthdayDay'];
+            $dateOfAttainmentage60JapanEra = $data['dateOfAttainmentage60JapanEra'] ?? "";
+            $dateOfAttainmentage60JapanEraYear = $data['dateOfAttainmentage60JapanEraYear'] ?? "";
+            $dateOfAttainmentage60Month = $data['dateOfAttainmentage60Month'] ?? "";
+            $dateOfAttainmentage60Day = $data['dateOfAttainmentage60Day'] ?? "";
+            $birthdayEra = $data['birthdayEra'] ?? "";
+            $birthdayYear = $data['birthdayYear'] ?? "";
+            $birthdayMonth = $data['birthdayMonth'] ?? "";
+            $birthdayDay = $data['birthdayDay'] ?? "";
 
             if(!empty($dateOfAttainmentage60Month) && !empty($dateOfAttainmentage60Day)){
                 if (!checkdate($dateOfAttainmentage60Month, $dateOfAttainmentage60Day, '2000')) {

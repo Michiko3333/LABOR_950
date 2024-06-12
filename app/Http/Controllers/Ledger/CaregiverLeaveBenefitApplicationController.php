@@ -10,9 +10,21 @@ use App\Models\Certificate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\EgovAPI\MixXmlEgovSigner;
+use App\Permission;
 
 class CaregiverLeaveBenefitApplicationController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission;
+            if (!$userPermission->isSelectedCompany() || $userPermission->denyProcedure() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8) || !$userPermission->isBasicDepartment()) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         if (!$this->isSelectedCompany()) {
@@ -195,7 +207,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
                 'branch_tel_subscriber_code' => $request->input('branch_tel_subscriber_code'),
                 'post_code_3' => $request->input('post_code_3'),
                 'post_code_4' => $request->input('post_code_4'),
-                'caregiver_leave_employee_address' => $request->input('caregiver_leave_employee_address'),
+                'employment_address' => $request->input('employment_address'),
                 'employment_tel_area_code' => $request->input('employment_tel_area_code'),
                 'employment_tel_city_code' => $request->input('employment_tel_city_code'),
                 'employment_tel_subscriber_code' => $request->input('employment_tel_subscriber_code'),
@@ -655,7 +667,7 @@ class CaregiverLeaveBenefitApplicationController extends Controller
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
-            return view('ledger.index');
+            return redirect()->route('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

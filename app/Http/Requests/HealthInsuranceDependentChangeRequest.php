@@ -14,73 +14,6 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
         return true;
     }
 
-    public function validationData()
-    {
-        $data = $this->all();
-
-        if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
-        }
-        if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
-        }
-        if (isset($data['spouse_name'])) {
-            $data['spouse_name'] = mb_convert_kana($data['spouse_name'], 'S');
-        }
-        if (isset($data['spouse_name_kana'])) {
-            $data['spouse_name_kana'] = mb_convert_kana($data['spouse_name_kana'], 'S');
-        }
-        if (isset($data['spouse_alias_name'])) {
-            $data['spouse_alias_name'] = mb_convert_kana($data['spouse_alias_name'], 'S');
-        }
-        if (isset($data['spouse_alias_name_kana'])) {
-            $data['spouse_alias_name_kana'] = mb_convert_kana($data['spouse_alias_name_kana'], 'S');
-        }
-        if (isset($data['other_dependent1_name'])) {
-            $data['other_dependent1_name'] = mb_convert_kana($data['other_dependent1_name'], 'S');
-        }
-        if (isset($data['other_dependent1_name_kana'])) {
-            $data['other_dependent1_name_kana'] = mb_convert_kana($data['other_dependent1_name_kana'], 'S');
-        }
-        if (isset($data['other_dependent2_name'])) {
-            $data['other_dependent2_name'] = mb_convert_kana($data['other_dependent2_name'], 'S');
-        }
-        if (isset($data['other_dependent2_name_kana'])) {
-            $data['other_dependent2_name_kana'] = mb_convert_kana($data['other_dependent2_name_kana'], 'S');
-        }
-        if (isset($data['company_name'])) {
-            $data['company_name'] = mb_convert_kana($data['company_name'], 'AS');
-            $data['company_name'] = str_replace(['-', '－', '―'], '‐', $data['company_name']);
-        }
-        if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
-            $data['employee_address'] = str_replace(['-', '－', '―'], '‐', $data['employee_address']);
-        }
-        if (isset($data['spouse_address'])) {
-            $data['spouse_address'] = mb_convert_kana($data['spouse_address'], 'AS');
-            $data['spouse_address'] = str_replace(['-', '－', '―'], '‐', $data['spouse_address']);
-        }
-        if (isset($data['other_dependent1_address'])) {
-            $data['other_dependent1_address'] = mb_convert_kana($data['other_dependent1_address'], 'AS');
-            $data['other_dependent1_address'] = str_replace(['-', '－', '―'], '‐', $data['other_dependent1_address']);
-        }
-        if (isset($data['other_dependent2_address'])) {
-            $data['other_dependent2_address'] = mb_convert_kana($data['other_dependent2_address'], 'AS');
-            $data['other_dependent2_address'] = str_replace(['-', '－', '―'], '‐', $data['other_dependent2_address']);
-        }
-        if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
-            $data['headquarters_address'] = str_replace(['-', '－', '―'], '‐', $data['headquarters_address']);
-        }
-        if (isset($data['headquarters_representative'])) {
-            $data['headquarters_representative'] = mb_convert_kana($data['headquarters_representative'], 'S');
-        }
-        if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
-        }
-
-        return $data;
-    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -279,50 +212,50 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthday_era = $data['birthday_era'];
-            $birthday_year = $data['birthday_year'];
-            $birthday_month = $data['birthday_month'];
-            $birthday_day = $data['birthday_day'];
-            $acquisition_era = $data['acquisition_era'];
-            $acquisition_year = $data['acquisition_year'];
-            $acquisition_month = $data['acquisition_month'];
-            $acquisition_day = $data['acquisition_day'];
-            $spouse_birthday_era = $data['spouse_birthday_era'];
-            $spouse_birthday_year = $data['spouse_birthday_year'];
-            $spouse_birthday_month = $data['spouse_birthday_month'];
-            $spouse_birthday_day = $data['spouse_birthday_day'];
-            $spouse_become_date_era = $data['spouse_become_date_era'];
-            $spouse_become_date_year = $data['spouse_become_date_year'];
-            $spouse_become_date_month = $data['spouse_become_date_month'];
-            $spouse_become_date_day = $data['spouse_become_date_day'];
-            $spouse_remove_date_era = $data['spouse_remove_date_era'];
-            $spouse_remove_date_year = $data['spouse_remove_date_year'];
-            $spouse_remove_date_month = $data['spouse_remove_date_month'];
-            $spouse_remove_date_day = $data['spouse_remove_date_day'];
-            $other_dependent1_birthday_era = $data['other_dependent1_birthday_era'];
-            $other_dependent1_birthday_year = $data['other_dependent1_birthday_year'];
-            $other_dependent1_birthday_month = $data['other_dependent1_birthday_month'];
-            $other_dependent1_birthday_day = $data['other_dependent1_birthday_day'];
-            $other_dependent1_become_date_era = $data['other_dependent1_become_date_era'];
-            $other_dependent1_become_date_year = $data['other_dependent1_become_date_year'];
-            $other_dependent1_become_date_month = $data['other_dependent1_become_date_month'];
-            $other_dependent1_become_date_day = $data['other_dependent1_become_date_day'];
-            $other_dependent1_remove_date_era = $data['other_dependent1_remove_date_era'];
-            $other_dependent1_remove_date_year = $data['other_dependent1_remove_date_year'];
-            $other_dependent1_remove_date_month = $data['other_dependent1_remove_date_month'];
-            $other_dependent1_remove_date_day = $data['other_dependent1_remove_date_day'];
-            $other_dependent2_birthday_era = $data['other_dependent2_birthday_era'];
-            $other_dependent2_birthday_year = $data['other_dependent2_birthday_year'];
-            $other_dependent2_birthday_month = $data['other_dependent2_birthday_month'];
-            $other_dependent2_birthday_day = $data['other_dependent2_birthday_day'];
-            $other_dependent2_become_date_era = $data['other_dependent2_become_date_era'];
-            $other_dependent2_become_date_year = $data['other_dependent2_become_date_year'];
-            $other_dependent2_become_date_month = $data['other_dependent2_become_date_month'];
-            $other_dependent2_become_date_day = $data['other_dependent2_become_date_day'];
-            $other_dependent2_remove_date_era = $data['other_dependent2_remove_date_era'];
-            $other_dependent2_remove_date_year = $data['other_dependent2_remove_date_year'];
-            $other_dependent2_remove_date_month = $data['other_dependent2_remove_date_month'];
-            $other_dependent2_remove_date_day = $data['other_dependent2_remove_date_day'];
+            $birthday_era = $data['birthday_era'] ?? "";
+            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_month = $data['birthday_month'] ?? "";
+            $birthday_day = $data['birthday_day'] ?? "";
+            $acquisition_era = $data['acquisition_era'] ?? "";
+            $acquisition_year = $data['acquisition_year'] ?? "";
+            $acquisition_month = $data['acquisition_month'] ?? "";
+            $acquisition_day = $data['acquisition_day'] ?? "";
+            $spouse_birthday_era = $data['spouse_birthday_era'] ?? "";
+            $spouse_birthday_year = $data['spouse_birthday_year'] ?? "";
+            $spouse_birthday_month = $data['spouse_birthday_month'] ?? "";
+            $spouse_birthday_day = $data['spouse_birthday_day'] ?? "";
+            $spouse_become_date_era = $data['spouse_become_date_era'] ?? "";
+            $spouse_become_date_year = $data['spouse_become_date_year'] ?? "";
+            $spouse_become_date_month = $data['spouse_become_date_month'] ?? "";
+            $spouse_become_date_day = $data['spouse_become_date_day'] ?? "";
+            $spouse_remove_date_era = $data['spouse_remove_date_era'] ?? "";
+            $spouse_remove_date_year = $data['spouse_remove_date_year'] ?? "";
+            $spouse_remove_date_month = $data['spouse_remove_date_month'] ?? "";
+            $spouse_remove_date_day = $data['spouse_remove_date_day'] ?? "";
+            $other_dependent1_birthday_era = $data['other_dependent1_birthday_era'] ?? "";
+            $other_dependent1_birthday_year = $data['other_dependent1_birthday_year'] ?? "";
+            $other_dependent1_birthday_month = $data['other_dependent1_birthday_month'] ?? "";
+            $other_dependent1_birthday_day = $data['other_dependent1_birthday_day'] ?? "";
+            $other_dependent1_become_date_era = $data['other_dependent1_become_date_era'] ?? "";
+            $other_dependent1_become_date_year = $data['other_dependent1_become_date_year'] ?? "";
+            $other_dependent1_become_date_month = $data['other_dependent1_become_date_month'] ?? "";
+            $other_dependent1_become_date_day = $data['other_dependent1_become_date_day'] ?? "";
+            $other_dependent1_remove_date_era = $data['other_dependent1_remove_date_era'] ?? "";
+            $other_dependent1_remove_date_year = $data['other_dependent1_remove_date_year'] ?? "";
+            $other_dependent1_remove_date_month = $data['other_dependent1_remove_date_month'] ?? "";
+            $other_dependent1_remove_date_day = $data['other_dependent1_remove_date_day'] ?? "";
+            $other_dependent2_birthday_era = $data['other_dependent2_birthday_era'] ?? "";
+            $other_dependent2_birthday_year = $data['other_dependent2_birthday_year'] ?? "";
+            $other_dependent2_birthday_month = $data['other_dependent2_birthday_month'] ?? "";
+            $other_dependent2_birthday_day = $data['other_dependent2_birthday_day'] ?? "";
+            $other_dependent2_become_date_era = $data['other_dependent2_become_date_era'] ?? "";
+            $other_dependent2_become_date_year = $data['other_dependent2_become_date_year'] ?? "";
+            $other_dependent2_become_date_month = $data['other_dependent2_become_date_month'] ?? "";
+            $other_dependent2_become_date_day = $data['other_dependent2_become_date_day'] ?? "";
+            $other_dependent2_remove_date_era = $data['other_dependent2_remove_date_era'] ?? "";
+            $other_dependent2_remove_date_year = $data['other_dependent2_remove_date_year'] ?? "";
+            $other_dependent2_remove_date_month = $data['other_dependent2_remove_date_month'] ?? "";
+            $other_dependent2_remove_date_day = $data['other_dependent2_remove_date_day'] ?? "";
 
             if(!empty($birthday_month) && !empty($birthday_day)){
                 if (!checkdate($birthday_month, $birthday_day, '2000')) {

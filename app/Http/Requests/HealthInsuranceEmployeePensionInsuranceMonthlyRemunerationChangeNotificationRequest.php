@@ -99,13 +99,13 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthday_era = $data['birthday_era'];
-            $birthday_year = $data['birthday_year'];
-            $birthday_month = $data['birthday_month'];
-            $birthday_date = $data['birthday_date'];
-            $revision_date_era = $data['revision_date_era'];
-            $revision_date_year = $data['revision_date_year'];
-            $revision_date_month = $data['revision_date_month'];
+            $birthday_era = $data['birthday_era'] ?? "";
+            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_month = $data['birthday_month'] ?? "";
+            $birthday_date = $data['birthday_date'] ?? "";
+            $revision_date_era = $data['revision_date_era'] ?? "";
+            $revision_date_year = $data['revision_date_year'] ?? "";
+            $revision_date_month = $data['revision_date_month'] ?? "";
 
             if ($birthday_era === '1') {
                 if (

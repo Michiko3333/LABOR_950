@@ -66,13 +66,13 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             "todayJapanEraYear" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "todayMonth" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "todayDay" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "headquartersAddress" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "headquartersAddress" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "headquartersTelAreaCode" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquartersTelCityCode" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquartersTelsubscriberCode" => 'string|regex:/^[0-9]{1,5}$/u',
-            "employer_company_managerial_position_name" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９A-Z　]+\z/u',
+            "employer_company_managerial_position_name" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９Ａ-Ｚ　]+\z/u',
             "destination" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
-            "address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "financialInstitutionNameKana" => 'nullable|string|max:255|regex:/\A[ァ-ヴー　]+\z/u',
             "financialInstitutionName" => 'nullable|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "headquartersOrBranch" => 'nullable|string|max:2',
@@ -108,21 +108,19 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $qualificationsJapanEra = $data['qualificationsJapanEra'];
-            $qualificationsJapanEraYear = $data['qualificationsJapanEraYear'];
-            $qualificationsMonth = $data['qualificationsMonth'];
-            $qualificationsDay = $data['qualificationsDay'];
-            if(isset($data['payerJapanEra1'])){
-                $payerJapanEra1 = $data['payerJapanEra1'];
-                $payerJapanEraYear1 = $data['payerJapanEraYear1'];
-                $payerMonth1 = $data['payerMonth1'];
-                $payerJapanEra2 = $data['payerJapanEra2'];
-                $payerJapanEraYear2 = $data['payerJapanEraYear2'];
-                $payerMonth2 = $data['payerMonth2'];
-                $payerJapanEra3 = $data['payerJapanEra3'];
-                $payerJapanEraYear3 = $data['payerJapanEraYear3'];
-                $payerMonth3 = $data['payerMonth3'];
-            };
+            $qualificationsJapanEra = $data['qualificationsJapanEra'] ?? "";
+            $qualificationsJapanEraYear = $data['qualificationsJapanEraYear'] ?? "";
+            $qualificationsMonth = $data['qualificationsMonth'] ?? "";
+            $qualificationsDay = $data['qualificationsDay'] ?? "";
+            $payerJapanEra1 = $data['payerJapanEra1'] ?? "";
+            $payerJapanEraYear1 = $data['payerJapanEraYear1'] ?? "";
+            $payerMonth1 = $data['payerMonth1'] ?? "";
+            $payerJapanEra2 = $data['payerJapanEra2'] ?? "";
+            $payerJapanEraYear2 = $data['payerJapanEraYear2'] ?? "";
+            $payerMonth2 = $data['payerMonth2'] ?? "";
+            $payerJapanEra3 = $data['payerJapanEra3'] ?? "";
+            $payerJapanEraYear3 = $data['payerJapanEraYear3'] ?? "";
+            $payerMonth3 = $data['payerMonth3'] ?? "";
 
             if ($this->hasFile('file_wage_payment_status')) {
                 $totalSize += $this->file('file_wage_payment_status')->getSize();

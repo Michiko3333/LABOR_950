@@ -103,8 +103,9 @@
             size="1" tabindex="14"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:54px; height:19px;"
             id="J16_005F_944E_8D86" name="retirement_japan_era">
+            <OPTION value=""></OPTION>
             <OPTION value="平成" {{ old('retirement_japan_era')=='平成' ? 'selected' : '' }}>平成</OPTION>
-            <OPTION value="令和" selected="selected" {{ old('retirement_japan_era')=='令和' ? 'selected' : '' }}>令和</OPTION>
+            <OPTION value="令和" {{ old('retirement_japan_era')=='令和' ? 'selected' : '' }}>令和</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:77px; top:144px; width:39px; height:28px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:4px 0px 0px 0px;"><INPUT

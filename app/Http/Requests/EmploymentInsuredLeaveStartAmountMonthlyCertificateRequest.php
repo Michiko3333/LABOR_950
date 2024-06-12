@@ -14,6 +14,41 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['employee_name_kana'])) {
+            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'S');
+        }
+        if (isset($data['employee_name'])) {
+            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'S');
+        }
+        if (isset($data['headquarters_employee_name'])) {
+            $data['headquarters_employee_name'] = mb_convert_kana($data['headquarters_employee_name'], 'S');
+        }
+        if (isset($data['labor_consultant_submission_agency_name'])) {
+            $data['labor_consultant_submission_agency_name'] = mb_convert_kana($data['labor_consultant_submission_agency_name'], 'S');
+        }
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+        if (isset($data['employee_address'])) {
+            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
+            $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
+        }
+        if (isset($data['headquarters_address'])) {
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -42,17 +77,17 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             'employee_childcare_caregiver_leave_start_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'employee_childcare_caregiver_leave_start_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+/u',
-            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚー　]+/u',
+            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'branch_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'employeepost_code_3' => 'nullable|string|regex:/^[0-9]{3}$/u',
             'employeepost_code_4' => 'nullable|string|regex:/^[0-9]{4}$/u',
-            'employee_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　]+/u',
+            'employee_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'employee_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'employee_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'employee_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　]+/u',
+            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'headquarters_employee_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+/u',
             'closing_start_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'closing_start_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -484,14 +519,14 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $employee_childcare_caregiver_leave_start_japan_era = $data['employee_childcare_caregiver_leave_start_japan_era'];
-            $employee_childcare_caregiver_leave_start_era_year = $data['employee_childcare_caregiver_leave_start_era_year'];
-            $employee_childcare_caregiver_leave_start_month = $data['employee_childcare_caregiver_leave_start_month'];
-            $employee_childcare_caregiver_leave_start_day = $data['employee_childcare_caregiver_leave_start_day'];
-            $employment_period_date_japan_era = $data['employment_period_date_japan_era'];
-            $employment_period_date_japan_era_year = $data['employment_period_date_japan_era_year'];
-            $employment_period_date_month = $data['employment_period_date_month'];
-            $employment_period_date_day = $data['employment_period_date_day'];
+            $employee_childcare_caregiver_leave_start_japan_era = $data['employee_childcare_caregiver_leave_start_japan_era'] ?? "";
+            $employee_childcare_caregiver_leave_start_era_year = $data['employee_childcare_caregiver_leave_start_era_year'] ?? "";
+            $employee_childcare_caregiver_leave_start_month = $data['employee_childcare_caregiver_leave_start_month'] ?? "";
+            $employee_childcare_caregiver_leave_start_day = $data['employee_childcare_caregiver_leave_start_day'] ?? "";
+            $employment_period_date_japan_era = $data['employment_period_date_japan_era'] ?? "";
+            $employment_period_date_japan_era_year = $data['employment_period_date_japan_era_year'] ?? "";
+            $employment_period_date_month = $data['employment_period_date_month'] ?? "";
+            $employment_period_date_day = $data['employment_period_date_day'] ?? "";
 
             if(!empty($employee_childcare_caregiver_leave_start_month) && !empty($employee_childcare_caregiver_leave_start_day)){
                 if (!checkdate($employee_childcare_caregiver_leave_start_month, $employee_childcare_caregiver_leave_start_day, '2000')) {

@@ -14,6 +14,54 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['employment_fullname'])) {
+            $data['employment_fullname'] = mb_convert_kana($data['employment_fullname'], 'S');
+        }
+        if (isset($data['employment_fullname_kana'])) {
+            $data['employment_fullname_kana'] = mb_convert_kana($data['employment_fullname_kana'], 'S');
+        }
+        if (isset($data['entrepreneur_name'])) {
+            $data['entrepreneur_name'] = mb_convert_kana($data['entrepreneur_name'], 'S');
+        }
+        if (isset($data['bank_name_kana'])) {
+            $data['bank_name_kana'] = mb_convert_kana($data['bank_name_kana'], 'S');
+        }
+        if (isset($data['bank_name'])) {
+            $data['bank_name'] = mb_convert_kana($data['bank_name'], 'S');
+        }
+        if (isset($data['branch'])) {
+            $data['branch'] = mb_convert_kana($data['branch'], 'AS');
+            $data['branch'] = str_replace(['-', '‐', '―'], '－', $data['branch']);
+        }
+        if (isset($data['employment_address'])) {
+            $data['employment_address'] = mb_convert_kana($data['employment_address'], 'AS');
+            $data['employment_address'] = str_replace(['-', '‐', '―'], '－', $data['employment_address']);
+        }
+        if (isset($data['creation_date_submission_agent'])) {
+            $data['creation_date_submission_agent'] = mb_convert_kana($data['creation_date_submission_agent'], 'S');
+        }
+        if (isset($data['labor_consultant_fullname'])) {
+            $data['labor_consultant_fullname'] = mb_convert_kana($data['labor_consultant_fullname'], 'S');
+        }
+        if (isset($data['branch_name'])) {
+            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+        if (isset($data['entrepreneur_address'])) {
+            $data['entrepreneur_address'] = mb_convert_kana($data['entrepreneur_address'], 'AS');
+            $data['entrepreneur_address'] = str_replace(['-', '‐', '―'], '－', $data['entrepreneur_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

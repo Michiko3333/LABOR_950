@@ -32,11 +32,11 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
         }
         if (isset($data['branch_name'])) {
             $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
-            $data['branch_name'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['branch_name']);
+            $data['branch_name'] = str_replace(['-', '‐', '―'], '－', $data['branch_name']);
         }
         if (isset($data['headquarters_address'])) {
             $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
-            $data['headquarters_address'] = str_replace(['-', '－', '‐', '－'], 'ー', $data['headquarters_address']);
+            $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
         if (isset($data['agent_name'])) {
             $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
@@ -125,19 +125,19 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $qualifications_japan_era = $data['qualifications_japan_era'];
-            $qualifications_japan_era_year = $data['qualifications_japan_era_year'];
-            $qualifications_month = $data['qualifications_month'];
-            $qualifications_day = $data['qualifications_day'];
-            $payer_japan_era1 = $data['payer_japan_era1'];
-            $payer_japan_era_year1 = $data['payer_japan_era_year1'];
-            $payer_month1 = $data['payer_month1'];
-            $payer_japan_era2 = $data['payer_japan_era2'];
-            $payer_japan_era_year2 = $data['payer_japan_era_year2'];
-            $payer_month2 = $data['payer_month2'];
-            $payer_japan_era3 = $data['payer_japan_era3'];
-            $payer_japan_era_year3 = $data['payer_japan_era_year3'];
-            $payer_month3 = $data['payer_month3'];
+            $qualifications_japan_era = $data['qualifications_japan_era'] ?? "";
+            $qualifications_japan_era_year = $data['qualifications_japan_era_year'] ?? "";
+            $qualifications_month = $data['qualifications_month'] ?? "";
+            $qualifications_day = $data['qualifications_day'] ?? "";
+            $payer_japan_era1 = $data['payer_japan_era1'] ?? "";
+            $payer_japan_era_year1 = $data['payer_japan_era_year1'] ?? "";
+            $payer_month1 = $data['payer_month1'] ?? "";
+            $payer_japan_era2 = $data['payer_japan_era2'] ?? "";
+            $payer_japan_era_year2 = $data['payer_japan_era_year2'] ?? "";
+            $payer_month2 = $data['payer_month2'] ?? "";
+            $payer_japan_era3 = $data['payer_japan_era3'] ?? "";
+            $payer_japan_era_year3 = $data['payer_japan_era_year3'] ?? "";
+            $payer_month3 = $data['payer_month3'] ?? "";
 
             if(!empty($qualifications_month) && !empty($qualifications_day)){
                 if (!checkdate($qualifications_month, $qualifications_day, '2000')) {

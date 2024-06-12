@@ -14,6 +14,33 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['name'])) {
+            $data['name'] = mb_convert_kana($data['name'], 'S');
+        }
+        if (isset($data['name_kana'])) {
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        }
+        if (isset($data['branch_name'])) {
+            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
+        }
+        if (isset($data['entrepreneur_name'])) {
+            $data['entrepreneur_name'] = mb_convert_kana($data['entrepreneur_name'], 'S');
+        }
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+        }
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -39,7 +66,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
             'insurance_office_no' => 'string|regex:/^[0-9]{5}$/u',
             'post_code_former' => 'string|regex:/^[0-9]{3}$/u',
             'post_code_latter' => 'string|regex:/^[0-9]{4}$/u',
-            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'entrepreneur_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'branch_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
@@ -83,26 +110,26 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthday_era = $data['birthday_era'];
-            $birthday_year = $data['birthday_year'];
-            $birthday_month = $data['birthday_month'];
-            $birthday_day = $data['birthday_day'];
-            $loss_era = $data['loss_era'];
-            $loss_year = $data['loss_year'];
-            $loss_month = $data['loss_month'];
-            $loss_day = $data['loss_day'];
-            $retirement_date_era = $data['retirement_date_era'];
-            $retirement_date_year = $data['retirement_date_year'];
-            $retirement_date_month = $data['retirement_date_month'];
-            $retirement_date_day = $data['retirement_date_day'];
-            $passed_away_date_era = $data['passed_away_date_era'];
-            $passed_away_date_year = $data['passed_away_date_year'];
-            $passed_away_date_month = $data['passed_away_date_month'];
-            $passed_away_date_day = $data['passed_away_date_day'];
-            $over_70_non_applicable_date_era = $data['over_70_non_applicable_date_era'];
-            $over_70_non_applicable_date_year = $data['over_70_non_applicable_date_year'];
-            $over_70_non_applicable_date_month = $data['over_70_non_applicable_date_month'];
-            $over_70_non_applicable_date_day = $data['over_70_non_applicable_date_day'];
+            $birthday_era = $data['birthday_era'] ?? "";
+            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_month = $data['birthday_month'] ?? "";
+            $birthday_day = $data['birthday_day'] ?? "";
+            $loss_era = $data['loss_era'] ?? "";
+            $loss_year = $data['loss_year'] ?? "";
+            $loss_month = $data['loss_month'] ?? "";
+            $loss_day = $data['loss_day'] ?? "";
+            $retirement_date_era = $data['retirement_date_era'] ?? "";
+            $retirement_date_year = $data['retirement_date_year'] ?? "";
+            $retirement_date_month = $data['retirement_date_month'] ?? "";
+            $retirement_date_day = $data['retirement_date_day'] ?? "";
+            $passed_away_date_era = $data['passed_away_date_era'] ?? "";
+            $passed_away_date_year = $data['passed_away_date_year'] ?? "";
+            $passed_away_date_month = $data['passed_away_date_month'] ?? "";
+            $passed_away_date_day = $data['passed_away_date_day'] ?? "";
+            $over_70_non_applicable_date_era = $data['over_70_non_applicable_date_era'] ?? "";
+            $over_70_non_applicable_date_year = $data['over_70_non_applicable_date_year'] ?? "";
+            $over_70_non_applicable_date_month = $data['over_70_non_applicable_date_month'] ?? "";
+            $over_70_non_applicable_date_day = $data['over_70_non_applicable_date_day'] ?? "";
 
             if(!empty($birthday_month) && !empty($birthday_day)){
                 if (!checkdate($birthday_month, $birthday_day, '2000')) {

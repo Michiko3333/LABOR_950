@@ -14,6 +14,30 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+        }
+        if (isset($data['business_name_name_of_ship_owner'])) {
+            $data['business_name_name_of_ship_owner'] = mb_convert_kana($data['business_name_name_of_ship_owner'], 'S');
+        }
+        if (isset($data['business_owner_name_representative_name'])) {
+            $data['business_owner_name_representative_name'] = mb_convert_kana($data['business_owner_name_representative_name'], 'S');
+        }
+        if (isset($data['bonus_name'])) {
+            $data['bonus_name'] = mb_convert_kana($data['bonus_name'], 'S');
+        }
+        if (isset($data['business_location_ship_owner_address'])) {
+            $data['business_location_ship_owner_address'] = mb_convert_kana($data['business_location_ship_owner_address'], 'AS');
+            $data['business_location_ship_owner_address'] = str_replace(['-', '‐', '―'], '－', $data['business_location_ship_owner_address']);
+        }
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,7 +51,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "business_name_name_of_ship_owner" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "business_owner_name_representative_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "changed_bonus_payment_schedule_month1" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],
@@ -49,7 +73,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "business_establishment_code_prefecture_code" => 'nullable|string|regex:/^[0-9]{1,2}+$/',
             "ship_owner_reference_code_ship_insurance_office_abbreviation_name" => 'nullable|string|max:3|regex:/^[一-龥々]+$/',
             "ship_owner_arrangement_symbol_symbol" => 'nullable|string|max:3|regex:/^[ァ-ヴー　]+\z/u',
-            "bonus_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "bonus_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　]+\z/u',
             "era_name" => 'nullable|int|in:9',
             "payment_status" => 'nullable|int|in:1',
             "title_types_of_welfare_pension_insurance" => 'nullable|int|in:1',
@@ -64,8 +88,8 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'];
-            $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'];
+            $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'] ?? "";
+            $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'] ?? "";
 
             if ($scheduled_year_of_bonus_payment == 1 && ($scheduled_month_of_bonus_payment < 5)) {
                 $validator->errors()->add('scheduled_year_of_bonus_payment', '賞与支払（予定）年月は正しい日付を入力してください。');
