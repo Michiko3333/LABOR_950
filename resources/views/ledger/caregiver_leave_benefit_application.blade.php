@@ -154,12 +154,13 @@
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
                     $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
                 @else
+                    $('#J74_005F_944E_8D86').prop('disabled', true);
                     $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                                            #J114_005F_8E81_96BC, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_8E73_93E0_8BC7_94D4\
-                                            #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA\
-                                            #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC\
-                                            #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86')
-                        .prop('readonly', false);
+                        #J114_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4,\
+                        #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
+                        #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
+                        #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86, #J83_005F_9574_8B4C_9793')
+                        .prop('readonly', true);
                 @endif
             });
 

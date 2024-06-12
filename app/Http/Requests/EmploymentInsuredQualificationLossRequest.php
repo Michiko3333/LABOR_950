@@ -97,18 +97,18 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthdayEra = $data['birthday_era'];
-            $birthdayYear = $data['birthday_year'];
-            $birthdayMonth = $data['birthday_month'];
-            $birthdayDay = $data['birthday_day'];
-            $insuredEra = $data['insured_date_era'];
-            $insuredYear = $data['insured_date_year'];
-            $insuredMonth = $data['insured_date_month'];
-            $insuredDay = $data['insured_date_day'];
-            $retirementEra = $data['retirement_date_era'];
-            $retirementYear = $data['retirement_date_year'];
-            $retirementMonth = $data['retirement_date_month'];
-            $retirementDay = $data['retirement_date_day'];
+            $birthdayEra = $data['birthday_era'] ?? "";
+            $birthdayYear = $data['birthday_year'] ?? "";
+            $birthdayMonth = $data['birthday_month'] ?? "";
+            $birthdayDay = $data['birthday_day'] ?? "";
+            $insuredEra = $data['insured_date_era'] ?? "";
+            $insuredYear = $data['insured_date_year'] ?? "";
+            $insuredMonth = $data['insured_date_month'] ?? "";
+            $insuredDay = $data['insured_date_day'] ?? "";
+            $retirementEra = $data['retirement_date_era'] ?? "";
+            $retirementYear = $data['retirement_date_year'] ?? "";
+            $retirementMonth = $data['retirement_date_month'] ?? "";
+            $retirementDay = $data['retirement_date_day'] ?? "";
             
             if ($birthdayEra === '大正') {
                 if (

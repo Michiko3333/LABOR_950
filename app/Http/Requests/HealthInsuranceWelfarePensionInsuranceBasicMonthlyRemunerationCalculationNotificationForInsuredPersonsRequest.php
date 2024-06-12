@@ -104,12 +104,12 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $birthday_era = $data['era_name'];
-            $birthday_year = $data['year_of_birth'];
-            $birthday_month = $data['month_of_birth'];
-            $birthday_date = $data['date_of_birth'];
-            $revision_date_era = $data['applicable_era_name'];
-            $revision_date_year = $data['applicable_year'];
+            $birthday_era = $data['era_name'] ?? "";
+            $birthday_year = $data['year_of_birth'] ?? "";
+            $birthday_month = $data['month_of_birth'] ?? "";
+            $birthday_date = $data['date_of_birth'] ?? "";
+            $revision_date_era = $data['applicable_era_name'] ?? "";
+            $revision_date_year = $data['applicable_year'] ?? "";
 
             if ($birthday_era === '1') {
                 if (

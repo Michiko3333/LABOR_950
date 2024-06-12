@@ -135,14 +135,14 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $birthdayEra = $data['birthday_era'];
-            $birthdayYear = $data['birthday_year'];
-            $birthdayMonth = $data['birthday_month'];
-            $birthdayDay = $data['birthday_day'];
-            $insuredEra = $data['insured_date_era'];
-            $insuredYear = $data['insured_date_year'];
-            $insuredMonth = $data['insured_date_month'];
-            $insuredDay = $data['insured_date_day'];
+            $birthdayEra = $data['birthday_era'] ?? "";
+            $birthdayYear = $data['birthday_year'] ?? "";
+            $birthdayMonth = $data['birthday_month'] ?? "";
+            $birthdayDay = $data['birthday_day'] ?? "";
+            $insuredEra = $data['insured_date_era'] ?? "";
+            $insuredYear = $data['insured_date_year'] ?? "";
+            $insuredMonth = $data['insured_date_month'] ?? "";
+            $insuredDay = $data['insured_date_day'] ?? "";
 
             if ($birthdayEra === '大正') {
                 if (

@@ -125,22 +125,22 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $birthdayEra = $data['birthday_era'];
-            $birthdayYear = $data['birthday_year'];
-            $birthdayMonth = $data['birthday_month'];
-            $birthdayDay = $data['birthday_day'];
-            $insuredEra = $data['employment_insured_date_era'];
-            $insuredYear = $data['employment_insured_date_year'];
-            $insuredMonth = $data['employment_insured_date_month'];
-            $insuredDay = $data['employment_insured_date_date'];
-            $transferEra = $data['transfer_date_era'];
-            $transferYear = $data['transfer_date_year'];
-            $transferMonth = $data['transfer_date_month'];
-            $transferDay = $data['transfer_date_date'];
-            $name_changedEra = $data['name_changed_date_era'];
-            $name_changedYear = $data['name_changed_date_year'];
-            $name_changedMonth = $data['name_changed_date_month'];
-            $name_changedDay = $data['name_changed_date_date'];
+            $birthdayEra = $data['birthday_era'] ?? "";
+            $birthdayYear = $data['birthday_year'] ?? "";
+            $birthdayMonth = $data['birthday_month'] ?? "";
+            $birthdayDay = $data['birthday_day'] ?? "";
+            $insuredEra = $data['employment_insured_date_era'] ?? "";
+            $insuredYear = $data['employment_insured_date_year'] ?? "";
+            $insuredMonth = $data['employment_insured_date_month'] ?? "";
+            $insuredDay = $data['employment_insured_date_date'] ?? "";
+            $transferEra = $data['transfer_date_era'] ?? "";
+            $transferYear = $data['transfer_date_year'] ?? "";
+            $transferMonth = $data['transfer_date_month'] ?? "";
+            $transferDay = $data['transfer_date_date'] ?? "";
+            $name_changedEra = $data['name_changed_date_era'] ?? "";
+            $name_changedYear = $data['name_changed_date_year'] ?? "";
+            $name_changedMonth = $data['name_changed_date_month'] ?? "";
+            $name_changedDay = $data['name_changed_date_date'] ?? "";
             
             if ($birthdayEra === '大正') {
                 if (

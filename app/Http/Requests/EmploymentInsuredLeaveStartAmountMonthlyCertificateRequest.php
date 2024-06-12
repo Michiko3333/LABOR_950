@@ -519,14 +519,14 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $employee_childcare_caregiver_leave_start_japan_era = $data['employee_childcare_caregiver_leave_start_japan_era'];
-            $employee_childcare_caregiver_leave_start_era_year = $data['employee_childcare_caregiver_leave_start_era_year'];
-            $employee_childcare_caregiver_leave_start_month = $data['employee_childcare_caregiver_leave_start_month'];
-            $employee_childcare_caregiver_leave_start_day = $data['employee_childcare_caregiver_leave_start_day'];
-            $employment_period_date_japan_era = $data['employment_period_date_japan_era'];
-            $employment_period_date_japan_era_year = $data['employment_period_date_japan_era_year'];
-            $employment_period_date_month = $data['employment_period_date_month'];
-            $employment_period_date_day = $data['employment_period_date_day'];
+            $employee_childcare_caregiver_leave_start_japan_era = $data['employee_childcare_caregiver_leave_start_japan_era'] ?? "";
+            $employee_childcare_caregiver_leave_start_era_year = $data['employee_childcare_caregiver_leave_start_era_year'] ?? "";
+            $employee_childcare_caregiver_leave_start_month = $data['employee_childcare_caregiver_leave_start_month'] ?? "";
+            $employee_childcare_caregiver_leave_start_day = $data['employee_childcare_caregiver_leave_start_day'] ?? "";
+            $employment_period_date_japan_era = $data['employment_period_date_japan_era'] ?? "";
+            $employment_period_date_japan_era_year = $data['employment_period_date_japan_era_year'] ?? "";
+            $employment_period_date_month = $data['employment_period_date_month'] ?? "";
+            $employment_period_date_day = $data['employment_period_date_day'] ?? "";
 
             if(!empty($employee_childcare_caregiver_leave_start_month) && !empty($employee_childcare_caregiver_leave_start_day)){
                 if (!checkdate($employee_childcare_caregiver_leave_start_month, $employee_childcare_caregiver_leave_start_day, '2000')) {

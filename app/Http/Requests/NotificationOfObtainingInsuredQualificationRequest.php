@@ -114,14 +114,14 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $employee_birthday_japan_era = $data['employee_birthday_japan_era'];
-            $employee_birthday_japan_era_year = $data['employee_birthday_japan_era_year'];
-            $employee_birthday_month = $data['employee_birthday_month'];
-            $employee_birthday_day = $data['employee_birthday_day'];
-            $employee_employment_insured_date_japan_era = $data['employee_employment_insured_date_japan_era'];
-            $employee_employment_insured_date_japan_era_year = $data['employee_employment_insured_date_japan_era_year'];
-            $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'];
-            $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'];
+            $employee_birthday_japan_era = $data['employee_birthday_japan_era'] ?? "";
+            $employee_birthday_japan_era_year = $data['employee_birthday_japan_era_year'] ?? "";
+            $employee_birthday_month = $data['employee_birthday_month'] ?? "";
+            $employee_birthday_day = $data['employee_birthday_day'] ?? "";
+            $employee_employment_insured_date_japan_era = $data['employee_employment_insured_date_japan_era'] ?? "";
+            $employee_employment_insured_date_japan_era_year = $data['employee_employment_insured_date_japan_era_year'] ?? "";
+            $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'] ?? "";
+            $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'] ?? "";
 
             if(!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)){
                 if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {

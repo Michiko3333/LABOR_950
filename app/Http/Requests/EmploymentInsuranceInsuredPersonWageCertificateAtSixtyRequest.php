@@ -420,14 +420,14 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Form
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $dateOfAttainmentage60JapanEra = $data['dateOfAttainmentage60JapanEra'];
-            $dateOfAttainmentage60JapanEraYear = $data['dateOfAttainmentage60JapanEraYear'];
-            $dateOfAttainmentage60Month = $data['dateOfAttainmentage60Month'];
-            $dateOfAttainmentage60Day = $data['dateOfAttainmentage60Day'];
-            $birthdayEra = $data['birthdayEra'];
-            $birthdayYear = $data['birthdayYear'];
-            $birthdayMonth = $data['birthdayMonth'];
-            $birthdayDay = $data['birthdayDay'];
+            $dateOfAttainmentage60JapanEra = $data['dateOfAttainmentage60JapanEra'] ?? "";
+            $dateOfAttainmentage60JapanEraYear = $data['dateOfAttainmentage60JapanEraYear'] ?? "";
+            $dateOfAttainmentage60Month = $data['dateOfAttainmentage60Month'] ?? "";
+            $dateOfAttainmentage60Day = $data['dateOfAttainmentage60Day'] ?? "";
+            $birthdayEra = $data['birthdayEra'] ?? "";
+            $birthdayYear = $data['birthdayYear'] ?? "";
+            $birthdayMonth = $data['birthdayMonth'] ?? "";
+            $birthdayDay = $data['birthdayDay'] ?? "";
 
             if(!empty($dateOfAttainmentage60Month) && !empty($dateOfAttainmentage60Day)){
                 if (!checkdate($dateOfAttainmentage60Month, $dateOfAttainmentage60Day, '2000')) {

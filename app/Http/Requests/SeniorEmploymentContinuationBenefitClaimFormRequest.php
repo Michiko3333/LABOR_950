@@ -125,19 +125,19 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $qualifications_japan_era = $data['qualifications_japan_era'];
-            $qualifications_japan_era_year = $data['qualifications_japan_era_year'];
-            $qualifications_month = $data['qualifications_month'];
-            $qualifications_day = $data['qualifications_day'];
-            $payer_japan_era1 = $data['payer_japan_era1'];
-            $payer_japan_era_year1 = $data['payer_japan_era_year1'];
-            $payer_month1 = $data['payer_month1'];
-            $payer_japan_era2 = $data['payer_japan_era2'];
-            $payer_japan_era_year2 = $data['payer_japan_era_year2'];
-            $payer_month2 = $data['payer_month2'];
-            $payer_japan_era3 = $data['payer_japan_era3'];
-            $payer_japan_era_year3 = $data['payer_japan_era_year3'];
-            $payer_month3 = $data['payer_month3'];
+            $qualifications_japan_era = $data['qualifications_japan_era'] ?? "";
+            $qualifications_japan_era_year = $data['qualifications_japan_era_year'] ?? "";
+            $qualifications_month = $data['qualifications_month'] ?? "";
+            $qualifications_day = $data['qualifications_day'] ?? "";
+            $payer_japan_era1 = $data['payer_japan_era1'] ?? "";
+            $payer_japan_era_year1 = $data['payer_japan_era_year1'] ?? "";
+            $payer_month1 = $data['payer_month1'] ?? "";
+            $payer_japan_era2 = $data['payer_japan_era2'] ?? "";
+            $payer_japan_era_year2 = $data['payer_japan_era_year2'] ?? "";
+            $payer_month2 = $data['payer_month2'] ?? "";
+            $payer_japan_era3 = $data['payer_japan_era3'] ?? "";
+            $payer_japan_era_year3 = $data['payer_japan_era_year3'] ?? "";
+            $payer_month3 = $data['payer_month3'] ?? "";
 
             if(!empty($qualifications_month) && !empty($qualifications_day)){
                 if (!checkdate($qualifications_month, $qualifications_day, '2000')) {

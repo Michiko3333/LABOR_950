@@ -88,8 +88,8 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'];
-            $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'];
+            $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'] ?? "";
+            $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'] ?? "";
 
             if ($scheduled_year_of_bonus_payment == 1 && ($scheduled_month_of_bonus_payment < 5)) {
                 $validator->errors()->add('scheduled_year_of_bonus_payment', '賞与支払（予定）年月は正しい日付を入力してください。');

@@ -108,21 +108,19 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $qualificationsJapanEra = $data['qualificationsJapanEra'];
-            $qualificationsJapanEraYear = $data['qualificationsJapanEraYear'];
-            $qualificationsMonth = $data['qualificationsMonth'];
-            $qualificationsDay = $data['qualificationsDay'];
-            if(isset($data['payerJapanEra1'])){
-                $payerJapanEra1 = $data['payerJapanEra1'];
-                $payerJapanEraYear1 = $data['payerJapanEraYear1'];
-                $payerMonth1 = $data['payerMonth1'];
-                $payerJapanEra2 = $data['payerJapanEra2'];
-                $payerJapanEraYear2 = $data['payerJapanEraYear2'];
-                $payerMonth2 = $data['payerMonth2'];
-                $payerJapanEra3 = $data['payerJapanEra3'];
-                $payerJapanEraYear3 = $data['payerJapanEraYear3'];
-                $payerMonth3 = $data['payerMonth3'];
-            };
+            $qualificationsJapanEra = $data['qualificationsJapanEra'] ?? "";
+            $qualificationsJapanEraYear = $data['qualificationsJapanEraYear'] ?? "";
+            $qualificationsMonth = $data['qualificationsMonth'] ?? "";
+            $qualificationsDay = $data['qualificationsDay'] ?? "";
+            $payerJapanEra1 = $data['payerJapanEra1'] ?? "";
+            $payerJapanEraYear1 = $data['payerJapanEraYear1'] ?? "";
+            $payerMonth1 = $data['payerMonth1'] ?? "";
+            $payerJapanEra2 = $data['payerJapanEra2'] ?? "";
+            $payerJapanEraYear2 = $data['payerJapanEraYear2'] ?? "";
+            $payerMonth2 = $data['payerMonth2'] ?? "";
+            $payerJapanEra3 = $data['payerJapanEra3'] ?? "";
+            $payerJapanEraYear3 = $data['payerJapanEraYear3'] ?? "";
+            $payerMonth3 = $data['payerMonth3'] ?? "";
 
             if ($this->hasFile('file_wage_payment_status')) {
                 $totalSize += $this->file('file_wage_payment_status')->getSize();

@@ -129,18 +129,18 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
-            $birthdayEra = $data['insured_birthday_japan_era'];
-            $birthdayYear = $data['insured_birthday_year'];
-            $birthdayMonth = $data['insured_birthday_month'];
-            $birthdayDay = $data['insured_birthday_day'];
-            $insuredEra = $data['employment_insured_japan_era'];
-            $insuredYear = $data['employment_insured_year'];
-            $insuredMonth = $data['employment_insured_month'];
-            $insuredDay = $data['employment_insured_day'];
-            $retirementEra = $data['retirement_japan_era'];
-            $retirementYear = $data['retirement_year'];
-            $retirementMonth = $data['retirement_month'];
-            $retirementDay = $data['retirement_day'];
+            $birthdayEra = $data['insured_birthday_japan_era'] ?? "";
+            $birthdayYear = $data['insured_birthday_year'] ?? "";
+            $birthdayMonth = $data['insured_birthday_month'] ?? "";
+            $birthdayDay = $data['insured_birthday_day'] ?? "";
+            $insuredEra = $data['employment_insured_japan_era'] ?? "";
+            $insuredYear = $data['employment_insured_year'] ?? "";
+            $insuredMonth = $data['employment_insured_month'] ?? "";
+            $insuredDay = $data['employment_insured_day'] ?? "";
+            $retirementEra = $data['retirement_japan_era'] ?? "";
+            $retirementYear = $data['retirement_year'] ?? "";
+            $retirementMonth = $data['retirement_month'] ?? "";
+            $retirementDay = $data['retirement_day'] ?? "";
             
             if ($birthdayEra === '大正') {
                 if (
