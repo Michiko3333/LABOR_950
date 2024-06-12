@@ -26,7 +26,7 @@ class AdminLaborList extends BaseTable
 
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
-            $condition = $condition->where(DB::raw("CONCAT(last_name, first_name)"), 'LIKE', $pat);
+            $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);
         }
 
         if (!empty($this->company_name)) {

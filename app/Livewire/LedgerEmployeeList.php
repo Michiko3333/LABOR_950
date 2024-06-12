@@ -49,7 +49,7 @@ class LedgerEmployeeList extends BaseTable
         $condition = Employee::whereIn('branch_id', array_keys($branch_ids))->where('delete_flg', 0);
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
-            $condition = $condition->where(DB::raw("CONCAT(last_name, first_name)"), 'LIKE', $pat);
+            $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);
         }
 
         if (!empty($this->branch_id)) {
