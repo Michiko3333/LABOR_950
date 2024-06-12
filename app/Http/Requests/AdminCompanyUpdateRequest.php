@@ -42,14 +42,40 @@ class AdminCompanyUpdateRequest extends FormRequest
         if (isset($data['name_abbreviation'])) {
             $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'as');
         }
+        if (isset($data['br-address_city'])) {
+            foreach ($data['br-address_city'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
+            }
+        }
         if (isset($data['br-address_ward'])) {
             foreach ($data['br-address_ward'] as &$ward) {
-                $ward = mb_convert_kana($ward, 'AS');
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
             }
         }
         if (isset($data['br-address_apartment'])) {
             foreach ($data['br-address_apartment'] as &$apartment) {
-                $apartment = mb_convert_kana($apartment, 'AS');
+                $apartment = mb_convert_kana($apartment, 'RANKS');
+                $apartment = str_replace(['-', '‐'], '－', $apartment);
+            }
+        }
+        if (isset($data['br-address_city_kana'])) {
+            foreach ($data['br-address_city_kana'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
+            }
+        }
+        if (isset($data['br-address_ward_kana'])) {
+            foreach ($data['br-address_ward_kana'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
+            }
+        }
+        if (isset($data['br-address_apartment_kana'])) {
+            foreach ($data['br-address_apartment_kana'] as &$apartment) {
+                $apartment = mb_convert_kana($apartment, 'RANKS');
+                $apartment = str_replace(['-', '‐'], '－', $apartment);
             }
         }
         return $data;
@@ -97,17 +123,17 @@ class AdminCompanyUpdateRequest extends FormRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥]+\z/u',
+            "br-address_city.*" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_ward" => 'required|array',
-            "br-address_ward.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９‐－]+\z/u',
+            "br-address_ward.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_apartment" => 'array',
-            "br-address_apartment.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ・‐－]+\z/u',
+            "br-address_apartment.*" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_city_kana" => 'required|array',
-            "br-address_city_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー]+\z/u',
+            "br-address_city_kana.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_ward_kana" => 'array',
-            "br-address_ward_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー‐－]+\z/u',
+            "br-address_ward_kana.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_apartment_kana" => 'array',
-            "br-address_apartment_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー・‐－]+\z/u',
+            "br-address_apartment_kana.*" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'required|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',

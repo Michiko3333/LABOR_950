@@ -18,23 +18,41 @@ class AdminEmployeeCreateRequest extends FormRequest
     {
         $data = $this->all();
 
+        if (isset($data['address_city'])) {
+            $data['address_city'] = mb_convert_kana($data['address_city'], 'RANKS');
+            $data['address_city'] = str_replace(['-', '‐'],  '－', $data['address_city']);
+        }
         if (isset($data['address_ward'])) {
-            $data['address_ward'] = mb_convert_kana($data['address_ward'], 'AS');
+            $data['address_ward'] = mb_convert_kana($data['address_ward'], 'RANKS');
+            $data['address_ward'] = str_replace(['-', '‐'], '－', $data['address_ward']);
         }
         if (isset($data['address_apartment'])) {
-            $data['address_apartment'] = mb_convert_kana($data['address_apartment'], 'AS');
+            $data['address_apartment'] = mb_convert_kana($data['address_apartment'], 'RANKS');
+            $data['address_apartment'] = str_replace(['-', '‐'], '－', $data['address_apartment']);
+        }
+        if (isset($data['emergency_address_city1'])) {
+            $data['emergency_address_city1'] = mb_convert_kana($data['emergency_address_city1'], 'RANKS');
+            $data['emergency_address_city1'] = str_replace(['-', '‐'],  '－', $data['emergency_address_city1']);
         }
         if (isset($data['emergency_address_ward1'])) {
-            $data['emergency_address_ward1'] = mb_convert_kana($data['emergency_address_ward1'], 'AS');
+            $data['emergency_address_ward1'] = mb_convert_kana($data['emergency_address_ward1'], 'RANKS');
+            $data['emergency_address_ward1'] = str_replace(['-', '‐'], '－', $data['emergency_address_ward1']);
         }
         if (isset($data['emergency_address_apartment1'])) {
-            $data['emergency_address_apartment1'] = mb_convert_kana($data['emergency_address_apartment1'], 'AS');
+            $data['emergency_address_apartment1'] = mb_convert_kana($data['emergency_address_apartment1'], 'RANKS');
+            $data['emergency_address_apartment1'] = str_replace(['-', '‐'], '－', $data['emergency_address_apartment1']);
+        }
+        if (isset($data['emergency_address_city2'])) {
+            $data['emergency_address_city2'] = mb_convert_kana($data['emergency_address_city2'], 'RANKS');
+            $data['emergency_address_city2'] = str_replace(['-', '‐'],  '－', $data['emergency_address_city2']);
         }
         if (isset($data['emergency_address_ward2'])) {
-            $data['emergency_address_ward2'] = mb_convert_kana($data['emergency_address_ward2'], 'AS');
+            $data['emergency_address_ward2'] = mb_convert_kana($data['emergency_address_ward2'], 'RANKS');
+            $data['emergency_address_ward2'] = str_replace(['-', '‐'], '－', $data['emergency_address_ward2']);
         }
         if (isset($data['emergency_address_apartment2'])) {
-            $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'AS');
+            $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'RANKS');
+            $data['emergency_address_apartment2'] = str_replace(['-', '‐'], '－', $data['emergency_address_apartment2']);
         }
         return $data;
     }
@@ -71,12 +89,12 @@ class AdminEmployeeCreateRequest extends FormRequest
             'birthday_date' => 'required',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
-            'address_city' => 'required|string|max:255',
-            'address_ward' => 'required|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'address_apartment' => 'required|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'address_city' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'address_ward' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'address_apartment' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
-            'address_city_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
-            'address_ward_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
+            'address_city_kana' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'address_ward_kana' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             //'address_apartment_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
@@ -91,17 +109,17 @@ class AdminEmployeeCreateRequest extends FormRequest
             'emergency_relationship1' => 'nullable|string|max:255',
             'emergency_tel1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_address_prefecture1' => 'nullable|string',
-            'emergency_address_city1' => 'nullable|string',
-            'emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_address_apartment1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_address_city1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_address_ward1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_address_apartment1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             'emergency_post_code2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_contact2' => 'nullable|string|max:255',
             'emergency_relationship2' => 'nullable|string|max:255',
             'emergency_tel2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'emergency_address_prefecture2' => 'nullable|string|max:255',
-            'emergency_address_city2' => 'nullable|string|max:255',
-            'emergency_address_ward2' => 'nullable|string|max:255',
-            'emergency_address_apartment2' => 'nullable|string|max:255',
+            'emergency_address_prefecture2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_address_city2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_address_ward2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_address_apartment2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             'spouse_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',

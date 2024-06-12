@@ -35,11 +35,12 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "pension_office_reference_prefecture" => 'required|string|regex:/^[0-9]{1,2}+$/',
             "pension_office_reference_no_cities" => 'required|string|regex:/^[0-9]{1,2}+$/',
             "pension_office_reference_no_office" => 'required|string|regex:/^[ァ-ヴーA-Z0-9]{1,4}+\z/u',
+            "csv_pension_office_no" => 'required|string|regex:/^[0-9]{5}+$/',
             "post_code_former" => 'required|string|regex:/^[0-9]{1,3}+$/',
             "post_code_latter" => 'required|string|regex:/^[0-9]{1,4}+$/',
-            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　‐]+\z/u',
+            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
             "business_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "business_owner_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "business_owner_name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+\z/u',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
@@ -97,6 +98,9 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
             return $input->over_70_check === 'on';
         });
+
+        $validator->sometimes(['remarks_calculation_basic_month_month1', 'remarks_calculation_basic_month_month2'], 'required_without_all:remarks_calculation_basic_month_month1,remarks_calculation_basic_month_month2', function ($input) {
+            return $input->remarks_and_calculation_of_employees_aged_70_and_over === '1';
         
         $validator->after(function ($validator) {
             $data = $validator->getData();
@@ -165,6 +169,8 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         return [
             'my_number_or_basic_pension_number.required_without_all' => '',
             'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
+            'remarks_calculation_basic_month_month1.required_without_all' => '',
+            'remarks_calculation_basic_month_month2.required_without_all' => '備考_70歳以上被用者算定_算定基礎月を入力してください。',
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
         ];
     }
@@ -184,6 +190,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'pension_office_reference_prefecture' => '事業所整理記号_都道府県コード',
             'pension_office_reference_no_cities' => '事業所整理記号_郡市区符号',
             'pension_office_reference_no_office' => '事業所整理記号_事業所記号',
+            'csv_pension_office_no' => '事業所番号',
             'post_code_former' => '事業所郵便番号3桁',
             'post_code_latter' => '事業所郵便番号4桁',
             'business_location' => '事業所所在地',

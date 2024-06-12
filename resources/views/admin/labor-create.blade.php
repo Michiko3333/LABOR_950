@@ -169,6 +169,14 @@
                                     placeholder="TARO">
                             </div>
                         </div>
+                        <div class="two fields">
+                            <div class="field required {{err($errors, 'labor_and_social_security_attorney_registration_no')}}">
+                                <label for="labor_and_social_security_attorney_registration_no">社会保険労務士登録番号</label>
+                                <input type="text" id="labor_and_social_security_attorney_registration_no" name="labor_and_social_security_attorney_registration_no"
+                                    value="{{ old('labor_and_social_security_attorney_registration_no', isset($employee_id) ? $employee->labor_and_social_security_attorney_registration_no : '') }}"
+                                    placeholder="01234567">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="ui horizontal card card-shadow item-1">

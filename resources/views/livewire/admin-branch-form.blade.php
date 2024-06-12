@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="two fields">
-                        <div class="field required {{ err_bind($errs, 'br-address_apartment', $key) }}">
+                        <div class="field {{ err_bind($errs, 'br-address_apartment', $key) }}">
                             <label for="br-address_apartment">住所（アパート・マンション名等）</label>
                             <input type="text" name="br-address_apartment[]"
                                 wire:model.live="data.{{ $key }}.br-address_apartment" placeholder="">
@@ -147,7 +147,7 @@
                     </div>
                     <div class="two fields">
 
-                        <div class="field required {{ err_bind($errs, 'br-address_apartment_kana', $key) }}">
+                        <div class="field {{ err_bind($errs, 'br-address_apartment_kana', $key) }}">
                             <label for="br-address_apartment_kana">住所（アパート・マンション名等）（カナ）</label>
                             <input type="text" name="br-address_apartment_kana[]"
                                 wire:model.live="data.{{ $key }}.br-address_apartment_kana" placeholder="">

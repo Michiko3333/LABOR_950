@@ -20,11 +20,41 @@ class BranchRequest extends FormRequest
 
         $data = array_map(function ($value) {
             if (!is_array($value)) {
-                if (isset($value['br-address_ward'])) {
-                    $value['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $value['br-address_ward']);
+                if (isset($data['br-address_city'])) {
+                    foreach ($data['br-address_city'] as &$ward) {
+                        $ward = mb_convert_kana($ward, 'RANKS');
+                        $ward = str_replace(['-', '‐'], '－', $ward);
+                    }
                 }
-                if (isset($value['br-address_apartment'])) {
-                    $value['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $value['br-address_apartment']);
+                if (isset($data['br-address_ward'])) {
+                    foreach ($data['br-address_ward'] as &$ward) {
+                        $ward = mb_convert_kana($ward, 'RANKS');
+                        $ward = str_replace(['-', '‐'], '－', $ward);
+                    }
+                }
+                if (isset($data['br-address_apartment'])) {
+                    foreach ($data['br-address_apartment'] as &$apartment) {
+                        $apartment = mb_convert_kana($apartment, 'RANKS');
+                        $apartment = str_replace(['-', '‐'], '－', $apartment);
+                    }
+                }
+                if (isset($data['br-address_city_kana'])) {
+                    foreach ($data['br-address_city_kana'] as &$ward) {
+                        $ward = mb_convert_kana($ward, 'RANKS');
+                        $ward = str_replace(['-', '‐'], '－', $ward);
+                    }
+                }
+                if (isset($data['br-address_ward_kana'])) {
+                    foreach ($data['br-address_ward_kana'] as &$ward) {
+                        $ward = mb_convert_kana($ward, 'RANKS');
+                        $ward = str_replace(['-', '‐'], '－', $ward);
+                    }
+                }
+                if (isset($data['br-address_apartment_kana'])) {
+                    foreach ($data['br-address_apartment_kana'] as &$apartment) {
+                        $apartment = mb_convert_kana($apartment, 'RANKS');
+                        $apartment = str_replace(['-', '‐'], '－', $apartment);
+                    }
                 }
             }
             return $value;
@@ -51,17 +81,17 @@ class BranchRequest extends FormRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥]+\z/u',
+            "br-address_city.*" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_ward" => 'required|array',
-            "br-address_ward.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９‐－]+\z/u',
+            "br-address_ward.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_apartment" => 'array',
-            "br-address_apartment.*" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥０-９Ａ-Ｚ・‐－]+\z/u',
+            "br-address_apartment.*" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_city_kana" => 'required|array',
-            "br-address_city_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー]+\z/u',
+            "br-address_city_kana.*" => 'required|string|max:255',
             "br-address_ward_kana" => 'array',
-            "br-address_ward_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー‐－]+\z/u',
+            "br-address_ward_kana.*" => 'required|string|max:255',
             "br-address_apartment_kana" => 'array',
-            "br-address_apartment_kana.*" => 'required|string|max:255|regex:/\A[ァ-ヴー・‐－]+\z/u',
+            "br-address_apartment_kana.*" => 'nullable|string|max:255',
             "br-tel_area_code" => 'array',
             "br-tel_area_code.*" => 'required|max:5|regex:/\A[0-9]+\z/u',
             "br-tel_city_code" => 'array',

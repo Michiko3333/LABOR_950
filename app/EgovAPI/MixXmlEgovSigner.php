@@ -118,12 +118,12 @@ class MixXmlEgovSigner
         if (!is_null($company->name_kana)) $request->merge(['applicant_corporate_name_kana' => $company->name_kana]);
         if (!is_null($headquarter)){
             if (!is_null($headquarter->post_code)) $request->merge(['applicant_post_code' => $headquarter->post_code]);
-            if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward) && !is_null($headquarter->address_apartment)) {
-                $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . $headquarter->address_apartment;
+            if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward)) {
+                $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . ($headquarter->address_apartment ?? '');
                 $request->merge(['applicant_address' => $address]);
             }
-            if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward) && !is_null($headquarter->address_apartment)) {
-                $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . $headquarter->address_apartment_kana;
+            if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward)) {
+                $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . ($headquarter->address_apartment_kana ?? '');
                 $request->merge(['applicant_address_kana' => $address_kana]);
             }
             if (!is_null($headquarter->tel_area_code) && !is_null($headquarter->tel_city_code) && !is_null($headquarter->tel_subscriber_code)){
@@ -145,6 +145,7 @@ class MixXmlEgovSigner
             }
             if (!is_null($laborConsultantCompany)){
                 $laborConsultantHeadquarter = Branch::where('company_id', $laborConsultantCompany->id)->where('delete_flg', 0)->where('branch_type', 1)->first();
+                $laborHeadquarterPrefectures = Prefecture::where('id', $laborConsultantHeadquarter->address_prefecture)->get('name', 'nama_kana')->first();
             }
             if (!is_null($user->last_name) && !is_null($user->first_name)) $request->merge(['contact_name' => $user->last_name . '　' . $user->first_name]);
             if (!is_null($user->last_name_kana) && !is_null($user->first_name_kana)) $request->merge(['contact_name_kana' => $user->last_name_kana . '　' . $user->first_name_kana]);
@@ -158,12 +159,12 @@ class MixXmlEgovSigner
             if (!is_null($user->division_name_kana)) $request->merge(['contact_division_name_kana' => $user->division_name_kana]);
             if (!is_null($laborConsultantHeadquarter)){
                 if (!is_null($laborConsultantHeadquarter->post_code)) $request->merge(['contact_post_code' => $laborConsultantHeadquarter->post_code]);
-                if (!is_null($prefectures) && !is_null($laborConsultantHeadquarter->address_city) && !is_null($laborConsultantHeadquarter->address_ward) && !is_null($laborConsultantHeadquarter->address_apartment)) {
-                    $laborConsultantAddress = $prefectures->name . $laborConsultantHeadquarter->address_city . $laborConsultantHeadquarter->address_ward . $laborConsultantHeadquarter->address_apartment;
+                if (!is_null($laborHeadquarterPrefectures) && !is_null($laborConsultantHeadquarter->address_city) && !is_null($laborConsultantHeadquarter->address_ward)) {
+                    $laborConsultantAddress = $laborHeadquarterPrefectures->name . $laborConsultantHeadquarter->address_city . $laborConsultantHeadquarter->address_ward . ($laborConsultantHeadquarter->address_apartment ?? '');
                     $request->merge(['contact_address' => $laborConsultantAddress]);
                 }
-                if (!is_null($prefectures) && !is_null($laborConsultantHeadquarter->address_city_kana) && !is_null($laborConsultantHeadquarter->address_ward) && !is_null($laborConsultantHeadquarter->address_apartment)) {
-                    $laborConsultantAddress_kana = $prefectures->name_kana . $laborConsultantHeadquarter->address_city_kana . $laborConsultantHeadquarter->address_ward_kana . $laborConsultantHeadquarter->address_apartment_kana;
+                if (!is_null($laborHeadquarterPrefectures) && !is_null($laborConsultantHeadquarter->address_city_kana) && !is_null($laborConsultantHeadquarter->address_ward)) {
+                    $laborConsultantAddress_kana = $laborHeadquarterPrefectures->name_kana . $laborConsultantHeadquarter->address_city_kana . $laborConsultantHeadquarter->address_ward_kana . ($laborConsultantHeadquarter->address_apartment_kana ?? '');
                     $request->merge(['contact_address_kana' => $laborConsultantAddress_kana]);
                 }
                 if (!is_null($laborConsultantHeadquarter->tel_area_code) && !is_null($laborConsultantHeadquarter->tel_city_code) && !is_null($laborConsultantHeadquarter->tel_subscriber_code)){
@@ -185,12 +186,12 @@ class MixXmlEgovSigner
             if (!is_null($company->name_kana)) $request->merge(['contact_corporate_name_kana' => $company->name_kana]);
             if (!is_null($headquarter)){
                 if (!is_null($headquarter->post_code)) $request->merge(['contact_post_code' => $headquarter->post_code]);
-                if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward) && !is_null($headquarter->address_apartment)) {
-                    $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . $headquarter->address_apartment;
+                if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward)) {
+                    $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . ($headquarter->address_apartment ?? '');
                     $request->merge(['contact_address' => $address]);
                 }
-                if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward) && !is_null($headquarter->address_apartment)) {
-                    $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . $headquarter->address_apartment_kana;
+                if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward)) {
+                    $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . ($headquarter->address_apartment_kana ?? '');
                     $request->merge(['contact_address_kana' => $address_kana]);
                 }
                 if (!is_null($headquarter->tel_area_code) && !is_null($headquarter->tel_city_code) && !is_null($headquarter->tel_subscriber_code)){
@@ -339,7 +340,7 @@ class MixXmlEgovSigner
             $xmlB->save($file);
             EgovTestLog::info(print_r($file . 'のデータ変換が成功しました', true));
         }
-       return $outputPath;
+        return $outputPath;
     }
 
     // フォルダーごと再帰コピー
@@ -661,7 +662,7 @@ class MixXmlEgovSigner
         $xml->save($attachmentPath);
     }
 
-     /**
+    /**
      * 個別署名での添付書類署名が必要なパスを取得
      * フォルダ内のxmlファイルが指定タグと指定値を一致するパスの取得
      * 再帰的に末端タグまで検索
@@ -708,7 +709,7 @@ class MixXmlEgovSigner
         }
     }
 
-     /**
+    /**
      * 最終確認試験用
      * 記入済みの帳票を署名し、手続送信を行う
      * 標準の場合はstorage/app/egov-test/zipにファイルを配置。個別なら配下にフォルダ類配置

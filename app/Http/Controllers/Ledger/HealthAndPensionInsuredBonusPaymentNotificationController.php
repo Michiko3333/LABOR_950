@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\HealthAndPensionInsuredBonusPaymentNotificationRequest;
 use App\Models\CurrentUser;
+use App\Models\Branch;
 use App\Models\Certificate;
 use App\Models\Csv_count;
 use Carbon\Carbon;
@@ -56,19 +57,35 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
     {
         $attachment = [];
 
-        $company = CurrentUser::currentCompany();
-        $companyId = $company->id;
-        if (!DB::table('m_csv_count')->where('company_id', $companyId)->exists()) {
-            Csv_count::create(['company_id' => $companyId, 'count' => 0]);
-        }
-        $csv_count = Csv_count::select('count')->where('company_id', $companyId)->first();
-        $count = $csv_count->count;
-        if ($count === 999) {
-            $count = 1;
+        if($request->input('labor_and_social_security_attorney_registration_no')) {
+            $labor = CurrentUser::info();
+            $laborId = $labor->id;
+            if(!DB::table('m_csv_count')->where('employee_id', $laborId)->exists()) {
+                Csv_count::create(['employee_id' => $laborId, 'count' => 0]);
+            }
+            $csv_count = Csv_count::select('count')->where('employee_id', $laborId)->first();
+            $count = $csv_count->count;
+            if($count === 999) {
+                $count = 1;
+            } else {
+                $count++;
+            }
+            Csv_count::where('employee_id', $laborId)->update(['count' => $count]);
         } else {
-            $count++;
+            $branch = Branch::select('id')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
+            $branchId = $branch->id;
+            if(!DB::table('m_csv_count')->where('branch_id', $branchId)->exists()) {
+                Csv_count::create(['branch_id' => $branchId, 'count' => 0]);
+            }
+            $csv_count = Csv_count::select('count')->where('branch_id', $branchId)->first();
+            $count = $csv_count->count;
+            if($count === 999) {
+                $count = 1;
+            } else {
+                $count++;
+            }
+            Csv_count::where('branch_id', $branchId)->update(['count' => $count]);
         }
-        Csv_count::where('company_id', $companyId)->update(['count' => $count]);
         $csvFormatter = new CsvFormatter('4950013520991000', $count);
         $csvFormatter->setKanri($request);
         $csvFormatter->setData($request);
@@ -123,6 +140,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
                 "pension_office_reference_prefecture"  => $request->input('pension_office_reference_prefecture'),
                 "pension_office_reference_no_cities"  => $request->input('pension_office_reference_no_cities'),
                 "pension_office_reference_no_office"  => $request->input('pension_office_reference_no_office'),
+                "csv_pension_office_no" => $request->input('csv_pension_office_no'),
                 "branch_post_code_parent"  => $request->input('branch_post_code_parent'),
                 "branch_post_code_child"  => $request->input('branch_post_code_child'),
                 "branch_address"  => $request->input('branch_address'),
@@ -132,6 +150,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
                 "branch_tel_city_code"  => $request->input('branch_tel_city_code'),
                 "branch_tel_subscriber_code"  => $request->input('branch_tel_subscriber_code'),
                 "labor_consultant_submission_agent_name"  => $request->input('labor_consultant_submission_agent_name'),
+                "labor_and_social_security_attorney_registration_no" => $request->input('labor_and_social_security_attorney_registration_no'),
                 "employment_insured_no"  => $request->input('employment_insured_no'),
                 "insured_fullname_kana"  => $request->input('insured_fullname_kana'),
                 "insured_fullname"  => $request->input('insured_fullname'),

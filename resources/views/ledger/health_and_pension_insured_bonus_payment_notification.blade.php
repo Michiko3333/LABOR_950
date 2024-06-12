@@ -128,7 +128,10 @@
                 $('#N7_005F_944E_8D86').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N8_005F_944E').val('{{ old('today_date', $todaySet['date']) }}');
 
-                @if ($current_employee->role_id !== 500)
+                @if ($current_employee->role_id === 500)
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
+                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
+                @else
                     $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('disabled', true);
                 @endif
 
@@ -190,7 +193,7 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
-                const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const branch_prefecture_data = data['branch_prefecture_data'];
                 var eraMapping = {
                     '明治': '1',
                     '大正': '3',
@@ -200,20 +203,21 @@
                 };
                 var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
-                $('#N9_005F_8C8E').val(headquarters.pension_office_reference_prefecture || '');
-                $('#N10_005F_93FA').val(headquarters.pension_office_reference_no_cities || '');
-                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(headquarters.pension_office_reference_no_office || '');
-                if (headquarters.post_code !== null && headquarters.post_code.length == 7) {
-                    $('#N12_005F_905C_90BF_8ED2_8E81').val(headquarters.post_code.substring(0, 3));
-                    $('#N13_005F_8374_838A_834B_8369').val(headquarters.post_code.substring(3, 7));
+                $('#N9_005F_8C8E').val(branch.pension_office_reference_prefecture || '');
+                $('#N10_005F_93FA').val(branch.pension_office_reference_no_cities || '');
+                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch.pension_office_reference_no_office || '');
+                $('#N9_005F_8C8E0').val(branch.pension_office_no || '');
+                if (branch.post_code !== null && branch.post_code.length == 7) {
+                    $('#N12_005F_905C_90BF_8ED2_8E81').val(branch.post_code.substring(0, 3));
+                    $('#N13_005F_8374_838A_834B_8369').val(branch.post_code.substring(3, 7));
                 }
-                const branchAddress = (headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (
-                    headquarters.address_ward || "") + (headquarters.address_apartment || "");
+                const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (
+                    branch.address_ward || "") + (branch.address_apartment || "");
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(branchAddress);
-                $('#N16_005F_905C_90BF').val(headquarters.name || '');
-                $('#N18_005F_8CC2_906C_94D4').val(headquarters.tel_area_code || '');
-                $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(headquarters.tel_city_code || '');
-                $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(headquarters.tel_subscriber_code || '');
+                $('#N16_005F_905C_90BF').val(branch.name || '');
+                $('#N18_005F_8CC2_906C_94D4').val(branch.tel_area_code || '');
+                $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch.tel_city_code || '');
+                $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(branch.tel_subscriber_code || '');
                 const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee
                     .first_name_kana || "");
                 const employeeName = (employee.last_name ? employee.last_name + '　' : "") + (employee.first_name || "");
