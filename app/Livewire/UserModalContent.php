@@ -222,7 +222,7 @@ class UserModalContent extends Component
         $validated = $this->validate([
             'emergency_edit.emergency_contact1' => 'nullable|string|max:255',
             'emergency_edit.emergency_relationship1' => 'nullable|string|max:255',
-            'emergency_edit.emergency_tel1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            'emergency_edit.emergency_tel1' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
             'emergency_edit.emergency_address_prefecture1' => 'nullable|string',
             'emergency_edit.emergency_address_city1' => 'nullable|string',
             'emergency_edit.emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
@@ -230,7 +230,7 @@ class UserModalContent extends Component
 
             'emergency_edit.emergency_contact2' => 'nullable|string|max:255',
             'emergency_edit.emergency_relationship2' => 'nullable|string|max:255',
-            'emergency_edit.emergency_tel2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            'emergency_edit.emergency_tel2' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
             'emergency_edit.emergency_address_prefecture2' => 'nullable|string',
             'emergency_edit.emergency_address_city2' => 'nullable|string',
             'emergency_edit.emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',

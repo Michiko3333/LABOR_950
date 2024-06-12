@@ -150,7 +150,7 @@
                     <div class="field {{ err($errors, 'emergency_edit.emergency_tel1') }}">
                         <label for="emergency_tel1">電話番号</label>
                         <input type="text" id="emergency_tel1" name="emergency_tel1"
-                            wire:model.live="emergency_edit.emergency_tel1"
+                            wire:model.live="emergency_edit.emergency_tel1" pattern="[\d\-]*" maxlength="12"
                             {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
                     </div>
                     <div class="two fields">
@@ -202,7 +202,7 @@
                     <div class="field {{ err($errors, 'emergency_edit.emergency_tel2') }}">
                         <label for="emergency_tel1">電話番号</label>
                         <input type="text" id="emergency_tel2" name="emergency_tel2"
-                            wire:model.live="emergency_edit.emergency_tel2"
+                            wire:model.live="emergency_edit.emergency_tel2" pattern="[\d\-]*" maxlength="12"
                             {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
                     </div>
                     <div class="two fields">

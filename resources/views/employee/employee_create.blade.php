@@ -506,7 +506,7 @@
                             <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
                                 <div class="field" style="padding-right: 0.8em;">
                                     <label for="emergency_tel1">電話番号（ハイフン無し）</label>
-                                    <input type="tel" pattern="[0-9]{1,5}" id="emergency_tel1"
+                                    <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
                                         name="emergency_tel1"
                                         value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
                                 </div>
@@ -574,7 +574,7 @@
                             <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
                                 <div class="field" style="padding-right: 0.8em;">
                                     <label for="emergency_tel2">電話番号（ハイフン無し）</label>
-                                    <input type="tel" pattern="[0-9]{1,5}" id="emergency_tel2"
+                                    <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
                                         name="emergency_tel2"
                                         value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
                                 </div>
