@@ -12,9 +12,22 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use Carbon\Carbon;
 use App\Models\Branch;
+use App\Permission;
 
 class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission;
+            if (!$userPermission->isSelectedCompany() || $userPermission->denyProcedure() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8) || !$userPermission->isBasicDepartment()) {
+
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         $imagePath = public_path('img/tyohyo155.png');
@@ -152,7 +165,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
-            return view('ledger.index');
+            return redirect()->route('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

@@ -14,9 +14,22 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\EgovAPI\CsvFormatter;
+use App\Permission;
 
 class HealthAndPensionInsuredBonusPaymentNotificationController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission;
+            if (!$userPermission->isSelectedCompany() || $userPermission->denyProcedure() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8) || !$userPermission->isBasicDepartment()) {
+
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         $imagePath = public_path('img/4950013520991000.png');
@@ -57,15 +70,15 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
     {
         $attachment = [];
 
-        if($request->input('labor_and_social_security_attorney_registration_no')) {
+        if ($request->input('labor_and_social_security_attorney_registration_no')) {
             $labor = CurrentUser::info();
             $laborId = $labor->id;
-            if(!DB::table('m_csv_count')->where('employee_id', $laborId)->exists()) {
+            if (!DB::table('m_csv_count')->where('employee_id', $laborId)->exists()) {
                 Csv_count::create(['employee_id' => $laborId, 'count' => 0]);
             }
             $csv_count = Csv_count::select('count')->where('employee_id', $laborId)->first();
             $count = $csv_count->count;
-            if($count === 999) {
+            if ($count === 999) {
                 $count = 1;
             } else {
                 $count++;
@@ -74,12 +87,12 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
         } else {
             $branch = Branch::select('id')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
             $branchId = $branch->id;
-            if(!DB::table('m_csv_count')->where('branch_id', $branchId)->exists()) {
+            if (!DB::table('m_csv_count')->where('branch_id', $branchId)->exists()) {
                 Csv_count::create(['branch_id' => $branchId, 'count' => 0]);
             }
             $csv_count = Csv_count::select('count')->where('branch_id', $branchId)->first();
             $count = $csv_count->count;
-            if($count === 999) {
+            if ($count === 999) {
                 $count = 1;
             } else {
                 $count++;
@@ -180,7 +193,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
-            return view('ledger.index');
+            return redirect()->route('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

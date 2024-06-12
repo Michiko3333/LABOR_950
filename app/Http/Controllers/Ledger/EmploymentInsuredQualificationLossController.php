@@ -15,9 +15,22 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
+use App\Permission;
 
 class EmploymentInsuredQualificationLossController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission;
+            if (!$userPermission->isSelectedCompany() || $userPermission->denyProcedure() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8) || !$userPermission->isBasicDepartment()) {
+
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         if (!$this->isSelectedCompany()) {
@@ -605,7 +618,7 @@ class EmploymentInsuredQualificationLossController extends Controller
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
-            return view('ledger.index');
+            return redirect()->route('ledger.index');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }
