@@ -101,7 +101,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
 
         $validator->sometimes(['remarks_calculation_basic_month_month1', 'remarks_calculation_basic_month_month2'], 'required_without_all:remarks_calculation_basic_month_month1,remarks_calculation_basic_month_month2', function ($input) {
             return $input->remarks_and_calculation_of_employees_aged_70_and_over === '1';
-        
+        });
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthday_era = $data['era_name'] ?? "";
