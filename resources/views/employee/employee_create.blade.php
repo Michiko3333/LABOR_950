@@ -841,13 +841,13 @@
                                 <label for="mynumber_card_no">マイナンバーカード番号</label>
                                 <input type="text" id="mynumber_card_no" name="mynumber_card_no"
                                     value="{{ old('mynumber_card_no', isset($employee_id) ? $employee->mynumber_card_no : '') }}"
-                                    placeholder="AB12345678CD">
+                                    placeholder="123456789012">
                             </div>
                             <div class="field {{ err($errors, 'social_insurance_no') }}">
                                 <label for="social_insurance_no">社会保険番号</label>
                                 <input type="text" id="social_insurance_no" name="social_insurance_no"
                                     value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
-                                    placeholder="AB123456">
+                                    placeholder="12345678">
                             </div>
                         </div>
                         <div class="two fields">
@@ -861,7 +861,7 @@
                                 <label for="pension_no">基礎年金番号</label>
                                 <input type="text" id="pension_no" name="pension_no"
                                     value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
-                                    placeholder="111122223333">
+                                    placeholder="0123456789">
                             </div>
                         </div>
                         <div class="three fields">
