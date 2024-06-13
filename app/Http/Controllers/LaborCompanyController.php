@@ -67,7 +67,6 @@ class LaborCompanyController extends Controller
 
     public function labor_company_update_post(LaborCompanyUpdateRequest $request)
     {
-        $userPermission = new Permission();
         DB::beginTransaction();
         try {
             $id = CurrentUser::branch()->value('company_id');
@@ -141,6 +140,35 @@ class LaborCompanyController extends Controller
         $formmatted_br_labor_insurance_establishment_date = $request->input('br-labor_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-labor_insurance_establishment_date')[$index])->format('Y-m-d') : null;
         $formmatted_br_employment_insurance_establishment_date = $request->input('br-employment_insurance_establishment_date')[$index] ? Carbon::createFromFormat('Y年n月j日', $request->input('br-employment_insurance_establishment_date')[$index])->format('Y-m-d') : null;
 
+        $fax = [];
+        $fax1 = $request->input('br-fax1') ?? null;
+        $fax2 = $request->input('br-fax2') ?? null;
+        $fax3 = $request->input('br-fax3') ?? null;
+        $fax1Index = count($request->input('br-fax1')) ?? null;
+        $fax2Index = count($request->input('br-fax2')) ?? null;
+        $fax3Index = count($request->input('br-fax3')) ?? null;
+
+        if ($fax1 !== null || $fax2 !== null || $fax3 !== null) {
+            $count = '';
+            if ($fax1Index >= $fax2Index && $fax1Index >= $fax3Index) {
+                $count = $fax1Index;
+            } elseif ($fax2Index >= $fax1Index && $fax2Index >= $fax3Index) {
+                $count = $fax2Index;
+            } else {
+                $count = $fax3Index;
+            }
+
+            for ($i = 0; $i < $count; $i++) {
+                $part1 = isset($fax1[$i]) ? $fax1[$i] : '';
+                $part2 = isset($fax2[$i]) ? $fax2[$i] : '';
+                $part3 = isset($fax3[$i]) ? $fax3[$i] : '';
+                if ($part1 === null && $part2 === null && $part3 === null) {
+                    continue;
+                }
+                $fax[] = ($part1 !== '' ? $part1 . '-' : '') . ($part2 !== '' ? $part2 . '-' : '') . ($part3 !== '' ? $part3 : '');
+            }
+        }
+
         return [
             'name' => $request->input('br-name')[$index],
             'company_id' => $company_id,
@@ -156,6 +184,7 @@ class LaborCompanyController extends Controller
             'tel_city_code' => $request->input('br-tel_city_code')[$index],
             'tel_subscriber_code' => $request->input('br-tel_subscriber_code')[$index],
             'tel_overseas' => $request->input('br-tel_overseas')[$index],
+            'fax' => $fax[$index],
             'mail_address' => $request->input('br-mail_address')[$index],
             'place_type' => $request->input('br-place_type')[$index],
             'branch_type' => $request->input('br-branch_type')[$index],
