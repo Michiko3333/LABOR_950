@@ -39,7 +39,7 @@ class CompanyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/^[ァ-ヴー＆’，‐．・]+$/u',
             'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
             'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9., ]+$/',
