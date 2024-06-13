@@ -31,6 +31,17 @@ use App\Permission;
 
 class EmployeeController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            $userPermission = new Permission();
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
+                return redirect()->route('home.index');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         return view('Employee.information');
@@ -39,7 +50,7 @@ class EmployeeController extends Controller
     public function employee_list(Request $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(5)) {
+        if (!$userPermission->isReadableFor(5)) {
             return redirect()->route('home.index');
         }
 
@@ -57,7 +68,7 @@ class EmployeeController extends Controller
     public function employee_update(Request $request, $id)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(6)) {
+        if (!$userPermission->isReadableFor(6)) {
             return redirect()->route('home.index');
         }
 
@@ -112,7 +123,7 @@ class EmployeeController extends Controller
     public function employee_update_post(AdminEmployeeUpdateRequest $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(6) || !$userPermission->isWritableFor(6)) {
+        if (!$userPermission->isReadableFor(6) || !$userPermission->isWritableFor(6)) {
             return redirect()->route('home.index');
         }
 

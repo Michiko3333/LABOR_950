@@ -11,7 +11,7 @@ class CalendarController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(11) || !$userPermission->isSelectedCompany()) {
+            if (!$userPermission->isSelectedCompany()) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -20,6 +20,10 @@ class CalendarController extends Controller
 
     public function index()
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(11)) {
+            return redirect()->route('home.index');
+        }
         return view('calendar.index');
     }
 }

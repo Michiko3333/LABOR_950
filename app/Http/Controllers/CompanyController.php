@@ -28,7 +28,7 @@ class CompanyController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(1) || !$userPermission->isSelectedCompany()) {
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -37,6 +37,11 @@ class CompanyController extends Controller
 
     public function company_edit()
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(1)) {
+            return redirect()->route('home.index');
+        }
+
         $currentCompany = CurrentUser::currentCompany();
         $company_listed_type = Values_company_listed_type::pluck('name', 'id');
         $businessTypes = Values_company_business_type::pluck('name', 'id');
@@ -62,10 +67,12 @@ class CompanyController extends Controller
     public function company_edit_post(CompanyUpdateRequest $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isWritableFor(1)) {
+        if (!$userPermission->isReadableFor(1) || !$userPermission->isWritableFor(1)) {
             return redirect()->route('home.index');
         }
+
         DB::beginTransaction();
+
         try {
             $request->request->remove('_token');
             $data = $request->validationData($request);

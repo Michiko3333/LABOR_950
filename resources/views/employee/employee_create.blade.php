@@ -1000,7 +1000,7 @@
                     </div>
                 </div>
             </div>
-            @if ($userPermission->isWritableFor(6))
+            @if ($userPermission->isDirector() || $userPermission->isWritableFor(6))
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('employee') }}"
                         style="width: 200px;">キャンセル</a>

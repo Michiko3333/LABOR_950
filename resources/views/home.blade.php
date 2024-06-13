@@ -198,7 +198,8 @@
                 @if (
                     !$userPermission->denyProcedure() &&
                         $userPermission->isBasicDepartment() &&
-                        $userPermission->isReadableAtleast([8, 9, 10]))
+                        ($userPermission->isReadableAtleast([8, 9]) ||
+                            ($userPermission->isWritableFor(10) && $userPermission->isReadableFor(10))))
                     <div class="ui horizontal huge card card-shadow control-panel-menu">
                         <div class="title content procedure">
                             <div class="overlay">
@@ -226,6 +227,7 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
                                     <a href="{{ route('ledger.egov') }}" class="item">
+
 
                                         <div class="content">
                                             <div class="header">e-Gov連携</div>

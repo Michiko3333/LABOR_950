@@ -27,13 +27,13 @@
                     <td>{{ empty($item->position_name) ? '-' : $item->position_name }}</td>
                     <td>{{ $item->branch_name }}</td>
                     <td class="right aligned collapsing">
-                        @if ($userPermission->getEmployeeType() === 1 || $userPermission->isAdmin())
+                        @if ($userPermission->isAdmin() || ($userPermission->isDirector() && $item->id != $userPermission->employee_id()))
                             <button class="ui basic primary button" type="button"
                                 wire:click="toPermission({{ $item->id }})">
                                 権限
                             </button>
                         @endif
-                        @if ($userPermission->isWritableFor(6) || $userPermission->isAdmin())
+                        @if ($userPermission->isAdmin() || ($userPermission->isReadableFor(6) && $userPermission->isWritableFor(6)))
                             <button class="ui basic primary button" type="button"
                                 wire:click="toEdit({{ $item->id }})">
                                 編集

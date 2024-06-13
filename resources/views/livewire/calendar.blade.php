@@ -182,9 +182,11 @@
                     </div>
                 </div>
             </form>
-            <div class="remove-link mt-2 ui hidden">
-                <button type="button" onClick="$calendar_modal.onRemove()">この予定を削除する</button>
-            </div>
+            @if ($userPermission->isWritableFor(11))
+                <div class="remove-link mt-2 ui hidden">
+                    <button type="button" onClick="$calendar_modal.onRemove()">この予定を削除する</button>
+                </div>
+            @endif
         </div>
         <div class="actions">
             <button class="ui negative button" type="button"
@@ -229,8 +231,10 @@
                 </div>
             </div>
         </div>
-        <div class="actions">
-            <button class="ui primary button approve">編集</button>
-        </div>
+        @if ($userPermission->isWritableFor(11))
+            <div class="actions">
+                <button class="ui primary button approve">編集</button>
+            </div>
+        @endif
     </div>
 </div>

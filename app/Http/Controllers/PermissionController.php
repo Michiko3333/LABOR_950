@@ -14,7 +14,7 @@ class PermissionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isAdmin() && $userPermission->getEmployeeType() != 1) {
+            if (!$userPermission->isAdmin() || !$userPermission->isDirector()) {
                 return redirect()->route('home.index');
             }
             return $next($request);

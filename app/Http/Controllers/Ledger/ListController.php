@@ -22,7 +22,7 @@ class ListController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(8) || !$userPermission->isWritableFor(8)) {
+            if ($userPermission->denyProcedure() || !$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -31,6 +31,10 @@ class ListController extends Controller
 
     public function index(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(8)) {
+            return redirect()->route('home.index');
+        }
         $company = CurrentUser::currentCompany();
         $companyId = $company->id;
         $certificate = Certificate::where('company_id', $companyId)
