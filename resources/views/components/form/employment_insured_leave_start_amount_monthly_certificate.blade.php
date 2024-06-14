@@ -84,6 +84,40 @@
 							checkbox3.value = "";
 					}
 			});
+
+			const employmentPeriodRadios = document.querySelectorAll('input[name="employment_period"]');
+			const eraInput = document.getElementById("J66_005F_944E_8D86");
+			const yearInput = document.getElementById("J67_005F_944E");
+			const monthInput = document.getElementById("J68_005F_8C8E");
+			const dayInput = document.getElementById("J69_005F_93FA");
+			const yearInput2 = document.getElementById("J70_005F_944E");
+			const monthInput2 = document.getElementById("J71_005F_8C8E");
+
+			employmentPeriodRadios.forEach(function(radio) {
+					radio.addEventListener('change', function() {
+							const selectedValue = document.querySelector('input[name="employment_period"]:checked').value;
+							if (selectedValue === '定めあり') {
+									eraInput.disabled = false;
+									yearInput.disabled = false;
+									monthInput.disabled = false;
+									dayInput.disabled = false;
+									yearInput2.disabled = false;
+									monthInput2.disabled = false;
+							} else if (selectedValue === '定めなし') {
+									eraInput.disabled = true;
+									yearInput.disabled = true;
+									monthInput.disabled = true;
+									dayInput.disabled = true;
+									yearInput2.disabled = true;
+									monthInput2.disabled = true;
+									yearInput.value = "";
+									monthInput.value = "";
+									dayInput.value = "";
+									yearInput2.value = "";
+									monthInput2.value = "";
+							}
+					});
+			});
 	})
 </script>
 
@@ -616,9 +650,9 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:auto; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:2px solid rgb(0, 0, 0); left:56px; top:1032px; width:179px; height:30px; text-align:left; font-size:27px; font-family:'ＭＳ 明朝', serif;"><SPAN style="font-size:9px; height:10px; line-height:1em; vertical-align:middle;"></SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:auto; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:234px; top:1032px; width:674px; height:30px; text-align:left; font-size:27px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 3px;"><SPAN style="font-size:9px; height:10px; line-height:1em; vertical-align:middle;"></SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:60px; top:1035px; width:149px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">１４（休業開始時における）</SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:247px; top:1041px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="258" value="定めなし" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="RADIO" id="J64_005F_8CD9_9770_8AFA_8AD4_82CC_92E8_82DF" <?php echo (old('employment_period')=='定めなし' ) ? 'checked' : '' ; ?> name="employment_period"><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:247px; top:1041px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="258" value="定めなし" class="employment_period" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="RADIO" id="J64_005F_8CD9_9770_8AFA_8AD4_82CC_92E8_82DF" <?php echo (old('employment_period')=='定めなし' ) ? 'checked' : '' ; ?> name="employment_period"><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:262px; top:1041px; width:64px; height:13px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">イ 定めなし</SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:332px; top:1041px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="259" value="定めあり" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="RADIO" id="J64_005F_8CD9_9770_8AFA_8AD4_82CC_92E8_82DF" <?php echo (old('employment_period')=='定めあり' ) ? 'checked' : '' ; ?> name="employment_period"><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:332px; top:1041px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="259" value="定めあり" class="employment_period" style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:10px; height:10px; margin:auto;" type="RADIO" id="J64_005F_8CD9_9770_8AFA_8AD4_82CC_92E8_82DF" <?php echo (old('employment_period')=='定めあり' ) ? 'checked' : '' ; ?> name="employment_period"><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:347px; top:1041px; width:88px; height:13px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">ロ 定めあり　→</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:515px; top:1041px; width:13px; height:13px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">年</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:556px; top:1041px; width:13px; height:13px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">月</SPAN>

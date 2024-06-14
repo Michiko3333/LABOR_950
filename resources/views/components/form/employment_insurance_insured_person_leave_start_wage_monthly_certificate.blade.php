@@ -81,6 +81,40 @@
 							checkbox3.value = "";
 					}
 			});
+
+			const employmentPeriodRadios = document.querySelectorAll('input[name="employment_duration_set"]');
+			const eraInput = document.getElementById("J66_005F_944E_8D86");
+			const yearInput = document.getElementById("J67_005F_944E");
+			const monthInput = document.getElementById("J68_005F_8C8E");
+			const dayInput = document.getElementById("J69_005F_93FA");
+			const yearInput2 = document.getElementById("J70_005F_944E");
+			const monthInput2 = document.getElementById("J71_005F_8C8E");
+
+			employmentPeriodRadios.forEach(function(radio) {
+					radio.addEventListener('change', function() {
+							const selectedValue = document.querySelector('input[name="employment_duration_set"]:checked').value;
+							if (selectedValue === '定めあり') {
+									eraInput.disabled = false;
+									yearInput.disabled = false;
+									monthInput.disabled = false;
+									dayInput.disabled = false;
+									yearInput2.disabled = false;
+									monthInput2.disabled = false;
+							} else if (selectedValue === '定めなし') {
+									eraInput.disabled = true;
+									yearInput.disabled = true;
+									monthInput.disabled = true;
+									dayInput.disabled = true;
+									yearInput2.disabled = true;
+									monthInput2.disabled = true;
+									yearInput.value = "";
+									monthInput.value = "";
+									dayInput.value = "";
+									yearInput2.value = "";
+									monthInput2.value = "";
+							}
+					});
+			});
 	})
 </script>
 

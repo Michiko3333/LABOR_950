@@ -1,5 +1,30 @@
 <div>
                         <div id="eGovForm">
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const remarksSalaryRaiseAndReductionReasons = document.getElementById('N63_005F_8E73_8A4F_8BC7_9467');
+                                    const remarksSalaryRaiseAndReductionReasonsText = document.getElementById('remarks_salary_raise_and_reduction_reasons_text');
+                                    const remarksAndOthers = document.getElementById('N65_005F_8F5A_8F8B');
+                                    const remarksOthers = document.getElementById('remarks_others');
+
+                                    remarksSalaryRaiseAndReductionReasons.addEventListener('change', function() {
+                                        if(remarksSalaryRaiseAndReductionReasons.checked) {
+                                            remarksSalaryRaiseAndReductionReasonsText.disabled = false;
+                                        } else {
+                                            remarksSalaryRaiseAndReductionReasonsText.disabled = true;
+                                            remarksSalaryRaiseAndReductionReasonsText.value = "";
+                                        }
+                                    });
+                                    remarksAndOthers.addEventListener('change', function() {
+                                        if(remarksAndOthers.checked) {
+                                            remarksOthers.disabled = false;
+                                        } else {
+                                            remarksOthers.disabled = true;
+                                            remarksOthers.value = "";
+                                        }
+                                    });
+                                });
+                            </script>
                             <style>
                                 @charset "UTF-8";
 
@@ -4992,10 +5017,10 @@
                                             </SPAN>
                                         </SPAN>
                                         <div class="egov-tool-field-origin" style="left: 552px; top: 381px;">
-                                            <input class="egov-tool-field-rect onImage" id="remarks_salary_raise_and_reduction_reasons_text" maxlength="13" name="remarks_salary_raise_and_reduction_reasons_text" style="width: 125px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_salary_raise_and_reduction_reasons_text') }}"/>
+                                            <input class="egov-tool-field-rect onImage" disabled id="remarks_salary_raise_and_reduction_reasons_text" maxlength="13" name="remarks_salary_raise_and_reduction_reasons_text" style="width: 125px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_salary_raise_and_reduction_reasons_text') }}"/>
                                         </div>
                                         <div class="egov-tool-field-origin" style="left: 576px; top: 423px;">
-                                            <input class="egov-tool-field-rect onImage" id="remarks_others" maxlength="10" name="remarks_others" style="width: 101px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_others') }}"/>
+                                            <input class="egov-tool-field-rect onImage" disabled id="remarks_others" maxlength="10" name="remarks_others" style="width: 101px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('remarks_others') }}"/>
                                         </div>
                                         <img alt="法令様式画像" src="{{ $dataUri }}"/>
                                     </div>
