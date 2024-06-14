@@ -166,6 +166,12 @@
                     ' ' + (headquarters.address_ward || "") + ' ' + (headquarters.address_apartment || "");
                 $('#J27_005F_8F5A_8F8A').val(headquarterAddress);
             }
+            $('#J14_005F_8C8E').on('change', function() {
+                $('#J29_005F_8C8E').val($(this).val());
+            });
+            $('#J15_005F_93FA').on('change', function() {
+                $('#J30_005F_93FA').val($(this).val());
+            });
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {

@@ -93,15 +93,9 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             'apply_to_name' => 'required|string'
         ];
     }
+
     public function withValidator($validator)
     {
-        $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
-            return $input->over_70_check === 'on';
-        });
-
-        $validator->sometimes(['remarks_calculation_basic_month_month1', 'remarks_calculation_basic_month_month2'], 'required_without_all:remarks_calculation_basic_month_month1,remarks_calculation_basic_month_month2', function ($input) {
-            return $input->remarks_and_calculation_of_employees_aged_70_and_over === '1';
-        });
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthday_era = $data['era_name'] ?? "";
@@ -149,8 +143,10 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 }
             }
             if(!empty($birthday_month) && !empty($birthday_date)){
-                if (!checkdate($birthday_month, $birthday_date, '2000')) {
+                if(ctype_digit($birthday_month)){
+                    if (!checkdate($birthday_month, $birthday_date, '2000')) {
                     $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -161,6 +157,14 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                     $validator->errors()->add('revision_date_day', '適用年月は正しい日付を入力してください。');
                 }
             }
+        });
+
+        $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
+            return $input->over_70_check === 'on';
+        });
+
+        $validator->sometimes(['remarks_calculation_basic_month_month1', 'remarks_calculation_basic_month_month2'], 'required_without_all:remarks_calculation_basic_month_month1,remarks_calculation_basic_month_month2', function ($input) {
+            return $input->remarks_and_calculation_of_employees_aged_70_and_over === '1';
         });
     }
 

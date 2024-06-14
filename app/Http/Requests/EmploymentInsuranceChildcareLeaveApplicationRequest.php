@@ -202,8 +202,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             $unsettled_day = $data['unsettled_day'] ?? "";
 
             if(!empty($qualifications_month) && !empty($qualifications_day)){
-                if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
+                if(ctype_digit($qualifications_month)){
+                    if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
                     $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -230,8 +232,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($childcare_start_date_month) && !empty($childcare_start_date_day)){
-                if (!checkdate($childcare_start_date_month, $childcare_start_date_day, '2000')) {
+                if(ctype_digit($childcare_start_date_month)){
+                    if (!checkdate($childcare_start_date_month, $childcare_start_date_day, '2000')) {
                     $validator->errors()->add('childcare_start_date_day','育児休業開始年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -250,8 +254,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
         
             if(!empty($birth_date_month) && !empty($birth_date_day)){
-                if (!checkdate($birth_date_month, $birth_date_day, '2000')) {
+                if(ctype_digit($birth_date_month)){
+                    if (!checkdate($birth_date_month, $birth_date_day, '2000')) {
                     $validator->errors()->add('birth_date_day','出産年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -270,8 +276,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payer_month1) && !empty($payer_day1)){
-                if (!checkdate($payer_month1, $payer_day1, '2000')) {
+                if(ctype_digit($payer_month1)){
+                    if (!checkdate($payer_month1, $payer_day1, '2000')) {
                     $validator->errors()->add('payer_day1','支給単位期間その１（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -290,8 +298,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payer_end_month1) && !empty($payer_end_day1)){
-                if (!checkdate($payer_end_month1, $payer_end_day1, '2000')) {
+                if(ctype_digit($payer_end_month1)){
+                    if (!checkdate($payer_end_month1, $payer_end_day1, '2000')) {
                     $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -306,8 +316,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payer_month2) && !empty($payer_day2)){
-                if (!checkdate($payer_month2, $payer_day2, '2000')) {
+                if(ctype_digit($payer_month2)){
+                    if (!checkdate($payer_month2, $payer_day2, '2000')) {
                     $validator->errors()->add('payer_day2','支給単位期間その２（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -326,8 +338,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payer_end_month2) && !empty($payer_end_day2)){
-                if (!checkdate($payer_end_month2, $payer_end_day2, '2000')) {
+                if(ctype_digit($payer_end_month2)){
+                    if (!checkdate($payer_end_month2, $payer_end_day2, '2000')) {
                     $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -342,8 +356,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payment_period_last_month) && !empty($payment_period_last_day)){
-                if (!checkdate($payment_period_last_month, $payment_period_last_day, '2000')) {
+                if(ctype_digit($payment_period_last_month)){
+                    if (!checkdate($payment_period_last_month, $payment_period_last_day, '2000')) {
                     $validator->errors()->add('payment_period_last_day','最終支給単位期間（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -362,8 +378,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end)){
-                if (!checkdate($payment_period_last_month_end, $payment_period_last_day_end, '2000')) {
+                if(ctype_digit($payment_period_last_month_end)){
+                    if (!checkdate($payment_period_last_month_end, $payment_period_last_day_end, '2000')) {
                     $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -378,8 +396,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($return_from_resignation_date_month) && !empty($return_from_resignation_date_day)){
-                if (!checkdate($return_from_resignation_date_month, $return_from_resignation_date_day, '2000')) {
+                if(ctype_digit($return_from_resignation_date_month)){
+                    if (!checkdate($return_from_resignation_date_month, $return_from_resignation_date_day, '2000')) {
                     $validator->errors()->add('return_from_resignation_date_day3','職場復帰年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -398,8 +418,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
             
             if(!empty($payment_period_extension_month) && !empty($payment_period_extension_day)){
-                if (!checkdate($payment_period_extension_month, $payment_period_extension_day, '2000')) {
+                if(ctype_digit($payment_period_extension_month)){
+                    if (!checkdate($payment_period_extension_month, $payment_period_extension_day, '2000')) {
                     $validator->errors()->add('payment_period_extension_day','支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -418,8 +440,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day)){
-                if (!checkdate($payment_period_extension_last_month, $payment_period_extension_last_day, '2000')) {
+                if(ctype_digit($payment_period_extension_last_month)){
+                    if (!checkdate($payment_period_extension_last_month, $payment_period_extension_last_day, '2000')) {
                     $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -434,8 +458,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             }
 
             if(!empty($unsettled_month) && !empty($unsettled_day)){
-                if (!checkdate($unsettled_month, $unsettled_day, '2000')) {
+                if(ctype_digit($unsettled_month)){
+                    if (!checkdate($unsettled_month, $unsettled_day, '2000')) {
                     $validator->errors()->add('unsettled_day','備考欄_雇用期間_年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -452,7 +478,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                     $validator->errors()->add('unsettled_day', '備考欄_雇用期間_年月日は正しい日付を入力してください。');
                 }
             }
-
+            
             if ($this->hasFile('file_amount_days_time')) {
                 $totalSize += $this->file('file_amount_days_time')->getSize();
             }

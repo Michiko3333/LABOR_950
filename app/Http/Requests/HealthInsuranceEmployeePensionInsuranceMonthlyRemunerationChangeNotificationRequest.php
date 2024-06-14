@@ -145,8 +145,10 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                 }
             }
             if(!empty($birthday_month) && !empty($birthday_date)){
-                if (!checkdate($birthday_month, $birthday_date, '2000')) {
+                if(ctype_digit($birthday_month)){
+                    if (!checkdate($birthday_month, $birthday_date, '2000')) {
                     $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 

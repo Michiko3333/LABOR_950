@@ -124,8 +124,10 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'] ?? "";
 
             if(!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)){
-                if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {
-                    $validator->errors()->add('employee_employment_insured_date_day','取得（該当）年月日は正しい日付を入力してください。');
+                if(ctype_digit($employee_employment_insured_date_month)){
+                    if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {
+                        $validator->errors()->add('employee_employment_insured_date_day','取得（該当）年月日は正しい日付を入力してください。');
+                    }
                 }
             }
             if ($employee_employment_insured_date_japan_era === '7') {
@@ -143,8 +145,10 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             }
 
             if(!empty($employee_birthday_month) && !empty($employee_birthday_day)){
-                if (!checkdate($employee_birthday_month, $employee_birthday_day, '2000')) {
-                    $validator->errors()->add('employee_birthday_day','生年月日は正しい日付を入力してください。');
+                if(ctype_digit($employee_birthday_month)){
+                    if (!checkdate($employee_birthday_month, $employee_birthday_day, '2000')) {
+                        $validator->errors()->add('employee_birthday_day','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
             if ($employee_birthday_japan_era === '5') {

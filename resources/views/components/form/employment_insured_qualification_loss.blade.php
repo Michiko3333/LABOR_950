@@ -140,6 +140,7 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:38px; height:21px;"
             id="J20_005F_9172_8EB8_8CB4_88F6" name="insurance_loss_reason">
             <OPTION value="" selected="selected"></OPTION>
+            <OPTION value="1" {{ old('insurance_loss_reason')=='1' ? 'selected' : '' }}>1</OPTION>
             <OPTION value="2" {{ old('insurance_loss_reason') == '2' ? 'selected' : '' }}>2</OPTION>
             <OPTION value="3" {{ old('insurance_loss_reason') == '3' ? 'selected' : '' }}>3</OPTION>
         </SELECT></SPAN>

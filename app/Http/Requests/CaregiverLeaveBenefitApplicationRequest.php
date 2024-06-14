@@ -128,6 +128,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $totalSize = 0;
+            
             $data = $validator->getData();
             $employment_insured_date_era = $data['employment_insured_date_era'] ?? "";
             $employment_insured_date_year = $data['employment_insured_date_year'] ?? "";
@@ -165,8 +166,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             $caregiver_leave_end_date_day = $data['caregiver_leave_end_date_day'] ?? "";
 
             if(!empty($employment_insured_date_month) && !empty($employment_insured_date_day)){
-                if (!checkdate($employment_insured_date_month, $employment_insured_date_day, '2000')) {
+                if(ctype_digit($employment_insured_date_month)){
+                    if (!checkdate($employment_insured_date_month, $employment_insured_date_day, '2000')) {
                     $validator->errors()->add('employment_insured_date_day','1枚目_資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -185,8 +188,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($caregiver_leave_start_date_month) && !empty($caregiver_leave_start_date_day)){
-                if (!checkdate($caregiver_leave_start_date_month, $caregiver_leave_start_date_day, '2000')) {
+                if(ctype_digit($caregiver_leave_start_date_month)){
+                    if (!checkdate($caregiver_leave_start_date_month, $caregiver_leave_start_date_day, '2000')) {
                     $validator->errors()->add('caregiver_leave_start_date_day','1枚目_介護休業開始年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -205,8 +210,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
         
             if(!empty($care_target_family_birthday_month) && !empty($care_target_family_birthday_day)){
-                if (!checkdate($care_target_family_birthday_month, $care_target_family_birthday_day, '2000')) {
+                if(ctype_digit($care_target_family_birthday_month)){
+                    if (!checkdate($care_target_family_birthday_month, $care_target_family_birthday_day, '2000')) {
                     $validator->errors()->add('care_target_family_birthday_day','1枚目_介護対象家族の生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -233,8 +240,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_start_1) && !empty($pay_target_period_day_start_1)){
-                if (!checkdate($pay_target_period_month_start_1, $pay_target_period_day_start_1, '2000')) {
+                if(ctype_digit($pay_target_period_month_start_1)){
+                    if (!checkdate($pay_target_period_month_start_1, $pay_target_period_day_start_1, '2000')) {
                     $validator->errors()->add('pay_target_period_day_start_1','1枚目_支給単位期間その１（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -253,8 +262,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_end_1) && !empty($pay_target_period_day_end_1)){
-                if (!checkdate($pay_target_period_month_end_1, $pay_target_period_day_end_1, '2000')) {
+                if(ctype_digit($pay_target_period_month_end_1)){
+                    if (!checkdate($pay_target_period_month_end_1, $pay_target_period_day_end_1, '2000')) {
                     $validator->errors()->add('pay_target_period_day_end_1','1枚目_支給単位期間その１（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -269,8 +280,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_start_2) && !empty($pay_target_period_day_start_2)){
-                if (!checkdate($pay_target_period_month_start_2, $pay_target_period_day_start_2, '2000')) {
+                if(ctype_digit($pay_target_period_month_start_2)){
+                    if (!checkdate($pay_target_period_month_start_2, $pay_target_period_day_start_2, '2000')) {
                     $validator->errors()->add('pay_target_period_day_start_2','1枚目_支給単位期間その２（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -289,8 +302,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_end_2) && !empty($pay_target_period_day_end_2)){
-                if (!checkdate($pay_target_period_month_end_2, $pay_target_period_day_end_2, '2000')) {
+                if(ctype_digit($pay_target_period_month_end_2)){
+                    if (!checkdate($pay_target_period_month_end_2, $pay_target_period_day_end_2, '2000')) {
                     $validator->errors()->add('pay_target_period_day_end_2','1枚目_支給単位期間その２（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -305,8 +320,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_start_3) && !empty($pay_target_period_day_start_3)){
-                if (!checkdate($pay_target_period_month_start_3, $pay_target_period_day_start_3, '2000')) {
+                if(ctype_digit($pay_target_period_month_start_3)){
+                    if (!checkdate($pay_target_period_month_start_3, $pay_target_period_day_start_3, '2000')) {
                     $validator->errors()->add('pay_target_period_day_start_3','1枚目_支給単位期間その３（初日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -325,8 +342,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($pay_target_period_month_end_3) && !empty($pay_target_period_day_end_3)){
-                if (!checkdate($pay_target_period_month_end_3, $pay_target_period_day_end_3, '2000')) {
+                if(ctype_digit($pay_target_period_month_end_3)){
+                    if (!checkdate($pay_target_period_month_end_3, $pay_target_period_day_end_3, '2000')) {
                     $validator->errors()->add('pay_target_period_day_end_3','1枚目_支給単位期間その３（末日）は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -341,8 +360,10 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             }
 
             if(!empty($caregiver_leave_end_date_month) && !empty($caregiver_leave_end_date_day)){
-                if (!checkdate($caregiver_leave_end_date_month, $caregiver_leave_end_date_day, '2000')) {
+                if(ctype_digit($caregiver_leave_end_date_month)){
+                    if (!checkdate($caregiver_leave_end_date_month, $caregiver_leave_end_date_day, '2000')) {
                     $validator->errors()->add('caregiver_leave_end_date_day3','1枚目_介護休業終了年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -359,7 +380,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
                     $validator->errors()->add('caregiver_leave_end_date_day3', '1枚目_介護休業終了年月日は正しい日付を入力してください。');
                 }
             }
-
+            
             if ($this->hasFile('file_nursing_facts')) {
                 $totalSize += $this->file('file_nursing_facts')->getSize();
             }

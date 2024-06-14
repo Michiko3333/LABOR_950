@@ -64,7 +64,7 @@ return [
     'gte' => [
         'array' => 'The :attribute field must have :value items or more.',
         'file' => 'The :attribute field must be greater than or equal to :value kilobytes.',
-        'numeric' => 'The :attribute field must be greater than or equal to :value.',
+        'numeric' => ':attributeは:value以降を入力してください',
         'string' => 'The :attribute field must be greater than or equal to :value characters.',
     ],
     'hex_color' => 'The :attribute field must be a valid hexadecimal color.',

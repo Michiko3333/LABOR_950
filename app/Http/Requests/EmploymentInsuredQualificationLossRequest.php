@@ -139,9 +139,11 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                     $validator->errors()->add('birthday_day', '1枚目_生年月日は正しい日付を入力してください。');
                 }
             }
-            if (!empty($birthdayMonth) && !empty($birthdayDay)) {
-                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
-                    $validator->errors()->add('birthday_day', '1枚目_生年月日は正しい日付を入力してください。');
+            if(!empty($birthdayMonth) && !empty($birthdayDay)){
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                    $validator->errors()->add('birthday_day','1枚目_生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -166,9 +168,11 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                     $validator->errors()->add('insured_date_era', '1枚目_資格取得年月日は正しい日付を入力してください。');
                 }
             }
-            if (!empty($insuredMonth) && !empty($insuredDay)) {
-                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
-                    $validator->errors()->add('insured_date_era', '1枚目_資格取得年月日は正しい日付を入力してください。');
+            if(!empty($insuredMonth) && !empty($insuredDay)){
+                if(ctype_digit($insuredMonth)){
+                    if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                    $validator->errors()->add('insured_date_era','1枚目_資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -185,17 +189,22 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                     $validator->errors()->add('retirement_date_era', '1枚目_離職年月日は正しい日付を入力してください。');
                 }
             }
-            if (!empty($retirementMonth) && !empty($retirementDay)) {
-                if (!checkdate($retirementMonth, $retirementDay, '2000')) {
-                    $validator->errors()->add('retirement_date_era', '1枚目_離職年月日は正しい日付を入力してください。');
+            if(!empty($retirementMonth) && !empty($retirementDay)){
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($retirementMonth, $retirementDay, '2000')) {
+                    $validator->errors()->add('retirement_date_era','1枚目_離職年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
-            if (!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])) {
-                if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
-                    $validator->errors()->add('stay_date_period_year', '1枚目_在留期間は正しい日付を入力してください。');
+            if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
+                if(ctype_digit($data['stay_date_period_month'])){
+                    if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
+                    $validator->errors()->add('stay_date_period_year','1枚目_在留期間は正しい日付を入力してください。');
+                    }
                 }
             }
+
             if ($this->hasFile('file_disqualification_status')) {
                 $totalSize += $this->file('file_disqualification_status')->getSize();
             }
