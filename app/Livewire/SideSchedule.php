@@ -64,7 +64,8 @@ class SideSchedule extends Component
         if (!empty($current_company)) {
 
             $base_date = new Carbon($this->year . '-' . $this->month . '-' . $this->date . ' 00:00:00');
-            $limit_date = $base_date->copy()->addMonth();
+            $limit_date = new Carbon($this->year . '-' . $this->month . '-' . $this->date . ' 23:59:59');
+            $limit_date = $limit_date->copy()->addMonth();
 
             $admin_event = Calendar_event::select(
                 't_calendar_event.id',
