@@ -153,7 +153,13 @@
                             wire:model.live="emergency_edit.emergency_tel1" pattern="[\d\-]*" maxlength="12"
                             {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
                     </div>
-                    <div class="two fields">
+                    <div class="three fields">
+                        <div class="field {{ err($errors, 'emergency_post_code1') }}">
+                            <label for="emergency_post_code1">郵便番号</label>
+                            <input type="text" name="emergency_post_code1"
+                            wire:model.live="emergency_edit.emergency_post_code1"
+                            {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                        </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture1') }}">
                             <label for="emergency_address_prefecture1">都道府県</label>
                             <select class="ui fluid dropdown" name="emergency_address_prefecture1"
@@ -209,7 +215,13 @@
                             wire:model.live="emergency_edit.emergency_tel2" pattern="[\d\-]*" maxlength="12"
                             {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
                     </div>
-                    <div class="two fields">
+                    <div class="three fields">
+                        <div class="field {{ err($errors, 'emergency_post_code2') }}">
+                            <label for="emergency_post_code2">郵便番号</label>
+                            <input type="text" name="emergency_post_code2"
+                            wire:model.live="emergency_edit.emergency_post_code2"
+                            {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                        </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture2') }}">
                             <label for="emergency_address_prefecture2">都道府県</label>
                             <select class="ui fluid dropdown" name="emergency_address_prefecture2"
