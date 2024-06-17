@@ -4557,7 +4557,7 @@
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 398.3px; top: 193px;">
                                                 <input class="egov-tool-field-rect onImage" id="N18_005F_8CC2_906C_94D4" maxlength="40" name="labor_consultant_name" style="width: 293.5px; height: 34px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;" type="text" value="{{ old('labor_consultant_name') }}"/>
-                                                <input id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851" value="{{ old('labor_and_social_security_attorney_registration_no') }}" name="labor_and_social_security_attorney_registration_no" type="hidden" value=""/>
+                                                <input id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851" value="{{ old('labor_and_social_security_attorney_registration_no') }}" name="labor_and_social_security_attorney_registration_no" type="hidden"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 62px; top: 269px;">
                                                 <input class="egov-tool-field-rect onImage" id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85" name="Insured_person_reference_number" onfocus="addlength(this,6)" style="width: 54px; height: 38px; font-size: 12px; text-align: right; line-height: 62px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('Insured_person_reference_number') }}"/>
