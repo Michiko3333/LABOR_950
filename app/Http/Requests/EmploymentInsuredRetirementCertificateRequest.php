@@ -71,7 +71,7 @@ class EmploymentInsuredRetirementCertificateRequest extends FormRequest
             "salary_payment_period_start_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_start_month_1',
             "salary_payment_period_end_month_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_day_1',
             "salary_payment_period_end_day_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:salary_payment_period_end_month_1',
-            "basic_days_of_salary_payment_period_1" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
+            "basic_days_of_salary_payment_period_1" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "salary_amount_A_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_B_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
             "salary_amount_total_1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
