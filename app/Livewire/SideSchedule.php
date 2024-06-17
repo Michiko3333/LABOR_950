@@ -221,7 +221,6 @@ class SideSchedule extends Component
 
         $i = 0;
         foreach ($events_list as $ev) {
-            if ($i > 4) continue;
             $type = '';
             if (!empty($ev['role_id'])) {
                 if ($ev['role_id'] == 999) $type = 'admin';
@@ -239,6 +238,8 @@ class SideSchedule extends Component
             }
             return ($a[2] < $b[2]) ? -1 : 1;
         });
+
+        $this->events = array_slice($this->events, 0, 5);
     }
 
     public function add_event($id, $name, $from, $to, $cts, $color = '')
