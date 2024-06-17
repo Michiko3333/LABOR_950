@@ -2092,7 +2092,7 @@
             tabindex="221"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:137px; max-width:137px; height:14px; ime-mode:active;"
             type="TEXT" id="J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6"
-            value="{{ old('laborConsultantActingAsAgent') }}" name="laborConsultantActingAsAgent" maxlength="12"></SPAN>
+            value="{{ old('submission_agent') }}" name="submission_agent" maxlength="12"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:264px; top:1261px; width:109px; line-height:38px; height:38px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="222"

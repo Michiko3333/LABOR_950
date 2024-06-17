@@ -381,7 +381,7 @@
 				<月>laborConsultantMonth</月>
 				<日>laborConsultantDay</日>
 			</作成年月日>
-			<提出代行者_事務代理者の表示>laborConsultantActingAsAgent</提出代行者_事務代理者の表示>
+			<提出代行者_事務代理者の表示>submission_agent</提出代行者_事務代理者の表示>
 			<氏名>laborConsultantName</氏名>
 			<電話番号>
 				<市外局番>laborConsultantTelAreaCode</市外局番>
