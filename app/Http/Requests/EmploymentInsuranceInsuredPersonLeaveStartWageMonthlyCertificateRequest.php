@@ -518,17 +518,19 @@ class EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest ex
                 }
             }
 
-            if ($data['employment_duration_set_japan_era'] === '平成') {
-                if (
-                    ($data['employment_duration_set_japan_era_year'] == 1 && ($data['employment_duration_set_month'] < 1 || ($data['employment_duration_set_month'] == 1 && $data['employment_duration_set_day'] < 8))) ||
-                    ($data['employment_duration_set_japan_era_year'] == 31 && ($data['employment_duration_set_month'] > 4 || ($data['employment_duration_set_month'] == 4 && $data['employment_duration_set_day'] > 30))) ||
-                    ($data['employment_duration_set_japan_era_year'] > 31)
-                ) {
-                    $validator->errors()->add('childcare_start_date_day', '2枚目_14_（休業開始時における）雇用期間_日付は正しい日付を入力してください。');
-                }
-            } elseif ($data['employment_duration_set_japan_era'] === '令和') {
-                if ($data['employment_duration_set_japan_era_year'] == 1 && ($data['employment_duration_set_month'] < 5)) {
-                    $validator->errors()->add('childcare_start_date_day', '2枚目_14_（休業開始時における）雇用期間_日付は正しい日付を入力してください。');
+            if(!empty($data['employment_duration_set_japan_era'])){
+                if ($data['employment_duration_set_japan_era'] === '平成') {
+                    if (
+                        ($data['employment_duration_set_japan_era_year'] == 1 && ($data['employment_duration_set_month'] < 1 || ($data['employment_duration_set_month'] == 1 && $data['employment_duration_set_day'] < 8))) ||
+                        ($data['employment_duration_set_japan_era_year'] == 31 && ($data['employment_duration_set_month'] > 4 || ($data['employment_duration_set_month'] == 4 && $data['employment_duration_set_day'] > 30))) ||
+                        ($data['employment_duration_set_japan_era_year'] > 31)
+                    ) {
+                        $validator->errors()->add('childcare_start_date_day', '2枚目_14_（休業開始時における）雇用期間_日付は正しい日付を入力してください。');
+                    }
+                } elseif ($data['employment_duration_set_japan_era'] === '令和') {
+                    if ($data['employment_duration_set_japan_era_year'] == 1 && ($data['employment_duration_set_month'] < 5)) {
+                        $validator->errors()->add('childcare_start_date_day', '2枚目_14_（休業開始時における）雇用期間_日付は正しい日付を入力してください。');
+                    }
                 }
             }
 
