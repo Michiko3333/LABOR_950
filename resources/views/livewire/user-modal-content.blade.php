@@ -156,10 +156,14 @@
                     <div class="two fields">
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture1') }}">
                             <label for="emergency_address_prefecture1">都道府県</label>
-                            <input type="text" id="emergency_address_prefecture1"
-                                name="emergency_address_prefecture1"
+                            <select class="ui fluid dropdown" name="emergency_address_prefecture1"
                                 wire:model.live="emergency_edit.emergency_address_prefecture1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'disabled' : '' }} style="height: 49px;">
+                                <option value="">未選択</option>
+                                @foreach ($prefectures as $prefecture)
+                                    <option value="{{ $prefecture->id }}">{{ $prefecture->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_city1') }}">
                             <label for="emergency_address_city1">市区町村</label>
@@ -208,10 +212,14 @@
                     <div class="two fields">
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture2') }}">
                             <label for="emergency_address_prefecture2">都道府県</label>
-                            <input type="text" id="emergency_address_prefecture2"
-                                name="emergency_address_prefecture2"
+                            <select class="ui fluid dropdown" name="emergency_address_prefecture2"
                                 wire:model.live="emergency_edit.emergency_address_prefecture2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'disabled' : '' }} style="height: 49px;">
+                                <option value="">未選択</option>
+                                @foreach ($prefectures as $prefecture)
+                                    <option value="{{ $prefecture->id }}">{{ $prefecture->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_city2') }}">
                             <label for="emergency_address_city2">市区町村</label>

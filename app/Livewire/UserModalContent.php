@@ -8,13 +8,14 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Employee_department;
 use App\Models\User;
+use App\Models\Prefecture;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class UserModalContent extends Component
 {
-
+    public $prefectures;
     public $employee_id = 0;
     public $tab = 0;
     public $profiles = [
@@ -120,6 +121,7 @@ class UserModalContent extends Component
                     $this->profiles['departments'] = ["-"];
                 }
 
+                $this->prefectures = Prefecture::all();
                 $this->profiles['name'] = $employee->last_name . ' ' . $employee->first_name;
                 $this->names = [
                     'old_last_name' => $employee->old_last_name,
@@ -224,18 +226,29 @@ class UserModalContent extends Component
             'emergency_edit.emergency_relationship1' => 'nullable|string|max:255',
             'emergency_edit.emergency_tel1' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
             'emergency_edit.emergency_address_prefecture1' => 'nullable|string',
-            'emergency_edit.emergency_address_city1' => 'nullable|string',
-            'emergency_edit.emergency_address_ward1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_edit.emergency_address_apartment1' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_edit.emergency_address_city1' => 'nullable|string|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_address_ward1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_address_apartment1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
 
             'emergency_edit.emergency_contact2' => 'nullable|string|max:255',
             'emergency_edit.emergency_relationship2' => 'nullable|string|max:255',
             'emergency_edit.emergency_tel2' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
             'emergency_edit.emergency_address_prefecture2' => 'nullable|string',
-            'emergency_edit.emergency_address_city2' => 'nullable|string',
-            'emergency_edit.emergency_address_ward2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
-            'emergency_edit.emergency_address_apartment2' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９]+\z/u',
+            'emergency_edit.emergency_address_city2' => 'nullable|string|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_address_ward2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_address_apartment2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
         ]);
+
+        $this->emergency_edit['emergency_contact1'] = mb_convert_kana($this->emergency_edit['emergency_contact1'], 'RANKS');
+        $this->emergency_edit['emergency_relationship1'] = mb_convert_kana($this->emergency_edit['emergency_relationship1'], 'RANKS');
+        $this->emergency_edit['emergency_address_city1'] = mb_convert_kana($this->emergency_edit['emergency_address_city1'], 'RANKS');
+        $this->emergency_edit['emergency_address_ward1'] = mb_convert_kana($this->emergency_edit['emergency_address_ward1'], 'RANKS');
+        $this->emergency_edit['emergency_address_apartment1'] = mb_convert_kana($this->emergency_edit['emergency_address_apartment1'], 'RANKS');
+        $this->emergency_edit['emergency_contact2'] = mb_convert_kana($this->emergency_edit['emergency_contact2'], 'RANKS');
+        $this->emergency_edit['emergency_relationship2'] = mb_convert_kana($this->emergency_edit['emergency_relationship2'], 'RANKS');
+        $this->emergency_edit['emergency_address_city2'] = mb_convert_kana($this->emergency_edit['emergency_address_city2'], 'RANKS');
+        $this->emergency_edit['emergency_address_ward2'] = mb_convert_kana($this->emergency_edit['emergency_address_ward2'], 'RANKS');
+        $this->emergency_edit['emergency_address_apartment2'] = mb_convert_kana($this->emergency_edit['emergency_address_apartment2'], 'RANKS');
 
         Employee::where('id', $this->employee_id)->update([
             'emergency_contact1' => $this->emergency_edit['emergency_contact1'],
