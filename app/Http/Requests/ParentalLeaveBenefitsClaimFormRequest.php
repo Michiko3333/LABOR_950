@@ -126,7 +126,7 @@ class ParentalLeaveBenefitsClaimFormRequest extends FormRequest
             'headquarters_or_branch' => 'nullable|string|max:2',
             'financia_iInstitution_code' => 'nullable|string|regex:/^[0-9]{4}$/u',
             'store_code' => 'nullable|string|regex:/^[0-9]{3}$/u',
-            'passbook_account_number' => 'nullable|string|regex:/^[0-9]{10,11}$/u',
+            'passbook_account_number' => 'nullable|string|regex:/^[0-9]{7}$/u',
             'yucho_bank_former' => 'nullable|string|regex:/^[0-9]{3,5}$/u',
             'yucho_bank_latter' => 'nullable|string|regex:/^[0-9]{7,8}$/u',
             'wage_deadline' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
