@@ -464,7 +464,7 @@
 				<月>labor_consultant_month</月>
 				<日>labor_consultant_day</日>
 			</作成年月日>
-			<提出代行者_事務代理者の表示>labor_consultant_acting_as_agent_name</提出代行者_事務代理者の表示>
+			<提出代行者_事務代理者の表示>agent_delegate_name</提出代行者_事務代理者の表示>
 			<氏名>labor_consultant_name</氏名>
 			<電話番号>
 				<市外局番>labor_consultant_tel_treacode</市外局番>
