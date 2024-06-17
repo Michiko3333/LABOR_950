@@ -27,7 +27,9 @@
                     <td>{{ empty($item->position_name) ? '-' : $item->position_name }}</td>
                     <td>{{ $item->branch_name }}</td>
                     <td class="right aligned collapsing">
-                        @if ($userPermission->isAdmin() || ($userPermission->isDirector() && $item->id != $userPermission->employee_id()))
+                        @if (
+                            $userPermission->isAdmin() ||
+                                (!$userPermission->isLabor() && $userPermission->isDirector() && $item->id != $userPermission->employee_id()))
                             <button class="ui basic primary button" type="button"
                                 wire:click="toPermission({{ $item->id }})">
                                 権限

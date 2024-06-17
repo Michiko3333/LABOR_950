@@ -39,9 +39,9 @@
 	function calc4 (f, line) {
 		var nullFlg = true;
 
-		var total = (f.elements["wageAmountA2_" + line].value - 0) + (f.elements["wageAmountA2_" + line].value - 0);
+		var total = (f.elements["wageAmountA2_" + line].value - 0) + (f.elements["wageAmountB2_" + line].value - 0);
 
-		if((f.elements["wageAmountB2_" + line].value) == "" && (f.elements["wageAmountB2_" + line].value) == ""){
+		if((f.elements["wageAmountA2_" + line].value) == "" && (f.elements["wageAmountB2_" + line].value) == ""){
 			nullFlg = false;
 		}
 

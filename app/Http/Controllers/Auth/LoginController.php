@@ -28,13 +28,18 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
+        \Log::info("ログイン試行：" . $request->input('email'));
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            \Log::info("ログイン成功：" . $request->input('email'));
             return redirect()->route('home.index');
         }
 
+        \Log::error("ログイン失敗：" . $request->input('email'));
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'ユーザーが見つかりません',
         ])->onlyInput('email');
     }
 }
