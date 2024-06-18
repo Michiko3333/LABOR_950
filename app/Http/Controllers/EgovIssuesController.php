@@ -17,7 +17,7 @@ class EgovIssuesController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(9) || !$userPermission->isSelectedCompany()) {
+            if ($userPermission->denyProcedure() || !$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -25,6 +25,11 @@ class EgovIssuesController extends Controller
     }
     public function index(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(9)) {
+            return redirect()->route('home.index');
+        }
+
         $company = CurrentUser::currentCompany();
         $companyId = $company->id;
         $egovAcount = $this->egovAcount();
@@ -34,6 +39,12 @@ class EgovIssuesController extends Controller
 
     public function detail(Request $request, $id)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(9)) {
+            return redirect()->route('home.index');
+        }
+
+
         $currentCompany = CurrentUser::currentCompany();
         $account = Egov_account::where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
         $detail = new \stdClass();
@@ -114,6 +125,11 @@ class EgovIssuesController extends Controller
         $req = $request->validate([
             'notice_sub_id' => 'required',
         ]);
+
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(9) || !$userPermission->isWritableFor(9)) {
+            return redirect()->route('home.index');
+        }
 
         $arrive_id = $id;
         $notice_sub_id = $req['notice_sub_id'];

@@ -16,7 +16,7 @@ class EgovController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if ($userPermission->denyProcedure() || !$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(10) || !$userPermission->isWritableFor(10) || !$userPermission->isSelectedCompany()) {
+            if ($userPermission->denyProcedure() || !$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -25,8 +25,9 @@ class EgovController extends Controller
 
     public function index(Request $request)
     {
-        if (!$this->isSelectedCompany()) {
-            return redirect()->route('home.select');
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(10) || !$userPermission->isWritableFor(10)) {
+            return redirect()->route('home.index');
         }
 
         $company = CurrentUser::currentCompany();

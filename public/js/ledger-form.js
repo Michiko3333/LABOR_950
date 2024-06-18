@@ -62,6 +62,7 @@ $('#ledger-preview-btn').click(() => {
             const name = $element.attr('name');
 
             $element.val('');
+            $element.prop('checked', false);
 
             if (formDataObject.hasOwnProperty(name)) {
                 if ($element.is('input[type="checkbox"]')) {

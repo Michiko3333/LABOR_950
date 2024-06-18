@@ -12,7 +12,7 @@ class ManagerialPositionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(4) || !$userPermission->isSelectedCompany()) {
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -20,6 +20,11 @@ class ManagerialPositionController extends Controller
     }
     public function managerial_position(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(4)) {
+            return redirect()->route('home.index');
+        }
+
         $current_company = CurrentUser::currentCompany();
         $current_company_id = $current_company->id;
         $current_company_name = $current_company->name;

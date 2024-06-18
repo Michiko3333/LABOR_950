@@ -88,7 +88,8 @@
                 @if (
                     !$userPermission->denyProcedure() &&
                         $userPermission->isBasicDepartment() &&
-                        $userPermission->isReadableAtleast([8, 9, 10]))
+                        ($userPermission->isReadableAtleast([8, 9]) ||
+                            ($userPermission->isWritableFor(10) && $userPermission->isReadableFor(10))))
                     <li class="title">行政手続き</li>
                     @if ($userPermission->isReadableFor(8))
                         <li class="item">
@@ -104,7 +105,7 @@
                                 申請案件一覧</a>
                         </li>
                     @endif
-                    @if ($userPermission->isReadableFor(10))
+                    @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
                         <li class="item">
                             <a href="{{ route('ledger.egov') }}">
 
@@ -135,18 +136,15 @@
                 <li class="title">Karte管理</li>
                 <li class="item">
                     <a href="{{ route('admin.company') }}">
-
                         会社管理</a>
                 </li>
                 <li class="item">
                     <a href="{{ route('admin.labor') }}">
-
                         アカウント管理</a>
                 </li>
                 @if (config('egov.test') === true)
                     <li class="item">
                         <a href="{{ route('egovtest.index') }}">
-
                             e-Gov最終試験管理</a>
                     </li>
                 @endif
@@ -155,7 +153,6 @@
                 <li class="title">社労士管理</li>
                 <li class="item">
                     <a href="{{ route('labor_company_update') }}">
-
                         自社情報編集</a>
                 </li>
             @endif

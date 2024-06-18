@@ -203,7 +203,28 @@
         });
     });
 
+    function updateInputFields() {
+        var checkboxYes = document.getElementById('J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B3');
+        var checkboxNo = document.getElementById('J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B33');
+        var inputJ129 = document.getElementById('J129_005F_8F90_96BC_9793');
+        var inputJ9 = document.getElementById('J9_005F_97A3_9045_8ED2_8E81_96BC');
 
+        if (checkboxYes.checked) {
+            inputJ129.value = inputJ9.value;
+            inputJ129.disabled = false;
+        } else if (checkboxNo.checked) {
+            inputJ129.value = '';
+            inputJ129.disabled = true;
+        }
+    }
+
+    window.onload = function() {
+        var checkboxYes = document.getElementById('J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B3');
+        var checkboxNo = document.getElementById('J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B33');
+
+        checkboxYes.addEventListener('change', updateInputFields);
+        checkboxNo.addEventListener('change', updateInputFields);
+    };
 
     // $(function(){
     //     $('.check').on('click', function() {
@@ -1264,7 +1285,7 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:1104px; top:1114px; width:23px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:3px 0px 0px 0px;">無し</SPAN>
 <input type="radio" name="objection_retirement_reason_flg" value="" checked style="display: none;">
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1032px; top:1114px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="312" value="有" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;" type="RADIO" id="J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B3" name="objection_retirement_reason_flg" <?php echo old('objection_retirement_reason_flg') == '有' ? 'checked' : ''; ?>><SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1089px; top:1114px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="313" value="無" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;" type="RADIO" id="J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B3" name="objection_retirement_reason_flg" <?php echo old('objection_retirement_reason_flg') == '無' ? 'checked' : ''; ?>><SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1089px; top:1114px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT tabindex="313" value="無" style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;" type="RADIO" id="J128_005F_97A3_9045_979D_9752_82C9_88D9_8B63_82CC_974C_96B33" name="objection_retirement_reason_flg" <?php echo old('objection_retirement_reason_flg') == '無' ? 'checked' : ''; ?>><SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:963px; top:1133px; width:176px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT tabindex="314" style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:176px; max-width:176px; height:14px; ime-mode:active;" type="TEXT" id="J129_005F_8F90_96BC_9793" name="name" class="clear" value="{{ old('name') }}" maxlength="15" disabled></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:1504px; top:127px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT tabindex="-1" disabled="disabled" value="1" style="position:absolute; top:1px; left:0px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;" type="CHECKBOX" id="J130_005F_9149_91F01A" name="J130_1A"><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:1524px; top:127px; width:30px; height:16px; text-align:center; font-size:11px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:3px 0px 0px 0px;">１Ａ</SPAN>

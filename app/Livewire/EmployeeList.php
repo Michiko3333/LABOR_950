@@ -21,10 +21,10 @@ class EmployeeList extends BaseTable
         $condition = Employee::select(['m_employee.id', 'last_name', 'first_name', 'position.name as position_name', 'branch.name as branch_name'])
             ->leftJoin('m_branch as branch', 'm_employee.branch_id', '=', 'branch.id')
             ->leftJoin('m_company as company', 'branch.company_id', '=', 'company.id')
-            ->leftJoin('m_managerial_position as position', function($join) {
+            ->leftJoin('m_managerial_position as position', function ($join) {
                 $join->on('position.id', '=', 'managerial_position_id')
                     ->where('position.delete_flg', 0);
-            })            
+            })
             ->where('company.id', $currentCompanyId);
 
         /*
@@ -43,7 +43,7 @@ class EmployeeList extends BaseTable
             */
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
-            $condition = $condition->where(DB::raw("CONCAT(last_name, first_name)"), 'LIKE', $pat);
+            $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);
         }
 
 
@@ -51,7 +51,7 @@ class EmployeeList extends BaseTable
         $items = $this->data['items'];
         foreach ($items as &$item) {
             $item->departments = Employee_department::select('name')
-                ->where('m_employee_department.delete_flg', 0) 
+                ->where('m_employee_department.delete_flg', 0)
                 ->leftJoin('m_department as dep', 'm_employee_department.department_id', '=', 'dep.id')
                 ->where('employee_id', $item->id)
                 ->pluck('name');

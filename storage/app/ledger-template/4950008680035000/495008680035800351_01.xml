@@ -8,14 +8,14 @@
 	<A-250046-004_1>
 		<短時間労働者/>
 		<被保険者番号>
-			<被保険者番号4桁>insurance_office_no_4</被保険者番号4桁>
-			<被保険者番号6桁>insurance_office_no_6</被保険者番号6桁>
-			<被保険者番号CD>insurance_office_no_CD</被保険者番号CD>
+			<被保険者番号4桁>employment_insured_no_4</被保険者番号4桁>
+			<被保険者番号6桁>employment_insured_no_6</被保険者番号6桁>
+			<被保険者番号CD>employment_insured_no_CD</被保険者番号CD>
 		</被保険者番号>
 		<事業所番号>
-			<事業所番号4桁>employment_insured_no_4</事業所番号4桁>
-			<事業所番号6桁>employment_insured_no_6</事業所番号6桁>
-			<事業所番号CD>employment_insured_no_CD</事業所番号CD>
+			<事業所番号4桁>insurance_office_no_4</事業所番号4桁>
+			<事業所番号6桁>insurance_office_no_6</事業所番号6桁>
+			<事業所番号CD>insurance_office_no_CD</事業所番号CD>
 		</事業所番号>
 		<離職者氏名_フリガナ>name_kana</離職者氏名_フリガナ>
 		<離職者氏名>name</離職者氏名>

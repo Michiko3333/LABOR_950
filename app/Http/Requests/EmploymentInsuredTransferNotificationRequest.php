@@ -172,8 +172,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                 }
             }
             if(!empty($birthdayMonth) && !empty($birthdayDay)){
-                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
                     $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -199,8 +201,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                 }
             }
             if(!empty($insuredMonth) && !empty($insuredDay)){
-                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                if(ctype_digit($insuredMonth)){
+                    if (!checkdate($insuredMonth, $insuredDay, '2000')) {
                     $validator->errors()->add('employment_insured_date_era','資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -218,12 +222,13 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                 }
             }
             if(!empty($transferMonth) && !empty($transferDay)){
-                if (!checkdate($transferMonth, $transferDay, '2000')) {
+                if(ctype_digit($transferMonth)){
+                    if (!checkdate($transferMonth, $transferDay, '2000')) {
                     $validator->errors()->add('transfer_date_era','転勤年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
-            
             if ($name_changedEra === '平成') {
                 if (
                     ($name_changedYear == 1 && ($name_changedMonth < 1 || ($name_changedMonth == 1 && $name_changedDay < 8))) ||
@@ -238,8 +243,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                 }
             }
             if(!empty($name_changedMonth) && !empty($name_changedDay)){
-                if (!checkdate($name_changedMonth, $name_changedDay, '2000')) {
+                if(ctype_digit($name_changedMonth)){
+                    if (!checkdate($name_changedMonth, $name_changedDay, '2000')) {
                     $validator->errors()->add('name_changed_date_era','氏名変更年月日は正しい日付を入力してください。');
+                    }
                 }
             }
         });

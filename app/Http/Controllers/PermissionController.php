@@ -14,7 +14,7 @@ class PermissionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isAdmin() && $userPermission->getEmployeeType() != 1) {
+            if (!$userPermission->isAdmin() && !$userPermission->isDirector()) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -23,6 +23,11 @@ class PermissionController extends Controller
 
     public function employee_permission($id)
     {
+        $userPermission = new Permission();
+        if ($userPermission->isLabor()) {
+            return redirect()->route('home.index');
+        }
+
         $features = Feature::all();
         $employee = Employee::find($id);
 
@@ -31,6 +36,11 @@ class PermissionController extends Controller
 
     public function employee_permission_post(Request $request, $id)
     {
+        $userPermission = new Permission();
+        if ($userPermission->isLabor()) {
+            return redirect()->route('home.index');
+        }
+
         $permissions = $request->input('permissions');
         $features = Feature::all();
         foreach ($features as $feature) {

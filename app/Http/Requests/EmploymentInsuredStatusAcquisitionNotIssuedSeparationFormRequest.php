@@ -124,6 +124,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
             'apply_to_name' => 'required|string'
         ];
     }
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
@@ -172,11 +173,13 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
                 }
             }
             if(!empty($birthdayMonth) && !empty($birthdayDay)){
-                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
                     $validator->errors()->add('insured_birthday_day','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
-
+    
             if ($insuredEra === '昭和') {
                 if (
                     ($insuredYear == 1 && ($insuredMonth < 12 || ($insuredMonth == 12 && $insuredDay < 25))) ||
@@ -199,11 +202,13 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
                 }
             }
             if(!empty($insuredMonth) && !empty($insuredDay)){
-                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                if(ctype_digit($insuredMonth)){
+                    if (!checkdate($insuredMonth, $insuredDay, '2000')) {
                     $validator->errors()->add('employment_insured_japan_era','資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
-
+    
             if ($retirementEra === '平成') {
                 if (
                     ($retirementYear == 1 && ($retirementMonth < 1 || ($retirementMonth == 1 && $retirementDay < 8))) ||
@@ -218,14 +223,18 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends F
                 }
             }
             if(!empty($retirementMonth) && !empty($retirementDay)){
-                if (!checkdate($retirementMonth, $retirementDay, '2000')) {
+                if(ctype_digit($retirementMonth)){
+                    if (!checkdate($retirementMonth, $retirementDay, '2000')) {
                     $validator->errors()->add('retirement_japan_era','離職年月日は正しい日付を入力してください。');
+                    }
                 }
             }
-
+    
             if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
-                if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
+                if(ctype_digit($data['stay_date_period_month'])){
+                    if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
                     $validator->errors()->add('stay_date_period_year','在留期間は正しい日付を入力してください。');
+                    }
                 }
             }
 

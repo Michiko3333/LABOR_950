@@ -297,10 +297,10 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             'note1_16' => 'nullable|string|max:255',
             'employee_salary_notices1' => 'nullable|string|max:255',
             'employment_period' => 'string|in:定めなし,定めあり',
-            'employment_period_date_japan_era' => 'nullable|string|required_with:employment_period_date_japan_era_year,employment_period_date_month,employment_period_date_day',
-            'employment_period_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_japan_era,employment_period_date_month,employment_period_date_day',
-            'employment_period_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_japan_era_year,employment_period_date_japan_era,employment_period_date_day',
-            'employment_period_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_japan_era_year,employment_period_date_month,employment_period_date_japan_era',
+            'employment_period_date_japan_era' => 'nullable|string',
+            'employment_period_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_month,employment_period_date_day',
+            'employment_period_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_japan_era_year,employment_period_date_day',
+            'employment_period_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:employment_period_date_japan_era_year,employment_period_date_month',
             'employment_period_japan_era_year' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'employment_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'labor_consultant_japan_era_year' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -529,8 +529,10 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             $employment_period_date_day = $data['employment_period_date_day'] ?? "";
 
             if(!empty($employee_childcare_caregiver_leave_start_month) && !empty($employee_childcare_caregiver_leave_start_day)){
-                if (!checkdate($employee_childcare_caregiver_leave_start_month, $employee_childcare_caregiver_leave_start_day, '2000')) {
+                if(ctype_digit($employee_childcare_caregiver_leave_start_month)){
+                    if (!checkdate($employee_childcare_caregiver_leave_start_month, $employee_childcare_caregiver_leave_start_day, '2000')) {
                     $validator->errors()->add('employee_childcare_caregiver_leave_start_month','4_休業等を開始した日の年月日は正しい日付を入力してください。');
+                    }
                 }
             }
             if ($employee_childcare_caregiver_leave_start_japan_era === '平成') {
@@ -547,6 +549,13 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
                 }
             }
 
+            if(!empty($employment_period_date_month) && !empty($employment_period_date_day)){
+                if(ctype_digit($employment_period_date_month)){
+                    if (!checkdate($employment_period_date_month, $employment_period_date_day, '2000')) {
+                    $validator->errors()->add('employment_period_date_day','14_（休業開始時における）雇用期間_日付は正しい日付を入力してください。');
+                    }
+                }
+            }
             if ($employment_period_date_japan_era === '平成') {
                 if (
                     ($employment_period_date_japan_era_year == 1 && ($employment_period_date_month < 1 || ($employment_period_date_month == 1 && $employment_period_date_day < 8))) ||
@@ -562,723 +571,979 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends FormReq
             }
         
             if(!empty($data['applicable_period_start_month1']) && !empty($data['applicable_period_start_day1'])){
-                if (!checkdate($data['applicable_period_start_month1'], $data['applicable_period_start_day1'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1'])){
+                    if (!checkdate($data['applicable_period_start_month1'], $data['applicable_period_start_day1'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1','7_算定対象期間_開始日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_start_month1_1']) && !empty($data['applicable_period_start_day1_1'])){
-                if (!checkdate($data['applicable_period_start_month1_1'], $data['applicable_period_start_day1_1'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_1'])){
+                    if (!checkdate($data['applicable_period_start_month1_1'], $data['applicable_period_start_day1_1'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_1','7_算定対象期間_開始日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_2']) && !empty($data['applicable_period_start_day1_2'])){
-                if (!checkdate($data['applicable_period_start_month1_2'], $data['applicable_period_start_day1_2'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_2'])){
+                    if (!checkdate($data['applicable_period_start_month1_2'], $data['applicable_period_start_day1_2'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_2','7_算定対象期間_開始日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_3']) && !empty($data['applicable_period_start_day1_3'])){
-                if (!checkdate($data['applicable_period_start_month1_3'], $data['applicable_period_start_day1_3'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_3'])){
+                    if (!checkdate($data['applicable_period_start_month1_3'], $data['applicable_period_start_day1_3'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_3','7_算定対象期間_開始日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_4']) && !empty($data['applicable_period_start_day1_4'])){
-                if (!checkdate($data['applicable_period_start_month1_4'], $data['applicable_period_start_day1_4'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_4'])){
+                    if (!checkdate($data['applicable_period_start_month1_4'], $data['applicable_period_start_day1_4'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_4','7_算定対象期間_開始日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_5']) && !empty($data['applicable_period_start_day1_5'])){
-                if (!checkdate($data['applicable_period_start_month1_5'], $data['applicable_period_start_day1_5'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_5'])){
+                    if (!checkdate($data['applicable_period_start_month1_5'], $data['applicable_period_start_day1_5'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_5','7_算定対象期間_開始日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_6']) && !empty($data['applicable_period_start_day1_6'])){
-                if (!checkdate($data['applicable_period_start_month1_6'], $data['applicable_period_start_day1_6'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_6'])){
+                    if (!checkdate($data['applicable_period_start_month1_6'], $data['applicable_period_start_day1_6'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_6','7_算定対象期間_開始日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_7']) && !empty($data['applicable_period_start_day1_7'])){
-                if (!checkdate($data['applicable_period_start_month1_7'], $data['applicable_period_start_day1_7'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_7'])){
+                    if (!checkdate($data['applicable_period_start_month1_7'], $data['applicable_period_start_day1_7'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_7','7_算定対象期間_開始日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_8']) && !empty($data['applicable_period_start_day1_8'])){
-                if (!checkdate($data['applicable_period_start_month1_8'], $data['applicable_period_start_day1_8'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_8'])){
+                    if (!checkdate($data['applicable_period_start_month1_8'], $data['applicable_period_start_day1_8'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_8','7_算定対象期間_開始日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_9']) && !empty($data['applicable_period_start_day1_9'])){
-                if (!checkdate($data['applicable_period_start_month1_9'], $data['applicable_period_start_day1_9'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_9'])){
+                    if (!checkdate($data['applicable_period_start_month1_9'], $data['applicable_period_start_day1_9'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_9','7_算定対象期間_開始日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_10']) && !empty($data['applicable_period_start_day1_10'])){
-                if (!checkdate($data['applicable_period_start_month1_10'], $data['applicable_period_start_day1_10'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_10'])){
+                    if (!checkdate($data['applicable_period_start_month1_10'], $data['applicable_period_start_day1_10'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_10','7_算定対象期間_開始日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_11']) && !empty($data['applicable_period_start_day1_11'])){
-                if (!checkdate($data['applicable_period_start_month1_11'], $data['applicable_period_start_day1_11'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_11'])){
+                    if (!checkdate($data['applicable_period_start_month1_11'], $data['applicable_period_start_day1_11'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_11','7_算定対象期間_開始日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_12']) && !empty($data['applicable_period_start_day1_12'])){
-                if (!checkdate($data['applicable_period_start_month1_12'], $data['applicable_period_start_day1_12'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_12'])){
+                    if (!checkdate($data['applicable_period_start_month1_12'], $data['applicable_period_start_day1_12'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_12','7_算定対象期間_開始日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_13']) && !empty($data['applicable_period_start_day1_13'])){
-                if (!checkdate($data['applicable_period_start_month1_13'], $data['applicable_period_start_day1_13'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_13'])){
+                    if (!checkdate($data['applicable_period_start_month1_13'], $data['applicable_period_start_day1_13'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_13','7_算定対象期間_開始日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month1_14']) && !empty($data['applicable_period_start_day1_14'])){
-                if (!checkdate($data['applicable_period_start_month1_14'], $data['applicable_period_start_day1_14'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_14'])){
+                    if (!checkdate($data['applicable_period_start_month1_14'], $data['applicable_period_start_day1_14'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_14','7_算定対象期間_開始日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_start_month1_15']) && !empty($data['applicable_period_start_day1_15'])){
-                if (!checkdate($data['applicable_period_start_month1_15'], $data['applicable_period_start_day1_15'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month1_15'])){
+                    if (!checkdate($data['applicable_period_start_month1_15'], $data['applicable_period_start_day1_15'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day1_15','7_算定対象期間_開始日付_16行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_end_month1_1']) && !empty($data['applicable_period_end_day1_1'])){
-                if (!checkdate($data['applicable_period_end_month1_1'], $data['applicable_period_end_day1_1'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_1'])){
+                    if (!checkdate($data['applicable_period_end_month1_1'], $data['applicable_period_end_day1_1'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_1','7_算定対象期間_終了日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_end_month1_2']) && !empty($data['applicable_period_end_day1_2'])){
-                if (!checkdate($data['applicable_period_end_month1_2'], $data['applicable_period_end_day1_2'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_2'])){
+                    if (!checkdate($data['applicable_period_end_month1_2'], $data['applicable_period_end_day1_2'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_2','7_算定対象期間_終了日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_3']) && !empty($data['applicable_period_end_day1_3'])){
-                if (!checkdate($data['applicable_period_end_month1_3'], $data['applicable_period_end_day1_3'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_3'])){
+                    if (!checkdate($data['applicable_period_end_month1_3'], $data['applicable_period_end_day1_3'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_3','7_算定対象期間_終了日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_4']) && !empty($data['applicable_period_end_day1_4'])){
-                if (!checkdate($data['applicable_period_end_month1_4'], $data['applicable_period_end_day1_4'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_4'])){
+                    if (!checkdate($data['applicable_period_end_month1_4'], $data['applicable_period_end_day1_4'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_4','7_算定対象期間_終了日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_5']) && !empty($data['applicable_period_end_day1_5'])){
-                if (!checkdate($data['applicable_period_end_month1_5'], $data['applicable_period_end_day1_5'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_5'])){
+                    if (!checkdate($data['applicable_period_end_month1_5'], $data['applicable_period_end_day1_5'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_5','7_算定対象期間_終了日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_6']) && !empty($data['applicable_period_end_day1_6'])){
-                if (!checkdate($data['applicable_period_end_month1_6'], $data['applicable_period_end_day1_6'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_6'])){
+                    if (!checkdate($data['applicable_period_end_month1_6'], $data['applicable_period_end_day1_6'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_6','7_算定対象期間_終了日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_7']) && !empty($data['applicable_period_end_day1_7'])){
-                if (!checkdate($data['applicable_period_end_month1_7'], $data['applicable_period_end_day1_7'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_7'])){
+                    if (!checkdate($data['applicable_period_end_month1_7'], $data['applicable_period_end_day1_7'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_7','7_算定対象期間_終了日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_8']) && !empty($data['applicable_period_end_day1_8'])){
-                if (!checkdate($data['applicable_period_end_month1_8'], $data['applicable_period_end_day1_8'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_8'])){
+                    if (!checkdate($data['applicable_period_end_month1_8'], $data['applicable_period_end_day1_8'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_8','7_算定対象期間_終了日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_9']) && !empty($data['applicable_period_end_day1_9'])){
-                if (!checkdate($data['applicable_period_end_month1_9'], $data['applicable_period_end_day1_9'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_9'])){
+                    if (!checkdate($data['applicable_period_end_month1_9'], $data['applicable_period_end_day1_9'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_9','7_算定対象期間_終了日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_10']) && !empty($data['applicable_period_end_day1_10'])){
-                if (!checkdate($data['applicable_period_end_month1_10'], $data['applicable_period_end_day1_10'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_10'])){
+                    if (!checkdate($data['applicable_period_end_month1_10'], $data['applicable_period_end_day1_10'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_10','7_算定対象期間_終了日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_11']) && !empty($data['applicable_period_end_day1_11'])){
-                if (!checkdate($data['applicable_period_end_month1_11'], $data['applicable_period_end_day1_11'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_11'])){
+                    if (!checkdate($data['applicable_period_end_month1_11'], $data['applicable_period_end_day1_11'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_11','7_算定対象期間_終了日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_12']) && !empty($data['applicable_period_end_day1_12'])){
-                if (!checkdate($data['applicable_period_end_month1_12'], $data['applicable_period_end_day1_12'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_12'])){
+                    if (!checkdate($data['applicable_period_end_month1_12'], $data['applicable_period_end_day1_12'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_12','7_算定対象期間_終了日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_13']) && !empty($data['applicable_period_end_day1_13'])){
-                if (!checkdate($data['applicable_period_end_month1_13'], $data['applicable_period_end_day1_13'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_13'])){
+                    if (!checkdate($data['applicable_period_end_month1_13'], $data['applicable_period_end_day1_13'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_13','7_算定対象期間_終了日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month1_14']) && !empty($data['applicable_period_end_day1_14'])){
-                if (!checkdate($data['applicable_period_end_month1_14'], $data['applicable_period_end_day1_14'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_14'])){
+                    if (!checkdate($data['applicable_period_end_month1_14'], $data['applicable_period_end_day1_14'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_14','7_算定対象期間_終了日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
             
             if(!empty($data['applicable_period_end_month1_15']) && !empty($data['applicable_period_end_day1_15'])){
-                if (!checkdate($data['applicable_period_end_month1_15'], $data['applicable_period_end_day1_15'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month1_15'])){
+                    if (!checkdate($data['applicable_period_end_month1_15'], $data['applicable_period_end_day1_15'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day1_15','7_算定対象期間_終了日付_16行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_start_month1']) && !empty($data['payment_period_start_day1'])){
-                if (!checkdate($data['payment_period_start_month1'], $data['payment_period_start_day1'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1'])){
+                    if (!checkdate($data['payment_period_start_month1'], $data['payment_period_start_day1'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1','9_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_start_month1_1']) && !empty($data['payment_period_start_day1_1'])){
-                if (!checkdate($data['payment_period_start_month1_1'], $data['payment_period_start_day1_1'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_1'])){
+                    if (!checkdate($data['payment_period_start_month1_1'], $data['payment_period_start_day1_1'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_1','9_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_2']) && !empty($data['payment_period_start_day1_2'])){
-                if (!checkdate($data['payment_period_start_month1_2'], $data['payment_period_start_day1_2'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_2'])){
+                    if (!checkdate($data['payment_period_start_month1_2'], $data['payment_period_start_day1_2'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_2','9_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_3']) && !empty($data['payment_period_start_day1_3'])){
-                if (!checkdate($data['payment_period_start_month1_3'], $data['payment_period_start_day1_3'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_3'])){
+                    if (!checkdate($data['payment_period_start_month1_3'], $data['payment_period_start_day1_3'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_3','9_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_4']) && !empty($data['payment_period_start_day1_4'])){
-                if (!checkdate($data['payment_period_start_month1_4'], $data['payment_period_start_day1_4'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_4'])){
+                    if (!checkdate($data['payment_period_start_month1_4'], $data['payment_period_start_day1_4'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_4','9_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_5']) && !empty($data['payment_period_start_day1_5'])){
-                if (!checkdate($data['payment_period_start_month1_5'], $data['payment_period_start_day1_5'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_5'])){
+                    if (!checkdate($data['payment_period_start_month1_5'], $data['payment_period_start_day1_5'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_5','9_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_6']) && !empty($data['payment_period_start_day1_6'])){
-                if (!checkdate($data['payment_period_start_month1_6'], $data['payment_period_start_day1_6'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_6'])){
+                    if (!checkdate($data['payment_period_start_month1_6'], $data['payment_period_start_day1_6'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_6','9_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_7']) && !empty($data['payment_period_start_day1_7'])){
-                if (!checkdate($data['payment_period_start_month1_7'], $data['payment_period_start_day1_7'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_7'])){
+                    if (!checkdate($data['payment_period_start_month1_7'], $data['payment_period_start_day1_7'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_7','9_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_8']) && !empty($data['payment_period_start_day1_8'])){
-                if (!checkdate($data['payment_period_start_month1_8'], $data['payment_period_start_day1_8'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_8'])){
+                    if (!checkdate($data['payment_period_start_month1_8'], $data['payment_period_start_day1_8'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_8','9_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_9']) && !empty($data['payment_period_start_day1_9'])){
-                if (!checkdate($data['payment_period_start_month1_9'], $data['payment_period_start_day1_9'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_9'])){
+                    if (!checkdate($data['payment_period_start_month1_9'], $data['payment_period_start_day1_9'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_9','9_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_10']) && !empty($data['payment_period_start_day1_10'])){
-                if (!checkdate($data['payment_period_start_month1_10'], $data['payment_period_start_day1_10'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_10'])){
+                    if (!checkdate($data['payment_period_start_month1_10'], $data['payment_period_start_day1_10'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_10','9_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_11']) && !empty($data['payment_period_start_day1_11'])){
-                if (!checkdate($data['payment_period_start_month1_11'], $data['payment_period_start_day1_11'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_11'])){
+                    if (!checkdate($data['payment_period_start_month1_11'], $data['payment_period_start_day1_11'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_11','9_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_12']) && !empty($data['payment_period_start_day1_12'])){
-                if (!checkdate($data['payment_period_start_month1_12'], $data['payment_period_start_day1_12'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_12'])){
+                    if (!checkdate($data['payment_period_start_month1_12'], $data['payment_period_start_day1_12'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_12','9_賃金支払対象期間_開始日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_13']) && !empty($data['payment_period_start_day1_13'])){
-                if (!checkdate($data['payment_period_start_month1_13'], $data['payment_period_start_day1_13'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_13'])){
+                    if (!checkdate($data['payment_period_start_month1_13'], $data['payment_period_start_day1_13'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_13','9_賃金支払対象期間_開始日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month1_14']) && !empty($data['payment_period_start_day1_14'])){
-                if (!checkdate($data['payment_period_start_month1_14'], $data['payment_period_start_day1_14'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_14'])){
+                    if (!checkdate($data['payment_period_start_month1_14'], $data['payment_period_start_day1_14'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_14','9_賃金支払対象期間_開始日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
             
             if(!empty($data['payment_period_start_month1_15']) && !empty($data['payment_period_start_day1_15'])){
-                if (!checkdate($data['payment_period_start_month1_15'], $data['payment_period_start_day1_15'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month1_15'])){
+                    if (!checkdate($data['payment_period_start_month1_15'], $data['payment_period_start_day1_15'], '2000')) {
                     $validator->errors()->add('payment_period_start_day1_15','9_賃金支払対象期間_開始日付_16行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_end_month1_1']) && !empty($data['payment_period_end_day1_1'])){
-                if (!checkdate($data['payment_period_end_month1_1'], $data['payment_period_end_day1_1'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_1'])){
+                    if (!checkdate($data['payment_period_end_month1_1'], $data['payment_period_end_day1_1'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_1','9_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_end_month1_2']) && !empty($data['payment_period_end_day1_2'])){
-                if (!checkdate($data['payment_period_end_month1_2'], $data['payment_period_end_day1_2'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_2'])){
+                    if (!checkdate($data['payment_period_end_month1_2'], $data['payment_period_end_day1_2'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_2','9_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_3']) && !empty($data['payment_period_end_day1_3'])){
-                if (!checkdate($data['payment_period_end_month1_3'], $data['payment_period_end_day1_3'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_3'])){
+                    if (!checkdate($data['payment_period_end_month1_3'], $data['payment_period_end_day1_3'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_3','9_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_4']) && !empty($data['payment_period_end_day1_4'])){
-                if (!checkdate($data['payment_period_end_month1_4'], $data['payment_period_end_day1_4'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_4'])){
+                    if (!checkdate($data['payment_period_end_month1_4'], $data['payment_period_end_day1_4'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_4','9_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_5']) && !empty($data['payment_period_end_day1_5'])){
-                if (!checkdate($data['payment_period_end_month1_5'], $data['payment_period_end_day1_5'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_5'])){
+                    if (!checkdate($data['payment_period_end_month1_5'], $data['payment_period_end_day1_5'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_5','9_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_6']) && !empty($data['payment_period_end_day1_6'])){
-                if (!checkdate($data['payment_period_end_month1_6'], $data['payment_period_end_day1_6'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_6'])){
+                    if (!checkdate($data['payment_period_end_month1_6'], $data['payment_period_end_day1_6'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_6','9_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_7']) && !empty($data['payment_period_end_day1_7'])){
-                if (!checkdate($data['payment_period_end_month1_7'], $data['payment_period_end_day1_7'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_7'])){
+                    if (!checkdate($data['payment_period_end_month1_7'], $data['payment_period_end_day1_7'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_7','9_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_8']) && !empty($data['payment_period_end_day1_8'])){
-                if (!checkdate($data['payment_period_end_month1_8'], $data['payment_period_end_day1_8'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_8'])){
+                    if (!checkdate($data['payment_period_end_month1_8'], $data['payment_period_end_day1_8'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_8','9_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_9']) && !empty($data['payment_period_end_day1_9'])){
-                if (!checkdate($data['payment_period_end_month1_9'], $data['payment_period_end_day1_9'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_9'])){
+                    if (!checkdate($data['payment_period_end_month1_9'], $data['payment_period_end_day1_9'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_9','9_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_10']) && !empty($data['payment_period_end_day1_10'])){
-                if (!checkdate($data['payment_period_end_month1_10'], $data['payment_period_end_day1_10'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_10'])){
+                    if (!checkdate($data['payment_period_end_month1_10'], $data['payment_period_end_day1_10'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_10','9_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_11']) && !empty($data['payment_period_end_day1_11'])){
-                if (!checkdate($data['payment_period_end_month1_11'], $data['payment_period_end_day1_11'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_11'])){
+                    if (!checkdate($data['payment_period_end_month1_11'], $data['payment_period_end_day1_11'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_11','9_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_12']) && !empty($data['payment_period_end_day1_12'])){
-                if (!checkdate($data['payment_period_end_month1_12'], $data['payment_period_end_day1_12'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_12'])){
+                    if (!checkdate($data['payment_period_end_month1_12'], $data['payment_period_end_day1_12'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_12','9_賃金支払対象期間_終了日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_13']) && !empty($data['payment_period_end_day1_13'])){
-                if (!checkdate($data['payment_period_end_month1_13'], $data['payment_period_end_day1_13'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_13'])){
+                    if (!checkdate($data['payment_period_end_month1_13'], $data['payment_period_end_day1_13'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_13','9_賃金支払対象期間_終了日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_end_month1_14']) && !empty($data['payment_period_end_day1_14'])){
-                if (!checkdate($data['payment_period_end_month1_14'], $data['payment_period_end_day1_14'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_14'])){
+                    if (!checkdate($data['payment_period_end_month1_14'], $data['payment_period_end_day1_14'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_14','9_賃金支払対象期間_終了日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month1_15']) && !empty($data['payment_period_end_day1_15'])){
-                if (!checkdate($data['payment_period_end_month1_15'], $data['payment_period_end_day1_15'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month1_15'])){
+                    if (!checkdate($data['payment_period_end_month1_15'], $data['payment_period_end_day1_15'], '2000')) {
                     $validator->errors()->add('payment_period_end_day1_15','9_賃金支払対象期間_終了日付_16行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_start_month2_1']) && !empty($data['applicable_period_start_day2_1'])){
-                if (!checkdate($data['applicable_period_start_month2_1'], $data['applicable_period_start_day2_1'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_1'])){
+                    if (!checkdate($data['applicable_period_start_month2_1'], $data['applicable_period_start_day2_1'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_1','[続紙]7_算定対象期間_開始日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['applicable_period_start_month2_2']) && !empty($data['applicable_period_start_day2_2'])){
-                if (!checkdate($data['applicable_period_start_month2_2'], $data['applicable_period_start_day2_2'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_2'])){
+                    if (!checkdate($data['applicable_period_start_month2_2'], $data['applicable_period_start_day2_2'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_2','[続紙]7_算定対象期間_開始日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_3']) && !empty($data['applicable_period_start_day2_3'])){
-                if (!checkdate($data['applicable_period_start_month2_3'], $data['applicable_period_start_day2_3'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_3'])){
+                    if (!checkdate($data['applicable_period_start_month2_3'], $data['applicable_period_start_day2_3'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_3','[続紙]7_算定対象期間_開始日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_4']) && !empty($data['applicable_period_start_day2_4'])){
-                if (!checkdate($data['applicable_period_start_month2_4'], $data['applicable_period_start_day2_4'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_4'])){
+                    if (!checkdate($data['applicable_period_start_month2_4'], $data['applicable_period_start_day2_4'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_4','[続紙]7_算定対象期間_開始日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_5']) && !empty($data['applicable_period_start_day2_5'])){
-                if (!checkdate($data['applicable_period_start_month2_5'], $data['applicable_period_start_day2_5'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_5'])){
+                    if (!checkdate($data['applicable_period_start_month2_5'], $data['applicable_period_start_day2_5'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_5','[続紙]7_算定対象期間_開始日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_6']) && !empty($data['applicable_period_start_day2_6'])){
-                if (!checkdate($data['applicable_period_start_month2_6'], $data['applicable_period_start_day2_6'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_6'])){
+                    if (!checkdate($data['applicable_period_start_month2_6'], $data['applicable_period_start_day2_6'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_6','[続紙]7_算定対象期間_開始日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_7']) && !empty($data['applicable_period_start_day2_7'])){
-                if (!checkdate($data['applicable_period_start_month2_7'], $data['applicable_period_start_day2_7'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_7'])){
+                    if (!checkdate($data['applicable_period_start_month2_7'], $data['applicable_period_start_day2_7'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_7','[続紙]7_算定対象期間_開始日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_8']) && !empty($data['applicable_period_start_day2_8'])){
-                if (!checkdate($data['applicable_period_start_month2_8'], $data['applicable_period_start_day2_8'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_8'])){
+                    if (!checkdate($data['applicable_period_start_month2_8'], $data['applicable_period_start_day2_8'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_8','[続紙]7_算定対象期間_開始日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_9']) && !empty($data['applicable_period_start_day2_9'])){
-                if (!checkdate($data['applicable_period_start_month2_9'], $data['applicable_period_start_day2_9'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_9'])){
+                    if (!checkdate($data['applicable_period_start_month2_9'], $data['applicable_period_start_day2_9'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_9','[続紙]7_算定対象期間_開始日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_10']) && !empty($data['applicable_period_start_day2_10'])){
-                if (!checkdate($data['applicable_period_start_month2_10'], $data['applicable_period_start_day2_10'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_10'])){
+                    if (!checkdate($data['applicable_period_start_month2_10'], $data['applicable_period_start_day2_10'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_10','[続紙]7_算定対象期間_開始日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_11']) && !empty($data['applicable_period_start_day2_11'])){
-                if (!checkdate($data['applicable_period_start_month2_11'], $data['applicable_period_start_day2_11'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_11'])){
+                    if (!checkdate($data['applicable_period_start_month2_11'], $data['applicable_period_start_day2_11'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_11','[続紙]7_算定対象期間_開始日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_12']) && !empty($data['applicable_period_start_day2_12'])){
-                if (!checkdate($data['applicable_period_start_month2_12'], $data['applicable_period_start_day2_12'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_12'])){
+                    if (!checkdate($data['applicable_period_start_month2_12'], $data['applicable_period_start_day2_12'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_12','[続紙]7_算定対象期間_開始日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_13']) && !empty($data['applicable_period_start_day2_13'])){
-                if (!checkdate($data['applicable_period_start_month2_13'], $data['applicable_period_start_day2_13'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_13'])){
+                    if (!checkdate($data['applicable_period_start_month2_13'], $data['applicable_period_start_day2_13'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_13','[続紙]7_算定対象期間_開始日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
             if(!empty($data['applicable_period_start_month2_14']) && !empty($data['applicable_period_start_day2_14'])){
-                if (!checkdate($data['applicable_period_start_month2_14'], $data['applicable_period_start_day2_14'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_14'])){
+                    if (!checkdate($data['applicable_period_start_month2_14'], $data['applicable_period_start_day2_14'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_14','[続紙]7_算定対象期間_開始日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_start_month2_15']) && !empty($data['applicable_period_start_day2_15'])){
-                if (!checkdate($data['applicable_period_start_month2_15'], $data['applicable_period_start_day2_15'], '2000')) {
+                if(ctype_digit($data['applicable_period_start_month2_15'])){
+                    if (!checkdate($data['applicable_period_start_month2_15'], $data['applicable_period_start_day2_15'], '2000')) {
                     $validator->errors()->add('applicable_period_start_day2_15','[続紙]7_算定対象期間_開始日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_1']) && !empty($data['applicable_period_end_day2_1'])){
-                if (!checkdate($data['applicable_period_end_month2_1'], $data['applicable_period_end_day2_1'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_1'])){
+                    if (!checkdate($data['applicable_period_end_month2_1'], $data['applicable_period_end_day2_1'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_1','[続紙]7_算定対象期間_終了日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_2']) && !empty($data['applicable_period_end_day2_2'])){
-                if (!checkdate($data['applicable_period_end_month2_2'], $data['applicable_period_end_day2_2'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_2'])){
+                    if (!checkdate($data['applicable_period_end_month2_2'], $data['applicable_period_end_day2_2'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_2','[続紙]7_算定対象期間_終了日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_3']) && !empty($data['applicable_period_end_day2_3'])){
-                if (!checkdate($data['applicable_period_end_month2_3'], $data['applicable_period_end_day2_3'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_3'])){
+                    if (!checkdate($data['applicable_period_end_month2_3'], $data['applicable_period_end_day2_3'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_3','[続紙]7_算定対象期間_終了日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_4']) && !empty($data['applicable_period_end_day2_4'])){
-                if (!checkdate($data['applicable_period_end_month2_4'], $data['applicable_period_end_day2_4'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_4'])){
+                    if (!checkdate($data['applicable_period_end_month2_4'], $data['applicable_period_end_day2_4'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_4','[続紙]7_算定対象期間_終了日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_5']) && !empty($data['applicable_period_end_day2_5'])){
-                if (!checkdate($data['applicable_period_end_month2_5'], $data['applicable_period_end_day2_5'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_5'])){
+                    if (!checkdate($data['applicable_period_end_month2_5'], $data['applicable_period_end_day2_5'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_5','[続紙]7_算定対象期間_終了日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_6']) && !empty($data['applicable_period_end_day2_6'])){
-               if (!checkdate($data['applicable_period_end_month2_6'], $data['applicable_period_end_day2_6'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_6'])){
+                    if (!checkdate($data['applicable_period_end_month2_6'], $data['applicable_period_end_day2_6'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_6','[続紙]7_算定対象期間_終了日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_7']) && !empty($data['applicable_period_end_day2_7'])){
-                if (!checkdate($data['applicable_period_end_month2_7'], $data['applicable_period_end_day2_7'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_7'])){
+                    if (!checkdate($data['applicable_period_end_month2_7'], $data['applicable_period_end_day2_7'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_7','[続紙]7_算定対象期間_終了日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_8']) && !empty($data['applicable_period_end_day2_8'])){
-                if (!checkdate($data['applicable_period_end_month2_8'], $data['applicable_period_end_day2_8'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_8'])){
+                    if (!checkdate($data['applicable_period_end_month2_8'], $data['applicable_period_end_day2_8'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_8','[続紙]7_算定対象期間_終了日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_9']) && !empty($data['applicable_period_end_day2_9'])){
-                if (!checkdate($data['applicable_period_end_month2_9'], $data['applicable_period_end_day2_9'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_9'])){
+                    if (!checkdate($data['applicable_period_end_month2_9'], $data['applicable_period_end_day2_9'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_9','[続紙]7_算定対象期間_終了日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_10']) && !empty($data['applicable_period_end_day2_10'])){
-                if (!checkdate($data['applicable_period_end_month2_10'], $data['applicable_period_end_day2_10'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_10'])){
+                    if (!checkdate($data['applicable_period_end_month2_10'], $data['applicable_period_end_day2_10'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_10','[続紙]7_算定対象期間_終了日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_11']) && !empty($data['applicable_period_end_day2_11'])){
-                if (!checkdate($data['applicable_period_end_month2_11'], $data['applicable_period_end_day2_11'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_11'])){
+                    if (!checkdate($data['applicable_period_end_month2_11'], $data['applicable_period_end_day2_11'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_11','[続紙]7_算定対象期間_終了日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_12']) && !empty($data['applicable_period_end_day2_12'])){
-                if (!checkdate($data['applicable_period_end_month2_12'], $data['applicable_period_end_day2_12'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_12'])){
+                    if (!checkdate($data['applicable_period_end_month2_12'], $data['applicable_period_end_day2_12'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_12','[続紙]7_算定対象期間_終了日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['applicable_period_end_month2_13']) && !empty($data['applicable_period_end_day2_13'])){
-                if (!checkdate($data['applicable_period_end_month2_13'], $data['applicable_period_end_day2_13'], '2000')) {
+                if(ctype_digit($data['applicable_period_end_month2_13'])){
+                    if (!checkdate($data['applicable_period_end_month2_13'], $data['applicable_period_end_day2_13'], '2000')) {
                     $validator->errors()->add('applicable_period_end_day2_13','[続紙]7_算定対象期間_終了日付_13行目は正しい日付を入力してください。');
+                    }
+                }
+            }
+
+            if(!empty($data['applicable_period_end_month2_14']) && !empty($data['applicable_period_end_day2_14'])){
+                if(ctype_digit($data['applicable_period_end_month2_14'])){
+                    if (!checkdate($data['applicable_period_end_month2_14'], $data['applicable_period_end_day2_14'], '2000')) {
+                    $validator->errors()->add('applicable_period_end_day2_14','[続紙]7_算定対象期間_終了日付_14行目は正しい日付を入力してください。');
+                    }
+                }
+            }
+
+            if(!empty($data['applicable_period_end_month2_15']) && !empty($data['applicable_period_end_day2_15'])){
+                if(ctype_digit($data['applicable_period_end_month2_15'])){
+                    if (!checkdate($data['applicable_period_end_month2_15'], $data['applicable_period_end_day2_15'], '2000')) {
+                    $validator->errors()->add('applicable_period_end_day2_15','[続紙]7_算定対象期間_終了日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_start_month2_1']) && !empty($data['payment_period_start_day2_1'])){
-                if (!checkdate($data['payment_period_start_month2_1'], $data['payment_period_start_day2_1'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_1'])){
+                    if (!checkdate($data['payment_period_start_month2_1'], $data['payment_period_start_day2_1'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_1','[続紙]9_賃金支払対象期間_開始日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_2']) && !empty($data['payment_period_start_day2_2'])){
-                if (!checkdate($data['payment_period_start_month2_2'], $data['payment_period_start_day2_2'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_2'])){
+                    if (!checkdate($data['payment_period_start_month2_2'], $data['payment_period_start_day2_2'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_2','[続紙]9_賃金支払対象期間_開始日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_3']) && !empty($data['payment_period_start_day2_3'])){
-                if (!checkdate($data['payment_period_start_month2_3'], $data['payment_period_start_day2_3'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_3'])){
+                    if (!checkdate($data['payment_period_start_month2_3'], $data['payment_period_start_day2_3'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_3','[続紙]9_賃金支払対象期間_開始日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_4']) && !empty($data['payment_period_start_day2_4'])){
-                if (!checkdate($data['payment_period_start_month2_4'], $data['payment_period_start_day2_4'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_4'])){
+                    if (!checkdate($data['payment_period_start_month2_4'], $data['payment_period_start_day2_4'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_4','[続紙]9_賃金支払対象期間_開始日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_5']) && !empty($data['payment_period_start_day2_5'])){
-                if (!checkdate($data['payment_period_start_month2_5'], $data['payment_period_start_day2_5'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_5'])){
+                    if (!checkdate($data['payment_period_start_month2_5'], $data['payment_period_start_day2_5'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_5','[続紙]9_賃金支払対象期間_開始日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_6']) && !empty($data['payment_period_start_day2_6'])){
-                if (!checkdate($data['payment_period_start_month2_6'], $data['payment_period_start_day2_6'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_6'])){
+                    if (!checkdate($data['payment_period_start_month2_6'], $data['payment_period_start_day2_6'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_6','[続紙]9_賃金支払対象期間_開始日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_7']) && !empty($data['payment_period_start_day2_7'])){
-                if (!checkdate($data['payment_period_start_month2_7'], $data['payment_period_start_day2_7'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_7'])){
+                    if (!checkdate($data['payment_period_start_month2_7'], $data['payment_period_start_day2_7'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_7','[続紙]9_賃金支払対象期間_開始日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_8']) && !empty($data['payment_period_start_day2_8'])){
-                if (!checkdate($data['payment_period_start_month2_8'], $data['payment_period_start_day2_8'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_8'])){
+                    if (!checkdate($data['payment_period_start_month2_8'], $data['payment_period_start_day2_8'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_8','[続紙]9_賃金支払対象期間_開始日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_9']) && !empty($data['payment_period_start_day2_9'])){
-                if (!checkdate($data['payment_period_start_month2_9'], $data['payment_period_start_day2_9'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_9'])){
+                    if (!checkdate($data['payment_period_start_month2_9'], $data['payment_period_start_day2_9'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_9','[続紙]9_賃金支払対象期間_開始日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_10']) && !empty($data['payment_period_start_day2_10'])){
-                if (!checkdate($data['payment_period_start_month2_10'], $data['payment_period_start_day2_10'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_10'])){
+                    if (!checkdate($data['payment_period_start_month2_10'], $data['payment_period_start_day2_10'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_10','[続紙]9_賃金支払対象期間_開始日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_11']) && !empty($data['payment_period_start_day2_11'])){
-                if (!checkdate($data['payment_period_start_month2_11'], $data['payment_period_start_day2_11'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_11'])){
+                    if (!checkdate($data['payment_period_start_month2_11'], $data['payment_period_start_day2_11'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_11','[続紙]9_賃金支払対象期間_開始日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_12']) && !empty($data['payment_period_start_month2_12'])){
-                if (!checkdate($data['payment_period_start_month2_12'], $data['payment_period_start_month2_12'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_12'])){
+                    if (!checkdate($data['payment_period_start_month2_12'], $data['payment_period_start_month2_12'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_12','[続紙]9_賃金支払対象期間_開始日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_13']) && !empty($data['payment_period_start_day2_13'])){
-                if (!checkdate($data['payment_period_start_month2_13'], $data['payment_period_start_day2_13'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_13'])){
+                    if (!checkdate($data['payment_period_start_month2_13'], $data['payment_period_start_day2_13'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_13','[続紙]9_賃金支払対象期間_開始日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_14']) && !empty($data['payment_period_start_month2_14'])){
-                if (!checkdate($data['payment_period_start_month2_14'], $data['payment_period_start_month2_14'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_14'])){
+                    if (!checkdate($data['payment_period_start_month2_14'], $data['payment_period_start_month2_14'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_14','[続紙]9_賃金支払対象期間_開始日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_start_month2_15']) && !empty($data['payment_period_start_day2_15'])){
-                if (!checkdate($data['payment_period_start_month2_15'], $data['payment_period_start_day2_15'], '2000')) {
+                if(ctype_digit($data['payment_period_start_month2_15'])){
+                    if (!checkdate($data['payment_period_start_month2_15'], $data['payment_period_start_day2_15'], '2000')) {
                     $validator->errors()->add('payment_period_start_day2_15','[続紙]9_賃金支払対象期間_開始日付_15行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_end_month2_1']) && !empty($data['payment_period_end_day2_1'])){
-                if (!checkdate($data['payment_period_end_month2_1'], $data['payment_period_end_day2_1'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_1'])){
+                    if (!checkdate($data['payment_period_end_month2_1'], $data['payment_period_end_day2_1'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_1','[続紙]9_賃金支払対象期間_終了日付_1行目は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['payment_period_end_month2_2']) && !empty($data['payment_period_end_day2_2'])){
-                if (!checkdate($data['payment_period_end_month2_2'], $data['payment_period_end_day2_2'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_2'])){
+                    if (!checkdate($data['payment_period_end_month2_2'], $data['payment_period_end_day2_2'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_2','[続紙]9_賃金支払対象期間_終了日付_2行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_3']) && !empty($data['payment_period_end_day2_3'])){
-                if (!checkdate($data['payment_period_end_month2_3'], $data['payment_period_end_day2_3'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_3'])){
+                    if (!checkdate($data['payment_period_end_month2_3'], $data['payment_period_end_day2_3'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_3','[続紙]9_賃金支払対象期間_終了日付_3行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_4']) && !empty($data['payment_period_end_day2_4'])){
-                if (!checkdate($data['payment_period_end_month2_4'], $data['payment_period_end_day2_4'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_4'])){
+                    if (!checkdate($data['payment_period_end_month2_4'], $data['payment_period_end_day2_4'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_4','[続紙]9_賃金支払対象期間_終了日付_4行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_5']) && !empty($data['payment_period_end_day2_5'])){
-                if (!checkdate($data['payment_period_end_month2_5'], $data['payment_period_end_day2_5'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_5'])){
+                    if (!checkdate($data['payment_period_end_month2_5'], $data['payment_period_end_day2_5'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_5','[続紙]9_賃金支払対象期間_終了日付_5行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_6']) && !empty($data['payment_period_end_day2_6'])){
-                if (!checkdate($data['payment_period_end_month2_6'], $data['payment_period_end_day2_6'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_6'])){
+                    if (!checkdate($data['payment_period_end_month2_6'], $data['payment_period_end_day2_6'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_6','[続紙]9_賃金支払対象期間_終了日付_6行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_7']) && !empty($data['payment_period_end_day2_7'])){
-                if (!checkdate($data['payment_period_end_month2_7'], $data['payment_period_end_day2_7'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_7'])){
+                    if (!checkdate($data['payment_period_end_month2_7'], $data['payment_period_end_day2_7'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_7','[続紙]9_賃金支払対象期間_終了日付_7行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_8']) && !empty($data['payment_period_end_day2_8'])){
-                if (!checkdate($data['payment_period_end_month2_8'], $data['payment_period_end_day2_8'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_8'])){
+                    if (!checkdate($data['payment_period_end_month2_8'], $data['payment_period_end_day2_8'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_8','[続紙]9_賃金支払対象期間_終了日付_8行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_9']) && !empty($data['payment_period_end_day2_9'])){
-                if (!checkdate($data['payment_period_end_month2_9'], $data['payment_period_end_day2_9'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_9'])){
+                    if (!checkdate($data['payment_period_end_month2_9'], $data['payment_period_end_day2_9'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_9','[続紙]9_賃金支払対象期間_終了日付_9行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_10']) && !empty($data['payment_period_end_day2_10'])){
-                if (!checkdate($data['payment_period_end_month2_10'], $data['payment_period_end_day2_10'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_10'])){
+                    if (!checkdate($data['payment_period_end_month2_10'], $data['payment_period_end_day2_10'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_10','[続紙]9_賃金支払対象期間_終了日付_10行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_11']) && !empty($data['payment_period_end_day2_11'])){
-                if (!checkdate($data['payment_period_end_month2_11'], $data['payment_period_end_day2_11'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_11'])){
+                    if (!checkdate($data['payment_period_end_month2_11'], $data['payment_period_end_day2_11'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_11','[続紙]9_賃金支払対象期間_終了日付_11行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_12']) && !empty($data['payment_period_end_month2_12'])){
-                if (!checkdate($data['payment_period_end_month2_12'], $data['payment_period_end_month2_12'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_12'])){
+                    if (!checkdate($data['payment_period_end_month2_12'], $data['payment_period_end_month2_12'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_12','[続紙]9_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_13']) && !empty($data['payment_period_end_day2_13'])){
-                if (!checkdate($data['payment_period_end_month2_13'], $data['payment_period_end_day2_13'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_13'])){
+                    if (!checkdate($data['payment_period_end_month2_13'], $data['payment_period_end_day2_13'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_13','[続紙]9_賃金支払対象期間_終了日付_13行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_14']) && !empty($data['payment_period_end_month2_14'])){
-                if (!checkdate($data['payment_period_end_month2_14'], $data['payment_period_end_month2_14'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_14'])){
+                    if (!checkdate($data['payment_period_end_month2_14'], $data['payment_period_end_month2_14'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_14','[続紙]9_賃金支払対象期間_終了日付_14行目は正しい日付を入力してください。');
+                    }
                 }
             }
         
             if(!empty($data['payment_period_end_month2_15']) && !empty($data['payment_period_end_day2_15'])){
-                if (!checkdate($data['payment_period_end_month2_15'], $data['payment_period_end_day2_15'], '2000')) {
+                if(ctype_digit($data['payment_period_end_month2_15'])){
+                    if (!checkdate($data['payment_period_end_month2_15'], $data['payment_period_end_day2_15'], '2000')) {
                     $validator->errors()->add('payment_period_end_day2_15','[続紙]9_賃金支払対象期間_終了日付_15行目は正しい日付を入力してください。');
+                    }
                 }
-            }
+            } 
             
             if ($this->hasFile('file_wage_certificate_or_payment_status')) {
                 $totalSize += $this->file('file_wage_certificate_or_payment_status')->getSize();

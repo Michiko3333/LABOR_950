@@ -136,11 +136,15 @@
                 @endif
 
                 checkOver70();
+                remarksAndPartTimeWorker();
                 $('#over_70_check').change(function(){
                     checkOver70();
                 });
                 $('#N40_905C_90BF_8ED2').change(function(){
                     checkOver70_2();
+                });
+                $('#N42_005F_8F8A_8DDD_926E').change(function(){
+                    remarksAndPartTimeWorker();
                 });
                 function checkOver70() {
                     if($('#over_70_check').prop('checked')) {
@@ -156,6 +160,14 @@
                     } else {
                         $('#personal_number, #basic_pension_number').prop('disabled', true); 
                         $('#personal_number, #basic_pension_number').val('');
+                    }
+                }
+                function remarksAndPartTimeWorker() {
+                    if($('#N42_005F_8F8A_8DDD_926E').prop('checked')) {
+                        $('#N43_947A_9242_8BC7_94D4').prop('disabled', false);
+                    } else {
+                        $('#N43_947A_9242_8BC7_94D4').prop('disabled', true); 
+                        $('#N43_947A_9242_8BC7_94D4').val('');
                     }
                 }
             });

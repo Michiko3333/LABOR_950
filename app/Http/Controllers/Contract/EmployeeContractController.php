@@ -24,7 +24,7 @@ class EmployeeContractController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isBasicDepartment() || !$userPermission->isReadableFor(7)) {
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -34,8 +34,9 @@ class EmployeeContractController extends Controller
     public function index(Request $request)
     {
         // 操作する会社が設定されているか
-        if (!$this->isSelectedCompany()) {
-            return redirect()->route('home.select');
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(7)) {
+            return redirect()->route('home.index');
         }
 
         $employee_id = $request->input('employee_id');
@@ -85,7 +86,7 @@ class EmployeeContractController extends Controller
     public function downlaod(EmployeeContractRequest $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isWritableFor(7)) {
+        if (!$userPermission->isReadableFor(7)) {
             return redirect()->route('home.index');
         }
 

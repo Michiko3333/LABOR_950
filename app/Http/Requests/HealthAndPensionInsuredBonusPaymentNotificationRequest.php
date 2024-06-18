@@ -71,16 +71,17 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
-            return $input->over_70_check === 'on';
-        });
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthday_era = $data['employee_birthday_era'] ?? "";
             $birthday_year = $data['employee_birthday_year'] ?? "";
             $birthday_month = $data['employee_birthday_month'] ?? "";
             $birthday_date = $data['employee_birthday_date'] ?? "";
-
+            $bonus_payment_date_era = $data['bonus_payment_date_era'] ?? "";
+            $bonus_payment_date_year = $data['bonus_payment_date_year'] ?? "";
+            $bonus_payment_date_month = $data['bonus_payment_date_month'] ?? "";
+            $bonus_payment_date_date = $data['bonus_payment_date_date'] ?? "";
+    
             if ($birthday_era === '1') {
                 if (
                     ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
@@ -119,10 +120,36 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
                 }
             }
             if(!empty($birthday_month) && !empty($birthday_date)){
-                if (!checkdate($birthday_month, $birthday_date, '2000')) {
+                if(ctype_digit($birthday_month)){
+                    if (!checkdate($birthday_month, $birthday_date, '2000')) {
                     $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
+
+            if ($bonus_payment_date_era === '7') {
+                if (
+                    ($bonus_payment_date_year == 1 && ($bonus_payment_date_month < 1 || ($bonus_payment_date_month == 1 && $bonus_payment_date_date < 8))) ||
+                    ($bonus_payment_date_year == 31 && ($bonus_payment_date_month > 4 || ($bonus_payment_date_month == 4 && $bonus_payment_date_date > 30))) ||
+                    ($bonus_payment_date_year > 31)
+                ) {
+                    $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
+                }
+            } elseif ($bonus_payment_date_era === '9') {
+                if ($bonus_payment_date_year == 1 && $bonus_payment_date_month < 5) {
+                    $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
+                }
+            }
+            if(!empty($bonus_payment_date_month) && !empty($bonus_payment_date_date)){
+                if(ctype_digit($bonus_payment_date_month)){
+                    if (!checkdate($bonus_payment_date_month, $bonus_payment_date_date, '2000')) {
+                    $validator->errors()->add('bonus_payment_date_date','賞与支払年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+        });
+        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
+            return $input->over_70_check === 'on';
         });
     }
 

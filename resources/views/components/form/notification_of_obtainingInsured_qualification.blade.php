@@ -9,6 +9,18 @@
                             clearInput.disabled = !otherCheckbox.checked;
                             clearInput.value = "";
                         });
+                        
+                        const acquisitionReason = document.getElementById('N54_005F_89C1_93FC_8ED2_94D4_8D86');
+                        const otherAcquisitionReason = document.getElementById('N55_005F_8E73_8A4F_8BC7_94D4');
+                        acquisitionReason.addEventListener('change', function() {
+                            if(acquisitionReason.value === 'その他') {
+                                otherAcquisitionReason.disabled = false;
+                            } else {
+                                otherAcquisitionReason.disabled = true;
+                                otherAcquisitionReason.value = "";
+                            }
+                        });
+
                     });
                 </script>
                 <style>
@@ -3325,7 +3337,7 @@
                                 </select>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 658px; top: 466.5px;">
-                                <input class="egov-tool-field-rect onImage" id="N55_005F_8E73_8A4F_8BC7_94D4" maxlength="7" name="other_acquisition_reason" style="width: 70px; height: 16px; font-size: 10px; text-align: left; line-height: 10px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('other_acquisition_reason') }}"/>
+                                <input class="egov-tool-field-rect onImage" disabled id="N55_005F_8E73_8A4F_8BC7_94D4" maxlength="7" name="other_acquisition_reason" style="width: 70px; height: 16px; font-size: 10px; text-align: left; line-height: 10px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('other_acquisition_reason') }}"/>
                             </div>
                             <div class="ledger-container">
                                 <img alt="法令様式画像" src="{{ $dataUri }}">    

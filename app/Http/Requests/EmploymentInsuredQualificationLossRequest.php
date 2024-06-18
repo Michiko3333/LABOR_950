@@ -52,7 +52,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             "birthday_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "birthday_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "birthday_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "insured_age_type" => 'nullable|int|between:1,4',
+            "insured_age_type" => 'nullable|string|max:20',
             "hello_work_office_no" => 'nullable|string|regex:/^[0-9]{5}$/u',
             "employment_status" => 'string',
             "company_name_abbreviation" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
@@ -109,7 +109,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             $retirementYear = $data['retirement_date_year'] ?? "";
             $retirementMonth = $data['retirement_date_month'] ?? "";
             $retirementDay = $data['retirement_date_day'] ?? "";
-            
+
             if ($birthdayEra === '大正') {
                 if (
                     ($birthdayYear == 1 && ($birthdayMonth < 7 || ($birthdayMonth == 7 && $birthdayDay < 30))) ||
@@ -140,8 +140,10 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                 }
             }
             if(!empty($birthdayMonth) && !empty($birthdayDay)){
-                if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
                     $validator->errors()->add('birthday_day','1枚目_生年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -153,7 +155,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                 ) {
                     $validator->errors()->add('insured_date_era', '1枚目_資格取得年月日は正しい日付を入力してください。');
                 }
-            } elseif($insuredEra === '平成') {
+            } elseif ($insuredEra === '平成') {
                 if (
                     ($insuredYear == 1 && ($insuredMonth < 1 || ($insuredMonth == 1 && $insuredDay < 8))) ||
                     ($insuredYear == 31 && ($insuredMonth > 4 || ($insuredMonth == 4 && $insuredDay > 30))) ||
@@ -167,8 +169,10 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                 }
             }
             if(!empty($insuredMonth) && !empty($insuredDay)){
-                if (!checkdate($insuredMonth, $insuredDay, '2000')) {
+                if(ctype_digit($insuredMonth)){
+                    if (!checkdate($insuredMonth, $insuredDay, '2000')) {
                     $validator->errors()->add('insured_date_era','1枚目_資格取得年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
@@ -186,16 +190,21 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
                 }
             }
             if(!empty($retirementMonth) && !empty($retirementDay)){
-                if (!checkdate($retirementMonth, $retirementDay, '2000')) {
+                if(ctype_digit($birthdayMonth)){
+                    if (!checkdate($retirementMonth, $retirementDay, '2000')) {
                     $validator->errors()->add('retirement_date_era','1枚目_離職年月日は正しい日付を入力してください。');
+                    }
                 }
             }
 
             if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
-                if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
+                if(ctype_digit($data['stay_date_period_month'])){
+                    if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
                     $validator->errors()->add('stay_date_period_year','1枚目_在留期間は正しい日付を入力してください。');
+                    }
                 }
             }
+
             if ($this->hasFile('file_disqualification_status')) {
                 $totalSize += $this->file('file_disqualification_status')->getSize();
             }
@@ -219,7 +228,7 @@ class EmploymentInsuredQualificationLossRequest extends FormRequest
             'stay_date_period_year.required_with' => '1枚目_在留期間_年を入力してください。',
             'stay_date_period_month.required_with' => '1枚目_在留期間_月を入力してください。',
             'stay_date_period_day.required_with' => '1枚目_在留期間_日を入力してください。',
-        ];  
+        ];
     }
     public function attributes()
     {

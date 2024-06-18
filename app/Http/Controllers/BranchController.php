@@ -22,7 +22,7 @@ class BranchController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isReadableFor(2) || !$userPermission->isSelectedCompany()) {
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -31,6 +31,10 @@ class BranchController extends Controller
 
     public function branch(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(2)) {
+            return redirect()->route('home.index');
+        }
         $current_company = CurrentUser::currentCompany();
         $branch = $current_company->branch()->where('delete_flg', 0)->get();
         $headquarters = $branch->where('branch_type', 1)->first();
@@ -54,9 +58,10 @@ class BranchController extends Controller
     public function branch_post(BranchRequest $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isWritableFor(2)) {
+        if (!$userPermission->isReadableFor(2) || !$userPermission->isWritableFor(2)) {
             return redirect()->route('home.index');
         }
+
         DB::beginTransaction();
         try {
             $request->request->remove('_token');

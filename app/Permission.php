@@ -12,6 +12,7 @@ class Permission
 {
     private $role_id = '';
     private $external_advsor = false;
+    private $employee_id = 0;
     private $employee_type = 0;
     private $employee_status = 0;
     private $department_permissions = [];
@@ -38,9 +39,11 @@ class Permission
                 $this->employee_status = $d['employee_status'];
                 $this->department_permissions = $d['department_permissions'];
                 $this->features = $d['features'];
+                $this->employee_id = $d['employee_id'];
             } else {
                 $employee = CurrentUser::info();
                 $employee_id = $employee->id;
+                $this->employee_id = $employee_id;
                 $this->role_id = $employee->role_id;
                 $this->external_advsor = $employee->external_advsor == 1;
                 $this->employee_type = $employee->employee_type;
@@ -58,6 +61,7 @@ class Permission
                     })->get()->toArray();
 
                 session()->put('permissions', [
+                    'employee_id' => $this->employee_id,
                     'role_id' => $this->role_id,
                     'external_advsor' => $this->external_advsor,
                     'employee_type' => $this->employee_type,
@@ -67,6 +71,11 @@ class Permission
                 ]);
             }
         }
+    }
+
+    public function employee_id()
+    {
+        return $this->employee_id;
     }
 
     public function isSelectedCompany()
@@ -89,6 +98,11 @@ class Permission
         return $this->role_id == '500';
     }
 
+    public function isDirector()
+    {
+        return $this->getEmployeeType() < 3;
+    }
+
     public function isExternalAdvisor()
     {
         return $this->external_advsor;
@@ -106,7 +120,7 @@ class Permission
 
     public function isBasicDepartment()
     {
-        return $this->isGeneralAffair() || $this->isAccounting() || $this->getEmployeeType() < 3;
+        return $this->isDirector() || $this->isGeneralAffair() || $this->isAccounting();
     }
 
     public function getEmployeeType()
@@ -147,7 +161,7 @@ class Permission
     }
     public function isReadableFor($feature_id)
     {
-        if ($this->isAdmin()) return 1;
+        if ($this->isAdmin() || $this->isDirector()) return 1;
         $permission = array_values(array_filter($this->features, function ($permission) use ($feature_id) {
             return $permission['feature_id'] === $feature_id;
         }));
@@ -161,7 +175,7 @@ class Permission
 
     public function isWritableFor($feature_id)
     {
-        if ($this->isAdmin()) return 1;
+        if ($this->isAdmin() || $this->isDirector()) return 1;
         $permission = array_values(array_filter($this->features, function ($permission) use ($feature_id) {
             return $permission['feature_id'] === $feature_id;
         }));
@@ -174,6 +188,7 @@ class Permission
 
     public function isReadableAtleast($ids = [])
     {
+        if ($this->isAdmin() || $this->isDirector()) return true;
         foreach ($ids as $id) {
             $r = $this->isReadableFor($id);
             if ($r) return true;
@@ -183,6 +198,7 @@ class Permission
 
     public function isWritableAtleast($ids = [])
     {
+        if ($this->isAdmin() || $this->isDirector()) return true;
         foreach ($ids as $id) {
             $r = $this->isWritableFor($id);
             if ($r) return true;
