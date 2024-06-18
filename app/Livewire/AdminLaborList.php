@@ -16,6 +16,7 @@ class AdminLaborList extends BaseTable
     {
         $condition = Employee::select([
             'm_employee.id as id',
+            'employee_type',
             'company.name as company_name',
             'last_name',
             'first_name',

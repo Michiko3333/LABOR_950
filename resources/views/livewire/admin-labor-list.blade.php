@@ -27,24 +27,32 @@
         </thead>
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
-            <tr class="card">
-                <td>{{ $item->last_name }} {{$item->first_name}}</td>
-                <td>@if($item->company_division == 1) 社労士 @elseif($item->company_division == 2) 顧客社員 @endif</td>
-                <td>{{$item->company_name}}</td>
-                <td class="right aligned collapsing">
-                    @if($item->company_division == 1)
-                    <button class="ui basic primary button" type="button" wire:click="toAddCompany({{ $item->id }})">
-                        顧客会社設定
-                    </button>
-                    @endif
-                    <button class="ui basic primary button" type="button" wire:click="toPermission({{ $item->id }})">
-                        権限
-                    </button>
-                    <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
-                        編集
-                    </button>
-                </td>
-            </tr>
+                <tr class="card">
+                    <td>{{ $item->last_name }} {{ $item->first_name }}</td>
+                    <td>
+                        @if ($item->company_division == 1)
+                            社労士
+                        @elseif($item->company_division == 2)
+                            顧客社員
+                        @endif
+                    </td>
+                    <td>{{ $item->company_name }}</td>
+                    <td class="right aligned collapsing">
+                        @if ($item->company_division == 1)
+                            <button class="ui button" type="button" wire:click="toAddCompany({{ $item->id }})">
+                                顧客会社設定
+                            </button>
+                        @endif
+                        @if ($item->employee_type > 2)
+                            <button class="ui button" type="button" wire:click="toPermission({{ $item->id }})">
+                                権限
+                            </button>
+                        @endif
+                        <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
+                            編集
+                        </button>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
