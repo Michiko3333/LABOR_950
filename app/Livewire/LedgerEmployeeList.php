@@ -20,6 +20,7 @@ use App\Models\Retirement_reason_employee_decision_reasons;
 use App\Http\Controllers\Controller;
 use App\Models\Prefecture;
 use Carbon\Carbon;
+use App\Models\Values_employee_insured_age_type;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,7 @@ class LedgerEmployeeList extends BaseTable
 
         $employee_id = $employeeData['id'];
         $employee_prefecture_id = $employeeData['address_prefecture'];
+        $employee_insured_age_type = $employeeData['insured_age_type'];
         $employee_prefecture_data = Prefecture::where('id', $employee_prefecture_id)->first();
         $branch_prefecture_id = $branchData['address_prefecture'];
         $branch_prefecture_data = Prefecture::where('id', $branch_prefecture_id)->first();
@@ -176,6 +178,9 @@ class LedgerEmployeeList extends BaseTable
                 'day' => $over_70_non_applicable_convert_date['japanese_calendar_result']->day,
             ];
         }
+        if (!empty($employee_insured_age_type)) {
+            $insured_age_type_data = Values_employee_insured_age_type::where('id', $employee_insured_age_type)->value('name');
+        }
 
         $output = [
             'employee' => $employeeData,
@@ -204,6 +209,7 @@ class LedgerEmployeeList extends BaseTable
             'spouse_prefecture_data' => $spouse_prefecture_data ?? '',
             'insurance_loss_convert_date' => $insurance_loss_convert_date ?? '',
             'over_70_non_applicable_convert_date' => $over_70_non_applicable_convert_date ?? '',
+            'insured_age_type_data' => $insured_age_type_data ?? '',
         ];
 
         $this->selected_id = $id;

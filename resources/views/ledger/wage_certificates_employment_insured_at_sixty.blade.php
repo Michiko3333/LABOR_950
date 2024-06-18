@@ -211,21 +211,21 @@
                 $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85_2nd').val(employmentInsuredNo6digit);
                 $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD_2nd').val(employmentInsuredNoCD);
 
-                var employmentInsuranceOfficeNo = employee.employment_insurance_office_no;
-                var isValidemploymentInsuranceOfficeNo = employmentInsuranceOfficeNo && employmentInsuranceOfficeNo.length ===
+                var branchInsuranceOfficeNo = branch.employment_insurance_office_no;
+                var isValidBranchInsuranceOfficeNo = branchInsuranceOfficeNo && branchInsuranceOfficeNo.length ===
                     11;
-                var employmentInsuranceOfficeNo4digit = isValidemploymentInsuranceOfficeNo ? employmentInsuranceOfficeNo
+                var branchInsuranceOfficeNo4digit = isValidBranchInsuranceOfficeNo ? branchInsuranceOfficeNo
                     .substring(0, 4) : "";
-                var employmentInsuranceOfficeNo6digit = isValidemploymentInsuranceOfficeNo ? employmentInsuranceOfficeNo
+                var branchInsuranceOfficeNo6digit = isValidBranchInsuranceOfficeNo ? branchInsuranceOfficeNo
                     .substring(4, 10) : "";
-                var employmentInsuranceOfficeNoCD = isValidemploymentInsuranceOfficeNo ? employmentInsuranceOfficeNo.substring(
+                var branchInsuranceOfficeNoCD = isValidBranchInsuranceOfficeNo ? branchInsuranceOfficeNo.substring(
                     10, 11) : "";
-                $('#J10_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(employmentInsuranceOfficeNo4digit);
-                $('#J11_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employmentInsuranceOfficeNo6digit);
-                $('#J12_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employmentInsuranceOfficeNoCD);
-                $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(employmentInsuranceOfficeNo4digit);
-                $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employmentInsuranceOfficeNo6digit);
-                $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employmentInsuranceOfficeNoCD);
+                $('#J10_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branchInsuranceOfficeNo4digit);
+                $('#J11_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branchInsuranceOfficeNo6digit);
+                $('#J12_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branchInsuranceOfficeNoCD);
+                $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branchInsuranceOfficeNo4digit);
+                $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branchInsuranceOfficeNo6digit);
+                $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branchInsuranceOfficeNoCD);
 
                 if (headquarters.tel_area_code && headquarters.tel_city_code && headquarters.tel_subscriber_code) {
                     $('#J68_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code);

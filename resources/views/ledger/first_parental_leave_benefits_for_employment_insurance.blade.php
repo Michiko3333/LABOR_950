@@ -209,13 +209,13 @@
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
 
-                if (employee.employment_insurance_office_no !== null && employee.employment_insurance_office_no.length == 11) {
-                    $('#J23_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(employee.employment_insurance_office_no.substring(0, 4));
-                    $('#J24_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employee.employment_insurance_office_no.substring(4, 10));
-                    $('#J25_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employee.employment_insurance_office_no.substring(10, 11));
-                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(employee.employment_insurance_office_no.substring(0, 4));
-                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(employee.employment_insurance_office_no.substring(4, 10));
-                    $('#J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(employee.employment_insurance_office_no.substring(10, 11));
+                if (branch.employment_insurance_office_no !== null && branch.employment_insurance_office_no.length == 11) {
+                    $('#J23_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.employment_insurance_office_no.substring(0, 4));
+                    $('#J24_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.employment_insurance_office_no.substring(4, 10));
+                    $('#J25_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.employment_insurance_office_no.substring(10, 11));
+                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.employment_insurance_office_no.substring(0, 4));
+                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.employment_insurance_office_no.substring(4, 10));
+                    $('#J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.employment_insurance_office_no.substring(10, 11));
                 } else {
                     $('#J23_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val("");
                     $('#J24_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val("");
