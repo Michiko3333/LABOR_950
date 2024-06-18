@@ -521,7 +521,7 @@
                     });
                 });
             </script>
-            <script>
+            <script type="module">
                 $(document).ready(function() {
                     $("#ledger-form").submit(function(event) {
                         if (!$("#certificate_checkbox_1").prop("checked")) {
