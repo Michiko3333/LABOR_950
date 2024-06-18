@@ -189,11 +189,11 @@
                     $('#J18_005F_8C8E').val(employmentRetirementConvertDate['month'] ?? "");
                     $('#J19_005F_93FA').val(employmentRetirementConvertDate['day'] ?? "");
                 }
-                if (branch.agreed_hours_year_h != null) {
-                    $('#J22_005F_8E9E_8AD4').val(branch.agreed_hours_year_h);
+                if (branch.agreed_hours_week_h != null) {
+                    $('#J22_005F_8E9E_8AD4').val(parseInt(branch.agreed_hours_week_h));
                 }
-                if (branch.agreed_hours_year_m != null) {
-                    $('#J23_005F_95AA').val(branch.agreed_hours_year_m);
+                if (branch.agreed_hours_week_m != null) {
+                    $('#J23_005F_95AA').val(parseInt(branch.agreed_hours_week_m));
                 }
                 $('#J27_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? "");
                 $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeNameKana);

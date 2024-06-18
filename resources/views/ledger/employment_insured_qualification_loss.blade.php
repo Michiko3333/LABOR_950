@@ -237,10 +237,10 @@
                 $('#J19_005F_93FA').val(employmentRetirementConvertDate['day'] ?? "");
                 $('#J20_005F_9172_8EB8_8CB4_88F6').val(employee.insurance_loss_reason);
                 if (branch.agreed_hours_week_h != null) {
-                    $('#J22_005F_8E9E_8AD4').val(parseInt(agreed_hours_week_h));
+                    $('#J22_005F_8E9E_8AD4').val(parseInt(branch.agreed_hours_week_h));
                 }
                 if (branch.agreed_hours_week_m != null) {
-                    $('#J23_005F_95AA').val(parseInt(agreed_hours_week_m));
+                    $('#J23_005F_95AA').val(parseInt(branch.agreed_hours_week_m));
                 }
                 $('#J27_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? '');
                 $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((employee.last_name_kana ? employee.last_name_kana + '　' :
