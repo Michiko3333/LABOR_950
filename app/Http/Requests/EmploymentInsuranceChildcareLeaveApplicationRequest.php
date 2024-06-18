@@ -126,7 +126,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'today_japan_era_year' => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'today_japan_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
+            'headquarters_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             'headquarters_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',

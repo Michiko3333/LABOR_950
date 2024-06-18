@@ -28,7 +28,7 @@ class MedicalInsurerCertificateRequest extends FormRequest
             "certification_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:certification_month,certification_year',
             "medical_insurer_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "medical_insurer_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
-            "medical_insurer_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
+            "medical_insurer_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             "medical_insurer_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             "medical_insurer_representative" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "medical_insurer_tel_area_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',

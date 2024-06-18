@@ -38,7 +38,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "csv_pension_office_no" => 'required|string|regex:/^[0-9]{5}+$/',
             "post_code_former" => 'required|string|regex:/^[0-9]{1,3}+$/',
             "post_code_latter" => 'required|string|regex:/^[0-9]{1,4}+$/',
-            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "business_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "business_owner_name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+\z/u',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
