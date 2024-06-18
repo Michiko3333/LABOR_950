@@ -845,34 +845,11 @@
                             </div>
                         </div>
                         <div class="two fields">
-                            <div class="field {{ err($errors, 'pension_office_no') }}">
-                                <label for="pension_office_no">事業所番号（厚生年金）</label>
-                                <input type="text" id="pension_office_no" name="pension_office_no"
-                                    value="{{ old('pension_office_no', isset($employee_id) ? $employee->pension_office_no : '') }}"
-                                    placeholder="01234">
-                            </div>
                             <div class="field {{ err($errors, 'pension_no') }}">
                                 <label for="pension_no">基礎年金番号</label>
                                 <input type="text" id="pension_no" name="pension_no"
                                     value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
                                     placeholder="0123456789">
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'pension_office_reference_prefecture') }}">
-                                <label for="pension_office_reference_prefecture">事業所整理記号-都道府県コード</label>
-                                <input type="text" name="pension_office_reference_prefecture" placeholder="01"
-                                    value="{{ old('pension_office_reference_prefecture', isset($employee_id) ? $employee->pension_office_reference_prefecture : '') }}">
-                            </div>
-                            <div class="field {{ err($errors, 'pension_office_reference_no_cities') }}">
-                                <label for="pension_office_reference_no_cities">事業所整理記号-郡市区記号</label>
-                                <input type="text" name="pension_office_reference_no_cities" placeholder="11"
-                                    value="{{ old('pension_office_reference_no_cities', isset($employee_id) ? $employee->pension_office_reference_no_cities : '') }}">
-                            </div>
-                            <div class="field {{ err($errors, 'pension_office_reference_no_office') }}">
-                                <label for="pension_office_reference_no_office">事業所整理記号-事業所記号</label>
-                                <input type="text" name="pension_office_reference_no_office" placeholder="イロハ"
-                                    value="{{ old('pension_office_reference_no_office', isset($employee_id) ? $employee->pension_office_reference_no_office : '') }}">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -910,23 +887,31 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="ui divider my-2"></div>
                         <div class="two fields">
-                            <div class="field {{ err($errors, 'insurance_office_reference_no') }}">
-                                <label for="insurance_office_reference_no">事業所整理番号（保険）</label>
-                                <input type="text" id="insurance_office_reference_no"
-                                    name="insurance_office_reference_no"
-                                    value="{{ old('insurance_office_reference_no', isset($employee_id) ? $employee->insurance_office_reference_no : '') }}"
-                                    placeholder="">
+                            <div class="field {{ err($errors, 'insured_age_type') }}">
+                                <label for="insured_age_type">取得時被保険者種類</label>
+                                <select class="ui fluid dropdown" name="insured_age_type"
+                                    value="{{ old('insured_age_type', isset($employee_id) ? $employee->insured_age_type : '') }}">
+                                    <option value="">未選択</option>
+                                    @foreach ($employee_insured_age_type as $k => $value)
+                                        <option value="{{ $k }}"
+                                            {{ old('insured_age_type') == "$k" ||
+                                            (isset($employee) && old('insured_age_type', $employee->insured_age_type) == "$k")
+                                                ? 'selected'
+                                                : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="field {{ err($errors, 'employment_insurance_office_no') }}">
-                                <label for="employment_insurance_office_no">事業所番号（雇用保険）</label>
-                                <input type="text" id="employment_insurance_office_no"
-                                    name="employment_insurance_office_no"
-                                    value="{{ old('employment_insurance_office_no', isset($employee_id) ? $employee->employment_insurance_office_no : '') }}"
-                                    placeholder="">
+                            <div class="field {{ err($errors, 'insurer_reference_no') }}">
+                                <label for="insurer_reference_no">被保険者整理番号</label>
+                                <input type="text" id="insurer_reference_no" name="insurer_reference_no"
+                                    value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
+                                    placeholder="0123456789" maxLength="10">
                             </div>
                         </div>
-                        <div class="ui divider my-2"></div>
                         <div class="three fields">
                             <div class="field {{ err($errors, 'insurer_no') }}">
                                 <label for="insurer_no">保険者番号</label>
@@ -989,6 +974,36 @@
                                         value='1'
                                         {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || old('unauthorized_activities_permission_flg') == '1' ? 'checked' : '' }}>
                                     <label>資格外活動許可</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field {{ err($errors, 'residential_status_id') }}">
+                            <label for="residential_status_id">在留資格</label>
+                            <select class="ui fluid dropdown" name="residential_status_id"
+                                value="{{ old('residential_status_id', isset($employee_id) ? $employee->residential_status_id : '') }}">
+                                <option value="">未選択</option>
+                                @foreach ($residential_status as $k => $value)
+                                    <option value="{{ $k }}"
+                                        {{ old('residential_status_id') == "$k" ||
+                                        (isset($employee) && old('residential_status_id', $employee->residential_status_id) == "$k")
+                                            ? 'selected'
+                                            : '' }}>
+                                        {{ $value }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="two fields">
+                            <div class="field {{ err($errors, 'formatted_stay_date_period') }}">
+                                <label>在留期間（期限）</label>
+                                <div class="ui calendar" id="retirement_date_calendar">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input type="text" placeholder="Date" name="stay_date_period"
+                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
+                                        <input type="hidden" name="formatted_stay_date_period"
+                                            id="formatted_stay_date_period" value="{{ old('stay_date_period') }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
