@@ -2340,14 +2340,14 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:755px; top:1038px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="264"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J70_005F_944E" value="{{ old('period_with_leave_start_included_month') }}"
-            name="period_with_leave_start_included_month" maxlength="2"></SPAN>
+            type="TEXT" id="J70_005F_944E" value="{{ old('period_with_leave_start_included_year') }}"
+            name="period_with_leave_start_included_year" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:791px; top:1038px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="265"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J71_005F_8C8E" value="{{ old('period_with_leave_start_included_day') }}"
-            name="period_with_leave_start_included_day" maxlength="2"></SPAN>
+            type="TEXT" id="J71_005F_8C8E" value="{{ old('period_with_leave_start_included_month') }}"
+            name="period_with_leave_start_included_month" maxlength="2"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-left:2px solid rgb(0, 0, 0); left:906px; top:965px; width:2px; height:231px;"></SPAN>
     <SPAN
