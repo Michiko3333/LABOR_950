@@ -465,7 +465,7 @@
 				<日>creation_date_day</日>
 			</作成年月日>
 			<提出代行者_事務代理者の表示>submission_agent</提出代行者_事務代理者の表示>
-			<氏名>labor_consultant_fullname_2</氏名>
+			<氏名>labor_consultant_fullname</氏名>
 			<電話番号>
 				<市外局番>labor_consultant_tel_area_code</市外局番>
 				<市内局番>labor_consultant_tel_city_code</市内局番>
