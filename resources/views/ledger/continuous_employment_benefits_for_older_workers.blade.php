@@ -150,15 +150,21 @@
                 const company = data['company'];
                 const todaySet = data['todaySet'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
+                const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 if (employee.last_name_kana && employee.first_name_kana) {
                     $('#J2_005F_8E81_96BC').val(employee.last_name_kana + '　' + employee.first_name_kana);
                     $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
                         employee.first_name_kana);
+                } else {
+                    $('#J2_005F_8E81_96BC').val('');
+                    $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val('');
                 }
                 if (employee.last_name && employee.first_name) {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                     $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
-
+                } else {
+                    $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val('');
+                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val('');
                 }
                 var employmentInsuredNo = employee.employment_insured_no;
                 if (employmentInsuredNo && employmentInsuredNo.length === 11) {
@@ -168,6 +174,21 @@
                     $('#J8_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employmentInsuredNo4digit);
                     $('#J9_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employmentInsuredNo6digit);
                     $('#J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employmentInsuredNoCD);
+                } else {
+                    $('#J8_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
+                    $('#J9_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
+                    $('#J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
+                }
+                if (employmentInsuredConvertDate != null) {
+                    $('#J12_005F_944E_8D86').val(employmentInsuredConvertDate['era']);
+                    $('#J13_005F_944E').val(employmentInsuredConvertDate['year']);
+                    $('#J14_005F_8C8E').val(employmentInsuredConvertDate['month']);
+                    $('#J15_005F_93FA').val(employmentInsuredConvertDate['day']);
+                } else {
+                    $('#J12_005F_944E_8D86').val("");
+                    $('#J13_005F_944E').val("");
+                    $('#J14_005F_8C8E').val("");
+                    $('#J15_005F_93FA').val("");
                 }
                 var branchInsuranceOfficeNo = branch.employment_insurance_office_no;
                 if (branchInsuranceOfficeNo && branchInsuranceOfficeNo.length === 11) {
@@ -177,11 +198,19 @@
                     $('#J4_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branchInsuranceOfficeNo4digit);
                     $('#J5_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branchInsuranceOfficeNo6digit);
                     $('#J6_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branchInsuranceOfficeNoCD);
+                } else {
+                    $('#J4_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val('');
+                    $('#J5_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
+                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
                 }
                 if (headquarters.tel_area_code && headquarters.tel_city_code && headquarters.tel_subscriber_code) {
                     $('#J51_005F_8E73_8A4F_8BC7_94D4').val(headquarters.tel_area_code);
                     $('#J52_005F_8E73_93E0_8BC7_94D4').val(headquarters.tel_city_code);
                     $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val(headquarters.tel_subscriber_code);
+                } else {
+                    $('#J51_005F_8E73_8A4F_8BC7_94D4').val('');
+                    $('#J52_005F_8E73_93E0_8BC7_94D4').val('');
+                    $('#J53_005F_89C1_93FC_8ED2_94D4_8D86').val('');
                 }
                 $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((headquarters_prefecture_data.name ?? '') + (
                     headquarters.address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters
