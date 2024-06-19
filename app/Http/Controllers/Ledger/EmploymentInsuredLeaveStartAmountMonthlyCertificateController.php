@@ -503,6 +503,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             $response = $XML->run($request, $separater = True);
             if ($response[0] == false) {
                 $errorMessage = $response[1];
+                \Log::error(print_r($response, true));
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
