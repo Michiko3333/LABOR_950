@@ -876,13 +876,13 @@
                                 <label for="insurer_no">保険者番号</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="0123456789">
+                                    placeholder="12345678" maxLength="8">
                             </div>
                             <div class="field {{ err($errors, 'insurer_reference_no') }}">
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="0123456789" maxLength="10">
+                                    placeholder="012" maxLength="3">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -892,7 +892,7 @@
                                 <label for="employment_insured_no">被保険者番号</label>
                                 <input type="text" id="employment_insured_no" name="employment_insured_no"
                                     value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
-                                    placeholder="0123456789" maxLength="10">
+                                    placeholder="01234567891" maxLength="11">
                             </div>
                             <div class="field {{ err($errors, 'employment_insurance_applied_date') }}">
                                 <label>雇用保険届出日</label>
@@ -979,41 +979,6 @@
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
                                     placeholder="0123456789" maxlength="10">
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'insurer_no') }}">
-                                <label for="insurer_no">保険者番号</label>
-                                <input type="text" id="insurer_no" name="insurer_no"
-                                    value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="0123456789">
-                            </div>
-                            <div class="field {{ err($errors, 'employment_insurance_applied_date') }}">
-                                <label>雇用保険届出日</label>
-                                <div class="ui calendar" id="employment_insurance_applied_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date"
-                                            name="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
-                                        <input type="hidden" name="employment_insurance_applied_date"
-                                            id="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'employment_insured_date') }}">
-                                <label>雇用保険資格取得日</label>
-                                <div class="ui calendar" id="employment_insured_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="employment_insured_date"
-                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
-                                        <input type="hidden" name="employment_insured_date"
-                                            id="employment_insured_date"
-                                            value="{{ old('employment_insured_date') }}">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
