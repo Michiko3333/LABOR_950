@@ -42,7 +42,10 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
             $data['employment_address'] = str_replace(['-', '‐', '―'], '－', $data['employment_address']);
         }
         if (isset($data['creation_date_submission_agent'])) {
-            $data['creation_date_submission_agent'] = mb_convert_kana($data['creation_date_submission_agent'], 'S');
+            $data['creation_date_submission_agent'] = mb_convert_kana($data['creation_date_submission_agent'], 'ASKV');
+        }
+        if (isset($data['submission_agent'])) {
+            $data['submission_agent'] = mb_convert_kana($data['submission_agent'], 'ASKV');
         }
         if (isset($data['labor_consultant_fullname'])) {
             $data['labor_consultant_fullname'] = mb_convert_kana($data['labor_consultant_fullname'], 'S');

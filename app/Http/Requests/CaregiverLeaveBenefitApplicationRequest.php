@@ -113,7 +113,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'commuting_allowance_period' => 'nullable|string|max:3',
             'commuting_allowance_period_other' => 'nullable|string|max:255',
             'note_main' => 'nullable|string|max:255',
-            'creation_date_submission_agent' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
+            'creation_date_submission_agent' => 'nullable|string|max:255',
             'labor_consultant_fullname' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
