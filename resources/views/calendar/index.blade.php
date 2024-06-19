@@ -58,6 +58,7 @@
                 onHidden: () => {
                     //$('.ui.dimmer.modals.page').empty();
                     $('.edit-calendar-modal').remove();
+                    window.$calendar_modal.isSubmit = false;
                 }
             }).modal('show');
         };

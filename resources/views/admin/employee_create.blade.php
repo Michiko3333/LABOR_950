@@ -909,7 +909,7 @@
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="0123456789" maxLength="10">
+                                    placeholder="0123456789" maxlength="10">
                             </div>
                         </div>
                         <div class="three fields">

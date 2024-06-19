@@ -10,6 +10,8 @@
             }
 
             const onEdit = () => {
+                if (window.$calendar_modal.isSubmit) return;
+                window.$calendar_modal.isSubmit = true;
                 const inputs_name = document.getElementsByClassName('edit-calendar-inputs_name')[1].value;
                 const inputs_category = document.getElementsByClassName('edit-calendar-inputs_category')[1].value;
                 const inputs_contents = document.getElementsByClassName('edit-calendar-inputs_contents')[1].value;
@@ -26,7 +28,6 @@
                     from: from ? $_calendar.calendar_date_from : '',
                     to: to ? $_calendar.calendar_date_to : '',
                 };
-
                 $wire.dispatch('onSubmitCalendar', {
                     data: data
                 });
@@ -58,7 +59,8 @@
                 onChangeFrom: onChangeFrom,
                 onChangeTo: onChangeTo,
                 onClose: onClose,
-                onRemove: onRemove
+                onRemove: onRemove,
+                isSubmit: false
             };
         </script>
     @endscript
@@ -178,7 +180,7 @@
                     </div>
                     <div class="field">
                         <label for="event-title">内容・詳細</label>
-                        <textarea name="event-contents" cols="30" rows="6" class='edit-calendar-inputs_contents'></textarea>
+                        <textarea name="event-contents" cols="30" rows="6" maxlength="255" class='edit-calendar-inputs_contents'></textarea>
                     </div>
                 </div>
             </form>
