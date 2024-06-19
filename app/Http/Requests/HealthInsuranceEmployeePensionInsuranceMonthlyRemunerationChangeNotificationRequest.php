@@ -45,7 +45,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
-            "insurer_reference_no" => 'nullable|string|regex:/^[0-9]{6}+$/',
+            "insurer_reference_no" => 'nullable|string|regex:/^[0-9]{1,6}+$/',
             "insured_fullname_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "insured_fullname" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "birthday_era" => 'required|int|in:1,3,5,7,9',
