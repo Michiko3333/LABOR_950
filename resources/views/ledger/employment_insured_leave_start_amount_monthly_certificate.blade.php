@@ -135,11 +135,19 @@
                     $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
                     $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(employee.employment_insured_no.substring(10));
+                } else {
+                    $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val("");
+                    $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val("");
+                    $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val("");
                 }
                 if (branch.employment_insurance_office_no !== null) {
                     $('#J6_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.employment_insurance_office_no.substring(0, 4));
                     $('#J7_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.employment_insurance_office_no.substring(4, 10));
                     $('#J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.employment_insurance_office_no.substring(10));
+                } else {
+                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val("");
+                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val("");
+                    $('#J8_005F_8E96_8BC6_8F8A_94D4_8D86CD').val("");
                 }
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
@@ -155,6 +163,9 @@
                 if (employee.post_code !== null && employee.post_code.length == 7) {
                     $('#J21_005F_947A_9242_8BC7_94D4_8D86').val(employee.post_code.substring(0, 3));
                     $('#J22_005F_92AC_88E6_94D4_8D86').val(employee.post_code.substring(3, 7));
+                } else {
+                    $('#J21_005F_947A_9242_8BC7_94D4_8D86').val("");
+                    $('#J22_005F_92AC_88E6_94D4_8D86').val("");
                 }
                 const employeeAddress = (employee_prefecture_data.name || "") + ' ' + (employee.address_city || "") + ' ' + (
                     employee.address_ward || "") + ' ' + (employee.address_apartment || "");
