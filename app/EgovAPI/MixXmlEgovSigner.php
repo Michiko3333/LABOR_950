@@ -524,6 +524,7 @@ class MixXmlEgovSigner
                 $returnData = [
                     false, [ 'title' => '', 'detail' => '' ]
                 ];
+                $errorReport = [];
                 if ($statusCode == 200){
                     EgovTestLog::info(print_r($r, true));
                     EgovTestLog::info(print_r('手続送信に成功しました', true));
@@ -532,19 +533,30 @@ class MixXmlEgovSigner
                     $returnData[1]['detail'] = '手続送信に成功しました';
                     $this->TableInsert($r);
                     break;
-                }else{
+                } else {
                     EgovTestLog::error("返却値エラー：申請データ送信に失敗しました");
                     EgovTestLog::info(print_r($r->collect(), true));
                     $returnData[1]['title'] = $r['title'];
                     $returnData[1]['detail'] = $r['detail'];
-                    $errorReport = [];
                     $index= 0;
-                    foreach ($r->collect()['report_list'] as $report) {
-                        $index++;
-                        if (isset($report['item']) && isset($report['content'])) {
-                            $errorReport[] = 'エラー' . $index . ': ' . $report['item'];
-                            $errorReport[] = 'エラーメッセージ' . $index . ': ' . $report['content'];
+                    if (isset($r->collect()['report_list'])) {
+                        foreach ($r->collect()['report_list'] as $report) {
+                            $index++;
+                            if (isset($report['item']) && isset($report['content'])) {
+                                $errorReport[] = 'エラー' . $index . ': ' . $report['item'];
+                                $errorReport[] = 'エラーメッセージ' . $index . ': ' . $report['content'];
+                            }
                         }
+                        $returnData[1]['errorReport'] = $errorReport;
+                        break;
+                    }
+                    $data = $r->collect();
+                    $errorReport[] = "予期せぬエラーが返ってきています。";
+                    foreach ($data as $key => $value) {
+                        if (is_array($value)) {
+                            $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                        }
+                        $errorReport[] = "$key: $value";
                     }
                     $returnData[1]['errorReport'] = $errorReport;
                     break;

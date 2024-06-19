@@ -24,8 +24,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6|max:20|regex:/^[!-~]+$/',
         ]);
 
         \Log::info("ログイン試行：" . $request->input('email'));
