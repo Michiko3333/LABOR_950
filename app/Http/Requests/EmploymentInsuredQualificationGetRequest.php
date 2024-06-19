@@ -106,7 +106,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             'country' => 'nullable|string|regex:/^[0-9]{1,3}$/u',
             'residential_status' => 'nullable|string|regex:/^[0-9]{1,3}$/u',
             'residential_status_unknown_reason' => 'nullable|string|max:255',
-            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            'headquarters_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             'employer_company_managerial_position_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'headquarters_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',

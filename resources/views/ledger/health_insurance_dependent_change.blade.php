@@ -195,6 +195,7 @@
                 $('#N16_P1').val(headquarters.tel_area_code ?? '');
                 $('#N17_P1').val(headquarters.tel_city_code ?? '');
                 $('#N18_P1').val(headquarters.tel_subscriber_code ?? '');
+                $('#N26_P1').val(employee.insurer_reference_no ?? '');
                 $('#N28_P1').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ?? ''));
                 $('#N27_P1').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ??
                     ''));
@@ -521,7 +522,7 @@
                     });
                 });
             </script>
-            <script>
+            <script type="module">
                 $(document).ready(function() {
                     $("#ledger-form").submit(function(event) {
                         if (!$("#certificate_checkbox_1").prop("checked")) {

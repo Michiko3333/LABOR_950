@@ -46,6 +46,8 @@ use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 use App\Models\Receptionist;
+use App\Models\Residential_status;
+use App\Models\Values_employee_insured_age_type;
 
 class AdminController extends Controller
 {
@@ -541,6 +543,8 @@ class AdminController extends Controller
         $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $residential_status = Residential_status::pluck('content', 'id');
+        $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $faxParts = ['', '', ''];
 
         return view('admin.employee_create', [
@@ -558,6 +562,8 @@ class AdminController extends Controller
             'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
             'occupation_type' => $occupation_type,
             'faxParts' => $faxParts,
+            'residential_status' => $residential_status,
+            'employee_insured_age_type' => $employee_insured_age_type
         ]);
     }
 
@@ -569,7 +575,7 @@ class AdminController extends Controller
                 $request->input('fax2'),
                 $request->input('fax3')
             ]);
-        } else{
+        } else {
             $fax = null;
         };
         DB::beginTransaction();
@@ -641,24 +647,19 @@ class AdminController extends Controller
                 'country_id' => $request->input('country_id'),
                 'salary_notices' => $request->input('salary_notices'),
                 'insured_age_type' => $request->input('insured_age_type'),
+                'insurer_reference_no' => $request->input('insurer_reference_no'),
                 'residence_card_no' => $request->input('residence_card_no'),
-                // 'stay_date_period' => $this->formatDate($request->input('stay_date_period')),
+                'stay_date_period' => $this->formatDate($request->input('stay_date_period')),
                 'residential_status_id' => $request->input('residential_status_id'),
                 'residential_status_unknown_reason' => $request->input('residential_status_unknown_reason'),
                 'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
                 'mynumber_card_no' => $request->input('mynumber_card_no'),
                 'social_insurance_no' => $request->input('social_insurance_no'),
-                'pension_office_no' => $request->input('pension_office_no'),
                 // 'pension_office_reference_no' => $request->input('pension_office_reference_no'),
-                'pension_office_reference_prefecture' => $request->input('pension_office_reference_prefecture'),
-                'pension_office_reference_no_cities' => $request->input('pension_office_reference_no_cities'),
-                'pension_office_reference_no_office' => $request->input('pension_office_reference_no_office'),
                 'pension_no' => $request->input('pension_no'),
                 'labor_insurance_type' => $request->input('labor_insurance_type'),
                 'employment_insurance_type' => $request->input('employment_insurance_type'),
                 'insurance_office_no' => $request->input('insurance_office_no'),
-                'insurance_office_reference_no' => $request->input('insurance_office_reference_no'),
-                'employment_insurance_office_no' => $request->input('employment_insurance_office_no'),
                 'insurer_no' => $request->input('insurer_no'),
                 'employment_insurance_applied_date' => $this->formatDate($request->input('employment_insurance_applied_date')),
                 'employment_insured_date' => $this->formatDate($request->input('employment_insured_date')),
@@ -758,6 +759,8 @@ class AdminController extends Controller
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
         $departments_list = Department::select('id', 'name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
+        $residential_status = Residential_status::pluck('content', 'id');
+        $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
 
         return view('admin.employee_create', [
             'employee' => $employee,
@@ -776,6 +779,8 @@ class AdminController extends Controller
             'over_retired_insurance_loss_reason' => $over_retired_insurance_loss_reason,
             'occupation_type' => $occupation_type,
             'faxParts' => $faxParts,
+            'residential_status' => $residential_status,
+            'employee_insured_age_type' => $employee_insured_age_type
         ]);
     }
 
@@ -787,7 +792,7 @@ class AdminController extends Controller
                 $request->input('fax2'),
                 $request->input('fax3')
             ]);
-        } else{
+        } else {
             $fax = null;
         };
         DB::beginTransaction();
@@ -860,24 +865,19 @@ class AdminController extends Controller
                     'country_id' => $request->input('country_id'),
                     'salary_notices' => $request->input('salary_notices'),
                     'insured_age_type' => $request->input('insured_age_type'),
+                    'insurer_reference_no' => $request->input('insurer_reference_no'),
                     'residence_card_no' => $request->input('residence_card_no'),
-                    // 'stay_date_period' => $this->formatDate($request->input('stay_date_period')),
+                    'stay_date_period' => $this->formatDate($request->input('stay_date_period')),
                     'residential_status_id' => $request->input('residential_status_id'),
                     'residential_status_unknown_reason' => $request->input('residential_status_unknown_reason'),
                     'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
                     'mynumber_card_no' => $request->input('mynumber_card_no'),
                     'social_insurance_no' => $request->input('social_insurance_no'),
-                    'pension_office_no' => $request->input('pension_office_no'),
                     //'pension_office_reference_no' => $request->input('pension_office_reference_no'),
-                    'pension_office_reference_prefecture' => $request->input('pension_office_reference_prefecture'),
-                    'pension_office_reference_no_cities' => $request->input('pension_office_reference_no_cities'),
-                    'pension_office_reference_no_office' => $request->input('pension_office_reference_no_office'),
                     'pension_no' => $request->input('pension_no'),
                     'labor_insurance_type' => $request->input('labor_insurance_type'),
                     'employment_insurance_type' => $request->input('employment_insurance_type'),
                     'insurance_office_no' => $request->input('insurance_office_no'),
-                    'insurance_office_reference_no' => $request->input('insurance_office_reference_no'),
-                    'employment_insurance_office_no' => $request->input('employment_insurance_office_no'),
                     'insurer_no' => $request->input('insurer_no'),
                     'employment_insurance_applied_date' => $this->formatDate($request->input('employment_insurance_applied_date')),
                     'employment_insured_date' => $this->formatDate($request->input('employment_insured_date')),

@@ -183,8 +183,8 @@
                 $('#N36_005F_8E96_8BC6_8F8A').val(employee_mynumber_card_no ?? '');
                 $('#N51_005F_8E73_8A4F_8BC7').val(employee_post_code_first ?? '');
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
-                $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee_address_city ?? '') + (
-                    employee_address_ward ?? '') + (employee_address_apartment ?? ''));
+                $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (
+                    employee.address_ward ?? '') + (employee.address_apartment ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

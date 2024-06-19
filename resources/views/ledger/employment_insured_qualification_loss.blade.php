@@ -196,6 +196,7 @@
                 const retirement_reason_employee_decision_change_office = data[
                     'retirement_reason_employee_decision_change_office'];
                 const retirement_reason_employee_decision_reasons = data['retirement_reason_employee_decision_reasons'];
+                const insured_age_type_data = data['insured_age_type_data'];
                 var retirement_date_nextday_month;
                 var retirement_date_nextday_day;
                 if (employee.retirement_date !== null) {
@@ -237,10 +238,14 @@
                 $('#J19_005F_93FA').val(employmentRetirementConvertDate['day'] ?? "");
                 $('#J20_005F_9172_8EB8_8CB4_88F6').val(employee.insurance_loss_reason);
                 if (branch.agreed_hours_week_h != null) {
-                    $('#J22_005F_8E9E_8AD4').val(parseInt(agreed_hours_week_h));
+                    $('#J22_005F_8E9E_8AD4').val(parseInt(branch.agreed_hours_week_h));
                 }
                 if (branch.agreed_hours_week_m != null) {
-                    $('#J23_005F_95AA').val(parseInt(agreed_hours_week_m));
+                    $('#J23_005F_95AA').val(parseInt(branch.agreed_hours_week_m));
+                }
+                if(branch.agreed_hours_week_h && branch.agreed_hours_week_m == null) {
+                    $('#J22_005F_8E9E_8AD4').val(parseInt(branch.agreed_hours_week_h));
+                    $('#J23_005F_95AA').val(0);
                 }
                 $('#J27_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? '');
                 $('#J29_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((employee.last_name_kana ? employee.last_name_kana + '　' :
@@ -251,7 +256,7 @@
                 $('#J33_005F_944E').val(birthdayConvertJapan['year'] ?? "");
                 $('#J34_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J35_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
-                $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(employee.insured_age_type ?? '');
+                $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(insured_age_type_data ?? "");
                 $('#J41_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
                 $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(branch.name);
                 $('#J45_005F_8F5A_8F8A_9694_82CD_8B8F_8F8A').val((employee_prefecture_data.name ?? '') + (employee

@@ -4948,7 +4948,7 @@
                         <input class="egov-tool-field-rect onImage" id="N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866"
                             value="{{ old('insurer_reference_no') }}" name="insurer_reference_no"
                             onfocus="addlength(this,6)"
-                            style="width: 55px; height: 40px; font-size: 12px; text-align: right; line-height: 62px; padding: inherit; background-color:#ddeeff;"
+                            style="width: 55px; height: 40px; font-size: 9px; text-align: right; line-height: 62px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 149px; top: 267.5px;">

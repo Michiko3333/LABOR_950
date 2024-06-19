@@ -605,15 +605,15 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:453px; top:416px; width:31px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">日数</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:0px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:96px; top:1061px; width:812px; line-height:84px; height:86px; font-size:12px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="-1" disabled
+        <INPUT tabindex="-1" disabled
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; width:810px; height:84px; ime-mode:active;"
-            id="J72_005F_8CF6_8BA4_9045_8BC6_88C0_92E8_8F8A_8B4C_8DDA_9793" name="hello_work_note">{{ old('hello_work_note') }}</TEXTAREA>
+            id="J72_005F_8CF6_8BA4_9045_8BC6_88C0_92E8_8F8A_8B4C_8DDA_9793" name="hello_work_note" value="{{ old('hello_work_note') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:965px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
-        <TEXTAREA tabindex="250"
+        <INPUT tabindex="250"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1">{{ old('wage_note_1') }}</TEXTAREA>
+            id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1" value="{{ old('wage_note_1') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:105px; top:1303px; width:131px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -2014,111 +2014,111 @@
             value="{{ old('calculation_day_start_1') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:435px; width:101px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="39"
+        <INPUT tabindex="39"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J40_005F_94F5_8D6C" name="note_1">{{ old('note_1') }}</TEXTAREA>
+            id="J40_005F_94F5_8D6C" name="note_1" value="{{ old('note_1') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:468px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="53"
+        <INPUT tabindex="53"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F1" name="note_1_1">{{ old('note_1_1') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F1" name="note_1_1" value="{{ old('note_1_1') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:502px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="67"
+        <INPUT tabindex="67"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F2" name="note_1_2">{{ old('note_1_2') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F2" name="note_1_2" value="{{ old('note_1_2') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:535px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="81"
+        <INPUT tabindex="81"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F3" name="note_1_3">{{ old('note_1_3') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F3" name="note_1_3" value="{{ old('note_1_3') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:568px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="95"
+        <INPUT tabindex="95"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F4" name="note_1_4">{{ old('note_1_4') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F4" name="note_1_4" value="{{ old('note_1_4') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:601px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="109"
+        <INPUT tabindex="109"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F5" name="note_1_5">{{ old('note_1_5') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F5" name="note_1_5" value="{{ old('note_1_5') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:635px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="123"
+        <INPUT tabindex="123"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F6" name="note_1_6">{{ old('note_1_6') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F6" name="note_1_6" value="{{ old('note_1_6') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:668px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="137"
+        <INPUT tabindex="137"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F7" name="note_1_7">{{ old('note_1_7') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F7" name="note_1_7" value="{{ old('note_1_7') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:701px; width:101px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="151"
+        <INPUT tabindex="151"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F8" name="note_1_8">{{ old('note_1_8') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F8" name="note_1_8" value="{{ old('note_1_8') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:734px; width:101px; line-height:32px; height:33px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="165"
+        <INPUT tabindex="165"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F9" name="note_1_9">{{ old('note_1_9') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F9" name="note_1_9" value="{{ old('note_1_9') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:766px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="179"
+        <INPUT tabindex="179"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F10" name="note_1_10">{{ old('note_1_10') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F10" name="note_1_10" value="{{ old('note_1_10') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:799px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="193"
+        <INPUT tabindex="193"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F11" name="note_1_11">{{ old('note_1_11') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F11" name="note_1_11" value="{{ old('note_1_11') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:833px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="207"
+        <INPUT tabindex="207"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F12" name="note_1_12">{{ old('note_1_12') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F12" name="note_1_12" value="{{ old('note_1_12') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:866px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="221"
+        <INPUT tabindex="221"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F13" name="note_1_13">{{ old('note_1_13') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F13" name="note_1_13" value="{{ old('note_1_13') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:899px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="235"
+        <INPUT tabindex="235"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F14" name="note_1_14">{{ old('note_1_14') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F14" name="note_1_14" value="{{ old('note_1_14') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:932px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="249"
+        <INPUT tabindex="249"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_94F5_8D6C_005F15" name="note_1_15">{{ old('note_1_15') }}</TEXTAREA>
+            id="J54_005F_94F5_8D6C_005F15" name="note_1_15" value="{{ old('note_1_15') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:2px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:491px; top:86px; width:176px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="9"
+        <INPUT tabindex="9"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:174px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J9_005F_8374_838A_834B_8369" name="employment_fullname_kana" disabled>{{ old('employment_fullname_kana') }}</TEXTAREA>
+            id="J9_005F_8374_838A_834B_8369" name="employment_fullname_kana" disabled value="{{ old('employment_fullname_kana') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:491px; top:119px; width:176px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="10"
+        <INPUT tabindex="10"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:174px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC" name="employment_fullname" disabled>{{ old('employment_fullname') }}</TEXTAREA>
+            id="J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC" name="employment_fullname" disabled value="{{ old('employment_fullname') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; display:none; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:838px; top:11px; width:142px; height:20px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:2px 0px 0px 0px;">A-250077-002_1</SPAN>
@@ -3240,9 +3240,9 @@
             style="font-size:12px; height:12px; line-height:1em; vertical-align:top;"></SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:2314px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
-        <TEXTAREA tabindex="982"
+        <INPUT tabindex="982"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2">{{ old('wage_note_2') }}</TEXTAREA>
+            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2" value="{{ old('wage_note_2') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:66px; top:1825px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -4404,93 +4404,93 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1784px; width:101px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1817px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="785"
+        <INPUT tabindex="785"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F1" name="note_2_1">{{ old('note_2_1') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F1" name="note_2_1" value="{{ old('note_2_1') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1850px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="799"
+        <INPUT tabindex="799"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F2" name="note_2_2">{{ old('note_2_2') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F2" name="note_2_2"value="{{ old('note_2_2') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1884px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="813"
+        <INPUT tabindex="813"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F3" name="note_2_3">{{ old('note_2_3') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F3" name="note_2_3" value="{{ old('note_2_3') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1917px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="827"
+        <INPUT tabindex="827"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F4" name="note_2_4"></TEXTAREA>{{ old('note_2_4') }}
+            id="J109_005F_94F5_8D6C_005F4" name="note_2_4"></INPUT value="{{ old('note_2_4') }}">
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1950px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="841"
+        <INPUT tabindex="841"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F5" name="note_2_5">{{ old('note_2_5') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F5" name="note_2_5" value="{{ old('note_2_5') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1983px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="855"
+        <INPUT tabindex="855"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F6" name="note_2_6">{{ old('note_2_6') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F6" name="note_2_6" value="{{ old('note_2_6') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2017px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="869"
+        <INPUT tabindex="869"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F7" name="note_2_7">{{ old('note_2_7') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F7" name="note_2_7" value="{{ old('note_2_7') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2050px; width:101px; line-height:32px; height:33px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="883"
+        <INPUT tabindex="883"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F8" name="note_2_8">{{ old('note_2_8') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F8" name="note_2_8" value="{{ old('note_2_8') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2082px; width:101px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="897"
+        <INPUT tabindex="897"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F9" name="note_2_9">{{ old('note_2_9') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F9" name="note_2_9" value="{{ old('note_2_9') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2115px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="911"
+        <INPUT tabindex="911"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F10" name="note_2_10">{{ old('note_2_10') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F10" name="note_2_10" value="{{ old('note_2_10') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2148px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="925"
+        <INPUT tabindex="925"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F11" name="note_2_11">{{ old('note_2_11') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F11" name="note_2_11" value="{{ old('note_2_11') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2181px; width:101px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="939"
+        <INPUT tabindex="939"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F12" name="note_2_12">{{ old('note_2_12') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F12" name="note_2_12" value="{{ old('note_2_12') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2215px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="953"
+        <INPUT tabindex="953"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F13" name="note_2_13">{{ old('note_2_13') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F13" name="note_2_13" value="{{ old('note_2_13') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2248px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="967"
+        <INPUT tabindex="967"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F14" name="note_2_14">{{ old('note_2_14') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F14" name="note_2_14" value="{{ old('note_2_14') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:2281px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
-        <TEXTAREA tabindex="981"
+        <INPUT tabindex="981"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F15" name="note_2_15">{{ old('note_2_15') }}</TEXTAREA>
+            id="J109_005F_94F5_8D6C_005F15" name="note_2_15" value="{{ old('note_2_15') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:auto; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:2px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:491px; top:1434px; width:176px; height:35px; text-align:left; font-size:31px; font-family:'ＭＳ 明朝', serif;"><SPAN

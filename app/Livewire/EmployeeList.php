@@ -18,7 +18,7 @@ class EmployeeList extends BaseTable
     {
         $currentCompany = CurrentUser::currentCompany();
         $currentCompanyId = $currentCompany->id;
-        $condition = Employee::select(['m_employee.id', 'last_name', 'first_name', 'position.name as position_name', 'branch.name as branch_name'])
+        $condition = Employee::select(['m_employee.id', 'employee_type', 'last_name', 'first_name', 'position.name as position_name', 'branch.name as branch_name'])
             ->leftJoin('m_branch as branch', 'm_employee.branch_id', '=', 'branch.id')
             ->leftJoin('m_company as company', 'branch.company_id', '=', 'company.id')
             ->leftJoin('m_managerial_position as position', function ($join) {
@@ -27,20 +27,6 @@ class EmployeeList extends BaseTable
             })
             ->where('company.id', $currentCompanyId);
 
-        /*
-        $condition = Employee::select([
-            'm_employee.id as id',
-            'branch.name as branch_name',
-            DB::raw('COALESCE(managerial_position.name, "") AS managerial_position_name'),
-            'last_name',
-            'first_name',
-            'division_name'
-        ])->leftJoin('m_branch as branch', 'm_employee.branch_id', '=', 'branch.id')
-            ->leftJoin('m_company as company', 'branch.company_id', '=', 'company.id')
-            ->leftJoin('m_managerial_position as managerial_position', 'm_employee.managerial_position_id', '=', 'managerial_position.id')
-            ->where('m_employee.delete_flg', 0)
-            ->where('company.id', $currentCompanyId);
-            */
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
             $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);

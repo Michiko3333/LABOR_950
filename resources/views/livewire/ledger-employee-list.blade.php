@@ -33,9 +33,9 @@
     </div>
     <div class="small-pagination">
         <div class="ui pagination borderless mini menu">
-            <button class="ui button item @if ($disablePrev) disabled @endif" wire:click="onPrev"
+            <button type="button" class="ui button item @if ($disablePrev) disabled @endif" wire:click="onPrev"
             ><i class="chevron left icon"></i></button>
-            <button class="ui button item @if ($disableNext) disabled @endif" wire:click="onNext"
+            <button type="button" class="ui button item @if ($disableNext) disabled @endif" wire:click="onNext"
             ><i class="chevron right icon"></i></button>
         </div>
     </div>

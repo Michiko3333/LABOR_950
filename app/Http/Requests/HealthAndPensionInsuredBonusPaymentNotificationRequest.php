@@ -39,7 +39,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             "csv_pension_office_no" => 'required|string|regex:/^[0-9]{5}+$/',
             "branch_post_code_parent" => 'string|regex:/^[0-9]{3}+$/',
             "branch_post_code_child" => 'string|regex:/^[0-9]{4}+$/',
-            "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "branch_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "employer_company_managerial_position_name" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+\z/u',
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}+$/',

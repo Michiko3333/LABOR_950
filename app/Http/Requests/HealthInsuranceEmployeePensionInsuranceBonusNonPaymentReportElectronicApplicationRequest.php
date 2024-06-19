@@ -51,7 +51,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "business_name_name_of_ship_owner" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "business_owner_name_representative_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "changed_bonus_payment_schedule_month1" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],

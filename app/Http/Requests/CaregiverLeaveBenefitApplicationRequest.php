@@ -91,7 +91,7 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'verification_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'verification_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
+            'branch' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             'entrepreneur_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'application_date_era' => 'string|max:2',
             'application_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -113,12 +113,12 @@ class CaregiverLeaveBenefitApplicationRequest extends FormRequest
             'commuting_allowance_period' => 'nullable|string|max:3',
             'commuting_allowance_period_other' => 'nullable|string|max:255',
             'note_main' => 'nullable|string|max:255',
-            'creation_date_submission_agent' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
+            'creation_date_submission_agent' => 'nullable|string|max:255',
             'labor_consultant_fullname' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'employment_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ－　]+\z/u',
+            'employment_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];

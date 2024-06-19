@@ -38,14 +38,14 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "csv_pension_office_no" => 'required|string|regex:/^[0-9]{5}+$/',
             "post_code_former" => 'required|string|regex:/^[0-9]{1,3}+$/',
             "post_code_latter" => 'required|string|regex:/^[0-9]{1,4}+$/',
-            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            "business_location" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "business_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "business_owner_name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+\z/u',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255',
-            "Insured_person_reference_number" => 'nullable|string|regex:/^[0-9]{1,6}+$/',
+            "Insured_person_reference_number" => 'nullable|string|regex:/^[0-9]{6}+$/',
             "insured_person_name_in_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "Insured_person_name_in_kanji" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "era_name" => 'required|int|in:1,3,5,7,9',
@@ -113,7 +113,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
-            } elseif($birthday_era === '2') {
+            } elseif ($birthday_era === '2') {
                 if (
                     ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
                     ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
@@ -142,10 +142,10 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($birthday_month) && !empty($birthday_date)){
-                if(ctype_digit($birthday_month)){
+            if (!empty($birthday_month) && !empty($birthday_date)) {
+                if (ctype_digit($birthday_month)) {
                     if (!checkdate($birthday_month, $birthday_date, '2000')) {
-                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
