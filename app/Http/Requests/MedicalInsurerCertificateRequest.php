@@ -43,14 +43,18 @@ class MedicalInsurerCertificateRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $validator->getData();
-            if(!empty($data['certification_month']) && !empty($data['certification_day'])){
-                if(ctype_digit($data['certification_month'])){
-                    if (!checkdate($data['certification_month'], $data['certification_day'], '2000')) {
+            $certificationYear = $data['certification_year'] ?? "";
+            $certificationMonth = $data['certification_month'] ?? "";
+            $certificationDay = $data['certification_day'] ?? "";
+
+            if(!empty($certificationMonth) && !empty($certificationDay)){
+                if(ctype_digit($certificationMonth)){
+                    if (!checkdate($certificationMonth, $certificationDay, '2000')) {
                     $validator->errors()->add('certification_day','3枚目_7_認定年月日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['certification_year'] == 1 && ($data['certification_month'] < 5 )) {
+            if ($certificationYear == 1 && ($certificationMonth < 5 )) {
                 $validator->errors()->add('certification_day', '3枚目_7_認定年月日は正しい日付を入力してください。');
             }
         });
