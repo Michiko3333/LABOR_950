@@ -133,7 +133,7 @@
                     </td>
                     <td width="60%"
                         style='width:60.1%;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:dotted windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0mm 5.4pt 0mm 5.4pt;height:14.2pt'>
                         <p class=MsoNormal align=center style='text-align:center'><span
                                 style='font-family:"ＭＳ 明朝",serif'>同上および</span><span
@@ -200,7 +200,7 @@
                     </td>
                     <td width="86%" colspan=3 valign=top
                         style='width:86.62%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:dotted windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0mm 5.4pt 0mm 5.4pt;height:15.2pt'>
                         <input type="text" id="duties" name="duties"
                             style="width: 100%;background-color: #ddeeff;"
