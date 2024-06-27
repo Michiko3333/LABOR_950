@@ -102,7 +102,10 @@ class Calendar extends Component
         $after_start_day = array_slice($this->day_base, $this->start_day);
         $this->days = array_merge($after_start_day, $before_start_day);
 
-        $base_date = new Carbon($this->active_year . '-' . $this->active_month . '-01 00:00:00');
+        $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
+        $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
+        $date_start = new Carbon($min);
+        $date_to = new Carbon($max);
 
         $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
@@ -119,8 +122,8 @@ class Calendar extends Component
         )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
             ->where('t_calendar_event.delete_flg', 0)
             ->where('emp.role_id', 999)
-            ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-            ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+            ->whereDate('t_calendar_event.from', '>=', $date_start)
+            ->whereDate('t_calendar_event.from', '<=', $date_to)
             ->get()->toArray();
         $events_list = array_merge($events_list, $admin_event);
 
@@ -136,8 +139,8 @@ class Calendar extends Component
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                 ->where('t_calendar_event.company_id', $current_company->id)
                 ->where('t_calendar_event.delete_flg', 0)
-                ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-                ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+                ->whereDate('t_calendar_event.from', '>=', $date_start)
+                ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->get()->toArray();
             $events_list = array_merge($events_list, $employee_event);
         } else if ($permission->isLabor()) {
@@ -152,8 +155,8 @@ class Calendar extends Component
                 'emp.role_id'
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                 ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-                ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+                ->whereDate('t_calendar_event.from', '>=', $date_start)
+                ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->where('t_calendar_event.delete_flg', 0)
                 ->where('emp.role_id', 100)
                 ->get()->toArray();
@@ -171,8 +174,8 @@ class Calendar extends Component
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                 ->where('t_calendar_event.employee_id', $current_user->id)
                 ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-                ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+                ->whereDate('t_calendar_event.from', '>=', $date_start)
+                ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->where('t_calendar_event.delete_flg', 0)
                 ->get()->toArray();
             $events_list = array_merge($events_list, $own_event);
@@ -188,8 +191,8 @@ class Calendar extends Component
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                 ->where('t_calendar_event.employee_id', '!=', $current_user->id)
                 ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-                ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+                ->whereDate('t_calendar_event.from', '>=', $date_start)
+                ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->where('emp.role_id', 100)
                 ->where('t_calendar_event.category_type', 1)
                 ->where('t_calendar_event.delete_flg', 0)
@@ -207,8 +210,8 @@ class Calendar extends Component
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                 ->where('t_calendar_event.employee_id', $current_user->id)
                 ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $base_date->copy()->subMonth())
-                ->whereDate('t_calendar_event.from', '<=', $base_date->copy()->addMonth())
+                ->whereDate('t_calendar_event.from', '>=', $date_start)
+                ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->where('t_calendar_event.delete_flg', 0)
                 ->get()->toArray();
             $events_list = array_merge($events_list, $own_event);
@@ -444,7 +447,13 @@ class Calendar extends Component
 
     public function valid($data)
     {
+        $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
+        $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
+
+        if ($min > $data['from'] || $max < $data['from']) return false;
+
         if (!empty($data['to'])) {
+            if ($min > $data['to'] || $max < $data['to']) return false;
             if ($data['from'] > $data['to']) return false;
         }
         return !empty($data['inputs_name']) && !empty($data['from'])  && !empty($data['inputs_category']);
