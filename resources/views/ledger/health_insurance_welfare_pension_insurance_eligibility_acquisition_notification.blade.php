@@ -122,21 +122,22 @@
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
-                const employee_pension_office_reference_prefecture = headquarters.pension_office_reference_prefecture;
-                const employee_pension_office_reference_no_cities = headquarters.pension_office_reference_no_cities;
-                const employee_pension_office_reference_no_office = headquarters.pension_office_reference_no_office;
-                const branch_insurance_office_no = headquarters.pension_office_no;
-                if (headquarters.post_code !== null && headquarters.post_code.length == 7) {
-                    var branch_post_code_first = headquarters.post_code.substring(0, 3);
-                    var branch_post_code_last = headquarters.post_code.substring(3, 7);
+                const branch_prefecture_data = data['branch_prefecture_data'];
+                const employee_pension_office_reference_prefecture = branch.pension_office_reference_prefecture;
+                const employee_pension_office_reference_no_cities = branch.pension_office_reference_no_cities;
+                const employee_pension_office_reference_no_office = branch.pension_office_reference_no_office;
+                const branch_insurance_office_no = branch.pension_office_no;
+                if (branch.post_code !== null && branch.post_code.length == 7) {
+                    var branch_post_code_first = branch.post_code.substring(0, 3);
+                    var branch_post_code_last = branch.post_code.substring(3, 7);
                 } else {
                     var branch_post_code_first = '';
                     var branch_post_code_last = '';
                 }
-                const branch_name = headquarters.name;
-                const branch_tel_area_code = headquarters.tel_area_code;
-                const branch_tel_city_code = headquarters.tel_city_code;
-                const branch_tel_subscriber_code = headquarters.tel_subscriber_code;
+                const branch_name = branch.name;
+                const branch_tel_area_code = branch.tel_area_code;
+                const branch_tel_city_code = branch.tel_city_code;
+                const branch_tel_subscriber_code = branch.tel_subscriber_code;
                 const employee_last_name_kana = employee.last_name_kana;
                 const employee_first_name_kana = employee.first_name_kana;
                 const employee_last_name = employee.last_name;
@@ -166,8 +167,8 @@
                 $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch_insurance_office_no ?? '');
                 $('#N12_005F_905C_90BF_8ED2_8E81').val(branch_post_code_first ?? '');
                 $('#N13_005F_8374_838A_834B_8369').val(branch_post_code_last ?? '');
-                $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((headquarters_prefecture_data.name ?? '') + (headquarters
-                    .address_city ?? '') + (headquarters.address_ward ?? '') + (headquarters.address_apartment ?? ''));
+                $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((branch_prefecture_data.name ?? '') + (branch
+                    .address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#N16_005F_905C_90BF').val(branch_name ?? '');
                 $('#N18_005F_8CC2_906C_94D4').val(branch_tel_area_code ?? '');
                 $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch_tel_city_code ?? '');
