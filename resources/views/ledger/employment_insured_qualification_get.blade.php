@@ -231,9 +231,13 @@
                 $('#J30_005F_8F41_9045_8C6F_9848').val(employee.employment_route ?? '');
                 if (branch.agreed_hours_week_h != null) {
                     $('#J31_005F_8E9E_8AD4').val(branch.agreed_hours_week_h);
+                } else {
+                    $('#J31_005F_8E9E_8AD4').val('');
                 }
                 if (branch.agreed_hours_week_m != null) {
                     $('#J32_005F_95AA').val(branch.agreed_hours_week_m);
+                } else {
+                    $('#J32_005F_95AA').val('');
                 }
                 if (branch.agreed_hours_week_h && branch.agreed_hours_week_m == null) {
                     $('#J31_005F_8E9E_8AD4').val(branch.agreed_hours_week_h);
