@@ -107,7 +107,7 @@ class BranchRequest extends FormRequest
             "br-fax3" => 'array',
             "br-fax3.*" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:br-fax2.*,br-fax1.*',
             "br-mail_address" => 'array',
-            "br-mail_address.*" => 'required|email',
+            "br-mail_address.*" => 'required|email:rfc',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|regex:/^\d{14}$/',
             "br-labor_insurance_payment_method" => 'array',
@@ -188,10 +188,10 @@ class BranchRequest extends FormRequest
         foreach ($this->input('br-fax3', []) as $index => $value) {
             $messages["br-fax3.{$index}.required_with"] = ($index + 1) . "事業所のFAX番号_3を入力してください。";
         }
-    
+
         return $messages;
     }
-    
+
     public function attributes()
     {
         $Attributes = [
