@@ -67,6 +67,7 @@
         });
         Livewire.on('modal-onSubmitError', () => {
             $('.edit-calendar-modal .ui.error.message').removeClass('hidden');
+            window.$calendar_modal.isSubmit = false;
         });
         Livewire.on('modal-onEditModal', (d) => {
             const data = d[0];
