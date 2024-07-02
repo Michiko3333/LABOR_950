@@ -87,6 +87,9 @@
                     $('.edit-department-form_name').val(d.form_name);
                     $('.edit-department-form_parent').val(d.form_parent);
                     $('.edit-department-form_permission').val(d.form_permission);
+                },
+                onHidden: () => {
+                    window.$lw.isSubmit = false;
                 }
             });
             modal.modal('show');
@@ -109,6 +112,7 @@
         });
         Livewire.on('showErrorMessage', (d) => {
             $('.edit-department-modal .ui.error.message').removeClass('hidden');
+            window.$lw.isSubmit = false;
         });
         Livewire.on('closeModal', (d) => {
             modal.modal('hide');

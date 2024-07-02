@@ -1032,7 +1032,7 @@
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('employee') }}"
                         style="width: 200px;">キャンセル</a>
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">更新</button>
                 </div>
             @endif
         </form>

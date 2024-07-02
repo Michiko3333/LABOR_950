@@ -1046,9 +1046,9 @@
                 <a class="ui button negative basic" href="{{ route('admin.labor') }}"
                     style="width: 200px;">キャンセル</a>
                 @if (!isset($employee_id))
-                    <button class="ui button primary" type="submit" style="width: 200px;">登録</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">登録</button>
                 @else
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">更新</button>
                 @endif
             </div>
         </form>

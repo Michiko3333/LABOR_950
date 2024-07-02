@@ -143,7 +143,7 @@ class DepartmentList extends Component
                 'company_id' => $this->company_id
             ]);
         }
-
+        $this->dispatch('closeModal');
         $this->render();
     }
 

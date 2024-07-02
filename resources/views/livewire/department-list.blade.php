@@ -5,6 +5,8 @@
                 $wire.dispatch('onCancelDepartment');
             }
             const onEdit = () => {
+                if (window.$lw.isSubmit) return;
+                window.$lw.isSubmit = true;
                 const form_id = document.getElementsByClassName('edit-department-form_id')[1].value;
                 const form_name = document.getElementsByClassName('edit-department-form_name')[1].value;
                 const form_parent = document.getElementsByClassName('edit-department-form_parent')[1].value;
@@ -25,7 +27,8 @@
             window.$lw = {
                 onCancel: onCancel,
                 onEdit: onEdit,
-                onRemove: onRemove
+                onRemove: onRemove,
+                isSubmit: false
             };
         </script>
     @endscript
@@ -54,7 +57,7 @@
             部署の追加
         </div>
         <div class="content" wire:ignore>
-            <form id="edit-department" name="edit-department">
+            <form id="edit-department" name="edit-department" onsubmit="return false;">
                 <div class="ui form">
                     <div class="ui error message hidden">
                         <div class="header">入力エラー</div>
@@ -88,7 +91,7 @@
         </div>
         <div class="actions">
             <button class="ui negative button" onClick="javascript:$lw.onCancel()" type="button">キャンセル</button>
-            <div class="ui approve primary button" onClick="javascript:$lw.onEdit()">登録</div>
+            <div class="ui primary button" onClick="javascript:$lw.onEdit()">登録</div>
         </div>
     </div>
 </div>

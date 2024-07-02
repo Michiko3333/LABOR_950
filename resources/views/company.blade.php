@@ -116,32 +116,32 @@
             }
 
             /*
-                        .company-data-area .ui.card.item-0 {
-                            grid-area: 1 / 1 / 4 / 3;
-                            min-width: 650px;
-                        }
+                            .company-data-area .ui.card.item-0 {
+                                grid-area: 1 / 1 / 4 / 3;
+                                min-width: 650px;
+                            }
 
-                        .company-data-area .ui.card.item-1 {
-                            grid-area: 2 / 3 / 3 / 5;
-                        }
+                            .company-data-area .ui.card.item-1 {
+                                grid-area: 2 / 3 / 3 / 5;
+                            }
 
-                        .company-data-area .ui.card.item-2 {
-                            grid-area: 1 / 3 / 2 / 4;
-                        }
+                            .company-data-area .ui.card.item-2 {
+                                grid-area: 1 / 3 / 2 / 4;
+                            }
 
-                        .company-data-area .ui.card.item-3 {
-                            grid-area: 1 / 4 / 2 / 5;
-                        }
+                            .company-data-area .ui.card.item-3 {
+                                grid-area: 1 / 4 / 2 / 5;
+                            }
 
-                        .company-data-area .ui.card.item-4 {
-                            grid-area: 3 / 3 / 4 / 4;
-                        }
+                            .company-data-area .ui.card.item-4 {
+                                grid-area: 3 / 3 / 4 / 4;
+                            }
 
-                        .company-data-area .ui.card.item-5 {
-                            grid-area: 3 / 4 / 4 / 5;
-                        }
+                            .company-data-area .ui.card.item-5 {
+                                grid-area: 3 / 4 / 4 / 5;
+                            }
 
-                        */
+                            */
 
             .company-data-area .ui.card.item-0 {
                 grid-area: 1 / 1 / 4 / 4;
@@ -580,7 +580,7 @@
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('home.index') }}"
                         style="width: 200px;">キャンセル</a>
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">更新</button>
                 </div>
             @endif
         </form>
