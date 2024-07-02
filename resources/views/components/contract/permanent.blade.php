@@ -129,7 +129,7 @@
                         </p>
                     </td>
                     <td width=404
-                        style='width:303.35pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0mm 5.4pt 0mm 5.4pt;height:13.9pt'>
+                        style='width:303.35pt;border-top:none;border-left:none;border-bottom:dotted windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0mm 5.4pt 0mm 5.4pt;height:13.9pt'>
                         <p class=MsoNormal align=center style='text-align:center'>
                             <span style='font-family:"ＭＳ 明朝",serif'>同上及び会社が指定する場所</span>
                         </p>
@@ -184,7 +184,7 @@
                         </p>
                     </td>
                     <td width=586 colspan=3
-                        style='width:439.45pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0mm 5.4pt 0mm 5.4pt;height:15.0pt'>
+                        style='width:439.45pt;border-top:none;border-left:none;border-bottom:dotted windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0mm 5.4pt 0mm 5.4pt;height:15.0pt'>
                         <input type="text" id="duties" name="duties"
                             style="width: 100%;background-color: #ddeeff;"
                             value="{{ old('duties', $default['duties']) }}" />

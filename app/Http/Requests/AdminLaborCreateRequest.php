@@ -35,9 +35,9 @@ class AdminLaborCreateRequest extends FormRequest
             'tel_area_code' => 'required',
             'tel_city_code' => 'required',
             'tel_subscriber_code' => 'required',
-            'mail_address2' => 'nullable|email',
+            'mail_address2' => 'nullable|email:rfc',
             'labor_and_social_security_attorney_registration_no' => 'required|string|regex:/^[0-9]{8}$/u',
-            'user_email' => 'required|email',
+            'user_email' => 'required|email:rfc',
             'user_pass' => 'required|min:6|max:20',
         ];
     }

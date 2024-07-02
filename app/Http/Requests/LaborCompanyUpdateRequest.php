@@ -100,7 +100,7 @@ class LaborCompanyUpdateRequest extends FormRequest
             "br-fax3" => 'array',
             "br-fax3.*" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:br-fax2.*,br-fax1.*',
             "br-mail_address" => 'required|array',
-            "br-mail_address.*" => 'email',
+            "br-mail_address.*" => 'email:rfc',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|string|max:20|regex:/^[0-9]{14}$/u',
             "br-labor_insurance_payment_method" => 'array',

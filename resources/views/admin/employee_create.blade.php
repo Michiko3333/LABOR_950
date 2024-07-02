@@ -848,36 +848,20 @@
                         <div class="ui divider my-2"></div>
                         <h3>社会保険</h3>
                         <div class="two fields">
-                            <div class="field {{ err($errors, 'insured_age_type') }}">
-                                <label for="insured_age_type">取得時被保険者種類</label>
-                                <select class="ui fluid dropdown" name="insured_age_type"
-                                    value="{{ old('insured_age_type', isset($employee_id) ? $employee->insured_age_type : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($employee_insured_age_type as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('insured_age_type') == "$k" ||
-                                            (isset($employee) && old('insured_age_type', $employee->insured_age_type) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div class="field {{ err($errors, 'social_insurance_no') }}">
                                 <label for="social_insurance_no">社会保険番号</label>
                                 <input type="text" id="social_insurance_no" name="social_insurance_no"
                                     value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
                                     placeholder="12345678">
                             </div>
-                        </div>
-                        <div class="two fields">
                             <div class="field {{ err($errors, 'insurer_no') }}">
                                 <label for="insurer_no">保険者番号</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
                                     placeholder="12345678" maxLength="8">
                             </div>
+                        </div>
+                        <div class="two fields">
                             <div class="field {{ err($errors, 'insurer_reference_no') }}">
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
@@ -973,12 +957,6 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="field {{ err($errors, 'insurer_reference_no') }}">
-                                <label for="insurer_reference_no">被保険者整理番号</label>
-                                <input type="text" id="insurer_reference_no" name="insurer_reference_no"
-                                    value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="0123456789" maxlength="10">
                             </div>
                         </div>
                     </div>

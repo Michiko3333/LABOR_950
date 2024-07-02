@@ -60,7 +60,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "birthday_month" => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "birthday_day" => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "sex" => 'string|in:男,女',
-            "mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
+            "mynumber_card_no" => 'nullable|string|regex:/^[0-9]{10,12}$/u',
             "acquisition_era" => 'nullable|int|in:5,7,9|required_with:acquisition_year,acquisition_month,acquisition_day',
             "acquisition_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:acquisition_era,acquisition_month,acquisition_day',
             "acquisition_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:acquisition_year,acquisition_era,acquisition_day',
@@ -79,7 +79,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "spouse_birthday_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:spouse_birthday_year,spouse_birthday_era,spouse_birthday_day',
             "spouse_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:spouse_birthday_year,spouse_birthday_month,spouse_birthday_era',
             "spouse_sex" => 'nullable|int|in:1,2,3,4',
-            "spouse_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
+            "spouse_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{10,12}$/u',
             "appointment" => 'nullable|string|in:有',
             "spouse_country" => 'nullable|string|max:255|regex:/\A[ァ-ヴー一-龥・（）\/]+\z/u',
             "spouse_alias_name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
@@ -136,7 +136,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent1_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_birthday_year,other_dependent1_birthday_month,other_dependent1_birthday_era',
             "other_dependent1_sex" => 'nullable|int|in:1,2',
             "other_dependent1_relationship" => 'nullable|string|in:実子・養子,実子養子以外,父母・養父母,義父母,弟妹,兄姉,祖父母,曽祖父母,孫,その他',
-            "other_dependent1_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
+            "other_dependent1_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{10,12}$/u',
             "other_dependent1_living_type" => 'nullable|string|in:同居,別居',
             "other_dependent1_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "other_dependent1_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
@@ -173,7 +173,7 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             "other_dependent2_birthday_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_birthday_year,other_dependent2_birthday_month,other_dependent2_birthday_era',
             "other_dependent2_sex" => 'nullable|int|in:1,2',
             "other_dependent2_relationship" => 'nullable|string|in:実子・養子,実子養子以外,父母・養父母,義父母,弟妹,兄姉,祖父母,曽祖父母,孫,その他',
-            "other_dependent2_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
+            "other_dependent2_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{10,12}$/u',
             "other_dependent2_living_type" => 'nullable|string|in:同居,別居',
             "other_dependent2_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "other_dependent2_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
@@ -257,10 +257,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
             $other_dependent2_remove_date_month = $data['other_dependent2_remove_date_month'] ?? "";
             $other_dependent2_remove_date_day = $data['other_dependent2_remove_date_day'] ?? "";
 
-            if(!empty($birthday_month) && !empty($birthday_day)){
-                if(ctype_digit($birthday_month)){
+            if (!empty($birthday_month) && !empty($birthday_day)) {
+                if (ctype_digit($birthday_month)) {
                     if (!checkdate($birthday_month, $birthday_day, '2000')) {
-                    $validator->errors()->add('birthday_day','1枚目_7_生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -285,11 +285,11 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                     $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                 }
             }
-            
-            if(!empty($acquisition_month) && !empty($acquisition_day)){
-                if(ctype_digit($acquisition_month)){
+
+            if (!empty($acquisition_month) && !empty($acquisition_day)) {
+                if (ctype_digit($acquisition_month)) {
                     if (!checkdate($acquisition_month, $acquisition_day, '2000')) {
-                    $validator->errors()->add('acquisition_day','1枚目_10_取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -315,21 +315,21 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($data['notification_month']) && !empty($data['notification_day'])){
-                if(ctype_digit($data['notification_month'])){
+            if (!empty($data['notification_month']) && !empty($data['notification_day'])) {
+                if (ctype_digit($data['notification_month'])) {
                     if (!checkdate($data['notification_month'], $data['notification_day'], '2000')) {
-                    $validator->errors()->add('notification_day','1枚目_13_氏名_日付は正しい日付を入力してください。');
+                        $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['notification_year'] == 1 && ($data['notification_month'] < 5 )) {
-                    $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
+            if ($data['notification_year'] == 1 && ($data['notification_month'] < 5)) {
+                $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
             }
 
-            if(!empty($spouse_birthday_month) && !empty($spouse_birthday_day)){
-                if(ctype_digit($spouse_birthday_month)){
+            if (!empty($spouse_birthday_month) && !empty($spouse_birthday_day)) {
+                if (ctype_digit($spouse_birthday_month)) {
                     if (!checkdate($spouse_birthday_month, $spouse_birthday_day, '2000')) {
-                    $validator->errors()->add('spouse_birthday_day','1枚目_14_生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -354,11 +354,11 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                     $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                 }
             }
-            
-            if(!empty($spouse_become_date_month) && !empty($spouse_become_date_day)){
-                if(ctype_digit($spouse_become_date_month)){
+
+            if (!empty($spouse_become_date_month) && !empty($spouse_become_date_day)) {
+                if (ctype_digit($spouse_become_date_month)) {
                     if (!checkdate($spouse_become_date_month, $spouse_become_date_day, '2000')) {
-                    $validator->errors()->add('spouse_become_date_day','1枚目_22_被扶養者になった日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -376,10 +376,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day)){
-                if(ctype_digit($spouse_remove_date_month)){
+            if (!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day)) {
+                if (ctype_digit($spouse_remove_date_month)) {
                     if (!checkdate($spouse_remove_date_month, $spouse_remove_date_day, '2000')) {
-                    $validator->errors()->add('spouse_remove_date_day','1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -397,54 +397,54 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($data['spouse_passed_away_date_month']) && !empty($data['spouse_passed_away_date_day'])){
-                if(ctype_digit($data['spouse_passed_away_date_month'])){
+            if (!empty($data['spouse_passed_away_date_month']) && !empty($data['spouse_passed_away_date_day'])) {
+                if (ctype_digit($data['spouse_passed_away_date_month'])) {
                     if (!checkdate($data['spouse_passed_away_date_month'], $data['spouse_passed_away_date_day'], '2000')) {
-                    $validator->errors()->add('spouse_passed_away_date_day','1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_passed_away_date_year'] == 1 && ($data['spouse_passed_away_date_month'] < 5 )) {
-                    $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
+            if ($data['spouse_passed_away_date_year'] == 1 && ($data['spouse_passed_away_date_month'] < 5)) {
+                $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
             }
 
-            if(!empty($data['spouse_special_requirements_applicable_date_month']) && !empty($data['spouse_special_requirements_applicable_date_day'])){
-                if(ctype_digit($data['spouse_special_requirements_applicable_date_month'])){
+            if (!empty($data['spouse_special_requirements_applicable_date_month']) && !empty($data['spouse_special_requirements_applicable_date_day'])) {
+                if (ctype_digit($data['spouse_special_requirements_applicable_date_month'])) {
                     if (!checkdate($data['spouse_special_requirements_applicable_date_month'], $data['spouse_special_requirements_applicable_date_day'], '2000')) {
-                    $validator->errors()->add('spouse_special_requirements_applicable_date_day','1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_special_requirements_applicable_date_year'] == 1 && ($data['spouse_special_requirements_applicable_date_month'] < 5 )) {
-                    $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
+            if ($data['spouse_special_requirements_applicable_date_year'] == 1 && ($data['spouse_special_requirements_applicable_date_month'] < 5)) {
+                $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
             }
-            
-            if(!empty($data['spouse_special_requirements_non_applicable_date_month']) && !empty($data['spouse_special_requirements_non_applicable_date_day'])){
-                if(ctype_digit($data['spouse_special_requirements_non_applicable_date_month'])){
+
+            if (!empty($data['spouse_special_requirements_non_applicable_date_month']) && !empty($data['spouse_special_requirements_non_applicable_date_day'])) {
+                if (ctype_digit($data['spouse_special_requirements_non_applicable_date_month'])) {
                     if (!checkdate($data['spouse_special_requirements_non_applicable_date_month'], $data['spouse_special_requirements_non_applicable_date_day'], '2000')) {
-                    $validator->errors()->add('spouse_special_requirements_non_applicable_date_day','1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_special_requirements_non_applicable_date_year'] == 1 && ($data['spouse_special_requirements_non_applicable_date_month'] < 5 )) {
-                    $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
+            if ($data['spouse_special_requirements_non_applicable_date_year'] == 1 && ($data['spouse_special_requirements_non_applicable_date_month'] < 5)) {
+                $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
             }
 
-            if(!empty($data['spouse_domestic_transfer_date_month']) && !empty($data['spouse_domestic_transfer_date_day'])){
-                if(ctype_digit($data['spouse_domestic_transfer_date_month'])){
+            if (!empty($data['spouse_domestic_transfer_date_month']) && !empty($data['spouse_domestic_transfer_date_day'])) {
+                if (ctype_digit($data['spouse_domestic_transfer_date_month'])) {
                     if (!checkdate($data['spouse_domestic_transfer_date_month'], $data['spouse_domestic_transfer_date_day'], '2000')) {
-                    $validator->errors()->add('spouse_domestic_transfer_date_day','1枚目_30_理由_国内転入日は正しい日付を入力してください。');
+                        $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_domestic_transfer_date_year'] == 1 && ($data['spouse_domestic_transfer_date_month'] < 5 )) {
-                    $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
+            if ($data['spouse_domestic_transfer_date_year'] == 1 && ($data['spouse_domestic_transfer_date_month'] < 5)) {
+                $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
             }
 
-            if(!empty($other_dependent1_birthday_month) && !empty($other_dependent1_birthday_day)){
-                if(ctype_digit($other_dependent1_birthday_month)){
+            if (!empty($other_dependent1_birthday_month) && !empty($other_dependent1_birthday_day)) {
+                if (ctype_digit($other_dependent1_birthday_month)) {
                     if (!checkdate($other_dependent1_birthday_month, $other_dependent1_birthday_day, '2000')) {
-                    $validator->errors()->add('other_dependent1_birthday_day','1枚目_34_生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -470,10 +470,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day)){
-                if(ctype_digit($other_dependent1_become_date_month)){
+            if (!empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day)) {
+                if (ctype_digit($other_dependent1_become_date_month)) {
                     if (!checkdate($other_dependent1_become_date_month, $other_dependent1_become_date_day, '2000')) {
-                    $validator->errors()->add('other_dependent1_become_date_day','1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -491,10 +491,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day)){
-                if(ctype_digit($other_dependent1_remove_date_month)){
+            if (!empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day)) {
+                if (ctype_digit($other_dependent1_remove_date_month)) {
                     if (!checkdate($other_dependent1_remove_date_month, $other_dependent1_remove_date_day, '2000')) {
-                    $validator->errors()->add('other_dependent1_remove_date_day','1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -512,21 +512,21 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($data['other_dependent1_domestic_transfer_date_month']) && !empty($data['other_dependent1_domestic_transfer_date_day'])){
-                if(ctype_digit($data['other_dependent1_domestic_transfer_date_month'])){
+            if (!empty($data['other_dependent1_domestic_transfer_date_month']) && !empty($data['other_dependent1_domestic_transfer_date_day'])) {
+                if (ctype_digit($data['other_dependent1_domestic_transfer_date_month'])) {
                     if (!checkdate($data['other_dependent1_domestic_transfer_date_month'], $data['other_dependent1_domestic_transfer_date_day'], '2000')) {
-                    $validator->errors()->add('other_dependent1_domestic_transfer_date_day','1枚目_47_国内転入日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['other_dependent1_domestic_transfer_date_year'] == 1 && ($data['other_dependent1_domestic_transfer_date_month'] < 5 )) {
-                    $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
+            if ($data['other_dependent1_domestic_transfer_date_year'] == 1 && ($data['other_dependent1_domestic_transfer_date_month'] < 5)) {
+                $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
             }
 
-            if(!empty($other_dependent2_birthday_month) && !empty($other_dependent2_birthday_day)){
-                if(ctype_digit($other_dependent2_birthday_month)){
+            if (!empty($other_dependent2_birthday_month) && !empty($other_dependent2_birthday_day)) {
+                if (ctype_digit($other_dependent2_birthday_month)) {
                     if (!checkdate($other_dependent2_birthday_month, $other_dependent2_birthday_day, '2000')) {
-                    $validator->errors()->add('other_dependent2_birthday_day','1枚目_49_生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -552,10 +552,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day)){
-                if(ctype_digit($other_dependent2_become_date_month)){
+            if (!empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day)) {
+                if (ctype_digit($other_dependent2_become_date_month)) {
                     if (!checkdate($other_dependent2_become_date_month, $other_dependent2_become_date_day, '2000')) {
-                    $validator->errors()->add('other_dependent2_become_date_day','1枚目_54_被扶養者になった日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -573,10 +573,10 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day)){
-                if(ctype_digit($other_dependent2_remove_date_month)){
+            if (!empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day)) {
+                if (ctype_digit($other_dependent2_remove_date_month)) {
                     if (!checkdate($other_dependent2_remove_date_month, $other_dependent2_remove_date_day, '2000')) {
-                    $validator->errors()->add('other_dependent2_remove_date_day','1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -594,15 +594,15 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
                 }
             }
 
-            if(!empty($data['other_dependent2_domestic_transfer_date_month']) && !empty($data['other_dependent2_domestic_transfer_date_day'])){
-                if(ctype_digit($data['other_dependent2_domestic_transfer_date_month'])){
+            if (!empty($data['other_dependent2_domestic_transfer_date_month']) && !empty($data['other_dependent2_domestic_transfer_date_day'])) {
+                if (ctype_digit($data['other_dependent2_domestic_transfer_date_month'])) {
                     if (!checkdate($data['other_dependent2_domestic_transfer_date_month'], $data['other_dependent2_domestic_transfer_date_day'], '2000')) {
-                    $validator->errors()->add('other_dependent2_domestic_transfer_date_day','1枚目_62_国内転入日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['other_dependent2_domestic_transfer_date_year'] == 1 && ($data['other_dependent2_domestic_transfer_date_month'] < 5 )) {
-                    $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
+            if ($data['other_dependent2_domestic_transfer_date_year'] == 1 && ($data['other_dependent2_domestic_transfer_date_month'] < 5)) {
+                $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
             }
 
             if ($this->hasFile('file_insurance')) {
