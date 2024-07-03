@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminCompanyUpdateRequest extends FormRequest
+class AdminCompanyUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,21 +13,6 @@ class AdminCompanyUpdateRequest extends FormRequest
     {
         return true;
     }
-
-    // public function validationData()
-    // {
-    //     $data = $this->all();
-
-    //     if (isset($data['br-address_ward'])) {
-    //         $data['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $data['br-address_ward']);
-    //     }
-    //     if (isset($data['br-address_apartment'])) {
-    //         $data['br-address_apartment'] = mb_convert_kana($data['br-address_apartment'], 'AS');
-    //         $data['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $data['br-address_apartment']);
-    //     }
-
-    //     return $data;
-    // }
 
     public function validationData()
     {

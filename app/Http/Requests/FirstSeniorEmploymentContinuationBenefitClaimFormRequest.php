@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
+class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -103,8 +103,9 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -170,10 +171,10 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
                     $validator->errors()->add('payerJapanEra3', '1枚目_１５欄の支給対象年月その３は正しい日付を入力してください。');
                 }
             }
-            if(!empty($qualificationsMonth) && !empty($qualificationsDay)){
-                if(ctype_digit($qualificationsMonth)){
+            if (!empty($qualificationsMonth) && !empty($qualificationsDay)) {
+                if (ctype_digit($qualificationsMonth)) {
                     if (!checkdate($qualificationsMonth, $qualificationsDay, '2000')) {
-                    $validator->errors()->add('qualificationsDay','1枚目_資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('qualificationsDay', '1枚目_資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }

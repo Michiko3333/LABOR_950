@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
+class SeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -121,8 +121,9 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -140,10 +141,10 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
             $payer_japan_era_year3 = $data['payer_japan_era_year3'] ?? "";
             $payer_month3 = $data['payer_month3'] ?? "";
 
-            if(!empty($qualifications_month) && !empty($qualifications_day)){
-                if(ctype_digit($qualifications_month)){
+            if (!empty($qualifications_month) && !empty($qualifications_day)) {
+                if (ctype_digit($qualifications_month)) {
                     if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
-                    $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -189,7 +190,7 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
                     $validator->errors()->add('payer_japan_era2', '支給対象年月その２は正しい日付を入力してください。');
                 }
             }
-            
+
             if ($payer_japan_era3 === '平成') {
                 if (($payer_japan_era_year3 == 31 && $payer_month3 > 4) || ($payer_japan_era_year3 > 31)) {
                     $validator->errors()->add('payer_japan_era3', '支給対象年月その３は正しい日付を入力してください。');

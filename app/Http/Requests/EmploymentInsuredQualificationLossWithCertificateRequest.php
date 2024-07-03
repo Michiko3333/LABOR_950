@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmploymentInsuredQualificationLossWithCertificateRequest extends FormRequest
+class EmploymentInsuredQualificationLossWithCertificateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -75,10 +75,11 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends FormReque
         $rules = new EmploymentInsuredQualificationLossRequest;
         $rules_2 = new EmploymentInsuredRetirementCertificateRequest;
 
-        return array_merge($rules->rules(),$rules_2->rules());
+        return array_merge($rules->rules(), $rules_2->rules());
     }
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator_1 = new EmploymentInsuredQualificationLossRequest;
         $validator_2 = new EmploymentInsuredRetirementCertificateRequest;
         $validator_1->withValidator($validator);
@@ -90,8 +91,8 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends FormReque
     {
         $messages = new EmploymentInsuredQualificationLossRequest;
         $messages_2 = new EmploymentInsuredRetirementCertificateRequest;
-        
-        return array_merge($messages->messages(),$messages_2->messages());
+
+        return array_merge($messages->messages(), $messages_2->messages());
     }
     public function attributes()
     {

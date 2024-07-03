@@ -92,19 +92,19 @@
     @if (!$this->companyID)
         <div class="small-pagination" style="text-align:center;">
             <div class="ui pagination borderless mini menu">
-                <a class="item @if ($disablePrev) disabled @endif" wire:click="onPrev"><i
-                        class="chevron left icon"></i></a>
-                <a class="item @if ($disableNext) disabled @endif" wire:click="onNext"><i
-                        class="chevron right icon"></i></a>
+                <a class="item pagination-disable @if ($disablePrev) disabled @endif"
+                    wire:click="onPrev"><i class="chevron left icon"></i></a>
+                <a class="item pagination-disable @if ($disableNext) disabled @endif"
+                    wire:click="onNext"><i class="chevron right icon"></i></a>
             </div>
         </div>
     @endif
     <div style="display: flex; justify-content: flex-end;">
         @if ($this->companyID)
-            <button class="ui button primary" type="button" style="width: 150px;"
+            <button class="ui button primary button-disable" type="button" style="width: 150px;"
                 wire:click="contractUpdate">更新</button>
         @else
-            <button class="ui button primary" type="button" style="width: 150px;"
+            <button class="ui button primary button-disable" type="button" style="width: 150px;"
                 wire:click="settingCompany">確定</button>
         @endif
     </div>

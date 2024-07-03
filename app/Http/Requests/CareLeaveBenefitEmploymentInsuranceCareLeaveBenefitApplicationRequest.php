@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest extends FormRequest
+class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -75,10 +75,11 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
         $rules = new CaregiverLeaveBenefitApplicationRequest;
         $rules_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
 
-        return array_merge($rules->rules(),$rules_2->rules());
+        return array_merge($rules->rules(), $rules_2->rules());
     }
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator_1 = new CaregiverLeaveBenefitApplicationRequest;
         $validator_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
         $validator_1->withValidator($validator);
@@ -91,7 +92,7 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
         $messages = new CaregiverLeaveBenefitApplicationRequest;
         $messages_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
 
-        return array_merge($messages->messages(),$messages_2->messages());
+        return array_merge($messages->messages(), $messages_2->messages());
     }
     public function attributes()
     {

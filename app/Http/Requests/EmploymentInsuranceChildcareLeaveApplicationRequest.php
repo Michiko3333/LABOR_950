@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
+class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -151,8 +151,9 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -201,10 +202,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
             $unsettled_month = $data['unsettled_month'] ?? "";
             $unsettled_day = $data['unsettled_day'] ?? "";
 
-            if(!empty($qualifications_month) && !empty($qualifications_day)){
-                if(ctype_digit($qualifications_month)){
+            if (!empty($qualifications_month) && !empty($qualifications_day)) {
+                if (ctype_digit($qualifications_month)) {
                     if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
-                    $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -231,10 +232,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($childcare_start_date_month) && !empty($childcare_start_date_day)){
-                if(ctype_digit($childcare_start_date_month)){
+            if (!empty($childcare_start_date_month) && !empty($childcare_start_date_day)) {
+                if (ctype_digit($childcare_start_date_month)) {
                     if (!checkdate($childcare_start_date_month, $childcare_start_date_day, '2000')) {
-                    $validator->errors()->add('childcare_start_date_day','育児休業開始年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('childcare_start_date_day', '育児休業開始年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -252,11 +253,11 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                     $validator->errors()->add('childcare_start_date_day', '育児休業開始年月日は正しい日付を入力してください。');
                 }
             }
-        
-            if(!empty($birth_date_month) && !empty($birth_date_day)){
-                if(ctype_digit($birth_date_month)){
+
+            if (!empty($birth_date_month) && !empty($birth_date_day)) {
+                if (ctype_digit($birth_date_month)) {
                     if (!checkdate($birth_date_month, $birth_date_day, '2000')) {
-                    $validator->errors()->add('birth_date_day','出産年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birth_date_day', '出産年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -275,10 +276,10 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($payer_month1) && !empty($payer_day1)){
-                if(ctype_digit($payer_month1)){
+            if (!empty($payer_month1) && !empty($payer_day1)) {
+                if (ctype_digit($payer_month1)) {
                     if (!checkdate($payer_month1, $payer_day1, '2000')) {
-                    $validator->errors()->add('payer_day1','支給単位期間その１（初日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payer_day1', '支給単位期間その１（初日）は正しい日付を入力してください。');
                     }
                 }
             }
@@ -297,28 +298,28 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($payer_end_month1) && !empty($payer_end_day1)){
-                if(ctype_digit($payer_end_month1)){
+            if (!empty($payer_end_month1) && !empty($payer_end_day1)) {
+                if (ctype_digit($payer_end_month1)) {
                     if (!checkdate($payer_end_month1, $payer_end_day1, '2000')) {
-                    $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payer_end_day1', '支給単位期間その１（末日）は正しい日付を入力してください。');
                     }
                 }
             }
 
-            if(!empty($payer_end_month1) && !empty($payer_end_day1) && !empty($payer_day1) && !empty($payer_month1)){
+            if (!empty($payer_end_month1) && !empty($payer_end_day1) && !empty($payer_day1) && !empty($payer_month1)) {
                 if ($payer_end_month1 === $payer_month1) {
-                    if($payer_day1 > $payer_end_day1){
-                        $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
+                    if ($payer_day1 > $payer_end_day1) {
+                        $validator->errors()->add('payer_end_day1', '支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
                     }
-                } elseif ($payer_month1 > $payer_end_month1){
-                    $validator->errors()->add('payer_end_day1','支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
+                } elseif ($payer_month1 > $payer_end_month1) {
+                    $validator->errors()->add('payer_end_day1', '支給単位期間その１（末日）は支給単位期間その１（初日）以降を入力してください。');
                 }
             }
 
-            if(!empty($payer_month2) && !empty($payer_day2)){
-                if(ctype_digit($payer_month2)){
+            if (!empty($payer_month2) && !empty($payer_day2)) {
+                if (ctype_digit($payer_month2)) {
                     if (!checkdate($payer_month2, $payer_day2, '2000')) {
-                    $validator->errors()->add('payer_day2','支給単位期間その２（初日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payer_day2', '支給単位期間その２（初日）は正しい日付を入力してください。');
                     }
                 }
             }
@@ -337,28 +338,28 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($payer_end_month2) && !empty($payer_end_day2)){
-                if(ctype_digit($payer_end_month2)){
+            if (!empty($payer_end_month2) && !empty($payer_end_day2)) {
+                if (ctype_digit($payer_end_month2)) {
                     if (!checkdate($payer_end_month2, $payer_end_day2, '2000')) {
-                    $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payer_end_day2', '支給単位期間その２（末日）は正しい日付を入力してください。');
                     }
                 }
             }
 
-            if(!empty($payer_end_month2) && !empty($payer_end_day2) && !empty($payer_day2) && !empty($payer_month2)){
+            if (!empty($payer_end_month2) && !empty($payer_end_day2) && !empty($payer_day2) && !empty($payer_month2)) {
                 if ($payer_end_month2 === $payer_month2) {
-                    if($payer_day2 > $payer_end_day2){
-                        $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
+                    if ($payer_day2 > $payer_end_day2) {
+                        $validator->errors()->add('payer_end_day2', '支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
                     }
-                } elseif ($payer_month2 > $payer_end_month2){
-                    $validator->errors()->add('payer_end_day2','支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
+                } elseif ($payer_month2 > $payer_end_month2) {
+                    $validator->errors()->add('payer_end_day2', '支給単位期間その２（末日）は支給単位期間その２（初日）以降を入力してください。');
                 }
             }
 
-            if(!empty($payment_period_last_month) && !empty($payment_period_last_day)){
-                if(ctype_digit($payment_period_last_month)){
+            if (!empty($payment_period_last_month) && !empty($payment_period_last_day)) {
+                if (ctype_digit($payment_period_last_month)) {
                     if (!checkdate($payment_period_last_month, $payment_period_last_day, '2000')) {
-                    $validator->errors()->add('payment_period_last_day','最終支給単位期間（初日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payment_period_last_day', '最終支給単位期間（初日）は正しい日付を入力してください。');
                     }
                 }
             }
@@ -377,28 +378,28 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end)){
-                if(ctype_digit($payment_period_last_month_end)){
+            if (!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end)) {
+                if (ctype_digit($payment_period_last_month_end)) {
                     if (!checkdate($payment_period_last_month_end, $payment_period_last_day_end, '2000')) {
-                    $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は正しい日付を入力してください。');
+                        $validator->errors()->add('payment_period_last_day_end', '最終支給単位期間（末日）は正しい日付を入力してください。');
                     }
                 }
             }
 
-            if(!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end) && !empty($payment_period_last_day) && !empty($payment_period_last_month)){
+            if (!empty($payment_period_last_month_end) && !empty($payment_period_last_day_end) && !empty($payment_period_last_day) && !empty($payment_period_last_month)) {
                 if ($payment_period_last_month_end === $payment_period_last_month) {
-                    if($payment_period_last_day > $payment_period_last_day_end){
-                        $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
+                    if ($payment_period_last_day > $payment_period_last_day_end) {
+                        $validator->errors()->add('payment_period_last_day_end', '最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
                     }
-                } elseif ($payment_period_last_month > $payment_period_last_month_end){
-                    $validator->errors()->add('payment_period_last_day_end','最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
+                } elseif ($payment_period_last_month > $payment_period_last_month_end) {
+                    $validator->errors()->add('payment_period_last_day_end', '最終支給単位期間（末日）は最終支給単位期間（初日）以降を入力してください。');
                 }
             }
 
-            if(!empty($return_from_resignation_date_month) && !empty($return_from_resignation_date_day)){
-                if(ctype_digit($return_from_resignation_date_month)){
+            if (!empty($return_from_resignation_date_month) && !empty($return_from_resignation_date_day)) {
+                if (ctype_digit($return_from_resignation_date_month)) {
                     if (!checkdate($return_from_resignation_date_month, $return_from_resignation_date_day, '2000')) {
-                    $validator->errors()->add('return_from_resignation_date_day3','職場復帰年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('return_from_resignation_date_day3', '職場復帰年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -416,11 +417,11 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                     $validator->errors()->add('return_from_resignation_date_day3', '職場復帰年月日は正しい日付を入力してください。');
                 }
             }
-            
-            if(!empty($payment_period_extension_month) && !empty($payment_period_extension_day)){
-                if(ctype_digit($payment_period_extension_month)){
+
+            if (!empty($payment_period_extension_month) && !empty($payment_period_extension_day)) {
+                if (ctype_digit($payment_period_extension_month)) {
                     if (!checkdate($payment_period_extension_month, $payment_period_extension_day, '2000')) {
-                    $validator->errors()->add('payment_period_extension_day','支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
+                        $validator->errors()->add('payment_period_extension_day', '支給対象となる期間の延長事由－期間_開始日付は正しい日付を入力してください。');
                     }
                 }
             }
@@ -439,28 +440,28 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                 }
             }
 
-            if(!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day)){
-                if(ctype_digit($payment_period_extension_last_month)){
+            if (!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day)) {
+                if (ctype_digit($payment_period_extension_last_month)) {
                     if (!checkdate($payment_period_extension_last_month, $payment_period_extension_last_day, '2000')) {
-                    $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は正しい日付を入力してください。');
+                        $validator->errors()->add('payment_period_extension_last_day', '支給対象となる期間の延長事由－期間_終了日付は正しい日付を入力してください。');
                     }
                 }
             }
 
-            if(!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day) && !empty($payment_period_extension_day) && !empty($payment_period_extension_month)){
+            if (!empty($payment_period_extension_last_month) && !empty($payment_period_extension_last_day) && !empty($payment_period_extension_day) && !empty($payment_period_extension_month)) {
                 if ($payment_period_extension_last_month === $payment_period_extension_month) {
-                    if($payment_period_extension_day > $payment_period_extension_last_day){
-                        $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
+                    if ($payment_period_extension_day > $payment_period_extension_last_day) {
+                        $validator->errors()->add('payment_period_extension_last_day', '支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
                     }
-                } elseif ($payment_period_extension_month > $payment_period_extension_last_month){
-                    $validator->errors()->add('payment_period_extension_last_day','支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
+                } elseif ($payment_period_extension_month > $payment_period_extension_last_month) {
+                    $validator->errors()->add('payment_period_extension_last_day', '支給対象となる期間の延長事由－期間_終了日付は支給対象となる期間の延長事由－期間_開始日付以降を入力してください。');
                 }
             }
 
-            if(!empty($unsettled_month) && !empty($unsettled_day)){
-                if(ctype_digit($unsettled_month)){
+            if (!empty($unsettled_month) && !empty($unsettled_day)) {
+                if (ctype_digit($unsettled_month)) {
                     if (!checkdate($unsettled_month, $unsettled_day, '2000')) {
-                    $validator->errors()->add('unsettled_day','備考欄_雇用期間_年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('unsettled_day', '備考欄_雇用期間_年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -478,7 +479,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends FormRequest
                     $validator->errors()->add('unsettled_day', '備考欄_雇用期間_年月日は正しい日付を入力してください。');
                 }
             }
-            
+
             if ($this->hasFile('file_amount_days_time')) {
                 $totalSize += $this->file('file_amount_days_time')->getSize();
             }

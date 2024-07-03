@@ -348,6 +348,9 @@
         $('.pagination-disable').click((event) => {
             $(event.target).addClass('disabled');
         });
+        $('.button-disable').click((event) => {
+            $(event.target).prop('disabled', true);
+        });
     </script>
 </body>
 

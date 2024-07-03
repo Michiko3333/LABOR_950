@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
+class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -105,8 +105,9 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -130,11 +131,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
             $over_70_non_applicable_date_year = $data['over_70_non_applicable_date_year'] ?? "";
             $over_70_non_applicable_date_month = $data['over_70_non_applicable_date_month'] ?? "";
             $over_70_non_applicable_date_day = $data['over_70_non_applicable_date_day'] ?? "";
-    
-            if(!empty($birthday_month) && !empty($birthday_day)){
-                if(ctype_digit($birthday_month)){
+
+            if (!empty($birthday_month) && !empty($birthday_day)) {
+                if (ctype_digit($birthday_month)) {
                     if (!checkdate($birthday_month, $birthday_day, '2000')) {
-                    $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -159,11 +160,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
                     $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                 }
             }
-    
-            if(!empty($loss_month) && !empty($loss_day)){
-                if(ctype_digit($loss_month)){
+
+            if (!empty($loss_month) && !empty($loss_day)) {
+                if (ctype_digit($loss_month)) {
                     if (!checkdate($loss_month, $loss_day, '2000')) {
-                    $validator->errors()->add('loss_day','喪失年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('loss_day', '喪失年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -180,11 +181,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
                     $validator->errors()->add('loss_day', '喪失年月日は正しい日付を入力してください。');
                 }
             }
-    
-            if(!empty($retirement_date_month) && !empty($retirement_date_day)){
-                if(ctype_digit($retirement_date_month)){
+
+            if (!empty($retirement_date_month) && !empty($retirement_date_day)) {
+                if (ctype_digit($retirement_date_month)) {
                     if (!checkdate($retirement_date_month, $retirement_date_day, '2000')) {
-                    $validator->errors()->add('retirement_date_day','喪失原因_退職等年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('retirement_date_day', '喪失原因_退職等年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -201,11 +202,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
                     $validator->errors()->add('retirement_date_day', '喪失原因_退職等年月日は正しい日付を入力してください。');
                 }
             }
-    
-            if(!empty($passed_away_date_month) && !empty($passed_away_date_day)){
-                if(ctype_digit($passed_away_date_month)){
+
+            if (!empty($passed_away_date_month) && !empty($passed_away_date_day)) {
+                if (ctype_digit($passed_away_date_month)) {
                     if (!checkdate($passed_away_date_month, $passed_away_date_day, '2000')) {
-                    $validator->errors()->add('passed_away_date_day','喪失原因_死亡年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('passed_away_date_day', '喪失原因_死亡年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -222,11 +223,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
                     $validator->errors()->add('passed_away_date_day', '喪失原因_死亡年月日は正しい日付を入力してください。');
                 }
             }
-    
-            if(!empty($over_70_non_applicable_date_month) && !empty($over_70_non_applicable_date_day)){
-                if(ctype_digit($over_70_non_applicable_date_month)){
+
+            if (!empty($over_70_non_applicable_date_month) && !empty($over_70_non_applicable_date_day)) {
+                if (ctype_digit($over_70_non_applicable_date_month)) {
                     if (!checkdate($over_70_non_applicable_date_month, $over_70_non_applicable_date_day, '2000')) {
-                    $validator->errors()->add('over_70_non_applicable_date_day','70歳不該当年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('over_70_non_applicable_date_day', '70歳不該当年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -243,7 +244,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends FormRequest
                     $validator->errors()->add('over_70_non_applicable_date_day', '70歳不該当年月日は正しい日付を入力してください。');
                 }
             }
-            
+
             if ($this->hasFile('file_insurance')) {
                 $totalSize += $this->file('file_insurance')->getSize();
             }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
+class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,7 +38,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
             $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
         }
-        
+
         return $data;
     }
 
@@ -110,8 +110,9 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $employee_birthday_japan_era = $data['employee_birthday_japan_era'] ?? "";
@@ -123,10 +124,10 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
             $employee_employment_insured_date_month = $data['employee_employment_insured_date_month'] ?? "";
             $employee_employment_insured_date_day = $data['employee_employment_insured_date_day'] ?? "";
 
-            if(!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)){
-                if(ctype_digit($employee_employment_insured_date_month)){
+            if (!empty($employee_employment_insured_date_month) && !empty($employee_employment_insured_date_day)) {
+                if (ctype_digit($employee_employment_insured_date_month)) {
                     if (!checkdate($employee_employment_insured_date_month, $employee_employment_insured_date_day, '2000')) {
-                        $validator->errors()->add('employee_employment_insured_date_day','取得（該当）年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('employee_employment_insured_date_day', '取得（該当）年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -144,10 +145,10 @@ class NotificationOfObtainingInsuredQualificationRequest extends FormRequest
                 }
             }
 
-            if(!empty($employee_birthday_month) && !empty($employee_birthday_day)){
-                if(ctype_digit($employee_birthday_month)){
+            if (!empty($employee_birthday_month) && !empty($employee_birthday_day)) {
+                if (ctype_digit($employee_birthday_month)) {
                     if (!checkdate($employee_birthday_month, $employee_birthday_day, '2000')) {
-                        $validator->errors()->add('employee_birthday_day','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('employee_birthday_day', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }

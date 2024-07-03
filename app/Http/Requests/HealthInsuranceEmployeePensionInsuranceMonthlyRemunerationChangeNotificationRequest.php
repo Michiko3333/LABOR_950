@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest extends FormRequest
+class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -94,8 +94,9 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -115,7 +116,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
-            } elseif($birthday_era === '2') {
+            } elseif ($birthday_era === '2') {
                 if (
                     ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
                     ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
@@ -144,10 +145,10 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($birthday_month) && !empty($birthday_date)){
-                if(ctype_digit($birthday_month)){
+            if (!empty($birthday_month) && !empty($birthday_date)) {
+                if (ctype_digit($birthday_month)) {
                     if (!checkdate($birthday_month, $birthday_date, '2000')) {
-                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }

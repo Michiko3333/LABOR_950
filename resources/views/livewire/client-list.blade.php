@@ -21,20 +21,22 @@
         </thead>
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
-            <tr class="card">
-                <td>{{ $item['name'] }}</td>
-                <td>{{ $company_type[$item->type_id] ?? 'E' }}</td>
-                <td>{{ $item->company_no }}</td>
-                <td>{{ $prefecture[$item->prefecture] ?? '' }}　{{ $item->city }}　{{ $item->ward }}　{{ $item->apartment }}</td>
-                <td class="right aligned collapsing">
-                    <a class="ui basic primary button" href="javascript:openClientModal({{ $item->company_id }})">
-                        編集
-                    </a>
-                    <a class="ui basic primary button" href="javascript:openCancelModal({{ $item->receptionist_id }})">
-                        削除
-                    </a>
-                </td>
-            </tr>
+                <tr class="card">
+                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $company_type[$item->type_id] ?? 'E' }}</td>
+                    <td>{{ $item->company_no }}</td>
+                    <td>{{ $prefecture[$item->prefecture] ?? '' }}　{{ $item->city }}　{{ $item->ward }}　{{ $item->apartment }}
+                    </td>
+                    <td class="right aligned collapsing">
+                        <a class="ui basic primary button" href="javascript:openClientModal({{ $item->company_id }})">
+                            編集
+                        </a>
+                        <a class="ui basic primary button"
+                            href="javascript:openCancelModal({{ $item->receptionist_id }})">
+                            削除
+                        </a>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
@@ -59,12 +61,14 @@
 @script
     <script type="module">
         window.openClientModal = (companyID) => {
-            if(companyID) {
+            if (companyID) {
                 $('#client_modal_title').text('契約期間を編集');
             } else {
                 $('#client_modal_title').text('追加する顧客会社を検索');
             }
-            $wire.dispatch('clientModalOpened', { companyID: companyID });
+            $wire.dispatch('clientModalOpened', {
+                companyID: companyID
+            });
             setTimeout(() => {
                 $('.client-modal').modal({
                     blurring: true,
@@ -75,12 +79,16 @@
             }, 230);
         };
         window.addEventListener('closeClientModal', () => {
+            console.log('CALLED');
             $('.client-modal').modal('hide');
             location.reload();
         });
 
         window.openCancelModal = (receptionistId) => {
-            $wire.dispatch('cancelModalOpened', { receptionistId: receptionistId, managerialPositionId: 0 });
+            $wire.dispatch('cancelModalOpened', {
+                receptionistId: receptionistId,
+                managerialPositionId: 0
+            });
             setTimeout(() => {
                 $('.cancel-modal').modal({
                     blurring: true
@@ -94,7 +102,7 @@
             $('.cancel-modal').modal('hide');
             location.reload();
         });
-        
+
         window.addEventListener('contractSuccess', () => {
             $.toast({
                 position: 'bottom right',

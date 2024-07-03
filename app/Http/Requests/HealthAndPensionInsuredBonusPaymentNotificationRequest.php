@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
+class HealthAndPensionInsuredBonusPaymentNotificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -69,8 +69,9 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthday_era = $data['employee_birthday_era'] ?? "";
@@ -81,7 +82,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
             $bonus_payment_date_year = $data['bonus_payment_date_year'] ?? "";
             $bonus_payment_date_month = $data['bonus_payment_date_month'] ?? "";
             $bonus_payment_date_date = $data['bonus_payment_date_date'] ?? "";
-    
+
             if ($birthday_era === '1') {
                 if (
                     ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
@@ -90,7 +91,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
-            } elseif($birthday_era === '2') {
+            } elseif ($birthday_era === '2') {
                 if (
                     ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
                     ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
@@ -119,10 +120,10 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($birthday_month) && !empty($birthday_date)){
-                if(ctype_digit($birthday_month)){
+            if (!empty($birthday_month) && !empty($birthday_date)) {
+                if (ctype_digit($birthday_month)) {
                     if (!checkdate($birthday_month, $birthday_date, '2000')) {
-                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -140,10 +141,10 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends FormRequest
                     $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($bonus_payment_date_month) && !empty($bonus_payment_date_date)){
-                if(ctype_digit($bonus_payment_date_month)){
+            if (!empty($bonus_payment_date_month) && !empty($bonus_payment_date_date)) {
+                if (ctype_digit($bonus_payment_date_month)) {
                     if (!checkdate($bonus_payment_date_month, $bonus_payment_date_date, '2000')) {
-                    $validator->errors()->add('bonus_payment_date_date','賞与支払年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
                     }
                 }
             }

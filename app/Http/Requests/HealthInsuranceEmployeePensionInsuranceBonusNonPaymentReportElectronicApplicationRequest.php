@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest extends FormRequest
+class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -84,8 +84,9 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'] ?? "";
@@ -96,7 +97,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             }
         });
     }
-    
+
     public function messages()
     {
         return [
