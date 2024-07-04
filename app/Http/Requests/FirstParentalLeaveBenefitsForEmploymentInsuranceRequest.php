@@ -93,8 +93,6 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends BaseReques
         $validator_2 = new EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
-
-        return $validator;
     }
 
     public function attributes()

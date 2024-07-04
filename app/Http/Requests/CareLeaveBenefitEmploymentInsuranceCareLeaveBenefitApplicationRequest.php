@@ -84,8 +84,6 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
         $validator_2 = new WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
-
-        return $validator;
     }
     public function messages()
     {

@@ -84,8 +84,6 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends BaseReque
         $validator_2 = new EmploymentInsuredRetirementCertificateRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
-
-        return $validator;
     }
     public function messages()
     {

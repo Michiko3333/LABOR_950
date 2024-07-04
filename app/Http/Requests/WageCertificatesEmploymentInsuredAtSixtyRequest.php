@@ -86,8 +86,6 @@ class WageCertificatesEmploymentInsuredAtSixtyRequest extends BaseRequest
         $validator_2 = new EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
-
-        return $validator;
     }
 
     public function attributes()
