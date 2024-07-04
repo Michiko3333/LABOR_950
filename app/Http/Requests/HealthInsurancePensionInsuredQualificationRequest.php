@@ -111,136 +111,190 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
+            $submission_japan_year = $data['submission_year'] ?? "";
+            if (isset($data['submission_year']) && ctype_digit($data['submission_year'])) {
+                $submission_year = 2018 + $data['submission_year'];
+            }
+            $submission_month = $data['submission_month'] ?? "";
+            $submission_day = $data['submission_day'] ?? "";
             $birthday_era = $data['birthday_era'] ?? "";
-            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_japan_year = $data['birthday_year'] ?? "";
+            if (isset($data['birthday_year']) && ctype_digit($data['birthday_year'])) {
+                if ($birthday_era === '5') {
+                    $birthday_year = 1925 + $data['birthday_year'];
+                } elseif ($birthday_era === '7') {
+                    $birthday_year = 1988 + $data['birthday_year'];
+                } elseif ($birthday_era === '9') {
+                    $birthday_year = 2018 + $data['birthday_year'];
+                }
+            }
             $birthday_month = $data['birthday_month'] ?? "";
             $birthday_day = $data['birthday_day'] ?? "";
             $loss_era = $data['loss_era'] ?? "";
-            $loss_year = $data['loss_year'] ?? "";
+            $loss_japan_year = $data['loss_year'] ?? "";
+            if (isset($data['loss_year']) && ctype_digit($data['loss_year'])) {
+                if ($loss_era === '平成') {
+                    $loss_year = 1988 + $data['loss_year'];
+                } elseif ($loss_era === '令和') {
+                    $loss_year = 2018 + $data['loss_year'];
+                }
+            }
             $loss_month = $data['loss_month'] ?? "";
             $loss_day = $data['loss_day'] ?? "";
             $retirement_date_era = $data['retirement_date_era'] ?? "";
-            $retirement_date_year = $data['retirement_date_year'] ?? "";
+            $retirement_date_japan_year = $data['retirement_date_year'] ?? "";
+            if (isset($data['retirement_date_year']) && ctype_digit($data['retirement_date_year'])) {
+                if ($retirement_date_era === '平成') {
+                    $retirement_date_year = 1988 + $data['retirement_date_year'];
+                } elseif ($retirement_date_era === '令和') {
+                    $retirement_date_year = 2018 + $data['retirement_date_year'];
+                }
+            }
             $retirement_date_month = $data['retirement_date_month'] ?? "";
             $retirement_date_day = $data['retirement_date_day'] ?? "";
             $passed_away_date_era = $data['passed_away_date_era'] ?? "";
-            $passed_away_date_year = $data['passed_away_date_year'] ?? "";
+            $passed_away_date_japan_year = $data['passed_away_date_year'] ?? "";
+            if (isset($data['passed_away_date_year']) && ctype_digit($data['passed_away_date_year'])) {
+                if ($passed_away_date_era === '平成') {
+                    $passed_away_date_year = 1988 + $data['passed_away_date_year'];
+                } elseif ($passed_away_date_era === '令和') {
+                    $passed_away_date_year = 2018 + $data['passed_away_date_year'];
+                }
+            }
             $passed_away_date_month = $data['passed_away_date_month'] ?? "";
             $passed_away_date_day = $data['passed_away_date_day'] ?? "";
             $over_70_non_applicable_date_era = $data['over_70_non_applicable_date_era'] ?? "";
-            $over_70_non_applicable_date_year = $data['over_70_non_applicable_date_year'] ?? "";
+            $over_70_non_applicable_date_japan_year = $data['over_70_non_applicable_date_year'] ?? "";
+            if (isset($data['over_70_non_applicable_date_year']) && ctype_digit($data['over_70_non_applicable_date_year'])) {
+                if ($over_70_non_applicable_date_era === '7') {
+                    $over_70_non_applicable_date_year = 1988 + $data['over_70_non_applicable_date_year'];
+                } elseif ($over_70_non_applicable_date_era === '9') {
+                    $over_70_non_applicable_date_year = 2018 + $data['over_70_non_applicable_date_year'];
+                }
+            }
             $over_70_non_applicable_date_month = $data['over_70_non_applicable_date_month'] ?? "";
             $over_70_non_applicable_date_day = $data['over_70_non_applicable_date_day'] ?? "";
 
-            if (!empty($birthday_month) && !empty($birthday_day)) {
-                if (ctype_digit($birthday_month)) {
-                    if (!checkdate($birthday_month, $birthday_day, '2000')) {
+            if (!empty($submission_month) && !empty($submission_day) && !empty($submission_year)) {
+                if (ctype_digit($submission_month) && ctype_digit($submission_day)) {
+                    if (!checkdate($submission_month, $submission_day, $submission_year)) {
+                        $validator->errors()->add('submission_day', '提出年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($submission_japan_year == 1 && ($submission_month < 5)) {
+                $validator->errors()->add('submission_day', '提出年月日は正しい日付を入力してください。');
+            }
+
+            if (!empty($birthday_month) && !empty($birthday_day) && !empty($birthday_year)) {
+                if (ctype_digit($birthday_month) && ctype_digit($birthday_day)) {
+                    if (!checkdate($birthday_month, $birthday_day, $birthday_year)) {
                         $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($birthday_era === '5') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_day < 25))) ||
-                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_day > 7))) ||
-                    ($birthday_year > 64)
+                    ($birthday_japan_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_day < 25))) ||
+                    ($birthday_japan_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_day > 7))) ||
+                    ($birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '7') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_day < 8))) ||
-                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_day > 30))) ||
-                    ($birthday_year > 31)
+                    ($birthday_japan_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_day < 8))) ||
+                    ($birthday_japan_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_day > 30))) ||
+                    ($birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '9') {
-                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_day < 1))) {
+                if ($birthday_japan_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_day < 1))) {
                     $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($loss_month) && !empty($loss_day)) {
-                if (ctype_digit($loss_month)) {
-                    if (!checkdate($loss_month, $loss_day, '2000')) {
+            if (!empty($loss_month) && !empty($loss_day) && !empty($loss_year)) {
+                if (ctype_digit($loss_month) && ctype_digit($loss_day)) {
+                    if (!checkdate($loss_month, $loss_day, $loss_year)) {
                         $validator->errors()->add('loss_day', '喪失年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($loss_era === '平成') {
                 if (
-                    ($loss_year == 1 && ($loss_month < 1 || ($loss_month == 1 && $loss_day < 8))) ||
-                    ($loss_year == 31 && ($loss_month > 4 || ($loss_month == 4 && $loss_day > 30))) ||
-                    ($loss_year > 31)
+                    ($loss_japan_year == 1 && ($loss_month < 1 || ($loss_month == 1 && $loss_day < 8))) ||
+                    ($loss_japan_year == 31 && ($loss_month > 4 || ($loss_month == 4 && $loss_day > 30))) ||
+                    ($loss_japan_year > 31)
                 ) {
                     $validator->errors()->add('loss_day', '喪失年月日は正しい日付を入力してください。');
                 }
             } elseif ($loss_era === '令和') {
-                if ($loss_year == 1 && ($loss_month < 5 || ($loss_month == 5 && $loss_day < 1))) {
+                if ($loss_japan_year == 1 && $loss_month < 5) {
                     $validator->errors()->add('loss_day', '喪失年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($retirement_date_month) && !empty($retirement_date_day)) {
-                if (ctype_digit($retirement_date_month)) {
-                    if (!checkdate($retirement_date_month, $retirement_date_day, '2000')) {
+            if (!empty($retirement_date_month) && !empty($retirement_date_day) && !empty($retirement_date_year)) {
+                if (ctype_digit($retirement_date_month) && ctype_digit($retirement_date_day)) {
+                    if (!checkdate($retirement_date_month, $retirement_date_day, $retirement_date_year)) {
                         $validator->errors()->add('retirement_date_day', '喪失原因_退職等年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($retirement_date_era === '平成') {
                 if (
-                    ($retirement_date_year == 1 && ($retirement_date_month < 1 || ($retirement_date_month == 1 && $retirement_date_day < 8))) ||
-                    ($retirement_date_year == 31 && ($retirement_date_month > 4 || ($retirement_date_month == 4 && $retirement_date_day > 30))) ||
-                    ($retirement_date_year > 31)
+                    ($retirement_date_japan_year == 1 && ($retirement_date_month < 1 || ($retirement_date_month == 1 && $retirement_date_day < 8))) ||
+                    ($retirement_date_japan_year == 31 && ($retirement_date_month > 4 || ($retirement_date_month == 4 && $retirement_date_day > 30))) ||
+                    ($retirement_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('retirement_date_day', '喪失原因_退職等年月日は正しい日付を入力してください。');
                 }
             } elseif ($retirement_date_era === '令和') {
-                if ($retirement_date_year == 1 && ($retirement_date_month < 5 || ($retirement_date_month == 5 && $retirement_date_day < 1))) {
+                if ($retirement_date_japan_year == 1 && $retirement_date_month < 5) {
                     $validator->errors()->add('retirement_date_day', '喪失原因_退職等年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($passed_away_date_month) && !empty($passed_away_date_day)) {
-                if (ctype_digit($passed_away_date_month)) {
-                    if (!checkdate($passed_away_date_month, $passed_away_date_day, '2000')) {
+            if (!empty($passed_away_date_month) && !empty($passed_away_date_day) && !empty($passed_away_date_year)) {
+                if (ctype_digit($passed_away_date_month) && ctype_digit($passed_away_date_day)) {
+                    if (!checkdate($passed_away_date_month, $passed_away_date_day, $passed_away_date_year)) {
                         $validator->errors()->add('passed_away_date_day', '喪失原因_死亡年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($passed_away_date_era === '平成') {
                 if (
-                    ($passed_away_date_year == 1 && ($passed_away_date_month < 1 || ($passed_away_date_month == 1 && $passed_away_date_day < 8))) ||
-                    ($passed_away_date_year == 31 && ($passed_away_date_month > 4 || ($passed_away_date_month == 4 && $passed_away_date_day > 30))) ||
-                    ($passed_away_date_year > 31)
+                    ($passed_away_date_japan_year == 1 && ($passed_away_date_month < 1 || ($passed_away_date_month == 1 && $passed_away_date_day < 8))) ||
+                    ($passed_away_date_japan_year == 31 && ($passed_away_date_month > 4 || ($passed_away_date_month == 4 && $passed_away_date_day > 30))) ||
+                    ($passed_away_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('passed_away_date_day', '喪失原因_死亡年月日は正しい日付を入力してください。');
                 }
             } elseif ($passed_away_date_era === '令和') {
-                if ($passed_away_date_year == 1 && ($passed_away_date_month < 5 || ($passed_away_date_month == 5 && $passed_away_date_day < 1))) {
+                if ($passed_away_date_japan_year == 1 && $passed_away_date_month < 5) {
                     $validator->errors()->add('passed_away_date_day', '喪失原因_死亡年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($over_70_non_applicable_date_month) && !empty($over_70_non_applicable_date_day)) {
-                if (ctype_digit($over_70_non_applicable_date_month)) {
-                    if (!checkdate($over_70_non_applicable_date_month, $over_70_non_applicable_date_day, '2000')) {
+            if (!empty($over_70_non_applicable_date_month) && !empty($over_70_non_applicable_date_day) && !empty($over_70_non_applicable_date_year)) {
+                if (ctype_digit($over_70_non_applicable_date_month) && ctype_digit($over_70_non_applicable_date_day)) {
+                    if (!checkdate($over_70_non_applicable_date_month, $over_70_non_applicable_date_day, $over_70_non_applicable_date_year)) {
                         $validator->errors()->add('over_70_non_applicable_date_day', '70歳不該当年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($over_70_non_applicable_date_era === '7') {
                 if (
-                    ($over_70_non_applicable_date_year == 1 && ($over_70_non_applicable_date_month < 1 || ($over_70_non_applicable_date_month == 1 && $over_70_non_applicable_date_day < 8))) ||
-                    ($over_70_non_applicable_date_year == 31 && ($over_70_non_applicable_date_month > 4 || ($over_70_non_applicable_date_month == 4 && $over_70_non_applicable_date_day > 30))) ||
-                    ($over_70_non_applicable_date_year > 31)
+                    ($over_70_non_applicable_date_japan_year == 1 && ($over_70_non_applicable_date_month < 1 || ($over_70_non_applicable_date_month == 1 && $over_70_non_applicable_date_day < 8))) ||
+                    ($over_70_non_applicable_date_japan_year == 31 && ($over_70_non_applicable_date_month > 4 || ($over_70_non_applicable_date_month == 4 && $over_70_non_applicable_date_day > 30))) ||
+                    ($over_70_non_applicable_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('over_70_non_applicable_date_day', '70歳不該当年月日は正しい日付を入力してください。');
                 }
             } elseif ($over_70_non_applicable_date_era === '9') {
-                if ($over_70_non_applicable_date_year == 1 && ($over_70_non_applicable_date_month < 5 || ($over_70_non_applicable_date_month == 5 && $over_70_non_applicable_date_day < 1))) {
+                if ($over_70_non_applicable_date_japan_year == 1 && $over_70_non_applicable_date_month < 5) {
                     $validator->errors()->add('over_70_non_applicable_date_day', '70歳不該当年月日は正しい日付を入力してください。');
                 }
             }

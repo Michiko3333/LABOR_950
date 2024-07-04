@@ -74,78 +74,115 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends BaseRequest
         parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
+            $today_japan_year = $data['today_year'] ?? "";
+            if (isset($data['today_year']) && ctype_digit($data['today_year'])) {
+                $today_year = 2018 + $data['today_year'];
+            }
+            $today_month = $data['today_month'] ?? "";
+            $today_date = $data['today_date'] ?? "";
             $birthday_era = $data['employee_birthday_era'] ?? "";
-            $birthday_year = $data['employee_birthday_year'] ?? "";
+            $birthday_japan_year = $data['employee_birthday_year'] ?? "";
+            if (isset($data['employee_birthday_year']) && ctype_digit($data['employee_birthday_year'])) {
+                if ($birthday_era === '1') {
+                    $birthday_year = 1867 + $data['employee_birthday_year'];
+                } elseif ($birthday_era === '3') {
+                    $birthday_year = 1911 + $data['employee_birthday_year'];
+                } elseif ($birthday_era === '5') {
+                    $birthday_year = 1925 + $data['employee_birthday_year'];
+                } elseif ($birthday_era === '7') {
+                    $birthday_year = 1988 + $data['employee_birthday_year'];
+                } elseif ($birthday_era === '9') {
+                    $birthday_year = 2018 + $data['employee_birthday_year'];
+                }
+            }
             $birthday_month = $data['employee_birthday_month'] ?? "";
             $birthday_date = $data['employee_birthday_date'] ?? "";
             $bonus_payment_date_era = $data['bonus_payment_date_era'] ?? "";
-            $bonus_payment_date_year = $data['bonus_payment_date_year'] ?? "";
+            $bonus_payment_date_japan_year = $data['bonus_payment_date_year'] ?? "";
+            if (isset($data['bonus_payment_date_year']) && ctype_digit($data['bonus_payment_date_year'])) {
+                if ($bonus_payment_date_era === '7') {
+                    $bonus_payment_date_year = 1988 + $data['bonus_payment_date_year'];
+                } elseif ($bonus_payment_date_era === '9') {
+                    $bonus_payment_date_year = 2018 + $data['bonus_payment_date_year'];
+                }
+            }
             $bonus_payment_date_month = $data['bonus_payment_date_month'] ?? "";
             $bonus_payment_date_date = $data['bonus_payment_date_date'] ?? "";
 
+            if (!empty($today_month) && !empty($today_date) && !empty($today_year)) {
+                if (ctype_digit($today_month) && ctype_digit($today_date)) {
+                    if (!checkdate($today_month, $today_date, $today_year)) {
+                        $validator->errors()->add('today_date', '提出年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($today_japan_year == 1 && ($today_month < 5)) {
+                $validator->errors()->add('today_month', '提出年月日は正しい日付を入力してください。');
+            }
+
+            if (!empty($birthday_month) && !empty($birthday_date) && !empty($birthday_year)) {
+                if (ctype_digit($birthday_month) && ctype_digit($birthday_date)) {
+                    if (!checkdate($birthday_month, $birthday_date, $birthday_year)) {
+                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
             if ($birthday_era === '1') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
-                    ($birthday_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
-                    ($birthday_year > 45)
+                    ($birthday_japan_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
+                    ($birthday_japan_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
+                    ($birthday_japan_year > 45)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
-            } elseif ($birthday_era === '2') {
+            } elseif ($birthday_era === '3') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
-                    ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
-                    ($birthday_year > 15)
+                    ($birthday_japan_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
+                    ($birthday_japan_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
+                    ($birthday_japan_year > 15)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '5') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
-                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
-                    ($birthday_year > 64)
+                    ($birthday_japan_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
+                    ($birthday_japan_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
+                    ($birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '7') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
-                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
-                    ($birthday_year > 31)
+                    ($birthday_japan_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
+                    ($birthday_japan_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
+                    ($birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '9') {
-                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
+                if ($birthday_japan_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             }
-            if (!empty($birthday_month) && !empty($birthday_date)) {
-                if (ctype_digit($birthday_month)) {
-                    if (!checkdate($birthday_month, $birthday_date, '2000')) {
-                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+
+            if (!empty($bonus_payment_date_month) && !empty($bonus_payment_date_date) && !empty($bonus_payment_date_year)) {
+                if (ctype_digit($bonus_payment_date_month) && ctype_digit($bonus_payment_date_date)) {
+                    if (!checkdate($bonus_payment_date_month, $bonus_payment_date_date, $bonus_payment_date_year)) {
+                        $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
                     }
                 }
             }
-
             if ($bonus_payment_date_era === '7') {
                 if (
-                    ($bonus_payment_date_year == 1 && ($bonus_payment_date_month < 1 || ($bonus_payment_date_month == 1 && $bonus_payment_date_date < 8))) ||
-                    ($bonus_payment_date_year == 31 && ($bonus_payment_date_month > 4 || ($bonus_payment_date_month == 4 && $bonus_payment_date_date > 30))) ||
-                    ($bonus_payment_date_year > 31)
+                    ($bonus_payment_date_japan_year == 1 && ($bonus_payment_date_month < 1 || ($bonus_payment_date_month == 1 && $bonus_payment_date_date < 8))) ||
+                    ($bonus_payment_date_japan_year == 31 && ($bonus_payment_date_month > 4 || ($bonus_payment_date_month == 4 && $bonus_payment_date_date > 30))) ||
+                    ($bonus_payment_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
                 }
             } elseif ($bonus_payment_date_era === '9') {
-                if ($bonus_payment_date_year == 1 && $bonus_payment_date_month < 5) {
+                if ($bonus_payment_date_japan_year == 1 && $bonus_payment_date_month < 5) {
                     $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
-                }
-            }
-            if (!empty($bonus_payment_date_month) && !empty($bonus_payment_date_date)) {
-                if (ctype_digit($bonus_payment_date_month)) {
-                    if (!checkdate($bonus_payment_date_month, $bonus_payment_date_date, '2000')) {
-                        $validator->errors()->add('bonus_payment_date_date', '賞与支払年月日は正しい日付を入力してください。');
-                    }
                 }
             }
         });
