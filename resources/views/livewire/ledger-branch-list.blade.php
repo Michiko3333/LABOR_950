@@ -23,10 +23,10 @@
     </div>
     <div class="small-pagination">
         <div class="ui pagination borderless mini menu">
-            <a class="item pagination-disable @if ($disablePrev) disabled @endif" wire:click="onPrev"><i
-                    class="chevron left icon"></i></a>
-            <a class="item pagination-disable @if ($disableNext) disabled @endif" wire:click="onNext"><i
-                    class="chevron right icon"></i></a>
+            <a class="item pagination-disable @if ($disablePrev) disabled @endif"
+                wire:click.debounce.150ms="onPrev"><i class="chevron left icon"></i></a>
+            <a class="item pagination-disable @if ($disableNext) disabled @endif"
+                wire:click.debounce.150ms="onNext"><i class="chevron right icon"></i></a>
         </div>
     </div>
 </div>

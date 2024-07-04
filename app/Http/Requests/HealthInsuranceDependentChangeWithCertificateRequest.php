@@ -112,8 +112,10 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends BaseRequest
         parent::withValidator($validator);
         $validator_1 = new HealthInsuranceDependentChangeRequest;
         $validator_2 = new MedicalInsurerCertificateRequest;
+        $validator_3 = new MedicalInsurerCertificateRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
+        $validator_3->withValidator($validator);
     }
 
     public function messages()

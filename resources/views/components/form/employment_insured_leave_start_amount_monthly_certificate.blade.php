@@ -2758,9 +2758,10 @@
             size="1" tabindex="267"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:48px; height:16px;"
             id="J74_005F_944E_8D86" name="labor_consultant_japan_era">
-            <OPTION value=""></OPTION>
-            <OPTION value="平成">平成</OPTION>
-            <OPTION value="令和" selected="selected">令和</OPTION>
+            <OPTION value="" {{ old('labor_consultant_japan_era') == '' ? 'selected' : '' }}></OPTION>
+            <OPTION value="平成" {{ old('labor_consultant_japan_era') == '平成' ? 'selected' : '' }} disabled>平成
+            </OPTION>
+            <OPTION value="令和" {{ old('labor_consultant_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
         </SELECT></SPAN>
     {{-- TODO ここから --}}
     <SPAN

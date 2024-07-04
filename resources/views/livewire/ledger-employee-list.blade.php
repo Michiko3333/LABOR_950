@@ -35,10 +35,10 @@
         <div class="ui pagination borderless mini menu">
             <button type="button"
                 class="ui button item pagination-disable @if ($disablePrev) disabled @endif"
-                wire:click="onPrev"><i class="chevron left icon"></i></button>
+                wire:click.debounce.150ms="onPrev"><i class="chevron left icon"></i></button>
             <button type="button"
                 class="ui button item pagination-disable @if ($disableNext) disabled @endif"
-                wire:click="onNext"><i class="chevron right icon"></i></button>
+                wire:click.debounce.150ms="onNext"><i class="chevron right icon"></i></button>
         </div>
     </div>
 </div>

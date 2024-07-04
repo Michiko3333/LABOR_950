@@ -127,9 +127,9 @@
         <script type="module">
             $(document).ready(function() {
                 $('#J59_005F_944E_8D86').val('{{ $today['era'] }}');
-                $('#J60_005F_944E').val('{{ $today['year'] }}');
-                $('#J61_005F_8C8E').val('{{ $today['month'] }}');
-                $('#J62_005F_93FA').val('{{ $today['date'] }}');
+                $('#J60_005F_944E').val('{{ old('notification_year', $today['year']) }}');
+                $('#J61_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
+                $('#J62_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
                     $('#J70_005F_944E_8D86').find('option').not(
@@ -152,8 +152,8 @@
                 @else
                     $('#J70_005F_944E_8D86').prop('disabled', true);
                     $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA, #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                                                                    #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
-                                                                    #J79_005F_9574_8B4C_9793').prop('readonly', true);
+                                                                            #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
+                                                                            #J79_005F_9574_8B4C_9793').prop('readonly', true);
                 @endif
             });
         </script>

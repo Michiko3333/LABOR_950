@@ -542,39 +542,39 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:112px; top:686px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="48"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J47_005F_944E" value="{{ old('today_japan_era_year') }}" name="today_japan_era_year"
-            maxlength="2"></SPAN>
+            maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:154px; top:686px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="49"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J48_005F_8C8E" value="{{ old('today_japan_era_month') }}"
-            name="today_japan_era_month" maxlength="2"></SPAN>
+            name="today_japan_era_month" maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:196px; top:686px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="50"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J49_005F_93FA" value="{{ old('today_japan_era_day') }}" name="today_japan_era_day"
-            maxlength="2"></SPAN>
+            maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:112px; top:820px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="57"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J57_005F_944E" value="{{ old('today_japan_era_year') }}" name="today_japan_era_year"
-            maxlength="2"></SPAN>
+            maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:154px; top:820px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="58"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J58_005F_8C8E" value="{{ old('today_japan_era_month') }}"
-            name="today_japan_era_month" maxlength="2"></SPAN>
+            name="today_japan_era_month" maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:196px; top:820px; width:19px; height:17px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="59"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J59_005F_93FA" value="{{ old('today_japan_era_day') }}" name="today_japan_era_day"
-            maxlength="2"></SPAN>
+            maxlength="2" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:125px; top:860px; width:130px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="60"
@@ -944,18 +944,18 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:61px; top:687px; width:49px; height:16px; font-size:10px; padding:0px 0px 0px 0px;"><SELECT
             size="1" tabindex="47"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:49px; height:16px;"
-            id="J46_005F_944E_8D86" name="today_japan_era">
+            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:49px; height:16px;"
+            id="J46_005F_944E_8D86" name="today_japan_era" readonly>
             <OPTION value="令和" {{ old('today_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('today_japan_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="平成" {{ old('today_japan_era') == '平成' ? 'selected' : '' }} disabled>平成</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:61px; top:821px; width:49px; height:16px; font-size:10px; padding:0px 0px 0px 0px;"><SELECT
             size="1" tabindex="56"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:49px; height:16px;"
-            id="J56_005F_944E_8D86" name="today_japan_era">
+            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); font-size:10px; font-family:'ＭＳ 明朝', serif; width:49px; height:16px;"
+            id="J56_005F_944E_8D86" name="today_japan_era" readonly>
             <OPTION value="令和" {{ old('today_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('today_japan_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="平成" {{ old('today_japan_era') == '平成' ? 'selected' : '' }} disabled>平成</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:556px; top:1026px; width:49px; height:15px; font-size:8px; padding:0px 0px 0px 0px;"><SELECT

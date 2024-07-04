@@ -102,10 +102,10 @@
     <div style="display: flex; justify-content: flex-end;">
         @if ($this->companyID)
             <button class="ui button primary button-disable" type="button" style="width: 150px;"
-                wire:click="contractUpdate">更新</button>
+                wire:click.debounce.150ms="contractUpdate">更新</button>
         @else
             <button class="ui button primary button-disable" type="button" style="width: 150px;"
-                wire:click="settingCompany">確定</button>
+                wire:click.debounce.150ms="settingCompany">確定</button>
         @endif
     </div>
 </div>
