@@ -3978,7 +3978,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2031px; width:109px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
             tabindex="740"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:99px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J100_005F_94F5_8D6C_005F5" value="{{ old('WageNote2_5') }}" name="WageNote2_4"></SPAN>
+            id="J100_005F_94F5_8D6C_005F5" value="{{ old('WageNote2_5') }}" name="WageNote2_5"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:806px; top:2064px; width:109px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 8px 0px 0px;"><input
             tabindex="754"

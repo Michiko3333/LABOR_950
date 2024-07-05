@@ -1,5 +1,9 @@
 <DIV style="position:relative; left:0px; top:0px; width:1566px; height:2320px;">
-
+    <style>
+        :not(.preview-area) input[type="text"].clear:disabled {
+            color: gray !important;
+        }
+    </style>
     <script type="text/javascript">
         function calc1(f) {
             if (f.salary_amount_A.value == "" && f.salary_amount_B.value == "") {
@@ -46,169 +50,139 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // チェックボックスのクリックイベントリスナー
-            const checkboxes = document.querySelectorAll('.check');
-            const clearInputs = document.querySelectorAll('.clear');
+        function renderRetirementForms() {
+            const clears = document.querySelectorAll(':not(.preview-area) input.clear');
+            clears.forEach(el => {
+                el.disabled = true;
+            });
 
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function() {
-                    // disabledがついているinputのクリア
-                    clearInputs.forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
+            const checks = document.querySelectorAll(':not(.preview-area) input.check');
+            checks.forEach(el => {
+                if (el.checked) {
+                    const cat = el.dataset.cat;
+                    switch (cat) {
+                        case "c2":
+                            const c2 = document.querySelectorAll(':not(.preview-area) input.clear.c2');
+                            c2.forEach(input => {
+                                input.disabled = false;
+                            });
 
-                    // checkbox選択時に対応しているinputのdisabled解除
-                    const value = this.value;
-                    const checkboxGroup = document.querySelectorAll('input[name="' + this
-                        .getAttribute('name') + '"]');
-                    const defaultCheck = document.querySelector('.default-check');
-                    switch (true) {
-                        case this.classList.contains('check') && this.classList.contains('c2'):
-                            document.querySelectorAll('.c2').forEach(function(input) {
+                            const c2_radio = document.querySelector(
+                                ':not(.preview-area) input.clear.c2[data-cat="c_2"]:checked');
+                            if (c2_radio) {
+                                if (c2_radio.value == "無") {
+                                    const c_2 = document.querySelectorAll(
+                                        ':not(.preview-area) input.clear.c_2');
+                                    c_2.forEach(input => {
+                                        input.disabled = false;
+                                    });
+                                    const c_2_radio = document.querySelector(
+                                        ':not(.preview-area) input.clear.c_2:checked');
+                                    if (c_2_radio) {
+                                        if (c_2_radio.value == "その他") {
+                                            const c2_c = document.querySelector(
+                                                ':not(.preview-area) input.clear.c2-c');
+                                            c2_c.disabled = false;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case "c3-1":
+                            const c3_1 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c3-1');
+                            c3_1.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
-                        case this.classList.contains('check') && this.classList.contains('c3-1'):
-                            document.querySelectorAll('.c3-1').forEach(function(input) {
+                        case "c3-2":
+                            const c312 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c3-1-2');
+                            c312.forEach(input => {
+                                input.disabled = false;
+                            });
+                            const c312_radio = document.querySelector(
+                                ':not(.preview-area) input.clear.c3-1-2:checked');
+                            if (c312_radio) {
+                                if (c312_radio.value == "常時雇用される労働者") {
+                                    const c3121 = document.querySelectorAll(
+                                        ':not(.preview-area) input.clear.c3-1-2-1');
+                                    c3121.forEach(input => {
+                                        input.disabled = false;
+                                    });
+                                } else if (c312_radio.value == "常時雇用される労働者以外") {
+                                    const c3122 = document.querySelectorAll(
+                                        ':not(.preview-area) input.clear.c3-1-2-2');
+                                    c3122.forEach(input => {
+                                        input.disabled = false;
+                                    });
+                                }
+                            }
+                            break;
+                        case "c4-3-2":
+                            const c432 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c4-3-2');
+                            c432.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
-                        case this.classList.contains('check') && this.classList.contains('c3-2'):
-                            document.querySelectorAll('.c3-1-2').forEach(function(input) {
+                        case "c5-1-5":
+                            const c515 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c5-1-5');
+                            c515.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
-                        case this.classList.contains('check') && this.classList.contains('c4-3-2'):
-                            document.querySelectorAll('.c4-3-2').forEach(function(input) {
+                        case "c5-1-6":
+                            const c516 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c5-1-6');
+                            c516.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
-                        case this.classList.contains('check') && this.classList.contains('c5-1-5'):
-                            document.querySelectorAll('.c5-1-5').forEach(function(input) {
+                        case "c5-1-7":
+                            const c517 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c5-1-7');
+                            c517.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
-                        case this.classList.contains('check') && this.classList.contains('c5-1-6'):
-                            document.querySelectorAll('.c5-1-6').forEach(function(input) {
-                                input.disabled = false;
-                            });
-                            break;
-                        case this.classList.contains('check') && this.classList.contains('c5-1-7'):
-                            document.querySelectorAll('.c5-1-7').forEach(function(input) {
-                                input.disabled = false;
-                            });
-                            break;
-                        case this.classList.contains('check') && this.classList.contains('c6'):
-                            document.querySelectorAll('.c6').forEach(function(input) {
+                        case "c6":
+                            const c6 = document.querySelectorAll(
+                                ':not(.preview-area) input.clear.c6');
+                            c6.forEach(input => {
                                 input.disabled = false;
                             });
                             break;
                         default:
                             break;
                     }
+                }
+            });
+        }
 
-                    // checkboxが１つしか選択できない
-                    if (this.checked) {
-                        checkboxes.forEach(function(cb) {
-                            if (cb !== checkbox) {
-                                cb.checked = false;
-                            }
-                        });
-                        defaultCheck.checked = true;
-                        checkboxGroup.forEach(function(input) {
-                            if (input.value === '') {
-                                input.checked = false;
-                            }
-                        });
-                    } else {
-                        checkboxGroup.forEach(function(input) {
-                            if (input.value === '') {
-                                input.checked = true;
-                            }
-                        });
-                        clearInputs.forEach(function(input) {
-                            input.disabled = true;
-                        });
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRetirementForms();
+
+            const checks = document.querySelectorAll(':not(.preview-area) input.check');
+            checks.forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const own = e.target.checked;
+                    checks.forEach(c => {
+                        c.checked = false;
+                    });
+                    if (own) {
+                        e.target.checked = true;
                     }
+                    renderRetirementForms();
                 });
             });
 
-            // radioボタン選択時の個別inputのdisabled解除
-            document.getElementById('J104_005F_Radio2').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c_2').forEach(function(input) {
-                        input.disabled = false;
-                    });
-                }
-            });
-            document.getElementById('J104_005F_Radio1').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c_2').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
-                }
-            });
-
-            document.getElementById('J105_005F_Radio1').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c2-c').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
-                }
-            });
-            document.getElementById('J105_005F_Radio2').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c2-c').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
-                }
-            });
-            document.getElementById('J105_005F_Radio3').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c2-c').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = false;
-                    });
-                }
-            });
-
-            document.getElementById('J107_005F_Radio1').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c3-1-2-1').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = false;
-                    });
-                    document.querySelectorAll('.c3-1-2-2').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
-                }
-            });
-            document.getElementById('J107_005F_Radio2').addEventListener('click', function() {
-                if (this.checked) {
-                    document.querySelectorAll('.c3-1-2-2').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = false;
-                    });
-                    document.querySelectorAll('.c3-1-2-1').forEach(function(input) {
-                        input.checked = false;
-                        input.value = '';
-                        input.disabled = true;
-                    });
-                }
+            const clears = document.querySelectorAll(':not(.preview-area) input.clear.call-render');
+            clears.forEach(el => {
+                el.addEventListener('change', () => {
+                    renderRetirementForms();
+                });
             });
         });
 
@@ -234,56 +208,6 @@
             checkboxYes.addEventListener('change', updateInputFields);
             checkboxNo.addEventListener('change', updateInputFields);
         };
-
-        // $(function(){
-        //     $('.check').on('click', function() {
-        //         // disabledがついているinputのクリア
-        //         $('.clear').prop('checked', false);
-        //         $('.clear').val('');
-
-        //         // checkbox選択時に対応しているinputのdisabled解除
-        //         const value = $(this).val();
-        //         const checkbox = $('input[name="' + $(this).attr('name') + '"]');
-        //         const defaultCheck = $('.default-check');
-        //         $('.clear').prop('disabled', true);
-        //         switch(true) {
-        //             case $(this).hasClass('check c1'):
-        //                 $('.1').prop('disabled', false);
-        //                 break;
-        //             case $(this).hasClass('check c2'):
-        //                 $('.2').prop('disabled', false);
-        //                 break;
-        //             case $(this).hasClass('check c3'):
-        //                 $('.3').prop('disabled', false);
-        //                 break;
-        //             default:
-        //                 break;
-        //         }
-
-        //         // checkboxが１つしか選択できない
-        //         if ($(this).prop('checked')){
-        //         $('.check').prop('checked', false);
-        //         $(this).prop('checked', true);
-        //         defaultCheck.prop('checked', true);
-        //         checkbox.filter('[value=""]').prop('checked', false);
-        //         } else {
-        //             checkbox.filter('[value=""]').prop('checked', true);
-        //             $('.clear').prop('disabled', true);
-        //         }
-        //     });
-
-        //     radioボタン選択時の個別inputのdisabled解除
-        //     $('#id1').on('click', function() {
-        //         if ($(this).prop('checked')) {
-        //             $('#id3').prop('disabled', false);
-        //         }
-        //     });
-        //     $('#id2').on('click', function() {
-        //         if ($(this).prop('checked')) {
-        //             $('#id3').prop('disabled', true);
-        //         }
-        //     });
-        // });
     </script>
 
     <SPAN
@@ -2996,79 +2920,88 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:126px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="237" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c1-1" id="J84_005F_9149_91F01_005F1" name="retirement_reason_1_1"
-            <?php echo old('retirement_reason_1_1') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c1-1" data-cat="c1-1" id="J84_005F_9149_91F01_005F1"
+            name="retirement_reason_1_1" <?php echo old('retirement_reason_1_1') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_1_2" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:139px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="238" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c1-2" id="J85_005F_9149_91F01_005F2" name="retirement_reason_1_2"
-            <?php echo old('retirement_reason_1_2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c1-2" data-cat="c1-2" id="J85_005F_9149_91F01_005F2"
+            name="retirement_reason_1_2" <?php echo old('retirement_reason_1_2') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_2" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:165px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="239" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c2" id="J86_005F_9149_91F02" name="retirement_reason_2"
-            <?php echo old('retirement_reason_2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c2" data-cat="c2" id="J86_005F_9149_91F02"
+            name="retirement_reason_2" <?php echo old('retirement_reason_2') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_3_1" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:273px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="240" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c3-1" id="J87_005F_9149_91F03_005F1" name="retirement_reason_3_1"
-            <?php echo old('retirement_reason_3_1') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c3-1" data-cat="c3-1" id="J87_005F_9149_91F03_005F1"
+            name="retirement_reason_3_1" <?php echo old('retirement_reason_3_1') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_3_2" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:366px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="241" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c3-2" id="J88_005F_9149_91F03_005F2" name="retirement_reason_3_2"
-            <?php echo old('retirement_reason_3_2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c3-2" data-cat="c3-2" id="J88_005F_9149_91F03_005F2"
+            name="retirement_reason_3_2" <?php echo old('retirement_reason_3_2') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_3_3" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:637px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="242" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c3-3" id="J89_005F_9149_91F03_005F3" name="retirement_reason_3_3"
-            <?php echo old('retirement_reason_3_3') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c3-3" data-cat="c3-3" id="J89_005F_9149_91F03_005F3"
+            name="retirement_reason_3_3" <?php echo old('retirement_reason_3_3') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_3_4" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:649px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="243" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c3-4" id="J90_005F_9149_91F03_005F4" name="retirement_reason_3_4"
-            <?php echo old('retirement_reason_3_4') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c3-4" data-cat="c3-4" id="J90_005F_9149_91F03_005F4"
+            name="retirement_reason_3_4" <?php echo old('retirement_reason_3_4') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_4_1" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:674px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="244" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c4-1" id="J91_005F_9149_91F04_005F1" name="retirement_reason_4_1"
-            <?php echo old('retirement_reason_4_1') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c4-1" data-cat="c4-1" id="J91_005F_9149_91F04_005F1"
+            name="retirement_reason_4_1" <?php echo old('retirement_reason_4_1') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_4_2" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:686px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="245" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c4-2" id="J92_005F_9149_91F04_005F2" name="retirement_reason_4_2"
-            <?php echo old('retirement_reason_4_2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            type="CHECKBOX" class="check c4-2" data-cat="c4-2" id="J92_005F_9149_91F04_005F2"
+            name="retirement_reason_4_2" <?php echo old('retirement_reason_4_2') == '1' ? 'checked' : ''; ?>><SPAN
+            style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_4_3_1" checked class="default-check"
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:710px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="246" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c4-3-1" id="J93_005F_9149_91F04_005F3_005F1"
+            type="CHECKBOX" class="check c4-3-1" data-cat="c4-3-1" id="J93_005F_9149_91F04_005F3_005F1"
             name="retirement_reason_4_3_1" <?php echo old('retirement_reason_4_3_1') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_4_3_2" checked class="default-check"
@@ -3077,7 +3010,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:725px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="247" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c4-3-2" id="J94_005F_9149_91F04_005F3_005F2"
+            type="CHECKBOX" class="check c4-3-2" data-cat="c4-3-2" id="J94_005F_9149_91F04_005F3_005F2"
             name="retirement_reason_4_3_2" <?php echo old('retirement_reason_4_3_2') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_1" checked class="default-check"
@@ -3086,7 +3019,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:762px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="248" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-1" id="J95_005F_9149_91F05_005F1_005F1"
+            type="CHECKBOX" class="check c5-1-1" data-cat="c5-1-1" id="J95_005F_9149_91F05_005F1_005F1"
             name="retirement_reason_5_1_1" <?php echo old('retirement_reason_5_1_1') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_2" checked class="default-check"
@@ -3095,7 +3028,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:785px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="249" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-2" id="J96_005F_9149_91F05_005F1_005F2"
+            type="CHECKBOX" class="check c5-1-2" data-cat="c5-1-2" id="J96_005F_9149_91F05_005F1_005F2"
             name="retirement_reason_5_1_2" <?php echo old('retirement_reason_5_1_2') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_3" checked class="default-check"
@@ -3104,7 +3037,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:809px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="250" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-3" id="J193_005F_9149_91F05_005F1_005F3"
+            type="CHECKBOX" class="check c5-1-3" data-cat="c5-1-3" id="J193_005F_9149_91F05_005F1_005F3"
             name="retirement_reason_5_1_3" <?php echo old('retirement_reason_5_1_3') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_4" checked class="default-check"
@@ -3113,7 +3046,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:831px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="251" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-4" id="J97_005F_9149_91F05_005F1_005F4"
+            type="CHECKBOX" class="check c5-1-4" data-cat="c5-1-4" id="J97_005F_9149_91F05_005F1_005F4"
             name="retirement_reason_5_1_4" <?php echo old('retirement_reason_5_1_4') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_5" checked class="default-check"
@@ -3122,7 +3055,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:843px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="252" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-5" id="J98_005F_9149_91F05_005F1_005F5"
+            type="CHECKBOX" class="check c5-1-5" data-cat="c5-1-5" id="J98_005F_9149_91F05_005F1_005F5"
             name="retirement_reason_5_1_5" <?php echo old('retirement_reason_5_1_5') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_6" checked class="default-check"
@@ -3131,7 +3064,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:857px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="253" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-6" id="J99_005F_9149_91F05_005F1_005F6"
+            type="CHECKBOX" class="check c5-1-6" data-cat="c5-1-6" id="J99_005F_9149_91F05_005F1_005F6"
             name="retirement_reason_5_1_6" <?php echo old('retirement_reason_5_1_6') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_1_7" checked class="default-check"
@@ -3140,7 +3073,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:873px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="254" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-1-7" id="J100_005F_9149_91F05_005F1_005F7"
+            type="CHECKBOX" class="check c5-1-7" data-cat="c5-1-7" id="J100_005F_9149_91F05_005F1_005F7"
             name="retirement_reason_5_1_7" <?php echo old('retirement_reason_5_1_7') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_5_2" checked class="default-check"
@@ -3149,8 +3082,8 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:888px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="255" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c5-2" id="J101_005F_9149_91F05_005F2" name="retirement_reason_5_2"
-            <?php echo old('retirement_reason_5_2') == '1' ? 'checked' : ''; ?>><SPAN
+            type="CHECKBOX" class="check c5-2" data-cat="c5-2" id="J101_005F_9149_91F05_005F2"
+            name="retirement_reason_5_2" <?php echo old('retirement_reason_5_2') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <INPUT value="" type="checkbox" name="retirement_reason_6" checked class="default-check"
         style="display: none;"><!--ここ-->
@@ -3158,8 +3091,8 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:832px; top:971px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="256" value="1"
             style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:12px; height:11px; margin:auto;"
-            type="CHECKBOX" class="check c6" id="J102_005F_9149_91F06" name="retirement_reason_6"
-            <?php echo old('retirement_reason_6') == '1' ? 'checked' : ''; ?>><SPAN
+            type="CHECKBOX" class="check c6" data-cat="c6" id="J102_005F_9149_91F06"
+            name="retirement_reason_6" <?php echo old('retirement_reason_6') == '1' ? 'checked' : ''; ?>><SPAN
             style="font-size:14px; height:14px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
 
     <SPAN
@@ -3207,42 +3140,43 @@
             tabindex="257"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J103_005F_92E8_944E_005F_944E_97EE" name="retirement_age" class="clear c2"
-            value="{{ old('retirement_age') }}" maxlength="2" disabled></SPAN>
+            value="{{ old('retirement_age') }}" maxlength="2"></SPAN>
+    <!-- ここから -->
     <input type="radio" name="reemployment_request_flg" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1040px; top:178px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="258" value="有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J104_005F_Radio1" name="reemployment_request_flg" class="clear c2"
-            <?php echo old('reemployment_request_flg') == '有' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J104_005F_Radio1" name="reemployment_request_flg" class="clear c2 call-render"
+            data-cat="c_2" <?php echo old('reemployment_request_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1040px; top:194px; width:13px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="259" value="無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J104_005F_Radio2" name="reemployment_request_flg" class="clear c2"
-            <?php echo old('reemployment_request_flg') == '無' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J104_005F_Radio2" name="reemployment_request_flg" class="clear c2 call-render"
+            data-cat="c_2" <?php echo old('reemployment_request_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="retirement_reason_type" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:933px; top:211px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="260" value="就業規則に定める事由に該当したため"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J105_005F_Radio1" name="retirement_reason_type" class="clear c_2"
+            type="RADIO" id="J105_005F_Radio1" name="retirement_reason_type" class="clear c_2 call-render"
             <?php echo old('retirement_reason_type') == '就業規則に定める事由に該当したため' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:933px; top:231px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="261" value="労使協定に定めた基準に該当しなかったため"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J105_005F_Radio2" name="retirement_reason_type" class="clear c_2"
+            type="RADIO" id="J105_005F_Radio2" name="retirement_reason_type" class="clear c_2 call-render"
             <?php echo old('retirement_reason_type') == '労使協定に定めた基準に該当しなかったため' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:933px; top:246px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="262" value="その他"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J105_005F_Radio3" name="retirement_reason_type" class="clear c_2"
+            type="RADIO" id="J105_005F_Radio3" name="retirement_reason_type" class="clear c_2 call-render"
             <?php echo old('retirement_reason_type') == 'その他' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
@@ -3251,22 +3185,22 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:381px; max-width:381px; height:14px; ime-mode:active;"
             type="TEXT"
             id="J106_005F_8C70_91B1_8CD9_9770_8AF3_965D_8ED2_005F_97A3_9045_979D_9752_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752"
-            name="retirement_reason" class="clear c2-c" value="{{ old('retirement_reason') }}" maxlength="34"
-            disabled></SPAN>
+            name="retirement_reason" class="clear c2-c" value="{{ old('retirement_reason') }}"
+            maxlength="34"></SPAN>
     <input type="radio" name="shortened_contract_renewal_reached_limit_flg" value="" checked
         style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1362px; top:293px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="267" value="する"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J197_005F_Radio1" name="shortened_contract_renewal_reached_limit_flg"
+            type="RADIO" id="J197_005F_Radio1" name="shortened_contract_renewal_reached_limit_flg"
             class="clear c3-1" <?php echo old('shortened_contract_renewal_reached_limit_flg') == 'する' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1405px; top:293px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="268" value="しない"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J197_005F_Radio2" name="shortened_contract_renewal_reached_limit_flg"
+            type="RADIO" id="J197_005F_Radio2" name="shortened_contract_renewal_reached_limit_flg"
             class="clear c3-1" <?php echo old('shortened_contract_renewal_reached_limit_flg') == 'しない' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_renewal_reached_limit_flg" value="" checked
@@ -3275,15 +3209,15 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1352px; top:306px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="269" value="する"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J198_005F_Radio1" name="contract_renewal_reached_limit_flg"
-            class="clear c3-1" <?php echo old('contract_renewal_reached_limit_flg') == 'する' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J198_005F_Radio1" name="contract_renewal_reached_limit_flg" class="clear c3-1"
+            <?php echo old('contract_renewal_reached_limit_flg') == 'する' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1395px; top:306px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="270" value="しない"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J198_005F_Radio2" name="contract_renewal_reached_limit_flg"
-            class="clear c3-1" <?php echo old('contract_renewal_reached_limit_flg') == 'しない' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J198_005F_Radio2" name="contract_renewal_reached_limit_flg" class="clear c3-1"
+            <?php echo old('contract_renewal_reached_limit_flg') == 'しない' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="rehire_contract_renewal_reached_limit_flg" value="" checked
         style="display: none;">
@@ -3291,14 +3225,14 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1265px; top:318px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="271" value="ある"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J199_005F_Radio1" name="rehire_contract_renewal_reached_limit_flg"
+            type="RADIO" id="J199_005F_Radio1" name="rehire_contract_renewal_reached_limit_flg"
             class="clear c3-1" <?php echo old('rehire_contract_renewal_reached_limit_flg') == 'ある' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1315px; top:318px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="272" value="ない"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J199_005F_Radio2" name="rehire_contract_renewal_reached_limit_flg"
+            type="RADIO" id="J199_005F_Radio2" name="rehire_contract_renewal_reached_limit_flg"
             class="clear c3-1" <?php echo old('rehire_contract_renewal_reached_limit_flg') == 'ない' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_period_total_reached_limit_flg" value="" checked
@@ -3307,14 +3241,14 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1350px; top:330px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="273" value="ある"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J200_005F_Radio1" name="contract_period_total_reached_limit_flg"
+            type="RADIO" id="J200_005F_Radio1" name="contract_period_total_reached_limit_flg"
             class="clear c3-1" <?php echo old('contract_period_total_reached_limit_flg') == 'ある' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1400px; top:330px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="274" value="ない"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J200_005F_Radio2" name="contract_period_total_reached_limit_flg"
+            type="RADIO" id="J200_005F_Radio2" name="contract_period_total_reached_limit_flg"
             class="clear c3-1" <?php echo old('contract_period_total_reached_limit_flg') == 'ない' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_period_total_established_before_law_amendment_flg" value="" checked
@@ -3323,31 +3257,29 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1178px; top:354px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="275" value="いた"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J201_005F_Radio1"
-            name="contract_period_total_established_before_law_amendment_flg" class="clear c3-1"
-            <?php echo old('contract_period_total_established_before_law_amendment_flg') == 'いた' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J201_005F_Radio1" name="contract_period_total_established_before_law_amendment_flg"
+            class="clear c3-1" <?php echo old('contract_period_total_established_before_law_amendment_flg') == 'いた' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1235px; top:354px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="276" value="いなかった"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J201_005F_Radio2"
-            name="contract_period_total_established_before_law_amendment_flg" class="clear c3-1"
-            <?php echo old('contract_period_total_established_before_law_amendment_flg') == 'いなかった' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J201_005F_Radio2" name="contract_period_total_established_before_law_amendment_flg"
+            class="clear c3-1" <?php echo old('contract_period_total_established_before_law_amendment_flg') == 'いなかった' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="dispatched_employee_flg" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:910px; top:378px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="277" value="常時雇用される労働者"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J107_005F_Radio1" name="dispatched_employee_flg" class="clear c3-1-2"
+            type="RADIO" id="J107_005F_Radio1" name="dispatched_employee_flg" class="clear c3-1-2 call-render"
             <?php echo old('dispatched_employee_flg') == '常時雇用される労働者' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:910px; top:490px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="278" value="常時雇用される労働者以外"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J107_005F_Radio2" name="dispatched_employee_flg" class="clear c3-1-2"
+            type="RADIO" id="J107_005F_Radio2" name="dispatched_employee_flg" class="clear c3-1-2 call-render"
             <?php echo old('dispatched_employee_flg') == '常時雇用される労働者以外' ? 'checked' : ''; ?>SPAN style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="eternal_hire_contract_renewal_guarantee_agreement_flg" value="" checked
         style="display: none;">
@@ -3355,31 +3287,29 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1146px; top:404px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="282" value="有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J111_005F_Radio1"
-            name="eternal_hire_contract_renewal_guarantee_agreement_flg" class="clear c3-1-2-1"
-            <?php echo old('eternal_hire_contract_renewal_guarantee_agreement_flg') == '有' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J111_005F_Radio1" name="eternal_hire_contract_renewal_guarantee_agreement_flg"
+            class="clear c3-1-2-1" <?php echo old('eternal_hire_contract_renewal_guarantee_agreement_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1188px; top:404px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="283" value="無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J111_005F_Radio2"
-            name="eternal_hire_contract_renewal_guarantee_agreement_flg" class="clear c3-1-2-1"
-            <?php echo old('eternal_hire_contract_renewal_guarantee_agreement_flg') == '無' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J111_005F_Radio2" name="eternal_hire_contract_renewal_guarantee_agreement_flg"
+            class="clear c3-1-2-1" <?php echo old('eternal_hire_contract_renewal_guarantee_agreement_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_non_renewal_flg" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1377px; top:404px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="284" value="有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J112_005F_Radio1" name="contract_non_renewal_flg" class="clear c3-1-2-1"
+            type="RADIO" id="J112_005F_Radio1" name="contract_non_renewal_flg" class="clear c3-1-2-1"
             <?php echo old('contract_non_renewal_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1415px; top:404px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="285" value="無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J112_005F_Radio2" name="contract_non_renewal_flg" class="clear c3-1-2-1"
+            type="RADIO" id="J112_005F_Radio2" name="contract_non_renewal_flg" class="clear c3-1-2-1"
             <?php echo old('contract_non_renewal_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="employment_termination_notice_flg" value="" checked
@@ -3388,30 +3318,30 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:415px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="286" value="有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J113_005F_Radio1" name="employment_termination_notice_flg"
-            class="clear c3-1-2-1" <?php echo old('employment_termination_notice_flg') == '有' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J113_005F_Radio1" name="employment_termination_notice_flg" class="clear c3-1-2-1"
+            <?php echo old('employment_termination_notice_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1135px; top:415px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="287" value="無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J113_005F_Radio2" name="employment_termination_notice_flg"
-            class="clear c3-1-2-1" <?php echo old('employment_termination_notice_flg') == '無' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J113_005F_Radio2" name="employment_termination_notice_flg" class="clear c3-1-2-1"
+            <?php echo old('employment_termination_notice_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="non_renewal_clause_addition_flg" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1127px; top:427px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="288" value="ある"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J202_005F_Radio1" name="non_renewal_clause_addition_flg"
-            class="clear c3-1-2-1" <?php echo old('non_renewal_clause_addition_flg') == 'ある' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J202_005F_Radio1" name="non_renewal_clause_addition_flg" class="clear c3-1-2-1"
+            <?php echo old('non_renewal_clause_addition_flg') == 'ある' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1170px; top:427px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="289" value="ない"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J202_005F_Radio2" name="non_renewal_clause_addition_flg"
-            class="clear c3-1-2-1" <?php echo old('non_renewal_clause_addition_flg') == 'ない' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J202_005F_Radio2" name="non_renewal_clause_addition_flg" class="clear c3-1-2-1"
+            <?php echo old('non_renewal_clause_addition_flg') == 'ない' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="eternal_hire_contract_renewal_request_type" value="" checked
         style="display: none;">
@@ -3419,21 +3349,21 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:441px; width:14px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="290" value="希望する申出有"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J114_005F_Radio1" name="eternal_hire_contract_renewal_request_type"
+            type="RADIO" id="J114_005F_Radio1" name="eternal_hire_contract_renewal_request_type"
             class="clear c3-1-2-1" <?php echo old('eternal_hire_contract_renewal_request_type') == '希望する申出有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:453px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="291" value="希望しない申出有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J114_005F_Radio2" name="eternal_hire_contract_renewal_request_type"
+            type="RADIO" id="J114_005F_Radio2" name="eternal_hire_contract_renewal_request_type"
             class="clear c3-1-2-1" <?php echo old('eternal_hire_contract_renewal_request_type') == '希望しない申出有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:466px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="292" value="申出無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J114_005F_Radio3" name="eternal_hire_contract_renewal_request_type"
+            type="RADIO" id="J114_005F_Radio3" name="eternal_hire_contract_renewal_request_type"
             class="clear c3-1-2-1" <?php echo old('eternal_hire_contract_renewal_request_type') == '1' ? '申出無' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_renewal_guarantee_agreement_flg" value="" checked
@@ -3442,14 +3372,14 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1148px; top:518px; width:14px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="296" value="有"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J118_005F_Radio1" name="contract_renewal_guarantee_agreement_flg"
+            type="RADIO" id="J118_005F_Radio1" name="contract_renewal_guarantee_agreement_flg"
             class="clear c3-1-2-2" <?php echo old('contract_renewal_guarantee_agreement_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1190px; top:518px; width:14px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="297" value="無"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J118_005F_Radio2" name="contract_renewal_guarantee_agreement_flg"
+            type="RADIO" id="J118_005F_Radio2" name="contract_renewal_guarantee_agreement_flg"
             class="clear c3-1-2-2" <?php echo old('contract_renewal_guarantee_agreement_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="no_contract_renewal_flg" value="" checked style="display: none;">
@@ -3457,14 +3387,14 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1379px; top:518px; width:13px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="298" value="有"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J119_005F_Radio1" name="no_contract_renewal_flg" class="clear c3-1-2-2"
+            type="RADIO" id="J119_005F_Radio1" name="no_contract_renewal_flg" class="clear c3-1-2-2"
             <?php echo old('no_contract_renewal_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1417px; top:518px; width:14px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="299" value="無"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J119_005F_Radio2" name="no_contract_renewal_flg" class="clear c3-1-2-2"
+            type="RADIO" id="J119_005F_Radio2" name="no_contract_renewal_flg" class="clear c3-1-2-2"
             <?php echo old('no_contract_renewal_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="contract_renewal_request_type" value="" checked style="display: none;">
@@ -3472,37 +3402,37 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:530px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="300" value="希望する申出有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J120_005F_Radio1" name="contract_renewal_request_type"
-            class="clear c3-1-2-2" <?php echo old('contract_renewal_request_type') == '希望する申出有' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J120_005F_Radio1" name="contract_renewal_request_type" class="clear c3-1-2-2"
+            <?php echo old('contract_renewal_request_type') == '希望する申出有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:542px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="301" value="希望しない申出有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J120_005F_Radio2" name="contract_renewal_request_type"
-            class="clear c3-1-2-2" <?php echo old('contract_renewal_request_type') == '希望しない申出有' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J120_005F_Radio2" name="contract_renewal_request_type" class="clear c3-1-2-2"
+            <?php echo old('contract_renewal_request_type') == '希望しない申出有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1093px; top:555px; width:14px; line-height:13px; height:13px; text-align:center; font-size:13px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="302" value="申出無"
             style="position:absolute; top:1px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J120_005F_Radio3" name="contract_renewal_request_type"
-            class="clear c3-1-2-2" <?php echo old('contract_renewal_request_type') == '申出無' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J120_005F_Radio3" name="contract_renewal_request_type" class="clear c3-1-2-2"
+            <?php echo old('contract_renewal_request_type') == '申出無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <input type="radio" name="employment_instructions_type" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:933px; top:568px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="303" value="労働者が適用基準に派遣就業の指示を拒否したことによる場合"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J121_005F_Radio1" name="employment_instructions_type"
-            class="clear c3-1-2-2" <?php echo old('employment_instructions_type') == '労働者が適用基準に派遣就業の指示を拒否したことによる場合' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J121_005F_Radio1" name="employment_instructions_type" class="clear c3-1-2-2"
+            <?php echo old('employment_instructions_type') == '労働者が適用基準に派遣就業の指示を拒否したことによる場合' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:933px; top:580px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="304" value="事業主が派遣就業の指示を行わなかったことによる場合"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J121_005F_Radio2" name="employment_instructions_type"
-            class="clear c3-1-2-2" <?php echo old('employment_instructions_type') == '事業主が派遣就業の指示を行わなかったことによる場合' ? 'checked' : ''; ?>><SPAN
+            type="RADIO" id="J121_005F_Radio2" name="employment_instructions_type" class="clear c3-1-2-2"
+            <?php echo old('employment_instructions_type') == '事業主が派遣就業の指示を行わなかったことによる場合' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1013px; top:283px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -3510,8 +3440,7 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J194_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_31_89F1_82CC_8C5F_96F1_8AFA_8AD4"
             name="contract_period_reached_limit_contract_period_once" class="clear c3-1"
-            value="{{ old('contract_period_reached_limit_contract_period_once') }}" maxlength="3"
-            disabled></SPAN>
+            value="{{ old('contract_period_reached_limit_contract_period_once') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1143px; top:283px; width:26px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="265"
@@ -3526,50 +3455,49 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J196_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_8C5F_96F1_8D58_9056_89F1_9094"
             name="contract_period_reached_limit_contract_renewal_count" class="clear c3-1"
-            value="{{ old('contract_period_reached_limit_contract_renewal_count') }}" maxlength="3"
-            disabled></SPAN>
+            value="{{ old('contract_period_reached_limit_contract_renewal_count') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1013px; top:391px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="279"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J108_005F_8FED_9770_984A_93AD_8ED2_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4"
             name="eternal_hire_contract_period_once" class="clear c3-1-2-1"
-            value="{{ old('eternal_hire_contract_period_once') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('eternal_hire_contract_period_once') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1143px; top:391px; width:26px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="280"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:26px; max-width:26px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J109_005F_8FED_9770_984A_93AD_8ED2_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4"
             name="eternal_hire_contract_period_total" class="clear c3-1-2-1"
-            value="{{ old('eternal_hire_contract_period_total') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('eternal_hire_contract_period_total') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1272px; top:391px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="281"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J110_005F_8FED_9770_984A_93AD_8ED2_005F_8C5F_96F1_8D58_9056_89F1_9094"
             name="eternal_hire_contract_renewal_count" class="clear c3-1-2-1"
-            value="{{ old('eternal_hire_contract_renewal_count') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('eternal_hire_contract_renewal_count') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1013px; top:503px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="293"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J115_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F1_89F1_82CC_8C5F_96F1_8AFA_8AD4"
             name="except_eternal_hire_contract_period_once" class="clear c3-1-2-2"
-            value="{{ old('except_eternal_hire_contract_period_once') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('except_eternal_hire_contract_period_once') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1143px; top:503px; width:26px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="294"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:26px; max-width:26px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J116_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4"
             name="except_eternal_hire_contract_period_total" class="clear c3-1-2-2"
-            value="{{ old('except_eternal_hire_contract_period_total') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('except_eternal_hire_contract_period_total') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1272px; top:503px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="295"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:27px; max-width:27px; height:14px; ime-mode:disabled;"
             type="TEXT" id="J117_005F_8FED_9770_984A_93AD_8ED2_88C8_8A4F_005F_8C5F_96F1_8D58_9056_89F1_9094"
             name="except_eternal_hire_contract_renewal_count" class="clear c3-1-2-2"
-            value="{{ old('except_eternal_hire_contract_renewal_count') }}" maxlength="3" disabled></SPAN>
+            value="{{ old('except_eternal_hire_contract_renewal_count') }}" maxlength="3"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1085px; top:723px; width:381px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="305"
@@ -3577,20 +3505,20 @@
             type="TEXT"
             id="J122_005F_8AF3_965D_91DE_9045_9694_82CD_91DE_9045_8AA9_8FA7_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752"
             name="retirement_recommendation_reason" class="clear c4-3-2"
-            value="{{ old('retirement_recommendation_reason') }}" maxlength="33" disabled></SPAN>
+            value="{{ old('retirement_recommendation_reason') }}" maxlength="33"></SPAN>
     <input type="radio" name="education_training_flg" value="" checked style="display: none;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1253px; top:842px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="306" value="有"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J123_005F_Radio1" name="education_training_flg" class="clear c5-1-5"
+            type="RADIO" id="J123_005F_Radio1" name="education_training_flg" class="clear c5-1-5"
             <?php echo old('education_training_flg') == '有' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1314px; top:842px; width:14px; line-height:13px; height:14px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="307" value="無"
             style="position:absolute; top:2px; left:2px; box-sizing:border-box; -moz-box-sizing:border-box; width:11px; height:10px; margin:auto;"
-            type="RADIO" disabled id="J123_005F_Radio2" name="education_training_flg" class="clear c5-1-5"
+            type="RADIO" id="J123_005F_Radio2" name="education_training_flg" class="clear c5-1-5"
             <?php echo old('education_training_flg') == '無' ? 'checked' : ''; ?>><SPAN
             style="font-size:11px; height:11px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
@@ -3600,20 +3528,22 @@
             type="TEXT"
             id="J124_005F_8E96_8BC6_8F8A_88DA_935D_82C9_82E6_82E8_92CA_8BCE_8DA2_93EF_005F_8F8A_8DDD_926E"
             name="change_office_place" class="clear c5-1-6" value="{{ old('change_office_place') }}"
-            maxlength="13" disabled></SPAN>
+            maxlength="13"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1085px; top:871px; width:381px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="309"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:381px; max-width:381px; height:14px; ime-mode:active;"
             type="TEXT" id="J125_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752"
             name="employee_decision_reasons" class="clear c5-1-7" value="{{ old('employee_decision_reasons') }}"
-            maxlength="32" disabled></SPAN>
+            maxlength="32"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1017px; top:983px; width:449px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="310"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:449px; max-width:449px; height:14px; ime-mode:active;"
             type="TEXT" id="J126_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752" name="other_reasons"
-            class="clear c6" value="{{ old('other_reasons') }}" maxlength="37" disabled></SPAN>
+            class="clear c6" value="{{ old('other_reasons') }}" maxlength="37"></SPAN>
+
+    <!-- ここまで -->
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:832px; top:1000px; width:150px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">具体的事情記載欄（事業主用）</SPAN>
     <SPAN

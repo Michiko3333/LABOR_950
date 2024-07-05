@@ -106,8 +106,6 @@
             </div>
         </div>
 
-        AAA:{{ old('over_70_non_applicable_date_year') }}
-
         <script type="module">
             $(document).ready(function() {
                 $('#N6_P1').val('{{ old('submission_year') ?? $todaySet['year'] }}');
