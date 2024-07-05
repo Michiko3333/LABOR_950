@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\noEmoji;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LaborCompanyUpdateRequest extends BaseRequest
@@ -31,6 +32,21 @@ class LaborCompanyUpdateRequest extends BaseRequest
         }, $data);
         return $data;
     }
+
+    public function withValidator($validator): void
+    {
+        // 絵文字バリデーションの事業所配列対応
+        $rules = [];
+        foreach ($this->request as $key => $value) {
+            if (strpos($key, 'br-') === 0) {
+                $rules[$key . ".*"] = new noEmoji;
+            } else {
+                $rules[$key] = new noEmoji;
+            }
+        }
+        $validator->addRules($rules);
+    }
+
 
     /**
      * Get the validation rules that apply to the request.
