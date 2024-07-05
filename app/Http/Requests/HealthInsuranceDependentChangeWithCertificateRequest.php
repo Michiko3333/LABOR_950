@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceDependentChangeWithCertificateRequest extends FormRequest
+class HealthInsuranceDependentChangeWithCertificateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -107,14 +107,15 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends FormRequest
         return array_merge($rules->rules(), $rules_2->rules(), $rules_3->rules());
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator_1 = new HealthInsuranceDependentChangeRequest;
         $validator_2 = new MedicalInsurerCertificateRequest;
+        $validator_3 = new MedicalInsurerCertificateRequest;
         $validator_1->withValidator($validator);
         $validator_2->withValidator($validator);
-
-        return $validator;
+        $validator_3->withValidator($validator);
     }
 
     public function messages()
@@ -122,7 +123,7 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends FormRequest
         $messages = new HealthInsuranceDependentChangeRequest;
         $messages_2 = new MedicalInsurerCertificateRequest;
 
-        return array_merge($messages->messages(),$messages_2->messages());
+        return array_merge($messages->messages(), $messages_2->messages());
     }
 
     public function attributes()

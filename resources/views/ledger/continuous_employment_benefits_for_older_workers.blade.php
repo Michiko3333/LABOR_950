@@ -119,12 +119,15 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
                 @if ($current_employee->role_id === 500)
-                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
-                    $('#J66_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
-                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
+                    $('#J65_005F_8E73_8A4F_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
+                    $('#J66_005F_8E73_93E0_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_city_code', $current_branch->tel_city_code) }}');
+                    $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val(
+                        '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                                    #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
+                                                                                                                                                                                                    #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @endif
             });
@@ -216,13 +219,18 @@
                 $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (
                     branch.address_city ?? '') + (branch.address_ward ?? '') + (branch
                     .address_apartment ?? ''));
+
+            }
+
+            setTimeout(() => {
                 $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
                     $('#J2_005F_8E81_96BC').val($(this).val());
                 });
                 $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
                     $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val($(this).val());
                 });
-            }
+            }, 0);
+
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {

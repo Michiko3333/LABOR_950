@@ -35,7 +35,7 @@
             役職の追加
         </div>
         <div class="content" wire:ignore>
-            <form id="edit-managerial-position" name="edit-managerial-position">
+            <form id="edit-managerial-position" name="edit-managerial-position" onsubmit="return false;">
                 <div class="ui form">
                     <div class="ui error message hidden">
                         <div class="header">入力エラー</div>
@@ -82,6 +82,10 @@
                 $wire.dispatch('onCancelManagerial');
             }
             const onEdit = () => {
+
+                if (window.$lw.isSubmit) return;
+                window.$lw.isSubmit = true;
+
                 const form_id = document.getElementsByClassName('edit-managerial-position-form_id')[1].value;
                 const form_name = document.getElementsByClassName('edit-managerial-position-form_name')[1].value;
                 const form_name_kana = document.getElementsByClassName('edit-managerial-position-form_name_kana')[1].value;
@@ -106,7 +110,8 @@
             window.$lw = {
                 onCancel: onCancel,
                 onEdit: onEdit,
-                onRemove: onRemove
+                onRemove: onRemove,
+                isSubmit: false
             };
         </script>
     @endscript

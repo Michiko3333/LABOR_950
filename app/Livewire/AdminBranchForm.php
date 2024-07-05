@@ -28,6 +28,7 @@ class AdminBranchForm extends Component
     public $labor_bureau_id = [];
     public $labor_supervision_id = [];
     public $pension_office_id = [];
+    public $loading = false;
 
     public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
@@ -160,8 +161,16 @@ class AdminBranchForm extends Component
 
     public function append()
     {
+        if ($this->loading) return;
+        $this->loading = true;
         array_push($this->data, $this->defaultValues());
         $this->dispatch('form-appended');
+    }
+
+    #[On('branch-form-loaded')]
+    public function branchFormLoaded()
+    {
+        $this->loading = false;
     }
 
     #[On('active-state')]
@@ -176,6 +185,8 @@ class AdminBranchForm extends Component
 
     public function remove($index)
     {
+        if ($this->loading) return;
+        $this->loading = true;
         unset($this->data[$index]);
         $this->data = array_values($this->data);
     }

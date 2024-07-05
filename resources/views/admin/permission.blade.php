@@ -100,7 +100,8 @@
                         <a class="ui button negative basic"
                             href="{{ request()->route()->getName() === 'employee_permission' ? route('employee') : route('admin.labor') }}"
                             style="width: 200px; margin-right: 10px;">キャンセル</a>
-                        <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                        <button class="ui button primary submit-disable" type="submit"
+                            style="width: 200px;">更新</button>
                     </div>
                 </form>
             </div>

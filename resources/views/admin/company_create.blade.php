@@ -345,7 +345,7 @@
                         </div>
 
                         <div class="two fields">
-                            <div class="required field {{err($errors, 'business_type')}}">
+                            <div class="required field {{ err($errors, 'business_type') }}">
                                 <label>企業区分</label>
                                 <select class="ui fluid dropdown" name="business_type"
                                     value="{{ old('business_type') }}">
@@ -361,7 +361,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="field  {{err($errors, 'listed_type')}}">
+                            <div class="field  {{ err($errors, 'listed_type') }}">
                                 <label>上場区分</label>
                                 <select class="ui fluid dropdown" name="listed_type"
                                     value="{{ old('listed_type') }}">
@@ -422,7 +422,7 @@
                     <div class="content">
                         <h2>資本情報</h2>
                         <div class="three fields">
-                            <div class="field {{err($errors, 'capital')}}">
+                            <div class="field {{ err($errors, 'capital') }}">
                                 <label for="capital">資本金</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="capital" name="capital"
@@ -603,17 +603,16 @@
             <h2 class="pl-1">事業所情報</h2>
 
             <!-- 支店情報 -->
-            <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures"
-                :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
-                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''"/>
+            <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures" :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
+                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''" />
 
             <div class="my-4" style="text-align: right; margin-right: 1em;">
                 <a class="ui button negative basic" href="{{ route('admin.company') }}"
                     style="width: 200px;">キャンセル</a>
                 @if (!isset($company_id))
-                    <button class="ui button primary" type="submit" style="width: 200px;">登録</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">登録</button>
                 @else
-                    <button class="ui button primary" type="submit" style="width: 200px;">更新</button>
+                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">更新</button>
                 @endif
             </div>
         </form>

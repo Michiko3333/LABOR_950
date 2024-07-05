@@ -7004,14 +7004,24 @@
                         var passYear = document.getElementById("N45_P1");
                         var passMonth = document.getElementById("N46_P1");
                         var passDay = document.getElementById("N47_P1");
-                        over70Era.value = "";
-                        over70Year.value = "";
-                        over70Month.value = "";
-                        over70Day.value = "";
-                        over70Era.disabled = true;
-                        over70Year.disabled = true;
-                        over70Month.disabled = true;
-                        over70Day.disabled = true;
+
+                        over70Era.disabled = false;
+                        over70Year.disabled = false;
+                        over70Month.disabled = false;
+                        over70Day.disabled = false;
+                        
+                        if (c3.checked) {
+                            over70Era.disabled = false;
+                            over70Year.disabled = false;
+                            over70Month.disabled = false;
+                            over70Day.disabled = false;
+                        } else {
+                            over70Era.disabled = true;
+                            over70Year.disabled = true;
+                            over70Month.disabled = true;
+                            over70Day.disabled = true;
+                        }
+                        
                         c2_0.addEventListener("change", function() {
                             if (c2_0.checked) {
                                 remarks.value = "";

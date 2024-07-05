@@ -4965,22 +4965,22 @@
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 317px; top: 272px;">
-                        <select class="egov-tool-field-rect onImage" id="N24_005F_8E96_8BC6"
-                            value="{{ old('birthday_era') }}" name="birthday_era" required="required"
+                        <select class="egov-tool-field-rect onImage" id="N24_005F_8E96_8BC6" name="birthday_era"
+                            required="required"
                             style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                            <option value="1">
+                            <option value="1" {{ old('birthday_era') == 1 ? 'selected' : '' }}>
                                 明治
                             </option>
-                            <option value="3">
+                            <option value="3" {{ old('birthday_era') == 3 ? 'selected' : '' }}>
                                 大正
                             </option>
-                            <option selected="" value="5">
+                            <option value="5" {{ old('birthday_era') == 5 ? 'selected' : '' }}>
                                 昭和
                             </option>
-                            <option value="7">
+                            <option value="7" {{ old('birthday_era') == 7 ? 'selected' : '' }}>
                                 平成
                             </option>
-                            <option value="9">
+                            <option value="9" {{ old('birthday_era') == 9 ? 'selected' : '' }}>
                                 令和
                             </option>
                         </select>
@@ -5010,10 +5010,10 @@
                         <select class="egov-tool-field-rect onImage" id="N29_005F_8E73"
                             value="{{ old('revision_date_era') }}" name="revision_date_era" required="required"
                             style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                            <option selected="" value="7">
+                            <option value="7" {{ old('revision_date_era') == 7 ? 'selected' : '' }}>
                                 平成
                             </option>
-                            <option value="9">
+                            <option value="9" {{ old('revision_date_era') == 9 ? 'selected' : '' }}>
                                 令和
                             </option>
                         </select>

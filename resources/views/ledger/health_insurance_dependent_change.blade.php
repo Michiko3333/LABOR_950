@@ -146,7 +146,7 @@
                 $('#N6_P1').val('{{ old('submission_date', $today['date']) }}');
                 $('#N22_P1').val('{{ old('accepted_year', $yesterday['year']) }}');
                 $('#N23_P1').val('{{ old('accepted_month', $yesterday['month']) }}');
-                $('#N24_P1').val('{{ old('accepted_date', $yesterday['date']) }}');
+                $('#N24_P1').val('{{ old('accepted_day', $yesterday['date']) }}');
                 $('#N27').val('{{ old('submission_year', $today['year']) }}');
                 $('#N28').val('{{ old('submission_month', $today['month']) }}');
                 $('#N29').val('{{ old('submission_date', $today['date']) }}');
@@ -320,7 +320,7 @@
                 }
                 $('#N9').val(employee.mynumber_card_no ?? '');
                 $('#N10').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ??
-                ''));
+                    ''));
                 $('#N11').val((employee.last_name ? employee.last_name + '　' : '') + (employee.first_name ??
                     ''));
                 $('#N13').val(birthdayEra);

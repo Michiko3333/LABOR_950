@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmploymentInsuredQualificationGetRequest extends FormRequest
+class EmploymentInsuredQualificationGetRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -131,8 +131,9 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthdayEra = $data['birthday_era'] ?? "";
@@ -174,10 +175,10 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
                 }
             }
 
-            if(!empty($birthdayMonth) && !empty($birthdayDay)){
-                if(ctype_digit($birthdayMonth)){
+            if (!empty($birthdayMonth) && !empty($birthdayDay)) {
+                if (ctype_digit($birthdayMonth)) {
                     if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
-                        $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -195,21 +196,21 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
                     $validator->errors()->add('insured_date_era', '資格取得年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($insuredMonth) && !empty($insuredDay)){
-                if(ctype_digit($insuredMonth)){
+            if (!empty($insuredMonth) && !empty($insuredDay)) {
+                if (ctype_digit($insuredMonth)) {
                     if (!checkdate($insuredMonth, $insuredDay, '2000')) {
-                        $validator->errors()->add('insured_date_era','資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('insured_date_era', '資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
-            if(!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])){
-                if(ctype_digit($data['stay_date_period_month'])){
+            if (!empty($data['stay_date_period_year']) && !empty($data['stay_date_period_month']) && !empty($data['stay_date_period_day'])) {
+                if (ctype_digit($data['stay_date_period_month'])) {
                     if (!checkdate($data['stay_date_period_month'], $data['stay_date_period_day'], $data['stay_date_period_year'])) {
-                        $validator->errors()->add('stay_date_period_year','在留期間は正しい日付を入力してください。');
+                        $validator->errors()->add('stay_date_period_year', '在留期間は正しい日付を入力してください。');
                     }
                 }
             }
-            if(!empty($data['contract_end_era'])){
+            if (!empty($data['contract_end_era'])) {
                 if ($data['contract_end_era'] === '平成') {
                     if (
                         ($data['contract_end_year'] == 1 && ($data['contract_end_month'] < 1 || ($data['contract_end_month'] == 1 && $data['contract_end_day'] < 8))) ||
@@ -223,15 +224,14 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
                         $validator->errors()->add('contract_end_day', '契約期間_終了年月日は正しい日付を入力してください。');
                     }
                 }
-                if(!empty($data['contract_end_month']) && !empty($data['contract_end_day'])){
-                    if(ctype_digit($data['contract_end_month'])){
+                if (!empty($data['contract_end_month']) && !empty($data['contract_end_day'])) {
+                    if (ctype_digit($data['contract_end_month'])) {
                         if (!checkdate($data['contract_end_month'], $data['contract_end_day'], '2000')) {
-                            $validator->errors()->add('contract_end_day','契約期間_終了年月日は正しい日付を入力してください。');
+                            $validator->errors()->add('contract_end_day', '契約期間_終了年月日は正しい日付を入力してください。');
                         }
                     }
                 }
             }
-            
         });
         $validator->sometimes('contract_end_era', 'in:令和', function ($input) {
             return $input->contract_start_era === '令和';
@@ -259,7 +259,7 @@ class EmploymentInsuredQualificationGetRequest extends FormRequest
             return $input->contract_start_era === '平成' && $input->contract_start_year >= 31 && $input->contract_start_month === 4;
         });
     }
-    
+
     public function messages()
     {
         return [

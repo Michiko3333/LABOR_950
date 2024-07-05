@@ -607,13 +607,15 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:0px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:96px; top:1061px; width:812px; line-height:84px; height:86px; font-size:12px; font-family:'ＭＳ 明朝', serif;">
         <INPUT tabindex="-1" disabled
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; width:810px; height:84px; ime-mode:active;"
-            id="J72_005F_8CF6_8BA4_9045_8BC6_88C0_92E8_8F8A_8B4C_8DDA_9793" name="hello_work_note" value="{{ old('hello_work_note') }}"></INPUT>
+            id="J72_005F_8CF6_8BA4_9045_8BC6_88C0_92E8_8F8A_8B4C_8DDA_9793" name="hello_work_note"
+            value="{{ old('hello_work_note') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:965px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
         <INPUT tabindex="250"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1" value="{{ old('wage_note_1') }}"></INPUT>
+            id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1"
+            value="{{ old('wage_note_1') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:105px; top:1303px; width:131px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -1561,7 +1563,7 @@
             tabindex="119"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J50_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F6"
-            name="payment_basic_period_1_6" maxlength="2"></SPAN>
+            name="payment_basic_period_1_6" maxlength="2" value="{{ old('payment_basic_period_1_6') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:676px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="133"
@@ -2112,13 +2114,15 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:2px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:491px; top:86px; width:176px; line-height:32px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
         <INPUT tabindex="9"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:174px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J9_005F_8374_838A_834B_8369" name="employment_fullname_kana" disabled value="{{ old('employment_fullname_kana') }}"></INPUT>
+            id="J9_005F_8374_838A_834B_8369" name="employment_fullname_kana" disabled
+            value="{{ old('employment_fullname_kana') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:491px; top:119px; width:176px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
         <INPUT tabindex="10"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:174px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC" name="employment_fullname" disabled value="{{ old('employment_fullname') }}"></INPUT>
+            id="J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC" name="employment_fullname"
+            disabled value="{{ old('employment_fullname') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; display:none; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:838px; top:11px; width:142px; height:20px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:2px 0px 0px 0px;">A-250077-002_1</SPAN>
@@ -2758,7 +2762,8 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:48px; height:16px;"
             id="J74_005F_944E_8D86" name="creation_date_japan_era">
             <OPTION value="令和" {{ old('creation_date_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('creation_date_japan_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="平成" {{ old('creation_date_japan_era') == '平成' ? 'selected' : '' }} disabled>平成
+            </OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:71px; top:1064px; width:12px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">※</SPAN>
@@ -3242,7 +3247,8 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:2314px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
         <INPUT tabindex="982"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2" value="{{ old('wage_note_2') }}"></INPUT>
+            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2"
+            value="{{ old('wage_note_2') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:66px; top:1825px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -4424,7 +4430,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1917px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
         <INPUT tabindex="827"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F4" name="note_2_4"></INPUT value="{{ old('note_2_4') }}">
+            id="J109_005F_94F5_8D6C_005F4" name="note_2_4" value="{{ old('note_2_4') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1950px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">

@@ -20,8 +20,8 @@
         @foreach ($data['items'] as $item)
             <div class="item {{ $selected_id == $item->id ? 'selected' : '' }}">
                 <div class="right floated content">
-                    <button type="button" class="ui button small" wire:click="selectEmployee({{ $item->id }})"
-                    >選択</button>
+                    <button type="button" class="ui button small"
+                        wire:click="selectEmployee({{ $item->id }})">選択</button>
                 </div>
                 <img class="ui avatar image" src="{{ asset('/img/image.png') }}">
                 <div class="content">
@@ -33,10 +33,12 @@
     </div>
     <div class="small-pagination">
         <div class="ui pagination borderless mini menu">
-            <button type="button" class="ui button item @if ($disablePrev) disabled @endif" wire:click="onPrev"
-            ><i class="chevron left icon"></i></button>
-            <button type="button" class="ui button item @if ($disableNext) disabled @endif" wire:click="onNext"
-            ><i class="chevron right icon"></i></button>
+            <button type="button"
+                class="ui button item pagination-disable @if ($disablePrev) disabled @endif"
+                wire:click.debounce.150ms="onPrev"><i class="chevron left icon"></i></button>
+            <button type="button"
+                class="ui button item pagination-disable @if ($disableNext) disabled @endif"
+                wire:click.debounce.150ms="onNext"><i class="chevron right icon"></i></button>
         </div>
     </div>
 </div>

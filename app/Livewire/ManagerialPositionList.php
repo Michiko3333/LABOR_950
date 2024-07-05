@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Managerial_position;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Rules\noEmoji;
 
 class ManagerialPositionList extends Component
 {
@@ -79,6 +80,12 @@ class ManagerialPositionList extends Component
             $this->dispatch('showErrorMessage');
             return;
         }
+
+        if (noEmoji::isEmoji($data['form_name']) || noEmoji::isEmoji($data['form_name_kana'])) {
+            $this->dispatch('showErrorMessage');
+            return;
+        }
+
         if (!empty($data['form_id'])) {
             Managerial_position::where('company_id', $this->company_id)->where('id', $data['form_id'])->update([
                 'name' => $data['form_name'],

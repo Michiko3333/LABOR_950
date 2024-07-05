@@ -107,18 +107,21 @@
         <script type="module">
             $(document).ready(function() {
                 @if ($current_employee->role_id === 500)
-                    $('#J74_005F_944E_8D86').val('{{ old('labor_consultant_today_era', $today['era']) }}');
-                    $('#J75_005F_944E').val('{{ old('labor_consultant_today_year', $today['year']) }}');
-                    $('#J76_005F_8C8E').val('{{ old('labor_consultant_today_month', $today['month']) }}');
-                    $('#J77_005F_93FA').val('{{ old('labor_consultant_today_date', $today['date']) }}');
-                    $('#J80_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
-                    $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
-                    $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
+                    $('#J74_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
+                    $('#J75_005F_944E').val('{{ old('labor_consultant_japan_era_year', $today['year']) }}');
+                    $('#J76_005F_8C8E').val('{{ old('labor_consultant_month', $today['month']) }}');
+                    $('#J77_005F_93FA').val('{{ old('labor_consultant_day', $today['date']) }}');
+                    $('#J80_005F_8E73_8A4F_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
+                    $('#J81_005F_8E73_93E0_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_city_code', $current_branch->tel_city_code) }}');
+                    $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val(
+                        '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J74_005F_944E_8D86').prop('disabled', true);
                     $('#J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA, #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                                                    #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86,\
-                                                    #J83_005F_9574_8B4C_9793').prop('readonly', true);
+                                                                            #J79_005F_8E81_96BC, #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86,\
+                                                                            #J83_005F_9574_8B4C_9793').prop('readonly', true);
                 @endif
             });
         </script>

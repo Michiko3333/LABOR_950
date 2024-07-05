@@ -33,13 +33,13 @@ class Pagination extends Component
         $elements = [];
 
         for ($i = 0; $i < count($ar); $i++) {
-            if ($ar[$i] == $pageCount && $this->currentPage < $pageCount - 2) {
+            if ($ar[$i] == $pageCount && $this->currentPage < $pageCount - 2 && $pageCount > 5) {
                 $elements[] = '...';
             }
 
             $elements[] = $ar[$i];
 
-            if ($ar[$i] == 1 && $this->currentPage > 3) {
+            if ($ar[$i] == 1 && $this->currentPage > 3 && $pageCount > 5) {
                 $elements[] = '...';
             }
         }

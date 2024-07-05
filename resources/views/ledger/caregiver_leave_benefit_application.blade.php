@@ -141,25 +141,31 @@
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
-                    $('#J76_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
-                    $('#J77_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
-                    $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
+                    $('#J76_005F_8E73_8A4F_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
+                    $('#J77_005F_8E73_93E0_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_city_code', $current_branch->tel_city_code) }}');
+                    $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').val(
+                        '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                     $('#J74_005F_944E_8D86').val('{{ old('creation_date_japan_era', $today['era']) }}');
                     $('#J74_005F_944E_8D86').find('option').not(
                         `[value="{{ old('creation_date_japan_era', $today['era']) }}"]`).prop('disabled', true);
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
-                    $('#J80_005F_8E73_8A4F_8BC7_94D4').val('{{ $current_branch->tel_area_code }}');
-                    $('#J81_005F_8E73_93E0_8BC7_94D4').val('{{ $current_branch->tel_city_code }}');
-                    $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val('{{ $current_branch->tel_subscriber_code }}');
+                    $('#J80_005F_8E73_8A4F_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
+                    $('#J81_005F_8E73_93E0_8BC7_94D4').val(
+                        '{{ old('labor_consultant_tel_city_code', $current_branch->tel_city_code) }}');
+                    $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val(
+                        '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J74_005F_944E_8D86').prop('disabled', true);
                     $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                        #J114_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4,\
-                        #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
-                        #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
-                        #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86, #J83_005F_9574_8B4C_9793')
+                                #J114_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4,\
+                                #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
+                                #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
+                                #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86, #J83_005F_9574_8B4C_9793')
                         .prop('readonly', true);
                 @endif
             });
@@ -192,7 +198,8 @@
                     headquarters.address_ward || "") + (headquarters.address_apartment || "");
                 const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
                     .address_ward || "") + (branch.address_apartment || "");
-                const branchInfo = (branch.name || "") + '　' + (branch_prefecture_data.name || "") + (branch.address_city || "") +
+                const branchInfo = (branch.name || "") + '　' + (branch_prefecture_data.name || "") + (branch.address_city ||
+                        "") +
                     (branch.address_ward || "") + (branch.address_apartment || "");
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
                     .address_ward || "") + (employee.address_apartment || "");
@@ -347,7 +354,7 @@
             $('#J78_005F_89C1_93FC_8ED2_94D4_8D86').on('change', function() {
                 $('#J82_005F_89C1_93FC_8ED2_94D4_8D86').val($(this).val());
             });
-            
+
             $('#J76').on('change', function() {
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val($(this).val());
             });

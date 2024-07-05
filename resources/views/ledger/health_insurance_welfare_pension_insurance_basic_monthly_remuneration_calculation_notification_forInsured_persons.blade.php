@@ -50,20 +50,26 @@
                                     <h2>70歳以上</h2>
                                     <div class="field four wide" style="margin-top: 5px;">
                                         <div class="ui toggle checkbox">
-                                            <input id="over_70_check" type="checkbox" name="over_70_check" {{ old("over_70_check") ? 'checked' : '' }}>
+                                            <input id="over_70_check" type="checkbox" name="over_70_check"
+                                                {{ old('over_70_check') ? 'checked' : '' }}>
                                             <label></label>
                                         </div>
                                     </div>
                                 </div>
                                 <p style="font-size: 12px; font-weight: 700;">70歳以上の方は下記のいずれかが必須です</p>
                                 <div id="over_70" style="display: flex;">
-                                    <div class="ui input" style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
+                                    <div class="ui input"
+                                        style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
                                         <label style="font-size: 11.2px;">個人番号</label>
-                                        <input id="personal_number" maxlength="12" type="text" placeholder="" name="my_number_or_basic_pension_number" value="{{ old('my_number_or_basic_pension_number') }}" value="">
+                                        <input id="personal_number" maxlength="12" type="text" placeholder=""
+                                            name="my_number_or_basic_pension_number"
+                                            value="{{ old('my_number_or_basic_pension_number') }}" value="">
                                     </div>
                                     <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
                                         <label style="font-size: 11.2px;">基礎年金番号</label>
-                                        <input id="basic_pension_number" maxlength="10" type="text" placeholder="" name="basic_pension_number" value="{{ old('basic_pension_number') }}" value="">
+                                        <input id="basic_pension_number" maxlength="10" type="text" placeholder=""
+                                            name="basic_pension_number" value="{{ old('basic_pension_number') }}"
+                                            value="">
                                     </div>
                                 </div>
                             </div>
@@ -73,10 +79,10 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'wage_ledger' => '（様式1）年間報酬の平均で算定することの申立書',
-                                    'attendance_record' => '（様式2）保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書等',
+                                    'attendance_record' =>
+                                        '（様式2）保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書等',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'"
-                                :separateDisabled="true" />
+                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -131,47 +137,56 @@
             $(document).ready(function() {
                 $('#N3_005F_944E_8D86').val('{{ old('today_japan_era_year', $todaySet['year']) }}');
                 $('#N4_005F_944E').val('{{ old('today_japan_era_month', $todaySet['month']) }}');
-                $('#N5_005F_8C8E').val('{{ old('today_japan_era_date', $todaySet['date']) }}');
+                $('#N5_005F_8C8E').val('{{ old('today_japan_era_day', $todaySet['date']) }}');
 
                 @if ($current_employee->role_id === 500)
-                    $('#N18_005F_8CC2_906C_94D4').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
+                    $('#N18_005F_8CC2_906C_94D4').val('{{ $current_employee->last_name }}' + '　' +
+                        '{{ $current_employee->first_name }}');
+                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val(
+                        '{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
                 @else
                     $('#N18_005F_8CC2_906C_94D4').prop('disabled', true);
                 @endif
 
                 checkOver70();
                 remarksAndPartTimeWorker();
-                $('#over_70_check').change(function(){
+                $('#over_70_check').change(function() {
                     checkOver70();
                 });
-                $('#N55_005F_8E73_8A4F_8BC7_94D4').change(function(){
+                $('#N55_005F_8E73_8A4F_8BC7_94D4').change(function() {
                     checkOver70_2();
                 });
-                $('#N60_005F_8E73_8A4F_8BC7_9432').change(function(){
+                $('#N60_005F_8E73_8A4F_8BC7_9432').change(function() {
                     remarksAndPartTimeWorker();
                 });
+
                 function checkOver70() {
-                    if($('#over_70_check').prop('checked')) {
-                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop('disabled', false);
+                    if ($('#over_70_check').prop('checked')) {
+                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
+                            'disabled', false);
                     } else {
-                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
+                            'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
                     }
                 }
+
                 function checkOver70_2() {
-                    if($('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked')) {
-                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop('disabled', false);
+                    if ($('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked')) {
+                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
+                            'disabled', false);
                     } else {
-                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
+                            'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
                     }
                 }
+
                 function remarksAndPartTimeWorker() {
-                    if($('#N60_005F_8E73_8A4F_8BC7_9432').prop('checked')) {
+                    if ($('#N60_005F_8E73_8A4F_8BC7_9432').prop('checked')) {
                         $('#N66_005F_8F5A').prop('disabled', false);
                     } else {
-                        $('#N66_005F_8F5A').prop('disabled', true); 
+                        $('#N66_005F_8F5A').prop('disabled', true);
                         $('#N66_005F_8F5A').val('');
                     }
                 }
@@ -189,28 +204,28 @@
                 });
             });
 
-            $(function(){
-                $('#personal_number').change(function(){
+            $(function() {
+                $('#personal_number').change(function() {
                     $('#basic_pension_number').val('');
                 });
-                $('#basic_pension_number').change(function(){
+                $('#basic_pension_number').change(function() {
                     $('#personal_number').val('');
                 });
             });
-            $(function(){
-                var cb1 = $('#over_70_check'); 
+            $(function() {
+                var cb1 = $('#over_70_check');
                 var cb2 = $('#N55_005F_8E73_8A4F_8BC7_94D4');
-                cb1.change(function(){
-                    if(cb1.prop('checked')){
+                cb1.change(function() {
+                    if (cb1.prop('checked')) {
                         cb2.prop('checked', true);
-                    }else{
+                    } else {
                         cb2.prop('checked', false);
                     }
                 });
-                cb2.change(function(){
-                    if(cb2.prop('checked')){
+                cb2.change(function() {
+                    if (cb2.prop('checked')) {
                         cb1.prop('checked', true);
-                    }else{
+                    } else {
                         cb1.prop('checked', false);
                     }
                 });

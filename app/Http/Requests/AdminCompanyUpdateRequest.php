@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\noEmoji;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminCompanyUpdateRequest extends FormRequest
+class AdminCompanyUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,21 +14,6 @@ class AdminCompanyUpdateRequest extends FormRequest
     {
         return true;
     }
-
-    // public function validationData()
-    // {
-    //     $data = $this->all();
-
-    //     if (isset($data['br-address_ward'])) {
-    //         $data['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $data['br-address_ward']);
-    //     }
-    //     if (isset($data['br-address_apartment'])) {
-    //         $data['br-address_apartment'] = mb_convert_kana($data['br-address_apartment'], 'AS');
-    //         $data['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $data['br-address_apartment']);
-    //     }
-
-    //     return $data;
-    // }
 
     public function validationData()
     {
@@ -81,6 +67,19 @@ class AdminCompanyUpdateRequest extends FormRequest
         return $data;
     }
 
+    public function withValidator($validator): void
+    {
+        // 絵文字バリデーションの事業所配列対応
+        $rules = [];
+        foreach ($this->request as $key => $value) {
+            if (strpos($key, 'br-') === 0) {
+                $rules[$key . ".*"] = new noEmoji;
+            } else {
+                $rules[$key] = new noEmoji;
+            }
+        }
+        $validator->addRules($rules);
+    }
 
     /**
      * Get the validation rules that apply to the request.

@@ -450,6 +450,11 @@ class Calendar extends Component
         $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
         $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
 
+        if (mb_strlen($data['inputs_name']) > 20) return false;
+        if ($data['inputs_category'] < 1 || $data['inputs_category'] > count($this->category_types)) {
+            return;
+        }
+
         if ($min > $data['from'] || $max < $data['from']) return false;
 
         if (!empty($data['to'])) {

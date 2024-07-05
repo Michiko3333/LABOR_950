@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceDependentChangeRequest extends FormRequest
+class HealthInsuranceDependentChangeRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -207,401 +207,548 @@ class HealthInsuranceDependentChangeRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
+            $accepted_japan_year = $data['accepted_year'] ?? "";
+            if (isset($data['accepted_year']) && ctype_digit($data['accepted_year'])) {
+                $accepted_year = 2018 + $data['accepted_year'];
+            }
+            $accepted_month = $data['accepted_month'] ?? "";
+            $accepted_day = $data['accepted_day'] ?? "";
             $birthday_era = $data['birthday_era'] ?? "";
-            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_japan_year = $data['birthday_year'] ?? "";
+            if(isset($data['birthday_year']) && ctype_digit($data['birthday_year'])) {
+                if($birthday_era === '5') {
+                    $birthday_year = 1925 + $data['birthday_year'];
+                } elseif($birthday_era === '7') {
+                    $birthday_year = 1988 + $data['birthday_year'];
+                } elseif($birthday_era === '9') {
+                    $birthday_year = 2018 + $data['birthday_year'];
+                }
+            }
             $birthday_month = $data['birthday_month'] ?? "";
             $birthday_day = $data['birthday_day'] ?? "";
             $acquisition_era = $data['acquisition_era'] ?? "";
-            $acquisition_year = $data['acquisition_year'] ?? "";
+            $acquisition_japan_year = $data['acquisition_year'] ?? "";
+            if(isset($data['acquisition_year']) && ctype_digit($data['acquisition_year'])) {
+                if($acquisition_era === '5') {
+                    $acquisition_year = 1925 + $data['acquisition_year'];
+                } elseif($acquisition_era === '7') {
+                    $acquisition_year = 1988 + $data['acquisition_year'];
+                } elseif($acquisition_era === '9') {
+                    $acquisition_year = 2018 + $data['acquisition_year'];
+                }
+            }
             $acquisition_month = $data['acquisition_month'] ?? "";
             $acquisition_day = $data['acquisition_day'] ?? "";
+            $notification_japan_year = $data['notification_year'] ?? "";
+            if (isset($data['notification_year']) && ctype_digit($data['notification_year'])) {
+                $notification_year = 2018 + $data['notification_year'];
+            }
+            $notification_month = $data['notification_month'] ?? "";
+            $notification_day = $data['notification_day'] ?? "";
             $spouse_birthday_era = $data['spouse_birthday_era'] ?? "";
-            $spouse_birthday_year = $data['spouse_birthday_year'] ?? "";
+            $spouse_birthday_japan_year = $data['spouse_birthday_year'] ?? "";
+            if(isset($data['spouse_birthday_year']) && ctype_digit($data['spouse_birthday_year'])) {
+                if($spouse_birthday_era === '5') {
+                    $spouse_birthday_year = 1925 + $data['spouse_birthday_year'];
+                } elseif($spouse_birthday_era === '7') {
+                    $spouse_birthday_year = 1988 + $data['spouse_birthday_year'];
+                } elseif($spouse_birthday_era === '9') {
+                    $spouse_birthday_year = 2018 + $data['spouse_birthday_year'];
+                }
+            }
             $spouse_birthday_month = $data['spouse_birthday_month'] ?? "";
             $spouse_birthday_day = $data['spouse_birthday_day'] ?? "";
             $spouse_become_date_era = $data['spouse_become_date_era'] ?? "";
-            $spouse_become_date_year = $data['spouse_become_date_year'] ?? "";
+            $spouse_become_date_japan_year = $data['spouse_become_date_year'] ?? "";
+            if(isset($data['spouse_become_date_year']) && ctype_digit($data['spouse_become_date_year'])) {
+                if($spouse_become_date_era === '7') {
+                    $spouse_become_date_year = 1988 + $data['spouse_become_date_year'];
+                } elseif($spouse_become_date_era === '9') {
+                    $spouse_become_date_year = 2018 + $data['spouse_become_date_year'];
+                }
+            }
             $spouse_become_date_month = $data['spouse_become_date_month'] ?? "";
             $spouse_become_date_day = $data['spouse_become_date_day'] ?? "";
             $spouse_remove_date_era = $data['spouse_remove_date_era'] ?? "";
-            $spouse_remove_date_year = $data['spouse_remove_date_year'] ?? "";
+            $spouse_remove_date_japan_year = $data['spouse_remove_date_year'] ?? "";
+            if(isset($data['spouse_remove_date_year']) && ctype_digit($data['spouse_remove_date_year'])) {
+                if($spouse_remove_date_era === '7') {
+                    $spouse_remove_date_year = 1988 + $data['spouse_remove_date_year'];
+                } elseif($spouse_remove_date_era === '9') {
+                    $spouse_remove_date_year = 2018 + $data['spouse_remove_date_year'];
+                }
+            }
             $spouse_remove_date_month = $data['spouse_remove_date_month'] ?? "";
             $spouse_remove_date_day = $data['spouse_remove_date_day'] ?? "";
+            $spouse_passed_away_date_japan_year = $data['spouse_passed_away_date_year'] ?? "";
+            if (isset($data['spouse_passed_away_date_year']) && ctype_digit($data['spouse_passed_away_date_year'])) {
+                $spouse_passed_away_date_year = 2018 + $data['spouse_passed_away_date_year'];
+            }
+            $spouse_passed_away_date_month = $data['spouse_passed_away_date_month'] ?? "";
+            $spouse_passed_away_date_day = $data['spouse_passed_away_date_day'] ?? "";
+            $spouse_special_requirements_applicable_date_japan_year = $data['spouse_special_requirements_applicable_date_year'] ?? "";
+            if (isset($data['spouse_special_requirements_applicable_date_year']) && ctype_digit($data['spouse_special_requirements_applicable_date_year'])) {
+                $spouse_special_requirements_applicable_date_year = 2018 + $data['spouse_special_requirements_applicable_date_year'];
+            }
+            $spouse_special_requirements_applicable_date_month = $data['spouse_special_requirements_applicable_date_month'] ?? "";
+            $spouse_special_requirements_applicable_date_day = $data['spouse_special_requirements_applicable_date_day'] ?? "";
+            $spouse_special_requirements_non_applicable_date_japan_year = $data['spouse_special_requirements_non_applicable_date_year'] ?? "";
+            if (isset($data['spouse_special_requirements_non_applicable_date_year']) && ctype_digit($data['spouse_special_requirements_non_applicable_date_year'])) {
+                $spouse_special_requirements_non_applicable_date_year = 2018 + $data['spouse_special_requirements_non_applicable_date_year'];
+            }
+            $spouse_special_requirements_non_applicable_date_month = $data['spouse_special_requirements_non_applicable_date_month'] ?? "";
+            $spouse_special_requirements_non_applicable_date_day = $data['spouse_special_requirements_non_applicable_date_day'] ?? "";
+            $spouse_domestic_transfer_date_japan_year = $data['spouse_domestic_transfer_date_year'] ?? "";
+            if (isset($data['spouse_domestic_transfer_date_year']) && ctype_digit($data['spouse_domestic_transfer_date_year'])) {
+                $spouse_domestic_transfer_date_year = 2018 + $data['spouse_domestic_transfer_date_year'];
+            }
+            $spouse_domestic_transfer_date_month = $data['spouse_domestic_transfer_date_month'] ?? "";
+            $spouse_domestic_transfer_date_day = $data['spouse_domestic_transfer_date_day'] ?? "";
             $other_dependent1_birthday_era = $data['other_dependent1_birthday_era'] ?? "";
-            $other_dependent1_birthday_year = $data['other_dependent1_birthday_year'] ?? "";
+            $other_dependent1_birthday_japan_year = $data['other_dependent1_birthday_year'] ?? "";
+            if(isset($data['other_dependent1_birthday_year']) && ctype_digit($data['other_dependent1_birthday_year'])) {
+                if($other_dependent1_birthday_era === '5') {
+                    $other_dependent1_birthday_year = 1925 + $data['other_dependent1_birthday_year'];
+                } elseif($other_dependent1_birthday_era === '7') {
+                    $other_dependent1_birthday_year = 1988 + $data['other_dependent1_birthday_year'];
+                } elseif($other_dependent1_birthday_era === '9') {
+                    $other_dependent1_birthday_year = 2018 + $data['other_dependent1_birthday_year'];
+                }
+            }
             $other_dependent1_birthday_month = $data['other_dependent1_birthday_month'] ?? "";
             $other_dependent1_birthday_day = $data['other_dependent1_birthday_day'] ?? "";
             $other_dependent1_become_date_era = $data['other_dependent1_become_date_era'] ?? "";
-            $other_dependent1_become_date_year = $data['other_dependent1_become_date_year'] ?? "";
+            $other_dependent1_become_date_japan_year = $data['other_dependent1_become_date_year'] ?? "";
+            if(isset($data['other_dependent1_become_date_year']) && ctype_digit($data['other_dependent1_become_date_year'])) {
+                if($other_dependent1_become_date_era === '7') {
+                    $other_dependent1_become_date_year = 1988 + $data['other_dependent1_become_date_year'];
+                } elseif($other_dependent1_become_date_era === '9') {
+                    $other_dependent1_become_date_year = 2018 + $data['other_dependent1_become_date_year'];
+                }
+            }
             $other_dependent1_become_date_month = $data['other_dependent1_become_date_month'] ?? "";
             $other_dependent1_become_date_day = $data['other_dependent1_become_date_day'] ?? "";
             $other_dependent1_remove_date_era = $data['other_dependent1_remove_date_era'] ?? "";
-            $other_dependent1_remove_date_year = $data['other_dependent1_remove_date_year'] ?? "";
+            $other_dependent1_remove_date_japan_year = $data['other_dependent1_remove_date_year'] ?? "";
+            if(isset($data['other_dependent1_remove_date_year']) && ctype_digit($data['other_dependent1_remove_date_year'])) {
+                if($other_dependent1_remove_date_era === '7') {
+                    $other_dependent1_remove_date_year = 1988 + $data['other_dependent1_remove_date_year'];
+                } elseif($other_dependent1_remove_date_era === '9') {
+                    $other_dependent1_remove_date_year = 2018 + $data['other_dependent1_remove_date_year'];
+                }
+            }
             $other_dependent1_remove_date_month = $data['other_dependent1_remove_date_month'] ?? "";
             $other_dependent1_remove_date_day = $data['other_dependent1_remove_date_day'] ?? "";
+            $other_dependent1_domestic_transfer_date_japan_year = $data['other_dependent1_domestic_transfer_date_year'] ?? "";
+            if (isset($data['other_dependent1_domestic_transfer_date_year']) && ctype_digit($data['other_dependent1_domestic_transfer_date_year'])) {
+                $other_dependent1_domestic_transfer_date_year = 2018 + $data['other_dependent1_domestic_transfer_date_year'];
+            }
+            $other_dependent1_domestic_transfer_date_month = $data['other_dependent1_domestic_transfer_date_month'] ?? "";
+            $other_dependent1_domestic_transfer_date_day = $data['other_dependent1_domestic_transfer_date_day'] ?? "";
             $other_dependent2_birthday_era = $data['other_dependent2_birthday_era'] ?? "";
-            $other_dependent2_birthday_year = $data['other_dependent2_birthday_year'] ?? "";
+            $other_dependent2_birthday_japan_year = $data['other_dependent2_birthday_year'] ?? "";
+            if(isset($data['other_dependent2_birthday_year']) && ctype_digit($data['other_dependent2_birthday_year'])) {
+                if($other_dependent2_birthday_era === '5') {
+                    $other_dependent2_birthday_year = 1925 + $data['other_dependent2_birthday_year'];
+                } elseif($other_dependent2_birthday_era === '7') {
+                    $other_dependent2_birthday_year = 1988 + $data['other_dependent2_birthday_year'];
+                } elseif($other_dependent2_birthday_era === '9') {
+                    $other_dependent2_birthday_year = 2018 + $data['other_dependent2_birthday_year'];
+                }
+            }
             $other_dependent2_birthday_month = $data['other_dependent2_birthday_month'] ?? "";
             $other_dependent2_birthday_day = $data['other_dependent2_birthday_day'] ?? "";
             $other_dependent2_become_date_era = $data['other_dependent2_become_date_era'] ?? "";
-            $other_dependent2_become_date_year = $data['other_dependent2_become_date_year'] ?? "";
+            $other_dependent2_become_date_japan_year = $data['other_dependent2_become_date_year'] ?? "";
+            if(isset($data['other_dependent2_become_date_year']) && ctype_digit($data['other_dependent2_become_date_year'])) {
+                if($other_dependent2_become_date_era === '7') {
+                    $other_dependent2_become_date_year = 1988 + $data['other_dependent2_become_date_year'];
+                } elseif($other_dependent2_become_date_era === '9') {
+                    $other_dependent2_become_date_year = 2018 + $data['other_dependent2_become_date_year'];
+                }
+            }
             $other_dependent2_become_date_month = $data['other_dependent2_become_date_month'] ?? "";
             $other_dependent2_become_date_day = $data['other_dependent2_become_date_day'] ?? "";
             $other_dependent2_remove_date_era = $data['other_dependent2_remove_date_era'] ?? "";
-            $other_dependent2_remove_date_year = $data['other_dependent2_remove_date_year'] ?? "";
+            $other_dependent2_remove_date_japan_year = $data['other_dependent2_remove_date_year'] ?? "";
+            if(isset($data['other_dependent2_remove_date_year']) && ctype_digit($data['other_dependent2_remove_date_year'])) {
+                if($other_dependent2_remove_date_era === '7') {
+                    $other_dependent2_remove_date_year = 1988 + $data['other_dependent2_remove_date_year'];
+                } elseif($other_dependent2_remove_date_era === '9') {
+                    $other_dependent2_remove_date_year = 2018 + $data['other_dependent2_remove_date_year'];
+                }
+            }
             $other_dependent2_remove_date_month = $data['other_dependent2_remove_date_month'] ?? "";
             $other_dependent2_remove_date_day = $data['other_dependent2_remove_date_day'] ?? "";
+            $other_dependent2_domestic_transfer_date_japan_year = $data['other_dependent2_domestic_transfer_date_year'] ?? "";
+            if (isset($data['other_dependent2_domestic_transfer_date_year']) && ctype_digit($data['other_dependent2_domestic_transfer_date_year'])) {
+                $other_dependent2_domestic_transfer_date_year = 2018 + $data['other_dependent2_domestic_transfer_date_year'];
+            }
+            $other_dependent2_domestic_transfer_date_month = $data['other_dependent2_domestic_transfer_date_month'] ?? "";
+            $other_dependent2_domestic_transfer_date_day = $data['other_dependent2_domestic_transfer_date_day'] ?? "";
 
-            if (!empty($birthday_month) && !empty($birthday_day)) {
-                if (ctype_digit($birthday_month)) {
-                    if (!checkdate($birthday_month, $birthday_day, '2000')) {
+            if(!empty($accepted_month) && !empty($accepted_day) && !empty($accepted_year)) {
+                if(ctype_digit($accepted_month) && ctype_digit($accepted_day)) {
+                    if (!checkdate($accepted_month, $accepted_day, $accepted_year)) {
+                        $validator->errors()->add('accepted_day','1枚目_3_事業主等受付年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($accepted_japan_year == 1 && ($accepted_month < 5)) {
+                $validator->errors()->add('accepted_day','1枚目_3_事業主等受付年月日は正しい日付を入力してください。');
+            }
+
+            if (!empty($birthday_month) && !empty($birthday_day) && !empty($birthday_year)) {
+                if (ctype_digit($birthday_month) && ctype_digit($birthday_day)) {
+                    if (!checkdate($birthday_month, $birthday_day, $birthday_year)) {
                         $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($birthday_era === '5') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_day < 25))) ||
-                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_day > 7))) ||
-                    ($birthday_year > 64)
+                    ($birthday_japan_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_day < 25))) ||
+                    ($birthday_japan_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_day > 7))) ||
+                    ($birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                 }
-            } elseif ($birthday_era === '7') {
+            } elseif($birthday_era === '7') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_day < 8))) ||
-                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_day > 30))) ||
-                    ($birthday_year > 31)
+                    ($birthday_japan_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_day < 8))) ||
+                    ($birthday_japan_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_day > 30))) ||
+                    ($birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '9') {
-                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_day < 1))) {
+                if ($birthday_japan_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_day < 1))) {
                     $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($acquisition_month) && !empty($acquisition_day)) {
-                if (ctype_digit($acquisition_month)) {
-                    if (!checkdate($acquisition_month, $acquisition_day, '2000')) {
-                        $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
-                    }
-                }
-            }
-            if ($acquisition_era === '5') {
-                if (
-                    ($acquisition_year == 1 && ($acquisition_month < 12 || ($acquisition_month == 12 && $acquisition_day < 25))) ||
-                    ($acquisition_year == 64 && ($acquisition_month > 1 || ($acquisition_month == 1 && $acquisition_day > 7))) ||
-                    ($acquisition_year > 64)
-                ) {
-                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
-                }
-            } elseif ($acquisition_era === '7') {
-                if (
-                    ($acquisition_year == 1 && ($acquisition_month < 1 || ($acquisition_month == 1 && $acquisition_day < 8))) ||
-                    ($acquisition_year == 31 && ($acquisition_month > 4 || ($acquisition_month == 4 && $acquisition_day > 30))) ||
-                    ($acquisition_year > 31)
-                ) {
-                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
-                }
-            } elseif ($acquisition_era === '9') {
-                if ($acquisition_year == 1 && ($acquisition_month < 5 || ($acquisition_month == 5 && $acquisition_day < 1))) {
-                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
-                }
-            }
-
-            if (!empty($data['notification_month']) && !empty($data['notification_day'])) {
-                if (ctype_digit($data['notification_month'])) {
-                    if (!checkdate($data['notification_month'], $data['notification_day'], '2000')) {
+            if (!empty($notification_month) && !empty($notification_day) && !empty($notification_year)) {
+                if (ctype_digit($notification_month) && ctype_digit($notification_day)) {
+                    if (!checkdate($notification_month, $notification_day, $notification_year)) {
                         $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['notification_year'] == 1 && ($data['notification_month'] < 5)) {
+            if ($notification_japan_year == 1 && ($notification_month < 5)) {
                 $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
             }
 
-            if (!empty($spouse_birthday_month) && !empty($spouse_birthday_day)) {
-                if (ctype_digit($spouse_birthday_month)) {
-                    if (!checkdate($spouse_birthday_month, $spouse_birthday_day, '2000')) {
+            if (!empty($spouse_birthday_month) && !empty($spouse_birthday_day) && !empty($spouse_birthday_year)) {
+                if (ctype_digit($spouse_birthday_month) && ctype_digit($spouse_birthday_day)) {
+                    if (!checkdate($spouse_birthday_month, $spouse_birthday_day, $spouse_birthday_year)) {
                         $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($spouse_birthday_era === '5') {
                 if (
-                    ($spouse_birthday_year == 1 && ($spouse_birthday_month < 12 || ($spouse_birthday_month == 12 && $spouse_birthday_day < 25))) ||
-                    ($spouse_birthday_year == 64 && ($spouse_birthday_month > 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day > 7))) ||
-                    ($spouse_birthday_year > 64)
+                    ($spouse_birthday_japan_year == 1 && ($spouse_birthday_month < 12 || ($spouse_birthday_month == 12 && $spouse_birthday_day < 25))) ||
+                    ($spouse_birthday_japan_year == 64 && ($spouse_birthday_month > 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day > 7))) ||
+                    ($spouse_birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                 }
-            } elseif ($spouse_birthday_era === '7') {
+            } elseif($spouse_birthday_era === '7') {
                 if (
-                    ($spouse_birthday_year == 1 && ($spouse_birthday_month < 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day < 8))) ||
-                    ($spouse_birthday_year == 31 && ($spouse_birthday_month > 4 || ($spouse_birthday_month == 4 && $spouse_birthday_day > 30))) ||
-                    ($spouse_birthday_year > 31)
+                    ($spouse_birthday_japan_year == 1 && ($spouse_birthday_month < 1 || ($spouse_birthday_month == 1 && $spouse_birthday_day < 8))) ||
+                    ($spouse_birthday_japan_year == 31 && ($spouse_birthday_month > 4 || ($spouse_birthday_month == 4 && $spouse_birthday_day > 30))) ||
+                    ($spouse_birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                 }
             } elseif ($spouse_birthday_era === '9') {
-                if ($spouse_birthday_year == 1 && ($spouse_birthday_month < 5 || ($spouse_birthday_month == 5 && $spouse_birthday_day < 1))) {
+                if ($spouse_birthday_japan_year == 1 && ($spouse_birthday_month < 5 || ($spouse_birthday_month == 5 && $spouse_birthday_day < 1))) {
                     $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($spouse_become_date_month) && !empty($spouse_become_date_day)) {
-                if (ctype_digit($spouse_become_date_month)) {
-                    if (!checkdate($spouse_become_date_month, $spouse_become_date_day, '2000')) {
+            if (!empty($acquisition_month) && !empty($acquisition_day) && !empty($acquisition_year)) {
+                if (ctype_digit($acquisition_month) && ctype_digit($acquisition_day)) {
+                    if (!checkdate($acquisition_month, $acquisition_day, $acquisition_year)) {
+                        $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($acquisition_era === '5') {
+                if (
+                    ($acquisition_japan_year == 1 && ($acquisition_month < 12 || ($acquisition_month == 12 && $acquisition_day < 25))) ||
+                    ($acquisition_japan_year == 64 && ($acquisition_month > 1 || ($acquisition_month == 1 && $acquisition_day > 7))) ||
+                    ($acquisition_japan_year > 64)
+                ) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            } elseif($acquisition_era === '7') {
+                if (
+                    ($acquisition_japan_year == 1 && ($acquisition_month < 1 || ($acquisition_month == 1 && $acquisition_day < 8))) ||
+                    ($acquisition_japan_year == 31 && ($acquisition_month > 4 || ($acquisition_month == 4 && $acquisition_day > 30))) ||
+                    ($acquisition_japan_year > 31)
+                ) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            } elseif ($acquisition_era === '9') {
+                if ($acquisition_japan_year == 1 && ($acquisition_month < 5 || ($acquisition_month == 5 && $acquisition_day < 1))) {
+                    $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
+                }
+            }
+
+            if (!empty($spouse_become_date_month) && !empty($spouse_become_date_day) && !empty($spouse_become_date_year)) {
+                if (ctype_digit($spouse_become_date_month) && ctype_digit($spouse_become_date_day)) {
+                    if (!checkdate($spouse_become_date_month, $spouse_become_date_day, $spouse_become_date_year)) {
                         $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($spouse_become_date_era === '7') {
+            if($spouse_become_date_era === '7') {
                 if (
-                    ($spouse_become_date_year == 1 && ($spouse_become_date_month < 1 || ($spouse_become_date_month == 1 && $spouse_become_date_day < 8))) ||
-                    ($spouse_become_date_year == 31 && ($spouse_become_date_month > 4 || ($spouse_become_date_month == 4 && $spouse_become_date_day > 30))) ||
-                    ($spouse_become_date_year > 31)
+                    ($spouse_become_date_japan_year == 1 && ($spouse_become_date_month < 1 || ($spouse_become_date_month == 1 && $spouse_become_date_day < 8))) ||
+                    ($spouse_become_date_japan_year == 31 && ($spouse_become_date_month > 4 || ($spouse_become_date_month == 4 && $spouse_become_date_day > 30))) ||
+                    ($spouse_become_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
                 }
             } elseif ($spouse_become_date_era === '9') {
-                if ($spouse_become_date_year == 1 && ($spouse_become_date_month < 5 || ($spouse_become_date_month == 5 && $spouse_become_date_day < 1))) {
+                if ($spouse_become_date_japan_year == 1 && ($spouse_become_date_month < 5 || ($spouse_become_date_month == 5 && $spouse_become_date_day < 1))) {
                     $validator->errors()->add('spouse_become_date_day', '1枚目_22_被扶養者になった日は正しい日付を入力してください。');
                 }
             }
-
-            if (!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day)) {
-                if (ctype_digit($spouse_remove_date_month)) {
-                    if (!checkdate($spouse_remove_date_month, $spouse_remove_date_day, '2000')) {
+            
+            if (!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day) && !empty($spouse_remove_date_year)) {
+                if (ctype_digit($spouse_remove_date_month) && ctype_digit($spouse_remove_date_day)) {
+                    if (!checkdate($spouse_remove_date_month, $spouse_remove_date_day, $spouse_remove_date_year)) {
                         $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($spouse_remove_date_era === '7') {
+            if($spouse_remove_date_era === '7') {
                 if (
-                    ($spouse_remove_date_year == 1 && ($spouse_remove_date_month < 1 || ($spouse_remove_date_month == 1 && $spouse_remove_date_day < 8))) ||
-                    ($spouse_remove_date_year == 31 && ($spouse_remove_date_month > 4 || ($spouse_remove_date_month == 4 && $spouse_remove_date_day > 30))) ||
-                    ($spouse_remove_date_year > 31)
+                    ($spouse_remove_date_japan_year == 1 && ($spouse_remove_date_month < 1 || ($spouse_remove_date_month == 1 && $spouse_remove_date_day < 8))) ||
+                    ($spouse_remove_date_japan_year == 31 && ($spouse_remove_date_month > 4 || ($spouse_remove_date_month == 4 && $spouse_remove_date_day > 30))) ||
+                    ($spouse_remove_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             } elseif ($spouse_remove_date_era === '9') {
-                if ($spouse_remove_date_year == 1 && ($spouse_remove_date_month < 5 || ($spouse_remove_date_month == 5 && $spouse_remove_date_day < 1))) {
+                if ($spouse_remove_date_japan_year == 1 && ($spouse_remove_date_month < 5 || ($spouse_remove_date_month == 5 && $spouse_remove_date_day < 1))) {
                     $validator->errors()->add('spouse_remove_date_day', '1枚目_26_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($data['spouse_passed_away_date_month']) && !empty($data['spouse_passed_away_date_day'])) {
-                if (ctype_digit($data['spouse_passed_away_date_month'])) {
-                    if (!checkdate($data['spouse_passed_away_date_month'], $data['spouse_passed_away_date_day'], '2000')) {
+            if (!empty($spouse_passed_away_date_month) && !empty($spouse_passed_away_date_day) && !empty($spouse_passed_away_date_year)) {
+                if (ctype_digit($spouse_passed_away_date_month) && ctype_digit($spouse_passed_away_date_day)) {
+                    if (!checkdate($spouse_passed_away_date_month, $spouse_passed_away_date_day, $spouse_passed_away_date_year)) {
                         $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_passed_away_date_year'] == 1 && ($data['spouse_passed_away_date_month'] < 5)) {
+            if ($spouse_passed_away_date_japan_year == 1 && ($spouse_passed_away_date_month < 5)) {
                 $validator->errors()->add('spouse_passed_away_date_day', '1枚目_23_理由_死亡年月日は正しい日付を入力してください。');
             }
 
-            if (!empty($data['spouse_special_requirements_applicable_date_month']) && !empty($data['spouse_special_requirements_applicable_date_day'])) {
-                if (ctype_digit($data['spouse_special_requirements_applicable_date_month'])) {
-                    if (!checkdate($data['spouse_special_requirements_applicable_date_month'], $data['spouse_special_requirements_applicable_date_day'], '2000')) {
+            if (!empty($spouse_special_requirements_applicable_date_month) && !empty($spouse_special_requirements_applicable_date_day) && !empty($spouse_special_requirements_applicable_date_year)) {
+                if (ctype_digit($spouse_special_requirements_applicable_date_month) && ctype_digit($spouse_special_requirements_applicable_date_day)) {
+                    if (!checkdate($spouse_special_requirements_applicable_date_month, $spouse_special_requirements_applicable_date_day, $spouse_special_requirements_applicable_date_year)) {
                         $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_special_requirements_applicable_date_year'] == 1 && ($data['spouse_special_requirements_applicable_date_month'] < 5)) {
+            if ($spouse_special_requirements_applicable_date_japan_year == 1 && ($spouse_special_requirements_applicable_date_month < 5)) {
                 $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
             }
-
-            if (!empty($data['spouse_special_requirements_non_applicable_date_month']) && !empty($data['spouse_special_requirements_non_applicable_date_day'])) {
-                if (ctype_digit($data['spouse_special_requirements_non_applicable_date_month'])) {
-                    if (!checkdate($data['spouse_special_requirements_non_applicable_date_month'], $data['spouse_special_requirements_non_applicable_date_day'], '2000')) {
+            
+            if (!empty($spouse_special_requirements_non_applicable_date_month) && !empty($spouse_special_requirements_non_applicable_date_day) && !empty($spouse_special_requirements_non_applicable_date_year)) {
+                if (ctype_digit($spouse_special_requirements_non_applicable_date_month) && ctype_digit($spouse_special_requirements_non_applicable_date_day)) {
+                    if (!checkdate($spouse_special_requirements_non_applicable_date_month, $spouse_special_requirements_non_applicable_date_day, $spouse_special_requirements_non_applicable_date_year)) {
                         $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_special_requirements_non_applicable_date_year'] == 1 && ($data['spouse_special_requirements_non_applicable_date_month'] < 5)) {
+            if ($spouse_special_requirements_non_applicable_date_japan_year == 1 && ($spouse_special_requirements_non_applicable_date_month < 5)) {
                 $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
             }
 
-            if (!empty($data['spouse_domestic_transfer_date_month']) && !empty($data['spouse_domestic_transfer_date_day'])) {
-                if (ctype_digit($data['spouse_domestic_transfer_date_month'])) {
-                    if (!checkdate($data['spouse_domestic_transfer_date_month'], $data['spouse_domestic_transfer_date_day'], '2000')) {
+            if (!empty($spouse_domestic_transfer_date_month) && !empty($spouse_domestic_transfer_date_day) && !empty($spouse_domestic_transfer_date_year)) {
+                if (ctype_digit($spouse_domestic_transfer_date_month) && ctype_digit($spouse_domestic_transfer_date_day)) {
+                    if (!checkdate($spouse_domestic_transfer_date_month, $spouse_domestic_transfer_date_day, $spouse_domestic_transfer_date_year)) {
                         $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['spouse_domestic_transfer_date_year'] == 1 && ($data['spouse_domestic_transfer_date_month'] < 5)) {
+            if ($spouse_domestic_transfer_date_japan_year == 1 && ($spouse_domestic_transfer_date_month < 5)) {
                 $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
             }
 
-            if (!empty($other_dependent1_birthday_month) && !empty($other_dependent1_birthday_day)) {
-                if (ctype_digit($other_dependent1_birthday_month)) {
-                    if (!checkdate($other_dependent1_birthday_month, $other_dependent1_birthday_day, '2000')) {
+            if (!empty($other_dependent1_birthday_month) && !empty($other_dependent1_birthday_day) && !empty($other_dependent1_birthday_year)) {
+                if (ctype_digit($other_dependent1_birthday_month) && ctype_digit($other_dependent1_birthday_day)) {
+                    if (!checkdate($other_dependent1_birthday_month, $other_dependent1_birthday_day, $other_dependent1_birthday_year)) {
                         $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($other_dependent1_birthday_era === '5') {
                 if (
-                    ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 12 || ($other_dependent1_birthday_month == 12 && $other_dependent1_birthday_day < 25))) ||
-                    ($other_dependent1_birthday_year == 64 && ($other_dependent1_birthday_month > 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day > 7))) ||
-                    ($other_dependent1_birthday_year > 64)
+                    ($other_dependent1_birthday_japan_year == 1 && ($other_dependent1_birthday_month < 12 || ($other_dependent1_birthday_month == 12 && $other_dependent1_birthday_day < 25))) ||
+                    ($other_dependent1_birthday_japan_year == 64 && ($other_dependent1_birthday_month > 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day > 7))) ||
+                    ($other_dependent1_birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
                 }
-            } elseif ($other_dependent1_birthday_era === '7') {
+            } elseif($other_dependent1_birthday_era === '7') {
                 if (
-                    ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day < 8))) ||
-                    ($other_dependent1_birthday_year == 31 && ($other_dependent1_birthday_month > 4 || ($other_dependent1_birthday_month == 4 && $other_dependent1_birthday_day > 30))) ||
-                    ($other_dependent1_birthday_year > 31)
+                    ($other_dependent1_birthday_japan_year == 1 && ($other_dependent1_birthday_month < 1 || ($other_dependent1_birthday_month == 1 && $other_dependent1_birthday_day < 8))) ||
+                    ($other_dependent1_birthday_japan_year == 31 && ($other_dependent1_birthday_month > 4 || ($other_dependent1_birthday_month == 4 && $other_dependent1_birthday_day > 30))) ||
+                    ($other_dependent1_birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent1_birthday_era === '9') {
-                if ($other_dependent1_birthday_year == 1 && ($other_dependent1_birthday_month < 5 || ($other_dependent1_birthday_month == 5 && $other_dependent1_birthday_day < 1))) {
+                if ($other_dependent1_birthday_japan_year == 1 && ($other_dependent1_birthday_month < 5 || ($other_dependent1_birthday_month == 5 && $other_dependent1_birthday_day < 1))) {
                     $validator->errors()->add('other_dependent1_birthday_day', '1枚目_34_生年月日は正しい日付を入力してください。');
                 }
             }
-
-            if (!empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day)) {
-                if (ctype_digit($other_dependent1_become_date_month)) {
-                    if (!checkdate($other_dependent1_become_date_month, $other_dependent1_become_date_day, '2000')) {
+            
+            if (!empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day) && !empty($other_dependent1_become_date_year)) {
+                if (ctype_digit($other_dependent1_become_date_month) && ctype_digit($other_dependent1_become_date_day)) {
+                    if (!checkdate($other_dependent1_become_date_month, $other_dependent1_become_date_day, $other_dependent1_become_date_year)) {
                         $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($other_dependent1_become_date_era === '7') {
+            if($other_dependent1_become_date_era === '7') {
                 if (
-                    ($other_dependent1_become_date_year == 1 && ($other_dependent1_become_date_month < 1 || ($other_dependent1_become_date_month == 1 && $other_dependent1_become_date_day < 8))) ||
-                    ($other_dependent1_become_date_year == 31 && ($other_dependent1_become_date_month > 4 || ($other_dependent1_become_date_month == 4 && $other_dependent1_become_date_day > 30))) ||
-                    ($other_dependent1_become_date_year > 31)
+                    ($other_dependent1_become_date_japan_year == 1 && ($other_dependent1_become_date_month < 1 || ($other_dependent1_become_date_month == 1 && $other_dependent1_become_date_day < 8))) ||
+                    ($other_dependent1_become_date_japan_year == 31 && ($other_dependent1_become_date_month > 4 || ($other_dependent1_become_date_month == 4 && $other_dependent1_become_date_day > 30))) ||
+                    ($other_dependent1_become_date_japan_year > 31)
                 ) {
-                    $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                        $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent1_become_date_era === '9') {
-                if ($other_dependent1_become_date_year == 1 && ($other_dependent1_become_date_month < 5 || ($other_dependent1_become_date_month == 5 && $other_dependent1_become_date_day < 1))) {
-                    $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
+                if ($other_dependent1_become_date_japan_year == 1 && ($other_dependent1_become_date_month < 5 || ($other_dependent1_become_date_month == 5 && $other_dependent1_become_date_day < 1))) {
+                        $validator->errors()->add('other_dependent1_become_date_day', '1枚目_39_被扶養者になった日は正しい日付を入力してください。');
                 }
             }
-
-            if (!empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day)) {
-                if (ctype_digit($other_dependent1_remove_date_month)) {
-                    if (!checkdate($other_dependent1_remove_date_month, $other_dependent1_remove_date_day, '2000')) {
+            
+            if (!empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day) && !empty($other_dependent1_remove_date_year)) {
+                if (ctype_digit($other_dependent1_remove_date_month) && ctype_digit($other_dependent1_remove_date_day)) {
+                    if (!checkdate($other_dependent1_remove_date_month, $other_dependent1_remove_date_day, $other_dependent1_remove_date_year)) {
                         $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($other_dependent1_remove_date_era === '7') {
+            if($other_dependent1_remove_date_era === '7') {
                 if (
-                    ($other_dependent1_remove_date_year == 1 && ($other_dependent1_remove_date_month < 1 || ($other_dependent1_remove_date_month == 1 && $other_dependent1_remove_date_day < 8))) ||
-                    ($other_dependent1_remove_date_year == 31 && ($other_dependent1_remove_date_month > 4 || ($other_dependent1_remove_date_month == 4 && $other_dependent1_remove_date_day > 30))) ||
-                    ($other_dependent1_remove_date_year > 31)
+                    ($other_dependent1_remove_date_japan_year == 1 && ($other_dependent1_remove_date_month < 1 || ($other_dependent1_remove_date_month == 1 && $other_dependent1_remove_date_day < 8))) ||
+                    ($other_dependent1_remove_date_japan_year == 31 && ($other_dependent1_remove_date_month > 4 || ($other_dependent1_remove_date_month == 4 && $other_dependent1_remove_date_day > 30))) ||
+                    ($other_dependent1_remove_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent1_remove_date_era === '9') {
-                if ($other_dependent1_remove_date_year == 1 && ($other_dependent1_remove_date_month < 5 || ($other_dependent1_remove_date_month == 5 && $other_dependent1_remove_date_day < 1))) {
+                if ($other_dependent1_remove_date_japan_year == 1 && ($other_dependent1_remove_date_month < 5 || ($other_dependent1_remove_date_month == 5 && $other_dependent1_remove_date_day < 1))) {
                     $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_42_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             }
-
-            if (!empty($data['other_dependent1_domestic_transfer_date_month']) && !empty($data['other_dependent1_domestic_transfer_date_day'])) {
-                if (ctype_digit($data['other_dependent1_domestic_transfer_date_month'])) {
-                    if (!checkdate($data['other_dependent1_domestic_transfer_date_month'], $data['other_dependent1_domestic_transfer_date_day'], '2000')) {
+            
+            if (!empty($other_dependent1_domestic_transfer_date_month) && !empty($other_dependent1_domestic_transfer_date_day) && !empty($other_dependent1_domestic_transfer_date_year)) {
+                if (ctype_digit($other_dependent1_domestic_transfer_date_month) && ctype_digit($other_dependent1_domestic_transfer_date_day)) {
+                    if (!checkdate($other_dependent1_domestic_transfer_date_month, $other_dependent1_domestic_transfer_date_day, $other_dependent1_domestic_transfer_date_year)) {
                         $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['other_dependent1_domestic_transfer_date_year'] == 1 && ($data['other_dependent1_domestic_transfer_date_month'] < 5)) {
+            if ($other_dependent1_domestic_transfer_date_japan_year == 1 && ($other_dependent1_domestic_transfer_date_month < 5)) {
                 $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_47_国内転入日は正しい日付を入力してください。');
             }
 
-            if (!empty($other_dependent2_birthday_month) && !empty($other_dependent2_birthday_day)) {
-                if (ctype_digit($other_dependent2_birthday_month)) {
-                    if (!checkdate($other_dependent2_birthday_month, $other_dependent2_birthday_day, '2000')) {
+            if (!empty($other_dependent2_birthday_month) && !empty($other_dependent2_birthday_day) && !empty($other_dependent2_birthday_year)) {
+                if (ctype_digit($other_dependent2_birthday_month) && ctype_digit($other_dependent2_birthday_day)) {
+                    if (!checkdate($other_dependent2_birthday_month, $other_dependent2_birthday_day, $other_dependent2_birthday_year)) {
                         $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
                     }
                 }
             }
             if ($other_dependent2_birthday_era === '5') {
                 if (
-                    ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 12 || ($other_dependent2_birthday_month == 12 && $other_dependent2_birthday_day < 25))) ||
-                    ($other_dependent2_birthday_year == 64 && ($other_dependent2_birthday_month > 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day > 7))) ||
-                    ($other_dependent2_birthday_year > 64)
+                    ($other_dependent2_birthday_japan_year == 1 && ($other_dependent2_birthday_month < 12 || ($other_dependent2_birthday_month == 12 && $other_dependent2_birthday_day < 25))) ||
+                    ($other_dependent2_birthday_japan_year == 64 && ($other_dependent2_birthday_month > 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day > 7))) ||
+                    ($other_dependent2_birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
                 }
-            } elseif ($other_dependent2_birthday_era === '7') {
+            } elseif($other_dependent2_birthday_era === '7') {
                 if (
-                    ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day < 8))) ||
-                    ($other_dependent2_birthday_year == 31 && ($other_dependent2_birthday_month > 4 || ($other_dependent2_birthday_month == 4 && $other_dependent2_birthday_day > 30))) ||
-                    ($other_dependent2_birthday_year > 31)
+                    ($other_dependent2_birthday_japan_year == 1 && ($other_dependent2_birthday_month < 1 || ($other_dependent2_birthday_month == 1 && $other_dependent2_birthday_day < 8))) ||
+                    ($other_dependent2_birthday_japan_year == 31 && ($other_dependent2_birthday_month > 4 || ($other_dependent2_birthday_month == 4 && $other_dependent2_birthday_day > 30))) ||
+                    ($other_dependent2_birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent2_birthday_era === '9') {
-                if ($other_dependent2_birthday_year == 1 && ($other_dependent2_birthday_month < 5 || ($other_dependent2_birthday_month == 5 && $other_dependent2_birthday_day < 1))) {
+                if ($other_dependent2_birthday_japan_year == 1 && ($other_dependent2_birthday_month < 5 || ($other_dependent2_birthday_month == 5 && $other_dependent2_birthday_day < 1))) {
                     $validator->errors()->add('other_dependent2_birthday_day', '1枚目_49_生年月日は正しい日付を入力してください。');
                 }
             }
-
-            if (!empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day)) {
-                if (ctype_digit($other_dependent2_become_date_month)) {
-                    if (!checkdate($other_dependent2_become_date_month, $other_dependent2_become_date_day, '2000')) {
+            
+            if (!empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day) && !empty($other_dependent2_become_date_year)) {
+                if (ctype_digit($other_dependent2_become_date_month) && ctype_digit($other_dependent2_become_date_day)) {
+                    if (!checkdate($other_dependent2_become_date_month, $other_dependent2_become_date_day, $other_dependent2_become_date_year)) {
                         $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($other_dependent2_become_date_era === '7') {
+            if($other_dependent2_become_date_era === '7') {
                 if (
-                    ($other_dependent2_become_date_year == 1 && ($other_dependent2_become_date_month < 1 || ($other_dependent2_become_date_month == 1 && $other_dependent2_become_date_day < 8))) ||
-                    ($other_dependent2_become_date_year == 31 && ($other_dependent2_become_date_month > 4 || ($other_dependent2_become_date_month == 4 && $other_dependent2_become_date_day > 30))) ||
-                    ($other_dependent2_become_date_year > 31)
+                    ($other_dependent2_become_date_japan_year == 1 && ($other_dependent2_become_date_month < 1 || ($other_dependent2_become_date_month == 1 && $other_dependent2_become_date_day < 8))) ||
+                    ($other_dependent2_become_date_japan_year == 31 && ($other_dependent2_become_date_month > 4 || ($other_dependent2_become_date_month == 4 && $other_dependent2_become_date_day > 30))) ||
+                    ($other_dependent2_become_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent2_become_date_era === '9') {
-                if ($other_dependent2_become_date_year == 1 && ($other_dependent2_become_date_month < 5 || ($other_dependent2_become_date_month == 5 && $other_dependent2_become_date_day < 1))) {
+                if ($other_dependent2_become_date_japan_year == 1 && ($other_dependent2_become_date_month < 5 || ($other_dependent2_become_date_month == 5 && $other_dependent2_become_date_day < 1))) {
                     $validator->errors()->add('other_dependent2_become_date_day', '1枚目_54_被扶養者になった日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day)) {
-                if (ctype_digit($other_dependent2_remove_date_month)) {
-                    if (!checkdate($other_dependent2_remove_date_month, $other_dependent2_remove_date_day, '2000')) {
+            if (!empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day) && !empty($other_dependent2_remove_date_year)) {
+                if (ctype_digit($other_dependent2_remove_date_month) && ctype_digit($other_dependent2_remove_date_day)) {
+                    if (!checkdate($other_dependent2_remove_date_month, $other_dependent2_remove_date_day, $other_dependent2_remove_date_year)) {
                         $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($other_dependent2_remove_date_era === '7') {
+            if($other_dependent2_remove_date_era === '7') {
                 if (
-                    ($other_dependent2_remove_date_year == 1 && ($other_dependent2_remove_date_month < 1 || ($other_dependent2_remove_date_month == 1 && $other_dependent2_remove_date_day < 8))) ||
-                    ($other_dependent2_remove_date_year == 31 && ($other_dependent2_remove_date_month > 4 || ($other_dependent2_remove_date_month == 4 && $other_dependent2_remove_date_day > 30))) ||
-                    ($other_dependent2_remove_date_year > 31)
+                    ($other_dependent2_remove_date_japan_year == 1 && ($other_dependent2_remove_date_month < 1 || ($other_dependent2_remove_date_month == 1 && $other_dependent2_remove_date_day < 8))) ||
+                    ($other_dependent2_remove_date_japan_year == 31 && ($other_dependent2_remove_date_month > 4 || ($other_dependent2_remove_date_month == 4 && $other_dependent2_remove_date_day > 30))) ||
+                    ($other_dependent2_remove_date_japan_year > 31)
                 ) {
                     $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             } elseif ($other_dependent2_remove_date_era === '9') {
-                if ($other_dependent2_remove_date_year == 1 && ($other_dependent2_remove_date_month < 5 || ($other_dependent2_remove_date_month == 5 && $other_dependent2_remove_date_day < 1))) {
+                if ($other_dependent2_remove_date_japan_year == 1 && ($other_dependent2_remove_date_month < 5 || ($other_dependent2_remove_date_month == 5 && $other_dependent2_remove_date_day < 1))) {
                     $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             }
 
-            if (!empty($data['other_dependent2_domestic_transfer_date_month']) && !empty($data['other_dependent2_domestic_transfer_date_day'])) {
-                if (ctype_digit($data['other_dependent2_domestic_transfer_date_month'])) {
-                    if (!checkdate($data['other_dependent2_domestic_transfer_date_month'], $data['other_dependent2_domestic_transfer_date_day'], '2000')) {
+            if (!empty($other_dependent2_domestic_transfer_date_month) && !empty($other_dependent2_domestic_transfer_date_day) && !empty($other_dependent2_domestic_transfer_date_year)) {
+                if (ctype_digit($other_dependent2_domestic_transfer_date_month)) {
+                    if (!checkdate($other_dependent2_domestic_transfer_date_month, $other_dependent2_domestic_transfer_date_day, $other_dependent2_domestic_transfer_date_year)) {
                         $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
                     }
                 }
             }
-            if ($data['other_dependent2_domestic_transfer_date_year'] == 1 && ($data['other_dependent2_domestic_transfer_date_month'] < 5)) {
+            if ($other_dependent2_domestic_transfer_date_japan_year == 1 && ($other_dependent2_domestic_transfer_date_month < 5)) {
                 $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_62_国内転入日は正しい日付を入力してください。');
             }
 

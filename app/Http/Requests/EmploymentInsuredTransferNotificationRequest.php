@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmploymentInsuredTransferNotificationRequest extends FormRequest
+class EmploymentInsuredTransferNotificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -120,9 +120,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
-    
-    public function withValidator($validator)
+
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
             $birthdayEra = $data['birthday_era'] ?? "";
@@ -141,7 +142,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
             $name_changedYear = $data['name_changed_date_year'] ?? "";
             $name_changedMonth = $data['name_changed_date_month'] ?? "";
             $name_changedDay = $data['name_changed_date_date'] ?? "";
-            
+
             if ($birthdayEra === '大正') {
                 if (
                     ($birthdayYear == 1 && ($birthdayMonth < 7 || ($birthdayMonth == 7 && $birthdayDay < 30))) ||
@@ -171,10 +172,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                     $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($birthdayMonth) && !empty($birthdayDay)){
-                if(ctype_digit($birthdayMonth)){
+            if (!empty($birthdayMonth) && !empty($birthdayDay)) {
+                if (ctype_digit($birthdayMonth)) {
                     if (!checkdate($birthdayMonth, $birthdayDay, '2000')) {
-                    $validator->errors()->add('birthday_day','生年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('birthday_day', '生年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -187,7 +188,7 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                 ) {
                     $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
                 }
-            } elseif($insuredEra === '平成') {
+            } elseif ($insuredEra === '平成') {
                 if (
                     ($insuredYear == 1 && ($insuredMonth < 1 || ($insuredMonth == 1 && $insuredDay < 8))) ||
                     ($insuredYear == 31 && ($insuredMonth > 4 || ($insuredMonth == 4 && $insuredDay > 30))) ||
@@ -200,10 +201,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                     $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($insuredMonth) && !empty($insuredDay)){
-                if(ctype_digit($insuredMonth)){
+            if (!empty($insuredMonth) && !empty($insuredDay)) {
+                if (ctype_digit($insuredMonth)) {
                     if (!checkdate($insuredMonth, $insuredDay, '2000')) {
-                    $validator->errors()->add('employment_insured_date_era','資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('employment_insured_date_era', '資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -221,10 +222,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                     $validator->errors()->add('transfer_date_era', '転勤年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($transferMonth) && !empty($transferDay)){
-                if(ctype_digit($transferMonth)){
+            if (!empty($transferMonth) && !empty($transferDay)) {
+                if (ctype_digit($transferMonth)) {
                     if (!checkdate($transferMonth, $transferDay, '2000')) {
-                    $validator->errors()->add('transfer_date_era','転勤年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('transfer_date_era', '転勤年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -242,10 +243,10 @@ class EmploymentInsuredTransferNotificationRequest extends FormRequest
                     $validator->errors()->add('name_changed_date_era', '氏名変更年月日は正しい日付を入力してください。');
                 }
             }
-            if(!empty($name_changedMonth) && !empty($name_changedDay)){
-                if(ctype_digit($name_changedMonth)){
+            if (!empty($name_changedMonth) && !empty($name_changedDay)) {
+                if (ctype_digit($name_changedMonth)) {
                     if (!checkdate($name_changedMonth, $name_changedDay, '2000')) {
-                    $validator->errors()->add('name_changed_date_era','氏名変更年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('name_changed_date_era', '氏名変更年月日は正しい日付を入力してください。');
                     }
                 }
             }

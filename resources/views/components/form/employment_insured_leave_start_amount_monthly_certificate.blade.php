@@ -2758,9 +2758,10 @@
             size="1" tabindex="267"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:48px; height:16px;"
             id="J74_005F_944E_8D86" name="labor_consultant_japan_era">
-            <OPTION value=""></OPTION>
-            <OPTION value="平成">平成</OPTION>
-            <OPTION value="令和" selected="selected">令和</OPTION>
+            <OPTION value="" {{ old('labor_consultant_japan_era') == '' ? 'selected' : '' }}></OPTION>
+            <OPTION value="平成" {{ old('labor_consultant_japan_era') == '平成' ? 'selected' : '' }} disabled>平成
+            </OPTION>
+            <OPTION value="令和" {{ old('labor_consultant_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
         </SELECT></SPAN>
     {{-- TODO ここから --}}
     <SPAN
@@ -4259,7 +4260,7 @@
             tabindex="825"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:68px; max-width:68px; height:16px; ime-mode:disabled;"
             type="TEXT" onBlur="return calc4(this.form, 4);" id="J107_005F_92C0_8BE0_8A7AB_005F4"
-            value="{{ old('wage_amount_b2_4') }}" ame="wage_amount_b2_4" maxlength="7"></SPAN>
+            value="{{ old('wage_amount_b2_4') }}" name="wage_amount_b2_4" maxlength="7"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:506px; top:1959px; width:69px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="838"
