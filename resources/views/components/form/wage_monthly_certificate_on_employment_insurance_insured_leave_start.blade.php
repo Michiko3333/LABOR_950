@@ -1563,7 +1563,7 @@
             tabindex="119"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:19px; max-width:19px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J50_005F_92C0_8BE0_8E78_95A5_91CE_8FDB_8AFA_8AD4_005F_8AEE_9162_93FA_9094_005F6"
-            name="payment_basic_period_1_6" maxlength="2"></SPAN>
+            name="payment_basic_period_1_6" maxlength="2" value="{{ old('payment_basic_period_1_6') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:676px; width:19px; height:16px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="133"
@@ -4430,7 +4430,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1917px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
         <INPUT tabindex="827"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:31px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J109_005F_94F5_8D6C_005F4" name="note_2_4"></INPUT value="{{ old('note_2_4') }}">
+            id="J109_005F_94F5_8D6C_005F4" name="note_2_4" value="{{ old('note_2_4') }}"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:2px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:807px; top:1950px; width:101px; line-height:33px; height:34px; font-size:10px; font-family:'ＭＳ 明朝', serif;">
