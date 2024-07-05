@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminEmployeeUpdateRequest extends FormRequest
+class AdminEmployeeUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -102,8 +102,8 @@ class AdminEmployeeUpdateRequest extends FormRequest
             "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax2',
             "fax2" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:fax1,fax3',
             "fax3" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:fax1,fax2',
-            'mail_address1' => 'nullable|string|max:255|email',
-            'mail_address2' => 'nullable|string|max:255|email',
+            'mail_address1' => 'nullable|string|max:255|email:rfc',
+            'mail_address2' => 'nullable|string|max:255|email:rfc',
             'emergency_post_code1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_contact1' => 'nullable|string|max:255',
             'emergency_relationship1' => 'nullable|string|max:255',

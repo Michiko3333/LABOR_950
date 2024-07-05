@@ -2760,7 +2760,8 @@
             id="J74_005F_944E_8D86" value="{{ old('labor_consultant_japan_era') }}"
             name="labor_consultant_japan_era">
             <OPTION value="令和" {{ old('labor_consultant_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('labor_consultant_japan_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="平成" {{ old('labor_consultant_japan_era') == '平成' ? 'selected' : '' }} disabled>平成
+            </OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:71px; top:1064px; width:12px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">※</SPAN>

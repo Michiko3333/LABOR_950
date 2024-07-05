@@ -7,6 +7,8 @@ use App\Models\DepartmentPermission;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
+use App\Rules\noEmoji;
+
 class DepartmentList extends Component
 {
     public $company_id = 0;
@@ -129,6 +131,12 @@ class DepartmentList extends Component
             $this->dispatch('showErrorMessage');
             return;
         }
+
+        if (noEmoji::isEmoji($data['form_name'])) {
+            $this->dispatch('showErrorMessage');
+            return;
+        }
+
         if (!empty($data['form_id'])) {
             Department::where('company_id', $this->company_id)->where('id', $data['form_id'])->update([
                 'name' => $data['form_name'],
@@ -143,7 +151,7 @@ class DepartmentList extends Component
                 'company_id' => $this->company_id
             ]);
         }
-
+        $this->dispatch('closeModal');
         $this->render();
     }
 

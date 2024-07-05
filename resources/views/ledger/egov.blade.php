@@ -86,7 +86,7 @@
         </div>
         <h2>電子証明書登録</h2>
         <p>電子申請に利用する電子証明書ファイルをアップロードしてください</p>
-        <p>電子証明書はe-gov公式サイトにて案内されている認証局で発行したものを推奨してります。詳しくは<a
+        <p>電子証明書はe-gov公式サイトにて案内されている認証局で発行したものを推奨しております。詳しくは<a
                 href="https://shinsei.e-gov.go.jp/contents/preparation/certificate/certification-authority.html"
                 target="_blank">こちら<i class="window restore outline icon small"></i></a>をご覧ください</p>
         <livewire:certification-loader />

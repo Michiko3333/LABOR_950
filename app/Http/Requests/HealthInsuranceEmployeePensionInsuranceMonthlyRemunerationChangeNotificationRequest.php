@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest extends FormRequest
+class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -94,61 +94,92 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
+            $today_japan_year = $data['today_year'] ?? "";
+            if (isset($data['today_year']) && ctype_digit($data['today_year'])) {
+                $today_year = 2018 + $data['today_year'];
+            }
+            $today_month = $data['today_month'] ?? "";
+            $today_date = $data['today_date'] ?? "";
             $birthday_era = $data['birthday_era'] ?? "";
-            $birthday_year = $data['birthday_year'] ?? "";
+            $birthday_japan_year = $data['birthday_year'] ?? "";
+            if (isset($data['birthday_year']) && ctype_digit($data['birthday_year'])) {
+                if ($birthday_era === '1') {
+                    $birthday_year = 1867 + $data['birthday_year'];
+                } elseif ($birthday_era === '3') {
+                    $birthday_year = 1911 + $data['birthday_year'];
+                } elseif ($birthday_era === '5') {
+                    $birthday_year = 1925 + $data['birthday_year'];
+                } elseif ($birthday_era === '7') {
+                    $birthday_year = 1988 + $data['birthday_year'];
+                } elseif ($birthday_era === '9') {
+                    $birthday_year = 2018 + $data['birthday_year'];
+                }
+            }
             $birthday_month = $data['birthday_month'] ?? "";
             $birthday_date = $data['birthday_date'] ?? "";
             $revision_date_era = $data['revision_date_era'] ?? "";
             $revision_date_year = $data['revision_date_year'] ?? "";
             $revision_date_month = $data['revision_date_month'] ?? "";
 
+            if (!empty($today_month) && !empty($today_date) && !empty($today_year)) {
+                if (ctype_digit($today_month) && ctype_digit($today_date)) {
+                    if (!checkdate($today_month, $today_date, $today_year)) {
+                        $validator->errors()->add('today_date', '提出年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($today_japan_year == 1 && ($today_month < 5)) {
+                $validator->errors()->add('today_date', '提出年月日は正しい日付を入力してください。');
+            }
+
+            if (!empty($birthday_month) && !empty($birthday_date) && !empty($birthday_year)) {
+                if (ctype_digit($birthday_month) && ctype_digit($birthday_date)) {
+                    if (!checkdate($birthday_month, $birthday_date, $birthday_year)) {
+                        $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
             if ($birthday_era === '1') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
-                    ($birthday_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
-                    ($birthday_year > 45)
+                    ($birthday_japan_year == 1 && ($birthday_month < 9 || ($birthday_month == 9 && $birthday_date < 8))) ||
+                    ($birthday_japan_year == 45 && ($birthday_month > 7 || ($birthday_month == 7 && $birthday_date > 30))) ||
+                    ($birthday_japan_year > 45)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
-            } elseif($birthday_era === '2') {
+            } elseif ($birthday_era === '3') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
-                    ($birthday_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
-                    ($birthday_year > 15)
+                    ($birthday_japan_year == 1 && ($birthday_month < 7 || ($birthday_month == 7 && $birthday_date < 30))) ||
+                    ($birthday_japan_year == 15 && ($birthday_month == 12 && $birthday_date > 25)) ||
+                    ($birthday_japan_year > 15)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '5') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
-                    ($birthday_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
-                    ($birthday_year > 64)
+                    ($birthday_japan_year == 1 && ($birthday_month < 12 || ($birthday_month == 12 && $birthday_date < 25))) ||
+                    ($birthday_japan_year == 64 && ($birthday_month > 1 || ($birthday_month == 1 && $birthday_date > 7))) ||
+                    ($birthday_japan_year > 64)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '7') {
                 if (
-                    ($birthday_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
-                    ($birthday_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
-                    ($birthday_year > 31)
+                    ($birthday_japan_year == 1 && ($birthday_month < 1 || ($birthday_month == 1 && $birthday_date < 8))) ||
+                    ($birthday_japan_year == 31 && ($birthday_month > 4 || ($birthday_month == 4 && $birthday_date > 30))) ||
+                    ($birthday_japan_year > 31)
                 ) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
                 }
             } elseif ($birthday_era === '9') {
-                if ($birthday_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
+                if ($birthday_japan_year == 1 && ($birthday_month < 5 || ($birthday_month == 5 && $birthday_date < 1))) {
                     $validator->errors()->add('birthday_date', '生年月日は正しい日付を入力してください。');
-                }
-            }
-            if(!empty($birthday_month) && !empty($birthday_date)){
-                if(ctype_digit($birthday_month)){
-                    if (!checkdate($birthday_month, $birthday_date, '2000')) {
-                    $validator->errors()->add('birthday_date','生年月日は正しい日付を入力してください。');
-                    }
                 }
             }
 

@@ -41,6 +41,7 @@
                     }
                 });
             });
+            Livewire.dispatch('branch-form-loaded');
         }
     </script>
     @foreach ($data as $key => $item)
@@ -283,19 +284,22 @@
                         </div>
                     </div>
                     <div class="three fields">
-                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
+                        <div
+                            class="field required {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
                             <label for="br-pension_office_reference_prefecture">事業所整理記号-都道府県コード</label>
                             <input type="text" name="br-pension_office_reference_prefecture[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_prefecture"
                                 placeholder="">
                         </div>
-                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
+                        <div
+                            class="field required {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
                             <label for="br-pension_office_reference_no_cities">事業所整理記号-郡市区記号</label>
                             <input type="text" name="br-pension_office_reference_no_cities[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_no_cities"
                                 placeholder="">
                         </div>
-                        <div class="field required {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
+                        <div
+                            class="field required {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
                             <label for="br-pension_office_reference_no_office">事業所整理記号-事業所記号</label>
                             <input type="text" name="br-pension_office_reference_no_office[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_reference_no_office"
@@ -590,7 +594,7 @@
                             <input type="text" name="br-holiday_legal[]"
                                 wire:model.live="data.{{ $key }}.br-holiday_legal" placeholder="">
                         </div>
-                        <div class="field {{ err_bind($errs, 'br-holiday_not_legal', $key) }}">
+                        <div class="field {{ err_bind($errs, 'br-holiday_not_logal', $key) }}">
                             <label for="br-holiday_not_logal">休日内容(法定休日以外)</label>
                             <input type="text" name="br-holiday_not_logal[]"
                                 wire:model.live="data.{{ $key }}.br-holiday_not_logal" placeholder="">

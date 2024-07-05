@@ -10848,13 +10848,13 @@ div.popup {
         <input hidden name="P1_category3_insured_Type" value="31">
         <input hidden name="P1_issue" value="健康保険">
       <div class="egov-tool-field-origin" style="left: 63px; top: 85px;">
-       <input class="egov-tool-field-rect onImage" id="N4_P1" name="submission_year" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N4_P1" name="submission_year" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text" readonly />
       </div>
       <div class="egov-tool-field-origin" style="left: 104px; top: 85px;">
-       <input class="egov-tool-field-rect onImage" id="N5_P1" name="submission_month" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N5_P1" name="submission_month" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text" readonly />
       </div>
       <div class="egov-tool-field-origin" style="left: 149px; top: 85px;">
-       <input class="egov-tool-field-rect onImage" id="N6_P1" name="submission_day" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text" />
+       <input class="egov-tool-field-rect onImage" id="N6_P1" name="submission_day" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text" readonly />
       </div>
       <div class="egov-tool-field-origin" style="left: 147px; top: 107px;">
        <input class="egov-tool-field-rect onImage" id="N7_P1" maxlength="2" name="pension_office_reference_prefecture" value="{{ old('pension_office_reference_prefecture') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text"/>

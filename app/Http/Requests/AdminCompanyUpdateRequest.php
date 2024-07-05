@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\noEmoji;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminCompanyUpdateRequest extends FormRequest
+class AdminCompanyUpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,21 +14,6 @@ class AdminCompanyUpdateRequest extends FormRequest
     {
         return true;
     }
-
-    // public function validationData()
-    // {
-    //     $data = $this->all();
-
-    //     if (isset($data['br-address_ward'])) {
-    //         $data['br-address_ward'] = str_replace(['-', '－', '―'], '‐', $data['br-address_ward']);
-    //     }
-    //     if (isset($data['br-address_apartment'])) {
-    //         $data['br-address_apartment'] = mb_convert_kana($data['br-address_apartment'], 'AS');
-    //         $data['br-address_apartment'] = str_replace(['-', '－', '―'], '‐', $data['br-address_apartment']);
-    //     }
-
-    //     return $data;
-    // }
 
     public function validationData()
     {
@@ -81,6 +67,19 @@ class AdminCompanyUpdateRequest extends FormRequest
         return $data;
     }
 
+    public function withValidator($validator): void
+    {
+        // 絵文字バリデーションの事業所配列対応
+        $rules = [];
+        foreach ($this->request as $key => $value) {
+            if (strpos($key, 'br-') === 0) {
+                $rules[$key . ".*"] = new noEmoji;
+            } else {
+                $rules[$key] = new noEmoji;
+            }
+        }
+        $validator->addRules($rules);
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -149,7 +148,7 @@ class AdminCompanyUpdateRequest extends FormRequest
             "br-fax3" => 'array',
             "br-fax3.*" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:br-fax2.*,br-fax1.*',
             "br-mail_address" => 'required|array',
-            "br-mail_address.*" => 'email',
+            "br-mail_address.*" => 'email:rfc',
             "br-labor_insurance_no" => 'array',
             "br-labor_insurance_no.*" => 'nullable|regex:/^\d{14}$/',
             "br-labor_insurance_payment_method" => 'array',
@@ -230,10 +229,10 @@ class AdminCompanyUpdateRequest extends FormRequest
         foreach ($this->input('br-fax3', []) as $index => $value) {
             $messages["br-fax3.{$index}.required_with"] = ($index + 1) . "事業所のFAX番号_3を入力してください。";
         }
-    
+
         return $messages;
     }
-    
+
     public function attributes()
     {
         $Attributes = [

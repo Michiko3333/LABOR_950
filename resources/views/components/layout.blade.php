@@ -340,6 +340,17 @@
         window.openUserModal = () => {
             user_modal.modal('show');
         };
+        $('.submit-disable').click((event) => {
+            $(event.target).prop('disabled', true);
+            const f = $(event.target).closest('form');
+            f.submit();
+        });
+        $('.pagination-disable').click((event) => {
+            $(event.target).addClass('disabled');
+        });
+        $('.button-disable').click((event) => {
+            $(event.target).prop('disabled', true);
+        });
     </script>
 </body>
 

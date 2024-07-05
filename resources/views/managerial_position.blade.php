@@ -65,6 +65,7 @@
     <script type="module">
         const modal = $('#editManagerial').modal({
             blurring: true,
+
         });
         const removeModal = $('#removeManagerial').modal({
             blurring: true,
@@ -80,6 +81,9 @@
                     $('.edit-managerial-position-form_rank').val(d.form_rank);
                     $('.edit-managerial-position-form_representative_flg').prop('checked',
                         d.form_representative_flg == 1);
+                },
+                onHidden: () => {
+                    window.$lw.isSubmit = false;
                 }
             });
             $('.edit-managerial-position-modal .ui.error.message').addClass('hidden');
@@ -101,6 +105,7 @@
 
         Livewire.on('showErrorMessage', (d) => {
             $('.edit-managerial-position-modal .ui.error.message').removeClass('hidden');
+            window.$lw.isSubmit = false;
         });
         Livewire.on('closeModal', (d) => {
             modal.modal('hide');

@@ -96,6 +96,7 @@ $('#ledger-edit-btn').click(() => {
     $('#ledger-step2').removeClass('active');
     window.scrollTo(0, 0);
 });
-$('#ledger-submit-btn').click(() => {
+$('#ledger-submit-btn').click((event) => {
+    $(event.target).prop('disabled', true);
     $('#ledger-form').submit();
 });

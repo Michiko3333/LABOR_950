@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 
-class EmployeeContractRequest extends FormRequest
+class EmployeeContractRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -52,7 +52,7 @@ class EmployeeContractRequest extends FormRequest
         ];
     }
 
-    
+
     public function attributes()
     {
         return [

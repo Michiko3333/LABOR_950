@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminEmployeeCreateRequest extends FormRequest
+class AdminEmployeeCreateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -102,8 +102,8 @@ class AdminEmployeeCreateRequest extends FormRequest
             "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax2',
             "fax2" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:fax1,fax3',
             "fax3" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:fax1,fax2',
-            'mail_address1' => 'nullable|string|max:255|email',
-            'mail_address2' => 'nullable|string|max:255|email',
+            'mail_address1' => 'nullable|string|max:255|email:rfc',
+            'mail_address2' => 'nullable|string|max:255|email:rfc',
             'emergency_post_code1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'emergency_contact1' => 'nullable|string|max:255',
             'emergency_relationship1' => 'nullable|string|max:255',
@@ -162,7 +162,7 @@ class AdminEmployeeCreateRequest extends FormRequest
             'employment_type' => 'nullable|integer',
             'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
-            'user_email' => 'required|email|max:255',
+            'user_email' => 'required|email:rfc|max:255',
             'user_pass' => 'required|min:6|max:20|regex:/^[!-~]+$/',
         ];
     }

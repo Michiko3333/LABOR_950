@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest extends FormRequest
+class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -84,19 +84,37 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $data = $validator->getData();
+            $today_japan_era_year = $data['today_japan_era_year'] ?? "";
+            if (isset($data['today_japan_era_year']) && ctype_digit($data['today_japan_era_year'])) {
+                $today_era_year = 2018 + $data['today_japan_era_year'];
+            }
+            $today_japan_era_month = $data['today_japan_era_month'] ?? "";
+            $today_japan_era_day = $data['today_japan_era_day'] ?? "";
             $scheduled_year_of_bonus_payment = $data['scheduled_year_of_bonus_payment'] ?? "";
             $scheduled_month_of_bonus_payment = $data['scheduled_month_of_bonus_payment'] ?? "";
+
+            if(!empty($today_japan_era_month) && !empty($today_japan_era_day) && !empty($today_era_year)) {
+                if(ctype_digit($today_japan_era_month) && ctype_digit($today_japan_era_day)) {
+                    if (!checkdate($today_japan_era_month, $today_japan_era_day, $today_era_year)) {
+                        $validator->errors()->add('today_japan_era_day','提出年月日は正しい日付を入力してください。');
+                    }
+                }
+            }
+            if ($today_japan_era_year == 1 && ($today_japan_era_month < 5)) {
+                $validator->errors()->add('today_japan_era_month', '提出年月日は正しい日付を入力してください。');
+            }
 
             if ($scheduled_year_of_bonus_payment == 1 && ($scheduled_month_of_bonus_payment < 5)) {
                 $validator->errors()->add('scheduled_year_of_bonus_payment', '賞与支払（予定）年月は正しい日付を入力してください。');
             }
         });
     }
-    
+
     public function messages()
     {
         return [

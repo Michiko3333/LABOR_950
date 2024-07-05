@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormRequest
+class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -103,8 +103,9 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -170,10 +171,10 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
                     $validator->errors()->add('payerJapanEra3', '1枚目_１５欄の支給対象年月その３は正しい日付を入力してください。');
                 }
             }
-            if(!empty($qualificationsMonth) && !empty($qualificationsDay)){
-                if(ctype_digit($qualificationsMonth)){
+            if (!empty($qualificationsMonth) && !empty($qualificationsDay)) {
+                if (ctype_digit($qualificationsMonth)) {
                     if (!checkdate($qualificationsMonth, $qualificationsDay, '2000')) {
-                    $validator->errors()->add('qualificationsDay','1枚目_資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('qualificationsDay', '1枚目_資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -284,9 +285,9 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends FormReque
             'wagePaymentDay' => '1枚目_備考欄_賃金支払日_日付',
             'wageStructure' => '1枚目_備考欄_賃金形態_形態',
             'wageStructureOther' => '1枚目_備考欄_賃金形態_その他記入欄',
-            'prescribedWorkingDays1' => '1枚目_備考欄_所定労豪日数_7欄',
-            'prescribedWorkingDays2' => '1枚目_備考欄_所定労豪日数_11欄',
-            'prescribedWorkingDays3' => '1枚目_備考欄_所定労豪日数_15欄',
+            'prescribedWorkingDays1' => '1枚目_備考欄_所定労働日数_7欄',
+            'prescribedWorkingDays2' => '1枚目_備考欄_所定労働日数_11欄',
+            'prescribedWorkingDays3' => '1枚目_備考欄_所定労働日数_15欄',
             'commutingAllowance' => '1枚目_備考欄_通勤手当_有無',
             'commutingAllowancePeriod' => '1枚目_備考欄_通勤手当_時期',
             'commutingAllowancePeriodOther' => '1枚目_備考欄_通勤手当_その他記入欄',

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
+class ContinuousEmploymentBenefitsForOlderWorkersRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -120,8 +120,9 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
             'apply_to_name' => 'required|string'
         ];
     }
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
+        parent::withValidator($validator);
         $validator->after(function ($validator) {
             $totalSize = 0;
             $data = $validator->getData();
@@ -139,10 +140,10 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
             $payer_japan_era_year3 = $data['payer_japan_era_year3'] ?? "";
             $payer_month3 = $data['payer_month3'] ?? "";
 
-            if(!empty($qualifications_month) && !empty($qualifications_day)){
-                if(ctype_digit($qualifications_month)){
+            if (!empty($qualifications_month) && !empty($qualifications_day)) {
+                if (ctype_digit($qualifications_month)) {
                     if (!checkdate($qualifications_month, $qualifications_day, '2000')) {
-                    $validator->errors()->add('qualifications_day','資格取得年月日は正しい日付を入力してください。');
+                        $validator->errors()->add('qualifications_day', '資格取得年月日は正しい日付を入力してください。');
                     }
                 }
             }
@@ -198,7 +199,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends FormRequest
                     $validator->errors()->add('payer_japan_era3', '支給対象年月その３は正しい日付を入力してください。');
                 }
             }
-            
+
             if ($this->hasFile('file_wage_amount')) {
                 $totalSize += $this->file('file_wage_amount')->getSize();
             }

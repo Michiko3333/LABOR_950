@@ -108,9 +108,9 @@
 
         <script type="module">
             $(document).ready(function() {
-                $('#N6_P1').val('{{ $todaySet['year'] }}');
-                $('#N7_P1').val('{{ $todaySet['month'] }}');
-                $('#N8_P1').val('{{ $todaySet['day'] }}');
+                $('#N6_P1').val('{{ old('submission_year') ?? $todaySet['year'] }}');
+                $('#N7_P1').val('{{ old('submission_month') ?? $todaySet['month'] }}');
+                $('#N8_P1').val('{{ old('submission_day') ?? $todaySet['day'] }}');
                 @if ($current_employee->role_id === 500)
                 @else
                     $('#N22_P1').prop('readonly', false);

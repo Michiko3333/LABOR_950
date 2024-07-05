@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Employee_department;
 use App\Models\User;
 use App\Models\Prefecture;
+use App\Rules\noEmoji;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -188,14 +189,14 @@ class UserModalContent extends Component
     {
 
         $validated = $this->validate([
-            'names_edit.old_last_name' => 'nullable|string|max:255',
-            'names_edit.old_first_name' => 'nullable|string|max:255',
-            'names_edit.old_last_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'names_edit.old_first_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'names_edit.old_last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'names_edit.old_first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
-            'names_edit.name_common' => 'nullable|string|max:255',
-            'names_edit.name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'names_edit.old_last_name' => ['nullable', 'string', 'max:255', new noEmoji],
+            'names_edit.old_first_name' => ['nullable', 'string', 'max:255', new noEmoji],
+            'names_edit.old_last_name_kana' => ['nullable', 'string', 'max:255', 'regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u', new noEmoji],
+            'names_edit.old_first_name_kana' => ['nullable', 'string', 'max:255', 'regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u', new noEmoji],
+            'names_edit.old_last_name_alphabet' => ['nullable', 'string', 'max:255', 'regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u', new noEmoji],
+            'names_edit.old_first_name_alphabet' => ['nullable', 'string', 'max:255', 'regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u', new noEmoji],
+            'names_edit.name_common' => ['nullable', 'string', 'max:255', new noEmoji],
+            'names_edit.name_common_kana' => ['nullable', 'string', 'max:255', 'regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u', new noEmoji],
         ]);
 
         Employee::where('id', $this->employee_id)->update([
@@ -228,23 +229,23 @@ class UserModalContent extends Component
     {
 
         $validated = $this->validate([
-            'emergency_edit.emergency_contact1' => 'nullable|string|max:255',
-            'emergency_edit.emergency_relationship1' => 'nullable|string|max:255',
-            'emergency_edit.emergency_tel1' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_address_prefecture1' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_post_code1' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_address_city1' => 'nullable|string|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            'emergency_edit.emergency_address_ward1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            'emergency_edit.emergency_address_apartment1' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_contact1' => ['nullable', 'string', 'max:255', new noEmoji],
+            'emergency_edit.emergency_relationship1' => ['nullable', 'string', 'max:255', new noEmoji],
+            'emergency_edit.emergency_tel1' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_address_prefecture1' => ['nullable', 'string', 'max:20', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_post_code1' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_address_city1' => ['nullable', 'string', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
+            'emergency_edit.emergency_address_ward1' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
+            'emergency_edit.emergency_address_apartment1' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
 
-            'emergency_edit.emergency_contact2' => 'nullable|string|max:255',
-            'emergency_edit.emergency_relationship2' => 'nullable|string|max:255',
-            'emergency_edit.emergency_tel2' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_address_prefecture2' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_post_code2' => 'nullable|string|max:12|regex:/\A[0-9]+\z/u',
-            'emergency_edit.emergency_address_city2' => 'nullable|string|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            'emergency_edit.emergency_address_ward2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            'emergency_edit.emergency_address_apartment2' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            'emergency_edit.emergency_contact2' => ['nullable', 'string', 'max:255', new noEmoji],
+            'emergency_edit.emergency_relationship2' => ['nullable', 'string', 'max:255', new noEmoji],
+            'emergency_edit.emergency_tel2' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_address_prefecture2' => ['nullable', 'string', 'max:20', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_post_code2' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_address_city2' => ['nullable', 'string', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
+            'emergency_edit.emergency_address_ward2' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
+            'emergency_edit.emergency_address_apartment2' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
         ]);
 
         $this->emergency_edit['emergency_contact1'] = mb_convert_kana($this->emergency_edit['emergency_contact1'], 'RANKS');
@@ -297,7 +298,7 @@ class UserModalContent extends Component
     public function loginEmailSave()
     {
         $validated = $this->validate([
-            'login_email_edit' => 'required|email|max:255',
+            'login_email_edit' => ['required', 'email:rfc', 'max:255', new noEmoji],
         ]);
 
         if (User::where('email', $this->login_email_edit)->exists()) {
@@ -315,8 +316,8 @@ class UserModalContent extends Component
     public function loginPassSave()
     {
         $validated = $this->validate([
-            'login_pass_edit' => 'required|min:6|max:20|regex:/^[!-~]+$/',
-            'login_pass_confirm_edit' => 'required|min:6|max:20|regex:/^[!-~]+$/',
+            'login_pass_edit' => ['required', 'min:6', 'max:20', 'regex:/^[!-~]+$/', new noEmoji],
+            'login_pass_confirm_edit' => ['required', 'min:6', 'max:20', 'regex:/^[!-~]+$/', new noEmoji],
         ]);
 
         $this->login_pass_success = false;
