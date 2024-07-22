@@ -31,6 +31,8 @@ class Company extends Model
         'supplier_company',
         'outsourcing_company',
         'sales_company',
+        'representative',
+        'bank_name',
         'url',
         'purpose',
         'company_division',
