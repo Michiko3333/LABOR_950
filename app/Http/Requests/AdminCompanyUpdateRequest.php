@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\noEmoji;
+use App\Rules\noSymbol;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminCompanyUpdateRequest extends BaseRequest
@@ -88,6 +89,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
      */
     public function rules(): array
     {
+        noSymbol::$attributes = $this->attributes();
         return [
             'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',
@@ -108,6 +110,8 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
+            'representative' => ['required', 'string', 'max:100', new noSymbol(false)],
+            'bank_name' => ['nullable', 'string', 'max:300', new noSymbol(true)],
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'company_division' => 'required|integer|in:1,2',
@@ -255,6 +259,8 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'supplier_company' => '仕入先名称',
             'outsourcing_company' => '外注先名称',
             'sales_company' => '販売先名称',
+            'representative' => '代表者',
+            'bank_name' => '銀行名',
             'url' => 'ホームページアドレス',
             'purpose' => '事業目的',
             'procedure_hidden_flg' => '行政手続非表示フラグ',
