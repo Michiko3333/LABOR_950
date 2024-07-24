@@ -480,9 +480,9 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:110px; top:253px; width:290px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="25" onChange="return(check_item_gw(this.form,25));"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:290px; max-width:290px; height:15px; ime-mode:active;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:290px; max-width:290px; height:15px; ime-mode:active;"
             type="TEXT" id="J28_005F_8E81_96BC_005F_89BA_9269" name="employer_managerial_position_name"
-            value="{{ old('employer_managerial_position_name') }}" maxlength="27"></SPAN>
+            value="{{ old('employer_managerial_position_name') }}" maxlength="27" readonly></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:422px; top:188px; width:360px; height:83px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:65px 0px 0px 0px;"></SPAN>
     <SPAN
@@ -2363,7 +2363,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:544px; top:767px; width:202px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="219"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:202px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J63_005F_97A3_9045_8ED2_8F90_96BC" name="name" value="{{ old('name') }}" disabled></SPAN>
+            id="J63_005F_97A3_9045_8ED2_8F90_96BC" name="name" value="{{ old('name') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:34px; top:798px; width:39px; height:172px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:154px 0px 0px 0px;"></SPAN>
     <SPAN

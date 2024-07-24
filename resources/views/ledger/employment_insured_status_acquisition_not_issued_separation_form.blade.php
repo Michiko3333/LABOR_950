@@ -107,6 +107,9 @@
                 $('#J60_005F_944E').val('{{ old('notification_date_year', $today['year']) }}');
                 $('#J61_005F_8C8E').val('{{ old('notification_date_month', $today['month']) }}');
                 $('#J62_005F_93FA').val('{{ old('notification_date_day', $today['date']) }}');
+
+                $('#J64_005F_8E81_96BC').val('{{ old('entrepreneur_name', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
                     $('#J70_005F_944E_8D86').find('option').not(

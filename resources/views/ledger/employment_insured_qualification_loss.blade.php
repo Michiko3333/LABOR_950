@@ -130,6 +130,10 @@
                 $('#J60_005F_944E').val('{{ old('notification_year', $today['year']) }}');
                 $('#J61_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
                 $('#J62_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
+
+                $('#J64_005F_8E81_96BC').val('{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC_005F_89BA_9269').val('{{ old('employer_managerial_position_name', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
                     $('#J70_005F_944E_8D86').find('option').not(
@@ -577,6 +581,9 @@
             });
             $('#J63_005F_8F5A_8F8A').on('input', function() {
                 $('#J26_005F_8F5A_8F8A').val($(this).val());
+            });
+            $('#J64_005F_8E81_96BC').on('input', function() {
+                $('#J28_005F_8E81_96BC_005F_89BA_9269').val($(this).val());
             });
             $('#J71_005F_944E').on('change', function() {
                 $('#J73_005F_944E').val($(this).val());

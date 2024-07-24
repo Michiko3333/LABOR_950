@@ -141,6 +141,10 @@
                 $('#J158_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J159_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J160_005F_93FA').val('{{ $todaySet['day'] }}');
+
+                $('#J154_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC').val('{{ old('employer_company_managerial_position_name', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                     $('#J198_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_treacode', $current_branch->tel_area_code) }}');

@@ -153,6 +153,11 @@
                 $('#N31_1').val('{{ old('submission_year', $today['year']) }}');
                 $('#N32_1').val('{{ old('submission_month', $today['month']) }}');
                 $('#N33_1').val('{{ old('submission_date', $today['date']) }}');
+
+                $('#N14_P1').val('{{ old('headquarters_representative', $company->representative) }}');
+                $('#N21').val('{{ old('headquarters_representative', $company->representative) }}');
+                $('#N25_1').val('{{ old('headquarters_representative', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                 @else
                     $('#N22_P1').prop('readonly', false);

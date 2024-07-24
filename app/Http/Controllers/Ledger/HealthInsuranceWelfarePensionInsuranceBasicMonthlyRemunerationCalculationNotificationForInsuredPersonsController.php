@@ -44,6 +44,11 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
 
         $company = CurrentUser::currentCompany();
         $companyId = $company->id;
+        $businessOwner = Branch::join('m_employee', 'm_branch.id', '=', 'm_employee.branch_id')
+            ->select('m_employee.last_name as last_name', 'm_employee.first_name as first_name')
+            ->where('m_employee.employee_type', 1)
+            ->where('m_branch.company_id', $companyId)
+            ->first();
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
@@ -64,7 +69,16 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
-        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons', ['company' => $company, 'todaySet' => $todaySet, 'dataUri' => $dataUri, 'current_employee' => $current_employee, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view('ledger.health_insurance_welfare_pension_insurance_basic_monthly_remuneration_calculation_notification_forInsured_persons',
+            ['company' => $company,
+            'todaySet' => $todaySet,
+            'dataUri' => $dataUri,
+            'current_employee' => $current_employee,
+            'certificate' => $certificate,
+            'procedureName' => $procedureName,
+            'egovAcount' => $egovAcount,
+            'businessOwner' => $businessOwner
+            ]);
     }
 
     public function post(HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsRequest $request)

@@ -587,7 +587,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:135px; top:280px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="27"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active;"
             id="J28_005F_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
             name="employer_company_managerial_position_name" disabled></SPAN>
     <SPAN
