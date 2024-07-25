@@ -123,6 +123,8 @@ class CompanyController extends Controller
             'supplier_company' => $requestData['supplier_company'],
             'outsourcing_company' => $requestData['outsourcing_company'],
             'sales_company' => $requestData['sales_company'],
+            'representative' => $requestData['representative'],
+            'bank_name' => $requestData['bank_name'],
             'url' => $requestData['url'],
             'purpose' => $requestData['purpose'],
         ];
