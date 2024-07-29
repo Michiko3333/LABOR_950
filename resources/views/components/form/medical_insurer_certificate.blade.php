@@ -10774,7 +10774,7 @@ min-width: 10px;
        <input class="egov-tool-field-rect onImage" id="N24_1" maxlength="25" name="medical_insurer_name" value="{{ old('medical_insurer_name') }}" style="width: 395px; height: 25px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;" type="text" value=""/>
       </div>
       <div class="egov-tool-field-origin" style="left: 244px; top: 370px;">
-       <input class="egov-tool-field-rect onImage" id="N25_1" maxlength="25" name="medical_insurer_representative" value="{{ old('medical_insurer_representative') }}" style="width: 395px; height: 15px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;" type="text" value=""/>
+       <input class="egov-tool-field-rect" id="N25_1" maxlength="25" name="medical_insurer_representative" value="{{ old('medical_insurer_representative') }}" style="width: 395px; height: 15px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;" type="text" value="" readonly/>
       </div>
       <div class="egov-tool-field-origin" style="left: 306px; top: 387px;">
        <input class="egov-tool-field-rect onImage" id="N27_1" maxlength="5" name="medical_insurer_tel_area_code" value="{{ old('medical_insurer_tel_area_code') }}" style="width: 70px; height: 15px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value=""/>

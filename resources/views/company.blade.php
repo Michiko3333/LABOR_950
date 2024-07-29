@@ -103,6 +103,11 @@
                 border: solid 2px #adadad;
             }
 
+            #bank_name {
+                resize: none;
+                height: 195px;
+            }
+
             .company-data-area>.ui.horizontal.card {
                 width: 100%;
                 margin: 0;
@@ -111,7 +116,7 @@
             .company-data-area {
                 display: grid;
                 gap: 0.8em;
-                grid-template-columns: repeat(3, auto);
+                grid-template-columns: repeat(4, auto);
                 grid-template-rows: repeat(5, auto);
             }
 
@@ -162,11 +167,15 @@
             }
 
             .company-data-area .ui.card.item-4 {
-                grid-area: 3 / 4 / 4 / 5;
+                grid-area: 5 / 1 / 4 / 3;
             }
 
             .company-data-area .ui.card.item-5 {
-                grid-area: 4 / 3 / 5 / 5;
+                grid-area: 3 / 4 / 4 / 5;
+            }
+
+            .company-data-area .ui.card.item-6 {
+                grid-area: 4 / 3 / 4 / 5;
             }
 
             @media (max-width: 820px) {
@@ -194,6 +203,10 @@
 
                 .company-data-area .ui.card.item-5 {
                     grid-area: 6 / 1 / 6 / 4;
+                }
+
+                .company-data-area .ui.card.item-6 {
+                    grid-area: 7 / 1 / 7 / 4;
                 }
 
                 .ui.styled.accordion .content {
@@ -290,6 +303,21 @@
                                         placeholder="KRT">
                                 @endif
                             </div>
+                        </div>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field required {{ err($errors, 'representative') }}">
+                                    <label for="representative">代表者</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="representative" name="representative"
+                                            value="{{ old('representative') }}" placeholder="">
+                                    @else
+                                        <input type="text" id="representative" name="representative"
+                                            value="{{ old('representative', $currentCompany->representative) }}"
+                                            placeholder="">
+                                    @endif
+                                </div>
+                                </div>
                         </div>
                         <div class="equal width fields">
                             <div class="required field {{ err($errors, 'company_no') }}">
@@ -514,38 +542,51 @@
                 <div class="ui horizontal card card-shadow item-4">
                     <div class="content">
                         <h2>取引先情報</h2>
-                        <div class="field {{ err($errors, 'supplier_company') }}">
-                            <label for="supplier_company">仕入先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="supplier_company" name="supplier_company"
-                                    value="{{ old('supplier_company') }}" placeholder="有限会社〇〇">
-                            @else
-                                <input type="text" id="supplier_company" name="supplier_company"
-                                    value="{{ old('supplier_company', $currentCompany->supplier_company) }}"
-                                    placeholder="有限会社〇〇">
-                            @endif
-                        </div>
-                        <div class="field {{ err($errors, 'outsourcing_company') }}">
-                            <label for="outsourcing_company">外注先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="outsourcing_company" name="outsourcing_company"
-                                    value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇">
-                            @else
-                                <input type="text" id="outsourcing_company" name="outsourcing_company"
-                                    value="{{ old('outsourcing_company', $currentCompany->outsourcing_company) }}"
-                                    placeholder="有限会社〇〇">
-                            @endif
-                        </div>
-                        <div class="field {{ err($errors, 'sales_company') }}">
-                            <label for="sales_company">販売先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="sales_company" name="sales_company"
-                                    value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
-                            @else
-                                <input type="text" id="sales_company" name="sales_company"
-                                    value="{{ old('sales_company', $currentCompany->sales_company) }}"
-                                    placeholder="株式会社〇〇">
-                            @endif
+                        <div class="two fields">
+                            <div class="field">
+                                <div class="field {{ err($errors, 'supplier_company') }}">
+                                    <label for="supplier_company">仕入先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="supplier_company" name="supplier_company"
+                                            value="{{ old('supplier_company') }}" placeholder="有限会社〇〇">
+                                    @else
+                                        <input type="text" id="supplier_company" name="supplier_company"
+                                            value="{{ old('supplier_company', $currentCompany->supplier_company) }}"
+                                            placeholder="有限会社〇〇">
+                                    @endif
+                                </div>
+                                <div class="field {{ err($errors, 'outsourcing_company') }}">
+                                    <label for="outsourcing_company">外注先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="outsourcing_company" name="outsourcing_company"
+                                            value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇">
+                                    @else
+                                        <input type="text" id="outsourcing_company" name="outsourcing_company"
+                                            value="{{ old('outsourcing_company', $currentCompany->outsourcing_company) }}"
+                                            placeholder="有限会社〇〇">
+                                    @endif
+                                </div>
+                                <div class="field {{ err($errors, 'sales_company') }}">
+                                    <label for="sales_company">販売先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="sales_company" name="sales_company"
+                                            value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
+                                    @else
+                                        <input type="text" id="sales_company" name="sales_company"
+                                            value="{{ old('sales_company', $currentCompany->sales_company) }}" placeholder="株式会社〇〇">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="field {{ err($errors, 'bank_name') }}">
+                                <label for="bank_name">銀行名</label>
+                                @if (!isset($currentCompany->id))
+                                    <textarea id="bank_name" name="bank_name"
+                                        maxlength="300" placeholder="">{{ old('bank_name') }}</textarea>
+                                @else
+                                    <textarea id="bank_name" name="bank_name"
+                                        maxlength="300" placeholder="">{{ old('bank_name', $currentCompany->bank_name) }}</textarea>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -572,6 +613,26 @@
                                 <input type="text" id="url" name="url"
                                     value="{{ old('url', $currentCompany->url) }}" placeholder="https://xxxxxxx">
                             @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="ui horizontal card card-shadow item-6">
+                    <div class="content">
+                        <h2>添付情報</h2>
+                        <div class="field">
+                            <label for="financial_statement">業績情報へ決算書の添付（直近1期分）</label>
+                                <input type="text" id="financial_statement" name="financial_statement" value="" placeholder="実装予定" disabled>
+                            <div class="ui error message"></div>
+                        </div>
+                        <div class="field">
+                            <label for="articles_of_incorporation">事業目的へ定款の添付（最新）</label>
+                                <input type="text" id="articles_of_incorporation" name="articles_of_incorporation" value="" placeholder="実装予定" disabled>
+                            <div class="ui error message"></div>
+                        </div>
+                        <div class="field">
+                            <label for="stock_information">株式情報へ株主を添付（最新）</label>
+                                <input type="text" id="stock_information" name="stock_information" value="" placeholder="実装予定" disabled>
+                            <div class="ui error message"></div>
                         </div>
                     </div>
                 </div>

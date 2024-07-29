@@ -106,6 +106,9 @@
                 $('#N5_005F_8C8E').val('{{ old('input_date_japan_era_year', $todaySet['year']) }}');
                 $('#N6_005F_93FA').val('{{ old('input_date_month', $todaySet['month']) }}');
                 $('#N7_005F_944E_8D86').val('{{ old('input_date_day', $todaySet['date']) }}');
+
+                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                 @else
                     $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('readonly', false);

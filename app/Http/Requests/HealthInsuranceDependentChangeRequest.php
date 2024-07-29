@@ -52,7 +52,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             "accepted_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "employer_confirmation" => 'nullable|string|in:有',
             "application_category" => 'required|string|max:10|in:該当,非該当,変更',
-            "insured_reference_number" => 'nullable|int',
+            "insured_reference_number" => 'nullable|string|regex:/^[0-9]{1,6}$/u',
             "name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "name_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "birthday_era" => 'required|int|in:5,7,9',
