@@ -128,7 +128,7 @@
                 $('#N7_005F_944E_8D86').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N8_005F_944E').val('{{ old('today_date', $todaySet['date']) }}');
 
-                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ $businessOwner->last_name ? $businessOwner->last_name.'　' : '' }}' + '{{ $businessOwner->first_name ?? '' }}');
+                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('employer_company_managerial_position_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
