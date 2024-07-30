@@ -48,6 +48,8 @@ use App\Models\Values_branch_work_style_type;
 use App\Models\Receptionist;
 use App\Models\Residential_status;
 use App\Models\Values_employee_insured_age_type;
+use App\Models\Industry_type;
+use App\Models\Company_industry_type;
 
 class AdminController extends Controller
 {
@@ -125,6 +127,14 @@ class AdminController extends Controller
                 $brdata = $this->data_branch($data, $index, $company_id);
                 Branch::create($brdata);
             }
+            $industryTypes = $request->input('industry_type', []);
+            foreach ($industryTypes as $industryTypeId) {
+                Company_industry_type::create([
+                    'company_id' => $company_id,
+                    'industry_type_id' => $industryTypeId,
+                    'delete_flg' => 0,
+                ]);
+            }
             DB::commit();
             $this->putSuccess();
         } catch (ValidationException $e) {
@@ -155,6 +165,8 @@ class AdminController extends Controller
         $place_type = Values_branch_place_type::pluck('name', 'id');
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
+        $industry_type = Company_industry_type::where('company_id', $company->id)->where('delete_flg', 0)->pluck('industry_type_id');
+
         return view('admin.company_create', [
             'company_id' => $company->id,
             'company' => $company,
@@ -166,7 +178,8 @@ class AdminController extends Controller
             'labor_insurance_payment_method' => $labor_insurance_payment_method,
             'place_type' => $place_type,
             'start_days_of_week' => $start_days_of_week,
-            'work_style_type' => $work_style_type
+            'work_style_type' => $work_style_type,
+            'industry_type' => $industry_type
         ]);
     }
 
@@ -191,6 +204,27 @@ class AdminController extends Controller
                 }
             }
             Branch::where('company_id', $id)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+            $industryTypes = $request->input('industry_type', []);
+            Company_industry_type::where('company_id', $id)
+                ->where('delete_flg', 1)
+                ->whereIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 0]);
+            Company_industry_type::where('company_id', $id)
+                ->whereNotIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 1]);
+            foreach ($industryTypes as $industryTypeId) {
+                Company_industry_type::updateOrCreate(
+                    [
+                        'company_id' => $id,
+                        'industry_type_id' => $industryTypeId,
+                    ],
+                    [
+                        'company_id' => $id,
+                        'industry_type_id' => $industryTypeId,
+                        'delete_flg' => 0
+                    ]
+                );
+            }
             DB::commit();
             $this->putSuccess();
         } catch (ValidationException $e) {
@@ -804,6 +838,9 @@ class AdminController extends Controller
             $address_city = $data['address_city'];
             $address_ward = $data['address_ward'];
             $address_apartment = $data['address_apartment'];
+            $address_city_kana = $data['address_city_kana'];
+            $address_ward_kana = $data['address_ward_kana'];
+            $address_apartment_kana = $data['address_apartment_kana'];
             $emergency_address_ward1 = $data['emergency_address_ward1'];
             $emergency_address_apartment1 = $data['emergency_address_apartment1'];
             $emergency_address_ward2 = $data['emergency_address_ward2'];
@@ -837,9 +874,9 @@ class AdminController extends Controller
                     'address_ward' => $address_ward,
                     'address_apartment' => $address_apartment,
                     // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
-                    'address_city_kana' => $request->input('address_city_kana'),
-                    'address_ward_kana' => $request->input('address_ward_kana'),
-                    'address_apartment_kana' => $request->input('address_apartment_kana'),
+                    'address_city_kana' => $address_city_kana,
+                    'address_ward_kana' => $address_ward_kana,
+                    'address_apartment_kana' => $address_apartment_kana,
                     'tel_area_code' => $request->input('tel_area_code'),
                     'tel_city_code' => $request->input('tel_city_code'),
                     'tel_subscriber_code' => $request->input('tel_subscriber_code'),
@@ -964,6 +1001,15 @@ class AdminController extends Controller
 
         return response()->json($managerial_position);
     }
+
+    public function get_industry_type(Request $request)
+    {
+
+        $industry_type = Industry_type::get(['id', 'industry_type_code']);
+
+        return response()->json($industry_type);
+    }
+
     // ---------------------------------------------------------------------------------------
     // 社労士顧客会社設定
     // ---------------------------------------------------------------------------------------

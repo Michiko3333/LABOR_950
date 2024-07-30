@@ -100,6 +100,8 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'license_no' => 'nullable|string|max:255',
             'business_type' => 'integer',
             'listed_type' => 'nullable|integer',
+            'industry_type' => 'array',
+            'industry_type.*' => 'nullable|integer|between:1,9999',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'capital' => 'nullable|integer',
             'annual_sales' => 'nullable|integer',
@@ -126,7 +128,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "br-address_city.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_ward" => 'required|array',
             "br-address_ward.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_apartment" => 'array',
@@ -249,6 +251,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'license_no' => '許認可番号',
             'business_type' => '企業区分',
             'listed_type' => '上場区分',
+            'industry_type' => '業種コード',
             'stock_code' => '証券コード',
             'capital' => '資本金',
             'annual_sales' => '年間売上高（連結）',
@@ -319,6 +322,9 @@ class AdminCompanyUpdateRequest extends BaseRequest
             "br-holiday_not_logal" => '休日内容(法定外休日)',
         ];
 
+        foreach ($this->input('industry_type', []) as $index => $value) {
+            $Attributes["industry_type.{$index}"] = ($index + 1) . "業種コード";
+        }
         foreach ($this->input('br-name', []) as $index => $value) {
             $Attributes["br-name.{$index}"] = ($index + 1) . "事業所_名称";
         }

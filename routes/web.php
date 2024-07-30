@@ -129,6 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
         Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
         Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
+        Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
 
         // Ledger
         Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
