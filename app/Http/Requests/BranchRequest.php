@@ -19,8 +19,6 @@ class BranchRequest extends BaseRequest
     {
         $data = $this->all();
 
-        $data = array_map(function ($value) {
-            if (!is_array($value)) {
                 if (isset($data['br-address_city'])) {
                     foreach ($data['br-address_city'] as &$ward) {
                         $ward = mb_convert_kana($ward, 'RANKS');
@@ -57,9 +55,6 @@ class BranchRequest extends BaseRequest
                         $apartment = str_replace(['-', '‐'], '－', $apartment);
                     }
                 }
-            }
-            return $value;
-        }, $data);
         return $data;
     }
 
@@ -96,7 +91,7 @@ class BranchRequest extends BaseRequest
             'br-address_prefecture' => 'required|array',
             'br-address_prefecture.*' => 'string|max:2',
             "br-address_city" => 'required|array',
-            "br-address_city.*" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "br-address_city.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_ward" => 'required|array',
             "br-address_ward.*" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "br-address_apartment" => 'array',

@@ -66,6 +66,12 @@ class BranchController extends Controller
         try {
             $request->request->remove('_token');
             $data = $request->validationData($request);
+            $address_city = $data['br-address_city'];
+            $address_ward = $data['br-address_ward'];
+            $address_apartment = $data['br-address_apartment'];
+            $address_city_kana = $data['br-address_city_kana'];
+            $address_ward_kana = $data['br-address_ward_kana'];
+            $address_apartment_kana = $data['br-address_apartment_kana'];
             $current_company = CurrentUser::currentCompany();
             $id = $current_company->id;
             $brids = $request->input('br-id');
