@@ -51,6 +51,8 @@ class CompanyUpdateRequest extends BaseRequest
             'license_no' => 'nullable|string|max:255',
             'business_type' => 'integer|between:1,3',
             'listed_type' => 'nullable|integer|between:1,6',
+            'industry_type' => 'array',
+            'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'capital' => 'nullable|integer',
             'annual_sales' => 'nullable|integer',
@@ -71,7 +73,7 @@ class CompanyUpdateRequest extends BaseRequest
 
     public function attributes()
     {
-        return [
+        $Attributes = [
             'name' => '会社名',
             'name_kana' => '会社名（カナ）',
             'name_en' => '会社名（英語表記）',
@@ -81,6 +83,7 @@ class CompanyUpdateRequest extends BaseRequest
             'license_no' => '許認可番号',
             'business_type' => '企業区分',
             'listed_type' => '上場区分',
+            'industry_type' => '業種コード',
             'stock_code' => '証券コード',
             'capital' => '資本金',
             'annual_sales' => '年間売上高（連結）',
@@ -98,5 +101,11 @@ class CompanyUpdateRequest extends BaseRequest
             'procedure_hidden_flg' => '行政手続非表示フラグ',
             'company_division' => '会社区分',
         ];
+
+        foreach ($this->input('industry_type', []) as $index => $value) {
+            $Attributes["industry_type.{$index}"] = ($index + 1) . "業種コード";
+        }
+        return $Attributes;
     }
+
 }

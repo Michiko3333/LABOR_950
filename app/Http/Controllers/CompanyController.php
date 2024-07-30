@@ -19,6 +19,7 @@ use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
+use App\Models\Company_industry_type;
 
 use App\Permission;
 
@@ -51,6 +52,8 @@ class CompanyController extends Controller
         $place_type = Values_branch_place_type::pluck('name', 'id');
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
+        $industry_type = Company_industry_type::where('company_id', $currentCompany->id)->where('delete_flg', 0)->pluck('industry_type_id');
+
         return view('company', [
             'currentCompany' => $currentCompany,
             'company_listed_type' => $company_listed_type,
@@ -60,7 +63,8 @@ class CompanyController extends Controller
             'labor_insurance_payment_method' => $labor_insurance_payment_method,
             'place_type' => $place_type,
             'start_days_of_week' => $start_days_of_week,
-            'work_style_type' => $work_style_type
+            'work_style_type' => $work_style_type,
+            'industry_type' => $industry_type
         ]);
     }
 
@@ -79,6 +83,27 @@ class CompanyController extends Controller
             $companyData = $this->data_company($data);
             $currentCompany = CurrentUser::currentCompany();
             $currentCompany->update($companyData);
+            $industryTypes = $request->input('industry_type', []);
+            Company_industry_type::where('company_id', $currentCompany->id)
+                ->where('delete_flg', 1)
+                ->whereIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 0]);
+            Company_industry_type::where('company_id', $currentCompany->id)
+                ->whereNotIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 1]);
+            foreach ($industryTypes as $industryTypeId) {
+                Company_industry_type::updateOrCreate(
+                    [
+                        'company_id' => $currentCompany->id,
+                        'industry_type_id' => $industryTypeId,
+                    ],
+                    [
+                        'company_id' => $currentCompany->id,
+                        'industry_type_id' => $industryTypeId,
+                        'delete_flg' => 0
+                    ]
+                );
+            }
             DB::commit();
             $this->putSuccess();
         } catch (ValidationException $e) {

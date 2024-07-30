@@ -394,6 +394,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="field {{ err($errors, 'industry_type[]') }}">
+                            <label for="industry_type[]">業種コード</label>
+                            <select id="industry_type_dropdown" class="ui fluid search dropdown multiple industry_type_select"
+                                multiple="" name="industry_type[]">
+                            </select>
+                        </div>
+                        <div style="text-align:right;">
+                            <button class="ui button" type="button" id="industry_type_btn">業種選択</button>
+                        </div>
                         <div class="field">
                             <div class="field {{ err($errors, 'stock_code') }}">
                                 <label for="stock_code">証券コード</label>
@@ -647,6 +656,21 @@
         </form>
     </section>
 
+    <!-- 業種選択モーダル -->
+    <x-search-industry-type-modal id="industry_type_select" selectorId="{{ $currentCompany->id ?? '' }}" />
+    <script type="module">
+        $('#industry_type_dropdown').on('change', function() {
+            const selectedValue = $(this).val();
+            Livewire.dispatch('checkIndustryType', [selectedValue]);
+        });
+
+        $('#industry_type_btn').click(_ => {
+            $('#industry_type_select').modal({
+                blurring: true
+            }).modal('show');
+        });
+    </script>
+
     <script type="module">
         $(document).ready(function() {
             const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(1));
@@ -677,6 +701,36 @@
                 })
             }
 
+            getIndustryType(true);
+        });
+
+        function getIndustryType(first = false) {
+            $.ajax({
+                url: '{{ route('admin.get_industry_type') }}',
+                type: 'post'
+            })
+                .done((data) => {
+                    $('select[name="industry_type[]"]').empty();
+                    data.forEach(element => {
+                        $('<option>').attr({
+                            value: element.id
+                        }).text(element.industry_type_code).appendTo('select[name="industry_type[]"]');
+                    });
+                    $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+
+                    if (first) {
+                        const def = @json(old('industry_type', $industry_type ?? []));
+                        def.forEach(v => {
+                            $('select[name="industry_type[]"] option[value=' + v +
+                                ']').attr(
+                                'selected', true);
+                        });
+                    }
+                });
+        }
+
+        Livewire.on('addIndustryType', (data) => {
+            $(`.item[data-text="${data[0].industry_type_code}"]`).trigger('click');
         });
     </script>
 </x-layout>
