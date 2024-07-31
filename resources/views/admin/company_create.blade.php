@@ -378,7 +378,9 @@
 
                         <div class="two fields">
                             <div class="required field {{ err($errors, 'business_type') }}">
-                                <label>企業区分</label>
+                                <label>企業区分
+                                <i class="question circle outline link icon" id="info-icon"></i>
+                                </label>
                                 <select class="ui fluid dropdown" name="business_type"
                                     value="{{ old('business_type') }}">
                                     <option value="">未選択</option>
@@ -392,6 +394,66 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="ui modal" id="info-modal">
+                                <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">中小企業区分</div>
+                                <div class="content">
+                                    <table class="ui celled table center aligned">
+                                        <thead>
+                                            <tr>
+                                            <th rowspan="2">業種</th>
+                                            <th colspan="2">中小企業</th>
+                                            <th colspan="1">小規模企業者</th>
+                                            </tr>
+                                            <tr>
+                                            <th style="border-left:1px solid rgba(34,36,38,.1)">資本金額</th>
+                                            <th>常時使用する従業員数</th>
+                                            <th>常時使用する従業員数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <td>小売・飲食業</td>
+                                            <td>5,000万円以下</td>
+                                            <td>50人以下</td>
+                                            <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                            <td>サービス業</td>
+                                            <td>5,000万円以下</td>
+                                            <td>100人以下</td>
+                                            <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                            <td>卸売業</td>
+                                            <td>1億円以下</td>
+                                            <td>100人以下</td>
+                                            <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                            <td>製造/建設/運輸　その他業種</td>
+                                            <td>3億円以下</td>
+                                            <td>300人以下</td>
+                                            <td>20人以下</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="ui message mt-2">
+                                    <div class="header">
+                                    資本金・従業員数が上記の数字を超えた場合大企業という区分になる。
+                                    </div>
+                                    <p></p>
+                                    <p>※これらの区分は日常業務にて必要とはならないが、法律上の区分（税法・下請法等）や国の制度を活用する際に区分される
+                                    際に必要となる。例えば、税法面において中小企業の場合は、大企業に比べ法人税の軽減税率、交際費の一部損金算入、
+                                    留保金課税の免除、欠損金の繰戻還付制度等の税法上の優遇措置がある。また、助成金や補助金を取得する際に、
+                                    助成率や補助率が変わる等。</p>
+                                    <p>※「業種区分は産業分類」を「資本金は会計データー」を「従業員数は従業員名簿」をマスターデーターとして紐づけ、
+                                    大・中・小を区分する。</p>
+                                    </div>
+                                </div>
+                                <div class="basic actions">
+                                    <div class="ui negative button">戻る</div>
+                                </div>
                             </div>
                             <div class="field  {{ err($errors, 'listed_type') }}">
                                 <label>上場区分</label>
@@ -763,6 +825,13 @@
 
         Livewire.on('addIndustryType', (data) => {
             $(`.item[data-text="${data[0].industry_type_code}"]`).trigger('click');
+        });
+    </script>
+    <script type="module">
+    $(document).ready(function() {
+            $('#info-icon').click(function() {
+                $('#info-modal').modal('show');
+            });
         });
     </script>
 </x-layout>
