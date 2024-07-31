@@ -7,7 +7,7 @@
                         <div class="field">
                             <label>証明書ファイル</label>
                             <div class="ui file input">
-                                <input type="file" name="cert-file" wire:model='cert_file'>
+                                <input type="file" name="cert-file" wire:model='cert_file' accept=".pfx,.p12">
                             </div>
                         </div>
                         <div class="field">
