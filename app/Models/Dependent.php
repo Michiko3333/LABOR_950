@@ -8,6 +8,30 @@ class Dependent extends Model
 {
     protected $table = 'm_dependent';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'employee_id',
+        'last_name',
+        'last_name_kana',
+        'first_name',
+        'first_name_kana',
+        'sex',
+        'relationship_spouse',
+        'relationship_dependent',
+        'spouse_flag',
+        'birthday',
+        'age',
+        'contact',
+        'occupation',
+        'annual_income',
+        'date_of_authorisation',
+        'date_of_expiry',
+        'mynumber_card_no',
+        'pension_no',
+        'dependent_type',
+        'other_1',
+        'other_2',
+        'delete_flg',
+    ];
 
     public function employee()
     {

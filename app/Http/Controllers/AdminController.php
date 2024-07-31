@@ -40,6 +40,7 @@ use App\Models\Values_employee_occupation_type;
 use App\Models\Values_employee_over_retired_insurance_loss_reason;
 use App\Models\Values_sex;
 use App\Models\Department;
+use App\Models\Dependent;
 use App\Models\Employee_department;
 use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
@@ -587,6 +588,7 @@ class AdminController extends Controller
             'departments' => [],
             'departments_list' => [],
             'managerial_position_list' => [],
+            'dependent' => [],
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
             'prefectures' => $prefectures,
@@ -734,6 +736,14 @@ class AdminController extends Controller
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
             ])->id;
 
+            $dename = $request->input('de-last_name');
+            if(!is_null($dename)){
+                foreach ($dename as $index => $name) {
+                    $dedata = $this->data_dependent($validationData, $index, $employee_id);
+                    Dependent::create($dedata);
+                }
+            }
+
             $departments = $request->input('departments', []);
             foreach ($departments as $dep) {
                 Employee_department::insert([
@@ -798,7 +808,8 @@ class AdminController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
-
+        $dependent = $employee->dependent()->where('delete_flg', 0)->get();
+        
         return view('admin.employee_create', [
             'employee' => $employee,
             'departments' => $departments,
@@ -817,7 +828,8 @@ class AdminController extends Controller
             'occupation_type' => $occupation_type,
             'faxParts' => $faxParts,
             'residential_status' => $residential_status,
-            'employee_insured_age_type' => $employee_insured_age_type
+            'employee_insured_age_type' => $employee_insured_age_type,
+            'dependent' => $dependent,
         ]);
     }
 
@@ -985,6 +997,51 @@ class AdminController extends Controller
         return redirect()->route('admin.labor');
     }
 
+    private function data_dependent(array $requestData, $index, $employee_id)
+    {
+        $input_date1 = $requestData['de-birthday'][$index];
+        if (!is_null($input_date1) && strtotime($input_date1) === false) {
+            $formatted_de_birthday = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+        } else {
+            $formatted_de_birthday = $input_date1;
+        }
+        $input_date2 = $requestData['de-date_of_authorisation'][$index];
+        if (!is_null($input_date2) && strtotime($input_date2) === false) {
+            $formatted_de_date_of_authorisation = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_authorisation = $input_date2;
+        }
+        $input_date3 = $requestData['de-date_of_expiry'][$index];
+        if (!is_null($input_date3) && strtotime($input_date3) === false) {
+            $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_expiry = $input_date3;
+        }
+
+        return [
+            'employee_id' => $employee_id,
+            'relationship_spouse' => $requestData['de-relationship_spouse'][$index] ?? null,
+            'relationship_dependent' => $requestData['de-relationship_dependent'][$index] ?? null,
+            'spouse_flag' => $requestData['de-spouse_flag'][$index] ?? null,
+            'last_name' => $requestData['de-last_name'][$index],
+            'first_name' => $requestData['de-first_name'][$index],
+            'last_name_kana' => $requestData['de-last_name_kana'][$index],
+            'first_name_kana' => $requestData['de-first_name_kana'][$index],
+            'sex' => $requestData['de-sex'][$index],
+            'age' => $requestData['de-age'][$index],
+            'occupation' => $requestData['de-occupation'][$index],
+            'annual_income' => $requestData['de-annual_income'][$index],
+            'contact' => $requestData['de-contact'][$index],
+            'dependent_type' => $requestData['de-dependent_type'][$index],
+            'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
+            'pension_no' => $requestData['de-pension_no'][$index],
+            'other_1' => $requestData['de-other_1'][$index],
+            'other_2' => $requestData['de-other_2'][$index],
+            'birthday' => $formatted_de_birthday,
+            'date_of_authorisation' => $formatted_de_date_of_authorisation,
+            'date_of_expiry' => $formatted_de_date_of_expiry,
+        ];
+    }
 
     public function get_departments(Request $request)
     {
