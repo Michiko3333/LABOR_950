@@ -850,9 +850,6 @@ class AdminController extends Controller
             $address_city = $data['address_city'];
             $address_ward = $data['address_ward'];
             $address_apartment = $data['address_apartment'];
-            $address_city_kana = $data['address_city_kana'];
-            $address_ward_kana = $data['address_ward_kana'];
-            $address_apartment_kana = $data['address_apartment_kana'];
             $emergency_address_ward1 = $data['emergency_address_ward1'];
             $emergency_address_apartment1 = $data['emergency_address_apartment1'];
             $emergency_address_ward2 = $data['emergency_address_ward2'];
@@ -885,10 +882,6 @@ class AdminController extends Controller
                     'address_city' => $address_city,
                     'address_ward' => $address_ward,
                     'address_apartment' => $address_apartment,
-                    // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
-                    'address_city_kana' => $address_city_kana,
-                    'address_ward_kana' => $address_ward_kana,
-                    'address_apartment_kana' => $address_apartment_kana,
                     'tel_area_code' => $request->input('tel_area_code'),
                     'tel_city_code' => $request->input('tel_city_code'),
                     'tel_subscriber_code' => $request->input('tel_subscriber_code'),
@@ -967,6 +960,23 @@ class AdminController extends Controller
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                 ]);
+
+            $dename = $request->input('de-last_name');
+            $deids = $request->input('de-id');
+            $excepts = [];
+            if(!is_null($dename)){
+                foreach ($deids as $index => $deid) {
+                    $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
+                    if ($deid > 0) {
+                        Dependent::where('id', $deid)->update($dedata);
+                        $excepts[] = $deid;
+                    } else {
+                        $created_id = Dependent::create($dedata)->id;
+                        $excepts[] = $created_id;
+                    }
+                }
+            }
+            Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)
