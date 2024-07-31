@@ -102,7 +102,7 @@ class AdminCompanyCreateRequest extends BaseRequest
             'business_type' => 'integer',
             'listed_type' => 'nullable|integer',
             'industry_type' => 'array',
-            'industry_type.*' => 'nullable|integer|between:1,9999',
+            'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'capital' => 'nullable|integer',
             'annual_sales' => 'nullable|integer',
