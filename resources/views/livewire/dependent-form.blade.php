@@ -64,15 +64,15 @@
                         '15' => 'その他の親族'
                     ];
 
-                    $relationship_spouse_value = $data[$key]['de-relationship_spouse'] ?? '';
-                    $relationship_dependent_value = $data[$key]['de-relationship_dependent'] ?? '';
+                    $relationship_spouse_value = $item['de-relationship_spouse'] ?? '';
+                    $relationship_dependent_value = $item['de-relationship_dependent'] ?? '';
                     $relationship_spouse = $relationship_spouse_group[$relationship_spouse_value] ?? '';
                     $relationship_dependent = $relationship_dependent_group[$relationship_dependent_value] ?? '';
                 @endphp
-                @if ($data[$key]['de-spouse_flag'] == '1')
-                    【{{ $relationship_spouse }}】&nbsp;{{ $data[$key]['de-last_name'] }}{{ $data[$key]['de-first_name'] }}
-                @elseif ($data[$key]['de-spouse_flag'] != '1')
-                    【{{ $relationship_dependent }}】&nbsp;{{ $data[$key]['de-last_name'] }}{{ $data[$key]['de-first_name'] }}
+                @if ($item['de-spouse_flag'] == '1')
+                    【{{ $relationship_spouse }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
+                @elseif ($item['de-spouse_flag'] != '1')
+                    【{{ $relationship_dependent }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
                 @endif
             </div>
             <div data-accordion="{{ $key }}" class="{{ $item['de-class_content'] }}">
@@ -80,7 +80,7 @@
                 <div class="content_inner">
                     <h3>基本情報</h3>
                     <div class="two fields">
-                        @if ($data[$key]['de-spouse_flag'] == '1')
+                        @if ($key == 0 && $item['de-spouse_flag'] == 1)
                             <div class="field required {{ err_bind($errs, 'de-relationship_spouse', $key) }}">
                                 <label for="de-relationship_spouse">続柄</label>
                                 <select class="ui fluid dropdown" name="de-relationship_spouse[]"
@@ -92,7 +92,8 @@
                                     <option value="4">妻(未届)</option>
                                 </select>
                             </div>
-                        @elseif  ($data[$key]['de-spouse_flag'] != '1')
+                            <input type="hidden" name="de-relationship_dependent[]" value="">
+                        @else
                             <div class="field required {{ err_bind($errs, 'de-relationship_dependent', $key) }}">
                                 <label for="de-relationship_dependent">続柄</label>
                                 <select class="ui fluid dropdown" name="de-relationship_dependent[]"
@@ -120,7 +121,7 @@
                             <div class="field {{ err_bind($errs, 'de-spouse_flag', $key) }}">
                                 <div class="ui checkbox mr-1">
                                     <input type="checkbox" name="de-spouse_flag[]" value='1'
-                                    @if($data[$key]['de-spouse_flag'] == 1) checked @endif
+                                    @if($item['de-spouse_flag'] == 1) checked @endif
                                     wire:model.live="data.{{ $key }}.de-spouse_flag">
                                     <label>配偶者</label>
                                 </div>

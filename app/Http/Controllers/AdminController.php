@@ -961,19 +961,16 @@ class AdminController extends Controller
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                 ]);
 
-            $dename = $request->input('de-last_name');
-            $deids = $request->input('de-id');
+            $deids = $request->input('de-id',[]);
             $excepts = [];
-            if(!is_null($dename)){
-                foreach ($deids as $index => $deid) {
-                    $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
-                    if ($deid > 0) {
-                        Dependent::where('id', $deid)->update($dedata);
-                        $excepts[] = $deid;
-                    } else {
-                        $created_id = Dependent::create($dedata)->id;
-                        $excepts[] = $created_id;
-                    }
+            foreach ($deids as $index => $deid) {
+                $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
+                if ($deid > 0) {
+                    Dependent::where('id', $deid)->update($dedata);
+                    $excepts[] = $deid;
+                } else {
+                    $created_id = Dependent::create($dedata)->id;
+                    $excepts[] = $created_id;
                 }
             }
             Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);

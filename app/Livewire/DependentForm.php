@@ -27,7 +27,7 @@ class DependentForm extends Component
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
-                    if (!is_null($oldValue)) {
+                    if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($i, $oldValue)) {
                         $def[$key] = $oldValue[$i];
                     }
                 }
