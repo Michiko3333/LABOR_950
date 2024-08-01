@@ -619,11 +619,11 @@
                             <div class="field {{ err($errors, 'authorized_shares') }}">
                                 <label for="authorized_shares">発行可能株式総数</label>
                                 @if (!isset($company_id))
-                                    <input type="text" id="authorized_shares" name="authorized_shares"
+                                    <input type="number" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares') }}" placeholder="1200" min="0"
                                         max="999999999999999999">
                                 @else
-                                    <input type="text" id="authorized_shares" name="authorized_shares"
+                                    <input type="number" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares', $company->authorized_shares) }}"
                                         placeholder="1200" min="0" max="999999999999999999">
                                 @endif
@@ -631,11 +631,11 @@
                             <div class="field {{ err($errors, 'issued_shares') }}">
                                 <label for="issued_shares">発行済株式総数</label>
                                 @if (!isset($company_id))
-                                    <input type="text" id="issued_shares" name="issued_shares"
+                                    <input type="number" id="issued_shares" name="issued_shares"
                                         value="{{ old('issued_shares') }}" placeholder="100" min="0"
                                         max="999999999999999999">
                                 @else
-                                    <input type="text" id="issued_shares" name="issued_shares"
+                                    <input type="number" id="issued_shares" name="issued_shares"
                                         value="{{ old('issued_shares', $company->issued_shares) }}" placeholder="100"
                                         min="0" max="999999999999999999">
                                 @endif
