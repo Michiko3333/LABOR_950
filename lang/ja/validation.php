@@ -96,7 +96,7 @@ return [
         'numeric' => ':attributeは:max以下の桁数にしてください。',
         'string' => ':attributeは:max文字以下で入力してください。',
     ],
-    'max_digits' => 'The :attribute field must not have more than :max digits.',
+    'max_digits' => ':attributeは:max桁以下で入力してください。',
     'mimes' => ':attributeの拡張子は:valuesのいずれかである必要があります。',
     'mimetypes' => 'The :attribute field must be a file of type: :values.',
     'min' => [
@@ -105,7 +105,7 @@ return [
         'numeric' => ':attributeは:min以上の桁数にしてください。',
         'string' => ':attributeは:min文字以上で入力してください。',
     ],
-    'min_digits' => 'The :attribute field must have at least :min digits.',
+    'min_digits' => ':attributeは:min桁以上で入力してください。',
     'missing' => 'The :attribute field must be missing.',
     'missing_if' => 'The :attribute field must be missing when :other is :value.',
     'missing_unless' => 'The :attribute field must be missing unless :other is :value.',

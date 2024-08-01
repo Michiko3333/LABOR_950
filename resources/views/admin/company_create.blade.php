@@ -334,7 +334,7 @@
                                             placeholder="">
                                     @endif
                                 </div>
-                                </div>
+                            </div>
                         </div>
                         <div class="equal width fields">
                             <div class="required field {{ err($errors, 'company_no') }}">
@@ -379,7 +379,7 @@
                         <div class="two fields">
                             <div class="required field {{ err($errors, 'business_type') }}">
                                 <label>企業区分
-                                <i class="question circle outline link icon" id="info-icon"></i>
+                                    <i class="question circle outline link icon" id="info-icon"></i>
                                 </label>
                                 <select class="ui fluid dropdown" name="business_type"
                                     value="{{ old('business_type') }}">
@@ -401,54 +401,54 @@
                                     <table class="ui celled table center aligned">
                                         <thead>
                                             <tr>
-                                            <th rowspan="2">業種</th>
-                                            <th colspan="2">中小企業</th>
-                                            <th colspan="1">小規模企業者</th>
+                                                <th rowspan="2">業種</th>
+                                                <th colspan="2">中小企業</th>
+                                                <th colspan="1">小規模企業者</th>
                                             </tr>
                                             <tr>
-                                            <th style="border-left:1px solid rgba(34,36,38,.1)">資本金額</th>
-                                            <th>常時使用する従業員数</th>
-                                            <th>常時使用する従業員数</th>
+                                                <th style="border-left:1px solid rgba(34,36,38,.1)">資本金額</th>
+                                                <th>常時使用する従業員数</th>
+                                                <th>常時使用する従業員数</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>小売・飲食業</td>
-                                            <td>5,000万円以下</td>
-                                            <td>50人以下</td>
-                                            <td>5人以下</td>
+                                                <td>小売・飲食業</td>
+                                                <td>5,000万円以下</td>
+                                                <td>50人以下</td>
+                                                <td>5人以下</td>
                                             </tr>
                                             <tr>
-                                            <td>サービス業</td>
-                                            <td>5,000万円以下</td>
-                                            <td>100人以下</td>
-                                            <td>5人以下</td>
+                                                <td>サービス業</td>
+                                                <td>5,000万円以下</td>
+                                                <td>100人以下</td>
+                                                <td>5人以下</td>
                                             </tr>
                                             <tr>
-                                            <td>卸売業</td>
-                                            <td>1億円以下</td>
-                                            <td>100人以下</td>
-                                            <td>5人以下</td>
+                                                <td>卸売業</td>
+                                                <td>1億円以下</td>
+                                                <td>100人以下</td>
+                                                <td>5人以下</td>
                                             </tr>
                                             <tr>
-                                            <td>製造/建設/運輸　その他業種</td>
-                                            <td>3億円以下</td>
-                                            <td>300人以下</td>
-                                            <td>20人以下</td>
+                                                <td>製造/建設/運輸　その他業種</td>
+                                                <td>3億円以下</td>
+                                                <td>300人以下</td>
+                                                <td>20人以下</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="ui message mt-2">
-                                    <div class="header">
-                                    資本金・従業員数が上記の数字を超えた場合大企業という区分になる。
-                                    </div>
-                                    <p></p>
-                                    <p>※これらの区分は日常業務にて必要とはならないが、法律上の区分（税法・下請法等）や国の制度を活用する際に区分される
-                                    際に必要となる。例えば、税法面において中小企業の場合は、大企業に比べ法人税の軽減税率、交際費の一部損金算入、
-                                    留保金課税の免除、欠損金の繰戻還付制度等の税法上の優遇措置がある。また、助成金や補助金を取得する際に、
-                                    助成率や補助率が変わる等。</p>
-                                    <p>※「業種区分は産業分類」を「資本金は会計データー」を「従業員数は従業員名簿」をマスターデーターとして紐づけ、
-                                    大・中・小を区分する。</p>
+                                        <div class="header">
+                                            資本金・従業員数が上記の数字を超えた場合大企業という区分になる。
+                                        </div>
+                                        <p></p>
+                                        <p>※これらの区分は日常業務にて必要とはならないが、法律上の区分（税法・下請法等）や国の制度を活用する際に区分される
+                                            際に必要となる。例えば、税法面において中小企業の場合は、大企業に比べ法人税の軽減税率、交際費の一部損金算入、
+                                            留保金課税の免除、欠損金の繰戻還付制度等の税法上の優遇措置がある。また、助成金や補助金を取得する際に、
+                                            助成率や補助率が変わる等。</p>
+                                        <p>※「業種区分は産業分類」を「資本金は会計データー」を「従業員数は従業員名簿」をマスターデーターとして紐づけ、
+                                            大・中・小を区分する。</p>
                                     </div>
                                 </div>
                                 <div class="basic actions">
@@ -473,8 +473,9 @@
                         </div>
                         <div class="field {{ err($errors, 'industry_type[]') }}">
                             <label for="industry_type[]">業種コード</label>
-                            <select id="industry_type_dropdown" class="ui fluid search dropdown multiple industry_type_select"
-                                multiple="" name="industry_type[]">
+                            <select id="industry_type_dropdown"
+                                class="ui fluid search dropdown multiple industry_type_select" multiple=""
+                                name="industry_type[]">
                             </select>
                         </div>
                         <div style="text-align:right;">
@@ -587,22 +588,25 @@
                             <div class="field {{ err($errors, 'annual_sales') }}">
                                 <label for="annual_sales">年間売上高（連結）</label>
                                 @if (!isset($company_id))
-                                    <input type="text" id="annual_sales" name="annual_sales"
-                                        value="{{ old('annual_sales') }}" placeholder="99999999">
+                                    <input type="number" id="annual_sales" name="annual_sales"
+                                        value="{{ old('annual_sales') }}" placeholder="99999999" min="0"
+                                        max="999999999999999999">
                                 @else
-                                    <input type="text" id="annual_sales" name="annual_sales"
+                                    <input type="number" id="annual_sales" name="annual_sales"
                                         value="{{ old('annual_sales', $company->annual_sales) }}"
-                                        placeholder="99999999">
+                                        placeholder="99999999" min="0" max="999999999999999999">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'employee_sum') }}">
                                 <label for="employee_sum">従業員数</label>
                                 @if (!isset($company_id))
-                                    <input type="text" id="employee_sum" name="employee_sum"
-                                        value="{{ old('employee_sum') }}" placeholder="999">
+                                    <input type="number" id="employee_sum" name="employee_sum"
+                                        value="{{ old('employee_sum') }}" placeholder="999" min="0"
+                                        max="999999999">
                                 @else
-                                    <input type="text" id="employee_sum" name="employee_sum"
-                                        value="{{ old('employee_sum', $company->employee_sum) }}" placeholder="999">
+                                    <input type="number" id="employee_sum" name="employee_sum"
+                                        value="{{ old('employee_sum', $company->employee_sum) }}" placeholder="999"
+                                        min="0" max="999999999">
                                 @endif
                             </div>
                         </div>
@@ -616,22 +620,24 @@
                                 <label for="authorized_shares">発行可能株式総数</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="authorized_shares" name="authorized_shares"
-                                        value="{{ old('authorized_shares') }}" placeholder="1200">
+                                        value="{{ old('authorized_shares') }}" placeholder="1200" min="0"
+                                        max="999999999999999999">
                                 @else
                                     <input type="text" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares', $company->authorized_shares) }}"
-                                        placeholder="1200">
+                                        placeholder="1200" min="0" max="999999999999999999">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'issued_shares') }}">
                                 <label for="issued_shares">発行済株式総数</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="issued_shares" name="issued_shares"
-                                        value="{{ old('issued_shares') }}" placeholder="100">
+                                        value="{{ old('issued_shares') }}" placeholder="100" min="0"
+                                        max="999999999999999999">
                                 @else
                                     <input type="text" id="issued_shares" name="issued_shares"
-                                        value="{{ old('issued_shares', $company->issued_shares) }}"
-                                        placeholder="100">
+                                        value="{{ old('issued_shares', $company->issued_shares) }}" placeholder="100"
+                                        min="0" max="999999999999999999">
                                 @endif
                             </div>
                         </div>
@@ -672,18 +678,17 @@
                                             value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
                                     @else
                                         <input type="text" id="sales_company" name="sales_company"
-                                            value="{{ old('sales_company', $company->sales_company) }}" placeholder="株式会社〇〇">
+                                            value="{{ old('sales_company', $company->sales_company) }}"
+                                            placeholder="株式会社〇〇">
                                     @endif
                                 </div>
                             </div>
                             <div class="field {{ err($errors, 'bank_name') }}">
                                 <label for="bank_name">銀行名</label>
                                 @if (!isset($company_id))
-                                    <textarea id="bank_name" name="bank_name"
-                                        maxlength="300" placeholder="">{{ old('bank_name') }}</textarea>
+                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name') }}</textarea>
                                 @else
-                                    <textarea id="bank_name" name="bank_name"
-                                        maxlength="300" placeholder="">{{ old('bank_name', $company->bank_name) }}</textarea>
+                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name', $company->bank_name) }}</textarea>
                                 @endif
                             </div>
                         </div>
@@ -720,17 +725,20 @@
                         <h2>添付情報</h2>
                         <div class="field">
                             <label for="financial_statement">業績情報へ決算書の添付（直近1期分）</label>
-                                <input type="text" id="financial_statement" name="financial_statement" value="" placeholder="実装予定" disabled>
+                            <input type="text" id="financial_statement" name="financial_statement" value=""
+                                placeholder="実装予定" disabled>
                             <div class="ui error message"></div>
                         </div>
                         <div class="field">
                             <label for="articles_of_incorporation">事業目的へ定款の添付（最新）</label>
-                                <input type="text" id="articles_of_incorporation" name="articles_of_incorporation" value="" placeholder="実装予定" disabled>
+                            <input type="text" id="articles_of_incorporation" name="articles_of_incorporation"
+                                value="" placeholder="実装予定" disabled>
                             <div class="ui error message"></div>
                         </div>
                         <div class="field">
                             <label for="stock_information">株式情報へ株主を添付（最新）</label>
-                                <input type="text" id="stock_information" name="stock_information" value="" placeholder="実装予定" disabled>
+                            <input type="text" id="stock_information" name="stock_information" value=""
+                                placeholder="実装予定" disabled>
                             <div class="ui error message"></div>
                         </div>
                     </div>
@@ -769,7 +777,7 @@
             }).modal('show');
         });
     </script>
-    
+
     <script type="module">
         $(document).ready(function() {
             $('#founding_date_calendar').calendar({
@@ -800,9 +808,9 @@
 
         function getIndustryType(first = false) {
             $.ajax({
-                url: '{{ route('admin.get_industry_type') }}',
-                type: 'post'
-            })
+                    url: '{{ route('admin.get_industry_type') }}',
+                    type: 'post'
+                })
                 .done((data) => {
                     $('select[name="industry_type[]"]').empty();
                     data.forEach(element => {
@@ -828,7 +836,7 @@
         });
     </script>
     <script type="module">
-    $(document).ready(function() {
+        $(document).ready(function() {
             $('#info-icon').click(function() {
                 $('#info-modal').modal('show');
             });
