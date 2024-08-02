@@ -13,6 +13,7 @@ use App\Models\Certificate;
 use Carbon\Carbon;
 use App\Models\Branch;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
 {
@@ -61,8 +62,14 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
-        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount', 'current_employee', 'current_branch'));
+        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount', 'current_employee', 'current_branch', 'existPresident'));
     }
 
     public function post(NotificationOfObtainingInsuredQualificationRequest $request)

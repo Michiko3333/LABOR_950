@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Employee;
 
 use Exception;
 
@@ -46,7 +47,14 @@ class ListController extends Controller
             $certificate = false;
         }
         $egovAcount = $this->egovAcount();
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
-        return view('ledger/ledger', compact('certificate', 'egovAcount'));
+
+        return view('ledger/ledger', compact('certificate', 'egovAcount', 'existPresident'));
     }
 }

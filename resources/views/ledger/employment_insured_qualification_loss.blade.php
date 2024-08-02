@@ -10,6 +10,9 @@
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -90,7 +93,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -131,8 +134,10 @@
                 $('#J61_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
                 $('#J62_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
 
-                $('#J64_005F_8E81_96BC').val('{{ old('employer_company_managerial_position_name', $company->representative) }}');
-                $('#J28_005F_8E81_96BC_005F_89BA_9269').val('{{ old('employer_managerial_position_name', $company->representative) }}');
+                $('#J64_005F_8E81_96BC').val(
+                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC_005F_89BA_9269').val(
+                    '{{ old('employer_managerial_position_name', $company->representative) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
@@ -162,8 +167,8 @@
                 @else
                     $('#J70_005F_944E_8D86').prop('disabled', true);
                     $('#J71_005F_944E, #J72_005F_8C8E, #J73_005F_93FA, #J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6,\
-                            #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
-                            #J79_005F_9574_8B4C_9793').prop(
+                                                    #J75_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4, #J78_005F_89C1_93FC_8ED2_94D4_8D86,\
+                                                    #J79_005F_9574_8B4C_9793').prop(
                         'readonly',
                         true);
                 @endif

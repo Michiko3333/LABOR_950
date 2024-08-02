@@ -7,6 +7,7 @@ use App\Http\Requests\CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplica
 use App\Models\Branch;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\EgovAPI\MixXmlEgovSigner;
@@ -53,6 +54,13 @@ class CaregiverLeaveBenefitApplicationController extends Controller
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
+
         return view('ledger.caregiver_leave_benefit_application', [
             'company' => $company,
             'current_employee' => $currentEmployee,
@@ -60,7 +68,8 @@ class CaregiverLeaveBenefitApplicationController extends Controller
             'today' => $today,
             'certificate' => $certificate,
             'egovAcount' => $egovAcount,
-            'procedureName' => $procedureName
+            'procedureName' => $procedureName,
+            'existPresident' => $existPresident
         ]);
     }
 

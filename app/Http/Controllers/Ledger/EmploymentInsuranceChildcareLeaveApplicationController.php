@@ -10,6 +10,7 @@ use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
 use App\Models\Branch;
+use App\Models\Employee;
 use App\Permission;
 
 use function Laravel\Prompts\text;
@@ -62,6 +63,13 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
+
         return view('ledger.employment_insurance_childcare_leave_application', [
             'company' => $company,
             'todaySet' => $todaySet,
@@ -69,7 +77,8 @@ class EmploymentInsuranceChildcareLeaveApplicationController extends Controller
             'procedureName' => $procedureName,
             'current_employee' => $current_employee,
             'egovAcount' => $egovAcount,
-            'current_branch' => $current_branch
+            'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

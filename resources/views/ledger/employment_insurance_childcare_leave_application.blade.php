@@ -12,6 +12,9 @@
         @endslot
         <h1> {{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。</p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -83,7 +86,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -120,7 +123,8 @@
                 $('#J99_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J100_005F_93FA').val('{{ $todaySet['day'] }}');
 
-                $('#J95_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                $('#J95_005F_8E96_8BC6_8EE5_8E81_96BC').val(
+                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J107_005F_8E73_8A4F_8BC7_94D4').val(
@@ -131,7 +135,7 @@
                         '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                                                    #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86')
+                                                                                            #J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J107_005F_8E73_8A4F_8BC7_94D4, #J108_005F_8E73_93E0_8BC7_94D4, #J109_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @endif
             });
