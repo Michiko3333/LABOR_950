@@ -165,6 +165,7 @@ class AdminBranchForm extends Component
         $this->loading = true;
         array_push($this->data, $this->defaultValues());
         $this->dispatch('form-appended');
+        $this->loading = false;
     }
 
     #[On('branch-form-loaded')]
@@ -189,6 +190,7 @@ class AdminBranchForm extends Component
         $this->loading = true;
         unset($this->data[$index]);
         $this->data = array_values($this->data);
+        $this->loading = false;
     }
 
     private function defaultValues()

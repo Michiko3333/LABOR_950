@@ -117,6 +117,40 @@
                         "g";
                 }
             }
+            .ui.styled.accordion .content {
+                display: flex;
+                padding: 14px;
+                gap: 14px;
+            }
+
+            .ui.styled.accordion .content .content_inner {
+                width: 49.9%;
+            }
+
+            .ui.styled.accordion .active.title {
+                background: white;
+            }
+
+            button.append-dependent {
+                width: 100%;
+                padding: 1em;
+                color: gray;
+                font-weight: bold;
+                border: solid 2px silver;
+                border-radius: 4px;
+                background: transparent;
+                cursor: pointer;
+            }
+
+            button.append-dependent:hover {
+                color: #9e9e9e;
+                border: solid 2px #cfcfcf;
+            }
+
+            button.append-dependent:active {
+                color: #6b6b6b;
+                border: solid 2px #adadad;
+            }
         </style>
     @endslot
     <section class="content">
@@ -149,8 +183,12 @@
                 <input type="hidden" name="employee_id" value="{{ $employee_id }}">
             @endif
 
-
-            <div class="labor-data-area">
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="sample">従業員情報</a>
+                <a class="item" data-tab="sample2">扶養者情報</a>
+            </div>
+            <div class="ui bottom attached segment" data-tab="sample">
+                <div class="labor-data-area">
                 <div class="ui horizontal card card-shadow item-0">
                     <div class="content">
                         <h2>基本情報</h2>
@@ -256,26 +294,6 @@
                                             {{ $item }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field">
-                                <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg" value='1'
-                                        {{ (isset($employee_id) && $employee->spouse_flg == 1) || old('spouse_flg') == '1' ? 'checked' : '' }}>
-                                    <label>配偶者有</label>
-                                </div>
-                                <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg" value='1'
-                                        {{ (isset($employee_id) && $employee->dependent_flg == 1) || old('dependent_flg') == '1' ? 'checked' : '' }}>
-                                    <label>扶養者有</label>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'dependent_family_number') }}">
-                                <label for="dependent_family_number">扶養人数</label>
-                                <input type="number" id="dependent_family_number" name="dependent_family_number"
-                                    value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
-                                    min="0" max="99">
                             </div>
                         </div>
                         <div class="ui divider my-2"></div>
@@ -1027,6 +1045,10 @@
                         </div>
                     </div>
                 </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
+                <livewire:dependent-form :dependent="$dependent" :errors="$errors" :id="$id" />
             </div>
             @if ($userPermission->isDirector() || $userPermission->isWritableFor(6))
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
@@ -1119,6 +1141,20 @@
                 getDepartmentList();
                 getPositionList();
             }
+        });
+    </script>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.ui.tabular.menu .item');
+            const contents = document.querySelectorAll('.ui.bottom.attached.segment');
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach((t) => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    contents.forEach((c) => c.style.display = 'none');
+                    contents[index].style.display = 'block';
+                });
+            });
         });
     </script>
 </x-layout>

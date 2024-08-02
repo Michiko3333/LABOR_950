@@ -50,11 +50,11 @@ class CertificationLoader extends Component
             $this->isError = true;
             return;
         }
-        
+
         $fileName = $this->cert_file->getClientOriginalName();
         $fileExtension = strtolower(pathinfo($fileName)['extension']);
 
-        if ($fileExtension !== 'pfx') {
+        if ($fileExtension !== 'pfx' && $fileExtension !== 'p12') {
             $this->isError = true;
             return;
         }
@@ -62,7 +62,7 @@ class CertificationLoader extends Component
         $this->view = 1;
 
         $company = CurrentUser::currentCompany();
-        $path = $this->cert_file->storeAs(path: 'tmp_loading_pfx', name: 'cert_' . $company->id . '_file.pfx');
+        $path = $this->cert_file->storeAs(path: 'tmp_loading_pfx', name: 'cert_' . $company->id . '_file.' . $fileExtension);
         $file = Storage::get($path);
         $result = true;
         if ($result) {

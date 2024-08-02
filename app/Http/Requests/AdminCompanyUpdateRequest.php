@@ -21,10 +21,10 @@ class AdminCompanyUpdateRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
+            $data['name'] = mb_convert_kana($data['name'], 'ASKV');
         }
         if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'ASKV');
         }
         if (isset($data['name_abbreviation'])) {
             $data['name_abbreviation'] = mb_convert_kana($data['name_abbreviation'], 'as');
@@ -104,11 +104,11 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'capital' => 'nullable|integer',
-            'annual_sales' => 'nullable|integer',
-            'employee_sum' => 'nullable|integer',
+            'annual_sales' => 'nullable|integer|max_digits:18',
+            'employee_sum' => 'nullable|integer|max_digits:9',
             'qualification' => 'nullable|string',
-            'authorized_shares' => 'nullable|integer',
-            'issued_shares' => 'nullable|integer',
+            'authorized_shares' => 'nullable|integer|max_digits:18',
+            'issued_shares' => 'nullable|integer|max_digits:18',
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
