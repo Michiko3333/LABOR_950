@@ -734,6 +734,8 @@ class AdminController extends Controller
                 'employer_type' => $request->input('employer_type'),
                 'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                'blood_type' => $request->input('blood_type'),
+                'qualifications' => $request->input('qualifications'),
             ])->id;
 
             $dename = $request->input('de-last_name');
@@ -959,6 +961,8 @@ class AdminController extends Controller
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                    'blood_type' => $request->input('blood_type'),
+                    'qualifications' => $request->input('qualifications'),
                 ]);
 
             $deids = $request->input('de-id',[]);

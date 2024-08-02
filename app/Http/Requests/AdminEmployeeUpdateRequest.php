@@ -145,6 +145,8 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',
             'country_id' => 'nullable|integer',
+            'blood_type' => 'nullable|string|in:A,B,AB,O',
+            'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
             'insurer_reference_no' => 'nullable|string|max:10|regex:/^\d{0,10}$/u',
