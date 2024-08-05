@@ -536,8 +536,8 @@ class MixXmlEgovSigner
                 } else {
                     EgovTestLog::error("返却値エラー：申請データ送信に失敗しました");
                     EgovTestLog::info(print_r($r->collect(), true));
-                    $returnData[1]['title'] = $r['title'];
-                    $returnData[1]['detail'] = $r['detail'];
+                    $retunrData[1]['title'] = isset($r['title']) ? $r['title'] : '';
+                    $retunrData[1]['detail'] = isset($r['detail']) ? $r['detail'] : '';
                     $index= 0;
                     if (isset($r->collect()['report_list'])) {
                         foreach ($r->collect()['report_list'] as $report) {
@@ -551,7 +551,8 @@ class MixXmlEgovSigner
                         break;
                     }
                     $data = $r->collect();
-                    $errorReport[] = "予期せぬエラーが返ってきています。";
+                    $errorReport[] = "予期せぬエラーが発生しました。";
+                    $errorReport[] = "詳細を確認して、システム管理者にお問い合わせ下さい。";
                     foreach ($data as $key => $value) {
                         if (is_array($value)) {
                             $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
