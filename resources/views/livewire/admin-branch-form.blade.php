@@ -319,27 +319,25 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="field {{ err_bind($errs, 'br-labor_bureau_id', $key) }}">
-                            <label for="br-labor_bureau_id">労働局</label>
-                            <select class="ui fluid search dropdown" name="br-labor_bureau_id[]"
-                                wire:model.live="data.{{ $key }}.br-labor_bureau_id">
+                        <div class="field {{ err_bind($errs, 'br-labor_bureau_name', $key) }}">
+                            <label for="br-labor_bureau_name">労働局</label>
+                            <select class="ui fluid search dropdown" name="br-labor_bureau_name[]"
+                                wire:model.live="data.{{ $key }}.br-labor_bureau_name">
                                 <option value="">未選択</option>
-                                @foreach ($labor_bureau_id as $value)
-                                    <option value="{{ $value['id'] }}">{{ $value['submit_name_jk'] }}
-                                        {{ $value['department'] }} {{ $value['section'] }}</option>
+                                @foreach ($labor_bureau_names as $value)
+                                    <option value="{{ $value }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="two fields" wire:ignore>
-                        <div class="field {{ err_bind($errs, 'br-labor_supervision_id', $key) }}">
-                            <label for="br-labor_supervision_id">労働基準監督署</label>
-                            <select class="ui fluid search dropdown" name="br-labor_supervision_id[]"
-                                wire:model.live="data.{{ $key }}.br-labor_supervision_id">
+                        <div class="field {{ err_bind($errs, 'br-labor_supervision_name', $key) }}">
+                            <label for="br-labor_supervision_name">労働基準監督署</label>
+                            <select class="ui fluid search dropdown" name="br-labor_supervision_name[]"
+                                wire:model.live="data.{{ $key }}.br-labor_supervision_name">
                                 <option value="">未選択</option>
-                                @foreach ($labor_supervision_id as $value)
-                                    <option value="{{ $value['id'] }}">{{ $value['submit_name_hij'] }}
-                                        {{ $value['section'] }}</option>
+                                @foreach ($labor_supervision_names as $value)
+                                    <option value="{{ $value }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -348,8 +346,8 @@
                             <select class="ui fluid search dropdown" name="br-pension_office_id[]"
                                 wire:model.live="data.{{ $key }}.br-pension_office_id">
                                 <option value="">未選択</option>
-                                @foreach ($pension_office_id as $value)
-                                    <option value="{{ $value['id'] }}">{{ $value['name'] }} {{ $value['section'] }}
+                                @foreach ($pension_office_names as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}
                                     </option>
                                 @endforeach
                             </select>

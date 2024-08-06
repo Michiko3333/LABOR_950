@@ -375,8 +375,8 @@ class AdminController extends Controller
             'employment_insurance_office_no' => $requestData['br-employment_insurance_office_no'][$index],
             'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
             'hello_work_id' => $requestData['br-hello_work_id'][$index],
-            'labor_bureau_id' => $requestData['br-labor_bureau_id'][$index],
-            'labor_supervision_id' => $requestData['br-labor_supervision_id'][$index],
+            'labor_bureau_name' => $requestData['br-labor_bureau_name'][$index],
+            'labor_supervision_name' => $requestData['br-labor_supervision_name'][$index],
             'start_date_of_month' => $requestData['br-start_date_of_month'][$index],
             'start_days_of_week' => $requestData['br-start_days_of_week'][$index],
             'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
@@ -739,7 +739,7 @@ class AdminController extends Controller
             ])->id;
 
             $dename = $request->input('de-last_name');
-            if(!is_null($dename)){
+            if (!is_null($dename)) {
                 foreach ($dename as $index => $name) {
                     $dedata = $this->data_dependent($validationData, $index, $employee_id);
                     Dependent::create($dedata);
@@ -811,7 +811,7 @@ class AdminController extends Controller
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $dependent = $employee->dependent()->where('delete_flg', 0)->get();
-        
+
         return view('admin.employee_create', [
             'employee' => $employee,
             'departments' => $departments,
@@ -965,7 +965,7 @@ class AdminController extends Controller
                     'qualifications' => $request->input('qualifications'),
                 ]);
 
-            $deids = $request->input('de-id',[]);
+            $deids = $request->input('de-id', []);
             $excepts = [];
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));

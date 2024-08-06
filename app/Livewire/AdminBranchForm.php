@@ -25,10 +25,11 @@ class AdminBranchForm extends Component
     public $start_days_of_week = [];
     public $work_style_type = [];
     public $hello_work_id = [];
-    public $labor_bureau_id = [];
-    public $labor_supervision_id = [];
-    public $pension_office_id = [];
     public $loading = false;
+
+    public $labor_bureau_names = [];
+    public $labor_supervision_names = [];
+    public $pension_office_names = [];
 
     public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
@@ -43,31 +44,11 @@ class AdminBranchForm extends Component
         $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
         $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
-        $this->labor_bureau_id = Labor_bureau::select('submit_name_jk', 'department', 'section', 'id')->get()
-            ->map(function ($labor_bureau_id) {
-                return [
-                    'submit_name_jk' => $labor_bureau_id->submit_name_jk,
-                    'department' => $labor_bureau_id->department,
-                    'section' => $labor_bureau_id->section,
-                    'id' => $labor_bureau_id->id,
-                ];
-            })->toArray();
-        $this->labor_supervision_id = Labor_supervision::select('submit_name_hij', 'section', 'id')->get()
-            ->map(function ($labor_supervision_id) {
-                return [
-                    'submit_name_hij' => $labor_supervision_id->submit_name_hij,
-                    'section' => $labor_supervision_id->section,
-                    'id' => $labor_supervision_id->id,
-                ];
-            })->toArray();
-        $this->pension_office_id = Pension_office::select('name', 'section', 'id')->get()
-            ->map(function ($pension_office_id) {
-                return [
-                    'name' => $pension_office_id->name,
-                    'section' => $pension_office_id->section,
-                    'id' => $pension_office_id->id,
-                ];
-            })->toArray();
+
+        $this->labor_bureau_names = Labor_bureau::distinct()->select('submit_name_jk')->get()->pluck('submit_name_jk');
+        $this->labor_supervision_names = Labor_supervision::distinct()->select('submit_name_hij')->get()->pluck('submit_name_hij');
+        $this->pension_office_names = Pension_office::select('submit_name_f', 'id')->whereNotNull('submit_name_f')->pluck('submit_name_f', 'id');
+
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
@@ -118,8 +99,8 @@ class AdminBranchForm extends Component
                 $d['br-employment_insurance_office_no'] = $item->employment_insurance_office_no;
                 $d['br-employment_insurance_establishment_date'] = $item->employment_insurance_establishment_date;
                 $d['br-hello_work_id'] = $item->hello_work_id;
-                $d['br-labor_bureau_id'] = $item->labor_bureau_id;
-                $d['br-labor_supervision_id'] = $item->labor_supervision_id;
+                $d['br-labor_bureau_name'] = $item->labor_bureau_name;
+                $d['br-labor_supervision_name'] = $item->labor_supervision_name;
                 $d['br-start_date_of_month'] = $item->start_date_of_month;
                 $d['br-start_days_of_week'] = $item->start_days_of_week;
                 $d['br-start_time_of_day'] = $item->start_time_of_day;
@@ -230,8 +211,8 @@ class AdminBranchForm extends Component
             'br-pension_office_reference_no_cities' => '',
             'br-pension_office_reference_no_office' => '',
             'br-hello_work_id' => '',
-            'br-labor_bureau_id' => '',
-            'br-labor_supervision_id' => '',
+            'br-labor_bureau_name' => '',
+            'br-labor_supervision_name' => '',
             'br-start_date_of_month' => '',
             'br-start_days_of_week' => '',
             'br-start_time_of_day' => '',
