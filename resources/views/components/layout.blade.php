@@ -273,8 +273,10 @@
             $("section.content input").prop("readonly", true);
             $("section.content input[type='checkbox']").prop("disabled", true);
             $("section.content input[type='radio']").prop("disabled", true);
+            $("section.content input[type='file']").prop("disabled", true);
             $("section.content input").prop("placeholder", '');
             $("section.content input").addClass("permission-readonly");
+            $(".hidden-readonly").remove();
         }
     </script>
     {{ $header ?? '' }}

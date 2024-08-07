@@ -240,7 +240,7 @@
         @endif
         <form class="ui form"
             action="{{ !isset($company_id) ? route('admin.company_create_post') : route('admin.company_update_post', $company_id) }}"
-            method="post">
+            method="post" enctype="multipart/form-data">
             @csrf
             @if (session('errors'))
                 <div class="ui error message">
@@ -472,7 +472,7 @@
                             </div>
                         </div>
                         <div class="field {{ err($errors, 'industry_type[]') }}">
-                            <label for="industry_type[]">業種コード</label>
+                            <label for="industry_type[]">業種コード<span class="ml-1"><a href="https://www.e-stat.go.jp" target=”_blank”>参考URL：https://www.e-stat.go.jp</a></span></label>
                             <select id="industry_type_dropdown"
                                 class="ui fluid search dropdown multiple industry_type_select" multiple=""
                                 name="industry_type[]">
@@ -725,21 +725,39 @@
                         <h2>添付情報</h2>
                         <div class="field">
                             <label for="financial_statement">業績情報へ決算書の添付（直近1期分）</label>
-                            <input type="text" id="financial_statement" name="financial_statement" value=""
-                                placeholder="実装予定" disabled>
-                            <div class="ui error message"></div>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="financial_statement" class="file-attachment-form" name="financial_statement">
+                            @if (!empty($financial_statement))
+                                <p style="text-align: right;">
+                                    {{ $financial_statement }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 1]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                    </span>
+                                </p>
+                            @endif
                         </div>
                         <div class="field">
                             <label for="articles_of_incorporation">事業目的へ定款の添付（最新）</label>
-                            <input type="text" id="articles_of_incorporation" name="articles_of_incorporation"
-                                value="" placeholder="実装予定" disabled>
-                            <div class="ui error message"></div>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="articles_of_incorporation" class="file-attachment-form" name="articles_of_incorporation">
+                            @if (!empty($articles_of_incorporation))
+                                <p style="text-align: right;">
+                                    {{ $articles_of_incorporation }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 2]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                    </span>
+                                </p>
+                            @endif
                         </div>
                         <div class="field">
                             <label for="stock_information">株式情報へ株主を添付（最新）</label>
-                            <input type="text" id="stock_information" name="stock_information" value=""
-                                placeholder="実装予定" disabled>
-                            <div class="ui error message"></div>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="stock_information" class="file-attachment-form" name="stock_information">
+                            @if (!empty($stock_information))
+                                <p style="text-align: right;">
+                                    {{ $stock_information }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 3]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                    </span>
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -841,5 +859,28 @@
                 $('#info-modal').modal('show');
             });
         });
+
+        const fileInputs = document.getElementsByClassName('file-attachment-form');
+        const fileHandler = (e) => {
+            const totalSizeLimit = 1024 * 1024 * 99;
+            let totalSize = 0;
+            for (let index = 0; index < fileInputs.length; index++) {
+                const input = fileInputs[index];
+                const files = input.files;
+
+                for (let i = 0; i < files.length; i++) {
+                    const size = files[i].size;
+                    totalSize += size;
+                }
+            }
+            if (totalSizeLimit < totalSize) {
+                window.alert('添付ファイルの合計は99MB以下にしてください。');
+                e.target.value = '';
+            }
+        };
+        for (let index = 0; index < fileInputs.length; index++) {
+            const element = fileInputs[index];
+            element.addEventListener('change', fileHandler);
+        }
     </script>
 </x-layout>

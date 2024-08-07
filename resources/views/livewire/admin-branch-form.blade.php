@@ -262,13 +262,14 @@
                         <div class="field required {{ err_bind($errs, 'br-pension_office_no', $key) }}">
                             <label for="br-pension_office_no">事業所番号（厚生年金）</label>
                             <input type="text" name="br-pension_office_no[]"
-                                wire:model.live="data.{{ $key }}.br-pension_office_no" placeholder="">
+                                wire:model.live="data.{{ $key }}.br-pension_office_no" placeholder=""
+                                maxlength="10">
                         </div>
                         <div class="field {{ err_bind($errs, 'br-employment_insurance_office_no', $key) }}">
                             <label for="br-employment_insurance_office_no">事業所番号（雇用保険）</label>
                             <input type="text" name="br-employment_insurance_office_no[]"
                                 wire:model.live="data.{{ $key }}.br-employment_insurance_office_no"
-                                placeholder="">
+                                placeholder="" maxlength="10">
                         </div>
 
                         <div class="field {{ err_bind($errs, 'br-employment_insurance_establishment_date', $key) }}">
