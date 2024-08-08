@@ -68,6 +68,9 @@ class CompanyUpdateRequest extends BaseRequest
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'company_division' => 'integer',
+            'financial_statement' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
+            'articles_of_incorporation' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
+            'stock_information' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
         ];
     }
 
@@ -100,6 +103,9 @@ class CompanyUpdateRequest extends BaseRequest
             'purpose' => '事業目的',
             'procedure_hidden_flg' => '行政手続非表示フラグ',
             'company_division' => '会社区分',
+            'financial_statement' => '業績情報へ決算書の添付（直近1期分）',
+            'articles_of_incorporation' => '事業目的へ定款の添付（最新）',
+            'stock_information' => '株式情報へ株主を添付（最新）',
         ];
 
         foreach ($this->input('industry_type', []) as $index => $value) {

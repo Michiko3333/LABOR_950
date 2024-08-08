@@ -11,6 +11,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use App\Models\Branch;
 use App\Permission;
+use App\Models\Employee;
 
 class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
 {
@@ -59,6 +60,12 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
         );
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.first_wage_certificates_employment_insured_at_sixty', [
             'company' => $company,
@@ -68,6 +75,7 @@ class FirstWageCertificatesEmploymentInsuredAtSixtyController extends Controller
             'current_employee' => $current_employee,
             'egovAcount' => $egovAcount,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

@@ -9,6 +9,7 @@ use App\Http\Requests\SeniorEmploymentContinuationBenefitClaimFormRequest;
 use App\Models\Branch;
 use App\Models\Certificate;
 use App\Models\CurrentUser;
+use App\Models\Employee;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Permission;
@@ -55,6 +56,14 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             'day' => $convertToday['japanese_calendar_result']->day,
         ];
         $egovAcount = $this->egovAcount();
+
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
+
         return view('ledger.employment_insurance_senior_continuation_allowance', [
             'company' => $company,
             'current_employee' => $currentEmployee,
@@ -62,7 +71,8 @@ class EmploymentInsuranceSeniorContinuationAllowanceController extends Controlle
             'todaySet' => $today,
             'certificate' => $certificate,
             'procedureName' => $procedureName,
-            'egovAcount' => $egovAcount
+            'egovAcount' => $egovAcount,
+            'existPresident' => $existPresident
         ]);
     }
 

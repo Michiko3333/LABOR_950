@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Models\Branch;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthInsuranceDependentChangeController extends Controller
 {
@@ -75,6 +76,12 @@ class HealthInsuranceDependentChangeController extends Controller
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.health_insurance_dependent_change', [
             'company' => $company,
@@ -88,6 +95,7 @@ class HealthInsuranceDependentChangeController extends Controller
             'procedureName' => $procedureName,
             'current_employee' => $current_employee,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

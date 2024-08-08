@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\EgovAPI\CsvFormatter;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthAndPensionInsuredBonusPaymentNotificationController extends Controller
 {
@@ -67,17 +68,27 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
-        return view('ledger.health_and_pension_insured_bonus_payment_notification',
-            ['company' => $company,
-            'todaySet' => $todaySet,
-            'current_employee' => $current_employee,
-            'dataUri' => $dataUri,
-            'certificate' => $certificate,
-            'procedureName' => $procedureName,
-            'egovAcount' => $egovAcount,
-            'businessOwner' => $businessOwner
-            ]);
+        return view(
+            'ledger.health_and_pension_insured_bonus_payment_notification',
+            [
+                'company' => $company,
+                'todaySet' => $todaySet,
+                'current_employee' => $current_employee,
+                'dataUri' => $dataUri,
+                'certificate' => $certificate,
+                'procedureName' => $procedureName,
+                'egovAcount' => $egovAcount,
+                'businessOwner' => $businessOwner,
+                'existPresident' => $existPresident
+            ]
+        );
     }
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)

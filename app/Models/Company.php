@@ -93,5 +93,10 @@ class Company extends Model
         return $this->hasOne(Egov_account::class);
     }
 
+    public function company_files()
+    {
+        return $this->hasMany(Company_files::class);
+    }
+
 }
 

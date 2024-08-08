@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\EgovAPI\CsvFormatter;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController extends Controller
 {
@@ -68,17 +69,27 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
-        return view('ledger.health_insurance_employee_pension_insurance_monthly_remuneration_change_notification',
-            ['company' => $company,
-            'todaySet' => $todaySet,
-            'dataUri' => $dataUri,
-            'current_employee' => $current_employee,
-            'certificate' => $certificate,
-            'procedureName' => $procedureName,
-            'egovAcount' => $egovAcount,
-            'businessOwner' => $businessOwner
-            ]);
+        return view(
+            'ledger.health_insurance_employee_pension_insurance_monthly_remuneration_change_notification',
+            [
+                'company' => $company,
+                'todaySet' => $todaySet,
+                'dataUri' => $dataUri,
+                'current_employee' => $current_employee,
+                'certificate' => $certificate,
+                'procedureName' => $procedureName,
+                'egovAcount' => $egovAcount,
+                'businessOwner' => $businessOwner,
+                'existPresident' => $existPresident
+            ]
+        );
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest $request)

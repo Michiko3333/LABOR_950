@@ -11,8 +11,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use App\Models\Branch;
 use App\Permission;
-
-use function Laravel\Prompts\text;
+use App\Models\Employee;
 
 class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Controller
 {
@@ -61,6 +60,12 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
         );
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.first_parental_leave_benefits_for_employment_insurance', [
             'company' => $company,
@@ -70,6 +75,7 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceController extends Control
             'current_employee' => $current_employee,
             'egovAcount' => $egovAcount,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

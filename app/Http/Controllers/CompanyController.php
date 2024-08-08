@@ -20,7 +20,8 @@ use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 use App\Models\Company_industry_type;
-
+use App\Models\Company_files;
+use App\Models\Industry_type;
 use App\Permission;
 
 class CompanyController extends Controller
@@ -53,6 +54,10 @@ class CompanyController extends Controller
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
         $industry_type = Company_industry_type::where('company_id', $currentCompany->id)->where('delete_flg', 0)->pluck('industry_type_id');
+        $financial_statement = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 1)->where('delete_flg', 0)->first();
+        $articles_of_incorporation = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 2)->where('delete_flg', 0)->first();
+        $stock_information = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 3)->where('delete_flg', 0)->first();
+        $current_industry_type = Industry_type::select('id', 'industry_type_code')->whereIn('id', $industry_type)->pluck('industry_type_code');
 
         return view('company', [
             'currentCompany' => $currentCompany,
@@ -64,7 +69,11 @@ class CompanyController extends Controller
             'place_type' => $place_type,
             'start_days_of_week' => $start_days_of_week,
             'work_style_type' => $work_style_type,
-            'industry_type' => $industry_type
+            'industry_type' => $industry_type,
+            'current_industry_type' => $current_industry_type,
+            'financial_statement' => $financial_statement->file_name ?? '',
+            'articles_of_incorporation' => $articles_of_incorporation->file_name ?? '',
+            'stock_information' => $stock_information->file_name ?? ''
         ]);
     }
 
@@ -103,6 +112,48 @@ class CompanyController extends Controller
                         'delete_flg' => 0
                     ]
                 );
+            }
+            if ($request->file('financial_statement')) {
+                $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
+                $financial_statement = $request->file('financial_statement')->get();
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 1)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $currentCompany->id,
+                    'document_type' => 1,
+                    'file_name' => $financial_statement_name,
+                    'data' => $financial_statement,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('articles_of_incorporation')) {
+                $articles_of_incorporation_name = $request->file('articles_of_incorporation')->getClientOriginalName();
+                $articles_of_incorporation = $request->file('articles_of_incorporation')->get();
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 2)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $currentCompany->id,
+                    'document_type' => 2,
+                    'file_name' => $articles_of_incorporation_name,
+                    'data' => $articles_of_incorporation,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('stock_information')) {
+                $stock_information_name = $request->file('stock_information')->getClientOriginalName();
+                $stock_information = $request->file('stock_information')->get();
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 3)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $currentCompany->id,
+                    'document_type' => 3,
+                    'file_name' => $stock_information_name,
+                    'data' => $stock_information,
+                    'delete_flg' => 0,
+                ]);
             }
             DB::commit();
             $this->putSuccess();
@@ -153,5 +204,22 @@ class CompanyController extends Controller
             'url' => $requestData['url'],
             'purpose' => $requestData['purpose'],
         ];
+    }
+
+    public function downloadFile($document_type)
+    {
+        $currentCompany = CurrentUser::currentCompany();
+        $company_id = $currentCompany->id;
+        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('document_type', $document_type)->first();
+        $headers = [
+            'Content-Type' => 'application/octet-stream',
+        ];
+
+        return response()->stream(function () use ($file) {
+            echo $file->data;
+        }, 200, [
+            'Content-Type' => $headers['Content-Type'],
+            'Content-Disposition' => 'attachment; filename="' . $file->file_name . '"',
+        ]);
     }
 }

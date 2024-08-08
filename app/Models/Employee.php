@@ -119,6 +119,8 @@ class Employee extends Model
         'employment_start_date',
         'employment_end_date',
         'icon_path',
+        'blood_type',
+        'qualifications',
     ];
 
     public function user()

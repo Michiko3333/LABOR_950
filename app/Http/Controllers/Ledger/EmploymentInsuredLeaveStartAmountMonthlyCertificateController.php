@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest;
 use App\Models\CurrentUser;
 use App\Models\Certificate;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\EgovAPI\MixXmlEgovSigner;
@@ -56,6 +57,13 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
 
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
+
         return view('ledger.employment_insured_leave_start_amount_monthly_certificate', [
             'company' => $company,
             'today' => $today,
@@ -64,6 +72,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateController extends Cont
             'current_employee' => $current_employee,
             'egovAcount' => $egovAcount,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

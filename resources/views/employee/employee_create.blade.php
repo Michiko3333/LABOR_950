@@ -296,6 +296,32 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="fields">
+                            <div class="three wide field {{ err($errors, 'blood_type') }}">
+                                <label>血液型</label>
+                                <select class="ui fluid dropdown" name="blood_type" value="{{ old('blood_type') }}">
+                                    <option value="">未選択</option>
+                                    <option value="A" {{ old('blood_type') == "A" || (isset($employee) && old('blood_type', $employee->blood_type) == "A") ? 'selected' : '' }}>
+                                    A</option>
+                                    <option value="B" {{ old('blood_type') == "B" || (isset($employee) && old('blood_type', $employee->blood_type) == "B") ? 'selected' : '' }}>
+                                    B</option>
+                                    <option value="AB" {{ old('blood_type') == "AB" || (isset($employee) && old('blood_type', $employee->blood_type) == "AB") ? 'selected' : '' }}>
+                                    AB</option>
+                                    <option value="O" {{ old('blood_type') == "O" || (isset($employee) && old('blood_type', $employee->blood_type) == "O") ? 'selected' : '' }}>
+                                    O</option>
+                                </select>
+                            </div>
+                            <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
+                                <label>資格情報</label>
+                                @if (!isset($employee_id))
+                                    <textarea id="qualifications" name="qualifications"
+                                    style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
+                                @else
+                                    <textarea id="qualifications" name="qualifications"
+                                    style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
+                                @endif
+                            </div>
+                        </div>
                         <div class="ui divider my-2"></div>
                         <div class="two fields">
                             <div class="two fields m-0">

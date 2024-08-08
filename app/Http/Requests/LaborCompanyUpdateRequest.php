@@ -139,10 +139,10 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-employment_insurance_office_no.*" => 'nullable|string|max:20',
             "br-hello_work_id" => 'array',
             "br-hello_work_id.*" => 'nullable|integer',
-            "br-labor_bureau_id" => 'array',
-            "br-labor_bureau_id.*" => 'nullable|integer',
-            "br-labor_supervision_id" => 'array',
-            "br-labor_supervision_id.*" => 'nullable|integer',
+            "br-labor_bureau_name" => 'array',
+            "br-labor_bureau_name.*" => 'nullable|integer',
+            "br-labor_supervision_name" => 'array',
+            "br-labor_supervision_name.*" => 'nullable|integer',
             "br-start_date_of_month" => 'array',
             "br-start_date_of_month.*" => 'nullable|integer',
             "br-start_days_of_week" => 'array',
@@ -257,8 +257,8 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-pension_office_reference_no_office" => '事業所整理記号-事業所記号',
             "br-employment_insurance_office_no" => '事業所番号（雇用保険）',
             "br-hello_work_id" => '管轄（公共職業安定所）',
-            "br-labor_bureau_id" => '管轄（労働局）',
-            "br-labor_supervision_id" => '管轄（労働基準監督）',
+            "br-labor_bureau_name" => '管轄（労働局）',
+            "br-labor_supervision_name" => '管轄（労働基準監督）',
             "br-start_date_of_month" => '開始設定(月の始まり)',
             "br-start_days_of_week" => '開始設定(週の始まり)',
             "br-start_time_of_day" => '開始設定(日の始まり)',
@@ -371,11 +371,11 @@ class LaborCompanyUpdateRequest extends BaseRequest
         foreach ($this->input('br-hello_work_id', []) as $index => $value) {
             $Attributes["br-hello_work_id.{$index}"] = ($index + 1) . "事業所_管轄（公共職業安定所）";
         }
-        foreach ($this->input('br-labor_bureau_id', []) as $index => $value) {
-            $Attributes["br-labor_bureau_id.{$index}"] = ($index + 1) . "事業所_管轄（労働局）";
+        foreach ($this->input('br-labor_bureau_name', []) as $index => $value) {
+            $Attributes["br-labor_bureau_name.{$index}"] = ($index + 1) . "事業所_管轄（労働局）";
         }
-        foreach ($this->input('br-labor_supervision_id', []) as $index => $value) {
-            $Attributes["br-labor_supervision_id.{$index}"] = ($index + 1) . "事業所_管轄（労働基準監督）";
+        foreach ($this->input('br-labor_supervision_name', []) as $index => $value) {
+            $Attributes["br-labor_supervision_name.{$index}"] = ($index + 1) . "事業所_管轄（労働基準監督）";
         }
         foreach ($this->input('br-start_date_of_month', []) as $index => $value) {
             $Attributes["br-start_date_of_month.{$index}"] = ($index + 1) . "事業所_開始設定(月の始まり)";
