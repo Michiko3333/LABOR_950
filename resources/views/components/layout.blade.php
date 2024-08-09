@@ -276,6 +276,8 @@
             $("section.content input[type='file']").prop("disabled", true);
             $("section.content input").prop("placeholder", '');
             $("section.content input").addClass("permission-readonly");
+            $("section.content textarea").prop("readonly", true);
+            $("section.content textarea").addClass("permission-readonly");
             $(".hidden-readonly").remove();
         }
     </script>
