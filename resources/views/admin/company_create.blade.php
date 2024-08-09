@@ -836,7 +836,7 @@
                             value: element.id
                         }).text(element.industry_type_code).appendTo('select[name="industry_type[]"]');
                     });
-                    $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                    $('.ui.dropdown.dropdown.multiple.industry_type_select').dropdown('clear');
 
                     if (first) {
                         const def = @json(old('industry_type', $industry_type ?? []));

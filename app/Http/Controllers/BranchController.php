@@ -141,6 +141,14 @@ class BranchController extends Controller
         }
         $current_company = CurrentUser::currentCompany();
         $company_id = $current_company->id;
+
+        $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
+        if(!is_null($bonus_payment_month)){
+            $bonus_payment_month_processed = implode(',', $bonus_payment_month);
+        } else {
+            $bonus_payment_month_processed = null;
+        }
+
         return [
             'name' => $requestData['br-name'][$index],
             'company_id' => $company_id,
@@ -195,6 +203,15 @@ class BranchController extends Controller
             'holiday_legal' => $requestData['br-holiday_legal'][$index],
             'holiday_not_logal' => $requestData['br-holiday_not_logal'][$index],
             'work_style_type' => $requestData['br-work_style_type'][$index],
+            'labor_insurance_category' => $requestData['br-labor_insurance_category'][$index],
+            'kenpo_no' => $requestData['br-kenpo_no'][$index],
+            'insurance_office_name' => $requestData['br-insurance_office_name'][$index],
+            'insurance_applicable_date' => $requestData['br-insurance_applicable_date'][$index],
+            'bonus_payment_month' => $bonus_payment_month_processed,
+            'pension_office_name' => $requestData['br-pension_office_name'][$index],
+            'employment_insurance_rate' => $requestData['br-employment_insurance_rate'][$index],
+            'rate_pattern_id' => $requestData['br-rate_pattern_id'][$index],
+            'fractional_adjustment_pattern_id' => $requestData['br-fractional_adjustment_pattern_id'][$index],
         ];
     }
 }
