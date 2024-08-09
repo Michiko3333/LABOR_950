@@ -68,9 +68,9 @@ class CompanyUpdateRequest extends BaseRequest
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'company_division' => 'integer',
-            'financial_statement' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
-            'articles_of_incorporation' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
-            'stock_information' => 'nullable|file|mimes:doc,docx,pdf,jpeg|max:5000',
+            'financial_statement' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'articles_of_incorporation' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'stock_information' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
         ];
     }
 
