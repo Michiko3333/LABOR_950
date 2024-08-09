@@ -151,6 +151,11 @@
                 color: #6b6b6b;
                 border: solid 2px #adadad;
             }
+            
+            .tab-error {
+                border: 2px solid red !important;
+                background-color: #fdd !important;
+            }
         </style>
     @endslot
     <section class="content">
@@ -182,10 +187,93 @@
             @if (isset($employee_id))
                 <input type="hidden" name="employee_id" value="{{ $employee_id }}">
             @endif
-
+            @php
+                $field1 = $errors->hasAny([
+                    'employee_no',
+                    'last_name',
+                    'last_name_kana',
+                    'last_name_alphabet',
+                    'first_name',
+                    'first_name_kana',
+                    'first_name_alphabet',
+                    'qualifications',
+                    'old_last_name',
+                    'old_last_name_kana',
+                    'old_last_name_alphabet',
+                    'old_first_name',
+                    'old_first_name_kana',
+                    'old_first_name_alphabet',
+                    'name_common',
+                    'name_common_kana',
+                    'post_code',
+                    'address_prefecture',
+                    'address_city',
+                    'address_ward',
+                    'address_apartment',
+                    'employee_type',
+                    'employee_status',
+                    'sex',
+                    'birthday_date',
+                    'company_name',
+                    'branch_id',
+                    'tel_area_code',
+                    'tel_city_code',
+                    'tel_subscriber_code',
+                    'fax1',
+                    'fax2',
+                    'fax3',
+                    'mail_address1',
+                    'mail_address2',
+                    'emergency_post_code1',
+                    'emergency_contact1',
+                    'emergency_relationship1',
+                    'emergency_tel1',
+                    'emergency_address_prefecture1',
+                    'emergency_address_city1',
+                    'emergency_address_ward1',
+                    'emergency_address_apartment1',
+                    'emergency_post_code2',
+                    'emergency_contact2',
+                    'emergency_relationship2',
+                    'emergency_tel2',
+                    'emergency_address_prefecture2',
+                    'emergency_address_city2',
+                    'emergency_address_ward2',
+                    'emergency_address_apartment2',
+                    'mynumber_card_no',
+                    'social_insurance_no',
+                    'pension_no',
+                    'insurer_no',
+                    'insurer_reference_no',
+                    'employment_insured_no',
+                    'residence_card_no',
+                    'residential_status_unknown_reason',
+                    'user_email',
+                    'user_pass',
+                ]);
+                $field2 = $errors->hasAny([
+                    'de-last_name.*',
+                    'de-last_name_kana.*',
+                    'de-first_name.*',
+                    'de-first_name_kana.*',
+                    'de-sex.*',
+                    'de-relationship_spouse.*',
+                    'de-relationship_dependent.*',
+                    'de-spouse_flag.*',
+                    'de-age.*',
+                    'de-contact.*',
+                    'de-occupation.*',
+                    'de-annual_income.*',
+                    'de-mynumber_card_no.*',
+                    'de-pension_no.*',
+                    'de-dependent_type.*',
+                    'de-other_1.*',
+                    'de-other_2.*',
+                ]);
+            @endphp
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="sample">従業員情報</a>
-                <a class="item" data-tab="sample2">扶養者情報</a>
+                <a class="item active {{ $field1 ? 'tab-error' : '' }}" data-tab="sample">従業員情報</a>
+                <a class="item {{ $field2 ? 'tab-error' : '' }}" data-tab="sample2">扶養者情報</a>
             </div>
             <div class="ui bottom attached segment" data-tab="sample">
                 <div class="labor-data-area">
