@@ -121,32 +121,32 @@
             }
 
             /*
-                        .company-data-area .ui.card.item-0 {
-                            grid-area: 1 / 1 / 4 / 3;
-                            min-width: 650px;
-                        }
+                                .company-data-area .ui.card.item-0 {
+                                    grid-area: 1 / 1 / 4 / 3;
+                                    min-width: 650px;
+                                }
 
-                        .company-data-area .ui.card.item-1 {
-                            grid-area: 2 / 3 / 3 / 5;
-                        }
+                                .company-data-area .ui.card.item-1 {
+                                    grid-area: 2 / 3 / 3 / 5;
+                                }
 
-                        .company-data-area .ui.card.item-2 {
-                            grid-area: 1 / 3 / 2 / 4;
-                        }
+                                .company-data-area .ui.card.item-2 {
+                                    grid-area: 1 / 3 / 2 / 4;
+                                }
 
-                        .company-data-area .ui.card.item-3 {
-                            grid-area: 1 / 4 / 2 / 5;
-                        }
+                                .company-data-area .ui.card.item-3 {
+                                    grid-area: 1 / 4 / 2 / 5;
+                                }
 
-                        .company-data-area .ui.card.item-4 {
-                            grid-area: 3 / 3 / 4 / 4;
-                        }
+                                .company-data-area .ui.card.item-4 {
+                                    grid-area: 3 / 3 / 4 / 4;
+                                }
 
-                        .company-data-area .ui.card.item-5 {
-                            grid-area: 3 / 4 / 4 / 5;
-                        }
+                                .company-data-area .ui.card.item-5 {
+                                    grid-area: 3 / 4 / 4 / 5;
+                                }
 
-                        */
+                                */
 
             .company-data-area .ui.card.item-0 {
                 grid-area: 1 / 1 / 4 / 4;
@@ -802,7 +802,7 @@
 
         function getIndustryType(first = false) {
             $.ajax({
-                    url: '{{ route('admin.get_industry_type') }}',
+                    url: '{{ route('company.get_industry_type') }}',
                     type: 'post'
                 })
                 .done((data) => {

@@ -92,7 +92,7 @@ return [
     'mac_address' => 'The :attribute field must be a valid MAC address.',
     'max' => [
         'array' => 'The :attribute field must not have more than :max items.',
-        'file' => 'The :attribute field must not be greater than :max kilobytes.',
+        'file' => ':attributeの容量を:maxKB以下にしてください',
         'numeric' => ':attributeは:max以下の桁数にしてください。',
         'string' => ':attributeは:max文字以下で入力してください。',
     ],
@@ -101,7 +101,7 @@ return [
     'mimetypes' => ':attributeは許可されたファイル形式ではありません',
     'min' => [
         'array' => 'The :attribute field must have at least :min items.',
-        'file' => 'The :attribute field must be at least :min kilobytes.',
+        'file' => ':attributeの容量を:maxKB以上にしてください',
         'numeric' => ':attributeは:min以上の桁数にしてください。',
         'string' => ':attributeは:min文字以上で入力してください。',
     ],
@@ -152,7 +152,7 @@ return [
     'string' => ':attributeは文字列で入力してください。',
     'timezone' => 'The :attribute field must be a valid timezone.',
     'unique' => 'The :attribute has already been taken.',
-    'uploaded' => 'The :attribute failed to upload.',
+    'uploaded' => ':attributeのアップロードに失敗しました。',
     'uppercase' => 'The :attribute field must be uppercase.',
     'url' => ':attributeは正しいURL形式ではありません。',
     'ulid' => 'The :attribute field must be a valid ULID.',

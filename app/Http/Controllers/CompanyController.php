@@ -222,4 +222,12 @@ class CompanyController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $file->file_name . '"',
         ]);
     }
+
+    public function get_industry_type(Request $request)
+    {
+
+        $industry_type = Industry_type::get(['id', 'industry_type_code']);
+
+        return response()->json($industry_type);
+    }
 }
