@@ -98,7 +98,7 @@ return [
     ],
     'max_digits' => ':attributeは:max桁以下で入力してください。',
     'mimes' => ':attributeの拡張子は:valuesのいずれかである必要があります。',
-    'mimetypes' => 'The :attribute field must be a file of type: :values.',
+    'mimetypes' => ':attributeは許可されたファイル形式ではありません',
     'min' => [
         'array' => 'The :attribute field must have at least :min items.',
         'file' => 'The :attribute field must be at least :min kilobytes.',
