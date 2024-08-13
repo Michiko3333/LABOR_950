@@ -210,7 +210,7 @@ class CompanyController extends Controller
     {
         $currentCompany = CurrentUser::currentCompany();
         $company_id = $currentCompany->id;
-        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('document_type', $document_type)->first();
+        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('delete_flg', 0)->where('document_type', $document_type)->first();
         $headers = [
             'Content-Type' => 'application/octet-stream',
         ];

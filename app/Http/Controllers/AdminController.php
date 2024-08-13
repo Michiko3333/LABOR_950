@@ -137,7 +137,7 @@ class AdminController extends Controller
                     'delete_flg' => 0,
                 ]);
             }
-            if($request->file('financial_statement')) {
+            if ($request->file('financial_statement')) {
                 $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
                 $financial_statement = $request->file('financial_statement')->get();
                 Company_files::create([
@@ -148,7 +148,7 @@ class AdminController extends Controller
                     'delete_flg' => 0,
                 ]);
             }
-            if($request->file('articles_of_incorporation')) {
+            if ($request->file('articles_of_incorporation')) {
                 $articles_of_incorporation_name = $request->file('articles_of_incorporation')->getClientOriginalName();
                 $articles_of_incorporation = $request->file('articles_of_incorporation')->get();
                 Company_files::create([
@@ -159,7 +159,7 @@ class AdminController extends Controller
                     'delete_flg' => 0,
                 ]);
             }
-            if($request->file('stock_information')) {
+            if ($request->file('stock_information')) {
                 $stock_information_name = $request->file('stock_information')->getClientOriginalName();
                 $stock_information = $request->file('stock_information')->get();
                 Company_files::create([
@@ -266,7 +266,7 @@ class AdminController extends Controller
                     ]
                 );
             }
-            if($request->file('financial_statement')) {
+            if ($request->file('financial_statement')) {
                 $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
                 $financial_statement = $request->file('financial_statement')->get();
                 Company_files::where('company_id', $id)
@@ -280,7 +280,7 @@ class AdminController extends Controller
                     'delete_flg' => 0,
                 ]);
             }
-            if($request->file('articles_of_incorporation')) {
+            if ($request->file('articles_of_incorporation')) {
                 $articles_of_incorporation_name = $request->file('articles_of_incorporation')->getClientOriginalName();
                 $articles_of_incorporation = $request->file('articles_of_incorporation')->get();
                 Company_files::where('company_id', $id)
@@ -294,7 +294,7 @@ class AdminController extends Controller
                     'delete_flg' => 0,
                 ]);
             }
-            if($request->file('stock_information')) {
+            if ($request->file('stock_information')) {
                 $stock_information_name = $request->file('stock_information')->getClientOriginalName();
                 $stock_information = $request->file('stock_information')->get();
                 Company_files::where('company_id', $id)
@@ -426,7 +426,7 @@ class AdminController extends Controller
         }
 
         $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
-        if(!is_null($bonus_payment_month)){
+        if (!is_null($bonus_payment_month)) {
             $bonus_payment_month_processed = implode(',', $bonus_payment_month);
         } else {
             $bonus_payment_month_processed = null;
@@ -507,7 +507,7 @@ class AdminController extends Controller
 
     public function downloadFile($company_id, $document_type)
     {
-        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('document_type', $document_type)->first();
+        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('delete_flg', 0)->where('document_type', $document_type)->first();
         $headers = [
             'Content-Type' => 'application/octet-stream',
         ];
