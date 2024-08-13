@@ -335,21 +335,21 @@
                             </div>
                             <div class="three fields">
                                 <div
-                                    class="field required {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
+                                    class="field {{ err_bind($errs, 'br-pension_office_reference_prefecture', $key) }}">
                                     <label for="br-pension_office_reference_prefecture">事業所番号整理記号・都道府県コード</label>
                                     <input type="text" name="br-pension_office_reference_prefecture[]"
                                         wire:model.live="data.{{ $key }}.br-pension_office_reference_prefecture"
                                         placeholder="" maxlength="2">
                                 </div>
                                 <div
-                                    class="field required {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
+                                    class="field {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
                                     <label for="br-pension_office_reference_no_cities">事業所番号整理記号・郡市区記号</label>
                                     <input type="text" name="br-pension_office_reference_no_cities[]"
                                         wire:model.live="data.{{ $key }}.br-pension_office_reference_no_cities"
                                         placeholder="" maxlength="2">
                                 </div>
                                 <div
-                                    class="field required {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
+                                    class="field {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
                                     <label for="br-pension_office_reference_no_office">事業所番号整理記号・事務所記号</label>
                                     <input type="text" name="br-pension_office_reference_no_office[]"
                                         wire:model.live="data.{{ $key }}.br-pension_office_reference_no_office"
@@ -924,8 +924,8 @@
 
     <style>
         .ui.secondary.vertical.branch-tab-menu .item.active {
-            background-color: #F2F2F2 !important;
-            color: #0C0C0C !important;
+            background-color: #F2F2F2;
+            color: #0C0C0C;
             font-weight: 700;
         }
 
@@ -942,9 +942,9 @@
             text-align: center;
         }
 
-        .tab-error {
-            border: 2px solid red !important;
-            background-color: #fdd !important;
+        .tab-error,
+        .tab-error.active {
+            color: #912d2b !important;
         }
 
         .disabled {
