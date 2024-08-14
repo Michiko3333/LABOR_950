@@ -266,6 +266,23 @@ class AdminController extends Controller
                     ]
                 );
             }
+
+            if ($request->input('financial_statement_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 1)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('articles_of_incorporation_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 2)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('stock_information_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 3)
+                    ->update(['delete_flg' => 1]);
+            }
+
             if ($request->file('financial_statement')) {
                 $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
                 $financial_statement = $request->file('financial_statement')->get();

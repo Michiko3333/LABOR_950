@@ -212,6 +212,20 @@
                     min-width: unset;
                 }
             }
+
+            a.download-link:hover {
+                text-decoration: underline;
+            }
+
+            a.delete-link {
+                color: var(--color-red);
+                margin-left: 0.5rem;
+            }
+
+            a.delete-link:hover {
+                color: var(--color-red);
+                text-decoration: underline;
+            }
         </style>
     @endslot
 
@@ -472,7 +486,8 @@
                             </div>
                         </div>
                         <div class="field {{ err($errors, 'industry_type[]') }}">
-                            <label for="industry_type[]">業種コード<span class="ml-1"><a href="https://www.e-stat.go.jp" target=”_blank”>参考URL：https://www.e-stat.go.jp</a></span></label>
+                            <label for="industry_type[]">業種コード<span class="ml-1"><a href="https://www.e-stat.go.jp"
+                                        target=”_blank”>参考URL：https://www.e-stat.go.jp</a></span></label>
                             <select id="industry_type_dropdown"
                                 class="ui fluid search dropdown multiple industry_type_select" multiple=""
                                 name="industry_type[]">
@@ -725,36 +740,60 @@
                         <h2>添付情報</h2>
                         <div class="field">
                             <label for="financial_statement">業績情報へ決算書の添付（直近1期分）</label>
-                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="financial_statement" class="file-attachment-form" name="financial_statement">
-                            @if (!empty($financial_statement))
-                                <p style="text-align: right;">
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="financial_statement"
+                                class="file-attachment-form" name="financial_statement">
+                            <input type="hidden" name="financial_statement_delete"
+                                value="{{ old('financial_statement_delete', 0) }}">
+                            @if (!empty($financial_statement) && old('financial_statement_delete') == 0)
+                                <p class="financial_statement_current" style="text-align: right;">
                                     {{ $financial_statement }}
                                     <span class="ml-1">
-                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 1]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 1]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('financial_statement')"
+                                                class="delete-link">削除</a>
+                                        @endif
                                     </span>
                                 </p>
                             @endif
                         </div>
                         <div class="field">
                             <label for="articles_of_incorporation">事業目的へ定款の添付（最新）</label>
-                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="articles_of_incorporation" class="file-attachment-form" name="articles_of_incorporation">
-                            @if (!empty($articles_of_incorporation))
-                                <p style="text-align: right;">
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="articles_of_incorporation"
+                                class="file-attachment-form" name="articles_of_incorporation">
+                            <input type="hidden" name="articles_of_incorporation_delete"
+                                value="{{ old('articles_of_incorporation_delete', 0) }}">
+                            @if (!empty($articles_of_incorporation) && old('articles_of_incorporation_delete') == 0)
+                                <p class="articles_of_incorporation_current" style="text-align: right;">
                                     {{ $articles_of_incorporation }}
                                     <span class="ml-1">
-                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 2]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 2]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('articles_of_incorporation')"
+                                                class="delete-link">削除</a>
+                                        @endif
                                     </span>
                                 </p>
                             @endif
                         </div>
                         <div class="field">
                             <label for="stock_information">株式情報へ株主を添付（最新）</label>
-                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="stock_information" class="file-attachment-form" name="stock_information">
-                            @if (!empty($stock_information))
-                                <p style="text-align: right;">
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="stock_information"
+                                class="file-attachment-form" name="stock_information">
+                            <input type="hidden" name="stock_information_delete"
+                                value="{{ old('stock_information_delete', 0) }}">
+                            @if (!empty($stock_information) && old('stock_information_delete') == 0)
+                                <p class="stock_information_current" style="text-align: right;">
                                     {{ $stock_information }}
                                     <span class="ml-1">
-                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 3]) }}" style="text-decoration: underline;">ダウンロード</a>
+                                        <a href="{{ route('admin.downloadFile', ['company_id' => $company_id, 'document_type' => 3]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('stock_information')"
+                                                class="delete-link">削除</a>
+                                        @endif
                                     </span>
                                 </p>
                             @endif
@@ -881,6 +920,14 @@
         for (let index = 0; index < fileInputs.length; index++) {
             const element = fileInputs[index];
             element.addEventListener('change', fileHandler);
+        }
+    </script>
+    <script>
+        function deleteFile(name) {
+            const current = document.querySelector('.' + name + '_current');
+            const del = document.querySelector('[name=' + name + '_delete]');
+            current.remove();
+            del.value = 1;
         }
     </script>
 </x-layout>
