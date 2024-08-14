@@ -85,7 +85,7 @@ class BranchRequest extends BaseRequest
         katakanaOnly::$attributes = $this->attributes();
         return [
             'br-name' => 'required|array',
-            'br-name.*' => 'string|max:255',
+            'br-name.*' => 'string|max:40',
             'br-branch_type' => 'required|array',
             'br-branch_type.*' => 'integer',
             'br-place_type' => 'required|array',

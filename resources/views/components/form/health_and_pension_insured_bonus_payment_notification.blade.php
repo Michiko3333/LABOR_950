@@ -109,7 +109,7 @@
                                     type="text" />
                             </div>
                             <div class="egov-tool-field-origin" style="left: 135px; top: 166px;">
-                                <input class="egov-tool-field-rect onImage" id="N16_005F_905C_90BF" maxlength="50"
+                                <input class="egov-tool-field-rect onImage" id="N16_005F_905C_90BF" maxlength="40"
                                     value="{{ old('branch_name') }}" name="branch_name" required="required"
                                     style="width: 254px; height: 27px; font-size: 12px; text-align: left; line-height: 27px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
                                     type="text" />

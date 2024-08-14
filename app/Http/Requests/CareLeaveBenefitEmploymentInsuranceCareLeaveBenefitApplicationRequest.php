@@ -50,9 +50,6 @@ class CareLeaveBenefitEmploymentInsuranceCareLeaveBenefitApplicationRequest exte
         if (isset($data['labor_consultant_fullname'])) {
             $data['labor_consultant_fullname'] = mb_convert_kana($data['labor_consultant_fullname'], 'S');
         }
-        if (isset($data['branch_name'])) {
-            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
-        }
         if (isset($data['branch_address'])) {
             $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
             $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);

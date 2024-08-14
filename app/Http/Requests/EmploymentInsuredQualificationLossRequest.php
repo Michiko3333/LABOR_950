@@ -55,7 +55,7 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
             "insured_age_type" => 'nullable|string|max:20',
             "hello_work_office_no" => 'nullable|string|regex:/^[0-9]{5}$/u',
             "employment_status" => 'string',
-            "company_name_abbreviation" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            "company_name_abbreviation" => 'string|max:30',
             "employee_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "insured_reason" => 'string|max:255',
             "name_alphabet" => 'nullable|string|max:255|regex:/^[A-Z]+[ ][A-Z]+$/u',

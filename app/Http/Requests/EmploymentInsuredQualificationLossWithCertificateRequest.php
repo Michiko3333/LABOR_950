@@ -30,10 +30,6 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends BaseReque
         if (isset($data['new_name_kana'])) {
             $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
         }
-        if (isset($data['company_name_abbreviation'])) {
-            $data['company_name_abbreviation'] = mb_convert_kana($data['company_name_abbreviation'], 'AS');
-            $data['company_name_abbreviation'] = str_replace(['-', '‐', '―'], '－', $data['company_name_abbreviation']);
-        }
         if (isset($data['headquarters_address'])) {
             $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
@@ -50,9 +46,6 @@ class EmploymentInsuredQualificationLossWithCertificateRequest extends BaseReque
         }
         if (isset($data['name_alphabet'])) {
             $data['name_alphabet'] = mb_convert_kana($data['name_alphabet'], 'as');
-        }
-        if (isset($data['branch_name'])) {
-            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
         }
         if (isset($data['company_name'])) {
             $data['company_name'] = mb_convert_kana($data['company_name'], 'AS');

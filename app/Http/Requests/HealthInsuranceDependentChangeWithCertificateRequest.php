@@ -48,10 +48,6 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends BaseRequest
         if (isset($data['other_dependent2_name_kana'])) {
             $data['other_dependent2_name_kana'] = mb_convert_kana($data['other_dependent2_name_kana'], 'S');
         }
-        if (isset($data['company_name'])) {
-            $data['company_name'] = mb_convert_kana($data['company_name'], 'AS');
-            $data['company_name'] = str_replace(['-', '‐', '―'], '－', $data['company_name']);
-        }
         if (isset($data['employee_address'])) {
             $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
             $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);

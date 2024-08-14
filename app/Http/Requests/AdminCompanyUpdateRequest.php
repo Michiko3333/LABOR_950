@@ -125,7 +125,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'articles_of_incorporation' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'stock_information' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'br-name' => 'required|array',
-            'br-name.*' => 'string|max:255',
+            'br-name.*' => 'string|max:40',
             'br-branch_type' => 'required|array',
             'br-branch_type.*' => 'integer',
             'br-place_type' => 'required|array',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
@@ -18,9 +19,6 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
     {
         $data = $this->all();
 
-        if (isset($data['branch_name'])) {
-            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'S');
-        }
         if (isset($data['employee_name_kana'])) {
             $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'S');
         }
@@ -49,6 +47,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
@@ -64,7 +63,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "branch_post_code_first" => 'string|regex:/^[0-9]{3}$/u',
             "branch_post_code_last" => 'string|regex:/^[0-9]{4}$/u',
             "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            "branch_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "branch_name" => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "company_representative" => 'string|max:255',
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',

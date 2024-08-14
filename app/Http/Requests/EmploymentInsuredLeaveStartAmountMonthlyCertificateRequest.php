@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends BaseRequest
@@ -56,6 +57,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends BaseReq
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_wage_certificate_or_payment_status" => 'required_unless:radio_file_wage_certificate_or_payment_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_childcare" => 'required_if:radio_file_childcare,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -76,7 +78,7 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends BaseReq
             'employee_childcare_caregiver_leave_start_era_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'employee_childcare_caregiver_leave_start_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'employee_childcare_caregiver_leave_start_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+/u',
+            'branch_name' => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             'branch_address' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             'branch_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
