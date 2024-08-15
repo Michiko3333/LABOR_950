@@ -343,7 +343,7 @@
                                 </div>
                                 <div
                                     class="field {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
-                                    <label for="br-pension_office_reference_no_cities">事業所番号整理記号・郡市区記号</label>
+                                    <label for="br-pension_office_reference_no_cities">事業所番号整理記号・郡市区符号</label>
                                     <input type="text" name="br-pension_office_reference_no_cities[]"
                                         wire:model.live="data.{{ $key }}.br-pension_office_reference_no_cities"
                                         placeholder="" maxlength="2">

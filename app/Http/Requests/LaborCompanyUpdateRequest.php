@@ -276,7 +276,7 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-pension_office_id" => '年金事務所ID',
             "br-pension_office_no" => '事業所番号（厚生年金）',
             "br-pension_office_reference_prefecture" => '事業所整理記号-都道府県コード',
-            "br-pension_office_reference_no_cities" => '事業所整理記号-郡市区記号',
+            "br-pension_office_reference_no_cities" => '事業所整理記号-郡市区符号',
             "br-pension_office_reference_no_office" => '事業所整理記号-事業所記号',
             "br-employment_insurance_office_no" => '事業所番号（雇用保険）',
             "br-hello_work_id" => '管轄（公共職業安定所）',
@@ -383,7 +383,7 @@ class LaborCompanyUpdateRequest extends BaseRequest
             $Attributes["br-pension_office_reference_prefecture.{$index}"] = ($index + 1) . "事業所_事業所整理記号-都道府県コード";
         }
         foreach ($this->input('br-pension_office_reference_no_cities', []) as $index => $value) {
-            $Attributes["br-pension_office_reference_no_cities.{$index}"] = ($index + 1) . "事業所_事業所整理記号-郡市区記号";
+            $Attributes["br-pension_office_reference_no_cities.{$index}"] = ($index + 1) . "事業所_事業所整理記号-郡市区符号";
         }
         foreach ($this->input('br-pension_office_reference_no_office', []) as $index => $value) {
             $Attributes["br-pension_office_reference_no_office.{$index}"] = ($index + 1) . "事業所_事業所整理記号-事業所記号";
