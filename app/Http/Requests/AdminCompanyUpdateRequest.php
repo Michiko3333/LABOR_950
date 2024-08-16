@@ -181,7 +181,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             "br-pension_office_reference_no_office" => 'array',
             "br-pension_office_reference_no_office.*" => ['nullable', 'string', 'max:10', new katakanaOnly(false)],
             "br-employment_insurance_office_no" => 'array',
-            "br-employment_insurance_office_no.*" => ['nullable', 'string', 'max:10', new NumberOnly(11)],
+            "br-employment_insurance_office_no.*" => ['nullable', 'string', new NumberOnly(11)],
             "br-hello_work_id" => 'array',
             "br-hello_work_id.*" => 'nullable|integer',
             "br-labor_bureau_name" => 'array',

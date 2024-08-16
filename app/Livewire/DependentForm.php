@@ -78,7 +78,6 @@ class DependentForm extends Component
         $this->loading = true;
         array_push($this->data, $this->defaultValues());
         $this->dispatch('form-appended');
-        $this->loading = false;
     }
 
     #[On('dependent-form-loaded')]

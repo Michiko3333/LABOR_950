@@ -157,7 +157,6 @@ class AdminBranchForm extends Component
         $this->loading = true;
         array_push($this->data, $this->defaultValues());
         $this->dispatch('form-appended', count($this->data));
-        $this->loading = false;
     }
 
     #[On('branch-form-loaded')]

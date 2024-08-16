@@ -194,23 +194,23 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-sex" => 'array',
             "de-sex.*" => 'nullable|integer|in:1,2',
             "de-relationship_spouse" => 'array',
-            "de-relationship_spouse.*" => 'nullable|integer|in:1,2,3,4|required_without:de-relationship_dependent.*',
+            "de-relationship_spouse.*" => 'nullable|integer|in:1,2,3,4|required_with:de-spouse_flag.*',
             "de-relationship_dependent" => 'array',
-            "de-relationship_dependent.*" => 'nullable|integer|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|required_without:de-relationship_spouse.*',
+            "de-relationship_dependent.*" => 'nullable|integer|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|required_without:de-spouse_flag.*',
             "de-spouse_flag" => 'array',
             "de-spouse_flag.*" => 'nullable|integer|in:1',
             "de-age" => 'array',
             "de-age.*" => 'nullable|integer|digits_between:1,3',
             "de-contact" => 'array',
-            "de-contact.*" => ['nullable', 'string', 'max:13', new NumberOnly(13)],
+            "de-contact.*" => ['nullable', 'string', new NumberOnly(13)],
             "de-occupation" => 'array',
             "de-occupation.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             "de-annual_income" => 'array',
             "de-annual_income.*" => 'nullable|integer|digits_between:1,7',
             "de-mynumber_card_no" => 'array',
-            "de-mynumber_card_no.*" => ['nullable', 'string', 'max:20', new NumberOnly(12)],
+            "de-mynumber_card_no.*" => ['nullable', 'string', new NumberOnly(12)],
             "de-pension_no" => 'array',
-            "de-pension_no.*" => ['nullable', 'string', 'max:10', new NumberOnly(10)],
+            "de-pension_no.*" => ['nullable', 'string', new NumberOnly(10)],
             "de-dependent_type" => 'array',
             "de-dependent_type.*" => 'nullable|integer|in:1,2,3,4',
             "de-other_1" => 'array',
@@ -229,7 +229,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'fax2.required_with' => 'FAX番号_2を入力してください。',
             'fax3.required_with' => 'FAX番号_3を入力してください。',
         ];
-        
+
         foreach ($this->input('de-last_name', []) as $index => $value) {
             $messages["de-last_name.{$index}.required_with"] = ($index + 1) . "扶養者の氏を入力してください。";
         }
@@ -246,7 +246,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             $messages["de-relationship_dependent.{$index}.required_without"] = ($index + 1) . "扶養者の続柄を選択してください。";
         }
         foreach ($this->input('de-relationship_spouse', []) as $index => $value) {
-            $messages["de-relationship_spouse.{$index}.required_without"] = ($index + 1) . "扶養者の続柄を選択してください。";
+            $messages["de-relationship_spouse.{$index}.required_with"] = ($index + 1) . "扶養者の続柄を選択してください。";
         }
 
         return $messages;
