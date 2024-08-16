@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HealthInsuranceDependentChangeRequest extends BaseRequest
@@ -21,6 +22,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_insurance" => 'required_if:radio_file_insurance,2|file|mimes:jpg,pdf|max:50000',
             "file_dependent" => 'required_if:radio_file_dependent,2|file|mimes:jpg,pdf|max:50000',
@@ -40,7 +42,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             "pension_office_reference_no_office" => 'required|string|regex:/^[ァ-ン]{1,4}$/u',
             "headquarters_post_code_former" => 'required|string|regex:/^[0-9]{3}$/u',
             "headquarters_post_code_latter" => 'required|string|regex:/^[0-9]{4}$/u',
-            "company_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            "company_name" => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "headquarters_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
             "headquarters_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
             "headquarters_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}$/u',

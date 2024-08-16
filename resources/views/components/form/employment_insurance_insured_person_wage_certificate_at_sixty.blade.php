@@ -840,7 +840,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:182px; width:349px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="10"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:349px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J10_005F_96BC_8FCC" value="{{ old('branchName') }}" name="branchName"></SPAN>
+            id="J10_005F_96BC_8FCC" value="{{ old('branchName') }}" name="branchName" maxlength="40"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:212px; width:349px; line-height:26px; height:26px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="11"

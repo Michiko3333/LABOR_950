@@ -136,6 +136,11 @@
                 color: #6b6b6b;
                 border: solid 2px #adadad;
             }
+
+            .tab-error,
+            .tab-error.active {
+                color: #912d2b !important;
+            }
         </style>
     @endslot
     <section class="content">
@@ -178,9 +183,93 @@
                 <input type="hidden" name="employee_id" value="{{ $employee_id }}">
             @endif
 
+            @php
+                $field1 = $errors->hasAny([
+                    'employee_no',
+                    'last_name',
+                    'last_name_kana',
+                    'last_name_alphabet',
+                    'first_name',
+                    'first_name_kana',
+                    'first_name_alphabet',
+                    'qualifications',
+                    'old_last_name',
+                    'old_last_name_kana',
+                    'old_last_name_alphabet',
+                    'old_first_name',
+                    'old_first_name_kana',
+                    'old_first_name_alphabet',
+                    'name_common',
+                    'name_common_kana',
+                    'post_code',
+                    'address_prefecture',
+                    'address_city',
+                    'address_ward',
+                    'address_apartment',
+                    'employee_type',
+                    'employee_status',
+                    'sex',
+                    'birthday_date',
+                    'company_name',
+                    'branch_id',
+                    'tel_area_code',
+                    'tel_city_code',
+                    'tel_subscriber_code',
+                    'fax1',
+                    'fax2',
+                    'fax3',
+                    'mail_address1',
+                    'mail_address2',
+                    'emergency_post_code1',
+                    'emergency_contact1',
+                    'emergency_relationship1',
+                    'emergency_tel1',
+                    'emergency_address_prefecture1',
+                    'emergency_address_city1',
+                    'emergency_address_ward1',
+                    'emergency_address_apartment1',
+                    'emergency_post_code2',
+                    'emergency_contact2',
+                    'emergency_relationship2',
+                    'emergency_tel2',
+                    'emergency_address_prefecture2',
+                    'emergency_address_city2',
+                    'emergency_address_ward2',
+                    'emergency_address_apartment2',
+                    'mynumber_card_no',
+                    'social_insurance_no',
+                    'pension_no',
+                    'insurer_no',
+                    'insurer_reference_no',
+                    'employment_insured_no',
+                    'residence_card_no',
+                    'residential_status_unknown_reason',
+                    'user_email',
+                    'user_pass',
+                ]);
+                $field2 = $errors->hasAny([
+                    'de-last_name.*',
+                    'de-last_name_kana.*',
+                    'de-first_name.*',
+                    'de-first_name_kana.*',
+                    'de-sex.*',
+                    'de-relationship_spouse.*',
+                    'de-relationship_dependent.*',
+                    'de-spouse_flag.*',
+                    'de-age.*',
+                    'de-contact.*',
+                    'de-occupation.*',
+                    'de-annual_income.*',
+                    'de-mynumber_card_no.*',
+                    'de-pension_no.*',
+                    'de-dependent_type.*',
+                    'de-other_1.*',
+                    'de-other_2.*',
+                ]);
+            @endphp
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="sample">従業員情報</a>
-                <a class="item" data-tab="sample2">扶養者情報</a>
+                <a class="item active {{ $field1 ? 'tab-error' : '' }}" data-tab="sample">従業員情報</a>
+                <a class="item {{ $field2 ? 'tab-error' : '' }}" data-tab="sample2">扶養者情報</a>
             </div>
             <div class="ui bottom attached segment" data-tab="sample">
                 <div class="labor-data-area">
@@ -294,26 +383,29 @@
                             <div class="fields">
                                 <div class="three wide field {{ err($errors, 'blood_type') }}">
                                     <label>血液型</label>
-                                    <select class="ui fluid dropdown" name="blood_type" value="{{ old('blood_type') }}">
+                                    <select class="ui fluid dropdown" name="blood_type"
+                                        value="{{ old('blood_type') }}">
                                         <option value="">未選択</option>
-                                        <option value="A" {{ old('blood_type') == "A" || (isset($employee) && old('blood_type', $employee->blood_type) == "A") ? 'selected' : '' }}>
-                                        A</option>
-                                        <option value="B" {{ old('blood_type') == "B" || (isset($employee) && old('blood_type', $employee->blood_type) == "B") ? 'selected' : '' }}>
-                                        B</option>
-                                        <option value="AB" {{ old('blood_type') == "AB" || (isset($employee) && old('blood_type', $employee->blood_type) == "AB") ? 'selected' : '' }}>
-                                        AB</option>
-                                        <option value="O" {{ old('blood_type') == "O" || (isset($employee) && old('blood_type', $employee->blood_type) == "O") ? 'selected' : '' }}>
-                                        O</option>
+                                        <option value="A"
+                                            {{ old('blood_type') == 'A' || (isset($employee) && old('blood_type', $employee->blood_type) == 'A') ? 'selected' : '' }}>
+                                            A</option>
+                                        <option value="B"
+                                            {{ old('blood_type') == 'B' || (isset($employee) && old('blood_type', $employee->blood_type) == 'B') ? 'selected' : '' }}>
+                                            B</option>
+                                        <option value="AB"
+                                            {{ old('blood_type') == 'AB' || (isset($employee) && old('blood_type', $employee->blood_type) == 'AB') ? 'selected' : '' }}>
+                                            AB</option>
+                                        <option value="O"
+                                            {{ old('blood_type') == 'O' || (isset($employee) && old('blood_type', $employee->blood_type) == 'O') ? 'selected' : '' }}>
+                                            O</option>
                                     </select>
                                 </div>
                                 <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
                                     <label>資格情報</label>
                                     @if (!isset($employee_id))
-                                        <textarea id="qualifications" name="qualifications"
-                                        style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
+                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
                                     @else
-                                        <textarea id="qualifications" name="qualifications"
-                                        style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
+                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
                                     @endif
                                 </div>
                             </div>
@@ -368,13 +460,15 @@
                                 <div class="two fields m-0">
                                     <div class="field {{ err($errors, 'old_last_name_alphabet') }}">
                                         <label for="old_last_name_alphabet">旧氏（アルファベット）</label>
-                                        <input type="text" id="old_last_name_alphabet" name="old_last_name_alphabet"
+                                        <input type="text" id="old_last_name_alphabet"
+                                            name="old_last_name_alphabet"
                                             value="{{ old('old_last_name_alphabet', isset($employee_id) ? $employee->old_last_name_alphabet : '') }}"
                                             placeholder="TANAKA">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name_alphabet') }}">
                                         <label for="old_first_name_alphabet">旧名（アルファベット）</label>
-                                        <input type="text" id="old_first_name_alphabet" name="old_first_name_alphabet"
+                                        <input type="text" id="old_first_name_alphabet"
+                                            name="old_first_name_alphabet"
                                             value="{{ old('old_first_name_alphabet', isset($employee_id) ? $employee->old_first_name_alphabet : '') }}"
                                             placeholder="TARO">
                                     </div>
@@ -720,13 +814,14 @@
                                     <label>離職票の交付希望の有無</label>
                                     <div class="mt-1">
                                         <div class="ui radio checkbox field mr-2 mt-0">
-                                            <input type="radio" name="resignation_letter_request_flg" checked="checked"
-                                                value="0"
+                                            <input type="radio" name="resignation_letter_request_flg"
+                                                checked="checked" value="0"
                                                 {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || old('resignation_letter_request_flg') == '0' ? 'checked' : '' }}>
                                             <label>無</label>
                                         </div>
                                         <div class="ui radio checkbox field mt-0">
-                                            <input type="radio" name="resignation_letter_request_flg" value="1"
+                                            <input type="radio" name="resignation_letter_request_flg"
+                                                value="1"
                                                 {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || old('resignation_letter_request_flg') == '1' ? 'checked' : '' }}>
                                             <label>有</label>
                                         </div>
@@ -755,7 +850,8 @@
                                             <input type="text" placeholder="Date" name="contract_end_date"
                                                 value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}">
                                             <input type="hidden" name="formatted_contract_end_date"
-                                                id="formatted_contract_end_date" value="{{ old('contract_end_date') }}">
+                                                id="formatted_contract_end_date"
+                                                value="{{ old('contract_end_date') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -768,8 +864,8 @@
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="hired_date"
                                                 value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}">
-                                            <input type="hidden" name="formatted_hired_date" id="formatted_hired_date"
-                                                value="{{ old('hired_date') }}">
+                                            <input type="hidden" name="formatted_hired_date"
+                                                id="formatted_hired_date" value="{{ old('hired_date') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -840,7 +936,8 @@
                                             <input type="text" placeholder="Date" name="passed_away_date"
                                                 value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}">
                                             <input type="hidden" name="formatted_passed_away_date"
-                                                id="formatted_passed_away_date" value="{{ old('passed_away_date') }}">
+                                                id="formatted_passed_away_date"
+                                                value="{{ old('passed_away_date') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -1059,7 +1156,8 @@
                                             <input type="text" placeholder="Date" name="stay_date_period"
                                                 value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
                                             <input type="hidden" name="formatted_stay_date_period"
-                                                id="formatted_stay_date_period" value="{{ old('stay_date_period') }}">
+                                                id="formatted_stay_date_period"
+                                                value="{{ old('stay_date_period') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -1211,11 +1309,11 @@
         });
     </script>
     <script type="module">
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const tabs = document.querySelectorAll('.ui.tabular.menu .item');
             const contents = document.querySelectorAll('.ui.bottom.attached.segment');
             tabs.forEach((tab, index) => {
-                tab.addEventListener('click', function () {
+                tab.addEventListener('click', function() {
                     tabs.forEach((t) => t.classList.remove('active'));
                     tab.classList.add('active');
                     contents.forEach((c) => c.style.display = 'none');

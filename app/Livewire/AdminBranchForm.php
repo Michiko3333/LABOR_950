@@ -55,7 +55,7 @@ class AdminBranchForm extends Component
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
-                    if (!is_null($oldValue)) {
+                    if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($i, $oldValue)) {
                         $def[$key] = $oldValue[$i];
                     }
                 }
@@ -121,6 +121,16 @@ class AdminBranchForm extends Component
                 $d['br-holiday_legal'] = $item->holiday_legal;
                 $d['br-holiday_not_logal'] = $item->holiday_not_logal;
                 $d['br-work_style_type'] = $item->work_style_type;
+                $d['br-labor_insurance_category'] = $item->labor_insurance_category;
+                $d['br-kenpo_no'] = $item->kenpo_no;
+                $d['br-insurance_office_name'] = $item->insurance_office_name;
+                $d['br-insurance_applicable_date'] = $item->insurance_applicable_date;
+                $bonus_payment_month = explode(',', $item->bonus_payment_month);
+                $d['br-bonus_payment_month'] = !empty($bonus_payment_month) ? $bonus_payment_month : null;
+                $d['br-pension_office_name'] = $item->pension_office_name;
+                $d['br-employment_insurance_rate'] = $item->employment_insurance_rate;
+                $d['br-rate_pattern_id'] = $item->rate_pattern_id;
+                $d['br-fractional_adjustment_pattern_id'] = $item->fractional_adjustment_pattern_id;
                 array_push($this->data, $d);
             }
         }
@@ -137,6 +147,7 @@ class AdminBranchForm extends Component
     }
     public function render()
     {
+        //\Log::info(print_r($this->data, true));
         return view('livewire.admin-branch-form');
     }
 
@@ -145,7 +156,7 @@ class AdminBranchForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         array_push($this->data, $this->defaultValues());
-        $this->dispatch('form-appended');
+        $this->dispatch('form-appended', count($this->data));
         $this->loading = false;
     }
 
@@ -233,6 +244,15 @@ class AdminBranchForm extends Component
             'br-holiday_legal' => '',
             'br-holiday_not_logal' => '',
             'br-work_style_type' => '',
+            'br-labor_insurance_category' => '',
+            'br-kenpo_no' => '',
+            'br-insurance_office_name' => '',
+            'br-insurance_applicable_date' => '',
+            'br-bonus_payment_month' => '',
+            'br-pension_office_name' => '',
+            'br-employment_insurance_rate' => '',
+            'br-rate_pattern_id' => '',
+            'br-fractional_adjustment_pattern_id' => '',
         ];
 
         if ($this->company !== null) {

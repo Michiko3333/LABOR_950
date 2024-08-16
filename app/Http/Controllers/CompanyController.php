@@ -113,6 +113,23 @@ class CompanyController extends Controller
                     ]
                 );
             }
+
+            if ($request->input('financial_statement_delete') == 1) {
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 1)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('articles_of_incorporation_delete') == 1) {
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 2)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('stock_information_delete') == 1) {
+                Company_files::where('company_id', $currentCompany->id)
+                    ->where('document_type', 3)
+                    ->update(['delete_flg' => 1]);
+            }
+
             if ($request->file('financial_statement')) {
                 $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
                 $financial_statement = $request->file('financial_statement')->get();
@@ -210,7 +227,7 @@ class CompanyController extends Controller
     {
         $currentCompany = CurrentUser::currentCompany();
         $company_id = $currentCompany->id;
-        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('document_type', $document_type)->first();
+        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('delete_flg', 0)->where('document_type', $document_type)->first();
         $headers = [
             'Content-Type' => 'application/octet-stream',
         ];
@@ -221,5 +238,13 @@ class CompanyController extends Controller
             'Content-Type' => $headers['Content-Type'],
             'Content-Disposition' => 'attachment; filename="' . $file->file_name . '"',
         ]);
+    }
+
+    public function get_industry_type(Request $request)
+    {
+
+        $industry_type = Industry_type::get(['id', 'industry_type_code']);
+
+        return response()->json($industry_type);
     }
 }

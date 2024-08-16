@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extends BaseRequest
@@ -21,6 +22,7 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
      */
     public static function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             'leave_start_wage_monthly_certificate' => 'nullable|int|in:1|required_without:reduced_working_hours_wage_certificate_start',
             'reduced_working_hours_wage_certificate_start' => 'nullable|int|in:1',
@@ -32,7 +34,7 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
             'insurance_office_no_cd' => 'nullable|string|regex:/^[0-9]{1}$/u',
             'employment_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+\z/u',
             'employment_fullname_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'branch_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'branch_name' => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             'branch_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             'branch_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',

@@ -143,9 +143,11 @@
                 $('#N5_005F_8C8E').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N6_005F_93FA').val('{{ old('today_date', $todaySet['date']) }}');
 
-                $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
-                );
+                @if (isset($businessOwner))
+                    $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(
+                        '{{ old('employer_company_managerial_position_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
+                    );
+                @endif
 
                 @if ($current_employee->role_id === 500)
                     $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('{{ $current_employee->last_name }}' +

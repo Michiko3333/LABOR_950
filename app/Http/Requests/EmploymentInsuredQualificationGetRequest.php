@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredQualificationGetRequest extends BaseRequest
@@ -52,6 +53,7 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             'file_other' => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             'input_file_other' => 'required_if:checked_other,on|string|max:255',
@@ -94,7 +96,7 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
             'contract_end_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:contract_end_month,contract_end_day',
             'contract_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_day',
             'contract_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:contract_end_year,contract_end_month',
-            'branch_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９Ａ-Ｚ　－]+\z/u',
+            'branch_name' => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             'insured_reason_detail' => 'nullable|string|max:255',
             'first_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z ]+\z/u',
             'residence_card_no' => 'nullable|string|max:12|regex:/\A[0-9A-Z　]+\z/u',

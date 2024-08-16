@@ -376,7 +376,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:114px; top:116px; width:297px; line-height:26px; height:26px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="12"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 10px 0px 0px; width:297px; height:25px; ime-mode:active;"
-            id="J15_005F_96BC_8FCC" name="branch_name" value="{{ old('branch_name') }}"></SPAN>
+            id="J15_005F_96BC_8FCC" name="branch_name" value="{{ old('branch_name') }}" maxlength="40"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:114px; top:144px; width:297px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="13"

@@ -142,9 +142,11 @@
                 $('#N4_005F_944E').val('{{ old('today_japan_era_month', $todaySet['month']) }}');
                 $('#N5_005F_8C8E').val('{{ old('today_japan_era_day', $todaySet['date']) }}');
 
-                $('#N13_005F_8374_838A_834B_8369').val(
-                    '{{ old('business_owner_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
-                );
+                @if (isset($businessOwner))
+                    $('#N13_005F_8374_838A_834B_8369').val(
+                        '{{ old('business_owner_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
+                    );
+                @endif
 
                 @if ($current_employee->role_id === 500)
                     $('#N18_005F_8CC2_906C_94D4').val('{{ $current_employee->last_name }}' + '　' +

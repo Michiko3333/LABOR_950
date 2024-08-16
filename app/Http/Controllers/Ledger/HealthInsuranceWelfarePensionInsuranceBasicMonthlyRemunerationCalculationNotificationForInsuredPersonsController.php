@@ -111,19 +111,17 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             }
             Csv_count::where('employee_id', $laborId)->update(['count' => $count]);
         } else {
-            $branch = Branch::select('id')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
-            $branchId = $branch->id;
-            if (!DB::table('m_csv_count')->where('branch_id', $branchId)->exists()) {
-                Csv_count::create(['branch_id' => $branchId, 'count' => 0]);
+            if (!DB::table('m_csv_count')->where('pension_office_no', $request->input('csv_pension_office_no'))->exists()) {
+                Csv_count::create(['pension_office_no' => $request->input('csv_pension_office_no'), 'count' => 0]);
             }
-            $csv_count = Csv_count::select('count')->where('branch_id', $branchId)->first();
+            $csv_count = Csv_count::select('count')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
             $count = $csv_count->count;
             if ($count === 999) {
                 $count = 1;
             } else {
                 $count++;
             }
-            Csv_count::where('branch_id', $branchId)->update(['count' => $count]);
+            Csv_count::where('pension_office_no', $request->input('csv_pension_office_no'))->update(['count' => $count]);
         }
         $csvFormatter = new CsvFormatter('4950013520989000', $count);
         $csvFormatter->setKanri($request);
