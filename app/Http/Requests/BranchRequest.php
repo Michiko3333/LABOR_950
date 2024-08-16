@@ -139,7 +139,7 @@ class BranchRequest extends BaseRequest
             "br-pension_office_reference_no_cities" => 'array',
             "br-pension_office_reference_no_cities.*" => ['nullable', 'string', new NumberOnly(2)],
             "br-pension_office_reference_no_office" => 'array',
-            "br-pension_office_reference_no_office.*" => ['nullable', 'string', 'max:10', new katakanaOnly(false)],
+            "br-pension_office_reference_no_office.*" => ['nullable', 'string', 'max:4', new katakanaOnly(false)],
             "br-employment_insurance_office_no" => 'array',
             "br-employment_insurance_office_no.*" => ['nullable', 'string', new NumberOnly(11)],
             "br-hello_work_id" => 'array',
