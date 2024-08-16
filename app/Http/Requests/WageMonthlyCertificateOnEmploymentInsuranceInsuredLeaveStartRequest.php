@@ -22,7 +22,8 @@ class WageMonthlyCertificateOnEmploymentInsuranceInsuredLeaveStartRequest extend
      */
     public static function rules(): array
     {
-        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             'leave_start_wage_monthly_certificate' => 'nullable|int|in:1|required_without:reduced_working_hours_wage_certificate_start',
             'reduced_working_hours_wage_certificate_start' => 'nullable|int|in:1',

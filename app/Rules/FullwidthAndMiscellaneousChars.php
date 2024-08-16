@@ -22,8 +22,8 @@ class FullwidthAndMiscellaneousChars implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $pattern = $this->includeNewlines
-            ? '/[\x{FF01}-\x{FF5E}\x{3000}-\x{303F}\x{4E00}-\x{9FAF}\x20-\x7F\n\t]/u'
-            : '/[\x{FF01}-\x{FF5E}\x{3000}-\x{303F}\x{4E00}-\x{9FAF}\x20-\x7F\t]/u';
+            ? '/^[\x{0020}-\x{007F}\x{FF01}-\x{FF5E}\x{3000}-\x{303F}\x{3040}-\x{309F}\x{30A0}-\x{30FF}\x{4E00}-\x{9FAF}\n\t]+$/u'
+            : '/^[\x{0020}-\x{007F}\x{FF01}-\x{FF5E}\x{3000}-\x{303F}\x{3040}-\x{309F}\x{30A0}-\x{30FF}\x{4E00}-\x{9FAF}\t]+$/u';
 
             $attribute = self::$attributes[$attribute] ?? $attribute;
 

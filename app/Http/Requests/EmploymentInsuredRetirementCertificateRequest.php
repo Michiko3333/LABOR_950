@@ -23,7 +23,8 @@ class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
 
     public static function rules(): array
     {
-        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "insurance_office_no_4" => 'string|regex:/^[0-9]{4}$/u',
             "insurance_office_no_6" => 'string|regex:/^[0-9]{6}$/u',
