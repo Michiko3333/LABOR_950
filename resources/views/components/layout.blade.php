@@ -279,6 +279,7 @@
             $("section.content textarea").prop("readonly", true);
             $("section.content textarea").addClass("permission-readonly");
             $(".hidden-readonly").remove();
+            $("i.calendar.icon").remove();
         }
     </script>
     {{ $header ?? '' }}
