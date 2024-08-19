@@ -106,7 +106,7 @@ class BranchController extends Controller
         }
         $input_date2 = $requestData['br-employment_insurance_establishment_date'][$index];
         if (!is_null($input_date2) && strtotime($input_date2) === false) {
-            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
@@ -143,7 +143,7 @@ class BranchController extends Controller
         $company_id = $current_company->id;
 
         $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
-        if(!is_null($bonus_payment_month)){
+        if (!is_null($bonus_payment_month)) {
             $bonus_payment_month_processed = implode(',', $bonus_payment_month);
         } else {
             $bonus_payment_month_processed = null;
