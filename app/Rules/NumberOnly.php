@@ -26,12 +26,10 @@ class NumberOnly implements ValidationRule
 
         $attribute = self::$attributes[$attribute] ?? $attribute;
 
-        if ($this->maxLength && $length > $this->maxLength) {
-            $fail("{$attribute}は{$this->maxLength}桁以下で入力してください。");
-        }
-
         if (!preg_match($pattern, $value)) {
             $fail("{$attribute}は正しい形式ではありません。");
+        } elseif ($this->maxLength && $length > $this->maxLength) {
+            $fail("{$attribute}は{$this->maxLength}桁以下で入力してください。");
         }
     }
 }
