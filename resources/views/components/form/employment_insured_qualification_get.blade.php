@@ -49,7 +49,7 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:171px; top:255px; width:57px; height:19px; font-size:13px;"><SELECT size="1" tabindex="12" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:57px; height:19px;" id="J13_005F_944E_8D86" name="birthday_era">
 <OPTION value="大正" {{ old('birthday_era') == '大正' ? 'selected' : '' }}>大正</OPTION>
 <OPTION value="昭和" {{ old('birthday_era') == '昭和' ? 'selected' : '' }}>昭和</OPTION>
-<OPTION value="平成" selected="selected" {{ old('birthday_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
+<OPTION value="平成" {{ old('birthday_era', '平成') == '平成' ? 'selected' : '' }}>平成</OPTION>
 <OPTION value="令和" {{ old('birthday_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:235px; top:251px; width:39px; height:28px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:4px 0px 0px 0px;"><INPUT tabindex="13" style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:39px; max-width:39px; height:16px; ime-mode:disabled;" type="TEXT" id="J14_005F_944E" name="birthday_year" value="{{ old('birthday_year') }}" maxlength="2"></SPAN>
