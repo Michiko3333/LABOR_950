@@ -22,7 +22,8 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
      */
     public static function rules(): array
     {
-        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "file_insurance" => 'required_if:radio_file_insurance,2|file|mimes:jpg,pdf|max:50000',
             "file_dependent" => 'required_if:radio_file_dependent,2|file|mimes:jpg,pdf|max:50000',

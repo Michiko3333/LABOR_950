@@ -862,13 +862,13 @@
                                 <div class="field {{ err_bind($errs, 'br-holiday_legal', $key) }}">
                                     <label for="br-holiday_legal">休日内容(法定休日)</label>
                                     <input type="text" name="br-holiday_legal[]"
-                                        wire:model.live="data.{{ $key }}.br-holiday_legal" placeholder="">
+                                        wire:model.live="data.{{ $key }}.br-holiday_legal" placeholder="" maxlength="255">
                                 </div>
                                 <div class="field {{ err_bind($errs, 'br-holiday_not_logal', $key) }}">
                                     <label for="br-holiday_not_logal">休日内容(法定休日以外)</label>
                                     <input type="text" name="br-holiday_not_logal[]"
                                         wire:model.live="data.{{ $key }}.br-holiday_not_logal"
-                                        placeholder="">
+                                        placeholder="" maxlength="255">
                                 </div>
                             </div>
                         </div>

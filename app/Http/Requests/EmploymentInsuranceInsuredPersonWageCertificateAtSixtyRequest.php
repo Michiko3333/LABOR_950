@@ -22,7 +22,8 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Base
      */
     public static function rules(): array
     {
-        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "employmentInsuredNo4digit" => 'string|regex:/^[0-9]{4}$/u',
             "employmentInsuredNo6digit" => 'string|regex:/^[0-9]{6}$/u',

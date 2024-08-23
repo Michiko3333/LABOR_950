@@ -325,6 +325,7 @@
                     $('#N6').val(spouse_birthday_convert_japan['year'] ?? "");
                     $('#N7').val(spouse_birthday_convert_japan['month'] ?? "");
                     $('#N8').val(spouse_birthday_convert_japan['day'] ?? "");
+                    $('#N57_P1').val(spouse.relationship_spouse ?? "");
                 }
                 $('#N9').val(employee.mynumber_card_no ?? '');
                 $('#N10').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ??

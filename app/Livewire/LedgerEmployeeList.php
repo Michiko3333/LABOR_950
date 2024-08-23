@@ -101,7 +101,7 @@ class LedgerEmployeeList extends BaseTable
         $retirement_reason_employee_decision_change_office_data = Retirement_reason_employee_decision_change_office::where('employee_id', $employee_id)->first();
         $retirement_reason_employee_decision_change_job_type_data = Retirement_reason_employee_decision_change_job_type::where('employee_id', $employee_id)->first();
         $retirement_reason_employee_decision_reasons_data = Retirement_reason_employee_decision_reasons::where('employee_id', $employee_id)->first();
-        $spouse_data = Dependent::where('employee_id', $employee_id)->where('spouse_flag', '1')->first();
+        $spouse_data = Dependent::where('employee_id', $employee_id)->where('spouse_flag', '1')->where('delete_flg', '0')->first();
         if ($spouse_data) {
             $spouse_prefecture_id = $spouse_data['address_prefecture'];
             $spouse_prefecture_data = Prefecture::where('id', $spouse_prefecture_id)->first();
