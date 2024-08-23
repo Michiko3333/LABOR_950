@@ -48,6 +48,7 @@ use App\Http\Controllers\FinalExamController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckQueryParameters;
+use App\Http\Middleware\EmployeeIconFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +71,10 @@ Route::group(['prefix' => 'healthcheck'], function () {
 
 /** 未ログイン */
 Route::middleware([CheckQueryParameters::class])->group(function () {
-    Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
-    Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
+    Route::middleware([EmployeeIconFile::class])->group(function () {
+        Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
+    });
 });
 
 /** ログイン必須ページ */
@@ -81,139 +84,142 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::middleware([CheckQueryParameters::class])->group(function () {
 
-        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
+        Route::middleware([EmployeeIconFile::class])->group(function () {
 
-        Route::get('/select', [HomeController::class, 'select'])->name('home.select');
-        Route::post('/select', [HomeController::class, 'select_post'])->name('home.select_post');
+            Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
 
-        Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
-        Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
-        Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
-        Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
-        Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+            Route::get('/select', [HomeController::class, 'select'])->name('home.select');
+            Route::post('/select', [HomeController::class, 'select_post'])->name('home.select_post');
 
-        // 帳票
-        Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
+            Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
+            Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
+            Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
+            Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
+            Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
-        // EgovAPI 検証試験データ取得用
-        if (config('egov.test') == true) {
-            Route::get('/admin/egovtest', [EgovTestController::class, 'index'])->name('egovtest.index');
-            Route::post('/admin/egovtest/dl', [EgovTestController::class, 'download'])->name('egovtest.download');
-        }
+            // 帳票
+            Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
 
-        // Admin
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-        Route::get('/admin/company', [AdminController::class, 'company_list'])->name('admin.company');
-        Route::get('/admin/company/create', [AdminController::class, 'company_create'])->name('admin.company_create');
-        Route::post('/admin/company/create', [AdminController::class, 'company_create_post'])->name('admin.company_create_post');
-        Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
-        Route::get('/admin/company/create/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
-        Route::post('/admin/company/create/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
-        Route::get('/admin/company/download/{company_id}/{document_type}', [AdminController::class, 'downloadFile'])->name('admin.downloadFile');
+            // EgovAPI 検証試験データ取得用
+            if (config('egov.test') == true) {
+                Route::get('/admin/egovtest', [EgovTestController::class, 'index'])->name('egovtest.index');
+                Route::post('/admin/egovtest/dl', [EgovTestController::class, 'download'])->name('egovtest.download');
+            }
 
-        // User
-        Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
-        Route::post('/admin/company/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
-        Route::get('/admin/company/department/{id}', [AdminController::class, 'company_department_update'])->name('admin.company_department_update');
-        Route::post('/admin/company/department/{id}', [AdminController::class, 'company_department_update_post'])->name('admin.company_department_update_post');
+            // Admin
+            Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+            Route::get('/admin/company', [AdminController::class, 'company_list'])->name('admin.company');
+            Route::get('/admin/company/create', [AdminController::class, 'company_create'])->name('admin.company_create');
+            Route::post('/admin/company/create', [AdminController::class, 'company_create_post'])->name('admin.company_create_post');
+            Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
+            Route::get('/admin/company/create/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
+            Route::post('/admin/company/create/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
+            Route::get('/admin/company/download/{company_id}/{document_type}', [AdminController::class, 'downloadFile'])->name('admin.downloadFile');
 
-        Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
-        Route::get('/admin/labor/create', [AdminController::class, 'labor_create'])->name('admin.labor_create');
-        Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
-        Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
-        Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
-        Route::get('/admin/labor/client/{id}', [AdminController::class, 'client'])->name('admin.client');
+            // User
+            Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
+            Route::post('/admin/company/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
+            Route::get('/admin/company/department/{id}', [AdminController::class, 'company_department_update'])->name('admin.company_department_update');
+            Route::post('/admin/company/department/{id}', [AdminController::class, 'company_department_update_post'])->name('admin.company_department_update_post');
 
-        Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
-        Route::post('/admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
-        Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
-        Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
-        Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
-        Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
-        Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
+            Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
+            Route::get('/admin/labor/create', [AdminController::class, 'labor_create'])->name('admin.labor_create');
+            Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
+            Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
+            Route::post('/admin/labor/edit/{id}', [AdminController::class, 'labor_update_post'])->name('admin.labor_update_post');
+            Route::get('/admin/labor/client/{id}', [AdminController::class, 'client'])->name('admin.client');
 
-        // Ledger
-        Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
-        Route::post('/ledger/api/disconnect', [EgovController::class, 'disconnect'])->name('egov.disconnect');
-        Route::get('/ledger/egov', [EgovController::class, 'index'])->name('ledger.egov');
-        Route::get('/get-egov-account', [EgovController::class, 'getEgovAccount'])->name('get-egov-account');
-        Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
-        Route::get('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'detail'])->name('ledger.detail');
-        Route::post('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'getOfficial'])->name('ledger.detail_official');
+            Route::get('/admin/employee/create', [AdminController::class, 'employee_create'])->name('admin.employee_create');
+            Route::post('/admin/employee/create', [AdminController::class, 'employee_create_post'])->name('admin.employee_create_post');
+            Route::get('/admin/employee/edit/{id}', [AdminController::class, 'employee_update'])->name('admin.employee_update');
+            Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
+            Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
+            Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
+            Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
 
-        Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
-        Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
-        Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');
-        Route::get('/ledger/4950013520991000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'index'])->name('ledger.4950013520991000');
-        Route::post('/ledger/4950013520991000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'post'])->name('ledger.4950013520991000_post');
-        Route::get('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'index'])->name('ledger.4950013520714000');
-        Route::post('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'post'])->name('ledger.4950013520714000_post');
-        Route::get('/ledger/4950008680044000', [WageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680044000');
-        Route::post('/ledger/4950008680044000', [WageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680044000_post');
-        Route::get('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'index'])->name('ledger.4950008680040000');
-        Route::post('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'post'])->name('ledger.4950008680040000_post');
-        Route::get('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'index'])->name('ledger.4950013520989000');
-        Route::post('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'post'])->name('ledger.4950013520989000_post');
-        Route::get('/ledger/4950013520711000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'index'])->name('ledger.4950013520711000');
-        Route::post('/ledger/4950013520711000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'post'])->name('ledger.4950013520711000_post');
-        Route::get('/ledger/4950013520990000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'index'])->name('ledger.4950013520990000');
-        Route::post('/ledger/4950013520990000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'post'])->name('ledger.4950013520990000_post');
-        Route::get('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'index'])->name('ledger.4950008680182000');
-        Route::post('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'post'])->name('ledger.4950008680182000_post');
-        Route::get('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'index'])->name('ledger.4950008680048000');
-        Route::post('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'post'])->name('ledger.4950008680048000_post');
-        Route::get('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index'])->name('ledger.4950008680047000');
-        Route::post('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'post'])->name('ledger.4950008680047000_post');
-        Route::get('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'index'])->name('ledger.4950013520873000');
-        Route::post('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'post'])->name('ledger.4950013520873000_post');
-        Route::get('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'index'])->name('ledger.4950008680050000');
-        Route::post('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'post'])->name('ledger.4950008680050000_post');
-        Route::get('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index'])->name('ledger.4950008680046000');
-        Route::post('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'post'])->name('ledger.4950008680046000_post');
-        Route::get('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'index'])->name('ledger.4950008680034000');
-        Route::post('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'post'])->name('ledger.4950008680034000_post');
-        Route::get('/ledger/4950008680035000', [EmploymentInsuredQualificationLossController::class, 'index'])->name('ledger.4950008680035000');
-        Route::post('/ledger/4950008680035000', [EmploymentInsuredQualificationLossController::class, 'post'])->name('ledger.4950008680035000_post');
-        Route::get('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'index'])->name('ledger.4950008680051000');
-        Route::post('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'post'])->name('ledger.4950008680051000_post');
-        Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
-        Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
-        Route::get('/ledger/4950013520996000', [HealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
-        Route::post('/ledger/4950013520996000', [HealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
+            // Ledger
+            Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
+            Route::post('/ledger/api/disconnect', [EgovController::class, 'disconnect'])->name('egov.disconnect');
+            Route::get('/ledger/egov', [EgovController::class, 'index'])->name('ledger.egov');
+            Route::get('/get-egov-account', [EgovController::class, 'getEgovAccount'])->name('get-egov-account');
+            Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
+            Route::get('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'detail'])->name('ledger.detail');
+            Route::post('/ledger/issues/detail/{id}', [EgovIssuesController::class, 'getOfficial'])->name('ledger.detail_official');
 
-        // 顧客画面
-        Route::get('/company/department', [CompanyDepartmentController::class, 'current_company_department_update'])->name('current_company_department_update');
+            Route::get('/ledger/sample', [SampleController::class, 'index'])->name('ledger.sample');
+            Route::get('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680045000');
+            Route::post('/ledger/4950008680045000', [FirstWageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680045000_post');
+            Route::get('/ledger/4950013520991000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'index'])->name('ledger.4950013520991000');
+            Route::post('/ledger/4950013520991000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'post'])->name('ledger.4950013520991000_post');
+            Route::get('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'index'])->name('ledger.4950013520714000');
+            Route::post('/ledger/4950013520714000', [HealthInsurancePensionInsuredQualificationLossController::class, 'post'])->name('ledger.4950013520714000_post');
+            Route::get('/ledger/4950008680044000', [WageCertificatesEmploymentInsuredAtSixtyController::class, 'index'])->name('ledger.4950008680044000');
+            Route::post('/ledger/4950008680044000', [WageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680044000_post');
+            Route::get('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'index'])->name('ledger.4950008680040000');
+            Route::post('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'post'])->name('ledger.4950008680040000_post');
+            Route::get('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'index'])->name('ledger.4950013520989000');
+            Route::post('/ledger/4950013520989000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'post'])->name('ledger.4950013520989000_post');
+            Route::get('/ledger/4950013520711000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'index'])->name('ledger.4950013520711000');
+            Route::post('/ledger/4950013520711000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'post'])->name('ledger.4950013520711000_post');
+            Route::get('/ledger/4950013520990000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'index'])->name('ledger.4950013520990000');
+            Route::post('/ledger/4950013520990000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'post'])->name('ledger.4950013520990000_post');
+            Route::get('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'index'])->name('ledger.4950008680182000');
+            Route::post('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'post'])->name('ledger.4950008680182000_post');
+            Route::get('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'index'])->name('ledger.4950008680048000');
+            Route::post('/ledger/4950008680048000', [EmploymentInsuredLeaveStartAmountMonthlyCertificateController::class, 'post'])->name('ledger.4950008680048000_post');
+            Route::get('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'index'])->name('ledger.4950008680047000');
+            Route::post('/ledger/4950008680047000', [ContinuousEmploymentBenefitsForOlderWorkersController::class, 'post'])->name('ledger.4950008680047000_post');
+            Route::get('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'index'])->name('ledger.4950013520873000');
+            Route::post('/ledger/4950013520873000', [HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController::class, 'post'])->name('ledger.4950013520873000_post');
+            Route::get('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'index'])->name('ledger.4950008680050000');
+            Route::post('/ledger/4950008680050000', [EmploymentInsuranceChildcareLeaveApplicationController::class, 'post'])->name('ledger.4950008680050000_post');
+            Route::get('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'index'])->name('ledger.4950008680046000');
+            Route::post('/ledger/4950008680046000', [EmploymentInsuranceSeniorContinuationAllowanceController::class, 'post'])->name('ledger.4950008680046000_post');
+            Route::get('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'index'])->name('ledger.4950008680034000');
+            Route::post('/ledger/4950008680034000', [EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormController::class, 'post'])->name('ledger.4950008680034000_post');
+            Route::get('/ledger/4950008680035000', [EmploymentInsuredQualificationLossController::class, 'index'])->name('ledger.4950008680035000');
+            Route::post('/ledger/4950008680035000', [EmploymentInsuredQualificationLossController::class, 'post'])->name('ledger.4950008680035000_post');
+            Route::get('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'index'])->name('ledger.4950008680051000');
+            Route::post('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'post'])->name('ledger.4950008680051000_post');
+            Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
+            Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
+            Route::get('/ledger/4950013520996000', [HealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
+            Route::post('/ledger/4950013520996000', [HealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
 
-        Route::get('/company', [CompanyController::class, 'company_edit'])->name('company_edit');
-        Route::post('/company', [CompanyController::class, 'company_edit_post'])->name('company_edit_post');
+            // 顧客画面
+            Route::get('/company/department', [CompanyDepartmentController::class, 'current_company_department_update'])->name('current_company_department_update');
 
-        Route::get('/company/branch', [BranchController::class, 'branch'])->name('branch');
-        Route::post('/company/branch', [BranchController::class, 'branch_post'])->name('branch_post');
+            Route::get('/company', [CompanyController::class, 'company_edit'])->name('company_edit');
+            Route::post('/company', [CompanyController::class, 'company_edit_post'])->name('company_edit_post');
 
-        Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
-        Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
+            Route::get('/company/branch', [BranchController::class, 'branch'])->name('branch');
+            Route::post('/company/branch', [BranchController::class, 'branch_post'])->name('branch_post');
 
-        Route::get('/employee', [EmployeeController::class, 'employee_list'])->name('employee');
-        Route::get('/employee/edit/{id}', [EmployeeController::class, 'employee_update'])->name('employee_update');
-        Route::post('/employee/edit/{id}', [EmployeeController::class, 'employee_update_post'])->name('employee_update_post');
+            Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
+            Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
 
-        Route::get('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
-        Route::post('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
+            Route::get('/employee', [EmployeeController::class, 'employee_list'])->name('employee');
+            Route::get('/employee/edit/{id}', [EmployeeController::class, 'employee_update'])->name('employee_update');
+            Route::post('/employee/edit/{id}', [EmployeeController::class, 'employee_update_post'])->name('employee_update_post');
 
-        Route::get('/employee/contract', [EmployeeContractController::class, 'index'])->name('contract.index');
-        Route::post('/employee/contract/check', [EmployeeContractController::class, 'check'])->name('contract.check');
-        Route::post('/employee/contract/download', [EmployeeContractController::class, 'downlaod'])->name('contract.download');
+            Route::get('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position'])->name('managerial_position');
+            Route::post('/company/managerial_position', [ManagerialPositionController::class, 'managerial_position_post'])->name('managerial_position_post');
 
-        Route::get('/employee/permission/{id}', [PermissionController::class, 'employee_permission'])->name('employee_permission');
-        Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
-        Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
-        Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
+            Route::get('/employee/contract', [EmployeeContractController::class, 'index'])->name('contract.index');
+            Route::post('/employee/contract/check', [EmployeeContractController::class, 'check'])->name('contract.check');
+            Route::post('/employee/contract/download', [EmployeeContractController::class, 'downlaod'])->name('contract.download');
 
-        Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
-        Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
+            Route::get('/employee/permission/{id}', [PermissionController::class, 'employee_permission'])->name('employee_permission');
+            Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
+            Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
+            Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
+
+            Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
+            Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
 
 
-        //最終試験用
-        Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
+            //最終試験用
+            Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
+        });
     });
 });

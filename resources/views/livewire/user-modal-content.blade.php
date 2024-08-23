@@ -30,29 +30,46 @@
     <div class="center-content"></div>
     <div class="right-content">
         @if ($tab === 0)
-            <section class="area profile">
-                <div class="icon-content p-2">
-                    <div class="user-icon">
-                        <img src="{{ asset('/img/image.png') }}">
+            <section>
+                <form wire:submit="saveIcon">
+                    <div class="area profile">
+                        <div class="icon-content p-2">
+                            <p class="description">画像の変更・削除はアイコンをクリック</p>
+                            <div class="user-icon" wire:click="openImgOperation"><!-- クリックするとimg-operationが出てくる -->
+                            @if(!empty($profiles['file_path']))
+                                <img src="{{ asset('storage/' . $profiles['file_path']) }}">
+                            @else
+                                <img src="{{ asset('img/image.png') }}">
+                            @endif
+                            </div>
+                            <div class="img-operation">
+                                <div class="img-select" wire:click="openInputFile">画像を変更する</div>
+                                <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" wire:model.live="icon_file" class="img-select-input"><!-- このinputは隠す -->
+                                <div class="img-delete" wire:click="deleteIcon">削除</div>
+                            </div>
+                        </div>
+                        <div class="information">
+                            @if ($role_id == 999)
+                                <a class="ui red tag label">管理者アカウント</a>
+                            @endif
+                            @if ($role_id === 500)
+                                <a class="ui red tag label">社労士アカウント</a>
+                            @endif
+                            @if ($role_id === 100)
+                                <a class="ui red tag label">一般アカウント</a>
+                            @endif
+                            <h1 class="mt-1">{{ $profiles['name'] }}</h1>
+                            <h3>{{ $profiles['company_name'] }}</h3>
+                            <p>配属：{{ $profiles['branch_name'] }}</p>
+                            <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
+                            <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="information">
-                    @if ($role_id == 999)
-                        <a class="ui red tag label">管理者アカウント</a>
-                    @endif
-                    @if ($role_id === 500)
-                        <a class="ui red tag label">社労士アカウント</a>
-                    @endif
-                    @if ($role_id === 100)
-                        <a class="ui red tag label">一般アカウント</a>
-                    @endif
-                    <h1 class="mt-1">{{ $profiles['name'] }}</h1>
-                    <h3>{{ $profiles['company_name'] }}</h3>
-                    <p>配属：{{ $profiles['branch_name'] }}</p>
-                    <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
-                    <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
-                    </p>
-                </div>
+                    <div style="text-align: right;">
+                        <button class="ui button small primary" type="submit">保存</button>
+                    </div>
+                </form>
             </section>
         @endif
         @if ($tab === 1)

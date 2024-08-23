@@ -10,15 +10,21 @@ use App\Models\Employee_department;
 use App\Models\User;
 use App\Models\Prefecture;
 use App\Rules\noEmoji;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithFileUploads;
 use Livewire\Component;
 
 class UserModalContent extends Component
 {
+    use WithFileUploads;
+
     public $prefectures;
     public $employee_id = 0;
+    public $company_id = 0;
     public $tab = 0;
+    public $icon_file;
     public $profiles = [
         'name' => '',
         'file_path' => '',
@@ -101,6 +107,7 @@ class UserModalContent extends Component
     public $login_pass_edit_flg = false;
     public $login_pass_valid = ['filled' => true, 'unknown' => true, 'confirm' => true];
     public $login_pass_success = false;
+
     public function mount()
     {
         $user = Auth::user();
@@ -113,7 +120,18 @@ class UserModalContent extends Component
                 $this->role_id = $employee->role_id;
                 if ($this->role_id !== 999) {
                     $currentCompany = CurrentUser::currentCompany();
-                    if (!empty($currentCompany)) $this->profiles['company_name'] = $currentCompany->name;
+                    if (!empty($currentCompany)) {
+                        $this->profiles['company_name'] = $currentCompany->name;
+                        $this->company_id = $currentCompany->id;
+                        $directory = 'photo/' . $this->company_id;
+                        $files = Storage::files($directory);
+                        foreach ($files as $file) {
+                            $fileName = pathinfo($file, PATHINFO_FILENAME);
+                            if ($fileName == $this->employee_id) {
+                                $this->profiles['file_path'] = $file;
+                            }
+                        }
+                    }
                     $this->profiles['branch_name'] = $employee->branch->name;
                     $this->profiles['departments'] = Employee_department::select('name')
                         ->where('m_employee_department.delete_flg', 0)
@@ -171,6 +189,36 @@ class UserModalContent extends Component
     {
         $this->namesCancel();
         $this->tab = $num;
+    }
+
+    public function saveIcon()
+    {
+        if ($this->icon_file && $this->company_id && $this->employee_id) {
+            $extension = $this->icon_file->getClientOriginalExtension();
+            // $directory = 'photo/' . $this->company_id; // バックログ記載のパス
+            $directory = 'public/photo/' . $this->company_id; // 表示できたほう
+            $filePath = $directory . '/' . $this->employee_id . '.' . $extension;
+
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+
+            if (Storage::exists($filePath)) {
+                Storage::delete($filePath);
+            }
+
+            $result = $this->icon_file->storeAs($filePath) ? 'success' : 'failed';
+
+            if ($result === 'success') {
+                $filePath = 'photo/' . $this->company_id . '/' . $this->employee_id . '.' .  $extension; // 表示できたほう
+                $this->profiles['file_path'] = $filePath;
+            }
+        }
+    }
+
+    public function deleteIcon()
+    {
+
     }
 
     public function namesCancel()
