@@ -25,7 +25,11 @@ class EgovServiceProvider extends ServiceProvider
             'dev' => config('egov.dev'),
             'client_id' => config('egov.software_id'),
             'api_key' => config('egov.api_key'),
-            'redirect_uri' => config('egov.redirect_uri')
+            'redirect_uri' => config('egov.redirect_uri'),
+            'account_path' => config('egov.account_path'),
+            'account_dev_path' => config('egov.account_dev_path'),
+            'api_path' => config('egov.api_path'),
+            'api_dev_path' => config('egov.api_dev_path'),
         );
         Egov::config($egov_config);
     }

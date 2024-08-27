@@ -24,6 +24,10 @@ class Egov
             'client_id' => '',
             'api_key' => '',
             'redirect_uri' => '',
+            'account_path' => '',
+            'account_dev_path' => '',
+            'api_path' => '',
+            'api_dev_path' => '',
         ], $config);
     }
 
