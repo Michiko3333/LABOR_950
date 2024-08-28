@@ -217,6 +217,13 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-other_1.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             "de-other_2" => 'array',
             "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            'custom_pattern_flag' => 'nullable|integer',
+            'insured_status' => 'nullable|string|max:21',
+            'health_insurance_association_number' => ['nullable', 'string', new NumberOnly(8)],
+            'acquisition_of_distinction' => 'nullable|string|max:5',
+            'welfare_pension' => 'nullable|string|max:2',
+            'overseas_special_exception' => 'nullable|string|max:4',
+            'dispatch_contract_completion' => 'nullable|string|max:10',
         ];
     }
 
@@ -319,12 +326,12 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'mynumber_card_no' => 'マイナンバーカード番号',
             'social_insurance_no' => '社会保険番号',
             'pension_no' => '基礎年金番号',
-            'insurer_no' => '保険者番号',
+            'insurer_no' => '被保険者番号',
             'insured_age_type' => '取得時被保険者種類',
             'insurer_reference_no' => '被保険者整理番号',
-            'employment_insured_no' => '雇用保険被保険者番号',
+            'employment_insured_no' => '雇用保険番号',
             'employment_insurance_applied_date' => '雇用保険届出日',
-            'employment_insured_date' => '雇用保険資格取得日',
+            'employment_insured_date' => '雇用保険取得日',
             'employee_type' => '社員区分',
             'employee_status' => '社員ステータス',
             'contract_period_flg' => '雇用契約期間の有無',
@@ -345,6 +352,13 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'user_pass' => 'パスワード',
             'blood_type' => '血液型',
             'qualifications' => '資格情報',
+            'custom_pattern_flag' => '端数調整パターン個別設定フラグ',
+            'insured_status' => '被保険者状況',
+            'health_insurance_association_number' => '健保組合番号',
+            'acquisition_of_distinction' => '取得区分',
+            'welfare_pension' => '厚生年金基金',
+            'overseas_special_exception' => '海外特例',
+            'dispatch_contract_completion' => '派遣請負修了区分',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {
