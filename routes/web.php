@@ -55,6 +55,7 @@ use App\Models\CurrentUser;
 use App\Models\Employee;
 
 use App\Http\Middleware\CheckQueryParameters;
+use App\Http\Middleware\EmployeeIconFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,8 +78,10 @@ Route::group(['prefix' => 'healthcheck'], function () {
 
 /** 未ログイン */
 Route::middleware([CheckQueryParameters::class])->group(function () {
-    Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
-    Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
+    Route::middleware([EmployeeIconFile::class])->group(function () {
+        Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('auth.login_post');
+    });
 });
 
 /** ログイン必須ページ */
@@ -143,6 +146,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::middleware([CheckQueryParameters::class])->group(function () {
 
         Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');      
+
+        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
 
         Route::get('/select', [HomeController::class, 'select'])->name('home.select');
         Route::post('/select', [HomeController::class, 'select_post'])->name('home.select_post');
@@ -278,3 +283,4 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
     });
 });
+
