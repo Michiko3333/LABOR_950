@@ -132,10 +132,10 @@ Route::group(['middleware' => 'auth'], function () {
 
                 if ($company_id === $requestCompanyId) {
                     $filePath = Storage::path($path);
-                    if (Storage::exists($path) && (int)pathinfo($path, PATHINFO_FILENAME) === $employee_id) {
+                    if (Storage::exists($path)) {
                         return new BinaryFileResponse($filePath);
                     }
-                    return new BinaryFileResponse(public_path('img/image.png'));
+                    return abort(403);
                 } else {
                     return abort(403);
                 }
