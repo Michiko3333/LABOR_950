@@ -47,6 +47,13 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+use App\Models\CurrentUser;
+use App\Models\Employee;
+
 use App\Http\Middleware\CheckQueryParameters;
 
 /*
@@ -79,9 +86,63 @@ Route::group(['middleware' => 'auth'], function () {
     // EgovAPI
     Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
 
+    Route::get('/photo/{path}', function(Request $request, $path) {
+        $user = CurrentUser::info();
+        $role_id = $user->role_id;
+        $path = "photo/{$path}";
+        if ($role_id === 999) {
+            $filePath = Storage::path($path);
+            if ($filePath && Storage::exists($path)) {
+                return new BinaryFileResponse($filePath);
+            } else {
+                return new BinaryFileResponse(public_path('/img/image.png'));
+            }
+        } else {
+            $pathParts = explode('/', $path);
+            $requestCompanyId = (int)$pathParts[1] ?? null;
+
+            if ($role_id === 500) {
+                $user = CurrentUser::info();
+                $employee_id = $user->id;
+                $employee = Employee::where('id', $employee_id)->where('delete_flg', 0)->first();
+                $branch = $employee->branch()->first();
+                $company = $branch->company()->first();
+                $company_id = $company->id;
+                $clients = CurrentUser::clients()->with('company')->get();
+                $clientCompanyIds = $clients->pluck('company.id')->toArray();
+                array_push($clientCompanyIds, $company_id);
+
+                if (in_array($requestCompanyId, $clientCompanyIds)) {
+                    $filePath = Storage::path($path);
+                    if (Storage::exists($path)) {
+                        return new BinaryFileResponse($filePath);
+                    } else {
+                        return new BinaryFileResponse(public_path('/img/image.png'));
+                    }
+                } else {
+                    return abort(403);
+                }                
+            } else {
+                $currentCompany = CurrentUser::currentCompany();
+                $company_id = $currentCompany->id;
+                $employee_id = $user->id;
+
+                if ($company_id === $requestCompanyId) {
+                    $filePath = Storage::path($path);
+                    if (Storage::exists($path) && (int)pathinfo($path, PATHINFO_FILENAME) === $employee_id) {
+                        return new BinaryFileResponse($filePath);
+                    }
+                    return new BinaryFileResponse(public_path('img/image.png'));
+                } else {
+                    return abort(403);
+                }
+            }
+        }
+    })->where('path', '.*');
+
     Route::middleware([CheckQueryParameters::class])->group(function () {
 
-        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
+        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');      
 
         Route::get('/select', [HomeController::class, 'select'])->name('home.select');
         Route::post('/select', [HomeController::class, 'select_post'])->name('home.select_post');

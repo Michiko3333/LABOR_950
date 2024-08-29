@@ -141,6 +141,37 @@
             .tab-error.active {
                 color: #912d2b !important;
             }
+
+            .user-icon {
+                position: relative;
+                width: 180px;
+                height: 180px;
+                margin: 0 auto;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+            .user-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .user-icon::before {
+                content: "";
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .icon-input-area {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
         </style>
     @endslot
     <section class="content">
@@ -166,6 +197,7 @@
 
         <form class="ui form"
             action="{{ !isset($employee_id) ? route('admin.employee_create_post') : route('admin.employee_update_post', $employee_id) }}"
+            enctype="multipart/form-data"
             method="post">
             @csrf
             @if (session('errors'))
@@ -276,6 +308,24 @@
                     <div class="ui horizontal card card-shadow item-0">
                         <div class="content">
                             <h2>基本情報</h2>
+                            <div class="two fields">
+                                <div class="field">
+                                    <div class="user-icon">
+                                        <img src="{{ $filePath }}" id="icon">
+                                    </div>
+                                </div>
+                                <div class="field icon-input-area">
+                                    @if(isset($employee_id))
+                                        <p>
+                                            <span>
+                                                <a id="iconDelete">削除</a>
+                                                <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg" value="0">
+                                            </span>
+                                        </p>
+                                    @endif
+                                    <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" id="iconChangeInput">
+                                </div>
+                            </div>
                             <div class="three fields">
                                 <div class="required field {{ err($errors, 'employee_no') }}">
                                     <label for="employee_no">社員番号</label>
@@ -1320,6 +1370,26 @@
                     contents[index].style.display = 'block';
                 });
             });
+        });
+
+        $('#iconChangeInput').on('change', function() {
+            const $fr = new FileReader();
+            $fr.onload = function() {
+                $('#icon').attr('src', $fr.result);
+            }
+            $fr.readAsDataURL(this.files[0]);
+
+            $('#iconDeleteFlg').val("0");
+        });
+
+        $('#iconDelete').on('click', function () {
+            const flg = $('#iconDeleteFlg').val();
+            console.log(flg);
+            if(flg === "0") {
+                $('#iconDeleteFlg').val("1");
+                $('#icon').attr('src', '/img/image.png');
+                $('#iconChangeInput').val('');
+            }
         });
     </script>
 </x-layout>
