@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Log;
 
 class EgovBase
 {
-    const ACCOUNT_PATH = 'https://account.e-gov.go.jp';
-    const ACCOUNT_DEV_PATH = 'https://account2.sbx.e-gov.go.jp';
-    const API_PATH = 'https://api.e-gov.go.jp/shinsei/v2';
-    const API_DEV_PATH = 'https://api2.sbx.e-gov.go.jp';
     const RESPONSE_TYPE = 'code';
     const SCOPE = 'openid offline_access';
     const AUTH_CODE = 'authorization_code';
@@ -52,13 +48,13 @@ class EgovBase
     }
     protected function getAccountPath(string $path)
     {
-        $url = $this->config['dev'] ? self::ACCOUNT_DEV_PATH : self::ACCOUNT_PATH;
+        $url = $this->config['dev'] ? $this->config['account_dev_path'] : $this->config['account_path'];
         $url = $url . $path;
         return $url;
     }
     protected function getAPIPath(string $path)
     {
-        $url = $this->config['dev'] ? self::API_DEV_PATH : self::API_PATH;
+        $url = $this->config['dev'] ? $this->config['api_dev_path'] : $this->config['api_path'];
         $url = $url . $path;
         return $url;
     }
