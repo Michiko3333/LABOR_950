@@ -258,6 +258,7 @@
             if (readonly) {
                 $sectionReadonly();
             }
+            $('.ui.dropdown.dropdown.multiple').dropdown({});
         });
     </script>
 </x-layout>

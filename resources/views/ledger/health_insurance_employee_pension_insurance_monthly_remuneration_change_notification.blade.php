@@ -10,6 +10,9 @@
         <p>
             申請・届出に関する事項を入力してください。
         </p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -52,20 +55,26 @@
                                     <h2>70歳以上</h2>
                                     <div class="field four wide" style="margin-top: 5px;">
                                         <div class="ui toggle checkbox">
-                                            <input id="over_70_check" type="checkbox" name="over_70_check" {{ old("over_70_check") ? 'checked' : '' }}>
+                                            <input id="over_70_check" type="checkbox" name="over_70_check"
+                                                {{ old('over_70_check') ? 'checked' : '' }}>
                                             <label></label>
                                         </div>
                                     </div>
                                 </div>
                                 <p style="font-size: 12px; font-weight: 700;">70歳以上の方は下記のいずれかが必須です</p>
                                 <div id="over_70" style="display: flex;">
-                                    <div class="ui input" style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
+                                    <div class="ui input"
+                                        style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
                                         <label style="font-size: 11.2px;">個人番号</label>
-                                        <input id="personal_number" maxlength="12" type="text" placeholder="" name="mynumber_no_or_pension_no" value="{{ old('mynumber_no_or_pension_no') }}" value="">
+                                        <input id="personal_number" maxlength="12" type="text" placeholder=""
+                                            name="mynumber_no_or_pension_no"
+                                            value="{{ old('mynumber_no_or_pension_no') }}" value="">
                                     </div>
                                     <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
                                         <label style="font-size: 11.2px;">基礎年金番号</label>
-                                        <input id="basic_pension_number" maxlength="10" type="text" placeholder="" name="basic_pension_number" value="{{ old('basic_pension_number') }}" value="">
+                                        <input id="basic_pension_number" maxlength="10" type="text" placeholder=""
+                                            name="basic_pension_number" value="{{ old('basic_pension_number') }}"
+                                            value="">
                                     </div>
                                 </div>
                             </div>
@@ -75,10 +84,10 @@
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'wage_ledger' => '（様式1）年間報酬の平均で算定することの申立書（随時改定用）',
-                                    'attendance_record' => '（様式2）健康保険厚生年金保険被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書（随時改定用）',
+                                    'attendance_record' =>
+                                        '（様式2）健康保険厚生年金保険被保険者報酬月額変更届・保険者算定申立に係る例年の状況、標準報酬月額の比較及び被保険者の同意書（随時改定用）',
                                     'other' => 'その他の添付書類',
-                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'"
-                                :separateDisabled="true" />
+                                ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
                         <div class="ui card card-shadow">
@@ -101,7 +110,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -134,33 +143,43 @@
                 $('#N5_005F_8C8E').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N6_005F_93FA').val('{{ old('today_date', $todaySet['date']) }}');
 
+                @if (isset($businessOwner))
+                    $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(
+                        '{{ old('employer_company_managerial_position_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
+                    );
+                @endif
+
                 @if ($current_employee->role_id === 500)
-                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
+                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('{{ $current_employee->last_name }}' +
+                        '{{ $current_employee->first_name }}');
+                    $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val(
+                        '{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
                 @else
                     $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').prop('disabled', true);
                 @endif
 
                 checkOver70();
-                $('#over_70_check').change(function(){
+                $('#over_70_check').change(function() {
                     checkOver70();
                 });
-                $('#N60_005F_8E73_8A4F_8BC7_9432').change(function(){
+                $('#N60_005F_8E73_8A4F_8BC7_9432').change(function() {
                     checkOver70_2();
                 });
+
                 function checkOver70() {
-                    if($('#over_70_check').prop('checked')) {
+                    if ($('#over_70_check').prop('checked')) {
                         $('#personal_number, #basic_pension_number').prop('disabled', false);
                     } else {
-                        $('#personal_number, #basic_pension_number').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number').prop('disabled', true);
                         $('#personal_number, #basic_pension_number').val('');
                     }
                 }
+
                 function checkOver70_2() {
-                    if($('#N60_005F_8E73_8A4F_8BC7_9432').prop('checked')) {
+                    if ($('#N60_005F_8E73_8A4F_8BC7_9432').prop('checked')) {
                         $('#personal_number, #basic_pension_number').prop('disabled', false);
                     } else {
-                        $('#personal_number, #basic_pension_number').prop('disabled', true); 
+                        $('#personal_number, #basic_pension_number').prop('disabled', true);
                         $('#personal_number, #basic_pension_number').val('');
                     }
                 }
@@ -178,28 +197,28 @@
                 });
             });
 
-            $(function(){
-                $('#personal_number').change(function(){
+            $(function() {
+                $('#personal_number').change(function() {
                     $('#basic_pension_number').val('');
                 });
-                $('#basic_pension_number').change(function(){
+                $('#basic_pension_number').change(function() {
                     $('#personal_number').val('');
                 });
             });
-            $(function(){
-                var cb1 = $('#over_70_check'); 
+            $(function() {
+                var cb1 = $('#over_70_check');
                 var cb2 = $('#N60_005F_8E73_8A4F_8BC7_9432');
-                cb1.change(function(){
-                    if(cb1.prop('checked')){
+                cb1.change(function() {
+                    if (cb1.prop('checked')) {
                         cb2.prop('checked', true);
-                    }else{
+                    } else {
                         cb2.prop('checked', false);
                     }
                 });
-                cb2.change(function(){
-                    if(cb2.prop('checked')){
+                cb2.change(function() {
+                    if (cb2.prop('checked')) {
                         cb1.prop('checked', true);
-                    }else{
+                    } else {
                         cb1.prop('checked', false);
                     }
                 });
@@ -256,7 +275,7 @@
         </script>
 
         @slot('footer')
-            <script src="{{ asset('/js/ledger-form.js') }}" type="module"></>
+            <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot
     </section>
 </x-layout>

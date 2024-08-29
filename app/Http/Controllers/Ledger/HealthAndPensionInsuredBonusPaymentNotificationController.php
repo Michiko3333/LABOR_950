@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\EgovAPI\CsvFormatter;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthAndPensionInsuredBonusPaymentNotificationController extends Controller
 {
@@ -43,6 +44,11 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
 
         $company = CurrentUser::currentCompany();
         $companyId = $company->id;
+        $businessOwner = Branch::join('m_employee', 'm_branch.id', '=', 'm_employee.branch_id')
+            ->select('m_employee.last_name as last_name', 'm_employee.first_name as first_name')
+            ->where('m_employee.employee_type', 1)
+            ->where('m_branch.company_id', $companyId)
+            ->first();
         $certificate = Certificate::where('company_id', $companyId)
             ->where('delete_flg', 0)
             ->first();
@@ -62,8 +68,27 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
-        return view('ledger.health_and_pension_insured_bonus_payment_notification', ['company' => $company, 'todaySet' => $todaySet, 'current_employee' => $current_employee, 'dataUri' => $dataUri, 'certificate' => $certificate, 'procedureName' => $procedureName, 'egovAcount' => $egovAcount]);
+        return view(
+            'ledger.health_and_pension_insured_bonus_payment_notification',
+            [
+                'company' => $company,
+                'todaySet' => $todaySet,
+                'current_employee' => $current_employee,
+                'dataUri' => $dataUri,
+                'certificate' => $certificate,
+                'procedureName' => $procedureName,
+                'egovAcount' => $egovAcount,
+                'businessOwner' => $businessOwner,
+                'existPresident' => $existPresident
+            ]
+        );
     }
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)
@@ -85,19 +110,17 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
             }
             Csv_count::where('employee_id', $laborId)->update(['count' => $count]);
         } else {
-            $branch = Branch::select('id')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
-            $branchId = $branch->id;
-            if (!DB::table('m_csv_count')->where('branch_id', $branchId)->exists()) {
-                Csv_count::create(['branch_id' => $branchId, 'count' => 0]);
+            if (!DB::table('m_csv_count')->where('pension_office_no', $request->input('csv_pension_office_no'))->exists()) {
+                Csv_count::create(['pension_office_no' => $request->input('csv_pension_office_no'), 'count' => 0]);
             }
-            $csv_count = Csv_count::select('count')->where('branch_id', $branchId)->first();
+            $csv_count = Csv_count::select('count')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
             $count = $csv_count->count;
             if ($count === 999) {
                 $count = 1;
             } else {
                 $count++;
             }
-            Csv_count::where('branch_id', $branchId)->update(['count' => $count]);
+            Csv_count::where('pension_office_no', $request->input('csv_pension_office_no'))->update(['count' => $count]);
         }
         $csvFormatter = new CsvFormatter('4950013520991000', $count);
         $csvFormatter->setKanri($request);

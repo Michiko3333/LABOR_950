@@ -28,6 +28,9 @@
             <div class="active section">帳票一覧</div>
         </div>
         <h1>帳票一覧</h1>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message">
                 <div class="header">

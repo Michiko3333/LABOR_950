@@ -16,6 +16,7 @@ use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Permission;
+use App\Models\Employee;
 
 class EmploymentInsuredQualificationLossController extends Controller
 {
@@ -65,6 +66,12 @@ class EmploymentInsuredQualificationLossController extends Controller
         $employmentStatuses = Values_employee_employment_status::all();
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.employment_insured_qualification_loss', [
             'company' => $company,
@@ -77,7 +84,8 @@ class EmploymentInsuredQualificationLossController extends Controller
             'employmentStatuses' => $employmentStatuses,
             'certificate' => $certificate,
             'egovAcount' => $egovAcount,
-            'procedureName' => $procedureName
+            'procedureName' => $procedureName,
+            'existPresident' => $existPresident
         ]);
     }
 

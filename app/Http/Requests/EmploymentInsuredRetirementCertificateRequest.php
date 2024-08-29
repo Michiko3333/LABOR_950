@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
@@ -22,6 +23,8 @@ class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
 
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "insurance_office_no_4" => 'string|regex:/^[0-9]{4}$/u',
             "insurance_office_no_6" => 'string|regex:/^[0-9]{6}$/u',
@@ -35,7 +38,7 @@ class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
             "retirement_date_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "retirement_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "retirement_date_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "branch_name" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
+            "branch_name" =>  ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(false)],
             "branch_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',

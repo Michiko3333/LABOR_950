@@ -11,6 +11,7 @@ use App\Models\CurrentUser;
 use App\Models\Certificate;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationController extends Controller
 {
@@ -59,6 +60,12 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         );
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.health_insurance_employee_pension_insurance_bonus_non_payment_report_electronic_application', [
             'company' => $company,
@@ -68,6 +75,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             'egovAcount' => $egovAcount,
             'current_employee' => $current_employee,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

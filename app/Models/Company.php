@@ -31,6 +31,8 @@ class Company extends Model
         'supplier_company',
         'outsourcing_company',
         'sales_company',
+        'representative',
+        'bank_name',
         'url',
         'purpose',
         'company_division',
@@ -89,6 +91,11 @@ class Company extends Model
     public function egov_account()
     {
         return $this->hasOne(Egov_account::class);
+    }
+
+    public function company_files()
+    {
+        return $this->hasMany(Company_files::class);
     }
 
 }

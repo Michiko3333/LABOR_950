@@ -117,6 +117,46 @@
                         "g";
                 }
             }
+
+            .ui.styled.accordion .content {
+                display: flex;
+                padding: 14px;
+                gap: 14px;
+            }
+
+            .ui.styled.accordion .content .content_inner {
+                width: 49.9%;
+            }
+
+            .ui.styled.accordion .active.title {
+                background: white;
+            }
+
+            button.append-dependent {
+                width: 100%;
+                padding: 1em;
+                color: gray;
+                font-weight: bold;
+                border: solid 2px silver;
+                border-radius: 4px;
+                background: transparent;
+                cursor: pointer;
+            }
+
+            button.append-dependent:hover {
+                color: #9e9e9e;
+                border: solid 2px #cfcfcf;
+            }
+
+            button.append-dependent:active {
+                color: #6b6b6b;
+                border: solid 2px #adadad;
+            }
+
+            .tab-error,
+            .tab-error.active {
+                color: #912d2b !important;
+            }
         </style>
     @endslot
     <section class="content">
@@ -148,885 +188,994 @@
             @if (isset($employee_id))
                 <input type="hidden" name="employee_id" value="{{ $employee_id }}">
             @endif
-
-
-            <div class="labor-data-area">
-                <div class="ui horizontal card card-shadow item-0">
-                    <div class="content">
-                        <h2>基本情報</h2>
-                        <div class="three fields">
-                            <div class="required field {{ err($errors, 'employee_no') }}">
-                                <label for="employee_no">社員番号</label>
-                                <input type="text" id="employee_no" name="employee_no"
-                                    value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
-                                    placeholder="E9999999">
-                            </div>
-                            <div class="required field {{ err($errors, 'employee_type') }}">
-                                <label>社員区分</label>
-                                <select class="ui fluid dropdown" name="employee_type">
-                                    <option value="">未選択</option>
-                                    @foreach ($employee_type as $k => $item)
-                                        <option value="{{ $k }}"
-                                            {{ old('employee_type') == $k || (isset($employee) && old('employee_type', $employee->employee_type) == $k)
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="required field {{ err($errors, 'employee_status') }}">
-                                <label>社員ステータス</label>
-                                <select class="ui fluid dropdown" name="employee_status">
-                                    <option value="">未選択</option>
-                                    @foreach ($employee_status_type as $k => $item)
-                                        <option value="{{ $k }}"
-                                            {{ old('employee_status') == $k ||
-                                            (isset($employee) && old('employee_status', $employee->employee_status) == $k)
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="two fields m-0">
-                                <div class="required field {{ err($errors, 'last_name') }}">
-                                    <label for="last_name">氏</label>
-                                    <input type="text" id="last_name" name="last_name"
-                                        value="{{ old('last_name', isset($employee_id) ? $employee->last_name : '') }}"
-                                        placeholder="田中">
+            @php
+                $field1 = $errors->hasAny([
+                    'employee_no',
+                    'last_name',
+                    'last_name_kana',
+                    'last_name_alphabet',
+                    'first_name',
+                    'first_name_kana',
+                    'first_name_alphabet',
+                    'qualifications',
+                    'old_last_name',
+                    'old_last_name_kana',
+                    'old_last_name_alphabet',
+                    'old_first_name',
+                    'old_first_name_kana',
+                    'old_first_name_alphabet',
+                    'name_common',
+                    'name_common_kana',
+                    'post_code',
+                    'address_prefecture',
+                    'address_city',
+                    'address_ward',
+                    'address_apartment',
+                    'employee_type',
+                    'employee_status',
+                    'sex',
+                    'birthday_date',
+                    'company_name',
+                    'branch_id',
+                    'tel_area_code',
+                    'tel_city_code',
+                    'tel_subscriber_code',
+                    'fax1',
+                    'fax2',
+                    'fax3',
+                    'mail_address1',
+                    'mail_address2',
+                    'emergency_post_code1',
+                    'emergency_contact1',
+                    'emergency_relationship1',
+                    'emergency_tel1',
+                    'emergency_address_prefecture1',
+                    'emergency_address_city1',
+                    'emergency_address_ward1',
+                    'emergency_address_apartment1',
+                    'emergency_post_code2',
+                    'emergency_contact2',
+                    'emergency_relationship2',
+                    'emergency_tel2',
+                    'emergency_address_prefecture2',
+                    'emergency_address_city2',
+                    'emergency_address_ward2',
+                    'emergency_address_apartment2',
+                    'mynumber_card_no',
+                    'social_insurance_no',
+                    'pension_no',
+                    'insurer_no',
+                    'insurer_reference_no',
+                    'employment_insured_no',
+                    'residence_card_no',
+                    'residential_status_unknown_reason',
+                    'user_email',
+                    'user_pass',
+                ]);
+                $field2 = $errors->hasAny([
+                    'de-last_name.*',
+                    'de-last_name_kana.*',
+                    'de-first_name.*',
+                    'de-first_name_kana.*',
+                    'de-sex.*',
+                    'de-relationship_spouse.*',
+                    'de-relationship_dependent.*',
+                    'de-spouse_flag.*',
+                    'de-age.*',
+                    'de-contact.*',
+                    'de-occupation.*',
+                    'de-annual_income.*',
+                    'de-mynumber_card_no.*',
+                    'de-pension_no.*',
+                    'de-dependent_type.*',
+                    'de-other_1.*',
+                    'de-other_2.*',
+                ]);
+            @endphp
+            <div class="ui top attached tabular menu">
+                <a class="item active {{ $field1 ? 'tab-error' : '' }}" data-tab="sample">従業員情報</a>
+                <a class="item {{ $field2 ? 'tab-error' : '' }}" data-tab="sample2">扶養者情報</a>
+            </div>
+            <div class="ui bottom attached segment" data-tab="sample">
+                <div class="labor-data-area">
+                    <div class="ui horizontal card card-shadow item-0">
+                        <div class="content">
+                            <h2>基本情報</h2>
+                            <div class="three fields">
+                                <div class="required field {{ err($errors, 'employee_no') }}">
+                                    <label for="employee_no">社員番号</label>
+                                    <input type="text" id="employee_no" name="employee_no"
+                                        value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
+                                        placeholder="E9999999">
                                 </div>
-                                <div class="required field {{ err($errors, 'first_name') }}">
-                                    <label for="first_name">名</label>
-                                    <input type="text" id="first_name" name="first_name"
-                                        value="{{ old('first_name', isset($employee_id) ? $employee->first_name : '') }}"
-                                        placeholder="太郎">
+                                <div class="required field {{ err($errors, 'employee_type') }}">
+                                    <label>社員区分</label>
+                                    <select class="ui fluid dropdown" name="employee_type">
+                                        <option value="">未選択</option>
+                                        @foreach ($employee_type as $k => $item)
+                                            <option value="{{ $k }}"
+                                                {{ old('employee_type') == $k || (isset($employee) && old('employee_type', $employee->employee_type) == $k)
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="required field {{ err($errors, 'employee_status') }}">
+                                    <label>社員ステータス</label>
+                                    <select class="ui fluid dropdown" name="employee_status">
+                                        <option value="">未選択</option>
+                                        @foreach ($employee_status_type as $k => $item)
+                                            <option value="{{ $k }}"
+                                                {{ old('employee_status') == $k ||
+                                                (isset($employee) && old('employee_status', $employee->employee_status) == $k)
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <div class="two fields m-0">
-                                <div class="required field {{ err($errors, 'last_name_kana') }}">
-                                    <label for="last_name_kana">氏（カナ）</label>
-                                    <input type="text" id="last_name_kana" name="last_name_kana"
-                                        value="{{ old('last_name_kana', isset($employee_id) ? $employee->last_name_kana : '') }}"
-                                        placeholder="タナカ">
+                            <div class="two fields">
+                                <div class="two fields m-0">
+                                    <div class="required field {{ err($errors, 'last_name') }}">
+                                        <label for="last_name">氏</label>
+                                        <input type="text" id="last_name" name="last_name"
+                                            value="{{ old('last_name', isset($employee_id) ? $employee->last_name : '') }}"
+                                            placeholder="田中">
+                                    </div>
+                                    <div class="required field {{ err($errors, 'first_name') }}">
+                                        <label for="first_name">名</label>
+                                        <input type="text" id="first_name" name="first_name"
+                                            value="{{ old('first_name', isset($employee_id) ? $employee->first_name : '') }}"
+                                            placeholder="太郎">
+                                    </div>
                                 </div>
-                                <div class="required field {{ err($errors, 'first_name_kana') }}">
-                                    <label for="first_name_kana">名（カナ）</label>
-                                    <input type="text" id="first_name_kana" name="first_name_kana"
-                                        value="{{ old('first_name_kana', isset($employee_id) ? $employee->first_name_kana : '') }}"
-                                        placeholder="タロウ">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="required field {{ err($errors, 'sex') }}">
-                                <label>性別</label>
-                                <select class="ui fluid dropdown" name="sex" value="{{ old('sex') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($sex_type as $id => $name)
-                                        <option value="{{ $id }}"
-                                            {{ old('sex') == "$id" || (isset($employee) && old('sex', $employee->sex) == "$id") ? 'selected' : '' }}>
-                                            {{ $name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="required field {{ err($errors, 'birthday_date') }}">
-                                <label>生年月日</label>
-                                <div class="ui calendar" id="birthday_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="birthday_date"
-                                            value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}">
-                                        <input type="hidden" name="formatted_birthday_date"
-                                            id="formatted_birthday_date" value="{{ old('birthday_date') }}">
+                                <div class="two fields m-0">
+                                    <div class="required field {{ err($errors, 'last_name_kana') }}">
+                                        <label for="last_name_kana">氏（カナ）</label>
+                                        <input type="text" id="last_name_kana" name="last_name_kana"
+                                            value="{{ old('last_name_kana', isset($employee_id) ? $employee->last_name_kana : '') }}"
+                                            placeholder="タナカ">
+                                    </div>
+                                    <div class="required field {{ err($errors, 'first_name_kana') }}">
+                                        <label for="first_name_kana">名（カナ）</label>
+                                        <input type="text" id="first_name_kana" name="first_name_kana"
+                                            value="{{ old('first_name_kana', isset($employee_id) ? $employee->first_name_kana : '') }}"
+                                            placeholder="タロウ">
                                     </div>
                                 </div>
                             </div>
-                            <div class="required field {{ err($errors, 'country_id') }}">
-                                <label>国籍</label>
-                                <select class="ui fluid dropdown" name="country_id">
-                                    <option value="">日本</option>
-                                    @foreach ($country_type as $k => $item)
-                                        <option value="{{ $k }}"
-                                            {{ old('country_id') == $k || (isset($employee) && old('country_id', $employee->country_id) == $k)
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field">
-                                <div class="ui checkbox mr-1">
-                                    <input type="checkbox" name="spouse_flg" value='1'
-                                        {{ (isset($employee_id) && $employee->spouse_flg == 1) || old('spouse_flg') == '1' ? 'checked' : '' }}>
-                                    <label>配偶者有</label>
+                            <div class="three fields">
+                                <div class="required field {{ err($errors, 'sex') }}">
+                                    <label>性別</label>
+                                    <select class="ui fluid dropdown" name="sex" value="{{ old('sex') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($sex_type as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ old('sex') == "$id" || (isset($employee) && old('sex', $employee->sex) == "$id") ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="ui checkbox">
-                                    <input type="checkbox" name="dependent_flg" value='1'
-                                        {{ (isset($employee_id) && $employee->dependent_flg == 1) || old('dependent_flg') == '1' ? 'checked' : '' }}>
-                                    <label>扶養者有</label>
+                                <div class="required field {{ err($errors, 'birthday_date') }}">
+                                    <label>生年月日</label>
+                                    <div class="ui calendar" id="birthday_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="birthday_date"
+                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}">
+                                            <input type="hidden" name="formatted_birthday_date"
+                                                id="formatted_birthday_date" value="{{ old('birthday_date') }}">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="field {{ err($errors, 'dependent_family_number') }}">
-                                <label for="dependent_family_number">扶養人数</label>
-                                <input type="number" id="dependent_family_number" name="dependent_family_number"
-                                    value="{{ old('dependent_family_number', isset($employee_id) ? $employee->dependent_family_number : '') }}"
-                                    min="0" max="99">
-                            </div>
-                        </div>
-                        <div class="ui divider my-2"></div>
-                        <div class="two fields">
-                            <div class="two fields m-0">
-                                <div class="field {{ err($errors, 'last_name_alphabet') }}">
-                                    <label for="last_name_alphabet">氏（アルファベット）</label>
-                                    <input type="text" id="last_name_alphabet" name="last_name_alphabet"
-                                        value="{{ old('last_name_alphabet', isset($employee_id) ? $employee->last_name_alphabet : '') }}"
-                                        placeholder="TANAKA">
-                                </div>
-                                <div class="field {{ err($errors, 'first_name_alphabet') }}">
-                                    <label for="first_name_alphabet">名（アルファベット）</label>
-                                    <input type="text" id="first_name_alphabet" name="first_name_alphabet"
-                                        value="{{ old('first_name_alphabet', isset($employee_id) ? $employee->first_name_alphabet : '') }}"
-                                        placeholder="TARO">
+                                <div class="required field {{ err($errors, 'country_id') }}">
+                                    <label>国籍</label>
+                                    <select class="ui fluid dropdown" name="country_id">
+                                        <option value="">日本</option>
+                                        @foreach ($country_type as $k => $item)
+                                            <option value="{{ $k }}"
+                                                {{ old('country_id') == $k || (isset($employee) && old('country_id', $employee->country_id) == $k)
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="two fields m-0">
-                                <div class="field {{ err($errors, 'old_last_name') }}">
-                                    <label for="old_last_name">旧氏</label>
-                                    <input type="text" id="old_last_name" name="old_last_name"
-                                        value="{{ old('old_last_name', isset($employee_id) ? $employee->old_last_name : '') }}"
-                                        placeholder="鈴木">
+                            <div class="fields">
+                                <div class="three wide field {{ err($errors, 'blood_type') }}">
+                                    <label>血液型</label>
+                                    <select class="ui fluid dropdown" name="blood_type"
+                                        value="{{ old('blood_type') }}">
+                                        <option value="">未選択</option>
+                                        <option value="A"
+                                            {{ old('blood_type') == 'A' || (isset($employee) && old('blood_type', $employee->blood_type) == 'A') ? 'selected' : '' }}>
+                                            A</option>
+                                        <option value="B"
+                                            {{ old('blood_type') == 'B' || (isset($employee) && old('blood_type', $employee->blood_type) == 'B') ? 'selected' : '' }}>
+                                            B</option>
+                                        <option value="AB"
+                                            {{ old('blood_type') == 'AB' || (isset($employee) && old('blood_type', $employee->blood_type) == 'AB') ? 'selected' : '' }}>
+                                            AB</option>
+                                        <option value="O"
+                                            {{ old('blood_type') == 'O' || (isset($employee) && old('blood_type', $employee->blood_type) == 'O') ? 'selected' : '' }}>
+                                            O</option>
+                                    </select>
                                 </div>
-                                <div class="field {{ err($errors, 'old_first_name') }}">
-                                    <label for="old_first_name">旧名</label>
-                                    <input type="text" id="old_first_name" name="old_first_name"
-                                        value="{{ old('old_first_name', isset($employee_id) ? $employee->old_first_name : '') }}"
-                                        placeholder="太郎">
-                                </div>
-                            </div>
-                            <div class="two fields m-0">
-                                <div class="field {{ err($errors, 'old_last_name_kana') }}">
-                                    <label for="old_last_name_kana">旧氏（カナ）</label>
-                                    <input type="text" id="old_last_name_kana" name="old_last_name_kana"
-                                        value="{{ old('old_last_name_kana', isset($employee_id) ? $employee->old_last_name_kana : '') }}"
-                                        placeholder="スズキ">
-                                </div>
-                                <div class="field {{ err($errors, 'old_first_name_kana') }}">
-                                    <label for="old_first_name_kana">旧名（カナ）</label>
-                                    <input type="text" id="old_first_name_kana" name="old_first_name_kana"
-                                        value="{{ old('old_first_name_kana', isset($employee_id) ? $employee->old_first_name_kana : '') }}"
-                                        placeholder="タロウ">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="two fields m-0">
-                                <div class="field {{ err($errors, 'old_last_name_alphabet') }}">
-                                    <label for="old_last_name_alphabet">旧氏（アルファベット）</label>
-                                    <input type="text" id="old_last_name_alphabet" name="old_last_name_alphabet"
-                                        value="{{ old('old_last_name_alphabet', isset($employee_id) ? $employee->old_last_name_alphabet : '') }}"
-                                        placeholder="TANAKA">
-                                </div>
-                                <div class="field {{ err($errors, 'old_first_name_alphabet') }}">
-                                    <label for="old_first_name_alphabet">旧名（アルファベット）</label>
-                                    <input type="text" id="old_first_name_alphabet" name="old_first_name_alphabet"
-                                        value="{{ old('old_first_name_alphabet', isset($employee_id) ? $employee->old_first_name_alphabet : '') }}"
-                                        placeholder="TARO">
+                                <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
+                                    <label>資格情報</label>
+                                    @if (!isset($employee_id))
+                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
+                                    @else
+                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="two fields m-0">
-                                <div class="field {{ err($errors, 'name_common') }}">
-                                    <label for="name_common">通称名</label>
-                                    <input type="text" id="name_common" name="name_common"
-                                        value="{{ old('name_common', isset($employee_id) ? $employee->name_common : '') }}"
-                                        placeholder="田中">
-                                </div>
-                                <div class="field {{ err($errors, 'name_common_kana') }}">
-                                    <label for="name_common_kana">通称名（カナ）</label>
-                                    <input type="text" id="name_common_kana" name="name_common_kana"
-                                        value="{{ old('name_common_kana', isset($employee_id) ? $employee->name_common_kana : '') }}"
-                                        placeholder="タナカ">
+                            <div class="ui divider my-2"></div>
+                            <div class="two fields">
+                                <div class="two fields m-0">
+                                    <div class="field {{ err($errors, 'last_name_alphabet') }}">
+                                        <label for="last_name_alphabet">氏（アルファベット）</label>
+                                        <input type="text" id="last_name_alphabet" name="last_name_alphabet"
+                                            value="{{ old('last_name_alphabet', isset($employee_id) ? $employee->last_name_alphabet : '') }}"
+                                            placeholder="TANAKA">
+                                    </div>
+                                    <div class="field {{ err($errors, 'first_name_alphabet') }}">
+                                        <label for="first_name_alphabet">名（アルファベット）</label>
+                                        <input type="text" id="first_name_alphabet" name="first_name_alphabet"
+                                            value="{{ old('first_name_alphabet', isset($employee_id) ? $employee->first_name_alphabet : '') }}"
+                                            placeholder="TARO">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="two fields">
+                                <div class="two fields m-0">
+                                    <div class="field {{ err($errors, 'old_last_name') }}">
+                                        <label for="old_last_name">旧氏</label>
+                                        <input type="text" id="old_last_name" name="old_last_name"
+                                            value="{{ old('old_last_name', isset($employee_id) ? $employee->old_last_name : '') }}"
+                                            placeholder="鈴木">
+                                    </div>
+                                    <div class="field {{ err($errors, 'old_first_name') }}">
+                                        <label for="old_first_name">旧名</label>
+                                        <input type="text" id="old_first_name" name="old_first_name"
+                                            value="{{ old('old_first_name', isset($employee_id) ? $employee->old_first_name : '') }}"
+                                            placeholder="太郎">
+                                    </div>
+                                </div>
+                                <div class="two fields m-0">
+                                    <div class="field {{ err($errors, 'old_last_name_kana') }}">
+                                        <label for="old_last_name_kana">旧氏（カナ）</label>
+                                        <input type="text" id="old_last_name_kana" name="old_last_name_kana"
+                                            value="{{ old('old_last_name_kana', isset($employee_id) ? $employee->old_last_name_kana : '') }}"
+                                            placeholder="スズキ">
+                                    </div>
+                                    <div class="field {{ err($errors, 'old_first_name_kana') }}">
+                                        <label for="old_first_name_kana">旧名（カナ）</label>
+                                        <input type="text" id="old_first_name_kana" name="old_first_name_kana"
+                                            value="{{ old('old_first_name_kana', isset($employee_id) ? $employee->old_first_name_kana : '') }}"
+                                            placeholder="タロウ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="two fields m-0">
+                                    <div class="field {{ err($errors, 'old_last_name_alphabet') }}">
+                                        <label for="old_last_name_alphabet">旧氏（アルファベット）</label>
+                                        <input type="text" id="old_last_name_alphabet"
+                                            name="old_last_name_alphabet"
+                                            value="{{ old('old_last_name_alphabet', isset($employee_id) ? $employee->old_last_name_alphabet : '') }}"
+                                            placeholder="TANAKA">
+                                    </div>
+                                    <div class="field {{ err($errors, 'old_first_name_alphabet') }}">
+                                        <label for="old_first_name_alphabet">旧名（アルファベット）</label>
+                                        <input type="text" id="old_first_name_alphabet"
+                                            name="old_first_name_alphabet"
+                                            value="{{ old('old_first_name_alphabet', isset($employee_id) ? $employee->old_first_name_alphabet : '') }}"
+                                            placeholder="TARO">
+                                    </div>
+                                </div>
+                                <div class="two fields m-0">
+                                    <div class="field {{ err($errors, 'name_common') }}">
+                                        <label for="name_common">通称名</label>
+                                        <input type="text" id="name_common" name="name_common"
+                                            value="{{ old('name_common', isset($employee_id) ? $employee->name_common : '') }}"
+                                            placeholder="田中">
+                                    </div>
+                                    <div class="field {{ err($errors, 'name_common_kana') }}">
+                                        <label for="name_common_kana">通称名（カナ）</label>
+                                        <input type="text" id="name_common_kana" name="name_common_kana"
+                                            value="{{ old('name_common_kana', isset($employee_id) ? $employee->name_common_kana : '') }}"
+                                            placeholder="タナカ">
+                                    </div>
+                                </div>
+                            </div>
 
-                    </div>
-                </div>
-                <div class="ui horizontal card card-shadow item-1">
-                    <div class="content">
-                        <h2>所属情報</h2>
-                        <div class="two fields">
-                            <div class="required field {{ err($errors, 'branch_id') }}">
-                                <label for="branch_name">支店</label>
-                                <input type="text" id="branch_name" name="branch_name" readonly
-                                    value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}">
-                                <input type="hidden" id="branch_id" name="branch_id"
-                                    value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}">
-                            </div>
-                        </div>
-                        @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
-                            <div style="text-align:right;">
-                                <button class="ui button" type="button" id="branch_btn">支店検索</button>
-                            </div>
-                        @endif
-                        <div class="field {{ err($errors, 'departments[]') }}">
-                            <label for="departments[]">所属部署</label>
-                            <select class="ui fluid search dropdown multiple clearable department_select"
-                                multiple="" name="departments[]">
-                            </select>
-                        </div>
-                        <div class="field {{ err($errors, 'managerial_position_id[]') }}">
-                            <label for="managerial_position_id">役職</label>
-                            <select class="ui fluid dropdown" name="managerial_position_id">
-                                <option value="">未選択</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui horizontal card card-shadow item-2">
-                    <div class="content">
-                        <h2>連絡先情報</h2>
-                        <div class="two fields">
-                            <div class="ui unstackable three fields field {{ err($errors, 'tel_area_code') }}"
-                                style="padding: 0;">
-                                <div class="field tel-hyphen required" style="padding-right: 0.8em;">
-                                    <label for="tel_area_code">電話番号</label>
-                                    <input type="tel" pattern="[0-9]{1,5}" id="tel_area_code"
-                                        name="tel_area_code"
-                                        value="{{ old('tel_area_code', isset($employee_id) ? $employee->tel_area_code : '') }}"
-                                        placeholder="市外局番" maxlength="4">
-                                </div>
-
-                                <div class="field tel-hyphen {{ err($errors, 'tel_city_code') }}">
-                                    <label></label>
-                                    <input type="tel" pattern="[0-9]{1,4}" id="tel_city_code"
-                                        name="tel_city_code"
-                                        value="{{ old('tel_city_code', isset($employee_id) ? $employee->tel_city_code : '') }}"
-                                        placeholder="市内局番" maxlength="4">
-                                </div>
-
-                                <div class="field {{ err($errors, 'tel_subscriber_code') }}"
-                                    style="padding-left: 0.8em;">
-                                    <label></label>
-                                    <input type="tel" pattern="[0-9]{4,7}" id="tel_subscriber_code"
-                                        name="tel_subscriber_code"
-                                        value="{{ old('tel_subscriber_code', isset($employee_id) ? $employee->tel_subscriber_code : '') }}"
-                                        placeholder="加入者番号" maxlength="4">
-                                </div>
-                            </div>
-                            <div class="ui unstackable three fields field" style="padding: 0;">
-                                <div class="field tel-hyphen {{ err($errors, 'fax1') }}"
-                                    style="padding-right: 0.8em;">
-                                    <label for="fax">FAX</label>
-                                    <input type="text" name="fax1" value="{{ old('fax1', $faxParts[0]) }}">
-                                </div>
-                                <div class="field tel-hyphen {{ err($errors, 'fax2') }}"
-                                    style="padding-right: 0.8em;">
-                                    <label for="fax2"></label>
-                                    <input type="text" name="fax2" value="{{ old('fax2', $faxParts[1]) }}">
-                                </div>
-                                <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
-                                    <label for="fax3"></label>
-                                    <input type="text" name="fax3" value="{{ old('fax3', $faxParts[2]) }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fields">
-                            <div class="four wide field required {{ err($errors, 'post_code') }}">
-                                <label for="post_code">郵便番号</label>
-                                <input type="text" name="post_code"
-                                    value="{{ old('post_code', isset($employee_id) ? $employee->post_code : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
-                                <label for="address_prefecture">住所（都道府県）</label>
-                                <select class="ui fluid dropdown" name="address_prefecture">
-                                    <option value="">未選択</option>
-                                    @foreach ($prefectures as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('address_prefecture') == "$k" ||
-                                            (isset($employee) && old('address_prefecture', $employee->address_prefecture) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="eight wide field required {{ err($errors, 'address_city') }}">
-                                <label for="address_city">住所（市区町村）</label>
-                                <input type="text" name="address_city"
-                                    value="{{ old('address_city', isset($employee_id) ? $employee->address_city : '') }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field required {{ err($errors, 'address_ward') }}">
-                                <label for="address_ward">住所（丁目・番地）</label>
-                                <input type="text" name="address_ward"
-                                    value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="field {{ err($errors, 'address_apartment') }}">
-                                <label for="address_apartment">住所（アパート・マンション名等）</label>
-                                <input type="text" name="address_apartment"
-                                    value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'mail_address1') }}">
-                                <label for="mail_address1">メールアドレス１</label>
-                                <input type="email" id="mail_address1" name="mail_address1"
-                                    value="{{ old('mail_address1', isset($employee_id) ? $employee->mail_address1 : '') }}"
-                                    placeholder="karte_xxxx@xxx.com">
-                            </div>
-                            <div class="field {{ err($errors, 'mail_address2') }}">
-                                <label for="mail_address2">メールアドレス２</label>
-                                <input type="email" id="mail_address2" name="mail_address2"
-                                    value="{{ old('mail_address2', isset($employee_id) ? $employee->mail_address2 : '') }}"
-                                    placeholder="karte_xxxx@xxx.com">
-                            </div>
-                        </div>
-                        <div class="ui divider my-2"></div>
-                        <h3>緊急連絡先１</h3>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'emergency_contact1') }}">
-                                <label for="emergency_contact1">氏名</label>
-                                <input type="text" id="emergency_contact1" name="emergency_contact1"
-                                    value="{{ old('emergency_contact1', isset($employee_id) ? $employee->emergency_contact1 : '') }}"
-                                    placeholder="田中 太郎">
-                            </div>
-                            <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
-                                <div class="field" style="padding-right: 0.8em;">
-                                    <label for="emergency_tel1">電話番号（ハイフン無し）</label>
-                                    <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
-                                        name="emergency_tel1"
-                                        value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fields">
-                            <div class="four wide field {{ err($errors, 'emergency_relationship1') }}">
-                                <label for="emergency_relationship1">続柄</label>
-                                <input type="text" id="emergency_relationship1" name="emergency_relationship1"
-                                    value="{{ old('emergency_relationship1', isset($employee_id) ? $employee->emergency_relationship1 : '') }}"
-                                    placeholder="父">
-                            </div>
-                            <div class="four wide field {{ err($errors, 'emergency_post_code1') }}">
-                                <label for="emergency_post_code1">郵便番号</label>
-                                <input type="text" name="emergency_post_code1"
-                                    value="{{ old('emergency_post_code1', isset($employee_id) ? $employee->emergency_post_code1 : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="four wide field {{ err($errors, 'emergency_address_prefecture1') }}">
-                                <label for="emergency_address_prefecture1">住所（都道府県）</label>
-                                <select class="ui fluid dropdown" name="emergency_address_prefecture1"
-                                    value="{{ old('emergency_address_prefecture1', isset($employee_id) ? $employee->emergency_address_prefecture1 : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($prefectures as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('emergency_address_prefecture1') == "$k" ||
-                                            (isset($employee) && old('emergency_address_prefecture1', $employee->emergency_address_prefecture1) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="eight wide field {{ err($errors, 'emergency_address_city1') }}">
-                                <label for="emergency_address_city1">住所（市区町村）</label>
-                                <input type="text" name="emergency_address_city1"
-                                    value="{{ old('emergency_address_city1', isset($employee_id) ? $employee->emergency_address_city1 : '') }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'emergency_address_ward1') }}">
-                                <label for="emergency_address_ward1">住所（丁目・番地）</label>
-                                <input type="text" name="emergency_address_ward1"
-                                    value="{{ old('emergency_address_ward1', isset($employee_id) ? $employee->emergency_address_ward1 : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="field {{ err($errors, 'emergency_address_apartment1') }}">
-                                <label for="emergency_address_apartment1">住所（アパート・マンション名等）</label>
-                                <input type="text" name="emergency_address_apartment1"
-                                    value="{{ old('emergency_address_apartment1', isset($employee_id) ? $employee->emergency_address_apartment1 : '') }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-
-                        <h3>緊急連絡先２</h3>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'emergency_contact2') }}">
-                                <label for="emergency_contact2">氏名</label>
-                                <input type="text" id="emergency_contact2" name="emergency_contact2"
-                                    value="{{ old('emergency_contact2', isset($employee_id) ? $employee->emergency_contact2 : '') }}"
-                                    placeholder="田中 太郎">
-                            </div>
-                            <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
-                                <div class="field" style="padding-right: 0.8em;">
-                                    <label for="emergency_tel2">電話番号（ハイフン無し）</label>
-                                    <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
-                                        name="emergency_tel2"
-                                        value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fields">
-                            <div class="four wide field {{ err($errors, 'emergency_relationship2') }}">
-                                <label for="emergency_relationship2">続柄</label>
-                                <input type="text" id="emergency_relationship2" name="emergency_relationship2"
-                                    value="{{ old('emergency_relationship2', isset($employee_id) ? $employee->emergency_relationship2 : '') }}"
-                                    placeholder="父">
-                            </div>
-                            <div class="four wide field {{ err($errors, 'emergency_post_code2') }}">
-                                <label for="emergency_post_code2">郵便番号</label>
-                                <input type="text" name="emergency_post_code2"
-                                    value="{{ old('emergency_post_code2', isset($employee_id) ? $employee->emergency_post_code2 : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="four wide field {{ err($errors, 'emergency_address_prefecture2') }}">
-                                <label for="emergency_address_prefecture2">住所（都道府県）</label>
-                                <select class="ui fluid dropdown" name="emergency_address_prefecture2"
-                                    value="{{ old('emergency_address_prefecture2', isset($employee_id) ? $employee->emergency_address_prefecture2 : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($prefectures as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('emergency_address_prefecture2') == "$k" ||
-                                            (isset($employee) && old('emergency_address_prefecture2', $employee->emergency_address_prefecture2) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="eight wide field {{ err($errors, 'emergency_address_city2') }}">
-                                <label for="emergency_address_city2">住所（市区町村）</label>
-                                <input type="text" name="emergency_address_city2"
-                                    value="{{ old('emergency_address_city2', isset($employee_id) ? $employee->emergency_address_city2 : '') }}"
-                                    placeholder="">
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'emergency_address_ward2') }}">
-                                <label for="emergency_address_ward2">住所（丁目・番地）</label>
-                                <input type="text" name="emergency_address_ward2"
-                                    value="{{ old('emergency_address_ward2', isset($employee_id) ? $employee->emergency_address_ward2 : '') }}"
-                                    placeholder="">
-                            </div>
-                            <div class="field {{ err($errors, 'emergency_address_apartment2') }}">
-                                <label for="emergency_address_apartment2">住所（アパート・マンション名等）</label>
-                                <input type="text" name="emergency_address_apartment2"
-                                    value="{{ old('emergency_address_apartment2', isset($employee_id) ? $employee->emergency_address_apartment2 : '') }}"
-                                    placeholder="">
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="ui horizontal card card-shadow item-3">
-                    <div class="content">
-                        <h2>契約情報</h2>
-                        <div class="three fields">
-                            <div class="field inline ml-0 {{ err($errors, 'contract_period_flg') }}">
-                                <label>雇用契約期間の有無</label>
-                                <div class="mt-1">
-                                    <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_period_flg" checked="checked"
-                                            value="0"
-                                            {{ (isset($employee_id) && $employee->contract_period_flg == 0) || old('contract_period_flg') == '0' ? 'checked' : '' }}>
-                                        <label>無</label>
-                                    </div>
-                                    <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_period_flg" value="1"
-                                            {{ (isset($employee_id) && $employee->contract_period_flg == 1) || old('contract_period_flg') == '1' ? 'checked' : '' }}>
-                                        <label>有</label>
-                                    </div>
+                    <div class="ui horizontal card card-shadow item-1">
+                        <div class="content">
+                            <h2>所属情報</h2>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'branch_id') }}">
+                                    <label for="branch_name">支店</label>
+                                    <input type="text" id="branch_name" name="branch_name" readonly
+                                        value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}">
+                                    <input type="hidden" id="branch_id" name="branch_id"
+                                        value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}">
                                 </div>
                             </div>
-                            <div class="field inline ml-0 {{ err($errors, 'contract_renewal_flg') }}">
-                                <label>契約更新条項の有無</label>
-                                <div class="mt-1">
-                                    <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="contract_renewal_flg" checked="checked"
-                                            value="0"
-                                            {{ (isset($employee_id) && $employee->contract_renewal_flg == 0) || old('contract_renewal_flg') == '0' ? 'checked' : '' }}>
-                                        <label>無</label>
-                                    </div>
-                                    <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="contract_renewal_flg" value="1"
-                                            {{ (isset($employee_id) && $employee->contract_renewal_flg == 1) || old('contract_renewal_flg') == '1' ? 'checked' : '' }}>
-                                        <label>有</label>
-                                    </div>
+                            @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
+                                <div style="text-align:right;">
+                                    <button class="ui button" type="button" id="branch_btn">支店検索</button>
                                 </div>
-                            </div>
-                            <div class="field inline ml-0 {{ err($errors, 'resignation_letter_request_flg') }}">
-                                <label>離職票の交付希望の有無</label>
-                                <div class="mt-1">
-                                    <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" checked="checked"
-                                            value="0"
-                                            {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || old('resignation_letter_request_flg') == '0' ? 'checked' : '' }}>
-                                        <label>無</label>
-                                    </div>
-                                    <div class="ui radio checkbox field mt-0">
-                                        <input type="radio" name="resignation_letter_request_flg" value="1"
-                                            {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || old('resignation_letter_request_flg') == '1' ? 'checked' : '' }}>
-                                        <label>有</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
-                                <label>雇用契約開始日</label>
-                                <div class="ui calendar" id="contract_start_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="contract_start_date"
-                                            value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}">
-                                        <input type="hidden" name="formatted_contract_start_date"
-                                            id="formatted_contract_start_date"
-                                            value="{{ old('contract_start_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'formatted_contract_end_date') }}">
-                                <label>雇用契約終了日</label>
-                                <div class="ui calendar" id="contract_end_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="contract_end_date"
-                                            value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}">
-                                        <input type="hidden" name="formatted_contract_end_date"
-                                            id="formatted_contract_end_date" value="{{ old('contract_end_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
-                                <label>入社日</label>
-                                <div class="ui calendar" id="hired_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="hired_date"
-                                            value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}">
-                                        <input type="hidden" name="formatted_hired_date" id="formatted_hired_date"
-                                            value="{{ old('hired_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'formatted_retirement_date') }}">
-                                <label>離職日</label>
-                                <div class="ui calendar" id="retirement_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="retirement_date"
-                                            value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}">
-                                        <input type="hidden" name="formatted_retirement_date"
-                                            id="formatted_retirement_date" value="{{ old('retirement_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'formatted_intended_retirement_date') }}">
-                                <label>離職予定日</label>
-                                <div class="ui calendar" id="intended_retirement_date">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="intended_retirement_date"
-                                            value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}">
-                                        <input type="hidden" name="formatted_intended_retirement_date"
-                                            id="formatted_intended_retirement_date"
-                                            value="{{ old('intended_retirement_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'retired_reason_type') }}">
-                                <label for="retired_reason_type">離職理由</label>
-                                <select class="ui fluid dropdown" name="retired_reason_type"
-                                    value="{{ old('retired_reason_type', isset($employee_id) ? $employee->retired_reason_type : '') }}">
-                                    <option value="">未選択</option>
+                            @endif
+                            <div class="field {{ err($errors, 'departments[]') }}">
+                                <label for="departments[]">所属部署</label>
+                                <select class="ui fluid search dropdown multiple clearable department_select"
+                                    multiple="" name="departments[]">
                                 </select>
                             </div>
-                        </div>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'insurance_loss_reason') }}">
-                                <label for="insurance_loss_reason">喪失原因</label>
-                                <select class="ui fluid dropdown" name="insurance_loss_reason"
-                                    value="{{ old('insurance_loss_reason', isset($employee_id) ? $employee->insurance_loss_reason : '') }}">
+                            <div class="field {{ err($errors, 'managerial_position_id[]') }}">
+                                <label for="managerial_position_id">役職</label>
+                                <select class="ui fluid dropdown" name="managerial_position_id">
                                     <option value="">未選択</option>
-                                    @foreach ($insurance_loss_reason as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('insurance_loss_reason') == "$k" ||
-                                            (isset($employee) && old('insurance_loss_reason', $employee->insurance_loss_reason) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="field {{ err($errors, 'over_retired_insurance_loss_reason') }}">
-                                <label for="over_retired_insurance_loss_reason">喪失原因（70歳以上）</label>
-                                <select class="ui fluid dropdown" name="over_retired_insurance_loss_reason"
-                                    value="{{ old('over_retired_insurance_loss_reason', isset($employee_id) ? $employee->over_retired_insurance_loss_reason : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($over_retired_insurance_loss_reason as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('over_retired_insurance_loss_reason') == "$k" ||
-                                            (isset($employee) && old('over_retired_insurance_loss_reason', $employee->over_retired_insurance_loss_reason) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="field {{ err($errors, 'formatted_passed_away_date') }}">
-                                <label>死亡日</label>
-                                <div class="ui calendar" id="passed_away_date">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="passed_away_date"
-                                            value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}">
-                                        <input type="hidden" name="formatted_passed_away_date"
-                                            id="formatted_passed_away_date" value="{{ old('passed_away_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'occupation_type') }}">
-                                <label for="occupation_type">職種</label>
-                                <select class="ui fluid dropdown" name="occupation_type"
-                                    value="{{ old('occupation_type', isset($employee_id) ? $employee->occupation_type : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($occupation_type as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('occupation_type') == "$k" ||
-                                            (isset($employee) && old('occupation_type', $employee->occupation_type) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="field">
-                                <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
-                                    <input type="checkbox" name="external_advisor_flg" value='1'
-                                        {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || old('external_advisor_flg') == '1' ? 'checked' : '' }}>
-                                    <label>外部顧問</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui horizontal card card-shadow item-4">
-                    <div class="content">
-                        <h2>保険情報</h2>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'mynumber_card_no') }}">
-                                <label for="mynumber_card_no">マイナンバーカード番号</label>
-                                <input type="text" id="mynumber_card_no" name="mynumber_card_no"
-                                    value="{{ old('mynumber_card_no', isset($employee_id) ? $employee->mynumber_card_no : '') }}"
-                                    placeholder="123456789012">
-                            </div>
-                            <div class="field {{ err($errors, 'pension_no') }}">
-                                <label for="pension_no">基礎年金番号</label>
-                                <input type="text" id="pension_no" name="pension_no"
-                                    value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
-                                    placeholder="0123456789">
-                            </div>
-
-                        </div>
-                        <div class="ui divider my-2"></div>
-                        <h3>社会保険</h3>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'social_insurance_no') }}">
-                                <label for="social_insurance_no">社会保険番号</label>
-                                <input type="text" id="social_insurance_no" name="social_insurance_no"
-                                    value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
-                                    placeholder="12345678">
-                            </div>
-                            <div class="field {{ err($errors, 'insurer_no') }}">
-                                <label for="insurer_no">保険者番号</label>
-                                <input type="text" id="insurer_no" name="insurer_no"
-                                    value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="12345678" maxLength="8">
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'insurer_reference_no') }}">
-                                <label for="insurer_reference_no">被保険者整理番号</label>
-                                <input type="text" id="insurer_reference_no" name="insurer_reference_no"
-                                    value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="012" maxLength="3">
-                            </div>
-                        </div>
-                        <div class="ui divider my-2"></div>
-                        <h3>雇用保険</h3>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'employment_insured_no') }}">
-                                <label for="employment_insured_no">被保険者番号</label>
-                                <input type="text" id="employment_insured_no" name="employment_insured_no"
-                                    value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
-                                    placeholder="01234567891" maxLength="11">
-                            </div>
-                            <div class="field {{ err($errors, 'employment_insurance_applied_date') }}">
-                                <label>雇用保険届出日</label>
-                                <div class="ui calendar" id="employment_insurance_applied_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date"
-                                            name="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
-                                        <input type="hidden" name="employment_insurance_applied_date"
-                                            id="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field {{ err($errors, 'employment_insured_date') }}">
-                                <label>雇用保険資格取得日</label>
-                                <div class="ui calendar" id="employment_insured_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="employment_insured_date"
-                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
-                                        <input type="hidden" name="employment_insured_date"
-                                            id="employment_insured_date"
-                                            value="{{ old('employment_insured_date') }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'labor_insurance_type') }}">
-                                <label for="labor_insurance_type">労災保険区分</label>
-                                <select class="ui fluid dropdown" name="labor_insurance_type"
-                                    value="{{ old('labor_insurance_type', isset($employee_id) ? $employee->labor_insurance_type : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($labor_insurance_type as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('labor_insurance_type') == "$k" ||
-                                            (isset($employee) && old('labor_insurance_type', $employee->labor_insurance_type) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="field {{ err($errors, 'employment_insurance_type') }}">
-                                <label for="employment_insurance_type">雇用保険区分</label>
-                                <select class="ui fluid dropdown" name="employment_insurance_type"
-                                    value="{{ old('employment_insurance_type', isset($employee_id) ? $employee->employment_insurance_type : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($employment_insurance_type as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('employment_insurance_type') == "$k" ||
-                                            (isset($employee) && old('employment_insurance_type', $employee->employment_insurance_type) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ui divider my-2"></div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'insured_age_type') }}">
-                                <label for="insured_age_type">取得時被保険者種類</label>
-                                <select class="ui fluid dropdown" name="insured_age_type"
-                                    value="{{ old('insured_age_type', isset($employee_id) ? $employee->insured_age_type : '') }}">
-                                    <option value="">未選択</option>
-                                    @foreach ($employee_insured_age_type as $k => $value)
-                                        <option value="{{ $k }}"
-                                            {{ old('insured_age_type') == "$k" ||
-                                            (isset($employee) && old('insured_age_type', $employee->insured_age_type) == "$k")
-                                                ? 'selected'
-                                                : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="ui horizontal card card-shadow item-5">
-                    <div class="content">
-                        <h2>外国籍記入欄</h2>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'residence_card_no') }}">
-                                <label for="residence_card_no">在留カード番号</label>
-                                <input type="text" pattern="^[0-9A-Z]{1,12}$" id="residence_card_no"
-                                    name="residence_card_no"
-                                    value="{{ old('residence_card_no', isset($employee_id) ? $employee->residence_card_no : '') }}"
-                                    placeholder="AB12345678CD">
+                    <div class="ui horizontal card card-shadow item-2">
+                        <div class="content">
+                            <h2>連絡先情報</h2>
+                            <div class="two fields">
+                                <div class="ui unstackable three fields field {{ err($errors, 'tel_area_code') }}"
+                                    style="padding: 0;">
+                                    <div class="field tel-hyphen required" style="padding-right: 0.8em;">
+                                        <label for="tel_area_code">電話番号</label>
+                                        <input type="tel" pattern="[0-9]{1,5}" id="tel_area_code"
+                                            name="tel_area_code"
+                                            value="{{ old('tel_area_code', isset($employee_id) ? $employee->tel_area_code : '') }}"
+                                            placeholder="市外局番" maxlength="4">
+                                    </div>
+
+                                    <div class="field tel-hyphen {{ err($errors, 'tel_city_code') }}">
+                                        <label></label>
+                                        <input type="tel" pattern="[0-9]{1,4}" id="tel_city_code"
+                                            name="tel_city_code"
+                                            value="{{ old('tel_city_code', isset($employee_id) ? $employee->tel_city_code : '') }}"
+                                            placeholder="市内局番" maxlength="4">
+                                    </div>
+
+                                    <div class="field {{ err($errors, 'tel_subscriber_code') }}"
+                                        style="padding-left: 0.8em;">
+                                        <label></label>
+                                        <input type="tel" pattern="[0-9]{4,7}" id="tel_subscriber_code"
+                                            name="tel_subscriber_code"
+                                            value="{{ old('tel_subscriber_code', isset($employee_id) ? $employee->tel_subscriber_code : '') }}"
+                                            placeholder="加入者番号" maxlength="4">
+                                    </div>
+                                </div>
+                                <div class="ui unstackable three fields field" style="padding: 0;">
+                                    <div class="field tel-hyphen {{ err($errors, 'fax1') }}"
+                                        style="padding-right: 0.8em;">
+                                        <label for="fax">FAX</label>
+                                        <input type="text" name="fax1"
+                                            value="{{ old('fax1', $faxParts[0]) }}">
+                                    </div>
+                                    <div class="field tel-hyphen {{ err($errors, 'fax2') }}"
+                                        style="padding-right: 0.8em;">
+                                        <label for="fax2"></label>
+                                        <input type="text" name="fax2"
+                                            value="{{ old('fax2', $faxParts[1]) }}">
+                                    </div>
+                                    <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
+                                        <label for="fax3"></label>
+                                        <input type="text" name="fax3"
+                                            value="{{ old('fax3', $faxParts[2]) }}">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="field {{ err($errors, 'residential_status_unknown_reason') }}">
-                                <label>在留資格不明理由</label>
-                                <input type="text" id="residential_status_unknown_reason"
-                                    name="residential_status_unknown_reason"
-                                    value="{{ old('residential_status_unknown_reason', isset($employee_id) ? $employee->residential_status_unknown_reason : '') }}"
-                                    placeholder="">
+                            <div class="fields">
+                                <div class="four wide field required {{ err($errors, 'post_code') }}">
+                                    <label for="post_code">郵便番号</label>
+                                    <input type="text" name="post_code"
+                                        value="{{ old('post_code', isset($employee_id) ? $employee->post_code : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
+                                    <label for="address_prefecture">住所（都道府県）</label>
+                                    <select class="ui fluid dropdown" name="address_prefecture">
+                                        <option value="">未選択</option>
+                                        @foreach ($prefectures as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('address_prefecture') == "$k" ||
+                                                (isset($employee) && old('address_prefecture', $employee->address_prefecture) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="eight wide field required {{ err($errors, 'address_city') }}">
+                                    <label for="address_city">住所（市区町村）</label>
+                                    <input type="text" name="address_city"
+                                        value="{{ old('address_city', isset($employee_id) ? $employee->address_city : '') }}"
+                                        placeholder="">
+                                </div>
                             </div>
-                            <div class="field">
-                                <div
-                                    class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
-                                    <input type="checkbox" name="unauthorized_activities_permission_flg"
-                                        value='1'
-                                        {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || old('unauthorized_activities_permission_flg') == '1' ? 'checked' : '' }}>
-                                    <label>資格外活動許可</label>
+                            <div class="two fields">
+                                <div class="field required {{ err($errors, 'address_ward') }}">
+                                    <label for="address_ward">住所（丁目・番地）</label>
+                                    <input type="text" name="address_ward"
+                                        value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="field {{ err($errors, 'address_apartment') }}">
+                                    <label for="address_apartment">住所（アパート・マンション名等）</label>
+                                    <input type="text" name="address_apartment"
+                                        value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'mail_address1') }}">
+                                    <label for="mail_address1">メールアドレス１</label>
+                                    <input type="email" id="mail_address1" name="mail_address1"
+                                        value="{{ old('mail_address1', isset($employee_id) ? $employee->mail_address1 : '') }}"
+                                        placeholder="karte_xxxx@xxx.com">
+                                </div>
+                                <div class="field {{ err($errors, 'mail_address2') }}">
+                                    <label for="mail_address2">メールアドレス２</label>
+                                    <input type="email" id="mail_address2" name="mail_address2"
+                                        value="{{ old('mail_address2', isset($employee_id) ? $employee->mail_address2 : '') }}"
+                                        placeholder="karte_xxxx@xxx.com">
+                                </div>
+                            </div>
+                            <div class="ui divider my-2"></div>
+                            <h3>緊急連絡先１</h3>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'emergency_contact1') }}">
+                                    <label for="emergency_contact1">氏名</label>
+                                    <input type="text" id="emergency_contact1" name="emergency_contact1"
+                                        value="{{ old('emergency_contact1', isset($employee_id) ? $employee->emergency_contact1 : '') }}"
+                                        placeholder="田中 太郎">
+                                </div>
+                                <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
+                                    <div class="field" style="padding-right: 0.8em;">
+                                        <label for="emergency_tel1">電話番号（ハイフン無し）</label>
+                                        <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
+                                            name="emergency_tel1"
+                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fields">
+                                <div class="four wide field {{ err($errors, 'emergency_relationship1') }}">
+                                    <label for="emergency_relationship1">続柄</label>
+                                    <input type="text" id="emergency_relationship1" name="emergency_relationship1"
+                                        value="{{ old('emergency_relationship1', isset($employee_id) ? $employee->emergency_relationship1 : '') }}"
+                                        placeholder="父">
+                                </div>
+                                <div class="four wide field {{ err($errors, 'emergency_post_code1') }}">
+                                    <label for="emergency_post_code1">郵便番号</label>
+                                    <input type="text" name="emergency_post_code1"
+                                        value="{{ old('emergency_post_code1', isset($employee_id) ? $employee->emergency_post_code1 : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="four wide field {{ err($errors, 'emergency_address_prefecture1') }}">
+                                    <label for="emergency_address_prefecture1">住所（都道府県）</label>
+                                    <select class="ui fluid dropdown" name="emergency_address_prefecture1"
+                                        value="{{ old('emergency_address_prefecture1', isset($employee_id) ? $employee->emergency_address_prefecture1 : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($prefectures as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('emergency_address_prefecture1') == "$k" ||
+                                                (isset($employee) && old('emergency_address_prefecture1', $employee->emergency_address_prefecture1) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="eight wide field {{ err($errors, 'emergency_address_city1') }}">
+                                    <label for="emergency_address_city1">住所（市区町村）</label>
+                                    <input type="text" name="emergency_address_city1"
+                                        value="{{ old('emergency_address_city1', isset($employee_id) ? $employee->emergency_address_city1 : '') }}"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'emergency_address_ward1') }}">
+                                    <label for="emergency_address_ward1">住所（丁目・番地）</label>
+                                    <input type="text" name="emergency_address_ward1"
+                                        value="{{ old('emergency_address_ward1', isset($employee_id) ? $employee->emergency_address_ward1 : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="field {{ err($errors, 'emergency_address_apartment1') }}">
+                                    <label for="emergency_address_apartment1">住所（アパート・マンション名等）</label>
+                                    <input type="text" name="emergency_address_apartment1"
+                                        value="{{ old('emergency_address_apartment1', isset($employee_id) ? $employee->emergency_address_apartment1 : '') }}"
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                            <h3>緊急連絡先２</h3>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'emergency_contact2') }}">
+                                    <label for="emergency_contact2">氏名</label>
+                                    <input type="text" id="emergency_contact2" name="emergency_contact2"
+                                        value="{{ old('emergency_contact2', isset($employee_id) ? $employee->emergency_contact2 : '') }}"
+                                        placeholder="田中 太郎">
+                                </div>
+                                <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
+                                    <div class="field" style="padding-right: 0.8em;">
+                                        <label for="emergency_tel2">電話番号（ハイフン無し）</label>
+                                        <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
+                                            name="emergency_tel2"
+                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fields">
+                                <div class="four wide field {{ err($errors, 'emergency_relationship2') }}">
+                                    <label for="emergency_relationship2">続柄</label>
+                                    <input type="text" id="emergency_relationship2" name="emergency_relationship2"
+                                        value="{{ old('emergency_relationship2', isset($employee_id) ? $employee->emergency_relationship2 : '') }}"
+                                        placeholder="父">
+                                </div>
+                                <div class="four wide field {{ err($errors, 'emergency_post_code2') }}">
+                                    <label for="emergency_post_code2">郵便番号</label>
+                                    <input type="text" name="emergency_post_code2"
+                                        value="{{ old('emergency_post_code2', isset($employee_id) ? $employee->emergency_post_code2 : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="four wide field {{ err($errors, 'emergency_address_prefecture2') }}">
+                                    <label for="emergency_address_prefecture2">住所（都道府県）</label>
+                                    <select class="ui fluid dropdown" name="emergency_address_prefecture2"
+                                        value="{{ old('emergency_address_prefecture2', isset($employee_id) ? $employee->emergency_address_prefecture2 : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($prefectures as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('emergency_address_prefecture2') == "$k" ||
+                                                (isset($employee) && old('emergency_address_prefecture2', $employee->emergency_address_prefecture2) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="eight wide field {{ err($errors, 'emergency_address_city2') }}">
+                                    <label for="emergency_address_city2">住所（市区町村）</label>
+                                    <input type="text" name="emergency_address_city2"
+                                        value="{{ old('emergency_address_city2', isset($employee_id) ? $employee->emergency_address_city2 : '') }}"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'emergency_address_ward2') }}">
+                                    <label for="emergency_address_ward2">住所（丁目・番地）</label>
+                                    <input type="text" name="emergency_address_ward2"
+                                        value="{{ old('emergency_address_ward2', isset($employee_id) ? $employee->emergency_address_ward2 : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="field {{ err($errors, 'emergency_address_apartment2') }}">
+                                    <label for="emergency_address_apartment2">住所（アパート・マンション名等）</label>
+                                    <input type="text" name="emergency_address_apartment2"
+                                        value="{{ old('emergency_address_apartment2', isset($employee_id) ? $employee->emergency_address_apartment2 : '') }}"
+                                        placeholder="">
                                 </div>
                             </div>
                         </div>
-                        <div class="field {{ err($errors, 'residential_status_id') }}">
-                            <label for="residential_status_id">在留資格</label>
-                            <select class="ui fluid dropdown" name="residential_status_id"
-                                value="{{ old('residential_status_id', isset($employee_id) ? $employee->residential_status_id : '') }}">
-                                <option value="">未選択</option>
-                                @foreach ($residential_status as $k => $value)
-                                    <option value="{{ $k }}"
-                                        {{ old('residential_status_id') == "$k" ||
-                                        (isset($employee) && old('residential_status_id', $employee->residential_status_id) == "$k")
-                                            ? 'selected'
-                                            : '' }}>
-                                        {{ $value }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="two fields">
-                            <div class="field {{ err($errors, 'formatted_stay_date_period') }}">
-                                <label>在留期間（期限）</label>
-                                <div class="ui calendar" id="retirement_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date" name="stay_date_period"
-                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
-                                        <input type="hidden" name="formatted_stay_date_period"
-                                            id="formatted_stay_date_period" value="{{ old('stay_date_period') }}">
+                    </div>
+                    <div class="ui horizontal card card-shadow item-3">
+                        <div class="content">
+                            <h2>契約情報</h2>
+                            <div class="three fields">
+                                <div class="field inline ml-0 {{ err($errors, 'contract_period_flg') }}">
+                                    <label>雇用契約期間の有無</label>
+                                    <div class="mt-1">
+                                        <div class="ui radio checkbox field mr-2 mt-0">
+                                            <input type="radio" name="contract_period_flg" checked="checked"
+                                                value="0"
+                                                {{ (isset($employee_id) && $employee->contract_period_flg == 0) || old('contract_period_flg') == '0' ? 'checked' : '' }}>
+                                            <label>無</label>
+                                        </div>
+                                        <div class="ui radio checkbox field mt-0">
+                                            <input type="radio" name="contract_period_flg" value="1"
+                                                {{ (isset($employee_id) && $employee->contract_period_flg == 1) || old('contract_period_flg') == '1' ? 'checked' : '' }}>
+                                            <label>有</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field inline ml-0 {{ err($errors, 'contract_renewal_flg') }}">
+                                    <label>契約更新条項の有無</label>
+                                    <div class="mt-1">
+                                        <div class="ui radio checkbox field mr-2 mt-0">
+                                            <input type="radio" name="contract_renewal_flg" checked="checked"
+                                                value="0"
+                                                {{ (isset($employee_id) && $employee->contract_renewal_flg == 0) || old('contract_renewal_flg') == '0' ? 'checked' : '' }}>
+                                            <label>無</label>
+                                        </div>
+                                        <div class="ui radio checkbox field mt-0">
+                                            <input type="radio" name="contract_renewal_flg" value="1"
+                                                {{ (isset($employee_id) && $employee->contract_renewal_flg == 1) || old('contract_renewal_flg') == '1' ? 'checked' : '' }}>
+                                            <label>有</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field inline ml-0 {{ err($errors, 'resignation_letter_request_flg') }}">
+                                    <label>離職票の交付希望の有無</label>
+                                    <div class="mt-1">
+                                        <div class="ui radio checkbox field mr-2 mt-0">
+                                            <input type="radio" name="resignation_letter_request_flg"
+                                                checked="checked" value="0"
+                                                {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 0) || old('resignation_letter_request_flg') == '0' ? 'checked' : '' }}>
+                                            <label>無</label>
+                                        </div>
+                                        <div class="ui radio checkbox field mt-0">
+                                            <input type="radio" name="resignation_letter_request_flg"
+                                                value="1"
+                                                {{ (isset($employee_id) && $employee->resignation_letter_request_flg == 1) || old('resignation_letter_request_flg') == '1' ? 'checked' : '' }}>
+                                            <label>有</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
+                                    <label>雇用契約開始日</label>
+                                    <div class="ui calendar" id="contract_start_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="contract_start_date"
+                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}">
+                                            <input type="hidden" name="formatted_contract_start_date"
+                                                id="formatted_contract_start_date"
+                                                value="{{ old('contract_start_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'formatted_contract_end_date') }}">
+                                    <label>雇用契約終了日</label>
+                                    <div class="ui calendar" id="contract_end_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="contract_end_date"
+                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}">
+                                            <input type="hidden" name="formatted_contract_end_date"
+                                                id="formatted_contract_end_date"
+                                                value="{{ old('contract_end_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="three fields">
+                                <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
+                                    <label>入社日</label>
+                                    <div class="ui calendar" id="hired_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="hired_date"
+                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}">
+                                            <input type="hidden" name="formatted_hired_date"
+                                                id="formatted_hired_date" value="{{ old('hired_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'formatted_retirement_date') }}">
+                                    <label>離職日</label>
+                                    <div class="ui calendar" id="retirement_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="retirement_date"
+                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}">
+                                            <input type="hidden" name="formatted_retirement_date"
+                                                id="formatted_retirement_date" value="{{ old('retirement_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'formatted_intended_retirement_date') }}">
+                                    <label>離職予定日</label>
+                                    <div class="ui calendar" id="intended_retirement_date">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="intended_retirement_date"
+                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}">
+                                            <input type="hidden" name="formatted_intended_retirement_date"
+                                                id="formatted_intended_retirement_date"
+                                                value="{{ old('intended_retirement_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'retired_reason_type') }}">
+                                    <label for="retired_reason_type">離職理由</label>
+                                    <select class="ui fluid dropdown" name="retired_reason_type"
+                                        value="{{ old('retired_reason_type', isset($employee_id) ? $employee->retired_reason_type : '') }}">
+                                        <option value="">未選択</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="three fields">
+                                <div class="field {{ err($errors, 'insurance_loss_reason') }}">
+                                    <label for="insurance_loss_reason">喪失原因</label>
+                                    <select class="ui fluid dropdown" name="insurance_loss_reason"
+                                        value="{{ old('insurance_loss_reason', isset($employee_id) ? $employee->insurance_loss_reason : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($insurance_loss_reason as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('insurance_loss_reason') == "$k" ||
+                                                (isset($employee) && old('insurance_loss_reason', $employee->insurance_loss_reason) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field {{ err($errors, 'over_retired_insurance_loss_reason') }}">
+                                    <label for="over_retired_insurance_loss_reason">喪失原因（70歳以上）</label>
+                                    <select class="ui fluid dropdown" name="over_retired_insurance_loss_reason"
+                                        value="{{ old('over_retired_insurance_loss_reason', isset($employee_id) ? $employee->over_retired_insurance_loss_reason : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($over_retired_insurance_loss_reason as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('over_retired_insurance_loss_reason') == "$k" ||
+                                                (isset($employee) && old('over_retired_insurance_loss_reason', $employee->over_retired_insurance_loss_reason) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field {{ err($errors, 'formatted_passed_away_date') }}">
+                                    <label>死亡日</label>
+                                    <div class="ui calendar" id="passed_away_date">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="passed_away_date"
+                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}">
+                                            <input type="hidden" name="formatted_passed_away_date"
+                                                id="formatted_passed_away_date"
+                                                value="{{ old('passed_away_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'occupation_type') }}">
+                                    <label for="occupation_type">職種</label>
+                                    <select class="ui fluid dropdown" name="occupation_type"
+                                        value="{{ old('occupation_type', isset($employee_id) ? $employee->occupation_type : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($occupation_type as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('occupation_type') == "$k" ||
+                                                (isset($employee) && old('occupation_type', $employee->occupation_type) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox field mt-3 {{ err($errors, 'external_advisor_flg') }}">
+                                        <input type="checkbox" name="external_advisor_flg" value='1'
+                                            {{ (isset($employee_id) && $employee->external_advisor_flg == 1) || old('external_advisor_flg') == '1' ? 'checked' : '' }}>
+                                        <label>外部顧問</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="ui horizontal card card-shadow item-4">
+                        <div class="content">
+                            <h2>保険情報</h2>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'mynumber_card_no') }}">
+                                    <label for="mynumber_card_no">マイナンバーカード番号</label>
+                                    <input type="text" id="mynumber_card_no" name="mynumber_card_no"
+                                        value="{{ old('mynumber_card_no', isset($employee_id) ? $employee->mynumber_card_no : '') }}"
+                                        placeholder="123456789012">
+                                </div>
+                                <div class="field {{ err($errors, 'pension_no') }}">
+                                    <label for="pension_no">基礎年金番号</label>
+                                    <input type="text" id="pension_no" name="pension_no"
+                                        value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
+                                        placeholder="0123456789">
+                                </div>
+
+                            </div>
+                            <div class="ui divider my-2"></div>
+                            <h3>社会保険</h3>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'social_insurance_no') }}">
+                                    <label for="social_insurance_no">社会保険番号</label>
+                                    <input type="text" id="social_insurance_no" name="social_insurance_no"
+                                        value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
+                                        placeholder="12345678">
+                                </div>
+                                <div class="field {{ err($errors, 'insurer_no') }}">
+                                    <label for="insurer_no">保険者番号</label>
+                                    <input type="text" id="insurer_no" name="insurer_no"
+                                        value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
+                                        placeholder="12345678" maxLength="8">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'insurer_reference_no') }}">
+                                    <label for="insurer_reference_no">被保険者整理番号</label>
+                                    <input type="text" id="insurer_reference_no" name="insurer_reference_no"
+                                        value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
+                                        placeholder="012" maxLength="3">
+                                </div>
+                            </div>
+                            <div class="ui divider my-2"></div>
+                            <h3>雇用保険</h3>
+                            <div class="three fields">
+                                <div class="field {{ err($errors, 'employment_insured_no') }}">
+                                    <label for="employment_insured_no">被保険者番号</label>
+                                    <input type="text" id="employment_insured_no" name="employment_insured_no"
+                                        value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
+                                        placeholder="01234567891" maxLength="11">
+                                </div>
+                                <div class="field {{ err($errors, 'employment_insurance_applied_date') }}">
+                                    <label>雇用保険届出日</label>
+                                    <div class="ui calendar" id="employment_insurance_applied_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date"
+                                                name="employment_insurance_applied_date"
+                                                value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
+                                            <input type="hidden" name="employment_insurance_applied_date"
+                                                id="employment_insurance_applied_date"
+                                                value="{{ old('employment_insurance_applied_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'employment_insured_date') }}">
+                                    <label>雇用保険資格取得日</label>
+                                    <div class="ui calendar" id="employment_insured_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="employment_insured_date"
+                                                value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
+                                            <input type="hidden" name="employment_insured_date"
+                                                id="employment_insured_date"
+                                                value="{{ old('employment_insured_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'labor_insurance_type') }}">
+                                    <label for="labor_insurance_type">労災保険区分</label>
+                                    <select class="ui fluid dropdown" name="labor_insurance_type"
+                                        value="{{ old('labor_insurance_type', isset($employee_id) ? $employee->labor_insurance_type : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($labor_insurance_type as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('labor_insurance_type') == "$k" ||
+                                                (isset($employee) && old('labor_insurance_type', $employee->labor_insurance_type) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field {{ err($errors, 'employment_insurance_type') }}">
+                                    <label for="employment_insurance_type">雇用保険区分</label>
+                                    <select class="ui fluid dropdown" name="employment_insurance_type"
+                                        value="{{ old('employment_insurance_type', isset($employee_id) ? $employee->employment_insurance_type : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($employment_insurance_type as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('employment_insurance_type') == "$k" ||
+                                                (isset($employee) && old('employment_insurance_type', $employee->employment_insurance_type) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="ui divider my-2"></div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'insured_age_type') }}">
+                                    <label for="insured_age_type">取得時被保険者種類</label>
+                                    <select class="ui fluid dropdown" name="insured_age_type"
+                                        value="{{ old('insured_age_type', isset($employee_id) ? $employee->insured_age_type : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach ($employee_insured_age_type as $k => $value)
+                                            <option value="{{ $k }}"
+                                                {{ old('insured_age_type') == "$k" ||
+                                                (isset($employee) && old('insured_age_type', $employee->insured_age_type) == "$k")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui horizontal card card-shadow item-5">
+                        <div class="content">
+                            <h2>外国籍記入欄</h2>
+                            <div class="three fields">
+                                <div class="field {{ err($errors, 'residence_card_no') }}">
+                                    <label for="residence_card_no">在留カード番号</label>
+                                    <input type="text" pattern="^[0-9A-Z]{1,12}$" id="residence_card_no"
+                                        name="residence_card_no"
+                                        value="{{ old('residence_card_no', isset($employee_id) ? $employee->residence_card_no : '') }}"
+                                        placeholder="AB12345678CD">
+                                </div>
+                                <div class="field {{ err($errors, 'residential_status_unknown_reason') }}">
+                                    <label>在留資格不明理由</label>
+                                    <input type="text" id="residential_status_unknown_reason"
+                                        name="residential_status_unknown_reason"
+                                        value="{{ old('residential_status_unknown_reason', isset($employee_id) ? $employee->residential_status_unknown_reason : '') }}"
+                                        placeholder="">
+                                </div>
+                                <div class="field">
+                                    <div
+                                        class="ui checkbox field mt-3 {{ err($errors, 'unauthorized_activities_permission_flg') }}">
+                                        <input type="checkbox" name="unauthorized_activities_permission_flg"
+                                            value='1'
+                                            {{ (isset($employee_id) && $employee->unauthorized_activities_permission_flg == 1) || old('unauthorized_activities_permission_flg') == '1' ? 'checked' : '' }}>
+                                        <label>資格外活動許可</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field {{ err($errors, 'residential_status_id') }}">
+                                <label for="residential_status_id">在留資格</label>
+                                <select class="ui fluid dropdown" name="residential_status_id"
+                                    value="{{ old('residential_status_id', isset($employee_id) ? $employee->residential_status_id : '') }}">
+                                    <option value="">未選択</option>
+                                    @foreach ($residential_status as $k => $value)
+                                        <option value="{{ $k }}"
+                                            {{ old('residential_status_id') == "$k" ||
+                                            (isset($employee) && old('residential_status_id', $employee->residential_status_id) == "$k")
+                                                ? 'selected'
+                                                : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'formatted_stay_date_period') }}">
+                                    <label>在留期間（期限）</label>
+                                    <div class="ui calendar" id="retirement_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="stay_date_period"
+                                                value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
+                                            <input type="hidden" name="formatted_stay_date_period"
+                                                id="formatted_stay_date_period"
+                                                value="{{ old('stay_date_period') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
+                <livewire:dependent-form :dependent="$dependent" :errors="$errors" :id="$id" />
             </div>
             @if ($userPermission->isDirector() || $userPermission->isWritableFor(6))
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
@@ -1119,6 +1268,20 @@
                 getDepartmentList();
                 getPositionList();
             }
+        });
+    </script>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.ui.tabular.menu .item');
+            const contents = document.querySelectorAll('.ui.bottom.attached.segment');
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach((t) => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    contents.forEach((c) => c.style.display = 'none');
+                    contents[index].style.display = 'block';
+                });
+            });
         });
     </script>
 </x-layout>

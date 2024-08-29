@@ -47,7 +47,6 @@ class EmployeeContractController extends Controller
             ->where('m_branch.company_id', $company->id)
             ->where('m_branch.branch_type', 1)
             ->first();
-        $representative = Employee::select(DB::raw("CONCAT(last_name,' ',first_name) as test"))->where('branch_id', $capital->id)->where('employee_type', 1)->first();
 
         $json_permanent = __DIR__ . '/default_permanent.json';
         $json_permanent_content = File::get($json_permanent);
@@ -73,7 +72,7 @@ class EmployeeContractController extends Controller
                 'day' => $day,
                 'address' => $capital->address ?? '',
                 'company_name' => $company->name ?? '',
-                'company_representative' => $representative->test ?? ''
+                'company_representative' => $company->representative ?? ''
             ],
         ]);
     }

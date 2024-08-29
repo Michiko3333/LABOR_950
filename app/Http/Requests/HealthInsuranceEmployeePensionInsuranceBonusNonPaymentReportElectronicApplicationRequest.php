@@ -21,9 +21,6 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         if (isset($data['labor_consultant_name'])) {
             $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
         }
-        if (isset($data['business_name_name_of_ship_owner'])) {
-            $data['business_name_name_of_ship_owner'] = mb_convert_kana($data['business_name_name_of_ship_owner'], 'S');
-        }
         if (isset($data['business_owner_name_representative_name'])) {
             $data['business_owner_name_representative_name'] = mb_convert_kana($data['business_owner_name_representative_name'], 'S');
         }
@@ -52,7 +49,7 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            "business_name_name_of_ship_owner" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "business_name_name_of_ship_owner" => 'required|string|max:25',
             "business_owner_name_representative_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             "changed_bonus_payment_schedule_month1" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],
             "changed_bonus_payment_schedule_month2" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],

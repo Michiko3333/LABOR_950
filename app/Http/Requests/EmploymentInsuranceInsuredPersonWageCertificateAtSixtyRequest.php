@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends BaseRequest
@@ -21,6 +22,8 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Base
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "employmentInsuredNo4digit" => 'string|regex:/^[0-9]{4}$/u',
             "employmentInsuredNo6digit" => 'string|regex:/^[0-9]{6}$/u',
@@ -30,7 +33,7 @@ class EmploymentInsuranceInsuredPersonWageCertificateAtSixtyRequest extends Base
             "employmentInsuranceOfficeNoCD" => 'string|regex:/^[0-9]{1}$/u',
             "employeeFullname" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "employeeFullnameKana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
-            "branchName" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "branchName" =>  ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "branchAddress" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "branchTelAreaCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "branchTelCityCode" => 'nullable|string|regex:/^[0-9]{1,5}$/u',

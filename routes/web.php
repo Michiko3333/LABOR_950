@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/company/list', [AdminController::class, 'company_list_api'])->name('admin.company_list_api');
         Route::get('/admin/company/create/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
         Route::post('/admin/company/create/edit/{id}', [AdminController::class, 'company_update_post'])->name('admin.company_update_post');
+        Route::get('/admin/company/download/{company_id}/{document_type}', [AdminController::class, 'downloadFile'])->name('admin.downloadFile');
 
         // User
         Route::get('/admin/company/edit/{id}', [AdminController::class, 'company_update'])->name('admin.company_update');
@@ -129,6 +130,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/employee/edit/{id}', [AdminController::class, 'employee_update_post'])->name('admin.employee_update_post');
         Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
         Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
+        Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
 
         // Ledger
         Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
@@ -206,6 +208,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/employee/permission/{id}', [PermissionController::class, 'employee_permission_post'])->name('employee_permission_post');
         Route::get('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission'])->name('labor_permission');
         Route::post('/admin/labor/permission/{id}', [PermissionController::class, 'labor_permission_post'])->name('labor_permission_post');
+
+        Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
+        Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
+
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');

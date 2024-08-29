@@ -66,6 +66,12 @@ class BranchController extends Controller
         try {
             $request->request->remove('_token');
             $data = $request->validationData($request);
+            $address_city = $data['br-address_city'];
+            $address_ward = $data['br-address_ward'];
+            $address_apartment = $data['br-address_apartment'];
+            $address_city_kana = $data['br-address_city_kana'];
+            $address_ward_kana = $data['br-address_ward_kana'];
+            $address_apartment_kana = $data['br-address_apartment_kana'];
             $current_company = CurrentUser::currentCompany();
             $id = $current_company->id;
             $brids = $request->input('br-id');
@@ -100,7 +106,7 @@ class BranchController extends Controller
         }
         $input_date2 = $requestData['br-employment_insurance_establishment_date'][$index];
         if (!is_null($input_date2) && strtotime($input_date2) === false) {
-            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+            $formatted_br_employment_insurance_establishment_date = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
         } else {
             $formatted_br_employment_insurance_establishment_date = $input_date2;
         }
@@ -135,6 +141,14 @@ class BranchController extends Controller
         }
         $current_company = CurrentUser::currentCompany();
         $company_id = $current_company->id;
+
+        $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
+        if (!is_null($bonus_payment_month)) {
+            $bonus_payment_month_processed = implode(',', $bonus_payment_month);
+        } else {
+            $bonus_payment_month_processed = null;
+        }
+
         return [
             'name' => $requestData['br-name'][$index],
             'company_id' => $company_id,
@@ -167,8 +181,8 @@ class BranchController extends Controller
             'employment_insurance_office_no' => $requestData['br-employment_insurance_office_no'][$index],
             'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
             'hello_work_id' => $requestData['br-hello_work_id'][$index],
-            'labor_bureau_id' => $requestData['br-labor_bureau_id'][$index],
-            'labor_supervision_id' => $requestData['br-labor_supervision_id'][$index],
+            'labor_bureau_name' => $requestData['br-labor_bureau_name'][$index],
+            'labor_supervision_name' => $requestData['br-labor_supervision_name'][$index],
             'start_date_of_month' => $requestData['br-start_date_of_month'][$index],
             'start_days_of_week' => $requestData['br-start_days_of_week'][$index],
             'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
@@ -189,6 +203,15 @@ class BranchController extends Controller
             'holiday_legal' => $requestData['br-holiday_legal'][$index],
             'holiday_not_logal' => $requestData['br-holiday_not_logal'][$index],
             'work_style_type' => $requestData['br-work_style_type'][$index],
+            'labor_insurance_category' => $requestData['br-labor_insurance_category'][$index],
+            'kenpo_no' => $requestData['br-kenpo_no'][$index],
+            'insurance_office_name' => $requestData['br-insurance_office_name'][$index],
+            'insurance_applicable_date' => $requestData['br-insurance_applicable_date'][$index],
+            'bonus_payment_month' => $bonus_payment_month_processed,
+            'pension_office_name' => $requestData['br-pension_office_name'][$index],
+            'employment_insurance_rate' => $requestData['br-employment_insurance_rate'][$index],
+            'rate_pattern_id' => $requestData['br-rate_pattern_id'][$index],
+            'fractional_adjustment_pattern_id' => $requestData['br-fractional_adjustment_pattern_id'][$index],
         ];
     }
 }

@@ -44,9 +44,6 @@ class WageCertificatesEmploymentInsuredAtSixtyRequest extends BaseRequest
         if (isset($data['laborConsultantName'])) {
             $data['laborConsultantName'] = mb_convert_kana($data['laborConsultantName'], 'S');
         }
-        if (isset($data['branchName'])) {
-            $data['branchName'] = mb_convert_kana($data['branchName'], 'S');
-        }
         if (isset($data['company_managerial_employer_name'])) {
             $data['company_managerial_employer_name'] = mb_convert_kana($data['company_managerial_employer_name'], 'S');
         }

@@ -103,6 +103,11 @@
                 border: solid 2px #adadad;
             }
 
+            #bank_name {
+                resize: none;
+                height: 195px;
+            }
+
             .company-data-area>.ui.horizontal.card {
                 width: 100%;
                 margin: 0;
@@ -111,37 +116,9 @@
             .company-data-area {
                 display: grid;
                 gap: 0.8em;
-                grid-template-columns: repeat(3, auto);
+                grid-template-columns: repeat(4, auto);
                 grid-template-rows: repeat(5, auto);
             }
-
-            /*
-                            .company-data-area .ui.card.item-0 {
-                                grid-area: 1 / 1 / 4 / 3;
-                                min-width: 650px;
-                            }
-
-                            .company-data-area .ui.card.item-1 {
-                                grid-area: 2 / 3 / 3 / 5;
-                            }
-
-                            .company-data-area .ui.card.item-2 {
-                                grid-area: 1 / 3 / 2 / 4;
-                            }
-
-                            .company-data-area .ui.card.item-3 {
-                                grid-area: 1 / 4 / 2 / 5;
-                            }
-
-                            .company-data-area .ui.card.item-4 {
-                                grid-area: 3 / 3 / 4 / 4;
-                            }
-
-                            .company-data-area .ui.card.item-5 {
-                                grid-area: 3 / 4 / 4 / 5;
-                            }
-
-                            */
 
             .company-data-area .ui.card.item-0 {
                 grid-area: 1 / 1 / 4 / 4;
@@ -162,11 +139,29 @@
             }
 
             .company-data-area .ui.card.item-4 {
-                grid-area: 3 / 4 / 4 / 5;
+                grid-area: 5 / 1 / 4 / 3;
             }
 
             .company-data-area .ui.card.item-5 {
-                grid-area: 4 / 3 / 5 / 5;
+                grid-area: 3 / 4 / 4 / 5;
+            }
+
+            .company-data-area .ui.card.item-6 {
+                grid-area: 4 / 3 / 4 / 5;
+            }
+
+            a.download-link:hover {
+                text-decoration: underline;
+            }
+
+            a.delete-link {
+                color: var(--color-red);
+                margin-left: 0.5rem;
+            }
+
+            a.delete-link:hover {
+                color: var(--color-red);
+                text-decoration: underline;
             }
 
             @media (max-width: 820px) {
@@ -194,6 +189,10 @@
 
                 .company-data-area .ui.card.item-5 {
                     grid-area: 6 / 1 / 6 / 4;
+                }
+
+                .company-data-area .ui.card.item-6 {
+                    grid-area: 7 / 1 / 7 / 4;
                 }
 
                 .ui.styled.accordion .content {
@@ -229,7 +228,7 @@
         </div>
 
         <h1 class="mb-2 mt-0">会社基本情報変更</h1>
-        <form class="ui form" action="{{ route('company_edit_post') }}" method="post">
+        <form class="ui form" action="{{ route('company_edit_post') }}" method="post" enctype="multipart/form-data">
             @csrf
             @if (session('errors'))
                 <div class="ui error message">
@@ -291,6 +290,21 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field required {{ err($errors, 'representative') }}">
+                                    <label for="representative">代表者</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="representative" name="representative"
+                                            value="{{ old('representative') }}" placeholder="">
+                                    @else
+                                        <input type="text" id="representative" name="representative"
+                                            value="{{ old('representative', $currentCompany->representative) }}"
+                                            placeholder="">
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                         <div class="equal width fields">
                             <div class="required field {{ err($errors, 'company_no') }}">
                                 <label for="company_no">法人番号</label>
@@ -333,7 +347,9 @@
 
                         <div class="two fields">
                             <div class="required field {{ err($errors, 'business_type') }}">
-                                <label>企業区分</label>
+                                <label>企業区分
+                                    <i class="question circle outline link icon" id="info-icon"></i>
+                                </label>
                                 <select class="ui fluid dropdown" name="business_type"
                                     value="{{ old('business_type') }}">
                                     <option value="">未選択</option>
@@ -348,6 +364,66 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="ui modal" id="info-modal">
+                                <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">中小企業区分</div>
+                                <div class="content">
+                                    <table class="ui celled table center aligned">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">業種</th>
+                                                <th colspan="2">中小企業</th>
+                                                <th colspan="1">小規模企業者</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="border-left:1px solid rgba(34,36,38,.1)">資本金額</th>
+                                                <th>常時使用する従業員数</th>
+                                                <th>常時使用する従業員数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>小売・飲食業</td>
+                                                <td>5,000万円以下</td>
+                                                <td>50人以下</td>
+                                                <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                                <td>サービス業</td>
+                                                <td>5,000万円以下</td>
+                                                <td>100人以下</td>
+                                                <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                                <td>卸売業</td>
+                                                <td>1億円以下</td>
+                                                <td>100人以下</td>
+                                                <td>5人以下</td>
+                                            </tr>
+                                            <tr>
+                                                <td>製造/建設/運輸　その他業種</td>
+                                                <td>3億円以下</td>
+                                                <td>300人以下</td>
+                                                <td>20人以下</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="ui message mt-2">
+                                        <div class="header">
+                                            資本金・従業員数が上記の数字を超えた場合大企業という区分になる。
+                                        </div>
+                                        <p></p>
+                                        <p>※これらの区分は日常業務にて必要とはならないが、法律上の区分（税法・下請法等）や国の制度を活用する際に区分される
+                                            際に必要となる。例えば、税法面において中小企業の場合は、大企業に比べ法人税の軽減税率、交際費の一部損金算入、
+                                            留保金課税の免除、欠損金の繰戻還付制度等の税法上の優遇措置がある。また、助成金や補助金を取得する際に、
+                                            助成率や補助率が変わる等。</p>
+                                        <p>※「業種区分は産業分類」を「資本金は会計データー」を「従業員数は従業員名簿」をマスターデーターとして紐づけ、
+                                            大・中・小を区分する。</p>
+                                    </div>
+                                </div>
+                                <div class="basic actions">
+                                    <div class="ui negative button">戻る</div>
+                                </div>
                             </div>
                             <div class="field  {{ err($errors, 'listed_type') }}">
                                 <label>上場区分</label>
@@ -365,6 +441,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                        <div class="field {{ err($errors, 'industry_type[]') }}">
+                            <label for="industry_type[]">業種コード<span class="ml-1"><a href="https://www.e-stat.go.jp"
+                                        target=”_blank”>参考URL：https://www.e-stat.go.jp</a></span></label>
+                            <select id="industry_type_dropdown"
+                                class="ui fluid search dropdown multiple industry_type_select" multiple=""
+                                name="industry_type[]">
+                            </select>
+                        </div>
+                        <div style="text-align:right;">
+                            <button class="ui button hidden-readonly" type="button"
+                                id="industry_type_btn">業種選択</button>
                         </div>
                         <div class="field">
                             <div class="field {{ err($errors, 'stock_code') }}">
@@ -459,23 +547,25 @@
                             <div class="field {{ err($errors, 'annual_sales') }}">
                                 <label for="annual_sales">年間売上高（連結）</label>
                                 @if (!isset($currentCompany->id))
-                                    <input type="text" id="annual_sales" name="annual_sales"
-                                        value="{{ old('annual_sales') }}" placeholder="99999999">
+                                    <input type="number" id="annual_sales" name="annual_sales"
+                                        value="{{ old('annual_sales') }}" placeholder="99999999" min="0"
+                                        max="999999999999999999">
                                 @else
-                                    <input type="text" id="annual_sales" name="annual_sales"
+                                    <input type="number" id="annual_sales" name="annual_sales"
                                         value="{{ old('annual_sales', $currentCompany->annual_sales) }}"
-                                        placeholder="99999999">
+                                        placeholder="99999999" min="0" max="999999999999999999">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'employee_sum') }}">
                                 <label for="employee_sum">従業員数</label>
                                 @if (!isset($currentCompany->id))
-                                    <input type="text" id="employee_sum" name="employee_sum"
-                                        value="{{ old('employee_sum') }}" placeholder="999">
+                                    <input type="number" id="employee_sum" name="employee_sum"
+                                        value="{{ old('employee_sum') }}" placeholder="999" min="0"
+                                        max="999999999">
                                 @else
-                                    <input type="text" id="employee_sum" name="employee_sum"
+                                    <input type="number" id="employee_sum" name="employee_sum"
                                         value="{{ old('employee_sum', $currentCompany->employee_sum) }}"
-                                        placeholder="999">
+                                        placeholder="999" min="0" max="999999999">
                                 @endif
                             </div>
                         </div>
@@ -488,23 +578,25 @@
                             <div class="field {{ err($errors, 'authorized_shares') }}">
                                 <label for="authorized_shares">発行可能株式総数</label>
                                 @if (!isset($currentCompany->id))
-                                    <input type="text" id="authorized_shares" name="authorized_shares"
-                                        value="{{ old('authorized_shares') }}" placeholder="1200">
+                                    <input type="number" id="authorized_shares" name="authorized_shares"
+                                        value="{{ old('authorized_shares') }}" placeholder="1200" min="0"
+                                        max="999999999999999999">
                                 @else
-                                    <input type="text" id="authorized_shares" name="authorized_shares"
+                                    <input type="number" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares', $currentCompany->authorized_shares) }}"
-                                        placeholder="1200">
+                                        placeholder="1200" min="0" max="999999999999999999">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'issued_shares') }}">
                                 <label for="issued_shares">発行済株式総数</label>
                                 @if (!isset($currentCompany->id))
-                                    <input type="text" id="issued_shares" name="issued_shares"
-                                        value="{{ old('issued_shares') }}" placeholder="100">
+                                    <input type="number" id="issued_shares" name="issued_shares"
+                                        value="{{ old('issued_shares') }}" placeholder="100" min="0"
+                                        max="999999999999999999">
                                 @else
-                                    <input type="text" id="issued_shares" name="issued_shares"
+                                    <input type="number" id="issued_shares" name="issued_shares"
                                         value="{{ old('issued_shares', $currentCompany->issued_shares) }}"
-                                        placeholder="100">
+                                        placeholder="100" min="0" max="999999999999999999">
                                 @endif
                             </div>
                         </div>
@@ -514,38 +606,50 @@
                 <div class="ui horizontal card card-shadow item-4">
                     <div class="content">
                         <h2>取引先情報</h2>
-                        <div class="field {{ err($errors, 'supplier_company') }}">
-                            <label for="supplier_company">仕入先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="supplier_company" name="supplier_company"
-                                    value="{{ old('supplier_company') }}" placeholder="有限会社〇〇">
-                            @else
-                                <input type="text" id="supplier_company" name="supplier_company"
-                                    value="{{ old('supplier_company', $currentCompany->supplier_company) }}"
-                                    placeholder="有限会社〇〇">
-                            @endif
-                        </div>
-                        <div class="field {{ err($errors, 'outsourcing_company') }}">
-                            <label for="outsourcing_company">外注先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="outsourcing_company" name="outsourcing_company"
-                                    value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇">
-                            @else
-                                <input type="text" id="outsourcing_company" name="outsourcing_company"
-                                    value="{{ old('outsourcing_company', $currentCompany->outsourcing_company) }}"
-                                    placeholder="有限会社〇〇">
-                            @endif
-                        </div>
-                        <div class="field {{ err($errors, 'sales_company') }}">
-                            <label for="sales_company">販売先名称</label>
-                            @if (!isset($currentCompany->id))
-                                <input type="text" id="sales_company" name="sales_company"
-                                    value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
-                            @else
-                                <input type="text" id="sales_company" name="sales_company"
-                                    value="{{ old('sales_company', $currentCompany->sales_company) }}"
-                                    placeholder="株式会社〇〇">
-                            @endif
+                        <div class="two fields">
+                            <div class="field">
+                                <div class="field {{ err($errors, 'supplier_company') }}">
+                                    <label for="supplier_company">仕入先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="supplier_company" name="supplier_company"
+                                            value="{{ old('supplier_company') }}" placeholder="有限会社〇〇">
+                                    @else
+                                        <input type="text" id="supplier_company" name="supplier_company"
+                                            value="{{ old('supplier_company', $currentCompany->supplier_company) }}"
+                                            placeholder="有限会社〇〇">
+                                    @endif
+                                </div>
+                                <div class="field {{ err($errors, 'outsourcing_company') }}">
+                                    <label for="outsourcing_company">外注先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="outsourcing_company" name="outsourcing_company"
+                                            value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇">
+                                    @else
+                                        <input type="text" id="outsourcing_company" name="outsourcing_company"
+                                            value="{{ old('outsourcing_company', $currentCompany->outsourcing_company) }}"
+                                            placeholder="有限会社〇〇">
+                                    @endif
+                                </div>
+                                <div class="field {{ err($errors, 'sales_company') }}">
+                                    <label for="sales_company">販売先名称</label>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" id="sales_company" name="sales_company"
+                                            value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
+                                    @else
+                                        <input type="text" id="sales_company" name="sales_company"
+                                            value="{{ old('sales_company', $currentCompany->sales_company) }}"
+                                            placeholder="株式会社〇〇">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="field {{ err($errors, 'bank_name') }}">
+                                <label for="bank_name">銀行名</label>
+                                @if (!isset($currentCompany->id))
+                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name') }}</textarea>
+                                @else
+                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name', $currentCompany->bank_name) }}</textarea>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -575,6 +679,71 @@
                         </div>
                     </div>
                 </div>
+                <div class="ui horizontal card card-shadow item-6">
+                    <div class="content">
+                        <h2>添付情報</h2>
+                        <div class="field">
+                            <label for="financial_statement">業績情報へ決算書の添付（直近1期分）</label>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="financial_statement"
+                                class="file-attachment-form" name="financial_statement">
+                            <input type="hidden" name="financial_statement_delete"
+                                value="{{ old('financial_statement_delete', 0) }}">
+                            @if (!empty($financial_statement) && old('financial_statement_delete') == 0)
+                                <p class="financial_statement_current" style="text-align: right;">
+                                    {{ $financial_statement }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('company.downloadFile', ['document_type' => 1]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('financial_statement')"
+                                                class="delete-link">削除</a>
+                                        @endif
+                                    </span>
+                                </p>
+                            @endif
+                        </div>
+                        <div class="field">
+                            <label for="articles_of_incorporation">事業目的へ定款の添付（最新）</label>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="articles_of_incorporation"
+                                class="file-attachment-form" name="articles_of_incorporation">
+                            <input type="hidden" name="articles_of_incorporation_delete"
+                                value="{{ old('articles_of_incorporation_delete', 0) }}">
+                            @if (!empty($articles_of_incorporation) && old('articles_of_incorporation_delete') == 0)
+                                <p class="articles_of_incorporation_current" style="text-align: right;">
+                                    {{ $articles_of_incorporation }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('company.downloadFile', ['document_type' => 2]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('articles_of_incorporation')"
+                                                class="delete-link">削除</a>
+                                        @endif
+                                    </span>
+                                </p>
+                            @endif
+                        </div>
+                        <div class="field">
+                            <label for="stock_information">株式情報へ株主を添付（最新）</label>
+                            <input type="file" accept=".doc,.docs,.pdf,.jpeg,.jpg" id="stock_information"
+                                class="file-attachment-form" name="stock_information">
+                            <input type="hidden" name="stock_information_delete"
+                                value="{{ old('stock_information_delete', 0) }}">
+                            @if (!empty($stock_information) && old('stock_information_delete') == 0)
+                                <p class="stock_information_current" style="text-align: right;">
+                                    {{ $stock_information }}
+                                    <span class="ml-1">
+                                        <a href="{{ route('company.downloadFile', ['document_type' => 3]) }}"
+                                            class="download-link">ダウンロード</a>
+                                        @if ($userPermission->isWritableFor(1))
+                                            <a href="javascript:deleteFile('stock_information')"
+                                                class="delete-link">削除</a>
+                                        @endif
+                                    </span>
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
             @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(1))
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
@@ -586,11 +755,28 @@
         </form>
     </section>
 
+    <!-- 業種選択モーダル -->
+    <x-search-industry-type-modal id="industry_type_select" selectorId="{{ $currentCompany->id ?? '' }}" />
+    <script type="module">
+        $('#industry_type_dropdown').on('change', function() {
+            const selectedValue = $(this).val();
+            Livewire.dispatch('checkIndustryType', [selectedValue]);
+        });
+
+        $('#industry_type_btn').click(_ => {
+            $('#industry_type_select').modal({
+                blurring: true
+            }).modal('show');
+        });
+    </script>
+
     <script type="module">
         $(document).ready(function() {
             const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(1));
             if (readonly) {
                 $sectionReadonly();
+                const def = @json($current_industry_type);
+                $('label[for="industry_type[]"]').next('input[type="text"]').val(def.join(', '));
             } else {
                 $('#founding_date_calendar').calendar({
                     type: 'date',
@@ -613,9 +799,76 @@
                         months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
                     },
                     initialDate: "",
-                })
+                });
+                getIndustryType(true);
             }
-
         });
+
+        function getIndustryType(first = false) {
+            $.ajax({
+                    url: '{{ route('company.get_industry_type') }}',
+                    type: 'post'
+                })
+                .done((data) => {
+                    $('select[name="industry_type[]"]').empty();
+                    data.forEach(element => {
+                        $('<option>').attr({
+                            value: element.id
+                        }).text(element.industry_type_code).appendTo('select[name="industry_type[]"]');
+                    });
+                    $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+
+                    if (first) {
+                        const def = @json(old('industry_type', $industry_type ?? []));
+                        def.forEach(v => {
+                            $('select[name="industry_type[]"] option[value=' + v +
+                                ']').attr(
+                                'selected', true);
+                        });
+                    }
+                });
+        }
+
+        Livewire.on('addIndustryType', (data) => {
+            $(`.item[data-text="${data[0].industry_type_code}"]`).trigger('click');
+        });
+    </script>
+    <script type="module">
+        $(document).ready(function() {
+            $('#info-icon').click(function() {
+                $('#info-modal').modal('show');
+            });
+        });
+
+        const fileInputs = document.getElementsByClassName('file-attachment-form');
+        const fileHandler = (e) => {
+            const totalSizeLimit = 1024 * 1024 * 99;
+            let totalSize = 0;
+            for (let index = 0; index < fileInputs.length; index++) {
+                const input = fileInputs[index];
+                const files = input.files;
+
+                for (let i = 0; i < files.length; i++) {
+                    const size = files[i].size;
+                    totalSize += size;
+                }
+            }
+            if (totalSizeLimit < totalSize) {
+                window.alert('添付ファイルの合計は99MB以下にしてください。');
+                e.target.value = '';
+            }
+        };
+        for (let index = 0; index < fileInputs.length; index++) {
+            const element = fileInputs[index];
+            element.addEventListener('change', fileHandler);
+        }
+    </script>
+    <script>
+        function deleteFile(name) {
+            const current = document.querySelector('.' + name + '_current');
+            const del = document.querySelector('[name=' + name + '_delete]');
+            current.remove();
+            del.value = 1;
+        }
     </script>
 </x-layout>

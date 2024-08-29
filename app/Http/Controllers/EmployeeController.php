@@ -26,6 +26,7 @@ use App\Models\Department;
 use App\Models\Managerial_position;
 use App\Models\Residential_status;
 use App\Models\User;
+use App\Models\Dependent;
 use App\Models\Values_employee_insured_age_type;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -103,6 +104,7 @@ class EmployeeController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->get();
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
+        $dependent = $employee->dependent()->where('delete_flg', 0)->get();
 
         return view('employee.employee_create', [
             'employee' => $employee,
@@ -122,7 +124,8 @@ class EmployeeController extends Controller
             'occupation_type' => $occupation_type,
             'faxParts' => $faxParts,
             'residential_status' => $residential_status,
-            'employee_insured_age_type' => $employee_insured_age_type
+            'employee_insured_age_type' => $employee_insured_age_type,
+            'dependent' => $dependent,
         ]);
     }
 
@@ -256,7 +259,24 @@ class EmployeeController extends Controller
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                    'blood_type' => $request->input('blood_type'),
+                    'qualifications' => $request->input('qualifications'),
                 ]);
+
+            
+            $deids = $request->input('de-id',[]);
+            $excepts = [];
+            foreach ($deids as $index => $deid) {
+                $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
+                if ($deid > 0) {
+                    Dependent::where('id', $deid)->update($dedata);
+                    $excepts[] = $deid;
+                } else {
+                    $created_id = Dependent::create($dedata)->id;
+                    $excepts[] = $created_id;
+                }
+            }
+            Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)
@@ -297,5 +317,51 @@ class EmployeeController extends Controller
     private function formatDate($input)
     {
         return $input ? Carbon::createFromFormat('Y年n月j日', $input)->format('Y-m-d') : null;
+    }
+
+    private function data_dependent(array $requestData, $index, $id)
+    {
+        $input_date1 = $requestData['de-birthday'][$index];
+        if (!is_null($input_date1) && strtotime($input_date1) === false) {
+            $formatted_de_birthday = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+        } else {
+            $formatted_de_birthday = $input_date1;
+        }
+        $input_date2 = $requestData['de-date_of_authorisation'][$index];
+        if (!is_null($input_date2) && strtotime($input_date2) === false) {
+            $formatted_de_date_of_authorisation = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_authorisation = $input_date2;
+        }
+        $input_date3 = $requestData['de-date_of_expiry'][$index];
+        if (!is_null($input_date3) && strtotime($input_date3) === false) {
+            $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_expiry = $input_date3;
+        }
+
+        return [
+            'employee_id' => $id,
+            'relationship_spouse' => $requestData['de-relationship_spouse'][$index] ?? null,
+            'relationship_dependent' => $requestData['de-relationship_dependent'][$index] ?? null,
+            'spouse_flag' => $requestData['de-spouse_flag'][$index] ?? null,
+            'last_name' => $requestData['de-last_name'][$index],
+            'first_name' => $requestData['de-first_name'][$index],
+            'last_name_kana' => $requestData['de-last_name_kana'][$index],
+            'first_name_kana' => $requestData['de-first_name_kana'][$index],
+            'sex' => $requestData['de-sex'][$index],
+            'age' => $requestData['de-age'][$index],
+            'occupation' => $requestData['de-occupation'][$index],
+            'annual_income' => $requestData['de-annual_income'][$index],
+            'contact' => $requestData['de-contact'][$index],
+            'dependent_type' => $requestData['de-dependent_type'][$index],
+            'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
+            'pension_no' => $requestData['de-pension_no'][$index],
+            'other_1' => $requestData['de-other_1'][$index],
+            'other_2' => $requestData['de-other_2'][$index],
+            'birthday' => $formatted_de_birthday,
+            'date_of_authorisation' => $formatted_de_date_of_authorisation,
+            'date_of_expiry' => $formatted_de_date_of_expiry,
+        ];
     }
 }

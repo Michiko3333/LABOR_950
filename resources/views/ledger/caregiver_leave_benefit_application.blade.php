@@ -10,6 +10,9 @@
         <p>申請・届出に関する事項を入力してください。<br>
             複数の様式を提出する場合は、タブから様式を切り替えてください。
         </p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -94,7 +97,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -137,6 +140,10 @@
                 $('#J80_005F_944E').val('{{ old('notification_year', $today['year']) }}');
                 $('#J81_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
                 $('#J82_005F_93FA').val('{{ old('notification_date', $today['date']) }}');
+
+                $('#J78_005F_8E96_8BC6_8EE5_96BC').val('{{ old('entrepreneur_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC').val('{{ old('entrepreneur_name', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
@@ -162,10 +169,10 @@
                 @else
                     $('#J74_005F_944E_8D86').prop('disabled', true);
                     $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2,\
-                                #J114_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4,\
-                                #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
-                                #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
-                                #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86, #J83_005F_9574_8B4C_9793')
+                                                        #J114_005F_8E81_96BC, #J76_005F_8E73_8A4F_8BC7_94D4, #J77_005F_8E73_93E0_8BC7_94D4,\
+                                                        #J78_005F_89C1_93FC_8ED2_94D4_8D86, #J75_005F_944E, #J76_005F_8C8E, #J77_005F_93FA,\
+                                                        #J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6, #J79_005F_8E81_96BC,\
+                                                        #J80_005F_8E73_8A4F_8BC7_94D4, #J81_005F_8E73_93E0_8BC7_94D4, #J82_005F_89C1_93FC_8ED2_94D4_8D86, #J83_005F_9574_8B4C_9793')
                         .prop('readonly', true);
                 @endif
             });

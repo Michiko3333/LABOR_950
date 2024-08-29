@@ -101,7 +101,7 @@ class LedgerEmployeeList extends BaseTable
         $retirement_reason_employee_decision_change_office_data = Retirement_reason_employee_decision_change_office::where('employee_id', $employee_id)->first();
         $retirement_reason_employee_decision_change_job_type_data = Retirement_reason_employee_decision_change_job_type::where('employee_id', $employee_id)->first();
         $retirement_reason_employee_decision_reasons_data = Retirement_reason_employee_decision_reasons::where('employee_id', $employee_id)->first();
-        $spouse_data = Dependent::where('employee_id', $employee_id)->where('relationship', '1')->first();
+        $spouse_data = Dependent::where('employee_id', $employee_id)->where('spouse_flag', '1')->where('delete_flg', '0')->first();
         if ($spouse_data) {
             $spouse_prefecture_id = $spouse_data['address_prefecture'];
             $spouse_prefecture_data = Prefecture::where('id', $spouse_prefecture_id)->first();
@@ -110,8 +110,8 @@ class LedgerEmployeeList extends BaseTable
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
             }
         }
-        if (!empty($spouse_data->spouse_birthday)) {
-            $spouse_birthday = Carbon::parse($employee->birthday);
+        if (!empty($spouse_data->birthday)) {
+            $spouse_birthday = Carbon::parse($spouse_data->birthday);
             $spouse_birthday_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($spouse_birthday);
             $spouse_birthday_convert_japan = [
                 'era' => $spouse_birthday_convert_japan['japanese_calendar_era_string'],

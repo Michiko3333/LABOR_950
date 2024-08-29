@@ -8,6 +8,9 @@
         @endslot
         <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。 </p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -107,7 +110,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -138,6 +141,12 @@
                 $('#N3_005F_944E_8D86').val('{{ old('today_japan_era_year', $todaySet['year']) }}');
                 $('#N4_005F_944E').val('{{ old('today_japan_era_month', $todaySet['month']) }}');
                 $('#N5_005F_8C8E').val('{{ old('today_japan_era_day', $todaySet['date']) }}');
+
+                @if (isset($businessOwner))
+                    $('#N13_005F_8374_838A_834B_8369').val(
+                        '{{ old('business_owner_name', ($businessOwner->last_name ? $businessOwner->last_name . '　' : '') . ($businessOwner->first_name ?? '')) }}'
+                    );
+                @endif
 
                 @if ($current_employee->role_id === 500)
                     $('#N18_005F_8CC2_906C_94D4').val('{{ $current_employee->last_name }}' + '　' +

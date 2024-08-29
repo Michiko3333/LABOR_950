@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\noEmoji;
+use App\Rules\noSymbol;
+use App\Rules\NumberOnly;
+use App\Rules\katakanaOnly;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminEmployeeCreateRequest extends BaseRequest
@@ -57,6 +61,20 @@ class AdminEmployeeCreateRequest extends BaseRequest
         return $data;
     }
 
+    public function withValidator($validator): void
+    {
+        // 絵文字バリデーションの扶養情報配列対応
+        $rules = [];
+        foreach ($this->request as $key => $value) {
+            if (strpos($key, 'de-') === 0) {
+                $rules[$key . ".*"] = new noEmoji;
+            } else {
+                $rules[$key] = new noEmoji;
+            }
+        }
+        $validator->addRules($rules);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -64,27 +82,30 @@ class AdminEmployeeCreateRequest extends BaseRequest
      */
     public function rules(): array
     {
+        noSymbol::$attributes = $this->attributes();
+        NumberOnly::$attributes = $this->attributes();
+        katakanaOnly::$attributes = $this->attributes();
         return [
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
             'company_name' => 'required',
             'branch_id' => 'integer',
             'managerial_position_id' => 'nullable|integer',
             'division_name' => 'nullable|string|max:255',
-            'division_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'division_name_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'last_name' => 'string|max:255',
-            'last_name_kana' => 'string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'last_name_kana' => ['string', 'max:255', new katakanaOnly(false)],
             'last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'first_name' => 'string|max:255',
-            'first_name_kana' => 'string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'first_name_kana' => ['string', 'max:255', new katakanaOnly(false)],
             'first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'old_last_name' => 'nullable|string|max:255',
-            'old_last_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'old_last_name_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'old_last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'old_first_name' => 'nullable|string|max:255',
-            'old_first_name_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'old_first_name_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'old_first_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'name_common' => 'nullable|string|max:255',
-            'name_common_kana' => 'nullable|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
+            'name_common_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'sex' => 'required',
             'birthday_date' => 'required',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
@@ -92,14 +113,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'address_city' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             'address_ward' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             'address_apartment' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            // 'address_prefecture_kana' => 'string|max:255|regex:/\A[ァ-ヴー]+\z/u',DB intなのでまち
-            'address_city_kana' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            'address_ward_kana' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-            //'address_apartment_kana' => 'string|max:255|regex:/\A[ァ-ヴー０-９]+\z/u',
             'tel_area_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_city_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
             'tel_subscriber_code' => 'string|max:10|regex:/\A[0-9]+\z/u',
-            "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax2',
+            "fax1" => 'nullable|string|regex:/^0[0-9]{1,4}$/|required_with:fax2,fax3',
             "fax2" => 'nullable|string|regex:/[0-9]{1,4}$/|required_with:fax1,fax3',
             "fax3" => 'nullable|string|regex:/[0-9]{1,8}$/|required_with:fax1,fax2',
             'mail_address1' => 'nullable|string|max:255|email:rfc',
@@ -124,6 +141,8 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'dependent_flg' => 'integer|nullable|regex:/^[01]+\z/u',
             'dependent_family_number' => 'integer|nullable',
             'country_id' => 'nullable|integer',
+            'blood_type' => 'nullable|string|in:A,B,AB,O',
+            'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
             'insurer_reference_no' => 'nullable|string|max:10|regex:/^\d{0,10}$/u',
@@ -164,23 +183,78 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'employer_type' => 'integer',
             'user_email' => 'required|email:rfc|max:255',
             'user_pass' => 'required|min:6|max:20|regex:/^[!-~]+$/',
+            "de-last_name" => 'array',
+            "de-last_name.*" => ['nullable', 'string', 'max:255', 'required_with:de-relationship_spouse.*,de-relationship_dependent.*'],
+            "de-last_name_kana" => 'array',
+            "de-last_name_kana.*" => ['nullable', 'string', 'max:255', new katakanaOnly(false), 'required_with:de-relationship_spouse.*,de-relationship_dependent.*'],
+            "de-first_name" => 'array',
+            "de-first_name.*" => ['nullable', 'string', 'max:255', 'required_with:de-relationship_spouse.*,de-relationship_dependent.*'],
+            "de-first_name_kana" => 'array',
+            "de-first_name_kana.*" => ['nullable', 'string', 'max:255', new katakanaOnly(false), 'required_with:de-relationship_spouse.*,de-relationship_dependent.*'],
+            "de-sex" => 'array',
+            "de-sex.*" => 'nullable|integer|in:1,2',
+            "de-relationship_spouse" => 'array',
+            "de-relationship_spouse.*" => 'nullable|integer|in:1,2,3,4|required_with:de-spouse_flag.*',
+            "de-relationship_dependent" => 'array',
+            "de-relationship_dependent.*" => 'nullable|integer|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|required_without:de-spouse_flag.*',
+            "de-spouse_flag" => 'array',
+            "de-spouse_flag.*" => 'nullable|integer|in:1',
+            "de-age" => 'array',
+            "de-age.*" => 'nullable|integer|digits_between:1,3',
+            "de-contact" => 'array',
+            "de-contact.*" => ['nullable', 'string', new NumberOnly(13)],
+            "de-occupation" => 'array',
+            "de-occupation.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            "de-annual_income" => 'array',
+            "de-annual_income.*" => 'nullable|integer|digits_between:1,7',
+            "de-mynumber_card_no" => 'array',
+            "de-mynumber_card_no.*" => ['nullable', 'string', new NumberOnly(12)],
+            "de-pension_no" => 'array',
+            "de-pension_no.*" => ['nullable', 'string', new NumberOnly(10)],
+            "de-dependent_type" => 'array',
+            "de-dependent_type.*" => 'nullable|integer|in:1,2,3,4',
+            "de-other_1" => 'array',
+            "de-other_1.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            "de-other_2" => 'array',
+            "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
         ];
     }
 
     public function messages()
     {
-        return [
+        $messages = [
             'company_name' => '会社を選択してください。',
             'branch_id' => '支店を選択してください。',
             'fax1.required_with' => 'FAX番号_1を入力してください。',
             'fax2.required_with' => 'FAX番号_2を入力してください。',
             'fax3.required_with' => 'FAX番号_3を入力してください。',
         ];
+
+        foreach ($this->input('de-last_name', []) as $index => $value) {
+            $messages["de-last_name.{$index}.required_with"] = ($index + 1) . "扶養者の氏を入力してください。";
+        }
+        foreach ($this->input('de-last_name_kana', []) as $index => $value) {
+            $messages["de-last_name_kana.{$index}.required_with"] = ($index + 1) . "扶養者の氏（カナ）を入力してください。";
+        }
+        foreach ($this->input('de-first_name', []) as $index => $value) {
+            $messages["de-first_name.{$index}.required_with"] = ($index + 1) . "扶養者の名を入力してください。";
+        }
+        foreach ($this->input('de-first_name_kana', []) as $index => $value) {
+            $messages["de-first_name_kana.{$index}.required_with"] = ($index + 1) . "扶養者の名（カナ）を入力してください。";
+        }
+        foreach ($this->input('de-relationship_dependent', []) as $index => $value) {
+            $messages["de-relationship_dependent.{$index}.required_without"] = ($index + 1) . "扶養者の続柄を選択してください。";
+        }
+        foreach ($this->input('de-relationship_spouse', []) as $index => $value) {
+            $messages["de-relationship_spouse.{$index}.required_with"] = ($index + 1) . "扶養者の続柄を選択してください。";
+        }
+
+        return $messages;
     }
 
     public function attributes()
     {
-        return [
+        $Attributes = [
             'employee_no' => '社員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',
@@ -269,6 +343,62 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'external_advisor_flg' => '外部顧問是否',
             'user_email' => 'ログイン用_メールアドレス',
             'user_pass' => 'パスワード',
+            'blood_type' => '血液型',
+            'qualifications' => '資格情報',
         ];
+
+        foreach ($this->input('de-last_name', []) as $index => $value) {
+            $Attributes["de-last_name.{$index}"] = ($index + 1) . "扶養者_氏";
+        }
+        foreach ($this->input('de-last_name_kana', []) as $index => $value) {
+            $Attributes["de-last_name_kana.{$index}"] = ($index + 1) . "扶養者_氏（カナ）";
+        }
+        foreach ($this->input('de-first_name', []) as $index => $value) {
+            $Attributes["de-first_name.{$index}"] = ($index + 1) . "扶養者_名";
+        }
+        foreach ($this->input('de-first_name_kana', []) as $index => $value) {
+            $Attributes["de-first_name_kana.{$index}"] = ($index + 1) . "扶養者_名（カナ）";
+        }
+        foreach ($this->input('de-sex', []) as $index => $value) {
+            $Attributes["de-sex.{$index}"] = ($index + 1) . "扶養者_性別";
+        }
+        foreach ($this->input('de-relationship_spouse', []) as $index => $value) {
+            $Attributes["de-relationship_spouse.{$index}"] = ($index + 1) . "扶養者_続柄（配偶者）";
+        }
+        foreach ($this->input('de-relationship_dependent', []) as $index => $value) {
+            $Attributes["de-relationship_dependent.{$index}"] = ($index + 1) . "扶養者_続柄（扶養者）";
+        }
+        foreach ($this->input('de-spouse_flag', []) as $index => $value) {
+            $Attributes["de-spouse_flag.{$index}"] = ($index + 1) . "扶養者_配偶者フラグ";
+        }
+        foreach ($this->input('de-age', []) as $index => $value) {
+            $Attributes["de-age.{$index}"] = ($index + 1) . "扶養者_年齢";
+        }
+        foreach ($this->input('de-contact', []) as $index => $value) {
+            $Attributes["de-contact.{$index}"] = ($index + 1) . "扶養者_連絡先";
+        }
+        foreach ($this->input('de-occupation', []) as $index => $value) {
+            $Attributes["de-occupation.{$index}"] = ($index + 1) . "扶養者_職業";
+        }
+        foreach ($this->input('de-annual_income', []) as $index => $value) {
+            $Attributes["de-annual_income.{$index}"] = ($index + 1) . "扶養者_収入（年収）";
+        }
+        foreach ($this->input('de-mynumber_card_no', []) as $index => $value) {
+            $Attributes["de-mynumber_card_no.{$index}"] = ($index + 1) . "扶養者_マイナンバーカード番号";
+        }
+        foreach ($this->input('de-pension_no', []) as $index => $value) {
+            $Attributes["de-pension_no.{$index}"] = ($index + 1) . "扶養者_基礎年金番号";
+        }
+        foreach ($this->input('de-dependent_type', []) as $index => $value) {
+            $Attributes["de-dependent_type.{$index}"] = ($index + 1) . "扶養者_扶養区分";
+        }
+        foreach ($this->input('de-other_1', []) as $index => $value) {
+            $Attributes["de-other_1.{$index}"] = ($index + 1) . "扶養者_その他①";
+        }
+        foreach ($this->input('de-other_2', []) as $index => $value) {
+            $Attributes["de-other_2.{$index}"] = ($index + 1) . "扶養者_その他②";
+        }
+
+        return $Attributes;
     }
 }

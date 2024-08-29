@@ -39,7 +39,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "branch_post_code_parent" => 'required|string|regex:/^[0-9]{3}+$/',
             "branch_post_code_child" => 'required|string|regex:/^[0-9]{4}+$/',
             "branch_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            "branch_name" => 'required|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "branch_name" => 'required|max:40',
             "employer_company_managerial_position_name" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+\z/u',
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',

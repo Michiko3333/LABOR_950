@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\katakanaOnly;
 use App\Rules\noEmoji;
+use App\Rules\NumberOnly;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LaborCompanyUpdateRequest extends BaseRequest
@@ -55,6 +57,8 @@ class LaborCompanyUpdateRequest extends BaseRequest
      */
     public function rules(): array
     {
+        NumberOnly::$attributes = $this->attributes();
+        katakanaOnly::$attributes = $this->attributes();
         return [
             'company_division' => 'required|integer|in:1',
             'name' => 'string|max:255',
@@ -118,31 +122,31 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-mail_address" => 'required|array',
             "br-mail_address.*" => 'email:rfc',
             "br-labor_insurance_no" => 'array',
-            "br-labor_insurance_no.*" => 'nullable|string|max:20|regex:/^[0-9]{14}$/u',
+            "br-labor_insurance_no.*" =>  ['nullable', 'string', 'max:20', new NumberOnly(14)],
             "br-labor_insurance_payment_method" => 'array',
             "br-labor_insurance_payment_method.*" => 'nullable|integer',
             "br-insurance_office_no" => 'array',
-            "br-insurance_office_no.*" => 'nullable|string|max:20',
+            "br-insurance_office_no.*" => ['nullable', 'string', 'max:20', new NumberOnly(5)],
             "br-insurance_office_reference_no" => 'array',
-            "br-insurance_office_reference_no.*" => 'nullable|string|max:20',
+            "br-insurance_office_reference_no.*" => ['nullable', 'string', 'max:20', new NumberOnly(5)],
             "br-pension_office_id" => 'array',
             "br-pension_office_id.*" => 'nullable|integer',
             "br-pension_office_no" => 'array',
-            "br-pension_office_no.*" => 'nullable|string|max:10',
+            "br-pension_office_no.*" => ['nullable', 'string', 'max:10', new NumberOnly(5)],
             "br-pension_office_reference_prefecture" => 'array',
-            "br-pension_office_reference_prefecture.*" => 'nullable|string|max:10',
+            "br-pension_office_reference_prefecture.*" => ['nullable', 'string', 'max:10', new NumberOnly(2)],
             "br-pension_office_reference_no_cities" => 'array',
-            "br-pension_office_reference_no_cities.*" => 'nullable|string|max:10',
+            "br-pension_office_reference_no_cities.*" => ['nullable', 'string', 'max:10', new NumberOnly(2)],
             "br-pension_office_reference_no_office" => 'array',
-            "br-pension_office_reference_no_office.*" => 'nullable|string|max:10',
+            "br-pension_office_reference_no_office.*" => ['nullable', 'string', 'max:10', new katakanaOnly(false)],
             "br-employment_insurance_office_no" => 'array',
-            "br-employment_insurance_office_no.*" => 'nullable|string|max:20',
+            "br-employment_insurance_office_no.*" => ['nullable', 'string', 'max:20', new NumberOnly(11)],
             "br-hello_work_id" => 'array',
             "br-hello_work_id.*" => 'nullable|integer',
-            "br-labor_bureau_id" => 'array',
-            "br-labor_bureau_id.*" => 'nullable|integer',
-            "br-labor_supervision_id" => 'array',
-            "br-labor_supervision_id.*" => 'nullable|integer',
+            "br-labor_bureau_name" => 'array',
+            "br-labor_bureau_name.*" => 'nullable|integer',
+            "br-labor_supervision_name" => 'array',
+            "br-labor_supervision_name.*" => 'nullable|integer',
             "br-start_date_of_month" => 'array',
             "br-start_date_of_month.*" => 'nullable|integer',
             "br-start_days_of_week" => 'array',
@@ -183,6 +187,25 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-holiday_legal.*" => 'nullable|string|max:8',
             "br-holiday_not_logal" => 'array',
             "br-holiday_not_logal.*" => 'nullable|string|max:8',
+            "br-labor_insurance_category" => 'array',
+            "br-labor_insurance_category.*" => 'nullable|integer',
+            "br-kenpo_no" => 'array',
+            "br-kenpo_no.*" => ['nullable', 'string', 'max:20', new NumberOnly(8)],
+            "br-insurance_office_name" => 'array',
+            "br-insurance_office_name.*" => 'nullable|string|max:100',
+            "br-insurance_applicable_date" => 'array',
+            "br-insurance_applicable_date.*" => 'nullable|integer|between:1,12',
+            "br-bonus_payment_month" => 'array',
+            'br-bonus_payment_month.*' => 'nullable|array',
+            'br-bonus_payment_month.*.*' => 'nullable|string|max:255',
+            "br-pension_office_name" => 'array',
+            "br-pension_office_name.*" => 'nullable|string|max:100',
+            "br-employment_insurance_rate" => 'array',
+            "br-employment_insurance_rate.*" => 'nullable|integer',
+            "br-rate_pattern_id" => 'array',
+            "br-rate_pattern_id.*" => 'nullable|integer',
+            "br-fractional_adjustment_pattern_id" => 'array',
+            "br-fractional_adjustment_pattern_id.*" => 'nullable|integer',
         ];
     }
 
@@ -253,12 +276,12 @@ class LaborCompanyUpdateRequest extends BaseRequest
             "br-pension_office_id" => '年金事務所ID',
             "br-pension_office_no" => '事業所番号（厚生年金）',
             "br-pension_office_reference_prefecture" => '事業所整理記号-都道府県コード',
-            "br-pension_office_reference_no_cities" => '事業所整理記号-郡市区記号',
+            "br-pension_office_reference_no_cities" => '事業所整理記号-郡市区符号',
             "br-pension_office_reference_no_office" => '事業所整理記号-事業所記号',
             "br-employment_insurance_office_no" => '事業所番号（雇用保険）',
             "br-hello_work_id" => '管轄（公共職業安定所）',
-            "br-labor_bureau_id" => '管轄（労働局）',
-            "br-labor_supervision_id" => '管轄（労働基準監督）',
+            "br-labor_bureau_name" => '管轄（労働局）',
+            "br-labor_supervision_name" => '管轄（労働基準監督）',
             "br-start_date_of_month" => '開始設定(月の始まり)',
             "br-start_days_of_week" => '開始設定(週の始まり)',
             "br-start_time_of_day" => '開始設定(日の始まり)',
@@ -345,22 +368,22 @@ class LaborCompanyUpdateRequest extends BaseRequest
             $Attributes["br-labor_insurance_payment_method.{$index}"] = ($index + 1) . "事業所_労働保険納付区分";
         }
         foreach ($this->input('br-insurance_office_no', []) as $index => $value) {
-            $Attributes["br-insurance_office_no.{$index}"] = ($index + 1) . "事業所_事業所番号（保険）";
+            $Attributes["br-insurance_office_no.{$index}"] = ($index + 1) . "事業所_健康保険組合・事業所番号";
         }
         foreach ($this->input('br-insurance_office_reference_no', []) as $index => $value) {
-            $Attributes["br-insurance_office_reference_no.{$index}"] = ($index + 1) . "事業所_事業所整理記号（保険）";
+            $Attributes["br-insurance_office_reference_no.{$index}"] = ($index + 1) . "事業所_健康保険・事業所整理番号";
         }
         foreach ($this->input('br-pension_office_id', []) as $index => $value) {
             $Attributes["br-pension_office_id.{$index}"] = ($index + 1) . "事業所_年金事務所ID";
         }
         foreach ($this->input('br-pension_office_no', []) as $index => $value) {
-            $Attributes["br-pension_office_no.{$index}"] = ($index + 1) . "事業所_事業所番号（厚生年金）";
+            $Attributes["br-pension_office_no.{$index}"] = ($index + 1) . "事業所_厚生年金基金・事業所番号";
         }
         foreach ($this->input('br-pension_office_reference_prefecture', []) as $index => $value) {
             $Attributes["br-pension_office_reference_prefecture.{$index}"] = ($index + 1) . "事業所_事業所整理記号-都道府県コード";
         }
         foreach ($this->input('br-pension_office_reference_no_cities', []) as $index => $value) {
-            $Attributes["br-pension_office_reference_no_cities.{$index}"] = ($index + 1) . "事業所_事業所整理記号-郡市区記号";
+            $Attributes["br-pension_office_reference_no_cities.{$index}"] = ($index + 1) . "事業所_事業所整理記号-郡市区符号";
         }
         foreach ($this->input('br-pension_office_reference_no_office', []) as $index => $value) {
             $Attributes["br-pension_office_reference_no_office.{$index}"] = ($index + 1) . "事業所_事業所整理記号-事業所記号";
@@ -371,11 +394,11 @@ class LaborCompanyUpdateRequest extends BaseRequest
         foreach ($this->input('br-hello_work_id', []) as $index => $value) {
             $Attributes["br-hello_work_id.{$index}"] = ($index + 1) . "事業所_管轄（公共職業安定所）";
         }
-        foreach ($this->input('br-labor_bureau_id', []) as $index => $value) {
-            $Attributes["br-labor_bureau_id.{$index}"] = ($index + 1) . "事業所_管轄（労働局）";
+        foreach ($this->input('br-labor_bureau_name', []) as $index => $value) {
+            $Attributes["br-labor_bureau_name.{$index}"] = ($index + 1) . "事業所_管轄（労働局）";
         }
-        foreach ($this->input('br-labor_supervision_id', []) as $index => $value) {
-            $Attributes["br-labor_supervision_id.{$index}"] = ($index + 1) . "事業所_管轄（労働基準監督）";
+        foreach ($this->input('br-labor_supervision_name', []) as $index => $value) {
+            $Attributes["br-labor_supervision_name.{$index}"] = ($index + 1) . "事業所_管轄（労働基準監督）";
         }
         foreach ($this->input('br-start_date_of_month', []) as $index => $value) {
             $Attributes["br-start_date_of_month.{$index}"] = ($index + 1) . "事業所_開始設定(月の始まり)";
@@ -436,6 +459,33 @@ class LaborCompanyUpdateRequest extends BaseRequest
         }
         foreach ($this->input('br-holiday_not_logal', []) as $index => $value) {
             $Attributes["br-holiday_not_logal.{$index}"] = ($index + 1) . "事業所_休日内容(法定外休日)";
+        }
+        foreach ($this->input('br-labor_insurance_category', []) as $index => $value) {
+            $Attributes["br-labor_insurance_category.{$index}"] = ($index + 1) . "事業所_労災種類の分類";
+        }
+        foreach ($this->input('br-kenpo_no', []) as $index => $value) {
+            $Attributes["br-kenpo_no.{$index}"] = ($index + 1) . "事業所_協会けんぽNo";
+        }
+        foreach ($this->input('br-insurance_office_name', []) as $index => $value) {
+            $Attributes["br-insurance_office_name.{$index}"] = ($index + 1) . "事業所_健康保険組合・名称";
+        }
+        foreach ($this->input('br-bonus_payment_month', []) as $index => $value) {
+            $Attributes["br-bonus_payment_month.{$index}"] = ($index + 1) . "事業所_賞与支払い月";
+        }
+        foreach ($this->input('br-pension_office_name', []) as $index => $value) {
+            $Attributes["br-pension_office_name.{$index}"] = ($index + 1) . "事業所_厚生年金基金・名称";
+        }
+        foreach ($this->input('br-employment_insurance_rate', []) as $index => $value) {
+            $Attributes["br-employment_insurance_rate.{$index}"] = ($index + 1) . "事業所_雇用保険料率区分";
+        }
+        foreach ($this->input('br-rate_pattern_id', []) as $index => $value) {
+            $Attributes["br-rate_pattern_id.{$index}"] = ($index + 1) . "事業所_料率パターン";
+        }
+        foreach ($this->input('br-fractional_adjustment_pattern_id', []) as $index => $value) {
+            $Attributes["br-fractional_adjustment_pattern_id.{$index}"] = ($index + 1) . "事業所_端数調整パターン";
+        }
+        foreach ($this->input('br-insurance_applicable_date', []) as $index => $value) {
+            $Attributes["br-insurance_applicable_date.{$index}"] = ($index + 1) . "事業所_社保適用年月";
         }
 
         return $Attributes;

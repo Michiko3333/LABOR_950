@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use App\Models\Branch;
 use App\Permission;
+use App\Models\Employee;
 
 class HealthInsurancePensionInsuredQualificationLossController extends Controller
 {
@@ -64,6 +65,12 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
         ];
         $egovAcount = $this->egovAcount();
         $procedureName = $this->getProcedureName($request);
+        $existPresident = Employee::whereHas('branch', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+            ->where('employee_type', 1)
+            ->where('delete_flg', 0)
+            ->exists();
 
         return view('ledger.health_insurance_pension_insured_qualification_loss', [
             'company' => $company,
@@ -74,6 +81,7 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
             'egovAcount' => $egovAcount,
             'current_employee' => $current_employee,
             'current_branch' => $current_branch,
+            'existPresident' => $existPresident
         ]);
     }
 

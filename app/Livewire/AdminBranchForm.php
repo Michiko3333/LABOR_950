@@ -25,10 +25,11 @@ class AdminBranchForm extends Component
     public $start_days_of_week = [];
     public $work_style_type = [];
     public $hello_work_id = [];
-    public $labor_bureau_id = [];
-    public $labor_supervision_id = [];
-    public $pension_office_id = [];
     public $loading = false;
+
+    public $labor_bureau_names = [];
+    public $labor_supervision_names = [];
+    public $pension_office_names = [];
 
     public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
@@ -43,38 +44,18 @@ class AdminBranchForm extends Component
         $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
         $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
-        $this->labor_bureau_id = Labor_bureau::select('submit_name_jk', 'department', 'section', 'id')->get()
-            ->map(function ($labor_bureau_id) {
-                return [
-                    'submit_name_jk' => $labor_bureau_id->submit_name_jk,
-                    'department' => $labor_bureau_id->department,
-                    'section' => $labor_bureau_id->section,
-                    'id' => $labor_bureau_id->id,
-                ];
-            })->toArray();
-        $this->labor_supervision_id = Labor_supervision::select('submit_name_hij', 'section', 'id')->get()
-            ->map(function ($labor_supervision_id) {
-                return [
-                    'submit_name_hij' => $labor_supervision_id->submit_name_hij,
-                    'section' => $labor_supervision_id->section,
-                    'id' => $labor_supervision_id->id,
-                ];
-            })->toArray();
-        $this->pension_office_id = Pension_office::select('name', 'section', 'id')->get()
-            ->map(function ($pension_office_id) {
-                return [
-                    'name' => $pension_office_id->name,
-                    'section' => $pension_office_id->section,
-                    'id' => $pension_office_id->id,
-                ];
-            })->toArray();
+
+        $this->labor_bureau_names = Labor_bureau::distinct()->select('submit_name_jk')->get()->pluck('submit_name_jk');
+        $this->labor_supervision_names = Labor_supervision::distinct()->select('submit_name_hij')->get()->pluck('submit_name_hij');
+        $this->pension_office_names = Pension_office::select('submit_name_f', 'id')->whereNotNull('submit_name_f')->pluck('submit_name_f', 'id');
+
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
-                    if (!is_null($oldValue)) {
+                    if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($i, $oldValue)) {
                         $def[$key] = $oldValue[$i];
                     }
                 }
@@ -118,8 +99,8 @@ class AdminBranchForm extends Component
                 $d['br-employment_insurance_office_no'] = $item->employment_insurance_office_no;
                 $d['br-employment_insurance_establishment_date'] = $item->employment_insurance_establishment_date;
                 $d['br-hello_work_id'] = $item->hello_work_id;
-                $d['br-labor_bureau_id'] = $item->labor_bureau_id;
-                $d['br-labor_supervision_id'] = $item->labor_supervision_id;
+                $d['br-labor_bureau_name'] = $item->labor_bureau_name;
+                $d['br-labor_supervision_name'] = $item->labor_supervision_name;
                 $d['br-start_date_of_month'] = $item->start_date_of_month;
                 $d['br-start_days_of_week'] = $item->start_days_of_week;
                 $d['br-start_time_of_day'] = $item->start_time_of_day;
@@ -140,6 +121,16 @@ class AdminBranchForm extends Component
                 $d['br-holiday_legal'] = $item->holiday_legal;
                 $d['br-holiday_not_logal'] = $item->holiday_not_logal;
                 $d['br-work_style_type'] = $item->work_style_type;
+                $d['br-labor_insurance_category'] = $item->labor_insurance_category;
+                $d['br-kenpo_no'] = $item->kenpo_no;
+                $d['br-insurance_office_name'] = $item->insurance_office_name;
+                $d['br-insurance_applicable_date'] = $item->insurance_applicable_date;
+                $bonus_payment_month = explode(',', $item->bonus_payment_month);
+                $d['br-bonus_payment_month'] = !empty($bonus_payment_month) ? $bonus_payment_month : null;
+                $d['br-pension_office_name'] = $item->pension_office_name;
+                $d['br-employment_insurance_rate'] = $item->employment_insurance_rate;
+                $d['br-rate_pattern_id'] = $item->rate_pattern_id;
+                $d['br-fractional_adjustment_pattern_id'] = $item->fractional_adjustment_pattern_id;
                 array_push($this->data, $d);
             }
         }
@@ -156,6 +147,7 @@ class AdminBranchForm extends Component
     }
     public function render()
     {
+        //\Log::info(print_r($this->data, true));
         return view('livewire.admin-branch-form');
     }
 
@@ -164,7 +156,7 @@ class AdminBranchForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         array_push($this->data, $this->defaultValues());
-        $this->dispatch('form-appended');
+        $this->dispatch('form-appended', count($this->data));
     }
 
     #[On('branch-form-loaded')]
@@ -189,6 +181,7 @@ class AdminBranchForm extends Component
         $this->loading = true;
         unset($this->data[$index]);
         $this->data = array_values($this->data);
+        $this->loading = false;
     }
 
     private function defaultValues()
@@ -228,8 +221,8 @@ class AdminBranchForm extends Component
             'br-pension_office_reference_no_cities' => '',
             'br-pension_office_reference_no_office' => '',
             'br-hello_work_id' => '',
-            'br-labor_bureau_id' => '',
-            'br-labor_supervision_id' => '',
+            'br-labor_bureau_name' => '',
+            'br-labor_supervision_name' => '',
             'br-start_date_of_month' => '',
             'br-start_days_of_week' => '',
             'br-start_time_of_day' => '',
@@ -250,6 +243,15 @@ class AdminBranchForm extends Component
             'br-holiday_legal' => '',
             'br-holiday_not_logal' => '',
             'br-work_style_type' => '',
+            'br-labor_insurance_category' => '',
+            'br-kenpo_no' => '',
+            'br-insurance_office_name' => '',
+            'br-insurance_applicable_date' => '',
+            'br-bonus_payment_month' => '',
+            'br-pension_office_name' => '',
+            'br-employment_insurance_rate' => '',
+            'br-rate_pattern_id' => '',
+            'br-fractional_adjustment_pattern_id' => '',
         ];
 
         if ($this->company !== null) {

@@ -39,8 +39,8 @@ class Branch extends Model
         'employment_insurance_office_no',
         'employment_insurance_establishment_date',
         'hello_work_id',
-        'labor_bureau_id',
-        'labor_supervision_id',
+        'labor_bureau_name',
+        'labor_supervision_name',
         'start_date_of_month',
         'start_days_of_week',
         'start_time_of_day',
@@ -62,6 +62,15 @@ class Branch extends Model
         'holiday_not_logal',
         'work_style_type',
         'mail_address',
+        'labor_insurance_category',
+        'kenpo_no',
+        'insurance_office_name',
+        'insurance_applicable_date',
+        'bonus_payment_month',
+        'pension_office_name',
+        'employment_insurance_rate',
+        'rate_pattern_id',
+        'fractional_adjustment_pattern_id',
     ];
 
     public function company()

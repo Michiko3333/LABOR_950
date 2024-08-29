@@ -9,6 +9,9 @@
         <h1>{{ $procedureName }}</h1>
         <p>申請・届出に関する事項を入力してください。
         </p>
+        @if ($existPresident == false)
+            <x-representative-alert />
+        @endif
         @if ($certificate == false)
             <div class="ui warning message" style="margin: 0;">
                 <div class="header">
@@ -99,7 +102,7 @@
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
-                    @if ($certificate == false || $egovAcount == false)
+                    @if ($certificate == false || $egovAcount == false || $existPresident == false)
                         <button id="ledger-preview-btn" class="ui button primary" type="button" style="width: 200px;"
                             disabled>確認</button>
                     @else
@@ -153,6 +156,11 @@
                 $('#N31_1').val('{{ old('submission_year', $today['year']) }}');
                 $('#N32_1').val('{{ old('submission_month', $today['month']) }}');
                 $('#N33_1').val('{{ old('submission_date', $today['date']) }}');
+
+                $('#N14_P1').val('{{ old('headquarters_representative', $company->representative) }}');
+                $('#N21').val('{{ old('headquarters_representative', $company->representative) }}');
+                $('#N25_1').val('{{ old('headquarters_representative', $company->representative) }}');
+
                 @if ($current_employee->role_id === 500)
                 @else
                     $('#N22_P1').prop('readonly', false);
@@ -317,6 +325,7 @@
                     $('#N6').val(spouse_birthday_convert_japan['year'] ?? "");
                     $('#N7').val(spouse_birthday_convert_japan['month'] ?? "");
                     $('#N8').val(spouse_birthday_convert_japan['day'] ?? "");
+                    $('#N57_P1').val(spouse.relationship_spouse ?? "");
                 }
                 $('#N9').val(employee.mynumber_card_no ?? '');
                 $('#N10').val((employee.last_name_kana ? employee.last_name_kana + '　' : '') + (employee.first_name_kana ??

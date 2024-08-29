@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\noEmoji;
+use App\Rules\noSymbol;
 
 class CompanyUpdateRequest extends BaseRequest
 {
@@ -19,10 +21,10 @@ class CompanyUpdateRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
+            $data['name'] = mb_convert_kana($data['name'], 'ASKV');
         }
         if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'ASKV');
         }
 
         if (isset($data['name_abbreviation'])) {
@@ -38,35 +40,43 @@ class CompanyUpdateRequest extends BaseRequest
      */
     public function rules(): array
     {
+        noSymbol::$attributes = $this->attributes();
         return [
             'name' => 'string|max:255',
             'name_kana' => 'string|max:255|regex:/^[ァ-ヴー＆’，‐．・]+$/u',
-            'name_en' => 'nullable|string|max:255|regex:/^[!-~]+$/',
+            'name_en' => 'nullable|string|max:255|regex:/^[\x20-\x7E]+$/',
             'name_abbreviation' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9., ]+$/',
             'company_no' => 'string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'company_type_id' => 'integer',
             'license_no' => 'nullable|string|max:255',
             'business_type' => 'integer|between:1,3',
             'listed_type' => 'nullable|integer|between:1,6',
+            'industry_type' => 'array',
+            'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
             'capital' => 'nullable|integer',
-            'annual_sales' => 'nullable|integer',
-            'employee_sum' => 'nullable|integer',
+            'annual_sales' => 'nullable|integer|max_digits:18',
+            'employee_sum' => 'nullable|integer|max_digits:9',
             'qualification' => 'nullable|string',
-            'authorized_shares' => 'nullable|integer',
-            'issued_shares' => 'nullable|integer',
+            'authorized_shares' => 'nullable|integer|max_digits:18',
+            'issued_shares' => 'nullable|integer|max_digits:18',
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
+            'representative' => ['required', 'string', 'max:100', new noSymbol(false)],
+            'bank_name' => ['nullable', 'string', 'max:300', new noSymbol(true)],
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
             'company_division' => 'integer',
+            'financial_statement' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'articles_of_incorporation' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'stock_information' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
         ];
     }
 
     public function attributes()
     {
-        return [
+        $Attributes = [
             'name' => '会社名',
             'name_kana' => '会社名（カナ）',
             'name_en' => '会社名（英語表記）',
@@ -76,6 +86,7 @@ class CompanyUpdateRequest extends BaseRequest
             'license_no' => '許認可番号',
             'business_type' => '企業区分',
             'listed_type' => '上場区分',
+            'industry_type' => '業種コード',
             'stock_code' => '証券コード',
             'capital' => '資本金',
             'annual_sales' => '年間売上高（連結）',
@@ -86,10 +97,20 @@ class CompanyUpdateRequest extends BaseRequest
             'supplier_company' => '仕入先名称',
             'outsourcing_company' => '外注先名称',
             'sales_company' => '販売先名称',
+            'representative' => '代表者',
+            'bank_name' => '銀行名',
             'url' => 'ホームページアドレス',
             'purpose' => '事業目的',
             'procedure_hidden_flg' => '行政手続非表示フラグ',
             'company_division' => '会社区分',
+            'financial_statement' => '業績情報へ決算書の添付（直近1期分）',
+            'articles_of_incorporation' => '事業目的へ定款の添付（最新）',
+            'stock_information' => '株式情報へ株主を添付（最新）',
         ];
+
+        foreach ($this->input('industry_type', []) as $index => $value) {
+            $Attributes["industry_type.{$index}"] = ($index + 1) . "業種コード";
+        }
+        return $Attributes;
     }
 }

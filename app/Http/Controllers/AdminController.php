@@ -40,6 +40,7 @@ use App\Models\Values_employee_occupation_type;
 use App\Models\Values_employee_over_retired_insurance_loss_reason;
 use App\Models\Values_sex;
 use App\Models\Department;
+use App\Models\Dependent;
 use App\Models\Employee_department;
 use App\Models\Values_branch_labor_insurance_payment_method;
 use App\Models\Values_branch_place_type;
@@ -48,6 +49,9 @@ use App\Models\Values_branch_work_style_type;
 use App\Models\Receptionist;
 use App\Models\Residential_status;
 use App\Models\Values_employee_insured_age_type;
+use App\Models\Industry_type;
+use App\Models\Company_industry_type;
+use App\Models\Company_files;
 
 class AdminController extends Controller
 {
@@ -125,6 +129,47 @@ class AdminController extends Controller
                 $brdata = $this->data_branch($data, $index, $company_id);
                 Branch::create($brdata);
             }
+            $industryTypes = $request->input('industry_type', []);
+            foreach ($industryTypes as $industryTypeId) {
+                Company_industry_type::create([
+                    'company_id' => $company_id,
+                    'industry_type_id' => $industryTypeId,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('financial_statement')) {
+                $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
+                $financial_statement = $request->file('financial_statement')->get();
+                Company_files::create([
+                    'company_id' => $company_id,
+                    'document_type' => 1,
+                    'file_name' => $financial_statement_name,
+                    'data' => $financial_statement,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('articles_of_incorporation')) {
+                $articles_of_incorporation_name = $request->file('articles_of_incorporation')->getClientOriginalName();
+                $articles_of_incorporation = $request->file('articles_of_incorporation')->get();
+                Company_files::create([
+                    'company_id' => $company_id,
+                    'document_type' => 2,
+                    'file_name' => $articles_of_incorporation_name,
+                    'data' => $articles_of_incorporation,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('stock_information')) {
+                $stock_information_name = $request->file('stock_information')->getClientOriginalName();
+                $stock_information = $request->file('stock_information')->get();
+                Company_files::create([
+                    'company_id' => $company_id,
+                    'document_type' => 3,
+                    'file_name' => $stock_information_name,
+                    'data' => $stock_information,
+                    'delete_flg' => 0,
+                ]);
+            }
             DB::commit();
             $this->putSuccess();
         } catch (ValidationException $e) {
@@ -155,6 +200,11 @@ class AdminController extends Controller
         $place_type = Values_branch_place_type::pluck('name', 'id');
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
+        $industry_type = Company_industry_type::where('company_id', $company->id)->where('delete_flg', 0)->pluck('industry_type_id');
+        $financial_statement = Company_files::select('file_name')->where('company_id', $company->id)->where('document_type', 1)->where('delete_flg', 0)->first();
+        $articles_of_incorporation = Company_files::select('file_name')->where('company_id', $company->id)->where('document_type', 2)->where('delete_flg', 0)->first();
+        $stock_information = Company_files::select('file_name')->where('company_id', $company->id)->where('document_type', 3)->where('delete_flg', 0)->first();
+
         return view('admin.company_create', [
             'company_id' => $company->id,
             'company' => $company,
@@ -166,7 +216,11 @@ class AdminController extends Controller
             'labor_insurance_payment_method' => $labor_insurance_payment_method,
             'place_type' => $place_type,
             'start_days_of_week' => $start_days_of_week,
-            'work_style_type' => $work_style_type
+            'work_style_type' => $work_style_type,
+            'industry_type' => $industry_type,
+            'financial_statement' => $financial_statement->file_name ?? '',
+            'articles_of_incorporation' => $articles_of_incorporation->file_name ?? '',
+            'stock_information' => $stock_information->file_name ?? ''
         ]);
     }
 
@@ -191,6 +245,86 @@ class AdminController extends Controller
                 }
             }
             Branch::where('company_id', $id)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+            $industryTypes = $request->input('industry_type', []);
+            Company_industry_type::where('company_id', $id)
+                ->where('delete_flg', 1)
+                ->whereIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 0]);
+            Company_industry_type::where('company_id', $id)
+                ->whereNotIn('industry_type_id', $industryTypes)
+                ->update(['delete_flg' => 1]);
+            foreach ($industryTypes as $industryTypeId) {
+                Company_industry_type::updateOrCreate(
+                    [
+                        'company_id' => $id,
+                        'industry_type_id' => $industryTypeId,
+                    ],
+                    [
+                        'company_id' => $id,
+                        'industry_type_id' => $industryTypeId,
+                        'delete_flg' => 0
+                    ]
+                );
+            }
+
+            if ($request->input('financial_statement_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 1)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('articles_of_incorporation_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 2)
+                    ->update(['delete_flg' => 1]);
+            }
+            if ($request->input('stock_information_delete') == 1) {
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 3)
+                    ->update(['delete_flg' => 1]);
+            }
+
+            if ($request->file('financial_statement')) {
+                $financial_statement_name = $request->file('financial_statement')->getClientOriginalName();
+                $financial_statement = $request->file('financial_statement')->get();
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 1)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $id,
+                    'document_type' => 1,
+                    'file_name' => $financial_statement_name,
+                    'data' => $financial_statement,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('articles_of_incorporation')) {
+                $articles_of_incorporation_name = $request->file('articles_of_incorporation')->getClientOriginalName();
+                $articles_of_incorporation = $request->file('articles_of_incorporation')->get();
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 2)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $id,
+                    'document_type' => 2,
+                    'file_name' => $articles_of_incorporation_name,
+                    'data' => $articles_of_incorporation,
+                    'delete_flg' => 0,
+                ]);
+            }
+            if ($request->file('stock_information')) {
+                $stock_information_name = $request->file('stock_information')->getClientOriginalName();
+                $stock_information = $request->file('stock_information')->get();
+                Company_files::where('company_id', $id)
+                    ->where('document_type', 3)
+                    ->update(['delete_flg' => 1]);
+                Company_files::create([
+                    'company_id' => $id,
+                    'document_type' => 3,
+                    'file_name' => $stock_information_name,
+                    'data' => $stock_information,
+                    'delete_flg' => 0,
+                ]);
+            }
             DB::commit();
             $this->putSuccess();
         } catch (ValidationException $e) {
@@ -256,6 +390,8 @@ class AdminController extends Controller
             'supplier_company' => $requestData['supplier_company'],
             'outsourcing_company' => $requestData['outsourcing_company'],
             'sales_company' => $requestData['sales_company'],
+            'representative' => $requestData['representative'],
+            'bank_name' => $requestData['bank_name'],
             'url' => $requestData['url'],
             'purpose' => $requestData['purpose'],
             'procedure_hidden_flg' => $requestData['procedure_hidden_flg'],
@@ -306,6 +442,13 @@ class AdminController extends Controller
             }
         }
 
+        $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
+        if (!is_null($bonus_payment_month)) {
+            $bonus_payment_month_processed = implode(',', $bonus_payment_month);
+        } else {
+            $bonus_payment_month_processed = null;
+        }
+
         return [
             'name' => $requestData['br-name'][$index],
             'company_id' => $company_id,
@@ -338,8 +481,8 @@ class AdminController extends Controller
             'employment_insurance_office_no' => $requestData['br-employment_insurance_office_no'][$index],
             'employment_insurance_establishment_date' => $formatted_br_employment_insurance_establishment_date,
             'hello_work_id' => $requestData['br-hello_work_id'][$index],
-            'labor_bureau_id' => $requestData['br-labor_bureau_id'][$index],
-            'labor_supervision_id' => $requestData['br-labor_supervision_id'][$index],
+            'labor_bureau_name' => $requestData['br-labor_bureau_name'][$index],
+            'labor_supervision_name' => $requestData['br-labor_supervision_name'][$index],
             'start_date_of_month' => $requestData['br-start_date_of_month'][$index],
             'start_days_of_week' => $requestData['br-start_days_of_week'][$index],
             'start_time_of_day' => $requestData['br-start_time_of_day'][$index],
@@ -360,6 +503,15 @@ class AdminController extends Controller
             'holiday_legal' => $requestData['br-holiday_legal'][$index],
             'holiday_not_logal' => $requestData['br-holiday_not_logal'][$index],
             'work_style_type' => $requestData['br-work_style_type'][$index],
+            'labor_insurance_category' => $requestData['br-labor_insurance_category'][$index],
+            'kenpo_no' => $requestData['br-kenpo_no'][$index],
+            'insurance_office_name' => $requestData['br-insurance_office_name'][$index],
+            'insurance_applicable_date' => $requestData['br-insurance_applicable_date'][$index],
+            'bonus_payment_month' => $bonus_payment_month_processed,
+            'pension_office_name' => $requestData['br-pension_office_name'][$index],
+            'employment_insurance_rate' => $requestData['br-employment_insurance_rate'][$index],
+            'rate_pattern_id' => $requestData['br-rate_pattern_id'][$index],
+            'fractional_adjustment_pattern_id' => $requestData['br-fractional_adjustment_pattern_id'][$index],
         ];
     }
 
@@ -368,6 +520,21 @@ class AdminController extends Controller
         $company = Company::find($id);
         $company_name = $company->name;
         return view('admin.department', ['company_id' => $id, 'company_name' => $company_name]);
+    }
+
+    public function downloadFile($company_id, $document_type)
+    {
+        $file = Company_files::select('file_name', 'data')->where('company_id', $company_id)->where('delete_flg', 0)->where('document_type', $document_type)->first();
+        $headers = [
+            'Content-Type' => 'application/octet-stream',
+        ];
+
+        return response()->stream(function () use ($file) {
+            echo $file->data;
+        }, 200, [
+            'Content-Type' => $headers['Content-Type'],
+            'Content-Disposition' => 'attachment; filename="' . $file->file_name . '"',
+        ]);
     }
 
     // ---------------------------------------------------------------------------------------
@@ -551,6 +718,7 @@ class AdminController extends Controller
             'departments' => [],
             'departments_list' => [],
             'managerial_position_list' => [],
+            'dependent' => [],
             'employee_type' => $employee_type,
             'sex_type' => $sex_type,
             'prefectures' => $prefectures,
@@ -696,7 +864,17 @@ class AdminController extends Controller
                 'employer_type' => $request->input('employer_type'),
                 'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                'blood_type' => $request->input('blood_type'),
+                'qualifications' => $request->input('qualifications'),
             ])->id;
+
+            $dename = $request->input('de-last_name');
+            if (!is_null($dename)) {
+                foreach ($dename as $index => $name) {
+                    $dedata = $this->data_dependent($validationData, $index, $employee_id);
+                    Dependent::create($dedata);
+                }
+            }
 
             $departments = $request->input('departments', []);
             foreach ($departments as $dep) {
@@ -762,6 +940,7 @@ class AdminController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
+        $dependent = $employee->dependent()->where('delete_flg', 0)->get();
 
         return view('admin.employee_create', [
             'employee' => $employee,
@@ -781,7 +960,8 @@ class AdminController extends Controller
             'occupation_type' => $occupation_type,
             'faxParts' => $faxParts,
             'residential_status' => $residential_status,
-            'employee_insured_age_type' => $employee_insured_age_type
+            'employee_insured_age_type' => $employee_insured_age_type,
+            'dependent' => $dependent,
         ]);
     }
 
@@ -834,10 +1014,6 @@ class AdminController extends Controller
                     'address_city' => $address_city,
                     'address_ward' => $address_ward,
                     'address_apartment' => $address_apartment,
-                    // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
-                    'address_city_kana' => $request->input('address_city_kana'),
-                    'address_ward_kana' => $request->input('address_ward_kana'),
-                    'address_apartment_kana' => $request->input('address_apartment_kana'),
                     'tel_area_code' => $request->input('tel_area_code'),
                     'tel_city_code' => $request->input('tel_city_code'),
                     'tel_subscriber_code' => $request->input('tel_subscriber_code'),
@@ -915,7 +1091,23 @@ class AdminController extends Controller
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
+                    'blood_type' => $request->input('blood_type'),
+                    'qualifications' => $request->input('qualifications'),
                 ]);
+
+            $deids = $request->input('de-id', []);
+            $excepts = [];
+            foreach ($deids as $index => $deid) {
+                $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
+                if ($deid > 0) {
+                    Dependent::where('id', $deid)->update($dedata);
+                    $excepts[] = $deid;
+                } else {
+                    $created_id = Dependent::create($dedata)->id;
+                    $excepts[] = $created_id;
+                }
+            }
+            Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)
@@ -946,6 +1138,51 @@ class AdminController extends Controller
         return redirect()->route('admin.labor');
     }
 
+    private function data_dependent(array $requestData, $index, $employee_id)
+    {
+        $input_date1 = $requestData['de-birthday'][$index];
+        if (!is_null($input_date1) && strtotime($input_date1) === false) {
+            $formatted_de_birthday = Carbon::createFromFormat('Y年n月j日', $input_date1)->format('Y-m-d');
+        } else {
+            $formatted_de_birthday = $input_date1;
+        }
+        $input_date2 = $requestData['de-date_of_authorisation'][$index];
+        if (!is_null($input_date2) && strtotime($input_date2) === false) {
+            $formatted_de_date_of_authorisation = Carbon::createFromFormat('Y年n月j日', $input_date2)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_authorisation = $input_date2;
+        }
+        $input_date3 = $requestData['de-date_of_expiry'][$index];
+        if (!is_null($input_date3) && strtotime($input_date3) === false) {
+            $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
+        } else {
+            $formatted_de_date_of_expiry = $input_date3;
+        }
+
+        return [
+            'employee_id' => $employee_id,
+            'relationship_spouse' => $requestData['de-relationship_spouse'][$index] ?? null,
+            'relationship_dependent' => $requestData['de-relationship_dependent'][$index] ?? null,
+            'spouse_flag' => $requestData['de-spouse_flag'][$index] ?? null,
+            'last_name' => $requestData['de-last_name'][$index],
+            'first_name' => $requestData['de-first_name'][$index],
+            'last_name_kana' => $requestData['de-last_name_kana'][$index],
+            'first_name_kana' => $requestData['de-first_name_kana'][$index],
+            'sex' => $requestData['de-sex'][$index],
+            'age' => $requestData['de-age'][$index],
+            'occupation' => $requestData['de-occupation'][$index],
+            'annual_income' => $requestData['de-annual_income'][$index],
+            'contact' => $requestData['de-contact'][$index],
+            'dependent_type' => $requestData['de-dependent_type'][$index],
+            'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
+            'pension_no' => $requestData['de-pension_no'][$index],
+            'other_1' => $requestData['de-other_1'][$index],
+            'other_2' => $requestData['de-other_2'][$index],
+            'birthday' => $formatted_de_birthday,
+            'date_of_authorisation' => $formatted_de_date_of_authorisation,
+            'date_of_expiry' => $formatted_de_date_of_expiry,
+        ];
+    }
 
     public function get_departments(Request $request)
     {
@@ -962,6 +1199,15 @@ class AdminController extends Controller
 
         return response()->json($managerial_position);
     }
+
+    public function get_industry_type(Request $request)
+    {
+
+        $industry_type = Industry_type::get(['id', 'industry_type_code']);
+
+        return response()->json($industry_type);
+    }
+
     // ---------------------------------------------------------------------------------------
     // 社労士顧客会社設定
     // ---------------------------------------------------------------------------------------
