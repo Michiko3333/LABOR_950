@@ -55,6 +55,7 @@
                 width: 180px;
                 height: 180px;
                 margin: 0 auto;
+                border: 1px solid #ECECEC;
                 border-radius: 50%;
                 overflow: hidden;
                 cursor: pointer;
