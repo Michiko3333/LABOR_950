@@ -377,19 +377,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="required field {{ err($errors, 'country_id') }}">
-                                    <label>国籍</label>
-                                    <select class="ui fluid dropdown" name="country_id">
-                                        <option value="">日本</option>
-                                        @foreach ($country_type as $k => $item)
-                                            <option value="{{ $k }}"
-                                                {{ old('country_id') == $k || (isset($employee) && old('country_id', $employee->country_id) == $k)
-                                                    ? 'selected'
-                                                    : '' }}>
-                                                {{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
                             <div class="fields">
                                 <div class="three wide field {{ err($errors, 'blood_type') }}">
