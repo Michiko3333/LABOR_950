@@ -323,6 +323,12 @@
                                                 <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg" value="0">
                                             </span>
                                         </p>
+                                    @else
+                                        <p>
+                                            <span>
+                                                <a id="selectCancel">キャンセル</a>
+                                            </span>
+                                        </p>
                                     @endif
                                     <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" id="iconChangeInput">
                                 </div>
@@ -1391,6 +1397,11 @@
                 $('#icon').attr('src', '/img/image.png');
                 $('#iconChangeInput').val('');
             }
+        });
+
+        $('#selectCancel').on('click', function() {
+            $('#icon').attr('src', '/img/image.png');
+            $('#iconChangeInput').val('');
         });
     </script>
 </x-layout>
