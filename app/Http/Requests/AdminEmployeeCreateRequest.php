@@ -220,10 +220,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'custom_pattern_flag' => 'nullable|integer',
             'insured_status' => 'nullable|string|max:21',
             'health_insurance_association_number' => ['nullable', 'string', new NumberOnly(8)],
-            'acquisition_of_distinction' => 'nullable|string|max:5',
-            'welfare_pension' => 'nullable|string|max:2',
-            'overseas_special_exception' => 'nullable|string|max:4',
-            'dispatch_contract_completion' => 'nullable|string|max:10',
+            'acquisition_of_distinction' => 'nullable|integer',
+            'welfare_pension' => 'nullable|integer',
+            'overseas_special_exception' => 'nullable|integer',
+            'dispatch_contract_completion' => 'nullable|integer',
         ];
     }
 

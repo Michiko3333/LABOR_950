@@ -1029,20 +1029,20 @@
                                 <select class="ui fluid dropdown" name="insured_status"
                                     value="{{ old('insured_status', isset($employee_id) ? $employee->insured_status : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="海外勤務者（介護保険適用除外）" {{ old('insured_status') == "海外勤務者（介護保険適用除外）" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "海外勤務者（介護保険適用除外）") ? 'selected': '' }}>
+                                    <option value="1" {{ old('insured_status') == "1" ||
+                                            (isset($employee) && old('insured_status', $employee->insured_status) == "1") ? 'selected': '' }}>
                                             海外勤務者（介護保険適用除外）</option>
-                                    <option value="育児休業者、産前産後休業者（社会保険免除）" {{ old('insured_status') == "育児休業者、産前産後休業者（社会保険免除）" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "育児休業者、産前産後休業者（社会保険免除）") ? 'selected': '' }}>
+                                    <option value="2" {{ old('insured_status') == "2" ||
+                                            (isset($employee) && old('insured_status', $employee->insured_status) == "2") ? 'selected': '' }}>
                                             育児休業者、産前産後休業者（社会保険免除）</option>
-                                    <option value="3" {{ old('insured_status') == "特定第二号被保険者（介護保険負担有）" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "特定第二号被保険者（介護保険負担有）") ? 'selected': '' }}>
+                                    <option value="3" {{ old('insured_status') == "3" ||
+                                            (isset($employee) && old('insured_status', $employee->insured_status) == "3") ? 'selected': '' }}>
                                             特定第二号被保険者（介護保険負担有）</option>
-                                    <option value="短期雇用特例被保険者" {{ old('insured_status') == "短期雇用特例被保険者" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "短期雇用特例被保険者") ? 'selected': '' }}>
+                                    <option value="4" {{ old('insured_status') == "4" ||
+                                            (isset($employee) && old('insured_status', $employee->insured_status) == "4") ? 'selected': '' }}>
                                             短期雇用特例被保険者</option>
-                                    <option value="その他" {{ old('insured_status') == "その他" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "その他") ? 'selected': '' }}>
+                                    <option value="5" {{ old('insured_status') == "5" ||
+                                            (isset($employee) && old('insured_status', $employee->insured_status) == "5") ? 'selected': '' }}>
                                             その他</option>
                                 </select>
                             </div>
@@ -1122,8 +1122,8 @@
                                 <select class="ui fluid dropdown" name="welfare_pension"
                                     value="{{ old('welfare_pension', isset($employee_id) ? $employee->welfare_pension : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="加入" {{ old('welfare_pension') == "加入" ||
-                                            (isset($employee) && old('welfare_pension', $employee->welfare_pension) == "加入") ? 'selected': '' }}>
+                                    <option value="1" {{ old('welfare_pension') == "1" ||
+                                            (isset($employee) && old('welfare_pension', $employee->welfare_pension) == "1") ? 'selected': '' }}>
                                             加入</option>
                                 </select>
                             </div>
@@ -1146,14 +1146,14 @@
                                 <select class="ui fluid dropdown" name="acquisition_of_distinction"
                                     value="{{ old('acquisition_of_distinction', isset($employee_id) ? $employee->acquisition_of_distinction : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="健保・厚年" {{ old('acquisition_of_distinction') == "健保・厚年" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "健保・厚年") ? 'selected': '' }}>
+                                    <option value="1" {{ old('acquisition_of_distinction') == "1" ||
+                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "1") ? 'selected': '' }}>
                                             健保・厚年</option>
-                                    <option value="共済出向" {{ old('acquisition_of_distinction') == "共済出向" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "共済出向") ? 'selected': '' }}>
+                                    <option value="2" {{ old('acquisition_of_distinction') == "2" ||
+                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "2") ? 'selected': '' }}>
                                             共済出向</option>
-                                    <option value="船保任続" {{ old('acquisition_of_distinction') == "船保任続" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "船保任続") ? 'selected': '' }}>
+                                    <option value="3" {{ old('acquisition_of_distinction') == "3" ||
+                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "3") ? 'selected': '' }}>
                                             船保任続</option>
                                 </select>
                             </div>
@@ -1192,14 +1192,14 @@
                                 <select class="ui fluid dropdown" name="overseas_special_exception"
                                     value="{{ old('overseas_special_exception', isset($employee_id) ? $employee->overseas_special_exception : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="海外在住" {{ old('overseas_special_exception') == "海外在住" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "海外在住") ? 'selected': '' }}>
+                                    <option value="1" {{ old('overseas_special_exception') == "1" ||
+                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "1") ? 'selected': '' }}>
                                             海外在住</option>
-                                    <option value="短期在留" {{ old('overseas_special_exception') == "短期在留" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "短期在留") ? 'selected': '' }}>
+                                    <option value="2" {{ old('overseas_special_exception') == "2" ||
+                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "2") ? 'selected': '' }}>
                                             短期在留</option>
-                                    <option value="その他" {{ old('overseas_special_exception') == "その他" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "その他") ? 'selected': '' }}>
+                                    <option value="3" {{ old('overseas_special_exception') == "3" ||
+                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "3") ? 'selected': '' }}>
                                             その他</option>
                                 </select>
                             </div>
@@ -1317,11 +1317,11 @@
                                 <select class="ui fluid dropdown" name="dispatch_contract_completion"
                                     value="{{ old('dispatch_contract_completion', isset($employee_id) ? $employee->dispatch_contract_completion : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="特定の事業所に勤務" {{ old('dispatch_contract_completion') == "特定の事業所に勤務" ||
-                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "特定の事業所に勤務") ? 'selected': '' }}>
+                                    <option value="1" {{ old('dispatch_contract_completion') == "1" ||
+                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "1") ? 'selected': '' }}>
                                             特定の事業所に勤務</option>
-                                    <option value="不特定の事業所に勤務" {{ old('dispatch_contract_completion') == "不特定の事業所に勤務" ||
-                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "不特定の事業所に勤務") ? 'selected': '' }}>
+                                    <option value="2" {{ old('dispatch_contract_completion') == "2" ||
+                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "2") ? 'selected': '' }}>
                                             不特定の事業所に勤務</option>
                                 </select>
                             </div>
