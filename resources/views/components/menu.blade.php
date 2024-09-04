@@ -18,7 +18,7 @@
                     $filePath = '/' . $file;
                 }
             }
-            if(!isset($file)) {
+            if(!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         } else {
