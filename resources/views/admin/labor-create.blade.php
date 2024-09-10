@@ -151,14 +151,14 @@
                                 @if(isset($employee_id))
                                     <p>
                                         <span>
-                                            <a id="iconDelete">削除</a>
+                                            <a id="iconDelete" style="color: var(--color-red);">削除</a>
                                             <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg" value="0">
                                         </span>
                                     </p>
                                 @else
                                     <p>
                                         <span>
-                                            <a id="selectCancel">キャンセル</a>
+                                            <a id="selectCancel" style="color: var(--color-red);">キャンセル</a>
                                         </span>
                                     </p>
                                 @endif

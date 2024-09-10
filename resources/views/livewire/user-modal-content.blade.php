@@ -52,7 +52,7 @@
                                 @if($icon_change_state === false)
                                     <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="iconChangeState">変更</a>
                                 @else
-                                    <a style="margin: 0.4rem 1.2rem 0 0; cursor: pointer;" wire:click="iconChangeState">キャンセル</a>
+                                    <a style="margin: 0.4rem 1.2rem 0 0; cursor: pointer; color: var(--color-red);" wire:click="iconChangeState">キャンセル</a>
                                     <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="saveIcon">保存</a>
                                 @endif
                             @endif
