@@ -324,7 +324,7 @@
                                     @if(isset($employee_id))
                                         <p>
                                             <span class="delete-icon">
-                                                <a id="iconDelete">削除</a>
+                                                <a id="iconDelete" style=" color: var(--color-red);">削除</a>
                                                 <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg" value="0">
                                             </span>
                                         </p>
