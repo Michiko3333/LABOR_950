@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 use App\Http\Requests\AdminLaborCreateRequest;
@@ -558,8 +559,10 @@ class AdminController extends Controller
     public function labor_create(Request $request)
     {
         $employee_type = Values_employee_employee_type::pluck('name', 'id');
+        $filePath = '/img/image.png';
 
         return view('admin.labor-create', [
+            'filePath' => $filePath,
             'departments' => [],
             'employee_type' => $employee_type
         ]);
@@ -611,6 +614,21 @@ class AdminController extends Controller
 
             User::create($data);
 
+            $employee = Employee::where('id', $employee_id)->where('delete_flg', 0)->first();
+            $branch = $employee->branch()->first();
+            $company = $branch->company()->first();
+            $company_id = $company->id;
+            $icon_file = $request->file('icon_file');
+            if($icon_file && $company_id && $employee_id) {
+                $extension = $icon_file->getClientOriginalExtension();
+                $directory = 'photo/' . $company_id;
+                $filePath = $directory . '/' . $employee_id . '.' . $extension;
+                if (!Storage::exists($directory)) {
+                    Storage::makeDirectory($directory);
+                }
+
+                $icon_file->storeAs($filePath);
+            }
 
             DB::commit();
             $this->putSuccess();
@@ -635,7 +653,22 @@ class AdminController extends Controller
         $employee->branch_name = $branch->name;
         $employee->branch_id = $branch->id;
 
+        if (!empty($employee->company_id)) {
+            $directory = 'photo/' . $employee->company_id;
+            $files = Storage::files($directory);
+            foreach ($files as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $employee->id) {
+                    $filePath = '/' . $file . '?v=' . time();
+                }
+            }
+            if(!isset($filePath)) {
+                $filePath = '/img/image.png';
+            }
+        }
+
         return view('admin.labor-create', [
+            'filePath' => $filePath,
             'departments' => $departments,
             'employee_id' => $id,
             'employee' => $employee,
@@ -684,6 +717,42 @@ class AdminController extends Controller
                 }
             }
 
+            $employee = Employee::where('id', $id)->where('delete_flg', 0)->first();
+            $branch = $employee->branch()->first();
+            $company = $branch->company()->first();
+            $company_id = $company->id;
+            $icon_file = $request->file('icon_file');
+            $icon_delete_flg = $request->input('icon_delete_flg');
+            if($company_id && $id) {
+                if($icon_delete_flg === "1") {
+                    $directory = 'photo/' . $company_id;
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $id) {
+                            Storage::delete($file);
+                        }
+                    }
+                } elseif ($icon_file) {
+                    $extension = $icon_file->getClientOriginalExtension();
+                    $directory = 'photo/' . $company_id;
+                    $filePath = $directory . '/' . $id . '.' . $extension;
+
+                    if (!Storage::exists($directory)) {
+                        Storage::makeDirectory($directory);
+                    }
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $id) {
+                            Storage::delete($file);
+                        }
+                    }
+
+                    $icon_file->storeAs($filePath);
+                }
+            }
+
             DB::commit();
             $this->putSuccess();
         } catch (\Exception $e) {
@@ -713,8 +782,10 @@ class AdminController extends Controller
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $faxParts = ['', '', ''];
+        $filePath = '/img/image.png';
 
         return view('admin.employee_create', [
+            'filePath' => $filePath,
             'departments' => [],
             'departments_list' => [],
             'managerial_position_list' => [],
@@ -897,6 +968,19 @@ class AdminController extends Controller
 
             User::create($data);
 
+            $company_id = $request->input('company_id');
+            $icon_file = $request->file('icon_file');
+            if($icon_file && $company_id && $employee_id) {
+                $extension = $icon_file->getClientOriginalExtension();
+                $directory = 'photo/' . $company_id;
+                $filePath = $directory . '/' . $employee_id . '.' . $extension;
+                if (!Storage::exists($directory)) {
+                    Storage::makeDirectory($directory);
+                }
+
+                $icon_file->storeAs($filePath);
+            }
+
             DB::commit();
             $this->putSuccess();
         } catch (\Exception $e) {
@@ -917,6 +1001,20 @@ class AdminController extends Controller
         $employee->company_id = $company->id;
         $employee->branch_name = $branch->name;
 
+        if (!empty($employee->company_id)) {
+            $directory = 'photo/' . $employee->company_id;
+            $files = Storage::files($directory);
+            foreach ($files as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $employee->id) {
+                    $filePath = '/' . $file . '?v=' . time();
+                }
+            }
+            if(!isset($filePath)) {
+                $filePath = '/img/image.png';
+            }
+        }
+
         if ($employee && !empty($employee->fax)) {
             $faxParts = explode('-', $employee->fax);
         } else {
@@ -934,14 +1032,15 @@ class AdminController extends Controller
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
         $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
-        $departments_list = Department::select('id', 'name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
-        $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->pluck('name', 'id');
+        $departments_list = Department::select('id', 'name')->where('company_id', $employee->company_id)->where('delete_flg', 0)->get();
+        $managerial_position_list = Managerial_position::where('company_id', $employee->company_id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $dependent = $employee->dependent()->where('delete_flg', 0)->get();
 
         return view('admin.employee_create', [
             'employee' => $employee,
+            'filePath' => $filePath,
             'departments' => $departments,
             'departments_list' => $departments_list,
             'managerial_position_list' => $managerial_position_list,
@@ -1128,6 +1227,40 @@ class AdminController extends Controller
                         'department_id' => $departmentId,
                         'employee_id' => $request->input('employee_id')
                     ]);
+                }
+            }
+
+            $employee_id = $request->input('employee_id');
+            $company_id = $request->input('company_id');
+            $icon_file = $request->file('icon_file');
+            $icon_delete_flg = $request->input('icon_delete_flg');
+            if($company_id && $employee_id) {
+                if($icon_delete_flg === "1") {
+                    $directory = 'photo/' . $company_id;
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $employee_id) {
+                            Storage::delete($file);
+                        }
+                    }
+                } elseif ($icon_file) {
+                    $extension = $icon_file->getClientOriginalExtension();
+                    $directory = 'photo/' . $company_id;
+                    $filePath = $directory . '/' . $employee_id . '.' . $extension;
+
+                    if (!Storage::exists($directory)) {
+                        Storage::makeDirectory($directory);
+                    }
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $employee_id) {
+                            Storage::delete($file);
+                        }
+                    }
+
+                    $icon_file->storeAs($filePath);
                 }
             }
 

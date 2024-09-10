@@ -10,18 +10,25 @@ use App\Models\Employee_department;
 use App\Models\User;
 use App\Models\Prefecture;
 use App\Rules\noEmoji;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithFileUploads;
 use Livewire\Component;
 
 class UserModalContent extends Component
 {
+    use WithFileUploads;
+
     public $prefectures;
     public $employee_id = 0;
+    public $company_id = 0;
+    public $icon_file;
+    public $icon_change_state = false;
     public $tab = 0;
     public $profiles = [
         'name' => '',
-        'file_path' => '',
+        'file_path' => '/img/image.png',
         'company_name' => '',
         'branch_name' => '',
         'departments' => [],
@@ -101,6 +108,7 @@ class UserModalContent extends Component
     public $login_pass_edit_flg = false;
     public $login_pass_valid = ['filled' => true, 'unknown' => true, 'confirm' => true];
     public $login_pass_success = false;
+
     public function mount()
     {
         $user = Auth::user();
@@ -112,8 +120,23 @@ class UserModalContent extends Component
                 $this->employee_id = $employee->id;
                 $this->role_id = $employee->role_id;
                 if ($this->role_id !== 999) {
-                    $currentCompany = CurrentUser::currentCompany();
-                    if (!empty($currentCompany)) $this->profiles['company_name'] = $currentCompany->name;
+                    $company = CurrentUser::currentCompany();
+                    if($this->role_id === 500) {
+                        $branch = $employee->branch()->first();
+                        $company = $branch->company()->first();
+                    }
+                    if (!empty($company)) {
+                        $this->profiles['company_name'] = $company->name;
+                        $this->company_id = $company->id;
+                        $directory = 'photo/' . $this->company_id;
+                        $files = Storage::files($directory);
+                        foreach ($files as $file) {
+                            $fileName = pathinfo($file, PATHINFO_FILENAME);
+                            if ((int)$fileName === $this->employee_id) {
+                                $this->profiles['file_path'] = '/' . $file;
+                            }
+                        }
+                    }
                     $this->profiles['branch_name'] = $employee->branch->name;
                     $this->profiles['departments'] = Employee_department::select('name')
                         ->where('m_employee_department.delete_flg', 0)
@@ -171,6 +194,54 @@ class UserModalContent extends Component
     {
         $this->namesCancel();
         $this->tab = $num;
+    }
+
+    public function iconChangeState()
+    {
+        $this->icon_change_state = !$this->icon_change_state;
+    }
+
+    public function changeIcon() {
+        $this->dispatch('changeIcon');
+    }
+
+    public function saveIcon()
+    {
+        if ($this->icon_file && $this->company_id && $this->employee_id) {
+            $maxSize = 5 * 1024 * 1024;
+            if ($this->icon_file->getSize() > $maxSize) {
+                session()->flash('error', 'ファイルサイズは5MB以下である必要があります。');
+                return;
+            }
+            $extension = $this->icon_file->getClientOriginalExtension();
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            if (!in_array($extension, $allowedExtensions)) {
+                session()->flash('error', 'jpn, jpeg, pngのみ許可されています。');
+                return;
+            }
+
+            $directory = 'photo/' . $this->company_id;
+            $filePath = $directory . '/' . $this->employee_id . '.' . $extension;
+
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory);
+            }
+
+            foreach (Storage::files($directory) as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $this->employee_id) {
+                    Storage::delete($file);
+                }
+            }
+
+            $result = $this->icon_file->storeAs($filePath);
+
+            if ($result) {
+                $this->profiles['file_path'] = $filePath . '?v=' . time();
+                $this->icon_change_state = false;
+                $this->dispatch('changeIconImage', $this->profiles['file_path']);
+            }
+        }
     }
 
     public function namesCancel()
@@ -233,8 +304,8 @@ class UserModalContent extends Component
             'emergency_edit.emergency_relationship1' => ['nullable', 'string', 'max:255', new noEmoji],
             'emergency_edit.emergency_tel1' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
             'emergency_edit.emergency_address_prefecture1' => ['nullable', 'string', 'max:20', 'regex:/\A[0-9]+\z/u', new noEmoji],
-            'emergency_edit.emergency_post_code1' => ['nullable', 'string', 'max:12', 'regex:/\A[0-9]+\z/u', new noEmoji],
-            'emergency_edit.emergency_address_city1' => ['nullable', 'string', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
+            'emergency_edit.emergency_post_code1' => ['nullable', 'string', 'max:20', 'regex:/\A[0-9]+\z/u', new noEmoji],
+            'emergency_edit.emergency_address_city1' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
             'emergency_edit.emergency_address_ward1' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
             'emergency_edit.emergency_address_apartment1' => ['nullable', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u', new noEmoji],
 
