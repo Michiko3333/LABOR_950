@@ -86,6 +86,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
         NumberOnly::$attributes = $this->attributes();
         katakanaOnly::$attributes = $this->attributes();
         return [
+            'icon_file' => 'nullable|file|mimetypes:image/jpeg,image/jpg,image/png|max:5000',
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
             'company_name' => 'required',
             'branch_id' => 'integer',
@@ -262,6 +263,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
     public function attributes()
     {
         $Attributes = [
+            'icon_file' => 'アイコン画像',
             'employee_no' => '社員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',

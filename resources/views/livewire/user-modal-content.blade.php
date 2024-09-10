@@ -30,28 +30,51 @@
     <div class="center-content"></div>
     <div class="right-content">
         @if ($tab === 0)
-            <section class="area profile">
-                <div class="icon-content p-2">
-                    <div class="user-icon">
-                        <img src="{{ asset('/img/image.png') }}">
+            <section>
+                <div class="area profile">
+                    <div class="icon-content p-2">
+                        @if (session()->has('error'))
+                            <div style="color: red;">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <div class="user-icon">
+                            @if($icon_change_state === false)
+                                <img src="{{ $profiles['file_path'] }}">
+                            @elseif($role_id !== 999)
+                                <img src="{{ $profiles['file_path'] }}" wire:ignore wire:click="changeIcon" id="icon" style="display: block; filter: brightness(50%);">
+                                <strong style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.4rem; pointer-events: none;">アップロード</strong>
+                                <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" wire:model.live="icon_file" id="iconChangeInput" style="display: none;">
+                            @endif
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            @if($role_id === 500)
+                                @if($icon_change_state === false)
+                                    <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="iconChangeState">変更</a>
+                                @else
+                                    <a style="margin: 0.4rem 1.2rem 0 0; cursor: pointer; color: var(--color-red);" wire:click="iconChangeState">キャンセル</a>
+                                    <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="saveIcon">保存</a>
+                                @endif
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="information">
-                    @if ($role_id == 999)
-                        <a class="ui red tag label">管理者アカウント</a>
-                    @endif
-                    @if ($role_id === 500)
-                        <a class="ui red tag label">社労士アカウント</a>
-                    @endif
-                    @if ($role_id === 100)
-                        <a class="ui red tag label">一般アカウント</a>
-                    @endif
-                    <h1 class="mt-1">{{ $profiles['name'] }}</h1>
-                    <h3>{{ $profiles['company_name'] }}</h3>
-                    <p>配属：{{ $profiles['branch_name'] }}</p>
-                    <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
-                    <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
-                    </p>
+                    <div class="information">
+                        @if ($role_id == 999)
+                            <a class="ui red tag label">管理者アカウント</a>
+                        @endif
+                        @if ($role_id === 500)
+                            <a class="ui red tag label">社労士アカウント</a>
+                        @endif
+                        @if ($role_id === 100)
+                            <a class="ui red tag label">一般アカウント</a>
+                        @endif
+                        <h1 class="mt-1">{{ $profiles['name'] }}</h1>
+                        <h3>{{ $profiles['company_name'] }}</h3>
+                        <p>配属：{{ $profiles['branch_name'] }}</p>
+                        <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
+                        <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
+                        </p>
+                    </div>
                 </div>
             </section>
         @endif
@@ -335,3 +358,17 @@
         @endif
     </div>
 </div>
+
+<script type="module">
+    Livewire.on('changeIcon', () => {
+        $('#iconChangeInput').click();
+
+        $('#iconChangeInput').on('change', function() {
+            const $fr = new FileReader();
+            $fr.onload = function() {
+                $('#icon').attr('src', $fr.result);
+            }
+            $fr.readAsDataURL(this.files[0]);
+        });
+    });
+</script>

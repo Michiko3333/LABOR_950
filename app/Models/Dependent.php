@@ -33,6 +33,10 @@ class Dependent extends Model
         'delete_flg',
     ];
 
+    protected $casts = [
+        'mynumber_card_no' => 'encrypted',
+    ];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

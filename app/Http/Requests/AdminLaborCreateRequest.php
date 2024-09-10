@@ -22,6 +22,7 @@ class AdminLaborCreateRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'icon_file' => 'nullable|file|mimetypes:image/jpeg,image/jpg,image/png|max:5000',
             'last_name' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥]+$/u',
             'last_name_kana' => 'required|string|max:255|regex:/\A[ァ-ヴー!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
             'last_name_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z!@#\$%\^\*()_+\{\}\[\]:;<>,.?~\/\\-=]+\z/u',
@@ -53,6 +54,7 @@ class AdminLaborCreateRequest extends BaseRequest
     public function attributes()
     {
         return [
+            'icon_file' => 'アイコン画像',
             'last_name' => '氏',
             'last_name_kana' => '氏（カナ）',
             'last_name_alphabet' => '氏（アルファベット）',
