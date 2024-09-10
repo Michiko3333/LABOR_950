@@ -123,6 +123,10 @@ class Employee extends Model
         'qualifications',
     ];
 
+    protected $casts = [
+        'mynumber_card_no' => 'encrypted',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'employee_id', 'id');

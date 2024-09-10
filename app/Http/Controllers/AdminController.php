@@ -783,7 +783,6 @@ class AdminController extends Controller
                 'address_city' => $request->input('address_city'),
                 'address_ward' => $address_ward,
                 'address_apartment' => $address_apartment,
-                // 'address_prefecture_kana' => $request->input('address_prefecture_kana'),developがint
                 'address_city_kana' => $request->input('address_city_kana'),
                 'address_ward_kana' => $request->input('address_ward_kana'),
                 'address_apartment_kana' => $request->input('address_apartment_kana'),
@@ -824,7 +823,6 @@ class AdminController extends Controller
                 'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
                 'mynumber_card_no' => $request->input('mynumber_card_no'),
                 'social_insurance_no' => $request->input('social_insurance_no'),
-                // 'pension_office_reference_no' => $request->input('pension_office_reference_no'),
                 'pension_no' => $request->input('pension_no'),
                 'labor_insurance_type' => $request->input('labor_insurance_type'),
                 'employment_insurance_type' => $request->input('employment_insurance_type'),
@@ -1049,9 +1047,7 @@ class AdminController extends Controller
                     'residential_status_id' => $request->input('residential_status_id'),
                     'residential_status_unknown_reason' => $request->input('residential_status_unknown_reason'),
                     'unauthorized_activities_permission_flg' => $request->input('unauthorized_activities_permission_flg'),
-                    'mynumber_card_no' => $request->input('mynumber_card_no'),
                     'social_insurance_no' => $request->input('social_insurance_no'),
-                    //'pension_office_reference_no' => $request->input('pension_office_reference_no'),
                     'pension_no' => $request->input('pension_no'),
                     'labor_insurance_type' => $request->input('labor_insurance_type'),
                     'employment_insurance_type' => $request->input('employment_insurance_type'),
@@ -1095,12 +1091,19 @@ class AdminController extends Controller
                     'qualifications' => $request->input('qualifications'),
                 ]);
 
+            $employee = Employee::find($request->input('employee_id'));
+            $employee->update(['mynumber_card_no' => $request->input('mynumber_card_no')]);
+
             $deids = $request->input('de-id', []);
             $excepts = [];
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
                 if ($deid > 0) {
-                    Dependent::where('id', $deid)->update($dedata);
+                    $dependent = Dependent::find($deid);
+                    if ($dependent) {
+                        $dependent->fill($dedata);
+                        $dependent->save();
+                    }
                     $excepts[] = $deid;
                 } else {
                     $created_id = Dependent::create($dedata)->id;
