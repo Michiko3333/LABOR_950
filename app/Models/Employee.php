@@ -121,6 +121,17 @@ class Employee extends Model
         'icon_path',
         'blood_type',
         'qualifications',
+        'insured_status',
+        'health_insurance_association_number',
+        'acquisition_of_distinction',
+        'health_insurance_acquisition_date',
+        'health_insurance_loss_date',
+        'welfare_pension',
+        'overseas_special_exception',
+        'overseas_special_exception_date',
+        'overseas_special_not_exception_date',
+        'dispatch_contract_completion',
+        'employment_not_insured_date',
     ];
 
     protected $casts = [

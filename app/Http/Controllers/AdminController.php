@@ -935,6 +935,17 @@ class AdminController extends Controller
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                 'blood_type' => $request->input('blood_type'),
                 'qualifications' => $request->input('qualifications'),
+                'insured_status' => $request->input('insured_status'),
+                'health_insurance_association_number' => $request->input('health_insurance_association_number'),
+                'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),
+                'health_insurance_acquisition_date' => $this->formatDate($request->input('health_insurance_acquisition_date')),
+                'health_insurance_loss_date' => $this->formatDate($request->input('health_insurance_loss_date')),
+                'welfare_pension' => $request->input('welfare_pension'),
+                'overseas_special_exception' => $request->input('overseas_special_exception'),
+                'overseas_special_exception_date' => $this->formatDate($request->input('overseas_special_exception_date')),
+                'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
+                'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
+                'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
             ])->id;
 
             $dename = $request->input('de-last_name');
@@ -1188,6 +1199,17 @@ class AdminController extends Controller
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                     'blood_type' => $request->input('blood_type'),
                     'qualifications' => $request->input('qualifications'),
+                    'insured_status' => $request->input('insured_status'),
+                    'health_insurance_association_number' => $request->input('health_insurance_association_number'),
+                    'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),
+                    'health_insurance_acquisition_date' => $this->formatDate($request->input('health_insurance_acquisition_date')),
+                    'health_insurance_loss_date' => $this->formatDate($request->input('health_insurance_loss_date')),
+                    'welfare_pension' => $request->input('welfare_pension'),
+                    'overseas_special_exception' => $request->input('overseas_special_exception'),
+                    'overseas_special_exception_date' => $this->formatDate($request->input('overseas_special_exception_date')),
+                    'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
+                    'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
+                    'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
                 ]);
 
             $employee = Employee::find($request->input('employee_id'));
