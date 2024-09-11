@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('m_employee', function (Blueprint $table) {
-            $table->string('insured_status',21)->nullable()->comment('被保険者状況')->after('custom_pattern_flag');
-            $table->string('health_insurance_association_number',8)->nullable()->comment('健保組合番号')->after('custom_pattern_flag');
+            $table->string('insured_status',21)->nullable()->comment('被保険者状況')->after('employment_end_date');
+            $table->string('health_insurance_association_number',8)->nullable()->comment('健保組合番号')->after('insured_status');
             $table->string('acquisition_of_distinction',5)->nullable()->comment('取得区分')->after('health_insurance_association_number');
             $table->date('health_insurance_acquisition_date')->nullable()->comment('健康保険取得日')->after('acquisition_of_distinction');
             $table->date('health_insurance_loss_date')->nullable()->comment('健康保険喪失日')->after('health_insurance_acquisition_date');
@@ -48,11 +48,11 @@ return new class extends Migration
             $table->dropColumn('overseas_special_not_exception_date');
             $table->dropColumn('dispatch_contract_completion');
             $table->dropColumn('employment_not_insured_date');
-            $table->string('insurer_no', 10)->nullable()->comment('被保険者番号')->change();
-            $table->string('insurer_reference_no', 10)->nullable()->comment('被保険者整理番号')->change();
-            $table->date('employment_insured_date')->nullable()->comment('雇用保険取得日')->change();
-            $table->string('employment_insured_no', 20)->nullable()->comment('雇用保険番号')->change();
-            $table->tinyInteger('unauthorized_activities_permission_flg')->nullable()->comment('資格外許可の有無')->change();
+            $table->string('insurer_no', 10)->nullable()->comment('保険者番号')->change();
+            $table->string('insurer_reference_no', 10)->nullable()->comment('保険者整理番号')->change();
+            $table->date('employment_insured_date')->nullable()->comment('雇用保険資格取得日')->change();
+            $table->string('employment_insured_no', 20)->nullable()->comment('雇用保険被保険者番号')->change();
+            $table->tinyInteger('unauthorized_activities_permission_flg')->nullable()->comment('資格外活動許可フラグ')->change();
         });
     }
 };

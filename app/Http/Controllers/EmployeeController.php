@@ -274,7 +274,6 @@ class EmployeeController extends Controller
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                     'blood_type' => $request->input('blood_type'),
                     'qualifications' => $request->input('qualifications'),
-                    'custom_pattern_flag' => $request->input('custom_pattern_flag'),
                     'insured_status' => $request->input('insured_status'),
                     'health_insurance_association_number' => $request->input('health_insurance_association_number'),
                     'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),

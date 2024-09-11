@@ -121,7 +121,6 @@ class Employee extends Model
         'icon_path',
         'blood_type',
         'qualifications',
-        'custom_pattern_flag',
         'insured_status',
         'health_insurance_association_number',
         'acquisition_of_distinction',
