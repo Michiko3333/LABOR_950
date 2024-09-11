@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('acquisition_of_distinction',5)->nullable()->comment('取得区分')->after('health_insurance_association_number');
             $table->date('health_insurance_acquisition_date')->nullable()->comment('健康保険取得日')->after('acquisition_of_distinction');
             $table->date('health_insurance_loss_date')->nullable()->comment('健康保険喪失日')->after('health_insurance_acquisition_date');
-            $table->string('welfare_pension',2)->nullable()->comment('厚生年金基金')->after('health_insurance_loss_date');
-            $table->string('overseas_special_exception',4)->nullable()->comment('海外特例')->after('welfare_pension');
+            $table->tinyInteger('welfare_pension')->nullable()->comment('厚生年金基金')->after('health_insurance_loss_date');
+            $table->tinyInteger('overseas_special_exception')->nullable()->comment('海外特例')->after('welfare_pension');
             $table->date('overseas_special_exception_date')->nullable()->comment('海外特例該当日')->after('overseas_special_exception');
             $table->date('overseas_special_not_exception_date')->nullable()->comment('海外特例非該当日')->after('overseas_special_exception_date');
-            $table->string('dispatch_contract_completion',10)->nullable()->comment('派遣請負修了区分')->after('overseas_special_not_exception_date');
+            $table->tinyInteger('dispatch_contract_completion')->nullable()->comment('派遣請負修了区分')->after('overseas_special_not_exception_date');
             $table->date('employment_not_insured_date')->nullable()->comment('雇用保険喪失日')->after('dispatch_contract_completion');
             $table->string('insurer_no', 10)->nullable()->comment('被保険者番号')->change();
             $table->string('insurer_reference_no', 10)->nullable()->comment('被保険者整理番号')->change();
