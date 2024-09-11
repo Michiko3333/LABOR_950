@@ -3,6 +3,27 @@
         $user = Auth::user();
         $employee = $user->employee()->first();
         $name = !empty($employee) ? $employee->last_name . ' ' . $employee->first_name : '';
+
+        $employee_id = !empty($employee) ? $employee->id : '';
+        $role_id = !empty($employee) ? $employee->role_id : '';
+        if($role_id !== 999) {
+            $branch = $employee->branch()->first();
+            $company = $branch->company()->first();
+            $company_id = $company->id;
+            $directory = 'photo/' . $company_id;
+            $files = Storage::files($directory);
+            foreach ($files as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $employee_id) {
+                    $filePath = '/' . $file;
+                }
+            }
+            if(!isset($filePath)) {
+                $filePath = '/img/image.png';
+            }
+        } else {
+            $filePath = '/img/image.png';
+        }
     @endphp
     <section class="left">
         <a id="sidebar-toggle">
@@ -14,7 +35,7 @@
         <div class="ui bottom menu scrollhint">
             <div class="ui floating dropdown item menu-user">
                 <div class="user-icon">
-                    <img src="{{ asset('/img/image.png') }}">
+                    <img src="{{ $filePath }}" id="iconImage">
                 </div>
                 <div class="name">{{ $name }}</div>
                 <i class="dropdown icon"></i>
@@ -184,6 +205,10 @@
             $('#menu-shadow').removeClass('show');
         }
     }
+
+    Livewire.on('changeIconImage', (iconPath) => {
+        $('#iconImage').attr('src', iconPath);
+    });
 </script>
 <style>
     header {

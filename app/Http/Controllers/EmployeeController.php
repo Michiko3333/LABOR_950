@@ -30,6 +30,7 @@ use App\Models\Dependent;
 use App\Models\Values_employee_insured_age_type;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Permission;
 
 class EmployeeController extends Controller
@@ -83,6 +84,20 @@ class EmployeeController extends Controller
         $employee->company_id = $company->id;
         $employee->branch_name = $branch->name;
 
+        if (!empty($employee->company_id)) {
+            $directory = 'photo/' . $employee->company_id;
+            $files = Storage::files($directory);
+            foreach ($files as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $employee->id) {
+                    $filePath = '/' . $file . '?v=' . time();
+                }
+            }
+            if(!isset($filePath)) {
+                $filePath = '/img/image.png';
+            }
+        }
+
         if ($employee && !empty($employee->fax)) {
             $faxParts = explode('-', $employee->fax);
         } else {
@@ -107,6 +122,7 @@ class EmployeeController extends Controller
         $dependent = $employee->dependent()->where('delete_flg', 0)->get();
 
         return view('employee.employee_create', [
+            'filePath' => $filePath,
             'employee' => $employee,
             'departments' => $departments,
             'departments_list' => $departments_list,
@@ -296,6 +312,42 @@ class EmployeeController extends Controller
                         'department_id' => $departmentId,
                         'employee_id' => $request->input('employee_id')
                     ]);
+                }
+            }
+
+            $employee_id = $request->input('employee_id');
+            $employee = Employee::where('id', $employee_id)->where('delete_flg', 0)->first();
+            $branch = $employee->branch()->first();
+            $company = $branch->company()->first();
+            $company_id = $company->id;
+            $icon_file = $request->file('icon_file');
+            $icon_delete_flg = $request->input('icon_delete_flg');
+            if($company_id && $employee_id) {
+                if($icon_delete_flg === "1") {
+                    $directory = 'photo/' . $company_id;
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $employee_id) {
+                            Storage::delete($file);
+                        }
+                    }
+                } elseif ($icon_file) {
+                    $extension = $icon_file->getClientOriginalExtension();
+                    $directory = 'photo/' . $company_id;
+                    $filePath = $directory . '/' . $employee_id . '.' . $extension;
+                    if (!Storage::exists($directory)) {
+                        Storage::makeDirectory($directory);
+                    }
+
+                    foreach (Storage::files($directory) as $file) {
+                        $fileName = pathinfo($file, PATHINFO_FILENAME);
+                        if ($fileName === $employee_id) {
+                            Storage::delete($file);
+                        }
+                    }
+
+                    $icon_file->storeAs($filePath);
                 }
             }
 
