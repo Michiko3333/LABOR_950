@@ -961,7 +961,7 @@
                                                 (isset($employee) && old('insurance_loss_reason', $employee->insurance_loss_reason) == "$k")
                                                     ? 'selected'
                                                     : '' }}>
-                                                {{ $value }}
+                                                {{ $k . ':' . $value }}
                                             </option>
                                         @endforeach
                                     </select>
