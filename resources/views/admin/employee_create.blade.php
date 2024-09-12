@@ -1312,13 +1312,13 @@
                                 <label for="insurer_no">被保険者番号</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="01234567891" maxLength="11">
+                                    placeholder="01234567" maxLength="8">
                             </div>
                             <div class="field {{ err($errors, 'insurer_reference_no') }}">
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="012" maxLength="3">
+                                    placeholder="012345" maxLength="6">
                             </div>
                         </div>
                     </div>
@@ -1345,14 +1345,14 @@
                                 <input type="text" pattern="^[0-9A-Z]{1,12}$" id="residence_card_no"
                                     name="residence_card_no"
                                     value="{{ old('residence_card_no', isset($employee_id) ? $employee->residence_card_no : '') }}"
-                                    placeholder="AB12345678CD">
+                                    placeholder="AB12345678CD" maxLength="12">
                             </div>
                             <div class="field {{ err($errors, 'residential_status_unknown_reason') }}">
                                 <label>在留資格不明理由</label>
                                 <input type="text" id="residential_status_unknown_reason"
                                     name="residential_status_unknown_reason"
                                     value="{{ old('residential_status_unknown_reason', isset($employee_id) ? $employee->residential_status_unknown_reason : '') }}"
-                                    placeholder="">
+                                    placeholder="" maxLength="255">
                             </div>
                             <div class="field">
                                 <div

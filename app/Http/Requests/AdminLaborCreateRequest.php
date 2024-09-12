@@ -48,6 +48,7 @@ class AdminLaborCreateRequest extends BaseRequest
         return [
             'company_id' => '会社を選択してください。',
             'branch_id' => '支店を選択してください。',
+            'icon_file.mimetypes' => 'アイコン画像はjpeg,jpg,pngのいずれかである必要があります。',
         ];
     }
 

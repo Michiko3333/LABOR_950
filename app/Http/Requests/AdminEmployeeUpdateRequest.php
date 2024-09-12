@@ -150,13 +150,13 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
-            'insurer_reference_no' => 'nullable|string|max:10|regex:/^\d{0,10}$/u',
-            'employment_insured_no' => 'nullable|string|max:11|regex:/^\d{0,11}$/u',
-            'residence_card_no' => 'nullable|string|max:20|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
+            'insurer_reference_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
+            'employment_insured_no' => 'nullable|string|max:11|regex:/\A[0-9]+\z/u',
+            'residence_card_no' => 'nullable|string|max:12|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
             'residential_status_unknown_reason' => 'nullable|string|max:255',
             'unauthorized_activities_permission_flg' => 'nullable|integer',
-            'mynumber_card_no' => 'nullable|string|max:20|regex:/^[0-9]{12}+\z/',
-            'social_insurance_no' => 'nullable|string|max:10|regex:/\A[A-Z0-9]+\z/u',
+            'mynumber_card_no' => 'nullable|string|max:12|regex:/^[0-9]{12}+\z/',
+            'social_insurance_no' => 'nullable|string|max:8|regex:/\A[A-Z0-9]+\z/u',
             'pension_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
             'labor_insurance_type' => 'nullable|integer',
             'employment_insurance_type' => 'nullable|integer',
@@ -233,6 +233,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'fax1.required_with' => 'FAX番号_1を入力してください。',
             'fax2.required_with' => 'FAX番号_2を入力してください。',
             'fax3.required_with' => 'FAX番号_3を入力してください。',
+            'icon_file.mimetypes' => 'アイコン画像はjpeg,jpg,pngのいずれかである必要があります。',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {
