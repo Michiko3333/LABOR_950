@@ -150,7 +150,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
-            'insurer_reference_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
+            'insurer_reference_no' => 'nullable|string|max:6|regex:/\A[0-9]+\z/u',
             'employment_insured_no' => 'nullable|string|max:11|regex:/\A[0-9]+\z/u',
             'residence_card_no' => 'nullable|string|max:12|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
             'residential_status_unknown_reason' => 'nullable|string|max:255',

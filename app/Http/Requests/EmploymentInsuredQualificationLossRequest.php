@@ -45,7 +45,7 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
             "agreed_hours_day_minute" => 'string|regex:/^[0-9]{1,2}$/u',
             "new_name" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "new_name_kana" => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
-            "mynumber_card_no" => 'nullable|string|regex:/^[0-9]{12}$/u',
+            "mynumber_card_no" => 'nullable|string|max:12|regex:/^[0-9]{12}$/u',
             "name_kana" => 'nullable|string|max:255|regex:/^[０-９＋‐－ー＃￥＆．，：＊　ァ-ヴヵヶＡ-Ｚａ-ｚ]+$/u',
             "sex" => 'nullable|int|in:1,2',
             "birthday_era" => 'string|in:大正,昭和,平成,令和',

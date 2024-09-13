@@ -132,6 +132,8 @@ class Employee extends Model
         'overseas_special_not_exception_date',
         'dispatch_contract_completion',
         'employment_not_insured_date',
+        'employment_insured_no',
+        'insurer_reference_no',
     ];
 
     protected $casts = [

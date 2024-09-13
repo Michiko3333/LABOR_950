@@ -77,7 +77,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "employee_birthday_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "insured_person_type" => 'nullable|int|in:1,2,3,5,6,7',
             "employee_insured_type" => 'nullable|int|in:1,3,4,0',
-            "employee_mynumber_card_no" => 'nullable|string|regex:/^[0-9]{10,12}$/u',
+            "employee_mynumber_card_no" => 'nullable|string|max:12|regex:/^[0-9]{10,12}$/u',
             "employee_employment_insured_date_japan_era" => 'int|in:7,9',
             "employee_employment_insured_date_japan_era_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "employee_employment_insured_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
