@@ -79,7 +79,7 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
             'birthday_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'birthday_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'birthday_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'mynumber_card_no' =>  'nullable|string|regex:/^[0-9]{10,12}$/u',
+            'mynumber_card_no' =>  'nullable|string|max:12|regex:/^[0-9]{10,12}$/u',
             'loss_era' => 'nullable|string|in:平成,令和|required_with:loss_year,loss_month,loss_day',
             'loss_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:loss_era,loss_month,loss_day',
             'loss_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:loss_year,loss_era,loss_day',

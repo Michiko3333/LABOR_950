@@ -86,6 +86,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
         NumberOnly::$attributes = $this->attributes();
         katakanaOnly::$attributes = $this->attributes();
         return [
+            'icon_file' => 'nullable|file|mimetypes:image/jpeg,image/jpg,image/png|max:5000',
             'employee_no' => 'string|max:255|regex:/\A[A-Z0-9]+\z/u',
             'company_name' => 'required',
             'branch_id' => 'integer',
@@ -145,15 +146,15 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
-            'insurer_reference_no' => 'nullable|string|max:10|regex:/^\d{0,10}$/u',
-            'employment_insured_no' => 'nullable|string|max:11|regex:/^\d{0,11}$/u',
+            'insurer_reference_no' => 'nullable|string|max:6|regex:/\A[0-9]+\z/u',
+            'employment_insured_no' => 'nullable|string|max:11|regex:/\A[0-9]+\z/u',
             'residential_status_id' => 'nullable|integer',
             'stay_date_period' => 'nullable|string|regex:/^\d{4}年\d{1,2}月\d{1,2}日$/u',
-            'residence_card_no' => 'nullable|string|max:20|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
+            'residence_card_no' => 'nullable|string|max:12|regex:/^[A-Z]{2}\d{8}[A-Z]{2}+\z/',
             'residential_status_unknown_reason' => 'nullable|string|max:255',
             'unauthorized_activities_permission_flg' => 'nullable|integer',
-            'mynumber_card_no' => 'nullable|string|max:20|regex:/^[0-9]{12}+\z/',
-            'social_insurance_no' => 'nullable|string|max:10|regex:/\A[A-Z0-9]+\z/u',
+            'mynumber_card_no' => 'nullable|string|max:12|regex:/^[0-9]{12}+\z/',
+            'social_insurance_no' => 'nullable|string|max:8|regex:/\A[A-Z0-9]+\z/u',
             'pension_no' => 'nullable|string|max:10|regex:/\A[0-9]+\z/u',
             'labor_insurance_type' => 'nullable|integer',
             'employment_insurance_type' => 'nullable|integer',
@@ -217,6 +218,12 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-other_1.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             "de-other_2" => 'array',
             "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            'insured_status' => 'nullable|string|max:21',
+            'health_insurance_association_number' => ['nullable', 'string', new NumberOnly(8)],
+            'acquisition_of_distinction' => 'nullable|integer',
+            'welfare_pension' => 'nullable|integer',
+            'overseas_special_exception' => 'nullable|integer',
+            'dispatch_contract_completion' => 'nullable|integer',
         ];
     }
 
@@ -228,6 +235,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'fax1.required_with' => 'FAX番号_1を入力してください。',
             'fax2.required_with' => 'FAX番号_2を入力してください。',
             'fax3.required_with' => 'FAX番号_3を入力してください。',
+            'icon_file.mimetypes' => 'アイコン画像はjpeg,jpg,pngのいずれかである必要があります。',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {
@@ -255,6 +263,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
     public function attributes()
     {
         $Attributes = [
+            'icon_file' => 'アイコン画像',
             'employee_no' => '社員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',
@@ -319,12 +328,12 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'mynumber_card_no' => 'マイナンバーカード番号',
             'social_insurance_no' => '社会保険番号',
             'pension_no' => '基礎年金番号',
-            'insurer_no' => '保険者番号',
+            'insurer_no' => '被保険者番号',
             'insured_age_type' => '取得時被保険者種類',
             'insurer_reference_no' => '被保険者整理番号',
-            'employment_insured_no' => '雇用保険被保険者番号',
+            'employment_insured_no' => '雇用保険番号',
             'employment_insurance_applied_date' => '雇用保険届出日',
-            'employment_insured_date' => '雇用保険資格取得日',
+            'employment_insured_date' => '雇用保険取得日',
             'employee_type' => '社員区分',
             'employee_status' => '社員ステータス',
             'contract_period_flg' => '雇用契約期間の有無',
@@ -345,6 +354,12 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'user_pass' => 'パスワード',
             'blood_type' => '血液型',
             'qualifications' => '資格情報',
+            'insured_status' => '被保険者状況',
+            'health_insurance_association_number' => '健保組合番号',
+            'acquisition_of_distinction' => '取得区分',
+            'welfare_pension' => '厚生年金基金',
+            'overseas_special_exception' => '海外特例',
+            'dispatch_contract_completion' => '派遣請負修了区分',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {

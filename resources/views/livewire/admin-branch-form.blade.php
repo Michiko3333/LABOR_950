@@ -276,7 +276,7 @@
                                 <div class="field {{ err_bind($errs, 'br-tel_overseas', $key) }}">
                                     <label for="br-tel_overseas">国外電話番号</label>
                                     <input type="text" name="br-tel_overseas[]"
-                                        wire:model.live="data.{{ $key }}.br-tel_overseas" placeholder="">
+                                        wire:model.live="data.{{ $key }}.br-tel_overseas" placeholder="" maxlength="15">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -798,7 +798,7 @@
                                 <div class="field {{ err_bind($errs, 'br-working_days_yearly', $key) }}">
                                     <label for="br-working_days_yearly">労働(年間)</label>
                                     <div class="ui right labeled input">
-                                        <input type="number" placeholder="245" min="0" max="365"
+                                        <input type="number" placeholder="120" min="0" max="365"
                                             name="br-working_days_yearly[]"
                                             wire:model.live="data.{{ $key }}.br-working_days_yearly">
                                         <div class="ui basic label">

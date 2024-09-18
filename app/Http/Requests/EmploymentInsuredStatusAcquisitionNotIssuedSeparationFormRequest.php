@@ -82,7 +82,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends B
             'replenishment_recruitment_plan_existence' => 'nullable|regex:/^1$/u',
             'changed_fullname' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             'changed_fullname_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
-            'mynumber_card_no' => 'nullable|int|regex:/^[0-9]{12}$/u',
+            'mynumber_card_no' => 'nullable|string|max:12|regex:/^[0-9]{12}$/u',
             'insured_fullname' => 'nullable|string|max:255|regex:/^[０-９＋‐－ー＃￥＆．，：＊　ァ-ヴヵヶＡ-Ｚａ-ｚ]+[　][０-９＋‐－ー＃￥＆．，：＊　ァ-ヴヵヶＡ-Ｚａ-ｚ]+$/u',
             'insured_sex' => 'nullable|string|max:1',
             'insured_birthday_japan_era' => 'nullable|string|max:2|required_with:insured_birthday_year,insured_birthday_month,insured_birthday_day',

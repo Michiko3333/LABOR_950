@@ -59,7 +59,7 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'birth_due_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:birth_due_date_month,birth_due_date_day',
             'birth_due_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:birth_due_date_japan_era_year,birth_due_date_day',
             'birth_due_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:birth_due_date_japan_era_year,birth_due_date_month',
-            'mynumber_card_no' => 'nullable|string|regex:/^[0-9]{12}$/u',
+            'mynumber_card_no' => 'nullable|string|max:12|regex:/^[0-9]{12}$/u',
             'post_code_former' => 'nullable|string|regex:/^[0-9]{3}$/u',
             'post_code_latter' => 'nullable|string|regex:/^[0-9]{4}$/u',
             'address_prefecture_city' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
