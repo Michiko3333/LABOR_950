@@ -61,8 +61,8 @@ class SubmissionSelector extends Component
                 ->where('address_prefecture', $this->selected_prefecture)
                 ->selectRaw('MAX(id) as id, identifier_d, MAX(submit_name_d) as submit_name_d, MAX(address_prefecture) as address_prefecture, MAX(name) as name, MAX(office_no) as office_no, MAX(local_code) as local_code')
                 ->groupBy('identifier_d')
+                ->orderBy('id', 'asc')
                 ->get();
-            // $this->hello_work_list = Hello_work::whereNotNull('submit_union_name_d')->where('address_prefecture', $this->selected_prefecture)->distinct('identifier_d')->get();
             $hello_work_list_ids = $this->hello_work_list->pluck('id')->toArray();
             if (!empty($this->selected_hello_work)) {
                 if (array_search($this->selected_hello_work, $hello_work_list_ids) === false) {
@@ -81,8 +81,8 @@ class SubmissionSelector extends Component
                 ->where('address_prefecture', $this->selected_prefecture)
                 ->selectRaw('MAX(id) as id, identifier_e, MAX(submit_name_e) as submit_name_e, MAX(address_prefecture) as address_prefecture, MAX(name) as name')
                 ->groupBy('identifier_e')
+                ->orderBy('id', 'asc')
                 ->get();
-            //$this->pension_office_list = Pension_office::whereNotNull('submit_union_name_e')->whereNotNull('identifier_e')->where('address_prefecture', $this->selected_prefecture)->distinct('identifier_e')->get();
             $pension_office_list_ids = $this->pension_office_list->pluck('id')->toArray();
             if (!empty($this->selected_pension_office)) {
                 if (array_search($this->selected_pension_office, $pension_office_list_ids) === false) {
