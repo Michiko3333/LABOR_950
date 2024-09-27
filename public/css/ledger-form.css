@@ -165,7 +165,7 @@ div.prevew-btn {
 
 #ledger-step0.step-view.active {
     opacity: 1;
-    max-height: 9999px;
+    max-height: 99999px;
 }
 
 #ledger-step1.step-view {
@@ -178,7 +178,7 @@ div.prevew-btn {
 
 #ledger-step1.step-view.active {
     opacity: 1;
-    max-height: 9999px;
+    max-height: 99999px;
 }
 
 #ledger-step2.step-view {
@@ -191,7 +191,7 @@ div.prevew-btn {
 
 #ledger-step2.step-view.active {
     opacity: 1;
-    max-height: 9999px;
+    max-height: 99999px;
 }
 
 #ledger-step2 .preview-area {

@@ -1,10 +1,10 @@
 <?php
 
 namespace Database\Seeders;
-        
-use Illuminate\Database\Seeder;      
+
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-        
+
 
 class PensionOfficeSeeder extends Seeder
 {
@@ -1094,29 +1094,6 @@ class PensionOfficeSeeder extends Seeder
                 'section'  => '街角の年金相談センター',
                 'tel'  => '0234224554',
                 'url'  => 'https://www.nenkin.go.jp/section/soudan/yamagata/centersakata.html',
-            ],
-            [
-                'name'   => '福島',
-                'name_kana'  => 'フクシマ',
-                'identifier_e'  => '49511200070000000000245',
-                'submit_name_e'  => '福島年金事務所（大阪事務センター）',
-                'submit_union_name_e'  => '大阪,福島年金事務所（大阪事務センター）',
-                'identifier_f'  => '49511200100000000000245',
-                'submit_name_f'  => '福島年金事務所',
-                'submit_union_name_f'  => '大阪,福島年金事務所',
-                'identifier_g'  => null,
-                'submit_name_g'  => null,
-                'submit_union_name_g'  => null,
-                'identifier_m'  => '49500138012701070004113',
-                'submit_name_m'  => '福島年金事務所',
-                'submit_union_name_m'  => '大阪,福島年金事務所',
-                'post_code'  => '9608131',
-                'address_prefecture'  => '福島県',
-                'address_city'  => '福島市',
-                'address_more_details'  => '北五老内町7-5 i・s・M37（イズム37）2階',
-                'section'  => '街角の年金相談センター',
-                'tel'  => '0245313838',
-                'url'  => 'https://www.nenkin.go.jp/section/soudan/fukushima/centerfukushima.html',
             ],
             [
                 'name'   => '東北福島',
@@ -9236,7 +9213,7 @@ class PensionOfficeSeeder extends Seeder
                 'section'  => '厚生年金適用厚生年金徴収課',
                 'tel'  => '0980829211',
                 'url'  => 'https://www.nenkin.go.jp/section/soudan/okinawa/ishigaki.html',
-            ],           
+            ],
         ]);
     }
 }
