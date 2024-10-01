@@ -48,9 +48,9 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_insurance" => 'required_unless:radio_file_insurance,1|file|mimes:jpg,pdf|max:50000',
+            "file_insurance" => 'required_if:radio_file_insurance,1|file|mimes:jpg,pdf|max:50000',
             "radio_file_other" => 'nullable|string|in:2',
-            "file_dependent" => 'required_unless:radio_file_dependent,1|file|mimes:jpg,pdf|max:50000',
+            "file_dependent" => 'required_if:radio_file_dependent,1|file|mimes:jpg,pdf|max:50000',
             "file_remote_dependent" => 'required_if:radio_file_load,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',

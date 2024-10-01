@@ -735,9 +735,9 @@ class MixXmlEgovSigner
      *                          9:申請のみ行う
      * @param int $examNo    最終確認試験の番号
      * 手続選択で取得したスケルトンデータにデータを記入したファイルを下記フォルダを作成して配置
-     * 標準：ledger/dev/zip
-     * 個別：dev_separate
-     * 共通：zip置き場のledgertmpフォルダ
+     *  標準：ledger/dev/zip
+     *  個別：dev_separate
+     *  共通：zip置き場のledgertmpフォルダ
      */
     public function runExam($proc_id, $signerNUM=1, $examNo)
     {
