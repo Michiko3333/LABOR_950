@@ -110,8 +110,8 @@
                 $('#J68_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
 
                 $('#J56_005F_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
-
+                    '{{ old('employer_company_managerial_position_name', $company->name) }}' + '　' + '{{ $company->representative }}'
+                );
                 @if ($current_employee->role_id === 500)
                     $('#J71_005F_944E_8D86').val('{{ old('create_era', $today['era']) }}');
                     $('#J71_005F_944E_8D86').find('option').not(`[value="{{ old('create_era', $today['era']) }}"]`)

@@ -135,7 +135,7 @@
                 $('#J62_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
 
                 $('#J64_005F_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name', $company->name) }}' + '　' + '{{ $company->representative }}');
                 $('#J28_005F_8E81_96BC_005F_89BA_9269').val(
                     '{{ old('employer_managerial_position_name', $company->representative) }}');
 

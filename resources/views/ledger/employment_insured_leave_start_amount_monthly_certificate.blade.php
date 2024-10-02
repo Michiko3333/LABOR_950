@@ -109,7 +109,7 @@
 
         <script type="module">
             $(document).ready(function() {
-                $('#J28_005F_8E81_96BC').val('{{ old('headquarters_employee_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC').val('{{ old('headquarters_employee_name', $company->name) }}' + '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J74_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
