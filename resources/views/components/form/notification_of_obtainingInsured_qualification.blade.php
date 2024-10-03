@@ -3242,11 +3242,11 @@
                             </div>
                             <div class="egov-tool-field-origin" style="left: 435px; top: 345px;">
                                 <select class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E" name="employee_employment_insured_date_japan_era" required="required" style="width: 44px; height: 24px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;">
-                                    <option selected="" value="7" {{ old('employee_employment_insured_date_japan_era') == '7' ? 'selected' : '' }}>
-                                    平成
-                                    </option>
                                     <option value="9" {{ old('employee_employment_insured_date_japan_era') == '9' ? 'selected' : '' }}>
                                     令和
+                                    </option>    
+                                    <option value="7" {{ old('employee_employment_insured_date_japan_era') == '7' ? 'selected' : '' }}>
+                                    平成
                                     </option>
                                 </select>
                             </div>

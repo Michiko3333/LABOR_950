@@ -5010,11 +5010,11 @@
                         <select class="egov-tool-field-rect onImage" id="N29_005F_8E73"
                             value="{{ old('revision_date_era') }}" name="revision_date_era" required="required"
                             style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                            <option value="7" {{ old('revision_date_era') == 7 ? 'selected' : '' }}>
-                                平成
-                            </option>
                             <option value="9" {{ old('revision_date_era') == 9 ? 'selected' : '' }}>
                                 令和
+                            </option>
+                            <option value="7" {{ old('revision_date_era') == 7 ? 'selected' : '' }}>
+                                平成
                             </option>
                         </select>
                     </div>

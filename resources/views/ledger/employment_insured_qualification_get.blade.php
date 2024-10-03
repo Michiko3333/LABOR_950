@@ -235,7 +235,6 @@
                     $('#J26_005F_8C8E').val("");
                     $('#J27_005F_93FA').val("");
                 }
-                $('#J28_005F_8CD9_9770_8C60_91D4').val(employee.employment_status ?? '');
                 $('#J29_005F_9045_8EED').val(employee.occupation_type ?? '');
                 $('#J30_005F_8F41_9045_8C6F_9848').val(employee.employment_route ?? '');
                 if (branch.agreed_hours_week_h != null) {
@@ -259,6 +258,7 @@
                         .prop('disabled', false);
                     $('#J44_005F_8C5F_96F1_8D58_9056_8FF0_8D80_974C_96B3').val((employee.contract_renewal_flg === 1) ? '有' :
                         '無');
+                    $('#J28_005F_8CD9_9770_8C60_91D4').val('');
                 } else if (employee.contract_period_flg === 0) {
                     $("input[name='contract_period_flg']").eq(1).prop("checked", true);
                     $('#J35_005F_944E_8D86').val('').prop('disabled', true);
@@ -270,6 +270,7 @@
                     $('#J42_005F_8C8E').val('').prop('disabled', true);
                     $('#J43_005F_93FA').val('').prop('disabled', true);
                     $('#J44_005F_8C5F_96F1_8D58_9056_8FF0_8D80_974C_96B3').val('').prop('disabled', true);
+                    $('#J28_005F_8CD9_9770_8C60_91D4').val('7');
                 }
                 $('#J45_005F_8E96_8BC6_8F8A_96BC_8FCC').val(branch.name);
                 $('#J46_005F_94F5_8D6C').val(employee.insured_reason_details);

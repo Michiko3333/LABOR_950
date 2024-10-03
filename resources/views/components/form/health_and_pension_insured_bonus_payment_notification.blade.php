@@ -227,13 +227,13 @@
                                 <select class="egov-tool-field-rect onImage" id="N31_005F_89C1_93FC"
                                     name="bonus_payment_date_era" required="required"
                                     style="width: 48px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color:#ddeeff;">
-                                    <option selected="" value="7"
-                                        {{ old('bonus_payment_date_era') == '7' ? 'selected' : '' }}>
-                                        平成
-                                    </option>
                                     <option value="9"
                                         {{ old('bonus_payment_date_era') == '9' ? 'selected' : '' }}>
                                         令和
+                                    </option>
+                                    <option value="7"
+                                        {{ old('bonus_payment_date_era') == '7' ? 'selected' : '' }}>
+                                        平成
                                     </option>
                                 </select>
                             </div>

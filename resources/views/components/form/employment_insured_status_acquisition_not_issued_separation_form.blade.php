@@ -479,7 +479,6 @@
             size="1" tabindex="46"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:38px; height:19px;"
             id="J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA" name="employment_type">
-            <OPTION value="" selected="selected"></OPTION>
             <OPTION value="1" {{ old('employment_type')=='1' ? 'selected' : '' }}>1</OPTION>
             <OPTION value="2" {{ old('employment_type')=='2' ? 'selected' : '' }}>2</OPTION>
         </SELECT></SPAN>

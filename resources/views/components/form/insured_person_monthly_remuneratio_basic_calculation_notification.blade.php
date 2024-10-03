@@ -4598,11 +4598,11 @@
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 450px; top: 272px;">
                                                 <select class="egov-tool-field-rect onImage" id="N28_8D864_8C85" name="applicable_era_name" required="required" style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                                                    <option value="7" {{ old('applicable_era_name') == '7' ? 'selected' : '' }} selected="selected">
-                                                    平成
-                                                    </option>
                                                     <option value="9" {{ old('applicable_era_name') == '9' ? 'selected' : '' }}>
                                                     令和
+                                                    </option>
+                                                    <option value="7" {{ old('applicable_era_name') == '7' ? 'selected' : '' }}>
+                                                    平成
                                                     </option>
                                                 </select>
                                             </div>
