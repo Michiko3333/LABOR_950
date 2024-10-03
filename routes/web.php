@@ -45,7 +45,7 @@ use App\Http\Controllers\FinalExamAfterLogoutController;
 use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
-
+use App\Http\Controllers\ShiftCalendarController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     // EgovAPI
     Route::get('/auth/redirect', [EgovController::class, 'getAuthCode'])->name('egov.get_auth_code');
 
-    Route::get('/photo/{path}', function(Request $request, $path) {
+    Route::get('/photo/{path}', function (Request $request, $path) {
         $user = CurrentUser::info();
         $role_id = $user->role_id;
         $path = "photo/{$path}";
@@ -124,7 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
                     }
                 } else {
                     return abort(403);
-                }                
+                }
             } else {
                 $currentCompany = CurrentUser::currentCompany();
                 $company_id = $currentCompany->id;
@@ -145,7 +145,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::middleware([CheckQueryParameters::class])->group(function () {
 
-        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');      
+        Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
 
         Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
 
@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
         Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+        Route::get('/calendar/shift', [ShiftCalendarController::class, 'index'])->name('calendar.shift');
 
         // 帳票
         Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
@@ -283,4 +284,3 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
     });
 });
-
