@@ -175,6 +175,7 @@
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const spouse = data['spouse'];
+                const company = data['company'];
                 const spouse_birthday_convert_japan = data['spouse_birthday_convert_japan'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const headquarters = data['headquarters'];
@@ -182,6 +183,8 @@
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const spouse_prefecture_data = data['spouse_prefecture_data'];
+                const date_of_authorisation_convert = data['date_of_authorisation_convert'];
+                const date_of_expiry_convert = data['date_of_expiry_convert'];
                 var eraMapping = {
                     '昭和': '5',
                     '平成': '7',
@@ -191,6 +194,10 @@
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 var spouseBirthdayEraValue = spouse_birthday_convert_japan['era'] ?? "";
                 var spouseBirthdayEra = eraMapping[spouseBirthdayEraValue] ?? "";
+                var authorisationEraValue = date_of_authorisation_convert['era'] ?? "";
+                var authorisationEra = eraMapping[authorisationEraValue] ?? "";
+                var expiryEraValue = date_of_expiry_convert['era'] ?? "";
+                var expiryEra = eraMapping[expiryEraValue] ?? "";
                 $('#N7_P1').val(branch.pension_office_reference_prefecture ?? '');
                 $('#N8_P1').val(branch.pension_office_reference_no_cities ?? '');
                 $('#N9_P1').val(branch.pension_office_reference_no_office ?? '');
@@ -200,7 +207,7 @@
                 }
                 $('#N12_P1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N13_P1').val(branch.name ?? '');
+                $('#N13_P1').val(company.name ?? '');
                 $('#N16_P1').val(branch.tel_area_code ?? '');
                 $('#N17_P1').val(branch.tel_city_code ?? '');
                 $('#N18_P1').val(branch.tel_subscriber_code ?? '');
@@ -223,7 +230,7 @@
                     $('#N43_P1').val(employee.post_code.substring(3, 7));
                 }
                 $('#N44_P1').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee
-                    .address_ward ?? '') + (employee.address_apartment ?? ''));
+                    .address_ward ?? ''));
                 if (spouse !== undefined && spouse !== null) {
                     $('#N50_P1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
                     $('#N49_P1').val((spouse.last_name_kana ? spouse.last_name_kana + '　' : '') + (spouse.first_name_kana ??
@@ -271,6 +278,14 @@
                     $('#N68_P1').val(spouse.tel_area_code ?? '');
                     $('#N69_P1').val(spouse.tel_city_code ?? '');
                     $('#N70_P1').val(spouse.tel_subscriber_code ?? '');
+                    $('#N73_P1').val(authorisationEra);
+                    $('#N74_P1').val(date_of_authorisation_convert['year'] ?? "");
+                    $('#N75_P1').val(date_of_authorisation_convert['month'] ?? "");
+                    $('#N76_P1').val(date_of_authorisation_convert['day'] ?? "");
+                    $('#N78_P1').val(expiryEra);
+                    $('#N79_P1').val(date_of_expiry_convert['year'] ?? "");
+                    $('#N80_P1').val(date_of_expiry_convert['month'] ?? "");
+                    $('#N81_P1').val(date_of_expiry_convert['day'] ?? "");
                     if (spouse.dependent_reason_type === 1) {
                         $('#N82_P1').val('配偶者の就職');
                     } else if (spouse.dependent_reason_type === 2) {
@@ -342,7 +357,7 @@
                 }
                 $('#N19').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N20').val(branch.name ?? '');
+                $('#N20').val(company.name ?? '');
                 $('#N23').val(branch.tel_area_code ?? '');
                 $('#N24').val(branch.tel_city_code ?? '');
                 $('#N25').val(branch.tel_subscriber_code ?? '');
@@ -369,7 +384,7 @@
                 }
                 $('#N23_1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N24_1').val(branch.name ?? '');
+                $('#N24_1').val(company.name ?? '');
                 $('#N27_1').val(branch.tel_area_code ?? '');
                 $('#N28_1').val(branch.tel_city_code ?? '');
                 $('#N29_1').val(branch.tel_subscriber_code ?? '');

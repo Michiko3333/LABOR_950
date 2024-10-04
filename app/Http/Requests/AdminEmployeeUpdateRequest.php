@@ -352,7 +352,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'acquisition_of_distinction' => '取得区分',
             'welfare_pension' => '厚生年金基金',
             'overseas_special_exception' => '海外特例',
-            'dispatch_contract_completion' => '派遣請負修了区分',
+            'dispatch_contract_completion' => '派遣請負就労区分',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {

@@ -140,7 +140,6 @@
                     var branch_post_code_first = '';
                     var branch_post_code_last = '';
                 }
-                const branch_name = branch.name;
                 const branch_tel_area_code = branch.tel_area_code;
                 const branch_tel_city_code = branch.tel_city_code;
                 const branch_tel_subscriber_code = branch.tel_subscriber_code;
@@ -175,7 +174,7 @@
                 $('#N13_005F_8374_838A_834B_8369').val(branch_post_code_last ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((branch_prefecture_data.name ?? '') + (branch
                     .address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N16_005F_905C_90BF').val(branch_name ?? '');
+                $('#N16_005F_905C_90BF').val(company.name ?? '');
                 $('#N18_005F_8CC2_906C_94D4').val(branch_tel_area_code ?? '');
                 $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch_tel_city_code ?? '');
                 $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(branch_tel_subscriber_code ?? '');
@@ -187,11 +186,12 @@
                 $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['year'] ?? "");
                 $('#N28_8D864_8C85').val(birthdayConvertJapan['month'] ?? "");
                 $('#N29_005F_8E73').val(birthdayConvertJapan['day'] ?? "");
+                $('#N30_93E0_8BC7_94D4').val(employee.sex);
                 $('#N36_005F_8E96_8BC6_8F8A').val(employee_mynumber_card_no ?? '');
                 $('#N51_005F_8E73_8A4F_8BC7').val(employee_post_code_first ?? '');
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
                 $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (
-                    employee.address_ward ?? '') + (employee.address_apartment ?? ''));
+                    employee.address_ward ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data

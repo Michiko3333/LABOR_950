@@ -245,6 +245,7 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -270,7 +271,7 @@
                 }
                 $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val((branch_prefecture_data.name ?? '') + (branch
                     .address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N12_005F_905C_90BF_8ED2_8E81').val(branch.name ?? '');
+                $('#N12_005F_905C_90BF_8ED2_8E81').val(company.name ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(branch.tel_area_code ?? '');
                 $('#N16_005F_905C_90BF').val(branch.tel_city_code ?? '');
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val(branch.tel_subscriber_code ?? '');

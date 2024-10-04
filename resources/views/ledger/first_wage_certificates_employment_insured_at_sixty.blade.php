@@ -190,6 +190,7 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
@@ -259,7 +260,7 @@
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || '');
                 $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || '');
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
-                    .address_ward || "") + (employee.address_apartment || "");
+                    .address_ward || "");
                 $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val(employeeAddress);
                 $('#J17_005F_8F5A_8F8A').val(employeeAddress);
                 const headquartersAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (
@@ -278,6 +279,7 @@
                 $('#J122_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(fullnameKana);
                 $('#J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(fullnameKana);
                 $('#J9_005F_985A_8F5C_8DCE_82C9_9242_82B5_82BD_8ED2_82CC_8E81_96BC').val(fullnameKana);
+                $('#J77_005F_82A0_82C4_90E6').val(hello_work);
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;

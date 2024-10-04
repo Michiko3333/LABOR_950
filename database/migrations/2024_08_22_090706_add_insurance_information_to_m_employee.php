@@ -21,7 +21,7 @@ return new class extends Migration
             $table->tinyInteger('overseas_special_exception')->nullable()->comment('海外特例')->after('welfare_pension');
             $table->date('overseas_special_exception_date')->nullable()->comment('海外特例該当日')->after('overseas_special_exception');
             $table->date('overseas_special_not_exception_date')->nullable()->comment('海外特例非該当日')->after('overseas_special_exception_date');
-            $table->tinyInteger('dispatch_contract_completion')->nullable()->comment('派遣請負修了区分')->after('overseas_special_not_exception_date');
+            $table->tinyInteger('dispatch_contract_completion')->nullable()->comment('派遣請負就労区分')->after('overseas_special_not_exception_date');
             $table->date('employment_not_insured_date')->nullable()->comment('雇用保険喪失日')->after('dispatch_contract_completion');
             $table->string('insurer_no', 10)->nullable()->comment('被保険者番号')->change();
             $table->string('insurer_reference_no', 10)->nullable()->comment('被保険者整理番号')->change();

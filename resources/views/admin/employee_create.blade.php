@@ -1382,7 +1382,7 @@
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'dispatch_contract_completion') }}">
-                                <label for="dispatch_contract_completion">派遣請負修了区分</label>
+                                <label for="dispatch_contract_completion">派遣請負就労区分</label>
                                 <select class="ui fluid dropdown" name="dispatch_contract_completion"
                                     value="{{ old('dispatch_contract_completion', isset($employee_id) ? $employee->dispatch_contract_completion : '') }}">
                                     <option value="">未選択</option>

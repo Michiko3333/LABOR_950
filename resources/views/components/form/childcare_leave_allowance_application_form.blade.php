@@ -474,10 +474,10 @@
             type="TEXT" id="J101_005F_82A0_82C4_90E6" value="{{ old('destination') }}" name="destination"
             maxlength="10"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:499px; top:888px; width:175px; line-height:30px; height:30px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:499px; top:888px; width:200px; line-height:30px; height:30px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="96"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:175px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J102_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname" disabled></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:200px; height:30px; ime-mode:active; padding:0px 0px 0px 1px;"
+            id="J102_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); left:379px; top:941px; width:18px; height:35px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;"></SPAN>
     <SPAN

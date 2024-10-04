@@ -18,6 +18,7 @@ use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
 use App\Http\Controllers\Controller;
+use App\Models\Hello_work;
 use App\Models\Prefecture;
 use Carbon\Carbon;
 use App\Models\Values_employee_insured_age_type;
@@ -91,6 +92,9 @@ class LedgerEmployeeList extends BaseTable
         $employee_prefecture_data = Prefecture::where('id', $employee_prefecture_id)->first();
         $branch_prefecture_id = $branchData['address_prefecture'];
         $branch_prefecture_data = Prefecture::where('id', $branch_prefecture_id)->first();
+        $hello_work_id = $branchData['hello_work_id'];
+        $helloWork = Hello_work::where('id', $hello_work_id)->first();
+        $helloWorkName = $helloWork ? $helloWork->name : '';
         $headquarters_prefecture_id = $headquartersData['address_prefecture'];
         $headquarters_prefecture_data = Prefecture::where('id', $headquarters_prefecture_id)->first();
         $retirement_reason_age_data = Retirement_reason_age::where('employee_id', $employee_id)->first();
@@ -181,10 +185,61 @@ class LedgerEmployeeList extends BaseTable
         if (!empty($employee_insured_age_type)) {
             $insured_age_type_data = Values_employee_insured_age_type::where('id', $employee_insured_age_type)->value('name');
         }
+        if (!empty($employee->contract_start_date)) {
+            $contract_start_date = Carbon::parse($employee->contract_start_date);
+            $contract_start_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($contract_start_date);
+            $contract_start_convert_date = [
+                'era' => $contract_start_convert_date['japanese_calendar_era_string'],
+                'year' => $contract_start_convert_date['japanese_calendar_result']->year,
+                'month' => $contract_start_convert_date['japanese_calendar_result']->month,
+                'day' => $contract_start_convert_date['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($employee->contract_end_date)) {
+            $contract_end_date = Carbon::parse($employee->contract_end_date);
+            $contract_end_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($contract_end_date);
+            $contract_end_convert_date = [
+                'era' => $contract_end_convert_date['japanese_calendar_era_string'],
+                'year' => $contract_end_convert_date['japanese_calendar_result']->year,
+                'month' => $contract_end_convert_date['japanese_calendar_result']->month,
+                'day' => $contract_end_convert_date['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($employee->retirement_date)) {
+            $loss_date = Carbon::parse($employee->retirement_date)->addDay();
+            $loss_convert_date = Controller::convertWesternCalendarToJapaneseCalendar($loss_date);
+            $loss_convert_date = [
+                'era' => $loss_convert_date['japanese_calendar_era_string'],
+                'year' => $loss_convert_date['japanese_calendar_result']->year,
+                'month' => $loss_convert_date['japanese_calendar_result']->month,
+                'day' => $loss_convert_date['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($spouse_data->date_of_authorisation)) {
+            $date_of_authorisation = Carbon::parse($spouse_data->date_of_authorisation);
+            $date_of_authorisation_convert = Controller::convertWesternCalendarToJapaneseCalendar($date_of_authorisation);
+            $date_of_authorisation_convert = [
+                'era' => $date_of_authorisation_convert['japanese_calendar_era_string'],
+                'year' => $date_of_authorisation_convert['japanese_calendar_result']->year,
+                'month' => $date_of_authorisation_convert['japanese_calendar_result']->month,
+                'day' => $date_of_authorisation_convert['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($spouse_data->date_of_expiry)) {
+            $date_of_expiry = Carbon::parse($spouse_data->date_of_expiry);
+            $date_of_expiry_convert = Controller::convertWesternCalendarToJapaneseCalendar($date_of_expiry);
+            $date_of_expiry_convert = [
+                'era' => $date_of_expiry_convert['japanese_calendar_era_string'],
+                'year' => $date_of_expiry_convert['japanese_calendar_result']->year,
+                'month' => $date_of_expiry_convert['japanese_calendar_result']->month,
+                'day' => $date_of_expiry_convert['japanese_calendar_result']->day,
+            ];
+        }
 
         $output = [
             'employee' => $employeeData,
             'branch' => $branchData,
+            'hello_work' => $helloWorkName,
             'headquarters' => $headquartersData,
             'company' => $companyData,
             'spouse' => $spouse_data,
@@ -210,6 +265,11 @@ class LedgerEmployeeList extends BaseTable
             'insurance_loss_convert_date' => $insurance_loss_convert_date ?? '',
             'over_70_non_applicable_convert_date' => $over_70_non_applicable_convert_date ?? '',
             'insured_age_type_data' => $insured_age_type_data ?? '',
+            'contract_start_convert_date' => $contract_start_convert_date ?? '',
+            'contract_end_convert_date' => $contract_end_convert_date ?? '',
+            'date_of_authorisation_convert' => $date_of_authorisation_convert ?? '',
+            'date_of_expiry_convert' => $date_of_expiry_convert ?? '',
+            'loss_convert_date' => $loss_convert_date ?? '',
         ];
 
         $this->selected_id = $id;

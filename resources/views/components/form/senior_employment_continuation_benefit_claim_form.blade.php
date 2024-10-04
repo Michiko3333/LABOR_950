@@ -582,10 +582,10 @@
             type="TEXT" id="J60_005F_82A0_82C4_90E6" value="{{ old('destination') }}" name="destination"
             maxlength="10"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:206px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:225px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="61"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0);font-size:10px; font-family:'ＭＳ 明朝', serif; width:206px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname" readonly></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:225px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
+            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:400px; top:874px; width:282px; line-height:0px; height:0px;"></SPAN>
     <SPAN

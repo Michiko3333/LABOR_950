@@ -194,6 +194,8 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
+                const hello_work = data['hello_work'];
                 const headquarters = data['headquarters'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
@@ -209,7 +211,7 @@
                         "") +
                     (branch.address_ward || "") + (branch.address_apartment || "");
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
-                    .address_ward || "") + (employee.address_apartment || "");
+                    .address_ward || "");
                 $('#J120_005F_89EE_8CEC_8B78_8BC6_94ED_95DB_8CAF_8ED2_82CC_8CC2_906C_94D4_8D86').val(employee
                     .mynumber_card_no || "");
                 if (employee.employment_insured_no !== null) {
@@ -275,7 +277,7 @@
                 }
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
-                $('#J16_005F_96BC_8FCC').val(branch.name || "");
+                $('#J16_005F_96BC_8FCC').val(company.name || "");
                 $('#J17_005F_8F8A_8DDD_926E').val(branchAddress);
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || "");
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || "");
@@ -293,6 +295,7 @@
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || "");
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || "");
                 $('#J27_005F_8F5A_8F8A').val(headquartersAddress);
+                $('#J83_005F_82A0_82C4_90E6').val(hello_work);
             }
 
             $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').on('input', function() {

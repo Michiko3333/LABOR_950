@@ -196,6 +196,7 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
                 const todaySet = data['todaySet'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
@@ -267,9 +268,7 @@
                     .address_apartment ?? ''));
                 $('#J29_005F_8F5A_8F8A').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (
                     branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ??
-                    '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
-                $('#J10_005F_96BC_8FCC').val(branch.name ?? '');
+                $('#J10_005F_96BC_8FCC').val(company.name ?? '');
                 $('#J11_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
                 var postCode = employee.post_code;
@@ -302,13 +301,14 @@
                     $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val("");
                 }
                 $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ??
-                    '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
+                    '') + (employee.address_ward ?? ''));
                 $('#J17_005F_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee
-                    .address_ward ?? '') + (employee.address_apartment ?? ''));
+                    .address_ward ?? ''));
                 $('#birthdayEra').val(birthdayConvertJapan['era'] ?? "");
                 $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
                 $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
+                $('#J77_005F_82A0_82C4_90E6').val(hello_work);
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;

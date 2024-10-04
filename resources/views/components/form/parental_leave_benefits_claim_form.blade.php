@@ -1463,8 +1463,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:489px; top:870px; width:223px; line-height:26px; height:26px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="121"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:223px; height:25px; ime-mode:active;"
-            id="J163_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"
-            disabled></span>
+            id="J163_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:0px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:256px; top:922px; width:205px; line-height:26px; height:27px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="123"
