@@ -1,6 +1,6 @@
-<div class="calendar">
+<div class="calendar-small">
     @if ($showHeader)
-        <div class="calendar-month">{{ $active_year }}年 {{ $active_month }}月</div>
+        <div class="calendar-small-month">{{ $active_year }}年 {{ $active_month }}月</div>
     @endif
     <div class="days">
         @foreach ($this->days as $day)
@@ -39,7 +39,22 @@
                 $last_num = $num;
             @endphp
             <div class="day_num">
-                <div>{{ $num }}</div>
+                @php
+                    $filtered_values = array_filter($this->values, function ($item) use ($num) {
+                        return $item['date'] == $num;
+                    });
+                    $values = array_values($filtered_values);
+                @endphp
+                @if ($this->clickable)
+                    <button wire:click="clickNum({{ $num }})">{{ $num }}</button>
+                @else
+                    <div>{{ $num }}</div>
+                @endif
+                @if (count($values) > 0)
+                    <span class="mark {{ $values[0]['mark'] }}"
+                        style="background-color: {{ $values[0]['color'] }}; color: {{ $values[0]['color'] }}; border-color: {{ $values[0]['color'] }};">
+                    </span>
+                @endif
             </div>
         @endfor
 

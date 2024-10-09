@@ -36,6 +36,9 @@ class Company extends Model
         'url',
         'purpose',
         'company_division',
+        'start_month_of_year',
+        'start_day_of_month',
+        'start_day_of_week'
     ];
 
     public function company_type()
@@ -70,12 +73,12 @@ class Company extends Model
 
     public function receptionist()
     {
-        return $this->hasMany(Receptionist::class,'id','client_company_id');
+        return $this->hasMany(Receptionist::class, 'id', 'client_company_id');
     }
 
     public function client()
     {
-        return $this->hasMany(Client::class,'id','client_company_id');
+        return $this->hasMany(Client::class, 'id', 'client_company_id');
     }
 
     public function managerial_position()
@@ -97,6 +100,4 @@ class Company extends Model
     {
         return $this->hasMany(Company_files::class);
     }
-
 }
-

@@ -396,6 +396,9 @@ class AdminController extends Controller
             'url' => $requestData['url'],
             'purpose' => $requestData['purpose'],
             'procedure_hidden_flg' => $requestData['procedure_hidden_flg'],
+            'start_month_of_year' => $requestData['start_month_of_year'],
+            'start_day_of_month' => $requestData['start_day_of_month'],
+            'start_day_of_week' => $requestData['start_day_of_week'],
         ];
     }
 
@@ -619,7 +622,7 @@ class AdminController extends Controller
             $company = $branch->company()->first();
             $company_id = $company->id;
             $icon_file = $request->file('icon_file');
-            if($icon_file && $company_id && $employee_id) {
+            if ($icon_file && $company_id && $employee_id) {
                 $extension = $icon_file->getClientOriginalExtension();
                 $directory = 'photo/' . $company_id;
                 $filePath = $directory . '/' . $employee_id . '.' . $extension;
@@ -662,7 +665,7 @@ class AdminController extends Controller
                     $filePath = '/' . $file . '?v=' . time();
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         }
@@ -723,8 +726,8 @@ class AdminController extends Controller
             $company_id = $company->id;
             $icon_file = $request->file('icon_file');
             $icon_delete_flg = $request->input('icon_delete_flg');
-            if($company_id && $id) {
-                if($icon_delete_flg === "1") {
+            if ($company_id && $id) {
+                if ($icon_delete_flg === "1") {
                     $directory = 'photo/' . $company_id;
 
                     foreach (Storage::files($directory) as $file) {
@@ -981,7 +984,7 @@ class AdminController extends Controller
 
             $company_id = $request->input('company_id');
             $icon_file = $request->file('icon_file');
-            if($icon_file && $company_id && $employee_id) {
+            if ($icon_file && $company_id && $employee_id) {
                 $extension = $icon_file->getClientOriginalExtension();
                 $directory = 'photo/' . $company_id;
                 $filePath = $directory . '/' . $employee_id . '.' . $extension;
@@ -1021,7 +1024,7 @@ class AdminController extends Controller
                     $filePath = '/' . $file . '?v=' . time();
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         }
@@ -1256,8 +1259,8 @@ class AdminController extends Controller
             $company_id = $request->input('company_id');
             $icon_file = $request->file('icon_file');
             $icon_delete_flg = $request->input('icon_delete_flg');
-            if($company_id && $employee_id) {
-                if($icon_delete_flg === "1") {
+            if ($company_id && $employee_id) {
+                if ($icon_delete_flg === "1") {
                     $directory = 'photo/' . $company_id;
 
                     foreach (Storage::files($directory) as $file) {

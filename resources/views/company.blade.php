@@ -478,6 +478,52 @@
                                     placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守">
                             @endif
                         </div>
+                        <div class="three fields">
+                            <div class="field">
+                                <label for="start_month_of_year">起算日（年の始まり）</label>
+                                <div class="ui right labeled input">
+                                    <select class="ui fluid dropdown" name="start_month_of_year"
+                                        value="{{ old('start_month_of_year', $currentCompany->start_month_of_year) }}">
+                                        @for ($i = 1; $i < 13; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ old('start_month_of_year', $currentCompany->start_month_of_year) == $i ? 'selected' : '' }}>
+                                                {{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <div class="ui basic label">
+                                        月
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="start_day_of_month">起算日（月の始まり）</label>
+                                <div class="ui right labeled input">
+                                    <select class="ui fluid dropdown" name="start_day_of_month"
+                                        value="{{ old('start_day_of_month', $currentCompany->start_day_of_month) }}">
+                                        @for ($i = 1; $i < 32; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ old('start_day_of_month', $currentCompany->start_day_of_month) == $i ? 'selected' : '' }}>
+                                                {{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <div class="ui basic label">
+                                        日
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="start_day_of_week">起算日（曜日の始まり）</label>
+                                <select class="ui fluid dropdown" name="start_day_of_week"
+                                    value="{{ old('start_day_of_week', $currentCompany->start_day_of_week) }}">
+                                    @foreach ($start_days_of_week as $k => $value)
+                                        <option value="{{ $k }}"
+                                            {{ old('start_day_of_week', $currentCompany->start_day_of_week) == $k ? 'selected' : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

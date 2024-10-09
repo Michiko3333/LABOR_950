@@ -14,7 +14,6 @@ class CalendarSmall extends Component
 {
     private $day_base = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    public $current_company;
     public $start_day = 0;
 
     public $date = null;
@@ -65,12 +64,15 @@ class CalendarSmall extends Component
     public $inputs_error = false;
 
     public $isOpen = false;
+    public $clickable = false;
+    public $values = [];
 
-    public function mount(int $year, int $month, bool $showHeader = false, int $firstDayWeek = 1, int $firstDate = 1)
+    public function mount(int $year, int $month, bool $showHeader = false, int $firstDayWeek = 0, int $firstDate = 1, bool $clickable = false, array $values = [])
     {
         $this->showHeader = $showHeader;
+        $this->clickable = $clickable;
         $this->select_date = $firstDate;
-        $this->start_day = $firstDayWeek - 1;
+        $this->start_day = $firstDayWeek;
         $this->today = $this->formatDate($year, $month, $this->select_date);
         $current_date = date('Y', strtotime($this->today));
         $one_year_ago = date('Y', strtotime('-1 year', strtotime($current_date)));
@@ -83,10 +85,7 @@ class CalendarSmall extends Component
 
         $this->select_year = $current_date;
         $this->select_month = date('m', strtotime($this->today));
-
-        $this->current_company = CurrentUser::currentCompany();
-
-
+        $this->values = $values;
         $this->calcDate();
     }
 
@@ -99,7 +98,6 @@ class CalendarSmall extends Component
         $after_start_day = array_slice($this->day_base, $this->start_day);
 
         $this->days = array_merge($after_start_day, $before_start_day);
-        //\Log::info(print_r($this->first_day_of_week, true));
 
         $this->events = [];
 
@@ -107,9 +105,6 @@ class CalendarSmall extends Component
         $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
         $this->num_days_next_month = date('j', strtotime('last day of next month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
         $this->first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $this->days);
-        \Log::info(print_r($this->first_day_of_week, true));
-        \Log::info(print_r($this->select_date, true));
-
 
         return view('livewire.calendar-small');
     }
@@ -171,5 +166,11 @@ class CalendarSmall extends Component
     {
         $this->select_year = date('Y', strtotime($this->today));
         $this->select_month = date('m', strtotime($this->today));
+    }
+
+    public function clickNum($num)
+    {
+        $clicked_date = $this->formatDate($this->select_year, $this->select_month, $num);
+        $this->dispatch('calendar-small-clicked', $clicked_date);
     }
 }

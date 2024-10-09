@@ -8,6 +8,8 @@ class ShiftCalendarController extends Controller
 {
     public function index()
     {
-        return view('calendar.shift');
+        return view('calendar.shift', [
+            'this_year' => date('Y')
+        ]);
     }
 }
