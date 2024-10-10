@@ -781,7 +781,7 @@ class AdminController extends Controller
         $employment_insurance_type = Values_employee_employment_insurance_type::pluck('name', 'id');
         $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
-        $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $occupation_type = Values_employee_occupation_type::pluck('name', 'option_no');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $faxParts = ['', '', ''];
@@ -1044,7 +1044,7 @@ class AdminController extends Controller
         $employment_insurance_type = Values_employee_employment_insurance_type::pluck('name', 'id');
         $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
-        $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $occupation_type = Values_employee_occupation_type::pluck('name', 'option_no');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
         $departments_list = Department::select('id', 'name')->where('company_id', $employee->company_id)->where('delete_flg', 0)->get();
         $managerial_position_list = Managerial_position::where('company_id', $employee->company_id)->where('delete_flg', 0)->pluck('name', 'id');

@@ -1,3 +1,10 @@
+<style type="text/css">
+    .flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>
 <DIV style="position:relative; left:0px; top:0px; width:796px; height:1124px;">
 
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:19px; top:15px; width:122px; height:15px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">様式第2号（第6条関係）</SPAN>
@@ -147,7 +154,58 @@
 <OPTION value="11" {{ old('occupation_type') == '11' ? 'selected' : '' }}>11</OPTION>
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:361px; top:358px; width:45px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">(01～11)</SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:361px; top:373px; width:61px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">記載要領参照</SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:361px; top:373px; width:61px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;"><a id="occupation-type">記載要領参照</a></SPAN>
+<div class="ui mini modal" id="occupation-type-modal">
+    <div class="content">
+            <div class="flex-container">
+                <p>管理的職業</p>
+                <p>01</p>
+            </div>
+            <div class="flex-container">
+                <p>専門的・技術的職業</p>
+                <p>02</p>
+            </div>
+            <div class="flex-container">
+                <p>事務的職業</p>
+                <p>03</p>
+            </div>
+            <div class="flex-container">
+                <p>販売の職業</p>
+                <p>04</p>
+            </div>
+            <div class="flex-container">
+                <p>サービスの職業</p>
+                <p>05</p>
+            </div>
+            <div class="flex-container">
+                <p>保安の職業</p>
+                <p>06</p>
+            </div>
+            <div class="flex-container">
+                <p>農林漁業の職業</p>
+                <p>07</p>
+            </div>
+            <div class="flex-container">
+                <p>生産工程の職業</p>
+                <p>08</p>
+            </div>
+            <div class="flex-container">
+                <p>輸送・機械運転の職業</p>
+                <p>09</p>
+            </div>
+            <div class="flex-container">
+                <p>建設・採掘の職業</p>
+                <p>10</p>
+            </div>
+            <div class="flex-container">
+                <p>運搬・清掃・包装等の職業</p>
+                <p>11</p>
+            </div>
+    </div>
+    <div class="basic actions">
+        <div class="ui negative button">戻る</div>
+    </div>
+</div>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:430px; top:339px; width:57px; height:11px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">14就職経路</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:430px; top:361px; width:38px; height:19px; font-size:13px;"><SELECT size="1" tabindex="28" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:38px; height:19px;" id="J30_005F_8F41_9045_8C6F_9848" name="employment_route">
 <OPTION value=""></OPTION>
@@ -427,4 +485,11 @@
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:729px; top:1103px; width:11px; height:11px; text-align:center; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">日</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box overflow:hidden; display:none; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:754px; top:1104px; width:39px; height:20px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">0</SPAN>
 
+<script type="module">
+        $(document).ready(function() {
+            $('#occupation-type').click(function() {
+                $('#occupation-type-modal').modal('show');
+            });
+        });
+</script>
 </DIV>
