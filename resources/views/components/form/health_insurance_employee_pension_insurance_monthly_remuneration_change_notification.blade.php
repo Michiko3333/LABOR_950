@@ -5032,6 +5032,11 @@
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
+                    <div class="egov-tool-field-origin" style="left: 552px; top: 285px;">
+                        <p class="egov-tool-field-rect onImage"
+                            style="width: 180px; height: 24px; font-size: 10px; text-align: center; line-height: 30px; padding: inherit; background-color:transparent;"
+                            type="text">※⑨従前改定月の年項目は西暦を記入</p>
+                    </div>
                     <div class="egov-tool-field-origin" style="left: 76px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N33_005F_8E73_8A4F" maxlength="4"
                             value="{{ old('previous_average_monthly_salary_health_insurance') }}"
