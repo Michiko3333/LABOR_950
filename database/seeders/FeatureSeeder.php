@@ -56,7 +56,11 @@ class FeatureSeeder extends Seeder
             [
                 'id' => '11',
                 'name' => 'カレンダー',
-            ]
+            ],
+            [
+                'id' => '12',
+                'name' => '年間勤務予定表',
+            ],
         ]);
     }
 }

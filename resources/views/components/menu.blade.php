@@ -6,7 +6,7 @@
 
         $employee_id = !empty($employee) ? $employee->id : '';
         $role_id = !empty($employee) ? $employee->role_id : '';
-        if($role_id !== 999) {
+        if ($role_id !== 999) {
             $branch = $employee->branch()->first();
             $company = $branch->company()->first();
             $company_id = $company->id;
@@ -14,11 +14,11 @@
             $files = Storage::files($directory);
             foreach ($files as $file) {
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
-                if ((int)$fileName === $employee_id) {
+                if ((int) $fileName === $employee_id) {
                     $filePath = '/' . $file;
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         } else {
@@ -135,13 +135,20 @@
                     @endif
                 @endif
             @endif
-            @if ($userPermission->isReadableFor(11))
+            @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12))
                 <li class="title">スケジュール</li>
                 <li class="item">
                     <a href="{{ route('calendar.index') }}">
 
                         カレンダー</a>
                 </li>
+                @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment())
+                    <li class="item">
+                        <a href="{{ route('calendar.shift') }}">
+
+                            年間勤務予定表</a>
+                    </li>
+                @endif
             @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"

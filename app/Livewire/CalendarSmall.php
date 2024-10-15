@@ -67,12 +67,22 @@ class CalendarSmall extends Component
     public $clickable = false;
     public $values = [];
 
+    protected $listeners = ['refreshCalendar' => '$refresh'];
+
     public function mount(int $year, int $month, bool $showHeader = false, int $firstDayWeek = 0, int $firstDate = 1, bool $clickable = false, array $values = [])
     {
         $this->showHeader = $showHeader;
         $this->clickable = $clickable;
         $this->select_date = $firstDate;
         $this->start_day = $firstDayWeek;
+
+        if ($this->select_date > 27 && $this->select_date < 32) {
+            while (!checkdate($month, $this->select_date, $year)) {
+                $this->select_date--;
+                if ($this->select_date < 28) break;
+            }
+        }
+
         $this->today = $this->formatDate($year, $month, $this->select_date);
         $current_date = date('Y', strtotime($this->today));
         $one_year_ago = date('Y', strtotime('-1 year', strtotime($current_date)));
@@ -105,7 +115,6 @@ class CalendarSmall extends Component
         $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
         $this->num_days_next_month = date('j', strtotime('last day of next month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
         $this->first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $this->days);
-
         return view('livewire.calendar-small');
     }
 
@@ -168,9 +177,10 @@ class CalendarSmall extends Component
         $this->select_month = date('m', strtotime($this->today));
     }
 
-    public function clickNum($num)
+    public function clickNum($month, $num)
     {
-        $clicked_date = $this->formatDate($this->select_year, $this->select_month, $num);
+        $year = $month < $this->select_month ? $this->select_year + 1 : $this->select_year;
+        $clicked_date = $this->formatDate($year, $month, $num);
         $this->dispatch('calendar-small-clicked', $clicked_date);
     }
 }

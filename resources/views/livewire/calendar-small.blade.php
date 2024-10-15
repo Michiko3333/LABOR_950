@@ -31,7 +31,10 @@
             @endif
             <div class="day_num ignore">{{ $i }}</div>
         @endfor
-
+        @php
+            $year = (int) $this->active_year;
+            $month = (int) $this->active_month;
+        @endphp
         @for ($i = $this->select_date; $i <= $this->num_days + $this->select_date - 1; $i++)
             @php
                 $day_count++;
@@ -40,13 +43,13 @@
             @endphp
             <div class="day_num">
                 @php
-                    $filtered_values = array_filter($this->values, function ($item) use ($num) {
-                        return $item['date'] == $num;
+                    $filtered_values = array_filter($this->values, function ($item) use ($num, $month, $year) {
+                        return $item['year'] == $year && $item['month'] == $month && $item['date'] == $num;
                     });
                     $values = array_values($filtered_values);
                 @endphp
                 @if ($this->clickable)
-                    <button wire:click="clickNum({{ $num }})">{{ $num }}</button>
+                    <button wire:click="clickNum({{ $month }}, {{ $num }})">{{ $num }}</button>
                 @else
                     <div>{{ $num }}</div>
                 @endif
@@ -55,6 +58,15 @@
                         style="background-color: {{ $values[0]['color'] }}; color: {{ $values[0]['color'] }}; border-color: {{ $values[0]['color'] }};">
                     </span>
                 @endif
+                @php
+                    if ($num == $this->num_days) {
+                        $month++;
+                        if ($month > 12) {
+                            $month = 1;
+                            $year++;
+                        }
+                    }
+                @endphp
             </div>
         @endfor
 

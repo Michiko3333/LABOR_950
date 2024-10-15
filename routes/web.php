@@ -158,6 +158,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('/calendar/shift', [ShiftCalendarController::class, 'index'])->name('calendar.shift');
+        Route::get('/calendar/shift/download', [ShiftCalendarController::class, 'download'])->name('calendar.shift_download');
 
         // 帳票
         Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');

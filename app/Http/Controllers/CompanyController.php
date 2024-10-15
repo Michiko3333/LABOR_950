@@ -58,7 +58,6 @@ class CompanyController extends Controller
         $articles_of_incorporation = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 2)->where('delete_flg', 0)->first();
         $stock_information = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 3)->where('delete_flg', 0)->first();
         $current_industry_type = Industry_type::select('id', 'industry_type_code')->whereIn('id', $industry_type)->pluck('industry_type_code');
-        \Log::info(print_r($currentCompany, true));
         return view('company', [
             'currentCompany' => $currentCompany,
             'company_listed_type' => $company_listed_type,

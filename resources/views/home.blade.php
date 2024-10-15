@@ -256,6 +256,13 @@
                                     </div>
                                 </a>
                             @endif
+                            @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment())
+                                <a href="{{ route('calendar.shift') }}" class="item">
+                                    <div class="content">
+                                        <div class="header">年間勤務予定表</div>
+                                    </div>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
