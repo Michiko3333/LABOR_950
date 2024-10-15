@@ -1226,13 +1226,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:373px; top:803px; width:348px; line-height:23px; height:23px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="82"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:348px; height:22px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J78_005F_8E96_8BC6_8EE5_96BC" name="entrepreneur_name"
+            id="J78_005F_8E96_8BC6_8EE5_96BC" name="entrepreneur_name" maxlength="64"
             value="{{ old('entrepreneur_name') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:373px; top:779px; width:348px; line-height:23px; height:23px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="81"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:348px; height:22px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J77_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" name="branch"
+            id="J77_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" name="branch" maxlength="64"
             value="{{ old('branch') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:72px; top:877px; width:111px; height:13px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT

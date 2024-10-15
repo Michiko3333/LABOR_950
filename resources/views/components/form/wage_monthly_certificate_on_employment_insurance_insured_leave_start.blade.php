@@ -573,22 +573,22 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:251px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="26"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active;"
-            id="J27_005F_8F5A_8F8A" name="entrepreneur_address" value="{{ old('entrepreneur_address') }}"></SPAN>
+            id="J27_005F_8F5A_8F8A" name="entrepreneur_address" value="{{ old('entrepreneur_address') }}" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:155px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="15"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J16_005F_96BC_8FCC" name="branch_name" value="{{ old('branch_name') }}" maxlength="40"></SPAN>
+            id="J16_005F_96BC_8FCC" name="branch_name" value="{{ old('branch_name') }}" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:183px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="16"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J17_005F_8F8A_8DDD_926E" name="branch_address" value="{{ old('branch_address') }}"></SPAN>
+            id="J17_005F_8F8A_8DDD_926E" name="branch_address" value="{{ old('branch_address') }}" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:280px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="27"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active;"
-            id="J28_005F_8E81_96BC" name="entrepreneur_name" disabled value="{{ old('entrepreneur_name') }}"></SPAN>
+            id="J28_005F_8E81_96BC" name="entrepreneur_name" disabled value="{{ old('entrepreneur_name') }}" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:212px; width:42px; height:16px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT
             tabindex="17"

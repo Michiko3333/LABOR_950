@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
@@ -21,6 +22,7 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends BaseReque
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_wage_payment_status" => 'required_unless:radio_file_wage_payment_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_insured_age" => 'required_if:radio_file_insured_age,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -66,11 +68,11 @@ class FirstSeniorEmploymentContinuationBenefitClaimFormRequest extends BaseReque
             "todayJapanEraYear" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "todayMonth" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "todayDay" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "headquartersAddress" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
+            "headquartersAddress" => ['required', 'string', 'max:66', new FullwidthAndMiscellaneousChars(true)],
             "headquartersTelAreaCode" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquartersTelCityCode" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquartersTelsubscriberCode" => 'string|regex:/^[0-9]{1,5}$/u',
-            "employer_company_managerial_position_name" => 'string|max:255|regex:/\A[ぁ-んァ-ン一-龥０-９Ａ-Ｚ　]+\z/u',
+            "employer_company_managerial_position_name" => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             "destination" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
             "address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "financialInstitutionNameKana" => 'nullable|string|max:255|regex:/\A[ァ-ヴー　]+\z/u',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
@@ -21,6 +22,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             'file_childcare' => 'required_unless:radio_file_childcare,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'file_wage_amount' => 'required_if:radio_file_wage_amount,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -115,11 +118,11 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'today_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
+            'headquarters_address' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'headquarters_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code_name' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'employer_company_managerial_position_name' => 'nullable|string|max:255',
+            'employer_company_managerial_position_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'destination' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々　]+\z/u',
             'financial_Institutions_name_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
             'financial_institution_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々　]+\z/u',

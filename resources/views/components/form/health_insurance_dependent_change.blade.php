@@ -10875,7 +10875,7 @@ div.popup {
        <input class="egov-tool-field-rect onImage" id="N12_P1" maxlength="50" name="headquarters_address" value="{{ old('headquarters_address') }}" required="required" style="width: 358px; height: 54px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
       <div class="egov-tool-field-origin" style="left: 133px; top: 218px;">
-       <input class="egov-tool-field-rect onImage" id="N13_P1" maxlength="40" name="company_name" value="{{ old('company_name') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N13_P1" maxlength="25" name="company_name" value="{{ old('company_name') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
       <div class="egov-tool-field-origin" style="left: 133px; top: 252px;">
        <input class="egov-tool-field-rect onImage" id="N14_P1" maxlength="25" name="headquarters_representative" value="{{ old('headquarters_representative') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">

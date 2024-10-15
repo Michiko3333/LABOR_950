@@ -427,13 +427,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:758px; width:228px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="86"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:228px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}"
+            id="J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="63"
             name="headquarters_address"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:816px; width:221px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="90"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:221px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J95_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
+            id="J95_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="60"
             name="employer_company_managerial_position_name"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:285px; top:880px; width:12px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">日</SPAN>

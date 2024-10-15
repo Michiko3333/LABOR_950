@@ -840,12 +840,12 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:182px; width:349px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="10"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:349px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J10_005F_96BC_8FCC" value="{{ old('branchName') }}" name="branchName" maxlength="40"></SPAN>
+            id="J10_005F_96BC_8FCC" value="{{ old('branchName') }}" name="branchName" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:212px; width:349px; line-height:26px; height:26px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="11"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:349px; height:25px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J11_005F_8F8A_8DDD_926E" value="{{ old('branchAddress') }}" name="branchAddress"　disabled></SPAN>
+            id="J11_005F_8F8A_8DDD_926E" value="{{ old('branchAddress') }}" name="branchAddress"　disabled maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:242px; width:34px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="12"
@@ -949,13 +949,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:147px; top:331px; width:348px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="28"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:348px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J29_005F_8F5A_8F8A" value="{{ old('headquartersAddress') }}" name="headquartersAddress"
+            id="J29_005F_8F5A_8F8A" value="{{ old('headquartersAddress') }}" name="headquartersAddress" maxlength="64"
             disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:147px; top:365px; width:348px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="29"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; width:348px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J30_005F_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
+            id="J30_005F_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="64"
             name="employer_company_managerial_position_name" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:202px; top:558px; width:17px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT

@@ -108,7 +108,7 @@
                 $('#J38_005F_8C8E').val('{{ old('today_month', $today['month']) }}');
                 $('#J39_005F_93FA').val('{{ old('today_date', $today['date']) }}');
 
-                $('#J31_005F_8E81_96BC').val('{{ old('headquarter_name', $company->name) }}' + '　' + '{{ $company->representative }}');
+                $('#J31_005F_8E81_96BC').val('{{ old('headquarter_name') }}' ? '{{ old('headquarter_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J42_005F_944E_8D86').val('{{ old('labor_consultant_today_era', $today['era']) }}');

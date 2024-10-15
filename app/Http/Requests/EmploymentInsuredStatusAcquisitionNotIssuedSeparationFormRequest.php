@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends BaseRequest
@@ -58,6 +59,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends B
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_disqualification_status" => 'required_unless:radio_file_disqualification_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -104,8 +106,8 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends B
             'notification_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'notification_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'notification_date_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch_address' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　－]+\z/u',
-            'entrepreneur_name' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々Ａ-Ｚ　]+\z/u',
+            'branch_address' => ['required', 'string', 'max:80', new FullwidthAndMiscellaneousChars(true)],
+            'entrepreneur_name' => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
             'branch_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_subscriber_code' => 'string|regex:/^[0-9]{1,5}$/u',

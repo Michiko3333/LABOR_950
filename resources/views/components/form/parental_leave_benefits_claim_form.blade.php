@@ -1395,7 +1395,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:752px; width:343px; line-height:26px; height:26px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="110"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:343px; height:25px; ime-mode:active;"
-            id="J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}"
+            id="J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="64"
             name="headquarters_address"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:779px; width:38px; height:15px; font-size:11px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
@@ -1421,7 +1421,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:795px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="114"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:343px; height:26px; ime-mode:active;"
-            id="J154_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
+            id="J154_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="64"
             name="employer_company_managerial_position_name"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:861px; width:50px; height:16px; font-size:10px;"><input

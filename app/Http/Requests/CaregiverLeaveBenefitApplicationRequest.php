@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
@@ -21,6 +22,8 @@ class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "file_nursing_facts" => 'required_unless:radio_file_nursing_facts,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_nursing_care_recipient" => 'required_unless:radio_file_nursing_care_recipient,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -91,8 +94,8 @@ class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'verification_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'verification_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
-            'entrepreneur_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'branch' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'entrepreneur_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'application_date_era' => 'string|max:2',
             'application_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'application_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',

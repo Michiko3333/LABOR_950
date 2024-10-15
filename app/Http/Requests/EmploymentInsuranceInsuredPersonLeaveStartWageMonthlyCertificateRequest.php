@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest extends BaseRequest
@@ -22,6 +23,8 @@ class EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest ex
 
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             'leave_start_wage_monthly_certificate' => 'nullable|string|in:1|required_without:reduced_working_hours_wage_certificate_start',
             'reduced_working_hours_wage_certificate_start' => 'nullable|string|in:1',
@@ -37,8 +40,8 @@ class EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest ex
             'childcare_start_date_japan_era_year' => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'childcare_start_date_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'childcare_start_date_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch_name' => 'required|string|max:255|regex:/^[ａ-ｚＡ-Ｚぁ-んァ-ヴ０-９ー一-龥　]+\z/u',
-            'branch_address' => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
+            'branch_name' => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'branch_address' => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'branch_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'branch_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -48,8 +51,8 @@ class EmploymentInsuranceInsuredPersonLeaveStartWageMonthlyCertificateRequest ex
             'tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'headquarters_address' => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            'employer_company_managerial_position_name' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥　－‐]+\z/u',
+            'headquarters_address' => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'employer_company_managerial_position_name' => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'leave_start_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:leave_start_date_day',
             'leave_start_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:leave_start_date_month',
             'calculation_duration_start_month1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:calculation_duration_start_day1',

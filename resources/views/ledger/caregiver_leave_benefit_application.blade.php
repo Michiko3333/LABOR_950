@@ -141,8 +141,8 @@
                 $('#J81_005F_8C8E').val('{{ old('notification_month', $today['month']) }}');
                 $('#J82_005F_93FA').val('{{ old('notification_date', $today['date']) }}');
 
-                $('#J78_005F_8E96_8BC6_8EE5_96BC').val('{{ old('entrepreneur_name', $company->name) }}' + '　' + '{{ $company->representative }}');
-                $('#J28_005F_8E81_96BC').val('{{ old('entrepreneur_name', $company->name) }}' + '　' + '{{ $company->representative }}');
+                $('#J78_005F_8E96_8BC6_8EE5_96BC').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
+                $('#J28_005F_8E81_96BC').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');

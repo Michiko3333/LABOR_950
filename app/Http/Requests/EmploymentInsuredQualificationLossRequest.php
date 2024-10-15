@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredQualificationLossRequest extends BaseRequest
@@ -22,6 +23,8 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
 
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "file_disqualification_status" => 'required_unless:radio_file_disqualification_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -71,8 +74,8 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
             "notification_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "notification_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "notification_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "headquarters_address" => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            'employer_managerial_position_name' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々　]+\z/u',
+            "headquarters_address" => ['required', 'string', 'max:80', new FullwidthAndMiscellaneousChars(true)],
+            'employer_managerial_position_name' => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
             "headquarters_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquarters_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "headquarters_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',

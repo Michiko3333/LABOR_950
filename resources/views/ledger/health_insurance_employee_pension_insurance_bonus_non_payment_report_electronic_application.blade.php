@@ -109,7 +109,7 @@
                 $('#_93FA_002E6').val('{{ old('today_japan_era_day', $todaySet['day']) }}');
 
                 $('#_8E96_8BC6_8EE5_8E81_96BCx_91E3_955C_8ED2_8E81_96BC_002E17').val(
-                    '{{ old('business_owner_name_representative_name', $company->name) }}' + '　' + '{{ $company->representative }}');
+                    '{{ old('business_owner_name_representative_name') }}' ? '{{ old('business_owner_name_representative_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
                 $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val('{{ old('business_name_name_of_ship_owner', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)

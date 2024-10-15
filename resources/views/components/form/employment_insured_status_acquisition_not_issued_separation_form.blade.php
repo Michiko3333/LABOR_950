@@ -582,7 +582,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:118px; top:750px; width:491px; line-height:26px; height:28px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="54"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:491px; height:28px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J63_005F_8F5A_8F8A" name="branch_address" value="{{ old('branch_address') }}" type="text"></SPAN>
+            id="J63_005F_8F5A_8F8A" name="branch_address" value="{{ old('branch_address') }}" type="text" maxlength="80"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:64px; top:784px; width:46px; height:27px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">氏　　名</SPAN>
     <SPAN

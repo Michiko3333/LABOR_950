@@ -110,7 +110,7 @@
                 $('#N6_005F_93FA').val('{{ old('input_date_month', $todaySet['month']) }}');
                 $('#N7_005F_944E_8D86').val('{{ old('input_date_day', $todaySet['date']) }}');
 
-                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative', $company->name) }}' + '　' + '{{ $company->representative }}');
+                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative') }}' ? '{{ old('company_representative') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                 @else

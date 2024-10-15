@@ -381,7 +381,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:114px; top:144px; width:297px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="13"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 10px 0px 0px; width:297px; height:26px; ime-mode:active;"
-            id="J16_005F_8F8A_8DDD_926E" name="branch_address" value="{{ old('branch_address') }}"></SPAN>
+            id="J16_005F_8F8A_8DDD_926E" name="branch_address" value="{{ old('branch_address') }}" maxlength="40"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:114px; top:171px; width:36px; height:16px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="14"
@@ -469,7 +469,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:110px; top:205px; width:297px; line-height:26px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="23" onChange="return(check_item_gw(this.form,23));"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif;  padding:0px 10px 0px 0px; width:297px; height:26px; ime-mode:active;"
-            id="J26_005F_8F5A_8F8A" name="headquarters_address" value="{{ old('headquarters_address') }}"
+            id="J26_005F_8F5A_8F8A" name="headquarters_address" value="{{ old('headquarters_address') }}" maxlength="40"
             disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:110px; top:236px; width:290px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -480,9 +480,9 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:110px; top:253px; width:290px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="25" onChange="return(check_item_gw(this.form,25));"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:290px; max-width:290px; height:15px; ime-mode:active;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:290px; max-width:290px; height:15px; ime-mode:active;"
             type="TEXT" id="J28_005F_8E81_96BC_005F_89BA_9269" name="employer_managerial_position_name"
-            value="{{ old('employer_managerial_position_name') }}" maxlength="27" readonly></SPAN>
+            value="{{ old('employer_managerial_position_name') }}" maxlength="27"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:422px; top:188px; width:360px; height:83px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:65px 0px 0px 0px;"></SPAN>
     <SPAN

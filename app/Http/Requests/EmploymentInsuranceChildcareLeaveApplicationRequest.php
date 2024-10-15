@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
@@ -48,6 +49,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_amount_days_time" => 'required_unless:radio_file_amount_days_time,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_written_consent" => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -126,11 +128,11 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
             'today_japan_era_year' => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'today_japan_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
+            'headquarters_address' => ['nullable', 'string', 'max:63', new FullwidthAndMiscellaneousChars(true)],
             'headquarters_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'employer_company_managerial_position_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'employer_company_managerial_position_name' => ['nullable', 'string', 'max:60', new FullwidthAndMiscellaneousChars(true)],
             'destination' => 'required|string|max:255|regex:/\A[ぁ-んァ-ンー一-龥々０-Ａ-Ｚ　]+\z/u',
             'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',

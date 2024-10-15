@@ -592,12 +592,12 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:416px; top:741px; width:240px; line-height:53px; height:54px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="55"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:240px; height:53px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_name') }}" name="employer_name"></SPAN>
+            id="J54_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_name') }}" name="employer_name" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:416px; top:673px; width:285px; line-height:42px; height:42px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="51"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:285px; height:41px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}"
+            id="J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="63"
             name="headquarters_address"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:317px; top:797px; width:384px; line-height:0px; height:0px;"></SPAN>
