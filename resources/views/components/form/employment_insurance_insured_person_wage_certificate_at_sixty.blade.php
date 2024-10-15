@@ -6,7 +6,7 @@
 
             val = (f.wageAmountA1.value - 0) + (f.wageAmountB1.value - 0);
 
-            if (f.wageAmountB1.value == "" && f.wageAmountB1.value == "") {
+            if (f.wageAmountA1.value == "" && f.wageAmountB1.value == "") {
                 nullFlg = false;
             }
 

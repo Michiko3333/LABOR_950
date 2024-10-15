@@ -276,8 +276,8 @@
                                 <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E"
                                     maxlength="4" value="{{ old('bonus_payment_sum') }}" name="bonus_payment_sum"
                                     required="required"
-                                    style="width: 50px; height: 36.5px; font-size: 12px; text-align: right; line-height: 36.5px; padding: inherit; background-color:#ddeeff;"
-                                    type="text" />
+                                    style="width: 50px; height: 36.5px; font-size: 12px; text-align: right; line-height: 36.5px; padding: inherit;"
+                                    type="text" readonly/>
                             </div>
 
                             <SPAN

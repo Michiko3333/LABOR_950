@@ -3276,7 +3276,7 @@
                                 <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4" maxlength="7" name="monthly_remuneration_part" style="width: 94px; height: 24px; font-size: 12px; text-align: right; line-height: 35px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_part') }}"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 278px; top: 417px;">
-                                <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6" maxlength="7" name="monthly_remuneration_total" required="required" style="width: 94px; height: 24px; font-size: 12px; text-align: right; line-height: 35px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_total') }}"/>
+                                <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6" maxlength="7" name="monthly_remuneration_total" required="required" style="width: 94px; height: 24px; font-size: 12px; text-align: right; line-height: 35px; padding: inherit;" type="text" value="{{ old('monthly_remuneration_total') }}" readonly/>
                             </div>
 
                             <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left: 405px; top: 394px; width:12px; line-height:12px; height:12px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;">

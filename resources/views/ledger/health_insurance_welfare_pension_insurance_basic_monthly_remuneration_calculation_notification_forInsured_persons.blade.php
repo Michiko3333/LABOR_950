@@ -162,7 +162,7 @@
                 $('#over_70_check').change(function() {
                     checkOver70();
                 });
-                $('#N55_005F_8E73_8A4F_8BC7_94D4').change(function() {
+                $('#N50_005F_8E73_8A4F_8BC9').change(function() {
                     checkOver70_2();
                 });
                 $('#N60_005F_8E73_8A4F_8BC7_9432').change(function() {
@@ -181,7 +181,7 @@
                 }
 
                 function checkOver70_2() {
-                    if ($('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked')) {
+                    if ($('#N50_005F_8E73_8A4F_8BC9').prop('checked')) {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', false);
                     } else {
@@ -223,7 +223,7 @@
             });
             $(function() {
                 var cb1 = $('#over_70_check');
-                var cb2 = $('#N55_005F_8E73_8A4F_8BC7_94D4');
+                var cb2 = $('#N50_005F_8E73_8A4F_8BC9');
                 cb1.change(function() {
                     if (cb1.prop('checked')) {
                         cb2.prop('checked', true);
@@ -291,7 +291,180 @@
                 insertDataFromEmployee(data)
             });
         </script>
+        <script type="module">
+            $(document).ready(function() {
+            function cal1() {
+                var nullFlg = true;
 
+                var valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
+                var valueB = parseFloat($('#N45__005F_8E73_8A4F_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N42_005F_8F8A_8DDD_926E').val() == "" && $('#N45__005F_8E73_8A4F_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N48_005F_8E73_8A4F_8BC7').val(val);
+                } else {
+                    $('#N48_005F_8E73_8A4F_8BC7').val("");
+                }
+            }
+            function cal2() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
+                var valueB = parseFloat($('#N46__005F_8E73_93E0_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N43_947A_9242_8BC7_94D4').val() == "" && $('#N46__005F_8E73_93E0_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N49_005F_8E73_8A4F_8BC8').val(val);
+                } else {
+                    $('#N49_005F_8E73_8A4F_8BC8').val("");
+                }
+            }
+            function cal3() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N44_005F_92AC_88E6').val()) || 0;
+                var valueB = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N44_005F_92AC_88E6').val() == "" && $('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N50_005F_8E73_8A4F_8BC9').val(val);
+                } else {
+                    $('#N50_005F_8E73_8A4F_8BC9').val("");
+                }
+            }
+            function cal4() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;
+
+                var val = valueA + valueB + valueC;
+
+                if ($('#N48_005F_8E73_8A4F_8BC7').val() == "" && $('#N49_005F_8E73_8A4F_8BC8').val() == "" && $('#N50_005F_8E73_8A4F_8BC9').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N51_005F_8E73_8A4F_8BC7').val(val);
+                } else {
+                    $('#N51_005F_8E73_8A4F_8BC7').val("");
+                }
+            }
+            function cal5() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if (val !== null && !isNaN(val)) {
+                    $('#N52_005F_8E73_8A4F').val(val);
+                } else {
+                    $('#N52_005F_8E73_8A4F').val("");
+                }
+            }
+            function cal6() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
+                var valueD = parseFloat($('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                if (valueD !== "") {
+                    var parsedD = parseFloat(valueD);
+                    if (!isNaN(parsedD)) {
+                        sum = sum-parsedD;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if(valueD !== null && !isNaN(valueD)){
+                    if (val !== null && !isNaN(val)) {
+                        $('#N53_005F_8E73_93E0').val(val);
+                    } else {
+                        $('#N53_005F_8E73_93E0').val("");
+                    }
+                }
+            }
+
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4').on('input', cal1);
+            $('#N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4').on('input', cal2);
+            $('#N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal3);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal4);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal5);
+            $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E, #N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal6);
+        });
+        </script>
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot

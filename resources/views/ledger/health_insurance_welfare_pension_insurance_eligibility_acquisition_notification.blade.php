@@ -199,7 +199,30 @@
                 insertDataFromEmployee(data)
             });
         </script>
+        <script type="module">
+            $(document).ready(function() {
+            function calculateTotal() {
+                var nullFlg = true;
 
+                var valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
+                var valueB = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N42_005F_8F8A_8DDD_926E').val() == "" && $('#N43_947A_9242_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N44_005F_92AC_88E6').val(val);
+                } else {
+                    $('#N44_005F_92AC_88E6').val("");
+                }
+            }
+
+            $('#N42_005F_8F8A_8DDD_926E, #N43_947A_9242_8BC7_94D4').on('input', calculateTotal);
+        });
+        </script>
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot

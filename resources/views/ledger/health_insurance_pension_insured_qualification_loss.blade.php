@@ -55,7 +55,7 @@
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_insurance', 'required_dependent']" :file_original_names="[
+                                <x-ledger-attachment :file_original_names="[
                                     'insurance' => '被保険者証',
                                     'dependent' => '被扶養者証',
                                     'remote_dependent' => '遠隔地被扶養者証',

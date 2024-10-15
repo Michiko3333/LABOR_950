@@ -48,10 +48,10 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_insurance" => 'required_if:radio_file_insurance,1|file|mimes:jpg,pdf|max:50000',
+            "file_insurance" => 'required_if:radio_file_insurance,2|file|mimes:jpg,pdf|max:50000',
             "radio_file_other" => 'nullable|string|in:2',
-            "file_dependent" => 'required_if:radio_file_dependent,1|file|mimes:jpg,pdf|max:50000',
-            "file_remote_dependent" => 'required_if:radio_file_load,2|file|mimes:jpg,pdf|max:50000',
+            "file_dependent" => 'required_if:radio_file_dependent,2|file|mimes:jpg,pdf|max:50000',
+            "file_remote_dependent" => 'required_if:radio_file_remote_dependent,2|file|mimes:jpg,pdf|max:50000',
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             'health_insurance' => 'nullable|int|in:1',
@@ -93,8 +93,8 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
             'passed_away_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:passed_away_date_year,passed_away_date_era,passed_away_date_day',
             'passed_away_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:passed_away_date_year,passed_away_date_month,passed_away_date_era',
             'remarks_other_details' => 'nullable|string|max:255',
-            'insurance_card_attached' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'insurance_card_irrepayable' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            'insurance_card_attached' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'insurance_card_irrepayable' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
             'over_70_non_applicable_date_era' => 'nullable|string|in:7,9|required_with:over_70_non_applicable_date_year,over_70_non_applicable_date_month,over_70_non_applicable_date_day',
             'over_70_non_applicable_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:over_70_non_applicable_date_era,over_70_non_applicable_date_month,over_70_non_applicable_date_day',
             'over_70_non_applicable_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:over_70_non_applicable_date_year,over_70_non_applicable_date_era,over_70_non_applicable_date_day',
