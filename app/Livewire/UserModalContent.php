@@ -10,6 +10,7 @@ use App\Models\Employee_department;
 use App\Models\User;
 use App\Models\Prefecture;
 use App\Rules\noEmoji;
+use App\Permission;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +33,7 @@ class UserModalContent extends Component
         'company_name' => '',
         'branch_name' => '',
         'departments' => [],
-        'managerial_position' => ''
+        'human_resources_permissions' => true
     ];
     public $names = [
         'old_last_name' => '',
@@ -113,12 +114,11 @@ class UserModalContent extends Component
     {
         $user = Auth::user();
         if (!empty($user)) {
+            $this->role_id = (new Permission())->getRoleId();
             $employee = CurrentUser::info();
             $this->login_email = $user->email;
             $this->login_email_edit = $this->login_email;
             if (!empty($user) || !empty($employee)) {
-                $this->employee_id = $employee->id;
-                $this->role_id = $employee->role_id;
                 if ($this->role_id !== 999) {
                     $company = CurrentUser::currentCompany();
                     if($this->role_id === 500) {
@@ -143,7 +143,19 @@ class UserModalContent extends Component
                         ->leftJoin('m_department as d', 'department_id', '=', 'd.id')
                         ->where('employee_id', $employee->id)
                         ->pluck('name')->toArray();
-                    $this->profiles['managerial_position'] = $employee->managerial_position()->where('delete_flg', 0)->first();
+                    if ($this->role_id === 100) {
+                        $departmentPermissionId = Employee_department::select('d.department_permission_id')
+                            ->join('m_department as d', 'm_employee_department.department_id', '=', 'd.id')
+                            ->where('m_employee_department.delete_flg', 0)
+                            ->where('d.delete_flg', 0)
+                            ->where('m_employee_department.employee_id', $employee->id)
+                            ->pluck('d.department_permission_id')
+                            ->toArray();
+                        if (!in_array(2, $departmentPermissionId)){
+                            $this->profiles['human_resources_permissions'] = false;
+                        }
+                    }
+
                 } elseif ($this->role_id = 999) {
                     $this->profiles['branch_name'] = "-";
                     $this->profiles['departments'] = ["-"];

@@ -145,7 +145,9 @@
                             <button class="ui button small" type="button" wire:click="namesCancel">キャンセル</button>
                             <button class="ui button small primary" type="submit">保存</button>
                         @else
-                            <button class="ui button small" type="button" wire:click="namesEdit">編集</button>
+                            @if ($profiles['human_resources_permissions'])
+                                <button class="ui button small" type="button" wire:click="namesEdit">編集</button>
+                            @endif
                         @endif
                     </div>
                 </form>
@@ -286,7 +288,9 @@
                                 wire:click="emergencyCancel">キャンセル</button>
                             <button class="ui button small primary" type="submit">保存</button>
                         @else
-                            <button class="ui button small" type="button" wire:click="emergencyEdit">編集</button>
+                            @if ($profiles['human_resources_permissions'])
+                                <button class="ui button small" type="button" wire:click="emergencyEdit">編集</button>
+                            @endif
                         @endif
                     </div>
                 </form>
