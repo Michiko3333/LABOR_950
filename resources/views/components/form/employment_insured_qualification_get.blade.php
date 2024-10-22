@@ -137,7 +137,47 @@
 <OPTION value="7" {{ old('employment_status') == '7' ? 'selected' : '' }}>7</OPTION>
 </SELECT></SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:217px; top:358px; width:38px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">(1～7)</SPAN>
-<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:217px; top:373px; width:61px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">記載要領参照</SPAN>
+<SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:217px; top:373px; width:61px; height:11px; text-align:left; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;"><a id="employment-status">記載要領参照</a></SPAN>
+<div class="ui mini modal" id="employment-status-modal">
+    <div class="content">
+            <div class="flex-container">
+                <p style="padding-top:13px;">日雇</p>
+                <p>1</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">派遣</p>
+                <p>2</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">パートタイム</p>
+                <p>3</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">有期契約労働者</p>
+                <p>4</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">季節的雇用</p>
+                <p>5</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">船員</p>
+                <p>6</p>
+            </div>
+            <div class="flex-container">
+                <p style="padding-top:13px;">その他</p>
+                <p>7</p>
+            </div>
+            <p></p>
+            <p style="font-size: 0.8em;">届出に係る者が派遣労働者（いわゆる登録型の派遣労働者。船員に該当する者を除く。）に該当する場合には「2」（派遣労働者）、
+            短時間労働者（週所定労働時間が30時間未満の者（派遣労働者、船員に該当する者を除く。））に該当する場合には「3」（パートタイム）、
+            有期契約労働者（パートタイム、派遣労働者、船員に該当する者を除く。）に該当する場合には「4」（有期契約労働者）、
+            船員に該当する場合には「6」（船員）を選択してください。</p>
+    </div>
+    <div class="basic actions">
+        <div class="ui negative button">戻る</div>
+    </div>
+</div>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:293px; top:339px; width:57px; height:11px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">13職種</SPAN>
 <SPAN style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:293px; top:361px; width:57px; height:19px; font-size:13px;"><SELECT size="1" tabindex="27" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:57px; height:19px;" id="J29_005F_9045_8EED" name="occupation_type">
 <OPTION value=""></OPTION>
@@ -158,47 +198,47 @@
 <div class="ui mini modal" id="occupation-type-modal">
     <div class="content">
             <div class="flex-container">
-                <p>管理的職業</p>
+                <p style="padding-top:13px;">管理的職業</p>
                 <p>01</p>
             </div>
             <div class="flex-container">
-                <p>専門的・技術的職業</p>
+                <p style="padding-top:13px;">専門的・技術的職業</p>
                 <p>02</p>
             </div>
             <div class="flex-container">
-                <p>事務的職業</p>
+                <p style="padding-top:13px;">事務的職業</p>
                 <p>03</p>
             </div>
             <div class="flex-container">
-                <p>販売の職業</p>
+                <p style="padding-top:13px;">販売の職業</p>
                 <p>04</p>
             </div>
             <div class="flex-container">
-                <p>サービスの職業</p>
+                <p style="padding-top:13px;">サービスの職業</p>
                 <p>05</p>
             </div>
             <div class="flex-container">
-                <p>保安の職業</p>
+                <p style="padding-top:13px;">保安の職業</p>
                 <p>06</p>
             </div>
             <div class="flex-container">
-                <p>農林漁業の職業</p>
+                <p style="padding-top:13px;">農林漁業の職業</p>
                 <p>07</p>
             </div>
             <div class="flex-container">
-                <p>生産工程の職業</p>
+                <p style="padding-top:13px;">生産工程の職業</p>
                 <p>08</p>
             </div>
             <div class="flex-container">
-                <p>輸送・機械運転の職業</p>
+                <p style="padding-top:13px;">輸送・機械運転の職業</p>
                 <p>09</p>
             </div>
             <div class="flex-container">
-                <p>建設・採掘の職業</p>
+                <p style="padding-top:13px;">建設・採掘の職業</p>
                 <p>10</p>
             </div>
             <div class="flex-container">
-                <p>運搬・清掃・包装等の職業</p>
+                <p style="padding-top:13px;">運搬・清掃・包装等の職業</p>
                 <p>11</p>
             </div>
     </div>
@@ -489,6 +529,9 @@
         $(document).ready(function() {
             $('#occupation-type').click(function() {
                 $('#occupation-type-modal').modal('show');
+            });
+            $('#employment-status').click(function() {
+                $('#employment-status-modal').modal('show');
             });
         });
 </script>
