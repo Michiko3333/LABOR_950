@@ -72,5 +72,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ApplicationFormSeeder::class);
         $this->call(DepartmentPermissionSeeder::class);
         $this->call(FeatureSeeder::class);
+        $this->call(FilterEmployeeListSeeder::class);
     }
 }

@@ -27,6 +27,8 @@ use App\Models\Managerial_position;
 use App\Models\Residential_status;
 use App\Models\User;
 use App\Models\Dependent;
+use App\Models\FilterEmployeeList;
+use App\Models\UserFilterEmployeeList;
 use App\Models\Values_employee_insured_age_type;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -58,6 +60,7 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
+        $currentUser = CurrentUser::info();
         $currentCompany = CurrentUser::CurrentCompany();
         $division = $currentCompany->company_division;
 
@@ -66,7 +69,28 @@ class EmployeeController extends Controller
             'limit' => 20,
             'search' => $request->input('search'),
         ];
-        return view('employee.employees', compact('division'));
+
+        $columnList = FilterEmployeeList::select('name', 'value');
+
+        if ($userPermission->isBasicDepartment()) {
+            $columnList = $columnList->where('hidden_basic_department', 0);
+        }
+
+        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
+        $userDefaultList = [];
+        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        if (count($userList) > 0) {
+            foreach ($userList as $key => $value) {
+                $key = array_search($value, array_column($masterColumnList, 'value'));
+                $userDefaultList[] = $masterColumnList[$key];
+            }
+        } else {
+            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
+            $userDefaultList = $defaultList;
+        }
+
+
+        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList]);
     }
 
     public function employee_update(Request $request, $id)
@@ -93,7 +117,7 @@ class EmployeeController extends Controller
                     $filePath = '/' . $file . '?v=' . time();
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         }
@@ -289,7 +313,7 @@ class EmployeeController extends Controller
             $employee = Employee::find($request->input('employee_id'));
             $employee->update(['mynumber_card_no' => $request->input('mynumber_card_no')]);
 
-            $deids = $request->input('de-id',[]);
+            $deids = $request->input('de-id', []);
             $excepts = [];
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
@@ -333,8 +357,8 @@ class EmployeeController extends Controller
             $company_id = $company->id;
             $icon_file = $request->file('icon_file');
             $icon_delete_flg = $request->input('icon_delete_flg');
-            if($company_id && $employee_id) {
-                if($icon_delete_flg === "1") {
+            if ($company_id && $employee_id) {
+                if ($icon_delete_flg === "1") {
                     $directory = 'photo/' . $company_id;
 
                     foreach (Storage::files($directory) as $file) {

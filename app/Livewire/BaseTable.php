@@ -15,6 +15,15 @@ class BaseTable extends Component
 
     public $paginated = false;
 
+    public $useColumnFilter = false;
+    public $showColumns = [];
+
+    public function mount()
+    {
+
+        if ($this->useColumnFilter) $this->dispatch('dispatch-filter-column');
+    }
+
     protected function getData($condition)
     {
         if (!$this->paginated) $this->page = 1;
@@ -43,6 +52,15 @@ class BaseTable extends Component
             ],
         ];
     }
+
+    public function isShowColumn($value)
+    {
+        $key = array_search($value, array_column($this->showColumns, 'value'));
+        $r = $key > -1;
+
+        return $this->useColumnFilter ? $r : true;
+    }
+
     #[On('movePage')]
     public function movePage($page)
     {
@@ -60,5 +78,10 @@ class BaseTable extends Component
     {
         $this->paginated = true;
         $this->page = $this->page + 1;
+    }
+    #[On('refresh-filter')]
+    public function filterColumn($list)
+    {
+        $this->showColumns = $list;
     }
 }
