@@ -1,11 +1,27 @@
 <section>
-    <div class="ui card full card-shadow shift-calendar-inputs">
+    <div style="width: 250px;">
+        <select class="ui fluid dropdown" name="current_shift" wire:model.live="current_shift"
+            wire:change="onChangeShiftId">
+            @foreach ($saved_list as $k => $value)
+                <option value="{{ $k }}">{{ $value }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="ui card full card-shadow shift-calendar-inputs" wire:key="shift-form:{{ $current_shift }}">
         <div class="content">
             <section style="display: flex; width: 100%;">
                 <div class="ui form" style="width: 50%;">
                     <div class="field">
                         <label for="title_value">タイトル</label>
                         <input type="text" id="title_value" name="title_value" wire:model="title_value">
+                    </div>
+                    <div class="field">
+                        <label for="br-start_days_of_week">事業所</label>
+                        <select class="ui fluid dropdown" name="branch_value" wire:model.live="branch_value">
+                            @foreach ($branch_list as $k => $value)
+                                <option value="{{ $k }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="three fields">
                         <div class="field ">
@@ -56,6 +72,13 @@
                                     <option value="{{ $k }}">{{ $value }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="field my-1">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="is_default" wire:model.live="is_default"
+                                {{ $is_default == 1 ? 'checked' : '' }}>
+                            <label>この勤務予定表をデフォルトにする</label>
                         </div>
                     </div>
                 </div>

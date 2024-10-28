@@ -10,11 +10,13 @@ class ShiftCalendar extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'company_id',
+        'branch_id',
         'title',
         'year',
         'month',
         'day',
         'week',
+        'is_default'
     ];
 
     public function company()

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Branch;
 use App\Models\CurrentUser;
 use App\Models\ShiftCalendar;
 use App\Models\ShiftCalendarHoliday;
@@ -22,6 +23,7 @@ class ShiftForm extends Component
     public $start_weekday = 7;
     public $start_date = 1;
     public $render_months = [];
+    public $is_default = false;
 
     public $branch_value = null;
     public $title_value = null;
@@ -34,8 +36,12 @@ class ShiftForm extends Component
     public $weeks = [];
     public $day_list = [];
     public $year_list = [];
-    public $test = [];
     public $values = [];
+
+    public $branch_list = [];
+
+    public $current_shift = 0;
+    public $saved_list = [];
 
     public $is_saving = false;
 
@@ -48,6 +54,8 @@ class ShiftForm extends Component
 
         $this->editable = $editable;
 
+        $this->branch_list = $current_company->branch()->get()->pluck('name', 'id');
+
         $current_main_branch = $current_company->branch()->where('branch_type', 1)->where('delete_flg', 0)->first();
         if (!empty($current_main_branch)) {
             $h = $current_main_branch->agreed_hours_day_h;
@@ -55,24 +63,41 @@ class ShiftForm extends Component
             $this->work_time = $h + floor($m / 60 * 100) / 100;
         }
 
-        $master = ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->first();
+        $shiftCalendar = ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->orderBy('is_default', 'desc');
+
+        $this->saved_list = $shiftCalendar->get()->pluck('title', 'id');
+        $this->saved_list[0] = '新規';
+
+        if ($this->current_shift > 0) {
+            $shiftCalendar = $shiftCalendar->where('id', $this->current_shift);
+        }
+        $master = $shiftCalendar->first();
+
         if (empty($master)) {
-            $this->title_value = $current_company->name;
+            $main_branch = Branch::where('company_id', $current_company->id)->where('branch_type', 1)->first();
+            $this->title_value = '';
             $this->start_year = date('Y');
-            $this->start_month = $current_company->start_month_of_year;
-            $this->start_date = $current_company->start_day_of_month;
-            $this->start_weekday = $current_company->start_day_of_week;
+            $this->start_month = $current_company->start_month_of_year ?? 1;
+            $this->start_date = $current_company->start_day_of_month ?? 1;
+            $this->start_weekday = $current_company->start_day_of_week ?? 7;
+            $this->branch_value = $main_branch->id;
+            $this->is_default = 0;
+            $this->current_shift = 0;
         } else {
+            $this->current_shift = $master->id;
             $this->title_value = $master->title;
             $this->start_year = $master->year;
             $this->start_month = $master->month;
             $this->start_date = $master->day;
             $this->start_weekday = $master->week;
+            $this->branch_value = $master->branch_id ?? $current_company->branch_id;
+            $this->is_default = $master->is_default;
 
             $holidays = ShiftCalendarHoliday::where('company_id', $current_company->id)
                 ->where('shift_calendar_id', $master->id)
                 ->where('delete_flg', 0)
                 ->get();
+
             foreach ($holidays as $holiday) {
                 $date = [
                     'full' => date('Y-m-d', strtotime($holiday->full_date)),
@@ -103,6 +128,11 @@ class ShiftForm extends Component
             $this->start_date = 1;
         }
         $this->makeListData();
+
+        $current_company = CurrentUser::currentCompany();
+        $shiftCalendar = ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->orderBy('is_default', 'desc');
+        $this->saved_list = $shiftCalendar->get()->pluck('title', 'id');
+        $this->saved_list[0] = '新規';
 
         $this->dispatch('holiday-modal-week-order', $this->start_weekday);
 
@@ -159,29 +189,33 @@ class ShiftForm extends Component
         DB::beginTransaction();
         try {
             $current_company = CurrentUser::currentCompany();
-            $current_data = ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->first();
-            if (!empty($current_data)) {
-                ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->update([
+            if (!empty($this->is_default)) {
+                ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->update(['is_default' => 0]);
+            }
+            if ($this->current_shift > 0) {
+                $target = ShiftCalendar::where('id', $this->current_shift)->where('company_id', $current_company->id)->where('delete_flg', 0);
+                $target->update([
                     'company_id' => $current_company->id,
+                    'branch_id' => $this->branch_value,
                     'title' => $this->title_value,
                     'year' => $this->start_year,
                     'month' => $this->start_month,
                     'day' => $this->start_date,
-                    'week' => $this->start_weekday
+                    'week' => $this->start_weekday,
+                    'is_default' => $this->is_default
                 ]);
-
                 $from = date('Y-m-d 00:00:00', strtotime($this->start_year . '-' . $this->start_month . '-' . $this->start_date));
                 $tmp = strtotime($this->start_year . '-' . $this->start_month . '-' . $this->start_date);
                 $to = date('Y-m-d 00:00:00', strtotime('+1 year', $tmp));
 
                 ShiftCalendarHoliday::whereBetween('full_date', [$from, $to])
                     ->where('company_id', $current_company->id)
-                    ->where('shift_calendar_id', $current_data->id)
+                    ->where('shift_calendar_id', $this->current_shift)
                     ->update(['delete_flg' => 1]);
 
                 foreach ($this->values as $value) {
                     $q = ShiftCalendarHoliday::where('company_id', $current_company->id)
-                        ->where('shift_calendar_id', $current_data->id)
+                        ->where('shift_calendar_id', $this->current_shift)
                         ->where('year', $value['year'])
                         ->where('month', $value['month'])
                         ->where('day', $value['date']);
@@ -193,7 +227,7 @@ class ShiftForm extends Component
                     } else {
                         ShiftCalendarHoliday::create([
                             'company_id' => $current_company->id,
-                            'shift_calendar_id' => $current_data->id,
+                            'shift_calendar_id' => $this->current_shift,
                             'year' => $value['year'],
                             'month' => $value['month'],
                             'day' => $value['date'],
@@ -202,18 +236,20 @@ class ShiftForm extends Component
                     }
                 }
             } else {
-                $created = ShiftCalendar::create([
+                $target = ShiftCalendar::create([
                     'company_id' => $current_company->id,
+                    'branch_id' => $this->branch_value,
                     'title' => $this->title_value,
                     'year' => $this->start_year,
                     'month' => $this->start_month,
                     'day' => $this->start_date,
-                    'week' => $this->start_weekday
+                    'week' => $this->start_weekday,
+                    'is_default' => $this->is_default
                 ]);
                 foreach ($this->values as $value) {
-                    $q = ShiftCalendarHoliday::create([
+                    ShiftCalendarHoliday::create([
                         'company_id' => $current_company->id,
-                        'shift_calendar_id' => $created->id,
+                        'shift_calendar_id' => $target->id,
                         'year' => $value['year'],
                         'month' => $value['month'],
                         'day' => $value['date'],
@@ -221,7 +257,6 @@ class ShiftForm extends Component
                     ]);
                 }
             }
-
             DB::commit();
             $this->dispatch('onSavedShiftCalendar');
         } catch (\Exception $e) {
@@ -230,6 +265,7 @@ class ShiftForm extends Component
             $this->dispatch('onErrorShiftCalendar');
         }
         $this->is_saving = false;
+        $this->render();
     }
 
     #[On('calendar-small-clicked')]
@@ -361,5 +397,53 @@ class ShiftForm extends Component
             }
         }
         $this->values = array_values($add_values);
+    }
+
+    public function onChangeShiftId()
+    {
+        $current_company = CurrentUser::info();
+        $main_branch = Branch::where('company_id', $current_company->id)->where('branch_type', 1)->first();
+
+        $this->values = [];
+
+        if ($this->current_shift > 0) {
+            $master = ShiftCalendar::where('company_id', $current_company->id)->where('id', $this->current_shift)->where('delete_flg', 0)->first();
+
+            $this->current_shift = $master->id;
+            $this->title_value = $master->title;
+            $this->start_year = $master->year;
+            $this->start_month = $master->month;
+            $this->start_date = $master->day;
+            $this->start_weekday = $master->week;
+            $this->branch_value = $master->branch_id;
+            $this->is_default = $master->is_default;
+
+            $holidays = ShiftCalendarHoliday::where('company_id', $current_company->id)
+                ->where('shift_calendar_id', $master->id)
+                ->where('delete_flg', 0)
+                ->get();
+
+            foreach ($holidays as $holiday) {
+                $date = [
+                    'full' => date('Y-m-d', strtotime($holiday->full_date)),
+                    'color' => 'var(--color-red)',
+                    'year' => $holiday->year,
+                    'month' => $holiday->month,
+                    'date' => $holiday->day,
+                    'mark' => 'holiday'
+                ];
+                $this->values[] = $date;
+            }
+        } else {
+            $this->title_value = '';
+            $this->start_year = date('Y');
+            $this->start_month = $current_company->start_month_of_year ?? 1;
+            $this->start_date = $current_company->start_day_of_month ?? 1;
+            $this->start_weekday = $current_company->start_day_of_week ?? 7;
+            $this->branch_value = $main_branch->id;
+            $this->is_default = false;
+        }
+
+        $this->render();
     }
 }
