@@ -61,6 +61,10 @@ class FeatureSeeder extends Seeder
                 'id' => '12',
                 'name' => '年間勤務予定表',
             ],
+            [
+                'id' => '13',
+                'name' => 'pickup設定',
+            ],
         ]);
     }
 }

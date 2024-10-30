@@ -149,6 +149,13 @@
                             年間勤務予定表</a>
                     </li>
                 @endif
+                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment())
+                    <li class="item">
+                        <a href="{{ route('pickup.setting') }}">
+
+                            Pick up設定</a>
+                    </li>
+                @endif
             @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"

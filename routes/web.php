@@ -46,6 +46,7 @@ use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
+use App\Http\Controllers\PickUpController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -159,6 +160,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('/calendar/shift', [ShiftCalendarController::class, 'index'])->name('calendar.shift');
         Route::get('/calendar/shift/download', [ShiftCalendarController::class, 'download'])->name('calendar.shift_download');
+        Route::get('/pick_up/setting', [PickUpController::class, 'setting'])->name('pickup.setting');
+        Route::post('/pick_up/setting/pick_up_setting', [PickUpController::class, 'pick_up_setting'])->name('pickup.pick_up_setting');
+        Route::post('/pick_up/setting/get_officers', [PickUpController::class, 'get_officers'])->name('pickup.get_officers');
 
         // 帳票
         Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
