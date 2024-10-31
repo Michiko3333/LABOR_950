@@ -18,7 +18,6 @@ class ValuesCalendarEventCategoryTypeSeeder extends Seeder
             ['name' => '税務業務'],
             ['name' => '人事業務'],
             ['name' => '行政手続'],
-            ['name' => '助成金・補助金等'],
             ['name' => 'その他']
         ]);
     }

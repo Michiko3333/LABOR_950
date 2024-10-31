@@ -57,6 +57,7 @@ class SideSchedule extends Component
     public function applySchedules()
     {
         $permission = new Permission();
+        $eventPermission = $permission->isGeneralAffair() && !$permission->isAdmin();
         $current_company = CurrentUser::currentCompany();
         $current_user = CurrentUser::info();
         $events_list = [];
@@ -67,30 +68,7 @@ class SideSchedule extends Component
             $limit_date = new Carbon($this->year . '-' . $this->month . '-' . $this->date . ' 23:59:59');
             $limit_date = $limit_date->copy()->addMonth();
 
-            $admin_event = Calendar_event::select(
-                't_calendar_event.id',
-                't_calendar_event.name',
-                't_calendar_event.from',
-                't_calendar_event.to',
-                't_calendar_event.contents',
-                't_calendar_event.employee_id',
-                'emp.role_id'
-            )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                ->where('t_calendar_event.delete_flg', 0)
-                ->where('emp.role_id', 999)
-                ->where(function ($query) use ($base_date, $limit_date) {
-                    $query->where('t_calendar_event.from', '>=', $base_date)
-                        ->where('t_calendar_event.from', '<=', $limit_date)
-                        ->orWhere(function ($query) use ($base_date, $limit_date) {
-                            $query->whereNotNull('t_calendar_event.to')
-                                ->where('t_calendar_event.to', '>=', $base_date)
-                                ->where('t_calendar_event.to', '<=', $limit_date);
-                        });
-                })
-                ->get()->toArray();
-            $events_list = array_merge($events_list, $admin_event);
-
-            if ($permission->isAdmin()) {
+            if ($permission->isAdmin() || $permission->isLabor() || $eventPermission) {
                 $employee_event = Calendar_event::select(
                     't_calendar_event.id',
                     't_calendar_event.name',
@@ -98,7 +76,6 @@ class SideSchedule extends Component
                     't_calendar_event.to',
                     't_calendar_event.contents',
                     't_calendar_event.employee_id',
-                    'emp.role_id'
                 )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
                     ->where('t_calendar_event.company_id', $current_company->id)
                     ->where('t_calendar_event.delete_flg', 0)
@@ -113,56 +90,6 @@ class SideSchedule extends Component
                     })
                     ->get()->toArray();
                 $events_list = array_merge($events_list, $employee_event);
-            } else if ($permission->isLabor()) {
-                // 顧客側すべて
-                $employee_event = Calendar_event::select(
-                    't_calendar_event.id',
-                    't_calendar_event.name',
-                    't_calendar_event.from',
-                    't_calendar_event.to',
-                    't_calendar_event.contents',
-                    't_calendar_event.employee_id',
-                    'emp.role_id'
-                )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                    ->where('t_calendar_event.company_id', $current_company->id)
-                    ->where(function ($query) use ($base_date, $limit_date) {
-                        $query->where('t_calendar_event.from', '>=', $base_date)
-                            ->where('t_calendar_event.from', '<=', $limit_date)
-                            ->orWhere(function ($query) use ($base_date, $limit_date) {
-                                $query->whereNotNull('t_calendar_event.to')
-                                    ->where('t_calendar_event.to', '>=', $base_date)
-                                    ->where('t_calendar_event.to', '<=', $limit_date);
-                            });
-                    })
-                    ->where('t_calendar_event.delete_flg', 0)
-                    ->where('emp.role_id', 100)
-                    ->get()->toArray();
-                $events_list = array_merge($events_list, $employee_event);
-
-                // 自分かつ顧客宛
-                $own_event = Calendar_event::select(
-                    't_calendar_event.id',
-                    't_calendar_event.name',
-                    't_calendar_event.from',
-                    't_calendar_event.to',
-                    't_calendar_event.contents',
-                    't_calendar_event.employee_id',
-                    'emp.role_id'
-                )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                    ->where('t_calendar_event.employee_id', $current_user->id)
-                    ->where('t_calendar_event.company_id', $current_company->id)
-                    ->where(function ($query) use ($base_date, $limit_date) {
-                        $query->where('t_calendar_event.from', '>=', $base_date)
-                            ->where('t_calendar_event.from', '<=', $limit_date)
-                            ->orWhere(function ($query) use ($base_date, $limit_date) {
-                                $query->whereNotNull('t_calendar_event.to')
-                                    ->where('t_calendar_event.to', '>=', $base_date)
-                                    ->where('t_calendar_event.to', '<=', $limit_date);
-                            });
-                    })
-                    ->where('t_calendar_event.delete_flg', 0)
-                    ->get()->toArray();
-                $events_list = array_merge($events_list, $own_event);
             } else {
                 $employee_event = Calendar_event::select(
                     't_calendar_event.id',
@@ -171,9 +98,7 @@ class SideSchedule extends Component
                     't_calendar_event.to',
                     't_calendar_event.contents',
                     't_calendar_event.employee_id',
-                    'emp.role_id'
                 )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                    ->where('t_calendar_event.employee_id', '!=', $current_user->id)
                     ->where('t_calendar_event.company_id', $current_company->id)
                     ->where(function ($query) use ($base_date, $limit_date) {
                         $query->where('t_calendar_event.from', '>=', $base_date)
@@ -184,35 +109,10 @@ class SideSchedule extends Component
                                     ->where('t_calendar_event.to', '<=', $limit_date);
                             });
                     })
-                    ->where('emp.role_id', 100)
                     ->where('t_calendar_event.category_type', 1)
                     ->where('t_calendar_event.delete_flg', 0)
                     ->get()->toArray();
                 $events_list = array_merge($events_list, $employee_event);
-
-                $own_event = Calendar_event::select(
-                    't_calendar_event.id',
-                    't_calendar_event.name',
-                    't_calendar_event.from',
-                    't_calendar_event.to',
-                    't_calendar_event.contents',
-                    't_calendar_event.employee_id',
-                    'emp.role_id'
-                )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                    ->where('t_calendar_event.employee_id', $current_user->id)
-                    ->where('t_calendar_event.company_id', $current_company->id)
-                    ->where(function ($query) use ($base_date, $limit_date) {
-                        $query->where('t_calendar_event.from', '>=', $base_date)
-                            ->where('t_calendar_event.from', '<=', $limit_date)
-                            ->orWhere(function ($query) use ($base_date, $limit_date) {
-                                $query->whereNotNull('t_calendar_event.to')
-                                    ->where('t_calendar_event.to', '>=', $base_date)
-                                    ->where('t_calendar_event.to', '<=', $limit_date);
-                            });
-                    })
-                    ->where('t_calendar_event.delete_flg', 0)
-                    ->get()->toArray();
-                $events_list = array_merge($events_list, $own_event);
             }
             $this->isSelected = true;
         } else {
@@ -221,14 +121,7 @@ class SideSchedule extends Component
 
         $i = 0;
         foreach ($events_list as $ev) {
-            $type = '';
-            if (!empty($ev['role_id'])) {
-                if ($ev['role_id'] == 999) $type = 'admin';
-                else if ($ev['role_id'] == 500) $type = 'labor';
-                else if ($ev['employee_id'] != $current_user->id) $type = 'normal';
-            }
-
-            $this->add_event($ev['id'], $ev['name'], $ev['from'], $ev['to'], $ev['contents'], $type);
+            $this->add_event($ev['id'], $ev['name'], $ev['from'], $ev['to'], $ev['contents']);
             $i++;
         }
 

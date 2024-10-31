@@ -9,7 +9,6 @@
     font-size: 1.5em;
     font-weight: bold;
     padding: 0.5em 0.5em 1em 0.5em;
-
 }
 
 .calendar-small .header .month-year {
@@ -50,7 +49,6 @@
     font-weight: bold;
     color: var(--color-black);
     text-align: center;
-
 }
 
 .calendar-small .days .day_name:nth-child(7) {
@@ -79,7 +77,7 @@
     border-radius: 20%;
 }
 
-.calendar-small .days .day_num>span.mark.dot {
+.calendar-small .days .day_num > span.mark.dot {
     position: absolute;
     padding: 3px;
     border-radius: 50%;
@@ -88,7 +86,7 @@
     pointer-events: none;
 }
 
-.calendar-small .days .day_num>span.mark.holiday {
+.calendar-small .days .day_num > span.mark.holiday {
     position: absolute;
     top: 10%;
     left: 10%;
@@ -99,7 +97,6 @@
     background-color: transparent !important;
     pointer-events: none;
 }
-
 
 .calendar-small .days .day_num .event {
     margin-top: 4px;
@@ -134,7 +131,6 @@
     color: #fff;
 }
 
-
 /* Colors */
 .calendar-small .days .day_num .event.labor {
     background-color: var(--color-yellow);
@@ -152,7 +148,8 @@
     background-color: gray;
 }
 
-.calendar-small .days .day_num:nth-child(7n+1) {}
+.calendar-small .days .day_num:nth-child(7n + 1) {
+}
 
 .calendar-small .days .day_num:hover {
     /* background-color: #fdfdfd; */
@@ -168,7 +165,6 @@
     background-color: #f1f2f3;
     cursor: inherit;
 }
-
 
 /* CalendarForm */
 .calendars {
@@ -188,6 +184,20 @@
     font-weight: bold;
 }
 
+#detailCalendar .header.labor {
+    font-weight: bold;
+    background-color: var(--color-yellow);
+}
+
+#detailCalendar .header.admin {
+    font-weight: bold;
+    background-color: var(--color-red);
+}
+
+#detailCalendar .header.employee {
+    font-weight: bold;
+    background-color: var(--color-blue);
+}
 .ui.card.shift-calendar-inputs select.ui.dropdown {
     height: 48px;
 }

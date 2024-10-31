@@ -10,6 +10,8 @@ use Livewire\Component;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
 
+use Illuminate\Support\Facades\Log;
+
 class CalendarSmall extends Component
 {
     private $day_base = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

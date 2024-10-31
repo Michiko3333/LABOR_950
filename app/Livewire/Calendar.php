@@ -9,6 +9,9 @@ use App\Permission;
 use Livewire\Component;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Calendar extends Component
 {
@@ -33,6 +36,7 @@ class Calendar extends Component
     public $days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     public $first_day_of_week = 0;
     public $events = [];
+    public $last_event_id = 0;
 
     public $years = [];
     public $months = array(
@@ -52,6 +56,8 @@ class Calendar extends Component
 
     public $category_types = [];
 
+    public $repetition_types = ['繰り返さない', '毎日', '毎週', '毎月（曜日）', '毎月（日付）', '毎年'];
+
     public $select_year, $select_month;
     public $current_edit_id = 0;
 
@@ -59,12 +65,33 @@ class Calendar extends Component
     public $inputs_name = '';
     public $inputs_category = '';
     public $inputs_contents = '';
+    public $inputs_repetition = '';
     public $inputs_error = false;
 
     public $isOpen = false;
 
+    public $todayNextYear, $todayAfterNextYear;
+    public $todayNextMonth, $todayAfterNextMonth;
+
+    public $editPermission = false;
+
+    public $nextMonthEvent = [];
+    public $afterNextMonthEvent = [];
+
     public function mount()
     {
+        $today = date('Y-m' . '-01');
+        $dateTime = new \DateTime($today);
+        $dateTime1 = clone $dateTime;
+
+        $dateTime1->modify('+1 month');
+        $dateTime2 = clone $dateTime;
+        $dateTime2->modify('+2 month');
+        $this->todayNextYear = $dateTime1->format('Y');
+        $this->todayAfterNextYear = $dateTime2->format('Y');
+        $this->todayNextMonth = $dateTime1->format('m');
+        $this->todayAfterNextMonth = $dateTime2->format('m');
+
         $this->today = date('Y-m-d');
         $current_date = date('Y', strtotime($this->today));
         $one_year_ago = date('Y', strtotime('-1 year', strtotime($current_date)));
@@ -80,19 +107,50 @@ class Calendar extends Component
 
         $this->current_company = CurrentUser::currentCompany();
 
-        $this->category_types = Values_calendar_event_category_type::pluck('name', 'id');
+        $permission = new Permission();
+        $this->editPermission = ($permission->isGeneralAffair() && !$permission->isAdmin()) ? true : false;
 
-        $branch = CurrentUser::branch()->first();
-        if (!empty($branch)) {
-            if (!empty($branch->start_days_of_week)) {
-                $this->start_day = $branch->start_days_of_week - 1;
-            }
+        if (!empty($this->current_company->start_day_of_week)) {
+            $this->start_day = $this->current_company->start_day_of_week;
         }
 
+        $this->category_types = Values_calendar_event_category_type::pluck('name', 'id');
+
         $this->calcDate();
+
+        $this->getEvents();
+
+        $this->num_days = date('t', strtotime('01-' . $this->active_month . '-' . $this->active_year));
+        $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
+        $this->first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $this->days);
     }
 
     public function render()
+    {
+        $this->calcDate();
+
+        if ($this->start_day < 0 || $this->start_day > 6) $this->start_day = 0;
+        $before_start_day = array_slice($this->day_base, 0, $this->start_day);
+        $after_start_day = array_slice($this->day_base, $this->start_day);
+        $this->days = array_merge($after_start_day, $before_start_day);
+
+        $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
+        $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
+        $date_start = new Carbon($min);
+        $date_to = new Carbon($max);
+
+        $this->num_days = date('t', strtotime('01-' . $this->active_month . '-' . $this->active_year));
+        $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
+        $this->first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $this->days);
+
+        $this->nextMonthEvent = $this->getCalenderSmallDotValues(1);
+        $this->afterNextMonthEvent = $this->getCalenderSmallDotValues(2);
+
+        return view('livewire.calendar');
+    }
+
+    #[On('getEvents')]
+    public function getEvents()
     {
         $permission = new Permission();
         $this->calcDate();
@@ -111,25 +169,10 @@ class Calendar extends Component
         $current_company = CurrentUser::currentCompany();
         $events_list = [];
 
-        $admin_event = Calendar_event::select(
-            't_calendar_event.id',
-            't_calendar_event.name',
-            't_calendar_event.from',
-            't_calendar_event.to',
-            't_calendar_event.contents',
-            't_calendar_event.employee_id',
-            'emp.role_id'
-        )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-            ->where('t_calendar_event.delete_flg', 0)
-            ->where('emp.role_id', 999)
-            ->whereDate('t_calendar_event.from', '>=', $date_start)
-            ->whereDate('t_calendar_event.from', '<=', $date_to)
-            ->get()->toArray();
-        $events_list = array_merge($events_list, $admin_event);
-
-        if ($permission->isAdmin()) {
+        if ($permission->isAdmin() || $permission->isLabor() || $this->editPermission) {
             $employee_event = Calendar_event::select(
                 't_calendar_event.id',
+                't_calendar_event.category_type',
                 't_calendar_event.name',
                 't_calendar_event.from',
                 't_calendar_event.to',
@@ -143,45 +186,10 @@ class Calendar extends Component
                 ->whereDate('t_calendar_event.from', '<=', $date_to)
                 ->get()->toArray();
             $events_list = array_merge($events_list, $employee_event);
-        } else if ($permission->isLabor()) {
-            // 顧客側すべて
-            $employee_event = Calendar_event::select(
-                't_calendar_event.id',
-                't_calendar_event.name',
-                't_calendar_event.from',
-                't_calendar_event.to',
-                't_calendar_event.contents',
-                't_calendar_event.employee_id',
-                'emp.role_id'
-            )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $date_start)
-                ->whereDate('t_calendar_event.from', '<=', $date_to)
-                ->where('t_calendar_event.delete_flg', 0)
-                ->where('emp.role_id', 100)
-                ->get()->toArray();
-            $events_list = array_merge($events_list, $employee_event);
-
-            // 自分かつ顧客宛
-            $own_event = Calendar_event::select(
-                't_calendar_event.id',
-                't_calendar_event.name',
-                't_calendar_event.from',
-                't_calendar_event.to',
-                't_calendar_event.contents',
-                't_calendar_event.employee_id',
-                'emp.role_id'
-            )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                ->where('t_calendar_event.employee_id', $current_user->id)
-                ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $date_start)
-                ->whereDate('t_calendar_event.from', '<=', $date_to)
-                ->where('t_calendar_event.delete_flg', 0)
-                ->get()->toArray();
-            $events_list = array_merge($events_list, $own_event);
         } else {
             $employee_event = Calendar_event::select(
                 't_calendar_event.id',
+                't_calendar_event.category_type',
                 't_calendar_event.name',
                 't_calendar_event.from',
                 't_calendar_event.to',
@@ -189,43 +197,33 @@ class Calendar extends Component
                 't_calendar_event.employee_id',
                 'emp.role_id'
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                ->where('t_calendar_event.employee_id', '!=', $current_user->id)
-                ->where('t_calendar_event.company_id', $current_company->id)
+            ->where('t_calendar_event.company_id', $current_company->id)
+                ->where('t_calendar_event.delete_flg', 0)
                 ->whereDate('t_calendar_event.from', '>=', $date_start)
                 ->whereDate('t_calendar_event.from', '<=', $date_to)
-                ->where('emp.role_id', 100)
                 ->where('t_calendar_event.category_type', 1)
-                ->where('t_calendar_event.delete_flg', 0)
                 ->get()->toArray();
             $events_list = array_merge($events_list, $employee_event);
-
-            $own_event = Calendar_event::select(
-                't_calendar_event.id',
-                't_calendar_event.name',
-                't_calendar_event.from',
-                't_calendar_event.to',
-                't_calendar_event.contents',
-                't_calendar_event.employee_id',
-                'emp.role_id'
-            )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-                ->where('t_calendar_event.employee_id', $current_user->id)
-                ->where('t_calendar_event.company_id', $current_company->id)
-                ->whereDate('t_calendar_event.from', '>=', $date_start)
-                ->whereDate('t_calendar_event.from', '<=', $date_to)
-                ->where('t_calendar_event.delete_flg', 0)
-                ->get()->toArray();
-            $events_list = array_merge($events_list, $own_event);
         }
 
-        $this->events = [];
+        $grouped_events = [];
+        $position_map = [];
+        $end_day_of_week = ($this->start_day % 6) - 1;
+
+        if(empty($events_list)) {
+            $this->events = [];
+        }
+
         foreach ($events_list as $ev) {
             $days = 1;
+            $event_id = $ev['id'];
             $type = '';
-            if (!empty($ev['to'])) {
-                $timestamp1 = strtotime($ev['from']);
-                $timestamp2 = strtotime($ev['to']);
 
-                $date1 = date('Y-m-d 00:00', $timestamp1);
+            $timestamp1 = strtotime($ev['from']);
+            $date1 = date('Y-m-d 00:00', $timestamp1);
+
+            if (!empty($ev['to'])) {
+                $timestamp2 = strtotime($ev['to']);
                 $date2 = date('Y-m-d 00:00', $timestamp2);
 
                 $diff = strtotime($date2) - strtotime($date1);
@@ -233,20 +231,184 @@ class Calendar extends Component
                 $days = $diffDays;
             }
 
-            if (!empty($ev['role_id'])) {
-                if ($ev['role_id'] == 999) $type = 'admin';
-                else if ($ev['role_id'] == 500) $type = 'labor';
-                else if ($ev['employee_id'] != $current_user->id) $type = 'normal';
+            $category_types = [
+                1 => 'company-events',
+                2 => 'general-affairs',
+                3 => 'taxation-services',
+                4 => 'personnel-affairs',
+                5 => 'administrative-procedures',
+                6 => 'others'
+            ];
+
+            $ev['days'] = $days;
+            $ev['type'] = $category_types[$ev['category_type']] ?? 'company-events';
+
+            $daysRemaining = $ev['days'];
+
+            for ($i = 0; $i < $days; $i++) {
+                $eventDay = date('Y-m-d', strtotime("$date1 +$i day"));
+                $event_day_of_week = date('w', strtotime($eventDay));
+                $day_of_month = date('j', strtotime($eventDay));
+                $eventNextDay = date('Y-m-d', strtotime("$eventDay +1 day"));
+                $day_of_next_month = date('j', strtotime($eventNextDay));
+                $lastDayOfMonth = date('Y-m-t', strtotime($eventDay));
+                $day_difference = abs(date('j', strtotime($eventDay)) - date('j', strtotime($lastDayOfMonth)));
+                $new_days = 1;
+
+                if (!isset($grouped_events[$eventDay])) {
+                    $grouped_events[$eventDay] = [];
+                }
+
+                if($i === 0) {
+                    if($ev['to']) {
+                        if($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
+                            $new_days = 1;
+                        } else {
+                            $new_days = abs(($end_day_of_week - $event_day_of_week + 7) % 7) + 1;
+                            
+                            if($day_difference < $new_days) {
+                                $new_days = $day_difference + 1;
+                            }
+                            if($daysRemaining <= $new_days) {
+                                $new_days = $daysRemaining;
+                            }
+                        }
+                        $daysRemaining--;
+                        $ev['days'] = $new_days;
+
+                        if((int)$event_day_of_week === $this->start_day) {
+                            $ev['start_day'] = true;
+                        } else {
+                            $ev['start_day'] = false;
+                        }
+                    }
+
+                    if(!isset($position_map)) {
+                        $position_map = [];
+                    }
+
+                    $ev['event_start'] = true;
+                    $emptyPosition = null;
+                    foreach ($grouped_events[$eventDay] as $key => $event) {
+                        if (isset($event['id']) && $event['id'] === 0) {
+                            $emptyPosition = $key;
+                            break;
+                        }
+                    }
+
+                    if (!empty($emptyPosition)) {
+                        $grouped_events[$eventDay][$emptyPosition] = $ev;
+                    } else {
+                        $grouped_events[$eventDay][] = $ev;
+                    }
+
+                    $id_values = array_column($grouped_events[$eventDay], 'id');
+                    $position = array_search($event_id, $id_values);
+                    $position_map[$event_id] = $position;
+                } else {
+                    $ev['from'] = $eventDay;
+
+                    $new_days = abs(($end_day_of_week - $event_day_of_week + 7) % 7) + 1;
+                    if($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
+                        $new_days = 1;
+                    } else {
+                        if($daysRemaining <= $new_days) {
+                            $new_days = $daysRemaining;
+                        }
+                        if($day_difference < $new_days) {
+                            $new_days = $day_difference + 1;
+                        }
+                    }
+                    $daysRemaining--;
+                    $ev['days'] = $new_days;
+                    
+                    if((int)$event_day_of_week === $this->start_day) {
+                        $ev['start_day'] = true;
+                    } else {
+                        $ev['start_day'] = false;
+                    }
+                    
+                    if(((int)$event_day_of_week === $end_day_of_week + 1) || (int)$day_of_month === 1) {
+                        if(isset($position_map[$event_id])) {
+                            $ev['event_start'] = true;
+                            $grouped_events[$eventDay][] = $ev;
+                            $id_values = array_column($grouped_events[$eventDay], 'id');
+                            $position = array_search($event_id, $id_values);
+                            $position_map[$event_id] = $position;
+                        }
+                    } else {
+                        if(isset($position_map[$event_id])) {
+                            $ev['event_start'] = false;
+                            $position = $position_map[$event_id];
+
+                            if (array_key_exists($position, $grouped_events[$eventDay]) && $grouped_events[$eventDay][$position]['id'] === 0) {
+                                $grouped_events[$eventDay][$position] = $ev;
+                            } else {
+                                while (count($grouped_events[$eventDay]) < $position) {
+                                    $grouped_events[$eventDay][] = [
+                                        'id' => 0,
+                                        'name' => 'empty',
+                                        'from' => $ev['from'],
+                                        'days' => 1,
+                                        'type' => $ev['type'],
+                                        'event_start' => false,
+                                        'filter_event' => false,
+                                    ];
+                                }
+                                array_splice($grouped_events[$eventDay], $position, 0, [$event_id => $ev]);
+                            }
+                        }
+                    }
+                }
             }
 
-            $this->add_event($ev['id'], $ev['name'], $ev['from'], $days, $type);
+            $this->events = [];
+            $eventsToAdd = [];
+
+            foreach ($grouped_events as $grouped_event) {
+                foreach ($grouped_event as $event) {
+                    if (isset($event['id'], $event['name'], $event['from'], $event['days'], $event['type'], $event['event_start'])) {
+                        $eventsToAdd[] = $event;
+                    }
+                }
+            }
+            $this->add_events($eventsToAdd);
         }
+    }
 
-        $this->num_days = date('t', strtotime('01-' . $this->active_month . '-' . $this->active_year));
-        $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
-        $this->first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $this->days);
-
-        return view('livewire.calendar');
+    private function getCalenderSmallDotValues(int $nextMonthNum): array
+    {
+        /***
+         * 翌月、翌々月のミニカレンダー情報を取得する
+         * int  $nextMonth: 1(翌月) or 2(翌々月)のみ
+         */
+        if ($nextMonthNum !== 1 && $nextMonthNum !== 2) {
+            return [];
+        }
+        $calenderSmallDotValues = [];
+        $events_date = array_column($this->events, 2);
+        if (isset($events_date)) {
+            $nextMonth = sprintf('%02d', ($this->select_month % 12) + $nextMonthNum);
+            if($nextMonth >= '13') {
+                $nextMonth = '01';
+            }
+            $filteredNextMonth  = array_filter($events_date, function($date) use ($nextMonth) {
+                $month = explode('-', explode(' ', $date)[0])[1];
+                return $month === $nextMonth;
+            });
+            foreach ($filteredNextMonth as &$event) {
+                $calenderSmallDotValues[] = [
+                    'full' => $event,
+                    'color' => 'var(--color-red)',
+                    'year' => date('Y', strtotime($event)),
+                    'month' => date('n', strtotime($event)),
+                    'date' => date('j', strtotime($event)),
+                    'mark' => 'dot'
+                ];
+            }
+            unset($nextMonth,$filteredNextMonth,$event);
+        }
+        return $calenderSmallDotValues;
     }
 
     public function calcDate()
@@ -256,10 +418,27 @@ class Calendar extends Component
         $this->active_month = $this->date != null ? date('m', strtotime($this->date)) : date('m');
     }
 
-    public function add_event($id, $txt, $date, $days = 1, $color = '')
+    public function add_events(array $events)
     {
-        $color = $color ? ' ' . $color : $color;
-        $this->events[] = [$id, $txt, $date, $days, $color];
+        foreach ($events as $event) {
+            $id = $event['id'];
+            $txt = $event['name'];
+            $date = $event['from'];
+            $days = $event['days'];
+            $color = $event['type'] ?? '';
+            $event_start = $event['event_start'] ?? false;
+            $filter_event = $event['filter_event'] ?? false;
+
+            $width = 100 * $days;
+
+            if(isset($event['start_day']) && $event['start_day'] === true) {
+                $add_width = (($days - 1) * 17) + ((1 * $days) - 1) * 1;
+            } else {
+                $add_width = ($days - 1) * 17;
+            }
+
+            $this->events[] = [$id, $txt, $date, $days, $color, $event_start, $width, $filter_event, $add_width];
+        }
     }
 
     public function checkdate($event, $i, $d)
@@ -273,19 +452,41 @@ class Calendar extends Component
         $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
         if ($move == 'next') {
             $m = strtotime('+1 month', strtotime($this->date));
+            $next_m = strtotime('+2 month', strtotime($this->date));
+            $after_next_m = strtotime('+3 month', strtotime($this->date));
             if ($max > $m) {
                 $d = date('Y-m-d', $m);
                 $this->select_year = date('Y', strtotime($d));
                 $this->select_month = date('m', strtotime($d));
+                
+                $next_d = date('Y-m-d', $next_m);
+                $this->todayNextYear = date('Y', strtotime($next_d));
+                $this->todayNextMonth = date('m', strtotime($next_d));
+                
+                $next_after_d = date('Y-m-d', $after_next_m);
+                $this->todayAfterNextYear = date('Y', strtotime($next_after_d));
+                $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
             }
         } else {
             $m = strtotime('-1 month', strtotime($this->date));
+            $next_m = strtotime($this->date);
+            $after_next_m = strtotime('+1 month', strtotime($this->date));
             if ($min <= $m) {
                 $d = date('Y-m-d', $m);
                 $this->select_year = date('Y', strtotime($d));
                 $this->select_month = date('m', strtotime($d));
+
+                $next_d = date('Y-m-d', $next_m);
+                $this->todayNextYear = date('Y', strtotime($next_d));
+                $this->todayNextMonth = date('m', strtotime($next_d));
+
+                $next_after_d = date('Y-m-d', $after_next_m);
+                $this->todayAfterNextYear = date('Y', strtotime($next_after_d));
+                $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
             }
         }
+
+        $this->getEvents();
     }
 
     public function isToday($i)
@@ -297,6 +498,66 @@ class Calendar extends Component
     {
         $this->select_year = date('Y', strtotime($this->today));
         $this->select_month = date('m', strtotime($this->today));
+
+        $next_m = strtotime('+1 month', strtotime($this->today));
+        $after_next_m = strtotime('+2 month', strtotime($this->today));
+
+        $next_d = date('Y-m-d', $next_m);
+        $this->todayNextYear = date('Y', strtotime($next_d));
+        $this->todayNextMonth = date('m', strtotime($next_d));
+
+        $next_after_d = date('Y-m-d', $after_next_m);
+        $this->todayAfterNextYear = date('Y', strtotime($next_after_d));
+        $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
+
+        $this->getEvents();
+    }
+
+    public function updatedSelectYear($value)
+    {
+        $selectDate = date('Y-m-d', strtotime($value . '-' . $this->active_month . '-01'));
+        $next_m = strtotime('+1 month', strtotime($selectDate));
+        $after_next_m = strtotime('+2 month', strtotime($selectDate));
+
+        $next_d = date('Y-m-d', $next_m);
+        $after_next_d = date('Y-m-d', $after_next_m);
+        $this->todayNextYear = date('Y', strtotime($next_d));
+        $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
+
+        $this->getEvents();
+    }
+
+    public function updatedSelectMonth($value)
+    {
+        $selectDate = date('Y-m-d', strtotime($this->active_year . '-' . $value . '-01'));
+        $next_m = strtotime('+1 month', strtotime($selectDate));
+        $after_next_m = strtotime('+2 month', strtotime($selectDate));
+
+        $next_d = date('Y-m-d', $next_m);
+        $after_next_d = date('Y-m-d', $after_next_m);
+        $this->todayNextYear = date('Y', strtotime($next_d));
+        $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
+        $this->todayNextMonth = date('m', strtotime($next_d));
+        $this->todayAfterNextMonth = date('m', strtotime($after_next_d));
+
+        $this->getEvents();
+    }
+
+    #[On('calendar-small-clicked')]
+    public function CalendarClicked($dateStr)
+    {
+        $this->select_year = date('Y', strtotime($dateStr));
+        $this->select_month = date('m', strtotime($dateStr));
+
+        $next_m = strtotime('+1 month', strtotime($dateStr));
+        $after_next_m = strtotime('+2 month', strtotime($dateStr));
+
+        $next_d = date('Y-m-d', $next_m);
+        $after_next_d = date('Y-m-d', $after_next_m);
+        $this->todayNextYear = date('Y', strtotime($next_d));
+        $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
+        $this->todayNextMonth = date('m', strtotime($next_d));
+        $this->todayAfterNextMonth = date('m', strtotime($after_next_d));
     }
 
     public function resetForm()
@@ -304,6 +565,7 @@ class Calendar extends Component
         $this->inputs_edit_id = 0;
         $this->inputs_name = '';
         $this->inputs_category = '';
+        $this->inputs_repetition = null;
         $this->inputs_contents = '';
         $this->inputs_error = false;
     }
@@ -314,6 +576,7 @@ class Calendar extends Component
             'inputs_edit_id' => $this->inputs_edit_id,
             'inputs_name' => $this->inputs_name,
             'inputs_category' => $this->inputs_category,
+            'inputs_repetition' => $this->inputs_repetition ?? 0,
             'inputs_contents' => $this->inputs_contents,
             'from' => $from,
             'to' => $to
@@ -327,6 +590,12 @@ class Calendar extends Component
 
         if (!empty($id)) {
             $current_user = CurrentUser::info();
+            $role_type = 'employee';
+            if($current_user->role_id === 999) {
+                $role_type = 'admin';
+            } elseif($current_user->role_id === 500) {
+                $role_type = 'labor';
+            }
             $current_company = CurrentUser::currentCompany();
             $d = Calendar_event::where('t_calendar_event.id', $id)->where('t_calendar_event.delete_flg', 0)->whereIn('company_id', [0, $current_company->id])->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')->first();
             if (!empty($d)) {
@@ -336,24 +605,26 @@ class Calendar extends Component
                 $to = empty($d->to) ? '' : strtotime($d->to);
                 $category = $d->category_type;
                 $contents = $d->contents;
-                $own = $d->employee_id == $current_user->id;
+                $repetition_type = $d->repetition_type;
 
                 $this->dispatch('modal-onDetailModal', info: [
                     'role_id' => $d->role_id,
+                    'role_type' => $role_type,
                     'author' => $d->last_name . ' ' . $d->first_name,
-                    'own' => $own,
                     'edit_id' => $edit_id,
                     'name' => $name,
                     'from' => $from,
                     'to' => $to,
                     'category' => $this->category_types[$category] ?? '',
-                    'contents' => $contents
+                    'repetition_type' => $this->repetition_types[$repetition_type] ?? $this->repetition_types[0],
+                    'contents' => $contents,
                 ]);
             } else {
                 \Log::error('no content');
             }
         }
     }
+
     #[On('onStartEditCalendar')]
     public function new($id = 0)
     {
@@ -370,6 +641,7 @@ class Calendar extends Component
                 $to = empty($d->to) ? '' : strtotime($d->to);
 
                 $this->inputs_category = $d->category_type;
+                $this->inputs_repetition = $d->repetition_type ?? 0;
                 $this->inputs_contents = $d->contents;
 
                 $this->dispatch('modal-onEditModal', $this->setData($from, $to));
@@ -404,42 +676,579 @@ class Calendar extends Component
         }
 
         // convert date
-        $from_date = empty($data['from']) ? null : Carbon::createFromTimestamp($data['from'])->toDateTimeString();
-        $to_date = empty($data['to']) ? null : Carbon::createFromTimestamp($data['to'])->toDateTimeString();
+        $from_date = empty($data['from']) ? null : Carbon::createFromTimestamp($data['from']);
+        $to_date = empty($data['to']) ? null : Carbon::createFromTimestamp($data['to']);
 
         $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
+        $identifier = (string) Str::uuid();
 
+        $insertData = [];
+
+        // 新規登録
         if (empty($this->inputs_edit_id)) {
-            Calendar_event::insert([
-                'employee_id' => $current_user->id,
-                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                'name' => $data['inputs_name'],
-                'category_type' => $data['inputs_category'],
-                'from' => $from_date,
-                'to' => $to_date,
-                'contents' => $data['inputs_contents'],
-            ]);
+            switch ($data['inputs_repetition']) {
+                case 1: // 毎日
+                    $insertData[] = [
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $new_to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $identifier,
+                    ];
+
+                    for ($i = 1; $i <= 365; $i++) {
+                        $new_from_date = $from_date->addDays(1);
+                        $new_to_date = $to_date ? $to_date->addDays(1) : null;
+
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $new_from_date->toDateTimeString(),
+                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ];
+                    }
+                    break;
+
+                case 2: // 毎週
+                    $insertData[] = [
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $new_to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $identifier,
+                    ];
+
+                    for ($i = 0; $i <= 365; $i += 7) {
+                        $new_from_date = $from_date->addDays(7);
+                        $new_to_date = $to_date ? $to_date->addDays(7) : null;
+
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $new_from_date->toDateTimeString(),
+                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ];
+                    }
+                    break;
+
+                case 3: // 毎月（曜日）
+                    $insertData[] = [
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $identifier,
+                    ];
+
+                    $startOfMonth = $from_date->copy()->startOfMonth();
+                    $weekNumber = (int)round(($from_date->day - $startOfMonth->dayOfWeek - 1) / 7) + 1;
+                    $weekDay = strtoupper($from_date->copy()->format('l'));
+                    $weekDayNumber = [
+                        'SUNDAY' => Carbon::SUNDAY,
+                        'MONDAY' => Carbon::MONDAY,
+                        'TUESDAY' => Carbon::TUESDAY,
+                        'WEDNESDAY' => Carbon::WEDNESDAY,
+                        'THURSDAY' => Carbon::THURSDAY,
+                        'FRIDAY' => Carbon::FRIDAY,
+                        'SATURDAY' => Carbon::SATURDAY,
+                    ];
+                    $weekDayConstant = $weekDayNumber[$weekDay] ?? null;
+
+                    $fromTime = $from_date->format('H:i:s');
+                    $toTime = $to_date ? $to_date->format('H:i:s') : null;
+
+                    for ($i = 0; $i < 12; $i++) {
+                        $new_from_date = $from_date->addMonth(1);
+                        $new_to_date = $to_date ? $to_date->addMonth(1) : null;
+
+                        $new_from_date = Carbon::createFromDate($new_from_date->year, $new_from_date->month)
+                                            ->nthOfMonth($weekNumber, $weekDayConstant);
+                        $new_to_date = $new_to_date ? Carbon::createFromDate($new_to_date->year, $new_to_date->month)
+                                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
+                        if($new_from_date === false || $new_to_date === false) {
+                            continue;
+                        }
+
+                        $new_from_date->setTimeFromTimeString($fromTime);
+                        $new_to_date ? $new_to_date->setTimeFromTimeString($toTime) : '';
+
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $new_from_date->toDateTimeString(),
+                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ];
+                    }
+                    break;
+
+                case 4: // 毎月（日付）
+                    $insertData[] = [
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $identifier,
+                    ];
+
+                    $new_from_date = $from_date->copy();
+                    $new_to_date = $to_date ? $to_date->copy() : null;
+                    $comparison_from_date = $new_from_date->copy()->setDay(1);
+
+                    for ($i = 0; $i < 12; $i++) {
+                        $comparison_from_date->addMonth(1);
+                        $day = $new_from_date->format('d');
+                        if (!checkdate($comparison_from_date->format('m'), $day, $comparison_from_date->format('Y'))) {
+                            Log::info([$comparison_from_date->format('m'), $day, $comparison_from_date->format('Y')]);
+                            continue;
+                        } else {
+                            $new_from_date->addMonth(1);
+                            $new_to_date ? $new_to_date->addMonth(1) : null;
+                        }
+
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $new_from_date->toDateTimeString(),
+                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ];
+                    }
+                    break;
+
+                case 5: // 毎年
+                    for ($i = 0; $i <= 1; $i++) {
+                        $new_from_date = $from_date->addYears($i);
+                        $new_to_date = $to_date ? $to_date->addYears($i) : null;
+                        $day = $new_from_date->format('d');
+                        if (!checkdate($new_from_date->format('m'), $day, $new_from_date->format('Y'))) {
+                            continue;
+                        }
+
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $new_from_date->toDateTimeString(),
+                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ];
+                    }
+                    break;
+
+                default: // 繰り返しなし
+                    $insertData[] = [
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() :null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => null,
+                    ];
+                    break;
+            }
+        // 編集
         } else {
-            $res = Calendar_event::where('id', $this->inputs_edit_id)->update([
-                'name' => $data['inputs_name'],
-                'category_type' => $data['inputs_category'],
-                'from' => $from_date,
-                'to' => $to_date,
-                'contents' => $data['inputs_contents'],
-            ]);
+            $select_event_type = $data['inputs_select_events_type'];
+            $exitingFirstsEvents = null;
+            $existingEvents = [];
+            $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)->first();
+
+            if($existingEvent->identifier === null) {
+                Calendar_event::where('id', $this->inputs_edit_id)
+                    ->update([
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $identifier,
+                    ]);
+
+                $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)->first();
+            }
+
+            $eventIdentifier = $existingEvent->identifier;
+
+            // この予定
+            if($select_event_type === '0' && $existingEvent) {
+                $data['inputs_repetition'] = 0;
+
+                Calendar_event::where('id', $this->inputs_edit_id)
+                    ->update([
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => 0,
+                        'identifier' => null,
+                    ]);
+
+                $existingEvents = Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('id', $this->inputs_edit_id)
+                    ->select('id')
+                    ->get()
+                    ->toArray();
+            // これ以降の予定
+            } elseif($select_event_type === '1' && $existingEvent) {
+                Calendar_event::where('id', $this->inputs_edit_id)
+                    ->update([
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $eventIdentifier,
+                    ]);
+                Calendar_event::where('identifier', $eventIdentifier)
+                    ->where('id', '>', $this->inputs_edit_id)
+                    ->update([
+                        'delete_flg' => 1,
+                    ]);
+
+                $existingEvents = Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('id', '>', $this->inputs_edit_id)
+                    ->select('id')
+                    ->get()
+                    ->toArray();
+            // 全ての予定
+            } elseif($select_event_type === '2' && $existingEvent) {
+                $exitingFirstsEvents = Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('delete_flg', 0)
+                    ->first();
+
+                $from_date = $exitingFirstsEvents->from ? Carbon::parse($exitingFirstsEvents->from) : $from_date;
+                $to_date = $exitingFirstsEvents->to ? Carbon::parse($exitingFirstsEvents->to) : null;
+
+                Calendar_event::where('id', $exitingFirstsEvents->id)
+                    ->update([
+                        'employee_id' => $current_user->id,
+                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                        'name' => $data['inputs_name'],
+                        'category_type' => $data['inputs_category'],
+                        'from' => $from_date->toDateTimeString(),
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
+                        'contents' => $data['inputs_contents'],
+                        'repetition_type' => $data['inputs_repetition'],
+                        'identifier' => $eventIdentifier,
+                    ]);
+                Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('id', '!=', $exitingFirstsEvents->id)
+                    ->update([
+                        'delete_flg' => 1,
+                    ]);
+
+                $existingEvents = Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('id', '!=', $exitingFirstsEvents->id)
+                    ->select('id')
+                    ->get()
+                    ->toArray();
+            }
+
+            $index = 0;
+            switch ($data['inputs_repetition']) {
+                case 1: // 毎日
+                    for ($i = 1; $i <= 365; $i++) {
+                        $new_from_date = $from_date->copy()->addDays($i);
+                        $new_to_date = $to_date ? $to_date->copy()->addDays($i) : null;
+
+                        if (isset($existingEvents[$index])) {
+                            Calendar_event::where('id', $existingEvents[$index]['id'])
+                                ->update([
+                                    'employee_id' => $current_user->id,
+                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                    'name' => $data['inputs_name'],
+                                    'from' => $new_from_date->toDateTimeString(),
+                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                    'contents' => $data['inputs_contents'],
+                                    'repetition_type' => $data['inputs_repetition'],
+                                    'delete_flg' => 0,
+                                ]);
+                            $index++;
+                        } else {
+                            $insertData[] = [
+                                'employee_id' => $current_user->id,
+                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                'name' => $data['inputs_name'],
+                                'category_type' => $data['inputs_category'],
+                                'from' => $new_from_date->toDateTimeString(),
+                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                'contents' => $data['inputs_contents'],
+                                'repetition_type' => $data['inputs_repetition'],
+                                'identifier' => $eventIdentifier,
+                                'delete_flg' => 0,
+                            ];
+                        }
+                    }
+                    break;
+
+                case 2: // 毎週
+                    for ($i = 7; $i <= 365; $i += 7) {
+                        $new_from_date = $from_date->copy()->addDays($i);
+                        $new_to_date = $to_date ? $to_date->copy()->addDays($i) : null;
+
+                        if (isset($existingEvents[$index])) {
+                            Calendar_event::where('id', $existingEvents[$index]['id'])
+                                ->update([
+                                    'employee_id' => $current_user->id,
+                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                    'name' => $data['inputs_name'],
+                                    'from' => $new_from_date->toDateTimeString(),
+                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                    'contents' => $data['inputs_contents'],
+                                    'repetition_type' => $data['inputs_repetition'],
+                                    'delete_flg' => 0,
+                                ]);
+                            $index++;
+                        } else {
+                            $insertData[] = [
+                                'employee_id' => $current_user->id,
+                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                'name' => $data['inputs_name'],
+                                'category_type' => $data['inputs_category'],
+                                'from' => $new_from_date->toDateTimeString(),
+                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                'contents' => $data['inputs_contents'],
+                                'repetition_type' => $data['inputs_repetition'],
+                                'identifier' => $eventIdentifier,
+                                'delete_flg' => 0,
+                            ];
+                        }
+                    }
+                    break;
+
+                case 3: // 毎月（曜日）
+                    $startOfMonth = $from_date->copy()->startOfMonth();
+                    $weekNumber = (int)round(($from_date->day - $startOfMonth->dayOfWeek - 1) / 7) + 1;
+                    $weekDay = strtoupper($from_date->copy()->format('l'));
+                    $weekDayNumber = [
+                        'SUNDAY' => Carbon::SUNDAY,
+                        'MONDAY' => Carbon::MONDAY,
+                        'TUESDAY' => Carbon::TUESDAY,
+                        'WEDNESDAY' => Carbon::WEDNESDAY,
+                        'THURSDAY' => Carbon::THURSDAY,
+                        'FRIDAY' => Carbon::FRIDAY,
+                        'SATURDAY' => Carbon::SATURDAY,
+                    ];
+                    $weekDayConstant = $weekDayNumber[$weekDay] ?? null;
+
+                    $fromTime = $from_date->copy()->format('H:i:s');
+                    $toTime = $to_date ? $to_date->copy()->format('H:i:s') : null;
+
+                    for ($i = 1; $i <= 12; $i++) {
+                        $new_from_date = $from_date->copy()->addMonth($i);
+                        $new_to_date = $to_date ? $to_date->copy()->addMonth($i) : null;
+
+                        $new_from_date = Carbon::createFromDate($new_from_date->year, $new_from_date->month)
+                                            ->nthOfMonth($weekNumber, $weekDayConstant);
+                        $new_to_date = $new_to_date ? Carbon::createFromDate($new_to_date->year, $new_to_date->month)
+                                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
+                        if($new_from_date === false || $new_to_date === false) {
+                            continue;
+                        }
+
+                        $new_from_date->setTimeFromTimeString($fromTime);
+                        $new_to_date ? $new_to_date->setTimeFromTimeString($toTime) : null;
+
+                        if (isset($existingEvents[$index])) {
+                            Calendar_event::where('id', $existingEvents[$index]['id'])
+                                ->update([
+                                    'employee_id' => $current_user->id,
+                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                    'name' => $data['inputs_name'],
+                                    'from' => $new_from_date->toDateTimeString(),
+                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                    'contents' => $data['inputs_contents'],
+                                    'repetition_type' => $data['inputs_repetition'],
+                                    'delete_flg' => 0,
+                                ]);
+                            $index++;
+                        } else {
+                            $insertData[] = [
+                                'employee_id' => $current_user->id,
+                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                'name' => $data['inputs_name'],
+                                'category_type' => $data['inputs_category'],
+                                'from' => $new_from_date->toDateTimeString(),
+                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                'contents' => $data['inputs_contents'],
+                                'repetition_type' => $data['inputs_repetition'],
+                                'identifier' => $eventIdentifier,
+                                'delete_flg' => 0,
+                            ];
+                        }
+                    }
+                    break;
+
+                case 4: // 毎月（日付）
+                    for ($i = 1; $i <= 12; $i++) {
+                        $new_from_date = $from_date->copy();
+                        $new_to_date = $to_date ? $to_date->copy() : null;
+
+                        $comparison_from_date = $new_from_date->copy()->setDay(1);
+                        $comparison_from_date->addMonth($i);
+
+                        $day = $new_from_date->format('d');
+                        if (!checkdate($comparison_from_date->format('m'), $day, $comparison_from_date->format('Y'))) {
+                            continue;
+                        } else {
+                            $new_from_date->addMonth($i);
+                            $new_to_date ? $new_to_date->addMonth($i) : null;
+                        }
+
+                        if (isset($existingEvents[$index])) {
+                            Calendar_event::where('id', $existingEvents[$index]['id'])
+                                ->update([
+                                    'employee_id' => $current_user->id,
+                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                    'name' => $data['inputs_name'],
+                                    'from' => $new_from_date->toDateTimeString(),
+                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                    'contents' => $data['inputs_contents'],
+                                    'repetition_type' => $data['inputs_repetition'],
+                                    'delete_flg' => 0,
+                                ]);
+                            $index++;
+                        } else {
+                            $insertData[] = [
+                                'employee_id' => $current_user->id,
+                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                'name' => $data['inputs_name'],
+                                'category_type' => $data['inputs_category'],
+                                'from' => $new_from_date->toDateTimeString(),
+                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                'contents' => $data['inputs_contents'],
+                                'repetition_type' => $data['inputs_repetition'],
+                                'identifier' => $eventIdentifier,
+                                'delete_flg' => 0,
+                            ];
+                        }
+                    }
+                    break;
+
+                case 5: // 毎年
+                    for ($i = 1; $i <= 1; $i++) {
+                        $new_from_date = $from_date->copy()->addYears($i);
+                        $new_to_date = $to_date ? $to_date->copy()->addYears($i) : null;
+                        $day = $new_from_date->format('d');
+                        if (!checkdate($new_from_date->format('m'), $day, $new_from_date->format('Y'))) {
+                            continue;
+                        }
+
+                        if (isset($existingEvents[$index])) {
+                            Calendar_event::where('id', $existingEvents[$index]['id'])
+                                ->update([
+                                    'employee_id' => $current_user->id,
+                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                    'name' => $data['inputs_name'],
+                                    'from' => $new_from_date->toDateTimeString(),
+                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                    'contents' => $data['inputs_contents'],
+                                    'repetition_type' => $data['inputs_repetition'],
+                                    'delete_flg' => 0,
+                                ]);
+                            $index++;
+                        } else {
+                            $insertData[] = [
+                                'employee_id' => $current_user->id,
+                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                                'name' => $data['inputs_name'],
+                                'category_type' => $data['inputs_category'],
+                                'from' => $new_from_date->toDateTimeString(),
+                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
+                                'contents' => $data['inputs_contents'],
+                                'repetition_type' => $data['inputs_repetition'],
+                                'identifier' => $eventIdentifier,
+                                'delete_flg' => 0,
+                            ];
+                        }
+                    }
+                    break;
+            }
         }
+
+        Calendar_event::insert($insertData);
+
         $this->resetForm();
         $this->dispatch('modal-closeCalendarModal');
         return true;
     }
 
     #[On('onRemoveCalendar')]
-    public function onRemove()
+    public function onRemove($value = '0')
     {
-        Calendar_event::where('id', $this->inputs_edit_id)->update([
-            'delete_flg' => 1
-        ]);
+        $identifier = Calendar_event::where('id', $this->inputs_edit_id)->value('identifier');
+
+        // この予定
+        if($value === '0') {
+            Calendar_event::where('id', $this->inputs_edit_id)
+                ->update([
+                    'delete_flg' => 1
+                ]);
+        // これ以降の予定
+        } elseif($value === '1') {
+            Calendar_event::where('identifier', $identifier)
+                ->where('id', '>=', $this->inputs_edit_id)
+                ->update([
+                    'delete_flg' => 1
+                ]);
+        // 全ての予定
+        } elseif($value === '2') {
+            Calendar_event::where('identifier', $identifier)
+                ->update([
+                    'delete_flg' => 1
+                ]);
+        }
 
         $this->resetForm();
         $this->dispatch('modal-closeCalendarModal');
@@ -470,5 +1279,14 @@ class Calendar extends Component
         $d = str_replace('年', '-', $d); // "年"を"-"に置換する
         $d = str_replace('月', '-', $d);
         return $d;
+    }
+
+    public function filterEvents($category)
+    {
+        foreach ($this->events as &$event) {
+            if (isset($event[4]) && $event[4] == $category) {
+                $event[7] = ($event[7] === 'hide') ? 'open' : 'hide';
+            }
+        }
     }
 }

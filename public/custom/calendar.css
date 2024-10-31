@@ -1,6 +1,321 @@
-.calendar {
+/* .calendar {
     display: flex;
     flex-flow: column;
+} */
+
+.hide {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+}
+
+.calendar-container {
+    display: flex;
+}
+
+.calendar-container .calendar-small-area {
+    display: flex;
+    flex-flow: column;
+    width: 320px;
+}
+
+.calendar-container .calendar-small-area .calendar-small-next {
+    margin-bottom: 1rem;
+}
+
+/* チェックボックス */
+.calendar-container .calendar-small-area .checkbox-area {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 1rem;
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox {
+    width: 132px;
+    margin: 0 1.5rem 1rem 0;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox
+    input[type="checkbox"] {
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-right: 0.2rem;
+    cursor: pointer;
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox label {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.company-events
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.company-events
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #dbdbdb;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.company-events
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.personnel-affairs
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #f2dcdc;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.personnel-affairs
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #f2dcdc;
+    border: 1px solid #f2dcdc;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.personnel-affairs
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.general-affairs
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #a4e6fc;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.general-affairs
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #a4e6fc;
+    border: 1px solid #a4e6fc;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.general-affairs
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.administrative-procedures
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #a4f4a8;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.administrative-procedures
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #a4f4a8;
+    border: 1px solid #a4f4a8;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.administrative-procedures
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.taxation-services
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #fab5ff;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.taxation-services
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fab5ff;
+    border: 1px solid #fab5ff;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.taxation-services
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.others
+    input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #edc26d;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.others
+    input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #edc26d;
+    border: 1px solid #edc26d;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container
+    .calendar-small-area
+    .checkbox-area
+    .event-checkbox.others
+    input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
 }
 
 .calendar .header .month-year {
@@ -26,32 +341,31 @@
     font-weight: bold;
 }
 
-.calendar .days {
+.calendar .days-work {
     display: flex;
     flex-flow: wrap;
     border-radius: 4px;
     overflow: hidden;
 }
 
-.calendar .days .day_name {
+.calendar .days-work .day_name-work {
     width: calc(100% / 7);
-    border-right: 1px solid color-mix(in srgb, var(--color-red) 90%, #000);
+    border-right: 1px solid color-mix(in srgb, var(--color-blue) 90%, #000);
     padding: 10px;
     text-transform: uppercase;
     font-size: 12px;
     font-weight: bold;
     color: #818589;
     color: #fff;
-    background-color: var(--color-red);
+    background-color: var(--color-blue);
     text-align: center;
-
 }
 
-.calendar .days .day_name:nth-child(7) {
+.calendar .days-work .day_name-work:nth-child(7) {
     border: none;
 }
 
-.calendar .days .day_num {
+.calendar .days-work .day_num-work {
     display: flex;
     flex-flow: column;
     width: calc(100% / 7);
@@ -63,28 +377,63 @@
     min-height: 100px;
 }
 
-.calendar .days .day_num span {
+.calendar .days-work .day_num-work span {
     display: inline-flex;
     width: 30px;
     font-size: 14px;
 }
 
-.calendar .days .day_num .event {
+.calendar .days-work .day_num-work .event {
+    position: relative;
+    z-index: 10;
     margin-top: 4px;
-    font-weight: 500;
-    font-size: 0.8em;
+    font-weight: 700;
+    font-size: 0.9em;
     padding: 2px 4px;
     border-radius: 4px;
     background-color: var(--color-blue);
-    color: #fff;
-    word-wrap: break-word;
+    color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.edit-calendar-modal .open-remove-select.hidden {
+    display: none;
+}
+.edit-calendar-modal .open-remove-select button {
+    color: #4183c4;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-calendar-modal .select-remove-type-area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.edit-calendar-modal .select-remove-type-style.hidden {
+    display: none;
+}
+
+.edit-calendar-modal .confirm-remove.hidden {
+    display: none;
+}
+.edit-calendar-modal .confirm-remove button {
+    margin-left: 4rem;
+    border: none;
+    background-color: #fff;
+    color: #4183c4;
     cursor: pointer;
 }
 
 .edit-calendar-modal .remove-link.hidden {
     display: none;
 }
-
 .edit-calendar-modal .remove-link button {
     color: #4183c4;
     text-decoration: none;
@@ -94,37 +443,56 @@
 }
 
 /* Colors */
-.calendar .days .day_num .event.labor {
+.calendar .days-work .day_num-work .event.company-events {
+    background-color: #dbdbdb;
+}
+.calendar .days-work .day_num-work .event.personnel-affairs {
+    background-color: #f2dcdc;
+}
+.calendar .days-work .day_num-work .event.general-affairs {
+    background-color: #a4e6fc;
+}
+.calendar .days-work .day_num-work .event.administrative-procedures {
+    background-color: #a4f4a8;
+}
+.calendar .days-work .day_num-work .event.taxation-services {
+    background-color: #fab5ff;
+}
+.calendar .days-work .day_num-work .event.others {
+    background-color: #edc26d;
+}
+
+.calendar .days-work .day_num-work .event.labor {
     background-color: var(--color-yellow);
 }
 
-.calendar .days .day_num .event.employee {
+.calendar .days-work .day_num-work .event.employee {
     background-color: var(--color-blue);
 }
 
-.calendar .days .day_num .event.admin {
+.calendar .days-work .day_num-work .event.admin {
     background-color: var(--color-red);
 }
 
-.calendar .days .day_num .event.normal {
+.calendar .days-work .day_num-work .event.normal {
     background-color: gray;
 }
 
-.calendar .days .day_num:nth-child(7n+1) {
+.calendar .days-work .day_num-work:nth-child(7n + 1) {
     border-left: 1px solid #e6e9ea;
 }
 
-.calendar .days .day_num:hover {
+.calendar .days-work .day_num-work:hover {
     background-color: #fdfdfd;
 }
 
-.calendar .days .day_num.ignore {
+.calendar .days-work .day_num-work.ignore {
     background-color: #fdfdfd;
     color: #ced2d4;
     cursor: inherit;
 }
 
-.calendar .days .day_num.selected {
+.calendar .days-work .day_num-work.selected {
     background-color: #f1f2f3;
     cursor: inherit;
 }
@@ -137,14 +505,6 @@
 #detailCalendar textarea {
     border: none;
     resize: none;
-}
-
-#detailCalendar .actions {
-    display: none;
-}
-
-#detailCalendar .actions.own {
-    display: block;
 }
 
 #detailCalendar .header input {
@@ -173,8 +533,44 @@
     background-color: var(--color-red);
 }
 
-
 #detailCalendar .header.employee {
     font-weight: bold;
     background-color: var(--color-blue);
+}
+
+#detailCalendar .no-repetition-event.hidden {
+    display: none;
+}
+
+#detailCalendar .repetition-event.hidden {
+    display: none;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.loader {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #fff;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
 }

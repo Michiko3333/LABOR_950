@@ -1,6 +1,7 @@
 <x-layout title="カレンダー" mode="">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('custom/calendar.css') }}">
+        <link rel="stylesheet" href="{{ asset('custom/calendar-small.css') }}">
     @endslot
 
     <section class="content pb-3">
@@ -54,17 +55,19 @@
                 allowMultiple: true,
                 onShow: () => {
                     //$('').remove();
+                    if($('.edit-calendar-inputs-select-events-type').val() === '0') {
+                        $('.select-repetition').css('display', 'none');
+                    }
                 },
                 onHidden: () => {
                     //$('.ui.dimmer.modals.page').empty();
+                    $('.select-repetition').css('display', 'block');
+                    $('input[name="removal-conditions"]').prop('checked', false);
                     $('.edit-calendar-modal').remove();
                     window.$calendar_modal.isSubmit = false;
                 }
             }).modal('show');
         };
-        Livewire.on('modal-closeCalendarModal', () => {
-            calendar_edit_modal.modal('hide');
-        });
         Livewire.on('modal-onSubmitError', () => {
             $('.edit-calendar-modal .ui.error.message').removeClass('hidden');
             window.$calendar_modal.isSubmit = false;
@@ -109,11 +112,21 @@
 
             $('.edit-calendar-inputs_name').val(data['inputs_name']);
             $('.edit-calendar-inputs_category').val(data['inputs_category']);
+            $('.edit-calendar-inputs_repetition').val(data['inputs_repetition']);
             $('.edit-calendar-inputs_contents').val(data['inputs_contents']);
+
+            if (data['inputs_repetition'] == 0) {
+                $('.remove-link').removeClass('hidden');
+                $('.open-remove-select').addClass('hidden');
+                $('.select-remove-type-style').addClass('hidden');
+                $('.confirm-remove').addClass('hidden');
+            } else {
+                $('.remove-link').addClass('hidden');
+                $('.open-remove-select').removeClass('hidden');
+            }
 
             if (data['inputs_edit_id'] > 0) {
                 $('.edit-calendar-inputs_edit_id').val(data['inputs_edit_id']);
-                $('.edit-calendar-modal .remove-link').removeClass('hidden');
             } else {
                 $('.edit-calendar-modal .remove-link').addClass('hidden');
             }
@@ -129,6 +142,12 @@
                 onHidden: () => {
                     $('.detail-calendar-modal').remove();
                     window.$calendar_modal.onClose();
+                    $('.no-repetition-event').addClass('hidden');
+                    $('.repetition-event').addClass('hidden');
+
+                    $('.select-remove-type-style').addClass('hidden');
+                    $('.confirm-remove').addClass('hidden');
+
                 },
                 onShow: () => {
                     $('.detail-calendar-modal .header').removeClass('admin');
@@ -139,9 +158,32 @@
                     $('#detailCalendar .category').val(info.category);
                     $('#detailCalendar .from_date').val(info.from);
                     $('#detailCalendar .to_date').val(info.to);
+                    $('#detailCalendar .repetition').val(info.repetition_type);
                     $('#detailCalendar .contents').val(info.contents);
 
                     $('#detailCalendar .author').val('');
+
+                    $('#detailCalendar .this-event').on('click', () => {
+                        $('.edit-calendar-inputs-select-events-type').val(0);
+                        window.$calendar_modal.onStartEdit(info.edit_id);
+                        window.openEditCalendarModal(false);
+                        calendar_detail_modal.modal('hide');
+                    });
+
+                    $('#detailCalendar .subsequent-events').on('click', () => {
+                        $('.edit-calendar-inputs-select-events-type').val(1);
+                        window.$calendar_modal.onStartEdit(info.edit_id);
+                        window.openEditCalendarModal(false);
+                        calendar_detail_modal.modal('hide');
+                    });
+
+                    $('#detailCalendar .all-event').on('click', () => {
+                        $('.edit-calendar-inputs-select-events-type').val(2);
+                        window.$calendar_modal.onStartEdit(info.edit_id);
+                        window.openEditCalendarModal(false);
+                        calendar_detail_modal.modal('hide');
+                    });
+
 
                     if (info.role_id == 999) {
                         $('#detailCalendar .header').addClass('admin');
@@ -149,25 +191,58 @@
                     } else if (info.role_id == 500) {
                         $('#detailCalendar .header').addClass('labor');
                         $('#detailCalendar .author').val('社労士：' + info.author);
+                    } else if (info.role_id == 100) {
+                        $('#detailCalendar .header').addClass('employee');
+                        $('#detailCalendar .author').val(info.author);
                     }
-                    if (info.own) {
-                        $('#detailCalendar .actions').addClass('own');
-                        $('#detailCalendar .actions>button').on('click', () => {
-                            window.$calendar_modal.onStartEdit(info.edit_id);
-                            window.openEditCalendarModal(false);
-                        });
-                        if (info.role_id != 999 && info.role_id != 500) {
-                            $('#detailCalendar .header').addClass('employee');
-                            $('#detailCalendar .author').val(info.author);
-                        }
+
+                    $('#detailCalendar .no-repetition-event>button').on('click', () => {
+                        $('.edit-calendar-inputs-select-events-type').val('');
+                        window.$calendar_modal.onStartEdit(info.edit_id);
+                        window.openEditCalendarModal(false);
+                    });
+
+                    if (info.repetition_type === '繰り返さない') {
+                        $('.no-repetition-event').removeClass('hidden');
+                        $('.repetition-event').addClass('hidden');
+
+                        $('.remove-link').removeClass('hidden');
+                        $('.open-remove-select').addClass('hidden');
+                        $('.select-remove-type-style').addClass('hidden');
+                        $('.confirm-remove').addClass('hidden');
                     } else {
-                        $('#detailCalendar .actions').removeClass('own');
-                        if (info.role_id != 999 && info.role_id != 500) {
-                            $('#detailCalendar .author').val(info.author);
-                        }
+                        $('.no-repetition-event').addClass('hidden');
+                        $('.repetition-event').removeClass('hidden');
+
+                        $('.remove-link').addClass('hidden');
+                        $('.open-remove-select').removeClass('hidden');
                     }
+                    const classList = $('#detailCalendar .header').attr('class');
+                    const role_type = classList.replace('header', '').trim();
+                    if(info.role_type !== role_type) {
+                        $('.no-repetition-event').addClass('hidden');
+                        $('.repetition-event').addClass('hidden');
+                    }
+
+                    $('.item').removeClass('selected');
+                    $('.item').removeClass('active');
                 }
             }).modal('show');
+
+            $('.ui.dropdown.edit-select').dropdown();
+        });
+
+        $(document).on('click', '.open-remove-select', function() {
+            $(this).addClass('hidden');
+            $('.select-remove-type-style').removeClass('hidden');
+        });
+
+        $(document).on('change', '.select-remove-type-style', function() {
+            $('.confirm-remove').removeClass('hidden');
+        });
+
+        $(document).on('click', 'input[name="removal-conditions"]',  function() {
+            $('input[name="removal-conditions"]').not(this).prop('checked', false);
         });
     </script>
 </x-layout>
