@@ -117,6 +117,8 @@ class ClientModalContent extends BaseTable
         $this->disablePrev = $this->page <= 1;
         $this->disableNext = $this->page >= ceil($this->total / $this->limit);
 
+        $this->dispatch('client-modal-render');
+
         return view('livewire.client-modal-content');
     }
 
@@ -161,7 +163,6 @@ class ClientModalContent extends BaseTable
         $this->formatStartDate = $startDate->format('Y-m-d');
         $this->formatEndDate = $endDate->format('Y-m-d');
 
-        
         $this->validate([
             'settingId.1' => 'required',
             'formatStartDate' => 'required|date',
@@ -176,6 +177,7 @@ class ClientModalContent extends BaseTable
         ]);
 
         try {
+            \Log::info('t');
             Receptionist::create([
                 'employee_id' => $employee_id,
                 'client_company_id' => $company_id,
@@ -204,7 +206,7 @@ class ClientModalContent extends BaseTable
 
         $employee_id = $this->id;
         $company_id = $this->companyID;
-        
+
         $this->formatStartDate = $startDate->format('Y-m-d');
         $this->formatEndDate = $endDate->format('Y-m-d');
 
@@ -226,7 +228,7 @@ class ClientModalContent extends BaseTable
                     'contract_start_date' => $startDate,
                     'contract_end_date' => $endDate
                 ]);
-                
+
             $this->dispatch('closeClientModal');
             $this->dispatch('contractSuccess');
         } catch (\Exception $e) {

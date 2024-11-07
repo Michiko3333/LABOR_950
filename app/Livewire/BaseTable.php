@@ -18,12 +18,6 @@ class BaseTable extends Component
     public $useColumnFilter = false;
     public $showColumns = [];
 
-    public function mount()
-    {
-
-        if ($this->useColumnFilter) $this->dispatch('dispatch-filter-column');
-    }
-
     protected function getData($condition)
     {
         if (!$this->paginated) $this->page = 1;
@@ -59,6 +53,11 @@ class BaseTable extends Component
         $r = $key > -1;
 
         return $this->useColumnFilter ? $r : true;
+    }
+
+    protected function dispatchFilter()
+    {
+        if ($this->useColumnFilter) $this->dispatch('dispatch-filter-column');
     }
 
     #[On('movePage')]

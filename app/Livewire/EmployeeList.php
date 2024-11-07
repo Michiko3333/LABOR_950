@@ -18,6 +18,11 @@ class EmployeeList extends BaseTable
     public $type = 0;
     public $useColumnFilter = true;
 
+    public function mount()
+    {
+        $this->dispatchFilter();
+    }
+
     public function render()
     {
         $currentCompany = CurrentUser::currentCompany();
