@@ -26,12 +26,14 @@ return new class extends Migration
             $table->integer('retirement_age')->nullable()->comment('定年退職年齢');
             $table->integer('retirement')->nullable()->comment('定年退職');
             $table->string('officers_ids')->nullable()->comment('役員の誕生日(社員ID)');
+            $table->integer('officers_birthday')->nullable()->comment('役員の誕生日');
             $table->integer('settlement_date')->nullable()->comment('決算日');
-            $table->integer('leave_of_absence')->nullable()->comment('休職');
-            $table->integer('closed')->nullable()->comment('休業');
+            $table->integer('start_of_closure')->nullable()->comment('休業開始');
+            $table->integer('end_of_closure')->nullable()->comment('休業終了');
             $table->integer('change_in_dependent_status')->nullable()->comment('扶養変更');
             $table->integer('subsidies_and_grants')->nullable()->comment('助成金・補助金等');
             $table->string('report_on_the_status_of_elderly_and_disabled_people', 5)->nullable()->comment('高齢者雇用状況報告書・障碍者状況等報告書');
+            $table->string('basis_of_calculation', 5)->default('06-15')->comment('算定基礎届');
             $table->timestamps();
         });
     }

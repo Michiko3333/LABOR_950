@@ -1521,5 +1521,7 @@
                 $('#iconChangeInput').val('');
             }
         });
+
+        $('.ui.dropdown.edit-select').dropdown();
     </script>
 </x-layout>

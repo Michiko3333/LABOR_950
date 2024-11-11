@@ -57,6 +57,7 @@ class DependentForm extends Component
                 $d['de-pension_no'] = $item->pension_no;
                 $d['de-other_1'] = $item->other_1;
                 $d['de-other_2'] = $item->other_2;
+                $d['de-history_flg'] = $item->history_flg;
                 array_push($this->data, $d);
             }
         }
@@ -105,6 +106,13 @@ class DependentForm extends Component
         $this->loading = false;
     }
 
+    public function history($index)
+    {
+        if ($this->loading) return;
+        $this->data[$index]['de-history_flg'] = 1;
+        $this->dispatch('history_flg-change', ['index' => $index]);
+    }
+
     private function defaultValues()
     {
         $defaultValues = [
@@ -130,6 +138,7 @@ class DependentForm extends Component
             'de-pension_no' => '',
             'de-other_1' => '',
             'de-other_2' => '',
+            'de-history_flg' => 0,
         ];
 
         return $defaultValues;

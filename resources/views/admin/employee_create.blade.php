@@ -1568,5 +1568,7 @@
             $('#icon').attr('src', '/img/image.png');
             $('#iconChangeInput').val('');
         });
+
+        $('.ui.dropdown.edit-select').dropdown();
     </script>
 </x-layout>

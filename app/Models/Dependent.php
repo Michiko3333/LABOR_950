@@ -30,6 +30,7 @@ class Dependent extends Model
         'dependent_type',
         'other_1',
         'other_2',
+        'history_flg',
         'delete_flg',
     ];
 

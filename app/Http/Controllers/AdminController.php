@@ -1313,11 +1313,13 @@ class AdminController extends Controller
         } else {
             $formatted_de_date_of_authorisation = $input_date2;
         }
-        $input_date3 = $requestData['de-date_of_expiry'][$index];
-        if (!is_null($input_date3) && strtotime($input_date3) === false) {
-            $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
-        } else {
-            $formatted_de_date_of_expiry = $input_date3;
+        if(isset($requestData['de-date_of_expiry'][$index])) {
+            $input_date3 = $requestData['de-date_of_expiry'][$index];
+            if (!is_null($input_date3) && strtotime($input_date3) === false) {
+                $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
+            } else {
+                $formatted_de_date_of_expiry = $input_date3;
+            }
         }
 
         return [
@@ -1325,6 +1327,7 @@ class AdminController extends Controller
             'relationship_spouse' => $requestData['de-relationship_spouse'][$index] ?? null,
             'relationship_dependent' => $requestData['de-relationship_dependent'][$index] ?? null,
             'spouse_flag' => $requestData['de-spouse_flag'][$index] ?? null,
+            'dependent_type' => $requestData['de-dependent_type'][$index] ?? null,
             'last_name' => $requestData['de-last_name'][$index],
             'first_name' => $requestData['de-first_name'][$index],
             'last_name_kana' => $requestData['de-last_name_kana'][$index],
@@ -1334,14 +1337,14 @@ class AdminController extends Controller
             'occupation' => $requestData['de-occupation'][$index],
             'annual_income' => $requestData['de-annual_income'][$index],
             'contact' => $requestData['de-contact'][$index],
-            'dependent_type' => $requestData['de-dependent_type'][$index],
             'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
             'pension_no' => $requestData['de-pension_no'][$index],
             'other_1' => $requestData['de-other_1'][$index],
             'other_2' => $requestData['de-other_2'][$index],
+            'history_flg' => $requestData['de-history'][$index] ?? 0,
             'birthday' => $formatted_de_birthday,
             'date_of_authorisation' => $formatted_de_date_of_authorisation,
-            'date_of_expiry' => $formatted_de_date_of_expiry,
+            'date_of_expiry' => $formatted_de_date_of_expiry ?? null,
         ];
     }
 

@@ -85,7 +85,7 @@ class PickUpController extends Controller
             $current_company = CurrentUser::currentCompany();
             $current_company_id = $current_company->id;
 
-            $pickupSetting = Pickup_setting::findOrFail($current_company_id);
+            $pickupSetting = Pickup_setting::where('company_id', $current_company_id)->first();
 
             $labor_insurance_annual_renewal_start = sprintf(
                 '%02d-%02d',
@@ -96,7 +96,7 @@ class PickUpController extends Controller
             $labor_insurance_annual_renewal_end = sprintf(
                 '%02d-%02d',
                 $request->input('labor_insurance_annual_renewal_end_month'),
-                $request->input('labor_insurance_annual_renewal_start_day')
+                $request->input('labor_insurance_annual_renewal_end_day')
             );
 
             $year_end_tax_adjustment_start = sprintf(
@@ -135,9 +135,10 @@ class PickUpController extends Controller
                     'retirement_age' => $request->input('retirement_age'),
                     'retirement' => $request->input('retirement'),
                     'officers_ids' => $officersString,
+                    'officers_birthday' => $request->input('officers_birthday'),
                     'settlement_date' => $request->input('settlement_date'),
-                    'leave_of_absence' => $request->input('leave_of_absence'),
-                    'closed' => $request->input('closed'),
+                    'start_of_closure' => $request->input('start_of_closure'),
+                    'end_of_closure' => $request->input('end_of_closure'),
                     'change_in_dependent_status' => $request->input('change_in_dependent_status'),
                     'subsidies_and_grants' => $request->input('subsidies_and_grants'),
                     'report_on_the_status_of_elderly_and_disabled_people' => $report_on_the_status_of_elderly_and_disabled_people,
@@ -157,9 +158,10 @@ class PickUpController extends Controller
                     'retirement_age' => $request->input('retirement_age'),
                     'retirement' => $request->input('retirement'),
                     'officers_ids' => $officersString,
+                    'officers_birthday' => $request->input('officers_birthday'),
                     'settlement_date' => $request->input('settlement_date'),
-                    'leave_of_absence' => $request->input('leave_of_absence'),
-                    'closed' => $request->input('closed'),
+                    'start_of_closure' => $request->input('start_of_closure'),
+                    'end_of_closure' => $request->input('end_of_closure'),
                     'change_in_dependent_status' => $request->input('change_in_dependent_status'),
                     'subsidies_and_grants' => $request->input('subsidies_and_grants'),
                     'report_on_the_status_of_elderly_and_disabled_people' => $report_on_the_status_of_elderly_and_disabled_people,

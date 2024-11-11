@@ -76,7 +76,7 @@
                                         value="{{ old('nursing_care_insurance_premium_deduction_begins', $pickupSetting->nursing_care_insurance_premium_deduction_begins) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="nursing_care_insurance_premium_deduction_begins"
-                                        value="{{ old('nursing_care_insurance_premium_deduction_begins') }}" min="1" max="365">
+                                        value="{{ old('nursing_care_insurance_premium_deduction_begins') ?? 60 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -91,7 +91,7 @@
                                         value="{{ old('application_for_attainment_wage_certificate', $pickupSetting->application_for_attainment_wage_certificate) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="application_for_attainment_wage_certificate"
-                                        value="{{ old('application_for_attainment_wage_certificate') }}" min="1" max="365">
+                                        value="{{ old('application_for_attainment_wage_certificate') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -106,7 +106,7 @@
                                         value="{{ old('end_of_nursing_care_insurance_premium_deduction', $pickupSetting->end_of_nursing_care_insurance_premium_deduction) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="end_of_nursing_care_insurance_premium_deduction"
-                                        value="{{ old('end_of_nursing_care_insurance_premium_deduction') }}" min="1" max="365">
+                                        value="{{ old('end_of_nursing_care_insurance_premium_deduction') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -121,7 +121,7 @@
                                         value="{{ old('loss_of_eligibility_for_employees_pension_insurance', $pickupSetting->loss_of_eligibility_for_employees_pension_insurance) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="loss_of_eligibility_for_employees_pension_insurance"
-                                        value="{{ old('loss_of_eligibility_for_employees_pension_insurance') }}" min="1" max="365">
+                                        value="{{ old('loss_of_eligibility_for_employees_pension_insurance') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -136,7 +136,7 @@
                                         value="{{ old('loss_of_health_insurance_status', $pickupSetting->loss_of_health_insurance_status) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="loss_of_health_insurance_status"
-                                        value="{{ old('loss_of_health_insurance_status') }}" min="1" max="365">
+                                        value="{{ old('loss_of_health_insurance_status') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -157,11 +157,11 @@
                             @else
                                 <div class="field {{ err($errors, 'labor_insurance_annual_renewal_start_month') }}">
                                     <input type="number" class="setting-input" name="labor_insurance_annual_renewal_start_month"
-                                        value="{{ old('labor_insurance_annual_renewal_start_month') }}" min="1" max="12"><span>月</span>
+                                        value="{{ old('labor_insurance_annual_renewal_start_month') ?? 5 }}" min="1" max="12"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'labor_insurance_annual_renewal_start_day') }}">
                                     <input type="number" class="setting-input" name="labor_insurance_annual_renewal_start_day"
-                                        value="{{ old('labor_insurance_annual_renewal_start_day') }}" min="1" max="31"><span>日</span>
+                                        value="{{ old('labor_insurance_annual_renewal_start_day') ?? 1 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
                             <span>から</span>
@@ -177,11 +177,11 @@
                             @else
                                 <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_month') }}">
                                     <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_month"
-                                        value="{{ old('labor_insurance_annual_renewal_end_month') }}" min="1" max="12"><span>月</span>
+                                        value="{{ old('labor_insurance_annual_renewal_end_month') ?? 7 }}" min="1" max="12"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_day') }}">
                                     <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_day"
-                                        value="{{ old('labor_insurance_annual_renewal_end_day') }}" min="1" max="31"><span>日</span>
+                                        value="{{ old('labor_insurance_annual_renewal_end_day') ?? 10 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
                             <span>の間通知</span>
@@ -203,11 +203,11 @@
                             @else
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_start_month') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_start_month"
-                                        value="{{ old('year_end_tax_adjustment_start_month') }}" min="1" max="12"><span>月</span>
+                                        value="{{ old('year_end_tax_adjustment_start_month') ?? 12 }}" min="1" max="12"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_start_day') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_start_day"
-                                        value="{{ old('year_end_tax_adjustment_start_day') }}" min="1" max="31"><span>日</span>
+                                        value="{{ old('year_end_tax_adjustment_start_day') ?? 1 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
                             <span>から</span>
@@ -223,11 +223,11 @@
                             @else
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_end_month') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_end_month"
-                                        value="{{ old('year_end_tax_adjustment_end_month') }}" min="1" max="12"><span>月</span>
+                                        value="{{ old('year_end_tax_adjustment_end_month') ?? 1 }}" min="1" max="12"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_end_day') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_end_day"
-                                        value="{{ old('year_end_tax_adjustment_end_day') }}" min="1" max="31"><span>日</span>
+                                        value="{{ old('year_end_tax_adjustment_end_day') ?? 31 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
                             <span>の間通知</span>
@@ -243,7 +243,7 @@
                                         value="{{ old('retirement_age', $pickupSetting->retirement_age) }}" min="" max="">歳
                                 @else
                                     <input type="number" class="setting-input" name="retirement_age"
-                                        value="{{ old('retirement_age') }}" min="" max="">歳
+                                        value="{{ old('retirement_age') ?? 65 }}" min="" max="">歳
                                 @endif
                             </p>
                         </div>
@@ -254,7 +254,7 @@
                                         value="{{ old('retirement', $pickupSetting->retirement) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="retirement"
-                                        value="{{ old('retirement') }}" min="1" max="365">
+                                        value="{{ old('retirement') ?? 365 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -263,11 +263,23 @@
 
                         <div class="field  {{ err($errors, 'officers') }}">
                             <h4 class="item-heading">役員の誕生日</h4>
-                            <div style="width: 50%;">
+                            <div style="width: 50%; margin-bottom: 1rem;">
                                 <label for="officers[]" class="label">通知対象</label>
                                 <select name="officers[]" multiple="" class="ui fluid dropdown">
                                     <option value="">未選択</option>
                                 </select>
+                            </div>
+                            <div class="field  {{ err($errors, 'officers_birthday') }}">
+                                <p>該当者の誕生日の
+                                    @if(isset($pickupSetting))
+                                        <input type="number" class="setting-input" name="officers_birthday"
+                                            value="{{ old('officers_birthday', $pickupSetting->officers_birthday) }}" min="1" max="365">
+                                    @else
+                                        <input type="number" class="setting-input" name="officers_birthday"
+                                            value="{{ old('officers_birthday') ?? 1 }}" min="1" max="365">
+                                    @endif
+                                    日前から通知開始
+                                </p>
                             </div>
                         </div>
                         <div class="ui divider under-line"></div>
@@ -280,37 +292,37 @@
                                         value="{{ old('settlement_date', $pickupSetting->settlement_date) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="settlement_date"
-                                        value="{{ old('settlement_date') }}" min="1" max="365">
+                                        value="{{ old('settlement_date') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'leave_of_absence') }}">
-                            <h4 class="item-heading">休職</h4>
-                            <p>対象者の休職終了日の
+                        <div class="field  {{ err($errors, 'start_of_closure') }}">
+                            <h4 class="item-heading">休業開始</h4>
+                            <p>対象者の休業開始日の
                                 @if(isset($pickupSetting))
-                                    <input type="number" class="setting-input" name="leave_of_absence"
-                                        value="{{ old('leave_of_absence', $pickupSetting->leave_of_absence) }}" min="1" max="365">
+                                    <input type="number" class="setting-input" name="start_of_closure"
+                                        value="{{ old('start_of_closure', $pickupSetting->start_of_closure) }}" min="1" max="365">
                                 @else
-                                    <input type="number" class="setting-input" name="leave_of_absence"
-                                        value="{{ old('leave_of_absence') }}" min="1" max="365">
+                                    <input type="number" class="setting-input" name="start_of_closure"
+                                        value="{{ old('start_of_closure') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'closed') }}">
-                            <h4 class="item-heading">休業</h4>
+                        <div class="field  {{ err($errors, 'end_of_closure') }}">
+                            <h4 class="item-heading">休業終了</h4>
                             <p>対象者の休業終了日の
                                 @if(isset($pickupSetting))
-                                    <input type="number" class="setting-input" name="closed"
-                                        value="{{ old('closed', $pickupSetting->closed) }}" min="1" max="365">
+                                    <input type="number" class="setting-input" name="end_of_closure"
+                                        value="{{ old('end_of_closure', $pickupSetting->end_of_closure) }}" min="1" max="365">
                                 @else
-                                    <input type="number" class="setting-input" name="closed"
-                                        value="{{ old('closed') }}" min="1" max="365">
+                                    <input type="number" class="setting-input" name="end_of_closure"
+                                        value="{{ old('end_of_closure') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -325,7 +337,7 @@
                                         value="{{ old('change_in_dependent_status', $pickupSetting->change_in_dependent_status) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="change_in_dependent_status"
-                                        value="{{ old('change_in_dependent_status') }}" min="1" max="365">
+                                        value="{{ old('change_in_dependent_status') ?? 5 }}" min="1" max="365">
                                 @endif
                                 日間通知
                             </p>
@@ -340,7 +352,7 @@
                                         value="{{ old('subsidies_and_grants', $pickupSetting->subsidies_and_grants) }}" min="1" max="365">
                                 @else
                                     <input type="number" class="setting-input" name="subsidies_and_grants"
-                                        value="{{ old('subsidies_and_grants') }}" min="1" max="365">
+                                        value="{{ old('subsidies_and_grants') ?? 30 }}" min="1" max="365">
                                 @endif
                                 日前から通知開始
                             </p>
@@ -352,24 +364,25 @@
                             @if(isset($pickupSetting))
                                 <div class="field {{ err($errors, 'report_on_the_status_of_elderly_and_disabled_people_month') }}">
                                     <input type="number" class="setting-input" name="report_on_the_status_of_elderly_and_disabled_people_month"
-                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_month', $report_on_the_status_of_elderly_and_disabled_people_month) }}" min="" max=""><span>月</span>
+                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_month', $report_on_the_status_of_elderly_and_disabled_people_month) }}" min="1" max="7"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'report_on_the_status_of_elderly_and_disabled_people_day') }}">
                                     <input type="number" class="setting-input" name="report_on_the_status_of_elderly_and_disabled_people_day"
-                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_day', $report_on_the_status_of_elderly_and_disabled_people_day) }}" min="" max=""><span>日</span>
+                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_day', $report_on_the_status_of_elderly_and_disabled_people_day) }}" min="1" max="31"><span>日</span>
                                 </div>
                             @else
                                 <div class="field {{ err($errors, 'report_on_the_status_of_elderly_and_disabled_people_month') }}">
                                     <input type="number" class="setting-input" name="report_on_the_status_of_elderly_and_disabled_people_month"
-                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_month') }}" min="" max=""><span>月</span>
+                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_month') ?? 6 }}" min="1" max="7"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'report_on_the_status_of_elderly_and_disabled_people_day') }}">
                                     <input type="number" class="setting-input" name="report_on_the_status_of_elderly_and_disabled_people_day"
-                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_day') }}" min="" max=""><span>日</span>
+                                        value="{{ old('report_on_the_status_of_elderly_and_disabled_people_day') ?? 1 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
                             <span>から7月15日までの間通知</span>
                         </div>
+                        <p>※年をまたいで期間を設定できません</p>
                     </div>                    
                 </div>
             </div>
