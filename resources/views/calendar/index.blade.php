@@ -111,6 +111,7 @@
             });
 
             $('.edit-calendar-inputs_name').val(data['inputs_name']);
+            $('.edit-calendar-inputs_subsidies_name').val(data['inputs_subsidies_name']);
             $('.edit-calendar-inputs_category').val(data['inputs_category']);
             $('.edit-calendar-inputs_repetition').val(data['inputs_repetition']);
             $('.edit-calendar-inputs_contents').val(data['inputs_contents']);
@@ -130,6 +131,8 @@
             } else {
                 $('.edit-calendar-modal .remove-link').addClass('hidden');
             }
+
+            subsidiesSwitching();
         });
 
         Livewire.on('modal-onDetailModal', (d) => {
@@ -147,14 +150,20 @@
 
                     $('.select-remove-type-style').addClass('hidden');
                     $('.confirm-remove').addClass('hidden');
-
                 },
                 onShow: () => {
                     $('.detail-calendar-modal .header').removeClass('admin');
                     $('#detailCalendar .header').removeClass('labor');
                     $('#detailCalendar .header').removeClass('employee');
 
+                    if(info.subsidies_name) {
+                        $('#detailCalendar .field.subsidies_name').removeClass('hidden');
+                    } else {
+                        $('#detailCalendar .field.subsidies_name').addClass('hidden');
+                    }
+
                     $('#detailCalendar .title').val(info.name);
+                    $('#detailCalendar .subsidies_name').val(info.subsidies_name);
                     $('#detailCalendar .category').val(info.category);
                     $('#detailCalendar .from_date').val(info.from);
                     $('#detailCalendar .to_date').val(info.to);
@@ -230,6 +239,8 @@
             }).modal('show');
 
             $('.ui.dropdown.edit-select').dropdown();
+
+            subsidiesSwitching();
         });
 
         $(document).on('click', '.open-remove-select', function() {
@@ -243,6 +254,18 @@
 
         $(document).on('click', 'input[name="removal-conditions"]',  function() {
             $('input[name="removal-conditions"]').not(this).prop('checked', false);
+        });
+
+        function subsidiesSwitching() {
+            if($('.edit-calendar-inputs_category').eq(1).val() == 7) {
+                $('.subsidies').eq(1).css('display', 'block');
+            } else {
+                $('.subsidies').css('display', 'none');
+            }
+        }
+
+        $(document).on('change', '.edit-calendar-inputs_category', function() {
+            subsidiesSwitching();
         });
     </script>
 </x-layout>

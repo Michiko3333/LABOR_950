@@ -21,6 +21,7 @@ class Calendar extends Component
 
     public $date = null;
     public $today = null;
+    public $todayFirstOfMonth = null;
     public $active_year, $active_month;
     public $days_ja = [
         'Sun' => '日',
@@ -63,6 +64,7 @@ class Calendar extends Component
 
     public $inputs_edit_id = 0;
     public $inputs_name = '';
+    public $inputs_subsidies_name = '';
     public $inputs_category = '';
     public $inputs_contents = '';
     public $inputs_repetition = '';
@@ -77,6 +79,8 @@ class Calendar extends Component
 
     public $nextMonthEvent = [];
     public $afterNextMonthEvent = [];
+
+    public $clickable = true;
 
     public function mount()
     {
@@ -104,6 +108,8 @@ class Calendar extends Component
 
         $this->select_year = $current_date;
         $this->select_month = date('m', strtotime($this->today));
+
+        $this->todayFirstOfMonth = Carbon::today()->firstOfMonth();
 
         $this->current_company = CurrentUser::currentCompany();
 
@@ -237,7 +243,8 @@ class Calendar extends Component
                 3 => 'taxation-services',
                 4 => 'personnel-affairs',
                 5 => 'administrative-procedures',
-                6 => 'others'
+                6 => 'others',
+                7 => 'grants-and-subsidies'
             ];
 
             $ev['days'] = $days;
@@ -496,11 +503,11 @@ class Calendar extends Component
 
     public function setToday()
     {
-        $this->select_year = date('Y', strtotime($this->today));
-        $this->select_month = date('m', strtotime($this->today));
+        $this->select_year = date('Y', strtotime($this->todayFirstOfMonth));
+        $this->select_month = date('m', strtotime($this->todayFirstOfMonth));
 
-        $next_m = strtotime('+1 month', strtotime($this->today));
-        $after_next_m = strtotime('+2 month', strtotime($this->today));
+        $next_m = strtotime('+1 month', strtotime($this->todayFirstOfMonth));
+        $after_next_m = strtotime('+2 month', strtotime($this->todayFirstOfMonth));
 
         $next_d = date('Y-m-d', $next_m);
         $this->todayNextYear = date('Y', strtotime($next_d));
@@ -546,24 +553,33 @@ class Calendar extends Component
     #[On('calendar-small-clicked')]
     public function CalendarClicked($dateStr)
     {
-        $this->select_year = date('Y', strtotime($dateStr));
-        $this->select_month = date('m', strtotime($dateStr));
+        $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
+        $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
+        $date_start = new Carbon($min);
+        $date_to = new Carbon($max);
+        $dateStr = Carbon::parse($dateStr);
 
-        $next_m = strtotime('+1 month', strtotime($dateStr));
-        $after_next_m = strtotime('+2 month', strtotime($dateStr));
+        if ($dateStr->between($date_start, $date_to)) {
+            $this->select_year = date('Y', strtotime($dateStr));
+            $this->select_month = date('m', strtotime($dateStr));
 
-        $next_d = date('Y-m-d', $next_m);
-        $after_next_d = date('Y-m-d', $after_next_m);
-        $this->todayNextYear = date('Y', strtotime($next_d));
-        $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
-        $this->todayNextMonth = date('m', strtotime($next_d));
-        $this->todayAfterNextMonth = date('m', strtotime($after_next_d));
+            $next_m = strtotime('+1 month', strtotime($dateStr));
+            $after_next_m = strtotime('+2 month', strtotime($dateStr));
+
+            $next_d = date('Y-m-d', $next_m);
+            $after_next_d = date('Y-m-d', $after_next_m);
+            $this->todayNextYear = date('Y', strtotime($next_d));
+            $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
+            $this->todayNextMonth = date('m', strtotime($next_d));
+            $this->todayAfterNextMonth = date('m', strtotime($after_next_d));
+        }
     }
 
     public function resetForm()
     {
         $this->inputs_edit_id = 0;
         $this->inputs_name = '';
+        $this->inputs_subsidies_name = '';
         $this->inputs_category = '';
         $this->inputs_repetition = null;
         $this->inputs_contents = '';
@@ -575,6 +591,7 @@ class Calendar extends Component
         return [
             'inputs_edit_id' => $this->inputs_edit_id,
             'inputs_name' => $this->inputs_name,
+            'inputs_subsidies_name' => $this->inputs_subsidies_name,
             'inputs_category' => $this->inputs_category,
             'inputs_repetition' => $this->inputs_repetition ?? 0,
             'inputs_contents' => $this->inputs_contents,
@@ -613,6 +630,7 @@ class Calendar extends Component
                     'author' => $d->last_name . ' ' . $d->first_name,
                     'edit_id' => $edit_id,
                     'name' => $name,
+                    'subsidies_name' => $d->subsidies_name,
                     'from' => $from,
                     'to' => $to,
                     'category' => $this->category_types[$category] ?? '',
@@ -636,6 +654,7 @@ class Calendar extends Component
 
                 $this->inputs_edit_id = $id;
                 $this->inputs_name = $d->name;
+                $this->inputs_subsidies_name = $d->subsidies_name;
 
                 $from = empty($d->from) ? '' : strtotime($d->from);
                 $to = empty($d->to) ? '' : strtotime($d->to);
@@ -685,48 +704,21 @@ class Calendar extends Component
 
         $insertData = [];
 
+        if($data['inputs_category'] !== '7') {
+            $data['inputs_subsidies_name'] = '';
+        }
         // 新規登録
         if (empty($this->inputs_edit_id)) {
             switch ($data['inputs_repetition']) {
-                case 1: // 毎日
+                case 1: // 毎週
                     $insertData[] = [
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
-                        'to' => $to_date ? $new_to_date->toDateTimeString() : null,
-                        'contents' => $data['inputs_contents'],
-                        'repetition_type' => $data['inputs_repetition'],
-                        'identifier' => $identifier,
-                    ];
-
-                    for ($i = 1; $i <= 365; $i++) {
-                        $new_from_date = $from_date->addDays(1);
-                        $new_to_date = $to_date ? $to_date->addDays(1) : null;
-
-                        $insertData[] = [
-                            'employee_id' => $current_user->id,
-                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                            'name' => $data['inputs_name'],
-                            'category_type' => $data['inputs_category'],
-                            'from' => $new_from_date->toDateTimeString(),
-                            'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
-                            'contents' => $data['inputs_contents'],
-                            'repetition_type' => $data['inputs_repetition'],
-                            'identifier' => $identifier,
-                        ];
-                    }
-                    break;
-
-                case 2: // 毎週
-                    $insertData[] = [
-                        'employee_id' => $current_user->id,
-                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                        'name' => $data['inputs_name'],
-                        'category_type' => $data['inputs_category'],
-                        'from' => $from_date->toDateTimeString(),
-                        'to' => $to_date ? $new_to_date->toDateTimeString() : null,
+                        'to' => $to_date ? $to_date->toDateTimeString() : null,
                         'contents' => $data['inputs_contents'],
                         'repetition_type' => $data['inputs_repetition'],
                         'identifier' => $identifier,
@@ -740,6 +732,7 @@ class Calendar extends Component
                             'employee_id' => $current_user->id,
                             'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                             'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
                             'category_type' => $data['inputs_category'],
                             'from' => $new_from_date->toDateTimeString(),
                             'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -750,11 +743,12 @@ class Calendar extends Component
                     }
                     break;
 
-                case 3: // 毎月（曜日）
+                case 2: // 毎月（曜日）
                     $insertData[] = [
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -799,6 +793,7 @@ class Calendar extends Component
                             'employee_id' => $current_user->id,
                             'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                             'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
                             'category_type' => $data['inputs_category'],
                             'from' => $new_from_date->toDateTimeString(),
                             'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -809,11 +804,12 @@ class Calendar extends Component
                     }
                     break;
 
-                case 4: // 毎月（日付）
+                case 3: // 毎月（日付）
                     $insertData[] = [
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -841,6 +837,7 @@ class Calendar extends Component
                             'employee_id' => $current_user->id,
                             'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                             'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
                             'category_type' => $data['inputs_category'],
                             'from' => $new_from_date->toDateTimeString(),
                             'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -851,7 +848,7 @@ class Calendar extends Component
                     }
                     break;
 
-                case 5: // 毎年
+                case 4: // 毎年
                     for ($i = 0; $i <= 1; $i++) {
                         $new_from_date = $from_date->addYears($i);
                         $new_to_date = $to_date ? $to_date->addYears($i) : null;
@@ -864,6 +861,7 @@ class Calendar extends Component
                             'employee_id' => $current_user->id,
                             'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                             'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
                             'category_type' => $data['inputs_category'],
                             'from' => $new_from_date->toDateTimeString(),
                             'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -879,6 +877,7 @@ class Calendar extends Component
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() :null,
@@ -896,11 +895,15 @@ class Calendar extends Component
             $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)->first();
 
             if($existingEvent->identifier === null) {
+                if($data['inputs_repetition'] === '0') {
+                    $identifier = null;
+                }
                 Calendar_event::where('id', $this->inputs_edit_id)
                     ->update([
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -923,6 +926,7 @@ class Calendar extends Component
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -943,6 +947,7 @@ class Calendar extends Component
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -975,6 +980,7 @@ class Calendar extends Component
                         'employee_id' => $current_user->id,
                         'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                         'name' => $data['inputs_name'],
+                        'subsidies_name' => $data['inputs_subsidies_name'],
                         'category_type' => $data['inputs_category'],
                         'from' => $from_date->toDateTimeString(),
                         'to' => $to_date ? $to_date->toDateTimeString() : null,
@@ -997,42 +1003,7 @@ class Calendar extends Component
 
             $index = 0;
             switch ($data['inputs_repetition']) {
-                case 1: // 毎日
-                    for ($i = 1; $i <= 365; $i++) {
-                        $new_from_date = $from_date->copy()->addDays($i);
-                        $new_to_date = $to_date ? $to_date->copy()->addDays($i) : null;
-
-                        if (isset($existingEvents[$index])) {
-                            Calendar_event::where('id', $existingEvents[$index]['id'])
-                                ->update([
-                                    'employee_id' => $current_user->id,
-                                    'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                                    'name' => $data['inputs_name'],
-                                    'from' => $new_from_date->toDateTimeString(),
-                                    'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
-                                    'contents' => $data['inputs_contents'],
-                                    'repetition_type' => $data['inputs_repetition'],
-                                    'delete_flg' => 0,
-                                ]);
-                            $index++;
-                        } else {
-                            $insertData[] = [
-                                'employee_id' => $current_user->id,
-                                'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                                'name' => $data['inputs_name'],
-                                'category_type' => $data['inputs_category'],
-                                'from' => $new_from_date->toDateTimeString(),
-                                'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
-                                'contents' => $data['inputs_contents'],
-                                'repetition_type' => $data['inputs_repetition'],
-                                'identifier' => $eventIdentifier,
-                                'delete_flg' => 0,
-                            ];
-                        }
-                    }
-                    break;
-
-                case 2: // 毎週
+                case 1: // 毎週
                     for ($i = 7; $i <= 365; $i += 7) {
                         $new_from_date = $from_date->copy()->addDays($i);
                         $new_to_date = $to_date ? $to_date->copy()->addDays($i) : null;
@@ -1043,6 +1014,8 @@ class Calendar extends Component
                                     'employee_id' => $current_user->id,
                                     'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                     'name' => $data['inputs_name'],
+                                    'subsidies_name' => $data['inputs_subsidies_name'],
+                                    'category_type' => $data['inputs_category'],
                                     'from' => $new_from_date->toDateTimeString(),
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
@@ -1055,6 +1028,7 @@ class Calendar extends Component
                                 'employee_id' => $current_user->id,
                                 'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                 'name' => $data['inputs_name'],
+                                'subsidies_name' => $data['inputs_subsidies_name'],
                                 'category_type' => $data['inputs_category'],
                                 'from' => $new_from_date->toDateTimeString(),
                                 'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -1067,7 +1041,7 @@ class Calendar extends Component
                     }
                     break;
 
-                case 3: // 毎月（曜日）
+                case 2: // 毎月（曜日）
                     $startOfMonth = $from_date->copy()->startOfMonth();
                     $weekNumber = (int)round(($from_date->day - $startOfMonth->dayOfWeek - 1) / 7) + 1;
                     $weekDay = strtoupper($from_date->copy()->format('l'));
@@ -1106,6 +1080,8 @@ class Calendar extends Component
                                     'employee_id' => $current_user->id,
                                     'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                     'name' => $data['inputs_name'],
+                                    'subsidies_name' => $data['inputs_subsidies_name'],
+                                    'category_type' => $data['inputs_category'],
                                     'from' => $new_from_date->toDateTimeString(),
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
@@ -1118,6 +1094,7 @@ class Calendar extends Component
                                 'employee_id' => $current_user->id,
                                 'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                 'name' => $data['inputs_name'],
+                                'subsidies_name' => $data['inputs_subsidies_name'],
                                 'category_type' => $data['inputs_category'],
                                 'from' => $new_from_date->toDateTimeString(),
                                 'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -1130,7 +1107,7 @@ class Calendar extends Component
                     }
                     break;
 
-                case 4: // 毎月（日付）
+                case 3: // 毎月（日付）
                     for ($i = 1; $i <= 12; $i++) {
                         $new_from_date = $from_date->copy();
                         $new_to_date = $to_date ? $to_date->copy() : null;
@@ -1152,6 +1129,8 @@ class Calendar extends Component
                                     'employee_id' => $current_user->id,
                                     'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                     'name' => $data['inputs_name'],
+                                    'subsidies_name' => $data['inputs_subsidies_name'],
+                                    'category_type' => $data['inputs_category'],
                                     'from' => $new_from_date->toDateTimeString(),
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
@@ -1164,6 +1143,7 @@ class Calendar extends Component
                                 'employee_id' => $current_user->id,
                                 'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                 'name' => $data['inputs_name'],
+                                'subsidies_name' => $data['inputs_subsidies_name'],
                                 'category_type' => $data['inputs_category'],
                                 'from' => $new_from_date->toDateTimeString(),
                                 'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -1176,7 +1156,7 @@ class Calendar extends Component
                     }
                     break;
 
-                case 5: // 毎年
+                case 4: // 毎年
                     for ($i = 1; $i <= 1; $i++) {
                         $new_from_date = $from_date->copy()->addYears($i);
                         $new_to_date = $to_date ? $to_date->copy()->addYears($i) : null;
@@ -1191,6 +1171,8 @@ class Calendar extends Component
                                     'employee_id' => $current_user->id,
                                     'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                     'name' => $data['inputs_name'],
+                                    'subsidies_name' => $data['inputs_subsidies_name'],
+                                    'category_type' => $data['inputs_category'],
                                     'from' => $new_from_date->toDateTimeString(),
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
@@ -1203,6 +1185,7 @@ class Calendar extends Component
                                 'employee_id' => $current_user->id,
                                 'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
                                 'name' => $data['inputs_name'],
+                                'subsidies_name' => $data['inputs_subsidies_name'],
                                 'category_type' => $data['inputs_category'],
                                 'from' => $new_from_date->toDateTimeString(),
                                 'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
@@ -1260,8 +1243,13 @@ class Calendar extends Component
         $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
 
         if (mb_strlen($data['inputs_name']) > 20) return false;
+        if (mb_strlen($data['inputs_subsidies_name']) >= 50) return false;
+
         if ($data['inputs_category'] < 1 || $data['inputs_category'] > count($this->category_types)) {
             return;
+        }
+        if ($data['inputs_category'] == 7) {
+            return !empty($data['inputs_subsidies_name']);
         }
 
         if ($min > $data['from'] || $max < $data['from']) return false;

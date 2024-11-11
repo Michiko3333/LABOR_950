@@ -35,11 +35,7 @@
     margin: 0 1.5rem 1rem 0;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox input[type="checkbox"] {
     border-radius: 0;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -54,11 +50,7 @@
     cursor: pointer;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.company-events
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.company-events input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -68,11 +60,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.company-events
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.company-events input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -82,11 +70,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.company-events
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.company-events input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -98,11 +82,7 @@
     content: "";
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.personnel-affairs
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.personnel-affairs input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -112,11 +92,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.personnel-affairs
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.personnel-affairs input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -126,11 +102,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.personnel-affairs
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.personnel-affairs input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -142,11 +114,7 @@
     content: "";
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.general-affairs
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.general-affairs input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -156,11 +124,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.general-affairs
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.general-affairs input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -170,11 +134,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.general-affairs
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.general-affairs input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -186,11 +146,7 @@
     content: "";
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.administrative-procedures
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.administrative-procedures input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -200,11 +156,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.administrative-procedures
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.administrative-procedures input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -214,11 +166,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.administrative-procedures
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.administrative-procedures input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -230,11 +178,7 @@
     content: "";
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.taxation-services
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.taxation-services input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -244,11 +188,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.taxation-services
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.taxation-services input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -258,11 +198,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.taxation-services
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.taxation-services input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -274,11 +210,7 @@
     content: "";
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.others
-    input[type="checkbox"] {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.others input[type="checkbox"] {
     position: relative;
     width: 22px;
     height: 22px;
@@ -288,11 +220,7 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.others
-    input[type="checkbox"]:checked {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.others input[type="checkbox"]:checked {
     position: relative;
     width: 22px;
     height: 22px;
@@ -302,11 +230,43 @@
     vertical-align: -4px;
 }
 
-.calendar-container
-    .calendar-small-area
-    .checkbox-area
-    .event-checkbox.others
-    input[type="checkbox"]:checked:before {
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.others input[type="checkbox"]:checked:before {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    transform: rotate(50deg);
+    width: 8px;
+    height: 12px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    content: "";
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.grants-and-subsidies {
+    width: 100%;
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.grants-and-subsidies input[type="checkbox"] {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #ff7272;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.grants-and-subsidies input[type="checkbox"]:checked {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background-color: #ff7272;
+    border: 1px solid #ff7272;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.calendar-container .calendar-small-area .checkbox-area .event-checkbox.grants-and-subsidies input[type="checkbox"]:checked:before {
     position: absolute;
     top: 2px;
     left: 6px;
@@ -402,6 +362,7 @@
 .edit-calendar-modal .open-remove-select.hidden {
     display: none;
 }
+
 .edit-calendar-modal .open-remove-select button {
     color: #4183c4;
     text-decoration: none;
@@ -423,6 +384,7 @@
 .edit-calendar-modal .confirm-remove.hidden {
     display: none;
 }
+
 .edit-calendar-modal .confirm-remove button {
     margin-left: 4rem;
     border: none;
@@ -434,6 +396,7 @@
 .edit-calendar-modal .remove-link.hidden {
     display: none;
 }
+
 .edit-calendar-modal .remove-link button {
     color: #4183c4;
     text-decoration: none;
@@ -446,20 +409,29 @@
 .calendar .days-work .day_num-work .event.company-events {
     background-color: #dbdbdb;
 }
+
 .calendar .days-work .day_num-work .event.personnel-affairs {
     background-color: #f2dcdc;
 }
+
 .calendar .days-work .day_num-work .event.general-affairs {
     background-color: #a4e6fc;
 }
+
 .calendar .days-work .day_num-work .event.administrative-procedures {
     background-color: #a4f4a8;
 }
+
 .calendar .days-work .day_num-work .event.taxation-services {
     background-color: #fab5ff;
 }
+
 .calendar .days-work .day_num-work .event.others {
     background-color: #edc26d;
+}
+
+.calendar .days-work .day_num-work .event.grants-and-subsidies {
+    background-color: #ff7272;
 }
 
 .calendar .days-work .day_num-work .event.labor {
@@ -536,6 +508,10 @@
 #detailCalendar .header.employee {
     font-weight: bold;
     background-color: var(--color-blue);
+}
+
+#detailCalendar .field.subsidies_name.hidden {
+    display: none;
 }
 
 #detailCalendar .no-repetition-event.hidden {

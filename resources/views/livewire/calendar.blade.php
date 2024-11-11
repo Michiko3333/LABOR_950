@@ -1,5 +1,5 @@
 <div class="calendar">
-<div wire:loading.delay.longest>
+<div id="load" style="display: none;">
 <div id="overlay">
 <div class="loader"></div>
 </div>
@@ -16,6 +16,7 @@ const onEdit = () => {
 if (window.$calendar_modal.isSubmit) return;
 window.$calendar_modal.isSubmit = true;
 const inputs_name = document.getElementsByClassName('edit-calendar-inputs_name')[1].value;
+const inputs_subsidies_name = document.getElementsByClassName('edit-calendar-inputs_subsidies_name')[1].value;
 const inputs_category = document.getElementsByClassName('edit-calendar-inputs_category')[1].value;
 const inputs_repetition = document.getElementsByClassName('edit-calendar-inputs_repetition')[1].value;
 const inputs_contents = document.getElementsByClassName('edit-calendar-inputs_contents')[1].value;
@@ -25,6 +26,7 @@ const from = document.getElementsByClassName('edit-calendar-from')[1].value;
 const to = document.getElementsByClassName('edit-calendar-to')[1].value;
 const data = {
 inputs_name: inputs_name,
+inputs_subsidies_name: inputs_subsidies_name,
 inputs_category: inputs_category,
 inputs_repetition: inputs_repetition ? inputs_repetition : 0,
 inputs_contents: inputs_contents,
@@ -75,6 +77,23 @@ Livewire.on('modal-closeCalendarModal', () => {
 });
 </script>
 @endscript
+<script>
+document.addEventListener('livewire:init', () => {
+    Livewire.hook('request', ({ respond, succeed }) => {
+        const startTime = Date.now();
+        const showLoading = () => {
+            document.getElementById('load').style.display = 'block';
+        };
+
+        let loadingTimer = setTimeout(showLoading, 800);
+
+        succeed(() => {
+            clearTimeout(loadingTimer);
+            document.getElementById('load').style.display = 'none';
+        });
+    });
+});
+</script>
 <div class="mb-1">
 @if ($this->editPermission)
 <button class="ui button primary small" type="button" onclick="openEditCalendarModal()"
@@ -83,7 +102,7 @@ wire:click='new'>予定を追加</button>
 </div>
 <div class="calendar-container">
 <div class="calendar-small-area">
-<div class="calendar-small-next"><livewire:calendar-small :year="$this->todayNextYear" :month="$this->todayNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="true" :values="$this->nextMonthEvent" wire:key="sc-component:{{ $this->todayNextYear }}-{{ $this->todayNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}" /></div><div class="calendar-small-next"><livewire:calendar-small :year="$this->todayAfterNextYear" :month="$this->todayAfterNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="true" :values="$this->afterNextMonthEvent" wire:key="sc-component:{{ $this->todayAfterNextYear }}-{{ $this->todayAfterNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}" /></div>
+<div class="calendar-small-next"><livewire:calendar-small :year="$this->todayNextYear" :month="$this->todayNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="$this->clickable" :values="$this->nextMonthEvent" wire:key="sc-component:{{ $this->todayNextYear }}-{{ $this->todayNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}:{{ $this->clickable }}" /></div><div class="calendar-small-next"><livewire:calendar-small :year="$this->todayAfterNextYear" :month="$this->todayAfterNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="$this->clickable" :values="$this->afterNextMonthEvent" wire:key="sc-component:{{ $this->todayAfterNextYear }}-{{ $this->todayAfterNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}:{{ $this->clickable }}" /></div>
 <div class="checkbox-area">
 <div class="event-checkbox company-events">
 <input type="checkbox" id="company-events" name="company-events" wire:click="filterEvents('company-events')" checked>
@@ -108,6 +127,10 @@ wire:click='new'>予定を追加</button>
 <div class="event-checkbox others">
 <input type="checkbox" id="others" name="others" wire:click="filterEvents('others')" checked>
 <label for="others">その他</label>
+</div>
+<div class="event-checkbox grants-and-subsidies">
+<input type="checkbox" id="grants-and-subsidies" name="grants-and-subsidies" wire:click="filterEvents('grants-and-subsidies')" checked>
+<label for="grants-and-subsidies">助成金・補助金</label>
 </div>
 </div>
 </div>
@@ -187,6 +210,10 @@ class="angle right icon"></i></button>
 <label for="event-title">タイトル</label>
 <input type="text" name="event-title" class='edit-calendar-inputs_name' maxlength="20" wire:ignore>
 </div>
+<div class="required field subsidies" style="display: none;">
+<label for="input_subsidies_name">助成金・補助金名</label>
+<input type="text" name="input_subsidies_name" class='edit-calendar-inputs_subsidies_name' maxlength="50" wire:ignore>
+</div>
 <div class="two fields">
 <div class="required field">
 <label>日時（開始）</label>
@@ -224,11 +251,10 @@ class="edit-calendar-to" wire:ignore>
 <label>繰り返し</label>
 <select class="ui fluid dropdown edit-calendar-inputs_repetition">
 <option value="0">繰り返さない</option>
-<option value="1">毎日</option>
-<option value="2">毎週</option>
-<option value="3">毎月（曜日）</option>
-<option value="4">毎月（日付）</option>
-<option value="5">毎年</option>
+<option value="1">毎週</option>
+<option value="2">毎月（曜日）</option>
+<option value="3">毎月（日付）</option>
+<option value="4">毎年</option>
 </select>
 </div>
 </div>
@@ -289,6 +315,10 @@ onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
 <div class="field">
 <label>登録者</label>
 <input type="text" class="author" readonly>
+</div>
+<div class="field subsidies_name hidden">
+<label>助成金・補助金名</label>
+<input type="text" class="subsidies_name" readonly>
 </div>
 <div class="two fields">
 <div class="field">

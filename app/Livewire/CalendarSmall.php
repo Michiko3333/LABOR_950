@@ -181,6 +181,7 @@ class CalendarSmall extends Component
 
     public function clickNum($month, $num)
     {
+        $this->clickable = false;
         $year = $month < $this->select_month ? $this->select_year + 1 : $this->select_year;
         $clicked_date = $this->formatDate($year, $month, $num);
         $this->dispatch('calendar-small-clicked', $clicked_date);

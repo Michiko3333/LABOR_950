@@ -10,6 +10,7 @@ class Calendar_event extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'name',
+        'subsidies_name',
         'from',
         'to',
         'contents'
