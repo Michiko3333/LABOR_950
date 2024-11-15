@@ -1,8 +1,11 @@
 <style type="text/css">
-    .flex-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.flex-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.preview-area a {
+    color: black;
 }
 </style>
 <DIV style="position:relative; left:0px; top:0px; width:796px; height:1124px;">
@@ -529,9 +532,11 @@
         $(document).ready(function() {
             $('#occupation-type').click(function() {
                 $('#occupation-type-modal').modal('show');
+                $('body').css('margin-right', '0');
             });
             $('#employment-status').click(function() {
                 $('#employment-status-modal').modal('show');
+                $('body').css('margin-right', '0');
             });
         });
 </script>
