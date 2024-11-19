@@ -46,7 +46,6 @@ class DependentForm extends Component
                 $d['de-first_name_kana'] = $item->first_name_kana;
                 $d['de-sex'] = $item->sex;
                 $d['de-birthday'] = $item->birthday;
-                $d['de-age'] = $item->age;
                 $d['de-occupation'] = $item->occupation;
                 $d['de-annual_income'] = $item->annual_income;
                 $d['de-contact'] = $item->contact;
@@ -127,7 +126,6 @@ class DependentForm extends Component
             'de-first_name_kana' => '',
             'de-sex' => '',
             'de-birthday' => '',
-            'de-age' => '',
             'de-occupation' => '',
             'de-annual_income' => '',
             'de-contact' => '',

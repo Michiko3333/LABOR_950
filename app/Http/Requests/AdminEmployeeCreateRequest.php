@@ -7,6 +7,7 @@ use App\Rules\noSymbol;
 use App\Rules\NumberOnly;
 use App\Rules\katakanaOnly;
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class AdminEmployeeCreateRequest extends BaseRequest
 {
@@ -58,6 +59,16 @@ class AdminEmployeeCreateRequest extends BaseRequest
             $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'RANKS');
             $data['emergency_address_apartment2'] = str_replace(['-', '‐'], '－', $data['emergency_address_apartment2']);
         }
+        if (isset($data['birthday_date'])) {
+            $data['birthday_date'] = Carbon::createFromFormat('Y年n月j日', $data['birthday_date'])->format('Y-m-d');
+        }
+        if (isset($data['de-birthday'])) {
+            foreach ($data['de-birthday'] as &$birthday) {
+                if($birthday){
+                    $birthday = Carbon::createFromFormat('Y年n月j日', $birthday)->format('Y-m-d');
+                }
+            }
+        }
         return $data;
     }
 
@@ -108,7 +119,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'name_common' => 'nullable|string|max:255',
             'name_common_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'sex' => 'required',
-            'birthday_date' => 'required',
+            'birthday_date' => 'required|before_or_equal:today',
             'post_code' => 'required|string|max:20|regex:/\A[0-9]+\z/u',
             'address_prefecture' => 'required|integer',
             'address_city' => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
@@ -194,14 +205,14 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-first_name_kana.*" => ['nullable', 'string', 'max:255', new katakanaOnly(false), 'required_with:de-relationship_spouse.*,de-relationship_dependent.*'],
             "de-sex" => 'array',
             "de-sex.*" => 'nullable|integer|in:1,2',
+            "de-birthday" => 'array',
+            "de-birthday.*" => 'nullable|before_or_equal:today',
             "de-relationship_spouse" => 'array',
             "de-relationship_spouse.*" => 'nullable|integer|in:1,2,3,4|required_with:de-spouse_flag.*',
             "de-relationship_dependent" => 'array',
             "de-relationship_dependent.*" => 'nullable|integer|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|required_without:de-spouse_flag.*',
             "de-spouse_flag" => 'array',
             "de-spouse_flag.*" => 'nullable|integer|in:1',
-            "de-age" => 'array',
-            "de-age.*" => 'nullable|integer|digits_between:1,3',
             "de-contact" => 'array',
             "de-contact.*" => ['nullable', 'string', new NumberOnly(13)],
             "de-occupation" => 'array',
@@ -377,6 +388,9 @@ class AdminEmployeeCreateRequest extends BaseRequest
         foreach ($this->input('de-sex', []) as $index => $value) {
             $Attributes["de-sex.{$index}"] = ($index + 1) . "扶養者_性別";
         }
+        foreach ($this->input('de-birthday', []) as $index => $value) {
+            $Attributes["de-birthday.{$index}"] = ($index + 1) . "扶養者_生年月日";
+        }
         foreach ($this->input('de-relationship_spouse', []) as $index => $value) {
             $Attributes["de-relationship_spouse.{$index}"] = ($index + 1) . "扶養者_続柄（配偶者）";
         }
@@ -385,9 +399,6 @@ class AdminEmployeeCreateRequest extends BaseRequest
         }
         foreach ($this->input('de-spouse_flag', []) as $index => $value) {
             $Attributes["de-spouse_flag.{$index}"] = ($index + 1) . "扶養者_配偶者フラグ";
-        }
-        foreach ($this->input('de-age', []) as $index => $value) {
-            $Attributes["de-age.{$index}"] = ($index + 1) . "扶養者_年齢";
         }
         foreach ($this->input('de-contact', []) as $index => $value) {
             $Attributes["de-contact.{$index}"] = ($index + 1) . "扶養者_連絡先";

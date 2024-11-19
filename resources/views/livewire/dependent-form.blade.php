@@ -12,6 +12,42 @@
                 },
                 initialDate: "",
             });
+            $('.dependent-calendar.birthday').each(function() {
+                const calendarElement = $(this);
+                calendarElement.calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    },
+                    initialDate: "",
+                    onChange: (date, text, mode) => {
+                        const match = text.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                        if (match) {
+                            const year = parseInt(match[1], 10);
+                            const month = parseInt(match[2], 10) - 1;
+                            const day = parseInt(match[3], 10);
+                            const birthDate = new Date(year, month, day);
+                            const today = new Date();
+
+                            let age = today.getFullYear() - birthDate.getFullYear();
+                            let monthDiff = today.getMonth() - birthDate.getMonth();
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                age -= 1;
+                                monthDiff += 12;
+                            }
+
+                            let ageMonths = monthDiff;
+                            const ageString = `${age}歳${ageMonths}ヵ月`;
+                            const ageInput = calendarElement.closest('.content_inner').find('.de-age');
+                            ageInput.val(ageString);
+                        }
+                    },
+                });
+            });
             $('.ui.accordion').accordion({
                 onChange: function(e) {
                     const acs = $('[data-accordion]');
@@ -265,10 +301,10 @@
                         <div class="field {{ err_bind($errs, 'de-birthday', $key) }}">
                             <label for="de-date_of_expiry">生年月日</label>
                             @if($history_flg === 0)
-                                <div class="ui calendar dependent-calendar" wire:ignore>
+                                <div class="ui calendar dependent-calendar birthday" wire:ignore>
                                     <div class="ui fluid input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" name="de-birthday[]"
+                                        <input type="text" name="de-birthday[]" class="de-birthday"
                                             wire:model.live="data.{{ $key }}.de-birthday"
                                             placeholder="YYYY年M月D日">
                                     </div>
@@ -279,15 +315,10 @@
                                     placeholder="" style="border: none;" readonly>
                             @endif
                         </div>
-                        <div class="field {{ err_bind($errs, 'de-age', $key) }}">
+                        <div class="field">
                             <label for="de-age">年齢</label>
-                            @if($history_flg === 0)
-                                <input type="number" name="de-age[]" max="200" min="0"
-                                    wire:model.live="data.{{ $key }}.de-age" placeholder="10">
-                            @else
-                                <input type="number" name="de-age[]" max="200" min="0"
-                                    wire:model.live="data.{{ $key }}.de-age" placeholder="" style="border: none;" readonly>
-                            @endif
+                                <input type="text" name="de-age[]" class="de-age"
+                                placeholder="" readonly style="border: none;">
                         </div>
                     </div>
                     <div class="two fields">
@@ -468,6 +499,23 @@
             const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
             $(document).ready(function() {
                 if (notReadonly) dependent();
+                $('.dependent-calendar.birthday').each(function() {
+                    const calendarElement = $(this);
+                    const date = new Date($(this).data()["date"]);
+                    if(date != "Invalid Date"){
+                        const today = new Date();
+                        let age = today.getFullYear() - date.getFullYear();
+                        let monthDiff = today.getMonth() - date.getMonth();
+                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < date.getDate())) {
+                            age -= 1;
+                            monthDiff += 12;
+                        }
+                        let ageMonths = monthDiff;
+                        const ageString = `${age}歳${ageMonths}ヵ月`;
+                        const ageInput = calendarElement.closest('.content_inner').find('.de-age');
+                        ageInput.val(ageString);
+                    }
+                });
             });
             $wire.on('form-appended', () => {
                 setTimeout(() => {

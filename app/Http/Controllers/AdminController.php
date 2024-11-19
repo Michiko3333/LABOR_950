@@ -1333,7 +1333,6 @@ class AdminController extends Controller
             'last_name_kana' => $requestData['de-last_name_kana'][$index],
             'first_name_kana' => $requestData['de-first_name_kana'][$index],
             'sex' => $requestData['de-sex'][$index],
-            'age' => $requestData['de-age'][$index],
             'occupation' => $requestData['de-occupation'][$index],
             'annual_income' => $requestData['de-annual_income'][$index],
             'contact' => $requestData['de-contact'][$index],
