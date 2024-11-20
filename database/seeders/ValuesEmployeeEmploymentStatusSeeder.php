@@ -12,6 +12,7 @@ class ValuesEmployeeEmploymentStatusSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_employment_status')->truncate();
         DB::table('m_values_employee_employment_status')->insert([
             ['name' => '日雇'],
             ['name' => '派遣'],

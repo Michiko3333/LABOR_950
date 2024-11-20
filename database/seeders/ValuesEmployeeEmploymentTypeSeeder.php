@@ -12,6 +12,7 @@ class ValuesEmployeeEmploymentTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_employment_type')->truncate();
         DB::table('m_values_employee_employment_type')->insert([
             ['name' => '派遣・請負労働者として主として当該事業所以外で就労する場合'],
             ['name' => '1に該当しない場合']

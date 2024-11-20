@@ -12,6 +12,7 @@ class ValuesDependentCaredFamilyMemberRelationshipSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_cared_family_member_relationship')->truncate();
         DB::table('m_values_dependent_cared_family_member_relationship')->insert([
             ['name' => '配偶者'],
             ['name' => '父母'],

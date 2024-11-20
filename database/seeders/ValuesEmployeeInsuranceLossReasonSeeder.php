@@ -12,6 +12,7 @@ class ValuesEmployeeInsuranceLossReasonSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_insurance_loss_reason')->truncate();
         DB::table('m_values_employee_insurance_loss_reason')->insert([
             ['name' => '離職以外の理由'],
             ['name' => '3以外の離職'],

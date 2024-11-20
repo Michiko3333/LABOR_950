@@ -12,6 +12,7 @@ class ValuesDependentRelationshipSexSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_relationship_sex')->truncate();
         DB::table('m_values_dependent_relationship_sex')->insert([
             ['name' => '夫'],
             ['name' => '妻'],

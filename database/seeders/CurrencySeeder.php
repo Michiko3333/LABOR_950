@@ -12,6 +12,7 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_currency')->truncate();
         DB::table('m_currency')->insert([
             [
                 // 'currency_no'   => '008',
@@ -1603,6 +1604,6 @@ class CurrencySeeder extends Seeder
                 'country'  => 'アメリカ合衆国（THE）',
                 'currency'  => '米ドル（翌日）',
             ],
-        ]); 
+        ]);
     }
 }

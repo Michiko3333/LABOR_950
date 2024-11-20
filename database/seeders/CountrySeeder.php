@@ -12,6 +12,7 @@ class CountrySeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_country')->truncate();
         DB::table('m_country')->insert([
             [
                 'country_code'   => 'IS',

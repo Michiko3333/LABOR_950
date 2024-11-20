@@ -13,6 +13,7 @@ class FilterEmployeeListSeeder extends Seeder
      */
     public function run(): void
     {
+        FilterEmployeeList::truncate();
         FilterEmployeeList::create([
             'name' => '氏名',
             'value' => 'full_name',

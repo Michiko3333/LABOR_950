@@ -12,6 +12,7 @@ class ValuesCompanyListedTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_company_listed_type')->truncate();
         DB::table('m_values_company_listed_type')->insert([
             ['name' => '東証プライム'],
             ['name' => '東証スタンダード'],

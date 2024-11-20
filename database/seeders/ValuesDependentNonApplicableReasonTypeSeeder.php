@@ -12,6 +12,7 @@ class ValuesDependentNonApplicableReasonTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_applicable_reason_type')->truncate();
         DB::table('m_values_dependent_applicable_reason_type')->insert([
             ['name' => '国内転入'],
             ['name' => 'その他']

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;      
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-        
+
 
 class LaborSupervisionSeeder extends Seeder
 {
@@ -13,6 +13,7 @@ class LaborSupervisionSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_labor_supervision')->truncate();
         DB::table('m_labor_supervision')->insert([
             [
                 'name'   => '札幌中央',
@@ -15277,6 +15278,6 @@ class LaborSupervisionSeeder extends Seeder
                 'tel'  => '0980822344',
                 'url'  => 'https://jsite.mhlw.go.jp/okinawa-roudoukyoku/kantoku/yaeyama_rkk_ksa.html',
             ],
-        ]); 
+        ]);
     }
 }

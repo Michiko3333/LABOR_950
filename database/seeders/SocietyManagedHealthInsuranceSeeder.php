@@ -12,6 +12,7 @@ class SocietyManagedHealthInsuranceSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_society_managed_health_insurance')->truncate();
         DB::table('m_society_managed_health_insurance')->insert([
             [
                 'name'   => 'あいおいニッセイ同和',

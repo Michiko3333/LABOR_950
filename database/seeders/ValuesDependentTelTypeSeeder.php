@@ -12,6 +12,7 @@ class ValuesDependentTelTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_tel_type')->truncate();
         DB::table('m_values_dependent_tel_type')->insert([
             ['name' => '自宅'],
             ['name' => '携帯'],

@@ -12,6 +12,7 @@ class ValuesShareholderShareholderTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_shareholder_shareholder_type')->truncate();
         DB::table('m_values_shareholder_shareholder_type')->insert([
             ['name' => '代表取締役'],
             ['name' => '取締役'],

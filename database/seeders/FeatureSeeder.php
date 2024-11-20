@@ -12,6 +12,7 @@ class FeatureSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_feature')->truncate();
         DB::table('m_feature')->insert([
             [
                 'id' => '1',

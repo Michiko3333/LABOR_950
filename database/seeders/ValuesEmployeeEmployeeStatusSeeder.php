@@ -12,23 +12,24 @@ class ValuesEmployeeEmployeeStatusSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_employee_status')->truncate();
         DB::table('m_values_employee_employee_status')->insert([
             [
-                'id' => '1', 
-                'name' => '内定承諾（未社員）', 
+                'id' => '1',
+                'name' => '内定承諾（未社員）',
             ],
             [
-                'id' => '2', 
-                'name' => '有期雇用社員', 
+                'id' => '2',
+                'name' => '有期雇用社員',
             ],
             [
-                'id' => '3', 
-                'name' => '正社員', 
+                'id' => '3',
+                'name' => '正社員',
             ],
             [
-                'id' => '9', 
-                'name' => '退職者', 
+                'id' => '9',
+                'name' => '退職者',
             ],
-    ]);
+        ]);
     }
 }

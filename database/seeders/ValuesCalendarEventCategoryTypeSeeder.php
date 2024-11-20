@@ -12,6 +12,7 @@ class ValuesCalendarEventCategoryTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_calendar_event_category_type')->truncate();
         DB::table('m_values_calendar_event_category_type')->insert([
             ['name' => '会社行事'],
             ['name' => '総務業務'],

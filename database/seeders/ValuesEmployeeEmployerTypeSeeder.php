@@ -12,6 +12,7 @@ class ValuesEmployeeEmployerTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_employer_type')->truncate();
         DB::table('m_values_employee_employer_type')->insert([
             ['name' => '雇用主'],
             ['name' => '非雇用主']

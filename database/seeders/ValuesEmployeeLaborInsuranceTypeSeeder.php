@@ -12,6 +12,7 @@ class ValuesEmployeeLaborInsuranceTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_labor_insurance_type')->truncate();
         DB::table('m_values_employee_labor_insurance_type')->insert([
             ['name' => '常用労働者'],
             ['name' => '役員で労働者扱いの者'],

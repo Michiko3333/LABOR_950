@@ -12,6 +12,7 @@ class ValuesEmployeeInsuredAgeTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_insured_age_type')->truncate();
         DB::table('m_values_employee_insured_age_type')->insert([
             ['name' => '一般'],
             ['name' => '高年齢'],

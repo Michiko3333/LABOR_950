@@ -12,6 +12,7 @@ class ValuesDependentLivingTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_living_type')->truncate();
         DB::table('m_values_dependent_living_type')->insert([
             ['name' => '同居'],
             ['name' => '別居']

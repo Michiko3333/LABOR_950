@@ -12,6 +12,7 @@ class PickupSettingSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_pickup_setting')->truncate();
         DB::table('m_pickup_setting')->insert([
             [
                 'id' => 1,

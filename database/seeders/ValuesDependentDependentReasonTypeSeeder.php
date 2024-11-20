@@ -12,6 +12,7 @@ class ValuesDependentDependentReasonTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_dependent_reason_type')->truncate();
         DB::table('m_values_dependent_dependent_reason_type')->insert([
             ['name' => '配偶者の就職'],
             ['name' => '婚姻'],

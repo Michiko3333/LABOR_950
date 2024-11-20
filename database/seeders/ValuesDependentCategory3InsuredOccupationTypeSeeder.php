@@ -12,6 +12,7 @@ class ValuesDependentCategory3InsuredOccupationTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_category3_insured_occupation_type')->truncate();
         DB::table('m_values_dependent_category3_insured_occupation_type')->insert([
             ['name' => '無職'],
             ['name' => 'パート'],

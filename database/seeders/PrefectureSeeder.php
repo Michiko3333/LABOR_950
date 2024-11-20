@@ -12,242 +12,243 @@ class PrefectureSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_prefecture')->truncate();
         DB::table('m_prefecture')->insert([
             [
                 'prefecture_code' => '01',
                 'name' => '北海道',
                 'name_kana' => 'ホッカイドウ'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '02',
                 'name' => '青森県',
                 'name_kana' => 'アオモリケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '03',
                 'name' => '岩手県',
                 'name_kana' => 'イワテケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '04',
                 'name' => '宮城県',
                 'name_kana' => 'ミヤギケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '05',
                 'name' => '秋田県',
                 'name_kana' => 'アキタケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '06',
                 'name' => '山形県',
                 'name_kana' => 'ヤマガタケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '07',
                 'name' => '福島県',
                 'name_kana' => 'フクシマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '08',
                 'name' => '茨城県',
                 'name_kana' => 'イバラキケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '09',
                 'name' => '栃木県',
                 'name_kana' => 'トチギケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '10',
                 'name' => '群馬県',
                 'name_kana' => 'グンマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '11',
                 'name' => '埼玉県',
                 'name_kana' => 'サイタマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '12',
                 'name' => '千葉県',
                 'name_kana' => 'チバケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '13',
                 'name' => '東京都',
                 'name_kana' => 'トウキョウト'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '14',
                 'name' => '神奈川県',
                 'name_kana' => 'カナガワケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '15',
                 'name' => '新潟県',
                 'name_kana' => 'ニイガタケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '16',
                 'name' => '富山県',
                 'name_kana' => 'トヤマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '17',
                 'name' => '石川県',
                 'name_kana' => 'イシカワケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '18',
                 'name' => '福井県',
                 'name_kana' => 'フクイケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '19',
                 'name' => '山梨県',
                 'name_kana' => 'ヤマナシケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '20',
                 'name' => '長野県',
                 'name_kana' => 'ナガノケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '21',
                 'name' => '岐阜県',
                 'name_kana' => 'ギフケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '22',
                 'name' => '静岡県',
                 'name_kana' => 'シズオカケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '23',
                 'name' => '愛知県',
                 'name_kana' => 'アイチケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '24',
                 'name' => '三重県',
                 'name_kana' => 'ミエケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '25',
                 'name' => '滋賀県',
                 'name_kana' => 'シガケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '26',
                 'name' => '京都府',
                 'name_kana' => 'キョウトフ'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '27',
                 'name' => '大阪府',
                 'name_kana' => 'オオサカフ'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '28',
                 'name' => '兵庫県',
                 'name_kana' => 'ヒョウゴケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '29',
                 'name' => '奈良県',
                 'name_kana' => 'ナラケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '30',
                 'name' => '和歌山県',
                 'name_kana' => 'ワカヤマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '31',
                 'name' => '鳥取県',
                 'name_kana' => 'トットリケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '32',
                 'name' => '島根県',
                 'name_kana' => 'シマネケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '33',
                 'name' => '岡山県',
                 'name_kana' => 'オカヤマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '34',
                 'name' => '広島県',
                 'name_kana' => 'ヒロシマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '35',
                 'name' => '山口県',
                 'name_kana' => 'ヤマグチケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '36',
                 'name' => '徳島県',
                 'name_kana' => 'トクシマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '37',
                 'name' => '香川県',
                 'name_kana' => 'カガワケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '38',
                 'name' => '愛媛県',
                 'name_kana' => 'エヒメケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '39',
                 'name' => '高知県',
                 'name_kana' => 'コウチケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '40',
                 'name' => '福岡県',
                 'name_kana' => 'フクオカケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '41',
                 'name' => '佐賀県',
                 'name_kana' => 'サガケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '42',
                 'name' => '長崎県',
                 'name_kana' => 'ナガサキケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '43',
                 'name' => '熊本県',
                 'name_kana' => 'クマモトケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '44',
                 'name' => '大分県',
                 'name_kana' => 'オオイタケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '45',
                 'name' => '宮崎県',
                 'name_kana' => 'ミヤザキケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '46',
                 'name' => '鹿児島県',
                 'name_kana' => 'カゴシマケン'
-              ],
-              [
+            ],
+            [
                 'prefecture_code' => '47',
                 'name' => '沖縄県',
                 'name_kana' => 'オキナワケン'
-              ]
+            ]
         ]);
     }
 }

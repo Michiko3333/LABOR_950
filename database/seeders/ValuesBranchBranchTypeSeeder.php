@@ -12,6 +12,7 @@ class ValuesBranchBranchTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_branch_branch_type')->truncate();
         DB::table('m_values_branch_branch_type')->insert([
             ['name' => '本社'],
             ['name' => '支店'],

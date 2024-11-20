@@ -16,6 +16,7 @@ class DepartmentPermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        DepartmentPermission::truncate();
         $dep_data = [
             ['id' => 1, 'name' => '一般'],
             ['id' => 2, 'name' => '人事総務'],

@@ -12,6 +12,7 @@ class LaborBureauSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_labor_bureau')->truncate();
         DB::table('m_labor_bureau')->insert([
             [
                 'name'   => null,
@@ -8241,7 +8242,7 @@ class LaborBureauSeeder extends Seeder
                 'address_more_details'  => 'おもろまち2丁目1番1号 那覇第2地方合同庁舎（1号館）',
                 'tel'  => '0988681637',
                 'url'  => 'https://jsite.mhlw.go.jp/okinawa-roudoukyoku/home.html',
-            ],        
+            ],
         ]);
     }
 }
