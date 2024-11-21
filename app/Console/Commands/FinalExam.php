@@ -100,7 +100,7 @@ class FinalExam extends Command
             } elseif ($examNumber == '18-1') {
                 $response = FinalExamController::get_notification_list_command($companyId, $examNumber);
             } elseif ($examNumber == '18-2') {
-                $arrive_id = '9002024000000417';
+                $arrive_id = $this->asking('arrive_id');
                 $response = FinalExamController::getNotificationInformation_command($companyId, $arrive_id, $examNumber);
             } elseif ($examNumber == '19-1') {
                 $arrive_id = $this->asking('arrive_id');

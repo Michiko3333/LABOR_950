@@ -2,18 +2,17 @@
 
 namespace App\EgovAPI;
 
-use App\Models\Company;
-use App\Models\Employee;
-
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use App\Models\Csv_count;
+use App\Models\CurrentUser;
 
 class CsvFormatter
 {
-    private $medium = '';
+    private $count = '';
     private $kanri = [];
     private $office = [];
     private $data = [];
-    private $code = '';
+    private $ledgerId = '';
     private $labor ='';
 
     public static $codes = [
@@ -22,15 +21,52 @@ class CsvFormatter
         '4950013520991000', // 健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届
     ];
 
-    public function __construct($code, $medium)
+    public function __construct()
     {
-        $this->code = $code;
-        $this->medium = str_pad($medium, 3, '0', STR_PAD_LEFT);
+        $this->ledgerId = request()->segment(2);
+    }
+
+    public function csvFomat($request)
+    {
+        if ($request->input('labor_and_social_security_attorney_registration_no')) {
+            $laborId = CurrentUser::info()->id;
+            if (!DB::table('m_csv_count')->where('employee_id', $laborId)->exists()) {
+                Csv_count::create(['employee_id' => $laborId, 'count' => 0]);
+            }
+            $csv_count = Csv_count::select('count')->where('employee_id', $laborId)->first();
+            $count = $csv_count->count;
+            if ($count === 999) {
+                $count = 1;
+            } else {
+                $count++;
+            }
+            Csv_count::where('employee_id', $laborId)->update(['count' => $count]);
+        } else {
+            if (!DB::table('m_csv_count')->where('pension_office_no', $request->input('csv_pension_office_no'))->exists()) {
+                Csv_count::create(['pension_office_no' => $request->input('csv_pension_office_no'), 'count' => 0]);
+            }
+            $csv_count = Csv_count::select('count')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
+            $count = $csv_count->count;
+            if ($count === 999) {
+                $count = 1;
+            } else {
+                $count++;
+            }
+            Csv_count::where('pension_office_no', $request->input('csv_pension_office_no'))->update(['count' => $count]);
+        }
+        $this->count = str_pad($count, 3, '0', STR_PAD_LEFT);
+        $this->setKanri($request);
+        $this->setData($request);
+        $csvData = $this->setCSVSummaryTable($request);
+
+        $request->merge($csvData);
+
+        return $request;
     }
 
     public function setKanri($request)
     {
-        switch($this->code){
+        switch($this->ledgerId){
             case '4950013520990000':
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -80,12 +116,12 @@ class CsvFormatter
                 $csv_labor_and_social_security_attorney_registration_no = $request->input('labor_and_social_security_attorney_registration_no');
             break;
         }
-        
+
         $this->kanri = [
             '都道府県コード' => empty($csv_submission_agent) ? $business_serial_number_prefecture : '',
             '郡市区符号' => empty($csv_submission_agent) ? $business_serial_number_city : '',
             '事業所記号' => empty($csv_labor_and_social_security_attorney_registration_no) ? mb_convert_kana($business_serial_number_office, 'k') : $csv_labor_and_social_security_attorney_registration_no,
-            '媒体通番' => $this->medium,
+            '媒体通番' => $this->count,
             '作成年月日' => now()->format('Ymd'),
             '代表届書コード' => 22223
         ];
@@ -110,7 +146,7 @@ class CsvFormatter
 
     public function setData($request)
     {
-        switch ($this->code) {
+        switch ($this->ledgerId) {
                 // 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届
             case '4950013520990000':
                 $before_revision_date = self::convertToWareki($request->input('before_revision_date_year'), $request->input('before_revision_date_month'));
@@ -340,23 +376,23 @@ class CsvFormatter
 
     public function getCsvText()
     {
-        $medium = $this->medium;
+        $count = $this->count;
         $labor = $this->labor;
         $data_kanri = implode(',', array_values($this->kanri));
         $data_office = implode(',', array_values($this->office));
         $data_values = implode(',', array_values($this->data));
 
-        if (empty($medium) || empty($data_kanri) || empty($data_office) || empty($data_values)) {
+        if (empty($count) || empty($data_kanri) || empty($data_office) || empty($data_values)) {
             return '';
         }
 
-        $str = "$data_kanri\n[kanri]\n$labor,$medium\n$data_office\n[data]\n$data_values\n";
+        $str = "$data_kanri\n[kanri]\n$labor,$count\n$data_office\n[data]\n$data_values\n";
         return $str;
     }
 
     public function setCSVSummaryTable($request)
     {
-        switch($this->code){
+        switch($this->ledgerId){
             case '4950013520990000':
                 $monthly_change_sheets = 1;
                 $basis_of_calculation_sheets = 0;
@@ -423,7 +459,7 @@ class CsvFormatter
 
         $csvData = [
             'identification_information_1' => empty($csv_labor_and_social_security_attorney_registration_no) ? $identification_information_1 : $csv_labor_and_social_security_attorney_registration_no,
-            'identification_information_2' => str_pad($this->medium, 3, '0', STR_PAD_LEFT),
+            'identification_information_2' => str_pad($this->count, 3, '0', STR_PAD_LEFT),
             'csv_create_date_year' => $today_year,
             'csv_create_date_month' => ltrim(now()->format('m'), '0'),
             'csv_create_date_day' => ltrim(now()->format('d'), '0'),

@@ -93,44 +93,12 @@ class HealthAndPensionInsuredBonusPaymentNotificationController extends Controll
 
     public function post(HealthAndPensionInsuredBonusPaymentNotificationRequest $request)
     {
-        $attachment = [];
-
-        if ($request->input('labor_and_social_security_attorney_registration_no')) {
-            $labor = CurrentUser::info();
-            $laborId = $labor->id;
-            if (!DB::table('m_csv_count')->where('employee_id', $laborId)->exists()) {
-                Csv_count::create(['employee_id' => $laborId, 'count' => 0]);
-            }
-            $csv_count = Csv_count::select('count')->where('employee_id', $laborId)->first();
-            $count = $csv_count->count;
-            if ($count === 999) {
-                $count = 1;
-            } else {
-                $count++;
-            }
-            Csv_count::where('employee_id', $laborId)->update(['count' => $count]);
-        } else {
-            if (!DB::table('m_csv_count')->where('pension_office_no', $request->input('csv_pension_office_no'))->exists()) {
-                Csv_count::create(['pension_office_no' => $request->input('csv_pension_office_no'), 'count' => 0]);
-            }
-            $csv_count = Csv_count::select('count')->where('pension_office_no', $request->input('csv_pension_office_no'))->first();
-            $count = $csv_count->count;
-            if ($count === 999) {
-                $count = 1;
-            } else {
-                $count++;
-            }
-            Csv_count::where('pension_office_no', $request->input('csv_pension_office_no'))->update(['count' => $count]);
-        }
-        $csvFormatter = new CsvFormatter('4950013520991000', $count);
-        $csvFormatter->setKanri($request);
-        $csvFormatter->setData($request);
+        $csvFormatter = new CsvFormatter();
+        $request = $csvFormatter->csvFomat($request);
         $csvText = $csvFormatter->getCsvText();
-        $csvData = $csvFormatter->setCSVSummaryTable($request);
-
-        $request->merge($csvData);
-
         $data = $request->all();
+
+        $attachment = [];
 
         foreach ($data as $key => $value) {
             if (strpos($key, 'radio_') === 0) {
