@@ -101,6 +101,11 @@ class Company extends Model
         return $this->hasMany(Company_files::class);
     }
 
+    public function departments()
+    {
+        return $this->hasMany(Department::class);
+    }
+    
     public function pickup_setting()
     {
         return $this->hasOne(Pickup_setting::class);

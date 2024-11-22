@@ -13,7 +13,6 @@
                 initialDate: "",
             });
 
-
             $('.ui.accordion').accordion({
                 onChange: function(e) {
                     const acs = $('[data-accordion]');
@@ -35,6 +34,7 @@
             });
 
             $('.ui.dropdown.dropdown.multiple').dropdown();
+            
             $(document).ready(function() {
                 $('.working_hours_calendar').calendar({
                     type: 'time',
@@ -48,7 +48,7 @@
         }
     </script>
     @foreach ($data as $key => $item)
-        <div class="ui styled accordion card-shadow my-2 branch-area-{{ $key }}" style="width: 100%;">
+        <div class="ui styled accordion card-shadow my-2 branch-area-{{ $key }}" style="width: 100%;" wire:key="branch-{{ $key }}">
             <div class="title active">
                 <i class="dropdown icon"></i>
                 @if ($key === 0 && !$this->company)
@@ -92,7 +92,6 @@
                                 'br-pension_office_reference_no_cities.' . $key,
                                 'br-pension_office_reference_no_office.' . $key,
                                 'br-insurance_applicable_date.' . $key,
-                                'br-bonus_payment_month.' . $key,
                                 'br-pension_office_name.' . $key,
                                 'br-pension_office_no.' . $key,
                                 'br-pension_office_id.' . $key,
@@ -134,6 +133,48 @@
                                 'br-holiday_legal.' . $key,
                                 'br-holiday_not_logal.' . $key,
                             ]);
+                            $patterns = [
+                                '/^sa-payroll_month\.' . preg_quote($key) . '\..*/',
+                                '/^sa-payroll_day\.' . preg_quote($key) . '\..*/',
+                                '/^sa-applied_date\.' . preg_quote($key) . '\..*/',
+                                '/^sa-payroll_deadline\.' . preg_quote($key) . '\..*/',
+                                '/^sa-departments\.' . preg_quote($key) . '\..*/',
+                                '/^bo-departments\.' . preg_quote($key) . '\..*/',
+                                '/^bo-bonus_payment_month\.' . preg_quote($key) . '\..*/',
+                                '/^bo-applied_date\.' . preg_quote($key) . '\..*/',
+                                '/^bou-departments\.' . preg_quote($key) . '\..*/',
+                                '/^bou-bonus_payment_month\.' . preg_quote($key) . '\..*/',
+                                '/^bou-applied_date\.' . preg_quote($key) . '\..*/',
+                            ];
+                            $sub = [
+                                '/^sa-payroll_month\.' . preg_quote($key) . '\..*/',
+                                '/^sa-payroll_day\.' . preg_quote($key) . '\..*/',
+                                '/^sa-applied_date\.' . preg_quote($key) . '\..*/',
+                                '/^sa-payroll_deadline\.' . preg_quote($key) . '\..*/',
+                                '/^sa-departments\.' . preg_quote($key) . '\..*/',
+                            ];
+                            $sub2 = [
+                                '/^bo-departments\.' . preg_quote($key) . '\..*/',
+                                '/^bo-bonus_payment_month\.' . preg_quote($key) . '\..*/',
+                                '/^bo-applied_date\.' . preg_quote($key) . '\..*/',
+                            ];
+                            $sub3 = [
+                                '/^bou-departments\.' . preg_quote($key) . '\..*/',
+                                '/^bou-bonus_payment_month\.' . preg_quote($key) . '\..*/',
+                                '/^bou-applied_date\.' . preg_quote($key) . '\..*/',
+                            ];
+                            $field6 = !empty(array_filter($patterns, function($pattern) use ($errors) {
+                                return !empty(preg_grep($pattern, $errors->keys()));
+                            }));
+                            $sub = !empty(array_filter($sub, function($pattern) use ($errors) {
+                                return !empty(preg_grep($pattern, $errors->keys()));
+                            }));
+                            $sub2 = !empty(array_filter($sub2, function($pattern) use ($errors) {
+                                return !empty(preg_grep($pattern, $errors->keys()));
+                            }));
+                            $sub3 = !empty(array_filter($sub3, function($pattern) use ($errors) {
+                                return !empty(preg_grep($pattern, $errors->keys()));
+                            }));
                         @endphp
                         <div class="ui secondary vertical menu branch-tab-menu px-1">
                             <a class="active item {{ $field1 ? 'tab-error' : '' }}"
@@ -146,6 +187,10 @@
                                 data-tab="労働保険_{{ $key }}">労働保険</a>
                             <a class="item {{ $field5 ? 'tab-error' : '' }}"
                                 data-tab="勤務関連_{{ $key }}">勤務関連</a>
+                            @if ($departments && count($departments) > 0)
+                            <a class="item {{ $field6 ? 'tab-error' : '' }}"
+                                data-tab="給与関連_{{ $key }}">給与関連</a>
+                            @endif
                         </div>
                     </div>
                     <div class="item" style="width: 100%;">
@@ -367,25 +412,6 @@
                                             月
                                         </div>
                                     </div>
-                                </div>
-                                <div class="field {{ err_bind($errs, 'br-bonus_payment_month', $key) }}">
-                                    <label for="br-bonus_payment_month">賞与支払月</label>
-                                    <select class="ui fluid multiple dropdown"
-                                        name="br-bonus_payment_month[{{ $key }}][]"
-                                        wire:model.live="data.{{ $key }}.br-bonus_payment_month" multiple>
-                                        <option value="1月">1月</option>
-                                        <option value="2月">2月</option>
-                                        <option value="3月">3月</option>
-                                        <option value="4月">4月</option>
-                                        <option value="5月">5月</option>
-                                        <option value="6月">6月</option>
-                                        <option value="7月">7月</option>
-                                        <option value="8月">8月</option>
-                                        <option value="9月">9月</option>
-                                        <option value="10月">10月</option>
-                                        <option value="11月">11月</option>
-                                        <option value="12月">12月</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="two fields">
@@ -872,6 +898,36 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($departments && count($departments) > 0)
+                        <div class="ui tab segment mt-0 py-0" data-tab="給与関連_{{ $key }}"
+                        style="width: 100%; border: none; box-shadow: none;">
+                            <div class="ui top attached tabular menu main-menu">
+                                <a class="item active {{ $sub ? 'tab-error' : '' }}" data-tab="給与_{{ $key }}">給与</a>
+                                <a class="item {{ $sub2 ? 'tab-error' : '' }}" data-tab="賞与_{{ $key }}">賞与</a>
+                                <a class="item {{ $sub3 ? 'tab-error' : '' }}" data-tab="報奨金_{{ $key }}">報奨金</a>
+                            </div>
+                            <div class="ui bottom attached segment tab main-segment active" data-tab="給与_{{ $key }}">
+                                <livewire:salary-form :errors="$errors" :childKey="$key" :salary="$salary" :branchId="$item['br-id']"
+                                :companyId="$id" wire:key="salary-form-{{ $key }}"/>
+                            </div>
+                            <div class="ui bottom attached segment tab main-segment" data-tab="賞与_{{ $key }}">
+                                <livewire:bonus-form :errors="$errors" :childKey="$key" :bonus="$bonus" :branchId="$item['br-id']"
+                                :companyId="$id" wire:key="bonus-form-{{ $key }}"/>
+                            </div>
+                            <div class="ui bottom attached segment tab main-segment" data-tab="報奨金_{{ $key }}">
+                                <livewire:bounty-form :errors="$errors" :childKey="$key" :bounty="$bounty" :branchId="$item['br-id']"
+                                :companyId="$id" wire:key="bounty-form-{{ $key }}"/>
+                            </div>
+                            @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
+                            <div style="text-align: right;">
+                                <a class="ui button primary confirm-button-{{ $key }}"
+                                href="javascript:openModal({{ $item['br-id'] }},{{ $key }})" wire:key="confirm-button-{{ $key }}">
+                                確認
+                                </a>
+                            </div>
+                            @endif
+                        </div>
+                        @endif
                         @if ($key > 0)
                             @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
                                 <div class="p-1" style="text-align: right;">
@@ -887,41 +943,73 @@
             </div>
         </div>
     @endforeach
-
     @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
         <button class="append-branch" type="button" wire:click="append"
             {{ count($data) > 9 ? 'disabled' : '' }}><i class="plus circle icon"></i>事業所を追加</button>
     @endif
     @script
-        <script type="module">
-            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
-            $(document).ready(function() {
-                if (notReadonly) branch();
-                else {
-                    $('section.content .calendar.icon').remove();
+    <script type="module">
+        const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
+        $(document).ready(function() {
+            if (notReadonly) branch();
+            else {
+                $('section.content .calendar.icon').remove();
+            }
+            $('.branch-tab-menu .item').tab();
+            $('.main-menu .item').tab();
+            $('.ui.dropdown.dropdown.multiple').on('change', function(event) {
+                var $dropdown = $(this);
+                $dropdown.prop('disabled', true).addClass('disabled');
+                setTimeout(function() {
+                    $dropdown.prop('disabled', false).removeClass('disabled');
+                }, 400);
+            });
+        });
+        $wire.on('form-appended', (e) => {
+            setTimeout(() => {
+                if (notReadonly) {
+                    const c = e[0];
+                    const i = c - 1;
+                    $('.branch-area-' + i + ' .branch-tab-menu .item').tab();
+                    branch();
                 }
-                $('.branch-tab-menu .item').tab();
                 $('.ui.dropdown.dropdown.multiple').on('change', function(event) {
                     var $dropdown = $(this);
                     $dropdown.prop('disabled', true).addClass('disabled');
                     setTimeout(function() {
-                        $dropdown.prop('disabled', false).removeClass('disabled');
+                    $dropdown.prop('disabled', false).removeClass('disabled');
                     }, 400);
                 });
+            }, 0);
+        });
+        $wire.on('remove', (e) => {
+            setTimeout(() => {
+                if (notReadonly) {
+                    branch();
+                }
+            }, 0);
+        });
+        $wire.on('change-state', (e) => {
+            setTimeout(() => {
+                if (notReadonly) {
+                    branch();
+                }
+            }, 0);
+        });
+        window.openModal = (branchID,index) => {
+            $wire.dispatch('confirmModalOpened', {
+                branchID: branchID,
+                index: index
             });
-            $wire.on('form-appended', (e) => {
-                setTimeout(() => {
-                    if (notReadonly) {
-                        const c = e[0];
-                        const i = c - 1;
-                        $('.branch-area-' + i + ' .branch-tab-menu .item').tab();
-                        branch();
-                    }
-                }, 0);
-            });
-        </script>
+            setTimeout(() => {
+                $('.confirm-modal').modal({
+                    blurring: true,
+                }).modal('show');
+                $('.modal-menu .item').tab();
+            }, 230);
+        };
+    </script>
     @endscript
-
     <style>
         .ui.secondary.vertical.branch-tab-menu .item.active {
             background-color: #F2F2F2;
@@ -950,6 +1038,11 @@
         .disabled {
             pointer-events: none;
             opacity: 0.8;
+        }
+
+        .red-text {
+            color: red !important;
+            font-weight: bold;
         }
     </style>
 </div>

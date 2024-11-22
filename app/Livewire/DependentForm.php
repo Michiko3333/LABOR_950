@@ -94,6 +94,7 @@ class DependentForm extends Component
             $v = $d['value'];
             $this->data[$i]['de-class_content'] = $v;
         }
+        $this->dispatch('change-state');
     }
 
     public function remove($index)
@@ -103,6 +104,7 @@ class DependentForm extends Component
         unset($this->data[$index]);
         $this->data = array_values($this->data);
         $this->loading = false;
+        $this->dispatch('remove');
     }
 
     public function history($index)

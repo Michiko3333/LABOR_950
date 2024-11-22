@@ -26,12 +26,18 @@ class AdminBranchForm extends Component
     public $work_style_type = [];
     public $hello_work_id = [];
     public $loading = false;
+    public $departments;
+    public $salary;
+    public $bonus;
+    public $bounty;
+    public $id;
 
     public $labor_bureau_names = [];
     public $labor_supervision_names = [];
     public $pension_office_names = [];
 
-    public function mount($errors, $branch = [], $prefectures = [], $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
+    public function mount($errors, $branch = [], $departments,$salary = [],$bonus = [],$bounty = [],$prefectures = [], 
+    $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
     {
         if (!empty($id)) {
             $company = Company::find($id);
@@ -44,6 +50,11 @@ class AdminBranchForm extends Component
         $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
         $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
+        $this->departments = $departments;
+        $this->salary = $salary;
+        $this->bonus = $bonus;
+        $this->bounty = $bounty;
+        $this->id = $id;
 
         $this->labor_bureau_names = Labor_bureau::distinct()->select('submit_name_jk')->get()->pluck('submit_name_jk');
         $this->labor_supervision_names = Labor_supervision::distinct()->select('submit_name_hij')->get()->pluck('submit_name_hij');
@@ -125,8 +136,6 @@ class AdminBranchForm extends Component
                 $d['br-kenpo_no'] = $item->kenpo_no;
                 $d['br-insurance_office_name'] = $item->insurance_office_name;
                 $d['br-insurance_applicable_date'] = $item->insurance_applicable_date;
-                $bonus_payment_month = explode(',', $item->bonus_payment_month);
-                $d['br-bonus_payment_month'] = !empty($bonus_payment_month) ? $bonus_payment_month : null;
                 $d['br-pension_office_name'] = $item->pension_office_name;
                 $d['br-employment_insurance_rate'] = $item->employment_insurance_rate;
                 $d['br-rate_pattern_id'] = $item->rate_pattern_id;
@@ -147,7 +156,6 @@ class AdminBranchForm extends Component
     }
     public function render()
     {
-        //\Log::info(print_r($this->data, true));
         return view('livewire.admin-branch-form');
     }
 
@@ -173,6 +181,7 @@ class AdminBranchForm extends Component
             $v = $d['value'];
             $this->data[$i]['br-class_content'] = $v;
         }
+        $this->dispatch('change-state');
     }
 
     public function remove($index)
@@ -182,6 +191,7 @@ class AdminBranchForm extends Component
         unset($this->data[$index]);
         $this->data = array_values($this->data);
         $this->loading = false;
+        $this->dispatch('remove');
     }
 
     private function defaultValues()
@@ -247,7 +257,6 @@ class AdminBranchForm extends Component
             'br-kenpo_no' => '',
             'br-insurance_office_name' => '',
             'br-insurance_applicable_date' => '',
-            'br-bonus_payment_month' => '',
             'br-pension_office_name' => '',
             'br-employment_insurance_rate' => '',
             'br-rate_pattern_id' => '',

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BranchRequest;
+use App\Models\Bonus;
+use App\Models\Bonus_history;
+use App\Models\Bounty;
+use App\Models\Bounty_history;
 use App\Models\CurrentUser;
 use App\Models\Prefecture;
 use App\Models\Values_branch_labor_insurance_payment_method;
@@ -13,6 +17,8 @@ use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 use App\Models\Branch;
+use App\Models\Salary;
+use App\Models\Salary_history;
 use Carbon\Carbon;
 use App\Permission;
 
@@ -44,6 +50,7 @@ class BranchController extends Controller
         $place_type = Values_branch_place_type::pluck('name', 'id');
         $start_days_of_week = Values_branch_start_days_of_week::pluck('name', 'id');
         $work_style_type = Values_branch_work_style_type::pluck('name', 'id');
+        $departments = $current_company->departments()->where('delete_flg', 0)->get();
         return view('branch', [
             'branch' => $branch,
             'company_id' => $company_id,
@@ -51,7 +58,8 @@ class BranchController extends Controller
             'labor_insurance_payment_method' => $labor_insurance_payment_method,
             'place_type' => $place_type,
             'start_days_of_week' => $start_days_of_week,
-            'work_style_type' => $work_style_type
+            'work_style_type' => $work_style_type,
+            'departments' => $departments,
         ]);
     }
 
@@ -75,15 +83,346 @@ class BranchController extends Controller
             $current_company = CurrentUser::currentCompany();
             $id = $current_company->id;
             $brids = $request->input('br-id');
+            $saids = $request->input('sa-id');
+            $boids = $request->input('bo-id');
+            $bouids = $request->input('bou-id');
             $excepts = [];
             foreach ($brids as $index => $brid) {
                 $brdata = $this->data_branch($data, $index);
+                $currentSaids = $saids[$index] ?? [];
+                $currentboids = $boids[$index] ?? [];
+                $currentbouids = $bouids[$index] ?? [];
                 if ($brid > 0) {
                     Branch::where('id', $brid)->update($brdata);
                     $excepts[] = $brid;
+                    $maxSalaryId = Salary::where('branch_id', $brid)->max('salary_id');
+                    $newSalaryId = is_null($maxSalaryId) ? "1" : $maxSalaryId + 1;
+                    $maxBonusId = Bonus::where('branch_id', $brid)->max('bonus_id');
+                    $newBonusId = is_null($maxBonusId) ? "1" : $maxBonusId + 1;
+                    $maxBountyId = Bounty::where('branch_id', $brid)->max('bounty_id');
+                    $newBountyId = is_null($maxBountyId) ? "1" : $maxBountyId + 1;
+                    foreach ($currentSaids as $saIndex => $said) {
+                        $applied_date = $data['sa-applied_date'][$index][$saIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        if ($said > 0) {
+                            $departments = $data['sa-departments'][$index][$saIndex] ?? null;
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    Salary::updateOrCreate(
+                                        [
+                                            'salary_id' => $said,
+                                            'department_id' => $department_processed,
+                                            'branch_id' => $brid,
+                                        ],
+                                        [
+                                            'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                            'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                            'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                            'applied_date' => $formatted_applied_date,
+                                        ],
+                                    );
+                                }
+                                Salary::where('salary_id', $said)
+                                ->where('branch_id', $brid)
+                                ->whereNotIn('department_id', $departments)
+                                ->update(['delete_flg' => 1]);
+                                $departmentsAll = implode(',', $departments);
+                                $salaryHistoryData = [
+                                    'salary_id' => $newSalaryId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                    'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                    'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Salary_history::create($salaryHistoryData);
+                            };
+                        }else{
+                            $departments = $data['sa-departments'][$index][$saIndex] ?? null;
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    $salaryData = [
+                                        'salary_id' => $newSalaryId,
+                                        'department_id' => $department_processed,
+                                        'branch_id' => $brid,
+                                        'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                        'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                        'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                        'applied_date' => $formatted_applied_date,
+                                    ];
+                                    Salary::create($salaryData);
+                                }
+                                $departmentsAll = implode(',', $departments);
+                                $salaryHistoryData = [
+                                    'salary_id' => $newSalaryId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                    'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                    'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Salary_history::create($salaryHistoryData);
+                            };
+                        }
+                        $newSalaryId++;
+                    }
+                    foreach ($currentboids as $boIndex => $boid) {
+                        $applied_date = $data['bo-applied_date'][$index][$boIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $departments = $data['bo-departments'][$index][$boIndex] ?? null;
+                        $bonus_payment_month = $data['bo-bonus_payment_month'][$index][$boIndex] ?? null;
+                        if (!is_null($bonus_payment_month)) {
+                            $bonus_payment_month_processed = implode('，', $bonus_payment_month);
+                        } else {
+                            $bonus_payment_month_processed = null;
+                        }
+                        if ($boid > 0) {
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    Bonus::updateOrCreate(
+                                        [
+                                            'bonus_id' => $boid,
+                                            'department_id' => $department_processed,
+                                            'branch_id' => $brid,
+                                        ],
+                                        [
+                                            'bonus_payment_month' => $bonus_payment_month_processed,
+                                            'applied_date' => $formatted_applied_date,
+                                        ],
+                                    );
+                                }
+                                Bonus::where('bonus_id', $boid)
+                                ->where('branch_id', $brid)
+                                ->whereNotIn('department_id', $departments)
+                                ->update(['delete_flg' => 1]);
+                                $departmentsAll = implode(',', $departments);
+                                $bonusHistoryData = [
+                                    'bonus_id' => $newBonusId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bonus_history::create($bonusHistoryData);
+                            };
+                        }else{
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    $bonusData = [
+                                        'bonus_id' => $newBonusId,
+                                        'department_id' => $department_processed,
+                                        'branch_id' => $brid,
+                                        'bonus_payment_month' => $bonus_payment_month_processed,
+                                        'applied_date' => $formatted_applied_date,
+                                    ];
+                                    Bonus::create($bonusData);
+                                }
+                                $departmentsAll = implode(',', $departments);
+                                $bonusHistoryData = [
+                                    'bonus_id' => $newBonusId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bonus_history::create($bonusHistoryData);
+                            };
+                        }
+                        $newBonusId++;
+                    }
+                    foreach ($currentbouids as $bouIndex => $bouid) {
+                        $applied_date = $data['bou-applied_date'][$index][$bouIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $departments = $data['bou-departments'][$index][$bouIndex] ?? null;
+                        $bonus_payment_month = $data['bou-bonus_payment_month'][$index][$bouIndex] ?? null;
+                        if (!is_null($bonus_payment_month)) {
+                            $bonus_payment_month_processed = implode('，', $bonus_payment_month);
+                        } else {
+                            $bonus_payment_month_processed = null;
+                        }
+                        if ($bouid > 0) {
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    Bounty::updateOrCreate(
+                                        [
+                                            'bounty_id' => $bouid,
+                                            'department_id' => $department_processed,
+                                            'branch_id' => $brid,
+                                        ],
+                                        [
+                                            'bonus_payment_month' => $bonus_payment_month_processed,
+                                            'applied_date' => $formatted_applied_date,
+                                        ],
+                                    );
+                                }
+                                Bounty::where('bounty_id', $bouid)
+                                ->where('branch_id', $brid)
+                                ->whereNotIn('department_id', $departments)
+                                ->update(['delete_flg' => 1]);
+                                $departmentsAll = implode(',', $departments);
+                                $bountyHistoryData = [
+                                    'bounty_id' => $newBountyId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bounty_history::create($bountyHistoryData);
+                            };
+                        }else{
+                            if(!is_null($departments)){
+                                foreach ($departments as $department_processed) {
+                                    $bountyData = [
+                                        'bounty_id' => $newBountyId,
+                                        'department_id' => $department_processed,
+                                        'branch_id' => $brid,
+                                        'bonus_payment_month' => $bonus_payment_month_processed,
+                                        'applied_date' => $formatted_applied_date,
+                                    ];
+                                    Bounty::create($bountyData);
+                                }
+                                $departmentsAll = implode(',', $departments);
+                                $bountyHistoryData = [
+                                    'bounty_id' => $newBountyId,
+                                    'department_id' => $departmentsAll,
+                                    'branch_id' => $brid,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bounty_history::create($bountyHistoryData);
+                            };
+                        }
+                        $newBountyId++;
+                    }
                 } else {
                     $created_id = Branch::create($brdata)->id;
                     $excepts[] = $created_id;
+                    $SalaryId = "1";
+                    $BonusId = "1";
+                    $BountyId = "1";
+                    foreach ($currentbouids as $bouIndex => $bouid) {
+                        $applied_date = $data['bou-applied_date'][$index][$bouIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $departments = $data['bou-departments'][$index][$bouIndex] ?? null;
+                        if(!is_null($departments)){
+                            $bonus_payment_month = $data['bou-bonus_payment_month'][$index][$bouIndex] ?? null;
+                            if (!is_null($bonus_payment_month)) {
+                                $bonus_payment_month_processed = implode('，', $bonus_payment_month);
+                            } else {
+                                $bonus_payment_month_processed = null;
+                            }
+                            foreach ($departments as $department_processed) {
+                                $bountyData = [
+                                    'bounty_id' => $BountyId,
+                                    'department_id' => $department_processed,
+                                    'branch_id' => $created_id,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bounty::create($bountyData);
+                            }
+                            $departmentsAll = implode(',', $departments);
+                            $bountyHistoryData = [
+                                'bounty_id' => $BountyId,
+                                'department_id' => $departmentsAll,
+                                'branch_id' => $created_id,
+                                'bonus_payment_month' => $bonus_payment_month_processed,
+                                'applied_date' => $formatted_applied_date,
+                            ];
+                            Bounty_history::create($bountyHistoryData);
+                        };
+                        $BountyId++;
+                    }
+                    foreach ($currentboids as $boIndex => $boid) {
+                        $applied_date = $data['bo-applied_date'][$index][$boIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $departments = $data['bo-departments'][$index][$boIndex] ?? null;
+                        if(!is_null($departments)){
+                            $bonus_payment_month = $data['bo-bonus_payment_month'][$index][$boIndex] ?? null;
+                            if (!is_null($bonus_payment_month)) {
+                                $bonus_payment_month_processed = implode('，', $bonus_payment_month);
+                            } else {
+                                $bonus_payment_month_processed = null;
+                            }
+                            foreach ($departments as $department_processed) {
+                                $bonusData = [
+                                    'bonus_id' => $BonusId,
+                                    'department_id' => $department_processed,
+                                    'branch_id' => $created_id,
+                                    'bonus_payment_month' => $bonus_payment_month_processed,
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Bonus::create($bonusData);
+                            }
+                            $departmentsAll = implode(',', $departments);
+                            $bonusHistoryData = [
+                                'bonus_id' => $BonusId,
+                                'department_id' => $departmentsAll,
+                                'branch_id' => $created_id,
+                                'bonus_payment_month' => $bonus_payment_month_processed,
+                                'applied_date' => $formatted_applied_date,
+                            ];
+                            Bonus_history::create($bonusHistoryData);
+                        };
+                        $BonusId++;
+                    }
+                    foreach ($currentSaids as $saIndex => $said) {
+                        $applied_date = $data['sa-applied_date'][$index][$saIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $departments = $data['sa-departments'][$index][$saIndex] ?? null;
+                        if(!is_null($departments)){
+                            foreach ($departments as $department_processed) {
+                                $salaryData = [
+                                    'salary_id' => $SalaryId,
+                                    'department_id' => $department_processed,
+                                    'branch_id' => $created_id,
+                                    'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                    'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                    'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                    'applied_date' => $formatted_applied_date,
+                                ];
+                                Salary::create($salaryData);
+                            }
+                            $departmentsAll = implode(',', $departments);
+                            $salaryHistoryData = [
+                                'salary_id' => $SalaryId,
+                                'department_id' => $departmentsAll,
+                                'branch_id' => $brid,
+                                'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
+                                'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
+                                'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
+                                'applied_date' => $formatted_applied_date,
+                            ];
+                            Salary_history::create($salaryHistoryData);
+                        };
+                        $SalaryId++;
+                    }
                 }
             }
             Branch::where('company_id', $id)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
@@ -141,13 +480,6 @@ class BranchController extends Controller
         }
         $current_company = CurrentUser::currentCompany();
         $company_id = $current_company->id;
-
-        $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
-        if (!is_null($bonus_payment_month)) {
-            $bonus_payment_month_processed = implode(',', $bonus_payment_month);
-        } else {
-            $bonus_payment_month_processed = null;
-        }
 
         return [
             'name' => $requestData['br-name'][$index],
@@ -207,7 +539,6 @@ class BranchController extends Controller
             'kenpo_no' => $requestData['br-kenpo_no'][$index],
             'insurance_office_name' => $requestData['br-insurance_office_name'][$index],
             'insurance_applicable_date' => $requestData['br-insurance_applicable_date'][$index],
-            'bonus_payment_month' => $bonus_payment_month_processed,
             'pension_office_name' => $requestData['br-pension_office_name'][$index],
             'employment_insurance_rate' => $requestData['br-employment_insurance_rate'][$index],
             'rate_pattern_id' => $requestData['br-rate_pattern_id'][$index],

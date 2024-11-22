@@ -240,9 +240,6 @@ class AdminCompanyCreateRequest extends BaseRequest
             "br-insurance_office_name.*" => 'nullable|string|max:100',
             "br-insurance_applicable_date" => 'array',
             "br-insurance_applicable_date.*" => 'nullable|integer|between:1,12',
-            "br-bonus_payment_month" => 'array',
-            'br-bonus_payment_month.*' => 'nullable|array',
-            'br-bonus_payment_month.*.*' => 'nullable|string|max:255',
             "br-pension_office_name" => 'array',
             "br-pension_office_name.*" => 'nullable|string|max:100',
             "br-employment_insurance_rate" => 'array',
@@ -525,9 +522,6 @@ class AdminCompanyCreateRequest extends BaseRequest
         }
         foreach ($this->input('br-insurance_office_name', []) as $index => $value) {
             $Attributes["br-insurance_office_name.{$index}"] = ($index + 1) . "事業所_健康保険組合・名称";
-        }
-        foreach ($this->input('br-bonus_payment_month', []) as $index => $value) {
-            $Attributes["br-bonus_payment_month.{$index}"] = ($index + 1) . "事業所_賞与支払い月";
         }
         foreach ($this->input('br-pension_office_name', []) as $index => $value) {
             $Attributes["br-pension_office_name.{$index}"] = ($index + 1) . "事業所_厚生年金基金・名称";

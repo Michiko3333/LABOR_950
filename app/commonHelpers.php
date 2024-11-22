@@ -27,3 +27,13 @@ if (!function_exists('err_bind')) {
         return in_array($name, $array) ? 'error' : '';
     }
 }
+
+if (!function_exists('err_sub')) {
+    function err_sub($array, $name, $br = null, $i = null)
+    {
+        if ($i !== null) {
+            $name = $name . ".$br" . ".$i";
+        }
+        return in_array($name, $array) ? 'error' : '';
+    }
+}

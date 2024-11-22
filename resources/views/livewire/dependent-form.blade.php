@@ -467,7 +467,7 @@
                         <input type="hidden" class="de-history" name="de-history[]" wire:model.live="data.{{ $key }}.de-history_flg" value="{{ $item['de-history_flg'] }}">
                         @if($history_flg === 0)
                             <div style="text-align: right;">
-                                @if($item['de-last_name'])
+                                @if($item['de-id'])
                                     <div class="ui floating dropdown button negative px-1 edit-select" style="width: 200px; text-align: right; font-size: 12.88px;">
                                         この扶養者情報を削除
                                         <i class="dropdown icon" style="margin-left: 1rem;"></i>
@@ -525,6 +525,20 @@
             $wire.on('history_flg-change', (index) => {
                 setTimeout(() => {
                     $('.de-history').eq(index[0].index).val(1);
+                }, 0);
+            });
+            $wire.on('remove', (e) => {
+                setTimeout(() => {
+                    if (notReadonly) {
+                        dependent();
+                    }
+                }, 0);
+            });
+            $wire.on('change-state', (e) => {
+                setTimeout(() => {
+                    if (notReadonly) {
+                        dependent();
+                    }
                 }, 0);
             });
         </script>
