@@ -9,6 +9,12 @@ use App\Rules\katakanaOnly;
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
 
+use App\Models\CurrentUser;
+use App\Models\Company;
+use App\Models\Branch;
+use App\Models\Department;
+use App\Models\Qualifications;
+
 class AdminEmployeeCreateRequest extends BaseRequest
 {
     /**
@@ -154,7 +160,6 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'dependent_family_number' => 'integer|nullable',
             'country_id' => 'nullable|integer',
             'blood_type' => 'nullable|string|in:A,B,AB,O',
-            'qualifications' => 'nullable|string|max:255',
             'salary_notices' => 'nullable|string|max:255',
             'insured_age_type' => 'nullable|integer',
             'insurer_reference_no' => 'nullable|string|max:6|regex:/\A[0-9]+\z/u',
@@ -364,7 +369,6 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'user_email' => 'ログイン用_メールアドレス',
             'user_pass' => 'パスワード',
             'blood_type' => '血液型',
-            'qualifications' => '資格情報',
             'insured_status' => '被保険者状況',
             'health_insurance_association_number' => '健保組合番号',
             'acquisition_of_distinction' => '取得区分',

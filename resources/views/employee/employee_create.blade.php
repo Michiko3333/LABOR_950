@@ -455,14 +455,15 @@
                                             O</option>
                                     </select>
                                 </div>
-                                <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
-                                    <label>資格情報</label>
-                                    @if (!isset($employee_id))
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
-                                    @else
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
-                                    @endif
+{{-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
+                                <div class="thirteen wide field {{ err($errors, 'qualifications[]') }}">
+                                    <label for="qualifications[]">資格情報</label>
+                                    <select id="qualifications_dropdown"
+                                        class="ui fluid search dropdown multiple qualifications_select" multiple=""
+                                        name="qualifications[]">
+                                    </select>
                                 </div>
+{{-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
                             </div>
                             <div class="ui divider my-2"></div>
                             <div class="two fields">
@@ -1471,6 +1472,26 @@
                 }
             }
 
+            function getQualificationsList() {
+                $('select[name="qualifications[]"]').empty();
+                let data = @json($qualifications);
+                data = [{
+                    id: '',
+                    name: '未選択'
+                }, ...data];
+                data.forEach(element => {
+                    $('<option>').attr({
+                        value: element.id
+                    }).text(element.qualification_name).appendTo('select[name="qualifications[]"]');
+                });
+                $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                const def = @json(old('employee_qualifications', $employee_qualifications));
+                def.forEach(v => {
+                    let a = $('select[name="qualifications[]"] option[value=' + v + ']').prop(
+                        'selected', true);
+                });
+            }
+
             const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(6));
             if (readonly) {
                 $sectionReadonly();
@@ -1514,7 +1535,6 @@
 
                             let ageMonths = monthDiff;
                             const ageString = `${age}歳${ageMonths}ヵ月`;
-                            console.log(ageString);
                             $(".age").val(ageString);
                         }
                     }
@@ -1540,6 +1560,7 @@
                 $('.ui.dropdown.dropdown.multiple').dropdown({});
                 getDepartmentList();
                 getPositionList();
+                getQualificationsList();
             }
         });
     </script>
@@ -1569,7 +1590,6 @@
 
         $('#iconDelete').on('click', function () {
             const flg = $('#iconDeleteFlg').val();
-            console.log(flg);
             if(flg === "0") {
                 $('#iconDeleteFlg').val("1");
                 $('#icon').attr('src', '/img/image.png');

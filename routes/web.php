@@ -47,6 +47,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
 use App\Http\Controllers\PickUpController;
+use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -203,6 +204,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/api/department/list', [AdminController::class, 'get_departments'])->name('admin.get_departments');
         Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
         Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
+        Route::post('/admin/api/qualifications/list', [AdminController::class, 'get_qualifications'])->name('admin.get_qualifications');
 
         // Ledger
         Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');
@@ -261,6 +263,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/company/branch', [BranchController::class, 'branch'])->name('branch');
         Route::post('/company/branch', [BranchController::class, 'branch_post'])->name('branch_post');
+
+        Route::get('/company/qualifications', [QualificationsController::class, 'qualifications'])->name('qualifications');
 
         Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
         Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');

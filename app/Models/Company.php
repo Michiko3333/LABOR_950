@@ -105,9 +105,14 @@ class Company extends Model
     {
         return $this->hasMany(Department::class);
     }
-    
+
     public function pickup_setting()
     {
         return $this->hasOne(Pickup_setting::class);
+    }
+
+    public function qualifications()
+    {
+        return $this->hasMany(Qualifications::class);
     }
 }

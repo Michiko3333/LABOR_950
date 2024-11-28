@@ -30,6 +30,10 @@ use App\Models\Dependent;
 use App\Models\FilterEmployeeList;
 use App\Models\UserFilterEmployeeList;
 use App\Models\Values_employee_insured_age_type;
+use App\Models\Qualifications;
+use App\Models\Employee_qualifications;
+use App\Models\Company;
+use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -89,7 +93,6 @@ class EmployeeController extends Controller
             $userDefaultList = $defaultList;
         }
 
-
         return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList]);
     }
 
@@ -144,6 +147,12 @@ class EmployeeController extends Controller
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
         $dependent = $employee->dependent()->where('delete_flg', 0)->get();
+        $qualifications = Qualifications::select('id', 'qualification_name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
+        $employee_qualifications = Employee_qualifications::join('m_qualifications', 'm_employee_qualifications.qualifications_id', '=', 'm_qualifications.id')
+            ->where('m_employee_qualifications.employee_id', $employee->id)
+            ->where('m_qualifications.delete_flg', 0)
+            ->where('m_employee_qualifications.delete_flg', 0)
+            ->pluck('m_qualifications.id');
 
         return view('employee.employee_create', [
             'filePath' => $filePath,
@@ -166,6 +175,8 @@ class EmployeeController extends Controller
             'residential_status' => $residential_status,
             'employee_insured_age_type' => $employee_insured_age_type,
             'dependent' => $dependent,
+            'qualifications' => $qualifications,
+            'employee_qualifications' => $employee_qualifications,
         ]);
     }
 
@@ -174,6 +185,38 @@ class EmployeeController extends Controller
         $userPermission = new Permission();
         if (!$userPermission->isReadableFor(6) || !$userPermission->isWritableFor(6)) {
             return redirect()->route('home.index');
+        }
+
+        $currentUser = CurrentUser::info();
+        $sinner = User::where('employee_id', $currentUser->id)->first();
+        $existsCompany = CurrentUser::currentCompany();
+        $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
+        if (empty($existsBranch)) {
+            \Log::info('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+        if($request->input('departments')) {
+            foreach($request->input('departments') as $department) {
+                $existsDepartment = Department::where('id', $department)->where('company_id', $existsCompany->id)->first();
+                if (empty($existsDepartment)) {
+                    \Log::info('不正利用者：' . $sinner->email);
+                    return abort(404);
+                }
+            }
+        }
+        $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
+        if (empty($existsManagerialPosition)) {
+            \Log::info('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+        if($request->input('qualifications')) {
+            foreach($request->input('qualifications') as $qualification) {
+                $existsQualification = Qualifications::where('id', $qualification)->where('company_id', $existsCompany->id)->first();
+                if (empty($existsQualification)) {
+                    \Log::info('不正利用者：' . $sinner->email);
+                    return abort(404);
+                }
+            }
         }
 
         $fax = implode('-', [
@@ -297,7 +340,7 @@ class EmployeeController extends Controller
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                     'blood_type' => $request->input('blood_type'),
-                    'qualifications' => $request->input('qualifications'),
+                    // 'qualifications' => $request->input('qualifications'),
                     'insured_status' => $request->input('insured_status'),
                     'health_insurance_association_number' => $request->input('health_insurance_association_number'),
                     'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),
@@ -331,6 +374,27 @@ class EmployeeController extends Controller
                 }
             }
             Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+
+
+            $qualifications = $request->input('qualifications', []);
+            Employee_qualifications::whereNotIn('qualifications_id', $qualifications)
+                ->where('employee_id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->update(['delete_flg' => 1]);
+
+            $existingQualificationsRecords = Employee_qualifications::whereIn('qualifications_id', $qualifications)->where('employee_id', $request->input('employee_id'))->where('delete_flg', 0)->get();
+
+            $existingQualificationsIds = $existingQualificationsRecords->pluck('qualifications_id')->toArray();
+            $newQualificationsIds = array_diff($qualifications, $existingQualificationsIds);
+            if (!empty($newQualificationsIds)) {
+                foreach ($newQualificationsIds as $qualificationsId) {
+                    Employee_qualifications::insert([
+                        'employee_id' => $request->input('employee_id'),
+                        'qualifications_id' => $qualificationsId,
+                    ]);
+                }
+            }
+
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)

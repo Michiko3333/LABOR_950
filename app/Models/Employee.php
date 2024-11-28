@@ -349,4 +349,9 @@ class Employee extends Model
     {
         return $this->hasOne(Csv_count::class);
     }
+
+    public function employee_qualifications()
+    {
+        return $this->hasMany(Employee_qualifications::class);
+    }
 }

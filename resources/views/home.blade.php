@@ -157,6 +157,18 @@
                                         </div>
                                     </a>
                                 @endif
+                                <a class="item" style="pointer-events: none;">
+                                    <div class="content">
+                                        <div class="header">各種設定</div>
+                                    </div>
+                                </a>
+                                @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
+                                    <a href="{{ route('qualifications') }}" class="item">
+                                        <div class="header">
+                                            　-　資格マスタ
+                                        </div>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>

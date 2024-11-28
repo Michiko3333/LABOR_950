@@ -89,6 +89,13 @@
                             役職マスタ</a>
                     </li>
                 @endif
+                @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
+                    <li class="item">
+                        <a href="{{ route('qualifications') }}">
+
+                            資格マスタ</a>
+                    </li>
+                @endif
                 @if ($userPermission->isBasicDepartment() && $userPermission->isReadableAtleast([5, 7]))
                     <li class="title">社員管理</li>
                     @if ($userPermission->isReadableFor(5))

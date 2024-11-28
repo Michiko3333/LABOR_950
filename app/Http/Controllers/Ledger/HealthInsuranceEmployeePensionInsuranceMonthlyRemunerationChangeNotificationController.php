@@ -94,6 +94,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest $request)
+    // public function post(Request $request)
     {
         $csvFormatter = new CsvFormatter();
         $request = $csvFormatter->csvFomat($request);

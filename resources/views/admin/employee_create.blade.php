@@ -454,13 +454,12 @@
                                             O</option>
                                     </select>
                                 </div>
-                                <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
-                                    <label>資格情報</label>
-                                    @if (!isset($employee_id))
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
-                                    @else
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
-                                    @endif
+                                <div class="thirteen wide field {{ err($errors, 'qualifications[]') }}">
+                                    <label for="qualifications[]">資格情報</label>
+                                    <select id="qualifications_dropdown"
+                                        class="ui fluid search dropdown multiple qualifications_select" multiple=""
+                                        name="qualifications[]">
+                                    </select>
                                 </div>
                             </div>
                             <div class="ui divider my-2"></div>
@@ -1490,7 +1489,6 @@
 
                         let ageMonths = monthDiff;
                         const ageString = `${age}歳${ageMonths}ヵ月`;
-                        console.log(ageString);
                         $(".age").val(ageString);
                     }
                 }
@@ -1530,7 +1528,7 @@
                                 value: element.id
                             }).text(element.name).appendTo('select[name="departments[]"]');
                         });
-                        $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                        $('.ui.dropdown.dropdown.multiple.department_select').dropdown('clear');
 
                         if (first) {
                             const def = @json(old('departments', $departments));
@@ -1574,14 +1572,47 @@
                         }
                     });
             }
+
+            function getQualificationsList(id, first = false) {
+                $.ajax({
+                    url: '{{ route('admin.get_qualifications') }}',
+                    data: {
+                        company_id: id
+                    },
+                    type: 'post'
+                })
+                .done((data) => {
+                    $('select[name="qualifications[]"]').empty();
+                    data = [{
+                        id: '',
+                        qualification_name: '未選択'
+                    }, ...data];
+                    data.forEach(element => {
+                        $('<option>').attr({
+                            value: element.id
+                        }).text(element.qualification_name).appendTo('select[name="qualifications[]"]');
+                    });
+                    if (first) {
+                        $('.ui.dropdown.dropdown.multiple.qualifications_select').dropdown('clear');
+                        const def = @json(old('qualifications', $employee_qualifications));
+                        def.forEach(v => {
+                            let a = $('select[name="qualifications[]"] option[value=' + v + ']').prop(
+                                'selected', true);
+                        });
+                    }
+                });
+            }
+
             const company_id = $('input[name=company_id]').val();
             if (company_id) {
                 getDepartmentList(company_id, true);
                 getPositionList(company_id, true);
+                getQualificationsList(company_id, true);
             }
             addEventCompanyModal((data) => {
                 getDepartmentList(data['id']);
                 getPositionList(data['id']);
+                getQualificationsList(data['id']);
             });
         });
     </script>
@@ -1611,7 +1642,6 @@
 
         $('#iconDelete').on('click', function () {
             const flg = $('#iconDeleteFlg').val();
-            console.log(flg);
             if(flg === "0") {
                 $('#iconDeleteFlg').val("1");
                 $('#icon').attr('src', '/img/image.png');

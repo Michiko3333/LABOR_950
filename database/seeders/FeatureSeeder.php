@@ -66,6 +66,10 @@ class FeatureSeeder extends Seeder
                 'id' => '13',
                 'name' => 'pickup設定',
             ],
+            [
+                'id' => '16',
+                'name' => '資格マスタ',
+            ],
         ]);
     }
 }
