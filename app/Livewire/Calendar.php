@@ -1249,7 +1249,9 @@ class Calendar extends Component
             return;
         }
         if ($data['inputs_category'] == 7) {
-            return !empty($data['inputs_subsidies_name']);
+            if(empty($data['inputs_subsidies_name'])) {
+                return;
+            }
         }
 
         if ($min > $data['from'] || $max < $data['from']) return false;
@@ -1258,6 +1260,7 @@ class Calendar extends Component
             if ($min > $data['to'] || $max < $data['to']) return false;
             if ($data['from'] > $data['to']) return false;
         }
+
         return !empty($data['inputs_name']) && !empty($data['from'])  && !empty($data['inputs_category']);
     }
 

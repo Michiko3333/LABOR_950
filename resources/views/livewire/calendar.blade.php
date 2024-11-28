@@ -208,11 +208,11 @@ class="angle right icon"></i></button>
 <input type="hidden" class='edit-calendar-inputs-select-events-type'>
 <div class="required field">
 <label for="event-title">タイトル</label>
-<input type="text" name="event-title" class='edit-calendar-inputs_name' maxlength="20" wire:ignore>
+<input type="text" name="event-title" class='edit-calendar-inputs_name' autocomplete="off" maxlength="20" wire:ignore>
 </div>
 <div class="required field subsidies" style="display: none;">
 <label for="input_subsidies_name">助成金・補助金名</label>
-<input type="text" name="input_subsidies_name" class='edit-calendar-inputs_subsidies_name' maxlength="50" wire:ignore>
+<input type="text" name="input_subsidies_name" class='edit-calendar-inputs_subsidies_name' autocomplete="off" maxlength="50" wire:ignore>
 </div>
 <div class="two fields">
 <div class="required field">
@@ -220,7 +220,7 @@ class="angle right icon"></i></button>
 <div class="ui calendar from_date_calendar" id="from_date_calendar" wire:ignore>
 <div class="ui input left icon">
 <i class="calendar icon"></i>
-<input type="text" placeholder="Date" name="from_date" class="from_date">
+<input type="text" placeholder="Date" name="from_date" class="from_date" autocomplete="off">
 <input type="hidden" name="formatted_from_date" class="formatted_from_date edit-calendar-from" id="formatted_from_date">
 </div>
 </div>
@@ -230,7 +230,7 @@ class="angle right icon"></i></button>
 <div class="ui calendar to_date_calendar" id="to_date_calendar" wire:ignore>
 <div class="ui input left icon">
 <i class="calendar icon"></i>
-<input type="text" placeholder="Date" name="to_date">
+<input type="text" placeholder="Date" name="to_date" autocomplete="off">
 <input type="hidden" name="formatted_to_date" id="formatted_to_date"
 class="edit-calendar-to" wire:ignore>
 </div>
