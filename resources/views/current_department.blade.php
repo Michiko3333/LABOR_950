@@ -36,6 +36,10 @@
                 top: 0;
                 left: -1.4em;
             }
+
+            #edit-department label {
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">

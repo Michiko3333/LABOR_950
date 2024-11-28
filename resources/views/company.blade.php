@@ -150,6 +150,10 @@
                 grid-area: 4 / 3 / 4 / 5;
             }
 
+            .company-data-area label {
+                font-size: 1em !important;
+            }
+
             a.download-link:hover {
                 text-decoration: underline;
             }

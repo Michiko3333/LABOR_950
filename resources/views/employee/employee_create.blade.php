@@ -180,6 +180,10 @@
                 flex-direction: column-reverse;
                 align-items: flex-end;
             }
+
+            .ui.bottom.attached.segment label {
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">

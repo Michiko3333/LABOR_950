@@ -13,6 +13,10 @@
             .table table {
                 width: 100%;
             }
+
+            .shift-calendar-inputs label {
+                font-size: 1em !important;
+            }
         </style>
     @endslot
 
