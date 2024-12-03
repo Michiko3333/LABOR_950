@@ -21,40 +21,41 @@ class BonusForm extends Component
     public $bonusHistory;
     public $companyId;
 
-    public function mount($errors,$branchId, $childKey = null, $bonus = [], $companyId) {
-        $bonus = Bonus::where('branch_id',$branchId)->where('delete_flg', 0)->get();
+    public function mount($errors, $branchId, $childKey = null, $bonus = [], $companyId)
+    {
+        $bonus = Bonus::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->bonus = $bonus;
-        $bonusHistory = Bonus_history::where('branch_id',$branchId)->get();
+        $bonusHistory = Bonus_history::where('branch_id', $branchId)->get();
         $this->bonusHistory = $bonusHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
-        $departments = Department::where('company_id',$companyId)->get();
+        $departments = Department::where('company_id', $companyId)->get();
         $this->departments = $departments;
         foreach ($this->bonusHistory as $historyItem) {
             $departmentIds = explode(',', $historyItem->department_id);
             $departmentNames = [];
             foreach ($departmentIds as $id) {
-                $department = Department::where('id', $id)->first(); 
+                $department = Department::where('id', $id)->first();
                 if ($department) {
                     $departmentNames[] = $department->name;
                 }
             }
             $historyItem->department_names = implode('，', $departmentNames);
         }
-        $c_ar = \old('bo-applied_date.'.$this->childKey);
+        $c_ar = \old('bo-applied_date.' . $this->childKey);
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
                     if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($this->childKey, $oldValue) && array_key_exists($i, $oldValue[$this->childKey])) {
-                        
+
                         $def[$key] = $oldValue[$this->childKey][$i];
                     }
                 }
                 array_push($this->bonusData, $def);
             }
-        }else {
+        } else {
             $mergedData = [];
 
             foreach ($bonus as $item) {
@@ -62,7 +63,7 @@ class BonusForm extends Component
 
                 if (!isset($mergedData[$boId])) {
                     $mergedData[$boId] = $item;
-                    
+
                     $mergedData[$boId]['department_id'] = $item['department_id'];
                 } else {
                     $mergedData[$boId]['department_id'] .= ',' . $item['department_id'];
@@ -108,7 +109,7 @@ class BonusForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         array_push($this->bonusData, $this->defaultValues());
-        $this->dispatch('form-appended');
+        $this->dispatch('bonus-appended');
     }
 
     #[On('bonus-form-loaded')]
@@ -122,9 +123,8 @@ class BonusForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->bonusData[$bonusKey]);
-        $this->bonusData = array_values($this->bonusData);
         $this->loading = false;
-        $this->dispatch('removebonus');
+        $this->dispatch('bonus-removed');
     }
 
     private function defaultValues()

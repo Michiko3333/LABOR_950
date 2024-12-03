@@ -1,14 +1,14 @@
 <div class="content" wire:ignore>
     <div class="ui top attached tabular menu modal-menu">
-        <a class="item active" data-tab="sample">給与</a>
-        <a class="item" data-tab="sample2">賞与</a>
-        <a class="item" data-tab="sample3">報奨金</a>
+        <a class="item active" data-tab="給与">給与</a>
+        <a class="item" data-tab="賞与">賞与</a>
+        <a class="item" data-tab="報奨金">報奨金</a>
     </div>
-    <div class="ui bottom attached segment tab modal-segment" data-tab="sample">
+    <div class="ui bottom attached segment tab modal-segment" data-tab="給与">
     </div>
-    <div class="ui bottom attached segment tab modal-segment" data-tab="sample2">
+    <div class="ui bottom attached segment tab modal-segment" data-tab="賞与">
     </div>
-    <div class="ui bottom attached segment tab modal-segment" data-tab="sample3">
+    <div class="ui bottom attached segment tab modal-segment" data-tab="報奨金">
     </div>
     <div class="basic actions">
         <a class="ui negative button" href="javascript:closeModal">戻る</a>
@@ -19,28 +19,38 @@
     <script type="module">
         window.closeModal = () => {
             setTimeout(() => {
-                $('.confirm-modal').modal('hide');
-            }, 230);
+                $('.branch-payment-confirm-modal').modal('hide');
+            }, 0);
         };
+
         function formatAppliedDate(appliedDate) {
-            const match = appliedDate.match(/(\d{1,2})月\s+(\d{4})/);
+            const match = appliedDate.match(/(\d{4})年(\d{1,2})月/);
             if (match) {
-                const [month, year] = match.slice(1);
+                const [year, month] = match.slice(1);
                 return `${year}-${month.padStart(2, '0')}`;
             } else {
                 return "";
             }
         }
-        window.addEventListener('salariesDataUpdated', event => {
-            const { salariesByBranch, bonusByBranch, bountyByBranch, index: thisIndex } = event.detail[0];
-            const parentElement = $('.branch-area-' + thisIndex);
-            const sampleElement = $('.ui.bottom.attached.segment.modal-segment[data-tab="sample"]');
-            const sample2Element = $('.ui.bottom.attached.segment.modal-segment[data-tab="sample2"]');
-            const sample3Element = $('.ui.bottom.attached.segment.modal-segment[data-tab="sample3"]');
 
-            const salaryIds = parentElement.find(`input[name="sa-id[${thisIndex}][]"]`).map((_, e) => e.value).get();
+        window.addEventListener('salariesDataUpdated', event => {
+            const {
+                salariesByBranch,
+                bonusByBranch,
+                bountyByBranch,
+                index: thisIndex
+            } = event.detail[0];
+
+            const parentElement = $('.branch-area-' + thisIndex);
+            const sampleElement = $('.ui.bottom.attached.segment.modal-segment[data-tab="給与"]');
+            const sample2Element = $('.ui.bottom.attached.segment.modal-segment[data-tab="賞与"]');
+            const sample3Element = $('.ui.bottom.attached.segment.modal-segment[data-tab="報奨金"]');
+
+            const salaryIds = parentElement.find(`input[name="sa-id[${thisIndex}][]"]`).map((_, e) => e.value)
+                .get();
             const bonusIds = parentElement.find(`input[name="bo-id[${thisIndex}][]"]`).map((_, e) => e.value).get();
-            const bountyIds = parentElement.find(`input[name="bou-id[${thisIndex}][]"]`).map((_, e) => e.value).get();
+            const bountyIds = parentElement.find(`input[name="bou-id[${thisIndex}][]"]`).map((_, e) => e.value)
+                .get();
 
             sampleElement.empty();
             sample2Element.empty();
@@ -52,16 +62,24 @@
             salaryIds.forEach((salaryId, saIndex) => {
                 const salaryElement = parentElement.find(`input[name="sa-id[${thisIndex}][]"]`).eq(saIndex);
                 const thisElement = salaryElement.closest('.salary.fields');
-                const departmentsElement = thisElement.find(`select[name="sa-departments[${thisIndex}][${saIndex}][]"] option:selected`).map((_, el) => $(el).text()).get();
+                const departmentsElement = thisElement.find(
+                    `select[name="sa-departments[${thisIndex}][${saIndex}][]"] option:selected`).map((_,
+                    el) => $(el).text()).get();
                 const departmentNames = departmentsElement.join('，');
-                const deadlineElement = thisElement.find(`select[name="sa-payroll_deadline[${thisIndex}][]"] option:selected`).text();
-                const monthElement = thisElement.find(`select[name="sa-payroll_month[${thisIndex}][]"] option:selected`).text();
-                const dayElement = thisElement.find(`select[name="sa-payroll_day[${thisIndex}][]"] option:selected`).text();
-                const notFormattedDateElement = thisElement.find(`input[name="sa-applied_date[${thisIndex}][]"]`).val();
-                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) : "未選択";
+                const deadlineElement = thisElement.find(
+                    `select[name="sa-payroll_deadline[${thisIndex}][]"] option:selected`).text();
+                const monthElement = thisElement.find(
+                    `select[name="sa-payroll_month[${thisIndex}][]"] option:selected`).text();
+                const dayElement = thisElement.find(
+                    `select[name="sa-payroll_day[${thisIndex}][]"] option:selected`).text();
+                const notFormattedDateElement = thisElement.find(
+                    `input[name="sa-applied_date[${thisIndex}][]"]`).val();
+                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) :
+                    "未選択";
 
                 const currentDate = new Date();
-                const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+                const formattedDate =
+                    `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
                 if (salaryId === "0") {
                     const $newSalaryTable = $(`
                         <div class="new-salary mb-2 mt-0">
@@ -84,12 +102,28 @@
                     salaryAnyChanges = true;
                 } else {
                     const oldSalary = salariesByBranch[saIndex] || {};
-                    const deallineMapping = { '1': '15日', '2': '20日', '3': '25日', '4': '末締め' };
-                    const monthMapping = { '1': '当月', '2': '翌月' };
+                    const deallineMapping = {
+                        '1': '15日',
+                        '2': '20日',
+                        '3': '25日',
+                        '4': '末締め'
+                    };
+                    const monthMapping = {
+                        '1': '当月',
+                        '2': '翌月'
+                    };
                     const dayMapping = {
-                        '1': '5日', '2': '10日', '3': '15日', '4': '20日', '5': '25日',
-                        '6': '末日', '7': '第1営業日', '8': '第2営業日', '9': '第3営業日',
-                        '10': '第4営業日', '11': '第5営業日'
+                        '1': '5日',
+                        '2': '10日',
+                        '3': '15日',
+                        '4': '20日',
+                        '5': '25日',
+                        '6': '末日',
+                        '7': '第1営業日',
+                        '8': '第2営業日',
+                        '9': '第3営業日',
+                        '10': '第4営業日',
+                        '11': '第5営業日'
                     };
 
                     const isChanged = oldSalary.department_names !== departmentNames ||
@@ -116,7 +150,6 @@
                                 <div class="ui divider my-2"></div>
                             </div>
                         `);
-
                         const $changedSalaryTable = $(`
                             <div class="changed-salary mb-2 mt-0">
                                 <h3>変更</h3>
@@ -127,7 +160,7 @@
                                         <td class="deadline-cell ${deallineMapping[oldSalary.payroll_deadline] !== deadlineElement ? 'red-text' : ''}">${deadlineElement}</td>
                                         <td class="month-cell ${monthMapping[oldSalary.payroll_month] !== monthElement ? 'red-text' : ''}">${monthElement}</td>
                                         <td class="day-cell ${dayMapping[oldSalary.payroll_day] !== dayElement ? 'red-text' : ''}">${dayElement}</td>
-                                        <td class="applied-date-cell ${oldSalary.applied_date !== dateElement ? 'red-text' : ''}">${dateElement}</td>
+                                        <td class="applied-date-cell ${oldSalary.applied_date.substring(0, 7) !== dateElement ? 'red-text' : ''}">${dateElement}</td>
                                         <td class="register-date-cell">${formattedDate}</td>
                                     </tr></tbody>
                                 </table>
@@ -143,15 +176,22 @@
             bonusIds.forEach((bonusId, boIndex) => {
                 const bonusElement = parentElement.find(`input[name="bo-id[${thisIndex}][]"]`).eq(boIndex);
                 const thisElement = bonusElement.closest('.bonus.fields');
-                const departmentsElement = thisElement.find(`select[name="bo-departments[${thisIndex}][${boIndex}][]"] option:selected`).map((_, el) => $(el).text()).get();
+                const departmentsElement = thisElement.find(
+                    `select[name="bo-departments[${thisIndex}][${boIndex}][]"] option:selected`).map((_,
+                    el) => $(el).text()).get();
                 const departmentNames = departmentsElement.join('，');
-                const monthsElement = thisElement.find(`select[name="bo-bonus_payment_month[${thisIndex}][${boIndex}][]"] option:selected`).map((_, el) => $(el).text()).get();
+                const monthsElement = thisElement.find(
+                        `select[name="bo-bonus_payment_month[${thisIndex}][${boIndex}][]"] option:selected`)
+                    .map((_, el) => $(el).text()).get();
                 const monthElement = monthsElement.join('，');
-                const notFormattedDateElement = thisElement.find(`input[name="bo-applied_date[${thisIndex}][]"]`).val();
-                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) : "未選択";
+                const notFormattedDateElement = thisElement.find(
+                    `input[name="bo-applied_date[${thisIndex}][]"]`).val();
+                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) :
+                    "未選択";
 
                 const currentDate = new Date();
-                const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+                const formattedDate =
+                    `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
 
                 if (bonusId === "0") {
                     const $newBonusTable = $(`
@@ -217,17 +257,25 @@
                 }
             });
             bountyIds.forEach((bountyId, bouIndex) => {
-                const bountyElement = parentElement.find(`input[name="bou-id[${thisIndex}][]"]`).eq(bouIndex);
+                const bountyElement = parentElement.find(`input[name="bou-id[${thisIndex}][]"]`).eq(
+                    bouIndex);
                 const thisElement = bountyElement.closest('.bounty.fields');
-                const departmentsElement = thisElement.find(`select[name="bou-departments[${thisIndex}][${bouIndex}][]"] option:selected`).map((_, el) => $(el).text()).get();
+                const departmentsElement = thisElement.find(
+                    `select[name="bou-departments[${thisIndex}][${bouIndex}][]"] option:selected`).map((
+                    _, el) => $(el).text()).get();
                 const departmentNames = departmentsElement.join('，');
-                const monthsElement = thisElement.find(`select[name="bou-bonus_payment_month[${thisIndex}][${bouIndex}][]"] option:selected`).map((_, el) => $(el).text()).get();
+                const monthsElement = thisElement.find(
+                    `select[name="bou-bonus_payment_month[${thisIndex}][${bouIndex}][]"] option:selected`
+                ).map((_, el) => $(el).text()).get();
                 const monthElement = monthsElement.join('，');
-                const notFormattedDateElement = thisElement.find(`input[name="bou-applied_date[${thisIndex}][]"]`).val();
-                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) : "未選択";
+                const notFormattedDateElement = thisElement.find(
+                    `input[name="bou-applied_date[${thisIndex}][]"]`).val();
+                const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) :
+                    "未選択";
 
                 const currentDate = new Date();
-                const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+                const formattedDate =
+                    `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
 
                 if (bountyId === "0") {
                     const $newBountyTable = $(`

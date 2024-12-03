@@ -21,40 +21,41 @@ class BountyForm extends Component
     public $bountyHistory;
     public $companyId;
 
-    public function mount($errors,$branchId, $childKey = null, $bounty = [], $companyId) {
-        $bounty = Bounty::where('branch_id',$branchId)->where('delete_flg', 0)->get();
+    public function mount($errors, $branchId, $childKey = null, $bounty = [], $companyId)
+    {
+        $bounty = Bounty::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->bounty = $bounty;
-        $bountyHistory = Bounty_history::where('branch_id',$branchId)->get();
+        $bountyHistory = Bounty_history::where('branch_id', $branchId)->get();
         $this->bountyHistory = $bountyHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
-        $departments = Department::where('company_id',$companyId)->get();
+        $departments = Department::where('company_id', $companyId)->get();
         $this->departments = $departments;
         foreach ($this->bountyHistory as $historyItem) {
             $departmentIds = explode(',', $historyItem->department_id);
             $departmentNames = [];
             foreach ($departmentIds as $id) {
-                $department = Department::where('id', $id)->first(); 
+                $department = Department::where('id', $id)->first();
                 if ($department) {
                     $departmentNames[] = $department->name;
                 }
             }
             $historyItem->department_names = implode('，', $departmentNames);
         }
-        $c_ar = \old('bou-applied_date.'.$this->childKey);
+        $c_ar = \old('bou-applied_date.' . $this->childKey);
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
                     if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($this->childKey, $oldValue) && array_key_exists($i, $oldValue[$this->childKey])) {
-                        
+
                         $def[$key] = $oldValue[$this->childKey][$i];
                     }
                 }
                 array_push($this->bountyData, $def);
             }
-        }else {
+        } else {
             $mergedData = [];
 
             foreach ($bounty as $item) {
@@ -62,7 +63,7 @@ class BountyForm extends Component
 
                 if (!isset($mergedData[$bouId])) {
                     $mergedData[$bouId] = $item;
-                    
+
                     $mergedData[$bouId]['department_id'] = $item['department_id'];
                 } else {
                     $mergedData[$bouId]['department_id'] .= ',' . $item['department_id'];
@@ -108,7 +109,7 @@ class BountyForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         array_push($this->bountyData, $this->defaultValues());
-        $this->dispatch('form-appended');
+        $this->dispatch('bounty-appended');
     }
 
     #[On('bounty-form-loaded')]
@@ -122,9 +123,8 @@ class BountyForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->bountyData[$bountyKey]);
-        $this->bountyData = array_values($this->bountyData);
         $this->loading = false;
-        $this->dispatch('removebounty');
+        $this->dispatch('bounty-removed');
     }
 
     private function defaultValues()

@@ -13,7 +13,7 @@ use App\Models\Bounty;
 
 use Livewire\Attributes\On;
 
-class ConfirmModalContent extends BaseTable
+class BranchPaymentConfirmModal extends BaseTable
 {
     public $salariesByBranch;
     public $mergedSalaries;
@@ -25,10 +25,11 @@ class ConfirmModalContent extends BaseTable
 
     protected $listeners = ['confirmModalOpened'];
 
-    public function confirmModalOpened($branchID,$index)
+    public function confirmModalOpened($branchID, $index)
     {
+        \Log::info('AAA');
         $this->salariesByBranch = Salary::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if($this->salariesByBranch->isNotEmpty()){
+        if ($this->salariesByBranch->isNotEmpty()) {
             foreach ($this->salariesByBranch as $salary) {
                 $salaryId = $salary->salary_id;
                 if (isset($mergedSalaries[$salaryId])) {
@@ -48,7 +49,7 @@ class ConfirmModalContent extends BaseTable
                 $departmentIds = explode(',', $mergedSalaries[$salaryId]['department_id']);
                 $departmentNames = [];
                 foreach ($departmentIds as $id) {
-                    $department = Department::where('id', $id)->first(); 
+                    $department = Department::where('id', $id)->first();
                     if ($department) {
                         $departmentNames[] = $department->name;
                     }
@@ -57,11 +58,11 @@ class ConfirmModalContent extends BaseTable
             }
             $mergedSalaries = array_values($mergedSalaries);
             $this->mergedSalaries = $mergedSalaries;
-        }else{
+        } else {
             $this->mergedSalaries = null;
         }
         $this->bonusByBranch = Bonus::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if($this->bonusByBranch->isNotEmpty()){
+        if ($this->bonusByBranch->isNotEmpty()) {
             foreach ($this->bonusByBranch as $bonus) {
                 $bonusId = $bonus->bonus_id;
                 if (isset($mergedBonus[$bonusId])) {
@@ -79,7 +80,7 @@ class ConfirmModalContent extends BaseTable
                 $departmentIds = explode(',', $mergedBonus[$bonusId]['department_id']);
                 $departmentNames = [];
                 foreach ($departmentIds as $id) {
-                    $department = Department::where('id', $id)->first(); 
+                    $department = Department::where('id', $id)->first();
                     if ($department) {
                         $departmentNames[] = $department->name;
                     }
@@ -88,11 +89,11 @@ class ConfirmModalContent extends BaseTable
             }
             $mergedBonus = array_values($mergedBonus);
             $this->mergedBonus = $mergedBonus;
-        }else{
+        } else {
             $this->mergedBonus = null;
         }
         $this->bountyByBranch = Bounty::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if($this->bountyByBranch->isNotEmpty()){
+        if ($this->bountyByBranch->isNotEmpty()) {
             foreach ($this->bountyByBranch as $bounty) {
                 $bountyId = $bounty->bounty_id;
                 if (isset($mergedBounty[$bountyId])) {
@@ -110,7 +111,7 @@ class ConfirmModalContent extends BaseTable
                 $departmentIds = explode(',', $mergedBounty[$bountyId]['department_id']);
                 $departmentNames = [];
                 foreach ($departmentIds as $id) {
-                    $department = Department::where('id', $id)->first(); 
+                    $department = Department::where('id', $id)->first();
                     if ($department) {
                         $departmentNames[] = $department->name;
                     }
@@ -119,20 +120,20 @@ class ConfirmModalContent extends BaseTable
             }
             $mergedBounty = array_values($mergedBounty);
             $this->mergedBounty = $mergedBounty;
-        }else{
+        } else {
             $this->mergedBounty = null;
         }
-        $this->index =$index;
+        $this->index = $index;
         $this->dispatch('salariesDataUpdated', [
-            'salariesByBranch' =>$this->mergedSalaries,
-            'bonusByBranch' =>$this->mergedBonus,
-            'bountyByBranch' =>$this->mergedBounty,
-            'index' =>$this->index,
+            'salariesByBranch' => $this->mergedSalaries,
+            'bonusByBranch' => $this->mergedBonus,
+            'bountyByBranch' => $this->mergedBounty,
+            'index' => $this->index,
         ]);
     }
 
     public function render()
     {
-        return view('livewire.confirm-modal-content');
+        return view('livewire.branch-payment-confirm-modal');
     }
 }

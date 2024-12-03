@@ -6,6 +6,10 @@
                 justify-content: space-between;
             }
 
+            .ui.form .field>label {
+                font-size: 1em;
+            }
+
 
             .ui.fluid.dropdown {
                 height: 49px;
@@ -217,6 +221,16 @@
                     min-width: unset;
                 }
             }
+
+            .branch-payment-confirm-modal .red-text {
+                font-weight: bold;
+                color: var(--color-red);
+            }
+
+            .tab-error,
+            .tab-error.active {
+                color: #912d2b !important;
+            }
         </style>
     @endslot
     <section class="content">
@@ -239,8 +253,19 @@
                 </div>
             @endif
             <div class="ui form">
-                <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures" :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
-                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''" :departments="$departments ?? ''"/>
+
+                @livewire('branch-form', [
+                    'id' => $company_id,
+                    'branch' => $branch,
+                    'departments' => $departments,
+                    'prefectures' => $prefectures,
+                    'labor_insurance_payment_method' => $labor_insurance_payment_method,
+                    'place_type' => $place_type,
+                    'start_days_of_week' => $start_days_of_week,
+                    'work_style_type' => $work_style_type,
+                    'errors' => $errors,
+                ])
+
                 @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
                     <div class="my-4" style="text-align: right; margin-right: 1em;">
                         <a class="ui button negative basic" href="{{ route('home.index') }}"
@@ -251,8 +276,8 @@
                 @endif
             </div>
         </form>
-        <div class="ui modal confirm-modal">
-            <livewire:confirm-modal-content/>
+        <div class="ui modal branch-payment-confirm-modal">
+            <livewire:branch-payment-confirm-modal />
         </div>
     </section>
     <script type="module">
@@ -261,7 +286,6 @@
             if (readonly) {
                 $sectionReadonly();
             }
-            $('.ui.dropdown.dropdown.multiple').dropdown({});
         });
     </script>
 </x-layout>

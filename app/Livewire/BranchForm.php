@@ -2,63 +2,89 @@
 
 namespace App\Livewire;
 
-use App\Models\Company;
 use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Hello_work;
 use App\Models\Labor_bureau;
 use App\Models\Labor_supervision;
 use App\Models\Pension_office;
-use Illuminate\Support\MessageBag;
+use App\Models\Values_branch_branch_type;
 use Livewire\Component;
 use Livewire\Attributes\On;
-use App\Models\Values_branch_branch_type;
 
-class AdminBranchForm extends Component
+class BranchForm extends Component
 {
-    public $data = [];
     public $company = null;
-    public $branch_types = [];
+    public $data = [];
+    public $branch = [];
     public $errs = [];
-    public $prefectures = [];
-    public $labor_insurance_payment_method = [];
+
+    public $branch_types = [];
     public $place_type = [];
+    public $labor_bureau_names = [];
+    public $prefectures = [];
+    public $pension_office_names = [];
+    public $hello_work_id = [];
+    public $labor_insurance_payment_method = [];
+    public $labor_supervision_names = [];
     public $start_days_of_week = [];
     public $work_style_type = [];
-    public $hello_work_id = [];
-    public $loading = false;
-    public $departments;
     public $salary;
     public $bonus;
     public $bounty;
-    public $id;
 
-    public $labor_bureau_names = [];
-    public $labor_supervision_names = [];
-    public $pension_office_names = [];
+    public $tabs = [
+        '事務所基本情報',
+        '社会保険',
+        '雇用保険',
+        '労働保険',
+        '勤務関連',
+        '給与関連'
+    ];
 
-    public function mount($errors, $branch = [], $departments,$salary = [],$bonus = [],$bounty = [],$prefectures = [], 
-    $labor_insurance_payment_method = [], $place_type = [], $start_days_of_week = [], $work_style_type = [], $id = null)
-    {
+    public $paymentTabs = [
+        '給与',
+        '賞与',
+        '報奨金'
+    ];
+
+    public $departments;
+
+    public function mount(
+        $errors,
+        $id = null,
+        $branch = [],
+        $departments = [],
+        $salary = [],
+        $bonus = [],
+        $bounty = [],
+        $prefectures = [],
+        $labor_insurance_payment_method = [],
+        $place_type = [],
+        $start_days_of_week = [],
+        $work_style_type = [],
+    ) {
         if (!empty($id)) {
             $company = Company::find($id);
             $this->company = $company;
         }
+
+        $this->place_type = $place_type;
         $this->prefectures = $prefectures;
         $this->labor_insurance_payment_method = $labor_insurance_payment_method;
-        $this->place_type = $place_type;
         $this->start_days_of_week = $start_days_of_week;
         $this->work_style_type = $work_style_type;
         $this->branch_types = Values_branch_branch_type::pluck('name', 'id')->toArray();
-        $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
-        $this->departments = $departments;
-        $this->salary = $salary;
-        $this->bonus = $bonus;
-        $this->bounty = $bounty;
-        $this->id = $id;
-
         $this->labor_bureau_names = Labor_bureau::distinct()->select('submit_name_jk')->get()->pluck('submit_name_jk');
         $this->labor_supervision_names = Labor_supervision::distinct()->select('submit_name_hij')->get()->pluck('submit_name_hij');
         $this->pension_office_names = Pension_office::select('submit_name_f', 'id')->whereNotNull('submit_name_f')->pluck('submit_name_f', 'id');
+        $this->hello_work_id = Hello_work::pluck('name', 'id')->toArray();
+        $this->salary = $salary;
+        $this->bonus = $bonus;
+        $this->bounty = $bounty;
+
+        $this->branch = $branch;
+        $this->departments = $departments;
 
         $c_ar = \old('br-name');
         if (!empty($c_ar)) {
@@ -156,47 +182,15 @@ class AdminBranchForm extends Component
     }
     public function render()
     {
-        return view('livewire.admin-branch-form');
-    }
-
-    public function append()
-    {
-        if ($this->loading) return;
-        $this->loading = true;
-        array_push($this->data, $this->defaultValues());
-        $this->dispatch('form-appended', count($this->data));
-    }
-
-    #[On('branch-form-loaded')]
-    public function branchFormLoaded()
-    {
-        $this->loading = false;
-    }
-
-    #[On('active-state')]
-    public function changeAccordionState($data)
-    {
-        foreach ($data as $d) {
-            $i = $d['index'];
-            $v = $d['value'];
-            $this->data[$i]['br-class_content'] = $v;
-        }
-        $this->dispatch('change-state');
-    }
-
-    public function remove($index)
-    {
-        if ($this->loading) return;
-        $this->loading = true;
-        unset($this->data[$index]);
-        $this->data = array_values($this->data);
-        $this->loading = false;
-        $this->dispatch('remove');
+        return view('livewire.branch-form');
     }
 
     private function defaultValues()
     {
         $defaultValues = [
+            'lw-accordion' => 1,
+            'lw-current_tab' => $this->tabs[0],
+            'lw-payment_tab' => $this->paymentTabs[0],
             'br-class_content' => 'content active',
             'br-id' => 0,
             'br-post_code' => '',
@@ -277,5 +271,16 @@ class AdminBranchForm extends Component
             $defaultValues['br-branch_type'] = 1;
         }
         return $defaultValues;
+    }
+
+    public function append()
+    {
+        array_push($this->data, $this->defaultValues());
+    }
+
+    #[On('rm-branch-item')]
+    public function removeBranchItem($index)
+    {
+        unset($this->data[$index]);
     }
 }

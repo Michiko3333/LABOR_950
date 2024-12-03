@@ -21,40 +21,41 @@ class SalaryForm extends Component
     public $salaryHistory;
     public $companyId;
 
-    public function mount($errors,$branchId, $childKey = null, $salary = [], $companyId) {
-        $salary = Salary::where('branch_id',$branchId)->where('delete_flg', 0)->get();
+    public function mount($errors, $branchId, $childKey = null, $salary = [], $companyId)
+    {
+        $salary = Salary::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->salary = $salary;
-        $salaryHistory = Salary_history::where('branch_id',$branchId)->get();
+        $salaryHistory = Salary_history::where('branch_id', $branchId)->get();
         $this->salaryHistory = $salaryHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
-        $departments = Department::where('company_id',$companyId)->get();
+        $departments = Department::where('company_id', $companyId)->get();
         $this->departments = $departments;
         foreach ($this->salaryHistory as $historyItem) {
             $departmentIds = explode(',', $historyItem->department_id);
             $departmentNames = [];
             foreach ($departmentIds as $id) {
-                $department = Department::where('id', $id)->first(); 
+                $department = Department::where('id', $id)->first();
                 if ($department) {
                     $departmentNames[] = $department->name;
                 }
             }
             $historyItem->department_names = implode('，', $departmentNames);
         }
-        $c_ar = \old('sa-payroll_deadline.'.$this->childKey);
+        $c_ar = \old('sa-payroll_deadline.' . $this->childKey);
         if (!empty($c_ar)) {
             for ($i = 0; $i < count($c_ar); $i++) {
                 $def = $this->defaultValues();
                 foreach ($def as $key => $value) {
                     $oldValue = \old($key);
                     if (!is_null($oldValue) && is_array($oldValue) && array_key_exists($this->childKey, $oldValue) && array_key_exists($i, $oldValue[$this->childKey])) {
-                        
+
                         $def[$key] = $oldValue[$this->childKey][$i];
                     }
                 }
                 array_push($this->salaryData, $def);
             }
-        }else {
+        } else {
             $mergedData = [];
 
             foreach ($salary as $item) {
@@ -62,7 +63,7 @@ class SalaryForm extends Component
 
                 if (!isset($mergedData[$saId])) {
                     $mergedData[$saId] = $item;
-                    
+
                     $mergedData[$saId]['department_id'] = $item['department_id'];
                 } else {
                     $mergedData[$saId]['department_id'] .= ',' . $item['department_id'];
@@ -111,7 +112,7 @@ class SalaryForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         array_push($this->salaryData, $this->defaultValues());
-        $this->dispatch('form-appended');
+        $this->dispatch('salary-appended');
     }
 
     #[On('salary-form-loaded')]
@@ -125,9 +126,8 @@ class SalaryForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->salaryData[$salaryKey]);
-        $this->salaryData = array_values($this->salaryData);
         $this->loading = false;
-        $this->dispatch('removeSalary');
+        $this->dispatch('salary-removed');
     }
 
     private function defaultValues()

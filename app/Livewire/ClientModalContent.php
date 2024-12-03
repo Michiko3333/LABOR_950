@@ -177,7 +177,6 @@ class ClientModalContent extends BaseTable
         ]);
 
         try {
-            \Log::info('t');
             Receptionist::create([
                 'employee_id' => $employee_id,
                 'client_company_id' => $company_id,

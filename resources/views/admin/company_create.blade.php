@@ -226,6 +226,16 @@
                 color: var(--color-red);
                 text-decoration: underline;
             }
+
+            .branch-payment-confirm-modal .red-text {
+                font-weight: bold;
+                color: var(--color-red);
+            }
+
+            .tab-error,
+            .tab-error.active {
+                color: #912d2b !important;
+            }
         </style>
     @endslot
 
@@ -859,8 +869,17 @@
             <h2 class="pl-1">事業所情報</h2>
 
             <!-- 支店情報 -->
-            <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures" :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
-                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''" :departments="$departments ?? ''"/>
+            @livewire('branch-form', [
+                'id' => $company_id ?? '',
+                'branch' => $branch,
+                'departments' => $departments ?? [],
+                'prefectures' => $prefectures,
+                'labor_insurance_payment_method' => $labor_insurance_payment_method,
+                'place_type' => $place_type,
+                'start_days_of_week' => $start_days_of_week,
+                'work_style_type' => $work_style_type,
+                'errors' => $errors,
+            ])
 
             <div class="my-4" style="text-align: right; margin-right: 1em;">
                 <a class="ui button negative basic" href="{{ route('admin.company') }}"
@@ -872,8 +891,8 @@
                 @endif
             </div>
         </form>
-        <div class="ui modal confirm-modal">
-            <livewire:confirm-modal-content/>
+        <div class="ui modal branch-payment-confirm-modal">
+            <livewire:branch-payment-confirm-modal />
         </div>
     </section>
 

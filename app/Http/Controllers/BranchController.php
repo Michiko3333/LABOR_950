@@ -110,7 +110,7 @@ class BranchController extends Controller
                         }
                         if ($said > 0) {
                             $departments = $data['sa-departments'][$index][$saIndex] ?? null;
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Salary::updateOrCreate(
                                         [
@@ -127,9 +127,9 @@ class BranchController extends Controller
                                     );
                                 }
                                 Salary::where('salary_id', $said)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $salaryHistoryData = [
                                     'salary_id' => $newSalaryId,
@@ -140,11 +140,12 @@ class BranchController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
+                                \Log::info(print_r($salaryHistoryData, true));
                                 Salary_history::create($salaryHistoryData);
                             };
-                        }else{
+                        } else {
                             $departments = $data['sa-departments'][$index][$saIndex] ?? null;
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $salaryData = [
                                         'salary_id' => $newSalaryId,
@@ -167,6 +168,7 @@ class BranchController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
+                                \Log::info(print_r($salaryHistoryData, true));
                                 Salary_history::create($salaryHistoryData);
                             };
                         }
@@ -187,7 +189,7 @@ class BranchController extends Controller
                             $bonus_payment_month_processed = null;
                         }
                         if ($boid > 0) {
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Bonus::updateOrCreate(
                                         [
@@ -202,9 +204,9 @@ class BranchController extends Controller
                                     );
                                 }
                                 Bonus::where('bonus_id', $boid)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $bonusHistoryData = [
                                     'bonus_id' => $newBonusId,
@@ -215,8 +217,8 @@ class BranchController extends Controller
                                 ];
                                 Bonus_history::create($bonusHistoryData);
                             };
-                        }else{
-                            if(!is_null($departments)){
+                        } else {
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $bonusData = [
                                         'bonus_id' => $newBonusId,
@@ -255,7 +257,7 @@ class BranchController extends Controller
                             $bonus_payment_month_processed = null;
                         }
                         if ($bouid > 0) {
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Bounty::updateOrCreate(
                                         [
@@ -270,9 +272,9 @@ class BranchController extends Controller
                                     );
                                 }
                                 Bounty::where('bounty_id', $bouid)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $bountyHistoryData = [
                                     'bounty_id' => $newBountyId,
@@ -283,8 +285,8 @@ class BranchController extends Controller
                                 ];
                                 Bounty_history::create($bountyHistoryData);
                             };
-                        }else{
-                            if(!is_null($departments)){
+                        } else {
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $bountyData = [
                                         'bounty_id' => $newBountyId,
@@ -322,7 +324,7 @@ class BranchController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['bou-departments'][$index][$bouIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             $bonus_payment_month = $data['bou-bonus_payment_month'][$index][$bouIndex] ?? null;
                             if (!is_null($bonus_payment_month)) {
                                 $bonus_payment_month_processed = implode('，', $bonus_payment_month);
@@ -359,7 +361,7 @@ class BranchController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['bo-departments'][$index][$boIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             $bonus_payment_month = $data['bo-bonus_payment_month'][$index][$boIndex] ?? null;
                             if (!is_null($bonus_payment_month)) {
                                 $bonus_payment_month_processed = implode('，', $bonus_payment_month);
@@ -396,7 +398,7 @@ class BranchController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['sa-departments'][$index][$saIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             foreach ($departments as $department_processed) {
                                 $salaryData = [
                                     'salary_id' => $SalaryId,
