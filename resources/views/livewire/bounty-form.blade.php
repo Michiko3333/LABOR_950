@@ -1,37 +1,90 @@
-<div>
+<div id="{{ $uniqueId }}" class="bounty-form">
     <script>
-        window.bounty = (n) => {
-            $('.dropdown.bounty-dropdown-' + n).dropdown({});
-            $('.bounty-month-' + n).each((index, element) => {
-                const parent = $(element).find('input');
-                const key = parent[0].attributes['wire:model.live']['nodeValue'];
-                const initialDate = key ? @this.get(key) : '';
-
-                $(element).calendar({
-                    type: 'month',
-                    formatter: {
-                        month: function(date, settings) {
-                            if (!date) return '';
-                            var year = date.getFullYear();
-                            var month = date.getMonth() + 1;
-                            return year + "年" + month + "月";
-                        }
-                    },
-                    text: {
-                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
-                            '12月'
-                        ],
-                        monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
-                            '11月', '12月'
-                        ],
-                    },
-                    initialDate: initialDate,
-                });
-
-            });
-            Livewire.dispatch('bounty-form-loaded');
+        const bountyForm = '.bounty-form';
+        const init_bounty = (n) => {
+            const key = '#' + n + bountyForm;
+            setTimeout(() => {
+                $(key + ' .ui.dropdown').dropdown({});
+            }, 0);
+            document.querySelectorAll(key).forEach(componentElement => {
+                const wireId = componentElement.getAttribute('wire:id');
+                if (wireId) {
+                    const livewireComponent = Livewire.find(wireId);
+                    $(key + ' .month-calendar').each((index, element) => {
+                        const parent = $(element).find('input');
+                        const key = parent[0].attributes['wire:model.live']['nodeValue'];
+                        const initialDate = key ? livewireComponent.get(key) : '';
+                        $(element).calendar({
+                            type: 'month',
+                            formatter: {
+                                month: function(date, settings) {
+                                    if (!date) return '';
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1;
+                                    return year + "年" + month + "月";
+                                }
+                            },
+                            text: {
+                                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月',
+                                    '10月', '11月',
+                                    '12月'
+                                ],
+                                monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+                                    '9月',
+                                    '10月',
+                                    '11月', '12月'
+                                ],
+                            },
+                            initialDate: initialDate,
+                            onChange: (d, t) => {
+                                if (key) livewireComponent.set(key, t);
+                            }
+                        });
+                    })
+                    document.querySelectorAll(key + ' .limit-select').forEach(selectElement => {
+                        selectElement.addEventListener('change', function() {
+                            if (this.selectedOptions) {
+                                const selectedOptions = Array.from(this.selectedOptions);
+                                if (selectedOptions.length === 4) {
+                                    Array.from(this.options).forEach(option => {
+                                        if (!option.selected) {
+                                            option.disabled = true;
+                                        }
+                                    });
+                                } else {
+                                    Array.from(this.options).forEach(option => {
+                                        option.disabled = false;
+                                    });
+                                }
+                            }
+                        });
+                    });
+                }
+            })
         }
     </script>
+    @script
+        <script>
+            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
+            $(document).ready(function() {
+                if (notReadonly) Livewire.dispatch('bounty-form-loaded');
+            });
+            $wire.on('bounty-appended', () => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('bounty-form-loaded');
+                }, 0);
+            });
+            $wire.on('bounty-removed', (e) => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('bounty-form-loaded');
+                }, 0);
+            });
+            $(document).off('click', '.bounty-history-{{ $childKey }}').on('click', '.bounty-history-{{ $childKey }}',
+                function() {
+                    $('.bounty-modal-{{ $childKey }}').modal('show');
+                });
+        </script>
+    @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button bounty-history-{{ $childKey }}">履歴</button>
         <div class="ui modal bounty-modal-{{ $childKey }}" wire:ignore>
@@ -68,7 +121,9 @@
         </div>
     </div>
     @foreach ($bountyData as $bountyKey => $bountyItem)
-        <div class="bounty fields">
+        <div class="bounty fields"
+            wire:key="{{ 'bounty-item-' . $childKey . '-' . $bountyKey . '-' . $bountyItem['bou-key'] }}"
+            x-init="init_bounty('{{ $uniqueId }}')">
             <input type="hidden" name="bou-id[{{ $childKey }}][]" value="{{ $bountyItem['bou-id'] }}" />
             <div class="six wide field {{ err_sub($bouErrs, 'bou-departments', $childKey, $bountyKey) }}" wire:ignore>
                 <label for="bou-departments[]">該当部署</label>
@@ -126,44 +181,6 @@
             id="append-bounty_{{ $childKey }}" {{ count($bountyData) > 9 ? 'disabled' : '' }}><i
                 class="plus circle icon"></i>追加</button>
     @endif
-    @script
-        <script type="module">
-            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
-            $(document).ready(function() {
-                if (notReadonly) bounty({{ $childKey }});
-            });
-            $(document).off('click', '.bounty-history-{{ $childKey }}').on('click', '.bounty-history-{{ $childKey }}',
-                function() {
-                    $('.bounty-modal-{{ $childKey }}').modal('show');
-                });
-            document.querySelectorAll('.limit-select').forEach(selectElement => {
-                selectElement.addEventListener('change', function() {
-                    const selectedOptions = Array.from(this.selectedOptions);
-                    if (selectedOptions.length === 4) {
-                        Array.from(this.options).forEach(option => {
-                            if (!option.selected) {
-                                option.disabled = true;
-                            }
-                        });
-                    } else {
-                        Array.from(this.options).forEach(option => {
-                            option.disabled = false;
-                        });
-                    }
-                });
-            });
-            $wire.on('bounty-appended', () => {
-                setTimeout(() => {
-                    if (notReadonly) bounty({{ $childKey }});
-                }, 0);
-            });
-            $wire.on('bounty-removed', (e) => {
-                setTimeout(() => {
-                    if (notReadonly) bounty({{ $childKey }});
-                }, 0);
-            });
-        </script>
-    @endscript
     <style type="text/css">
         .flex-container {
             display: flex;

@@ -27,7 +27,6 @@ class BranchPaymentConfirmModal extends BaseTable
 
     public function confirmModalOpened($branchID, $index)
     {
-        \Log::info('AAA');
         $this->salariesByBranch = Salary::where('branch_id', $branchID)->where('delete_flg', 0)->get();
         if ($this->salariesByBranch->isNotEmpty()) {
             foreach ($this->salariesByBranch as $salary) {

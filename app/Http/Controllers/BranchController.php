@@ -140,7 +140,6 @@ class BranchController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                \Log::info(print_r($salaryHistoryData, true));
                                 Salary_history::create($salaryHistoryData);
                             };
                         } else {
@@ -168,7 +167,6 @@ class BranchController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                \Log::info(print_r($salaryHistoryData, true));
                                 Salary_history::create($salaryHistoryData);
                             };
                         }

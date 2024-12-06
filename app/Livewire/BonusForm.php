@@ -11,6 +11,8 @@ use Livewire\Attributes\On;
 
 class BonusForm extends Component
 {
+    public $uniqueId;
+
     public $bonusData = [];
     public $departments = [];
     public $branchId;
@@ -23,6 +25,8 @@ class BonusForm extends Component
 
     public function mount($errors, $branchId, $childKey = null, $bonus = [], $companyId)
     {
+        $this->uniqueId = str_replace('.', '', uniqid('bonus_', true));
+
         $bonus = Bonus::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->bonus = $bonus;
         $bonusHistory = Bonus_history::where('branch_id', $branchId)->get();
@@ -70,7 +74,13 @@ class BonusForm extends Component
                 }
 
                 $mergedData[$boId]['bonus_payment_month'] = $item['bonus_payment_month'];
-                $mergedData[$boId]['applied_date'] = $item['applied_date'];
+                $applied_date = $item['applied_date'];
+                if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $applied_date, $matches)) {
+                    $year = $matches[1];
+                    $month = intval($matches[2]);
+                    $applied_date = "{$year}年{$month}月";
+                }
+                $mergedData[$boId]['applied_date'] = $applied_date;
             }
 
             foreach ($mergedData as $boId => $data) {
@@ -123,6 +133,7 @@ class BonusForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->bonusData[$bonusKey]);
+        $this->bonusData = array_values($this->bonusData);
         $this->loading = false;
         $this->dispatch('bonus-removed');
     }
@@ -131,6 +142,7 @@ class BonusForm extends Component
     {
         $defaultValues = [
             'bo-id' => 0,
+            'bo-key' => str_replace('.', '', uniqid('bonus_', true)),
             'bo-bonus_payment_month' => '',
             'bo-applied_date' => '',
             'bo-departments' => '',

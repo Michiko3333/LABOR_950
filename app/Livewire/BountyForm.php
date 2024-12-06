@@ -11,6 +11,8 @@ use Livewire\Attributes\On;
 
 class BountyForm extends Component
 {
+    public $uniqueId;
+
     public $bountyData = [];
     public $departments = [];
     public $branchId;
@@ -23,6 +25,8 @@ class BountyForm extends Component
 
     public function mount($errors, $branchId, $childKey = null, $bounty = [], $companyId)
     {
+        $this->uniqueId = str_replace('.', '', uniqid('bonus_', true));
+
         $bounty = Bounty::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->bounty = $bounty;
         $bountyHistory = Bounty_history::where('branch_id', $branchId)->get();
@@ -70,7 +74,13 @@ class BountyForm extends Component
                 }
 
                 $mergedData[$bouId]['bonus_payment_month'] = $item['bonus_payment_month'];
-                $mergedData[$bouId]['applied_date'] = $item['applied_date'];
+                $applied_date = $item['applied_date'];
+                if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $applied_date, $matches)) {
+                    $year = $matches[1];
+                    $month = intval($matches[2]);
+                    $applied_date = "{$year}年{$month}月";
+                }
+                $mergedData[$bouId]['applied_date'] = $applied_date;
             }
 
             foreach ($mergedData as $bouId => $data) {
@@ -123,6 +133,7 @@ class BountyForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->bountyData[$bountyKey]);
+        $this->bountyData = array_values($this->bountyData);
         $this->loading = false;
         $this->dispatch('bounty-removed');
     }
@@ -131,6 +142,7 @@ class BountyForm extends Component
     {
         $defaultValues = [
             'bou-id' => 0,
+            'bou-key' => str_replace('.', '', uniqid('bonus_', true)),
             'bou-bonus_payment_month' => '',
             'bou-applied_date' => '',
             'bou-departments' => '',

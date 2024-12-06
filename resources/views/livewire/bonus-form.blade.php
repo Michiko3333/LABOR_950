@@ -1,36 +1,90 @@
-<div>
+<div id="{{ $uniqueId }}" class="bonus-form">
     <script>
-        window.bonus = (n) => {
-            $('.dropdown.bonus-dropdown-' + n).dropdown({});
-            $('.bonus-month-' + n).each((index, element) => {
-                const parent = $(element).find('input');
-                const key = parent[0].attributes['wire:model.live']['nodeValue'];
-                const initialDate = key ? @this.get(key) : '';
-
-                $(element).calendar({
-                    type: 'month',
-                    formatter: {
-                        month: function(date, settings) {
-                            if (!date) return '';
-                            var year = date.getFullYear();
-                            var month = date.getMonth() + 1;
-                            return year + "年" + month + "月";
-                        }
-                    },
-                    text: {
-                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
-                            '12月'
-                        ],
-                        monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
-                            '11月', '12月'
-                        ],
-                    },
-                    initialDate: initialDate,
-                });
-            });
-            Livewire.dispatch('bonus-form-loaded');
+        const bonusForm = '.bonus-form';
+        const init_bonus = (n) => {
+            const key = '#' + n + bonusForm;
+            setTimeout(() => {
+                $(key + ' .ui.dropdown').dropdown({});
+            }, 0);
+            document.querySelectorAll(key).forEach(componentElement => {
+                const wireId = componentElement.getAttribute('wire:id');
+                if (wireId) {
+                    const livewireComponent = Livewire.find(wireId);
+                    $(key + ' .month-calendar').each((index, element) => {
+                        const parent = $(element).find('input');
+                        const key = parent[0].attributes['wire:model.live']['nodeValue'];
+                        const initialDate = key ? livewireComponent.get(key) : '';
+                        $(element).calendar({
+                            type: 'month',
+                            formatter: {
+                                month: function(date, settings) {
+                                    if (!date) return '';
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1;
+                                    return year + "年" + month + "月";
+                                }
+                            },
+                            text: {
+                                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月',
+                                    '10月', '11月',
+                                    '12月'
+                                ],
+                                monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+                                    '9月',
+                                    '10月',
+                                    '11月', '12月'
+                                ],
+                            },
+                            initialDate: initialDate,
+                            onChange: (d, t) => {
+                                if (key) livewireComponent.set(key, t);
+                            }
+                        });
+                    })
+                    document.querySelectorAll(key + ' .limit-select').forEach(selectElement => {
+                        selectElement.addEventListener('change', function() {
+                            if (this.selectedOptions) {
+                                const selectedOptions = Array.from(this.selectedOptions);
+                                if (selectedOptions.length === 4) {
+                                    Array.from(this.options).forEach(option => {
+                                        if (!option.selected) {
+                                            option.disabled = true;
+                                        }
+                                    });
+                                } else {
+                                    Array.from(this.options).forEach(option => {
+                                        option.disabled = false;
+                                    });
+                                }
+                            }
+                        });
+                    });
+                }
+            })
         }
     </script>
+    @script
+        <script>
+            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
+            $(document).ready(function() {
+                if (notReadonly) Livewire.dispatch('bonus-form-loaded');
+            });
+            $wire.on('bonus-appended', () => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('bonus-form-loaded');
+                }, 0);
+            });
+            $wire.on('bonus-removed', (e) => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('bonus-form-loaded');
+                }, 0);
+            });
+            $(document).off('click', '.bonus-history-{{ $childKey }}').on('click', '.bonus-history-{{ $childKey }}',
+                function() {
+                    $('.bonus-modal-{{ $childKey }}').modal('show');
+                });
+        </script>
+    @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button bonus-history-{{ $childKey }}">履歴</button>
         <div class="ui modal bonus-modal-{{ $childKey }}" wire:ignore>
@@ -67,7 +121,9 @@
         </div>
     </div>
     @foreach ($bonusData as $bonusKey => $bonusItem)
-        <div class="bonus fields" wire:key="bonus-item-{{ $childKey }}-{{ $bonusKey }}">
+        <div class="bonus fields"
+            wire:key="{{ 'bonus-item-' . $childKey . '-' . $bonusKey . '-' . $bonusItem['bo-key'] }}"
+            x-init="init_bonus('{{ $uniqueId }}')">
             <input type="hidden" name="bo-id[{{ $childKey }}][]" value="{{ $bonusItem['bo-id'] }}" />
             <div class="six wide field {{ err_sub($boErrs, 'bo-departments', $childKey, $bonusKey) }}" wire:ignore>
                 <label for="bo-departments[]">該当部署</label>
@@ -101,7 +157,7 @@
             </div>
             <div class="three wide field {{ err_sub($boErrs, 'bo-applied_date', $childKey, $bonusKey) }}">
                 <label for="bo-applied_date">適用年月</label>
-                <div class="ui calendar bonus-month-{{ $childKey }}" wire:ignore>
+                <div class="ui calendar month-calendar" wire:ignore>
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" name="bo-applied_date[{{ $childKey }}][]"
@@ -126,44 +182,6 @@
             id="append-bonus_{{ $childKey }}" {{ count($bonusData) > 9 ? 'disabled' : '' }}><i
                 class="plus circle icon"></i>追加</button>
     @endif
-    @script
-        <script type="module">
-            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
-            $(document).ready(function() {
-                if (notReadonly) bonus({{ $childKey }});
-            });
-            $(document).off('click', '.bonus-history-{{ $childKey }}').on('click', '.bonus-history-{{ $childKey }}',
-                function() {
-                    $('.bonus-modal-{{ $childKey }}').modal('show');
-                });
-            document.querySelectorAll('.limit-select').forEach(selectElement => {
-                selectElement.addEventListener('change', function() {
-                    const selectedOptions = Array.from(this.selectedOptions);
-                    if (selectedOptions.length === 4) {
-                        Array.from(this.options).forEach(option => {
-                            if (!option.selected) {
-                                option.disabled = true;
-                            }
-                        });
-                    } else {
-                        Array.from(this.options).forEach(option => {
-                            option.disabled = false;
-                        });
-                    }
-                });
-            });
-            $wire.on('bonus-appended', () => {
-                setTimeout(() => {
-                    if (notReadonly) bonus({{ $childKey }});
-                }, 0);
-            });
-            $wire.on('bonus-removed', (e) => {
-                setTimeout(() => {
-                    if (notReadonly) bonus({{ $childKey }});
-                }, 0);
-            });
-        </script>
-    @endscript
     <style type="text/css">
         .flex-container {
             display: flex;

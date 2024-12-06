@@ -1,37 +1,71 @@
-<div>
-    <script type="module">
-        window.salary = (n) => {
-            $('.dropdown.salary-dropdown-' + n).dropdown({});
-            $('.salary-month-' + n).each((index, element) => {
-                const parent = $(element).find('input');
-                const key = parent[0].attributes['wire:model.live']['nodeValue'];
-                const initialDate = key ? @this.get(key) : '';
+<div id="{{ $uniqueId }}" class="salary-form">
+    <script>
+        const salaryForm = '.salary-form';
+        const init_salary = (n) => {
+            const key = '#' + n + salaryForm;
+            setTimeout(() => {
+                $(key + ' .ui.dropdown.search').dropdown({});
+            }, 0);
+            document.querySelectorAll(key).forEach(componentElement => {
+                const wireId = componentElement.getAttribute('wire:id');
+                if (wireId) {
+                    const livewireComponent = Livewire.find(wireId);
+                    $(key + ' .month-calendar').each((index, element) => {
+                        const parent = $(element).find('input');
+                        const key = parent[0].attributes['wire:model.live']['nodeValue'];
+                        const initialDate = key ? livewireComponent.get(key) : '';
+                        $(element).calendar({
+                            type: 'month',
+                            formatter: {
+                                month: function(date, settings) {
+                                    if (!date) return '';
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1;
+                                    return year + "年" + month + "月";
+                                }
+                            },
+                            text: {
+                                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月',
+                                    '10月', '11月',
+                                    '12月'
+                                ],
+                                monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+                                    '9月',
+                                    '10月',
+                                    '11月', '12月'
+                                ],
+                            },
+                            initialDate: initialDate,
+                            onChange: (d, t) => {
+                                if (key) livewireComponent.set(key, t);
+                            }
+                        });
+                    })
 
-                $(element).calendar({
-                    type: 'month',
-                    formatter: {
-                        month: function(date, settings) {
-                            if (!date) return '';
-                            var year = date.getFullYear();
-                            var month = date.getMonth() + 1;
-                            return year + "年" + month + "月";
-                        }
-                    },
-                    text: {
-                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
-                            '12月'
-                        ],
-                        monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
-                            '11月', '12月'
-                        ],
-                    },
-                    initialDate: initialDate,
-                });
-
-            });
-            Livewire.dispatch('salary-form-loaded');
+                }
+            })
         }
     </script>
+    @script
+        <script>
+            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
+            $wire.on('salary-appended', () => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('salary-form-loaded');
+                }, 0);
+            });
+            $wire.on('salary-removed', (e) => {
+                setTimeout(() => {
+                    if (notReadonly) Livewire.dispatch('salary-form-loaded');
+                }, 0);
+            });
+            $(document).off('click', '.salary-history-{{ $childKey }}')
+                .on('click', '.salary-history-{{ $childKey }}',
+                    function() {
+                        $('.salary-modal-{{ $childKey }}').modal('show');
+                    });
+        </script>
+    @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button salary-history-{{ $childKey }}">履歴</button>
         <div class="ui modal salary-modal-{{ $childKey }}" wire:ignore>
@@ -109,7 +143,9 @@
         </div>
     </div>
     @foreach ($salaryData as $salaryKey => $salaryItem)
-        <div class="salary fields" wire:key="salary-item-{{ $childKey }}-{{ $salaryKey }}">
+        <div class="salary fields"
+            wire:key="{{ 'salary-item-' . $childKey . '-' . $salaryKey . '-' . $salaryItem['sa-key'] }}"
+            x-init="init_salary('{{ $uniqueId }}')">
             <input type="hidden" name="sa-id[{{ $childKey }}][]" value="{{ $salaryItem['sa-id'] }}" />
             <div class="six wide field {{ err_sub($saErrs, 'sa-departments', $childKey, $salaryKey) }}" wire:ignore>
                 <label for="sa-departments[]">該当部署</label>
@@ -160,9 +196,9 @@
                     <option value="11">第5営業日</option>
                 </select>
             </div>
-            <div class="three wide field {{ err_sub($saErrs, 'sa-applied_date', $childKey, $salaryKey) }}">
+            <div class="three wide field {{ err_sub($saErrs, 'sa-applied_date', $childKey, $salaryKey) }}" wire:ignore>
                 <label for="sa-applied_date">適用年月</label>
-                <div class="ui calendar month-calendar salary-month-{{ $childKey }}" wire:ignore>
+                <div class="ui calendar month-calendar" wire:ignore>
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" name="sa-applied_date[{{ $childKey }}][]"
@@ -187,28 +223,6 @@
             id="append-salary_{{ $childKey }}" {{ count($salaryData) > 9 ? 'disabled' : '' }}><i
                 class="plus circle icon"></i>追加</button>
     @endif
-    @script
-        <script type="module">
-            const notReadonly = @json($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2));
-            $(document).ready(function() {
-                if (notReadonly) salary({{ $childKey }});
-            });
-            $(document).off('click', '.salary-history-{{ $childKey }}').on('click', '.salary-history-{{ $childKey }}',
-                function() {
-                    $('.salary-modal-{{ $childKey }}').modal('show');
-                });
-            $wire.on('salary-appended', () => {
-                setTimeout(() => {
-                    if (notReadonly) salary({{ $childKey }});
-                }, 0);
-            });
-            $wire.on('salary-removed', (e) => {
-                setTimeout(() => {
-                    if (notReadonly) salary({{ $childKey }});
-                }, 0);
-            });
-        </script>
-    @endscript
     <style type="text/css">
         .flex-container {
             display: flex;

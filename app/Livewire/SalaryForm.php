@@ -11,6 +11,8 @@ use Livewire\Attributes\On;
 
 class SalaryForm extends Component
 {
+    public $uniqueId;
+
     public $salaryData = [];
     public $departments = [];
     public $branchId;
@@ -23,6 +25,8 @@ class SalaryForm extends Component
 
     public function mount($errors, $branchId, $childKey = null, $salary = [], $companyId)
     {
+        $this->uniqueId = str_replace('.', '', uniqid('salary_', true));
+
         $salary = Salary::where('branch_id', $branchId)->where('delete_flg', 0)->get();
         $this->salary = $salary;
         $salaryHistory = Salary_history::where('branch_id', $branchId)->get();
@@ -72,7 +76,14 @@ class SalaryForm extends Component
                 $mergedData[$saId]['payroll_deadline'] = $item['payroll_deadline'];
                 $mergedData[$saId]['payroll_month'] = $item['payroll_month'];
                 $mergedData[$saId]['payroll_day'] = $item['payroll_day'];
-                $mergedData[$saId]['applied_date'] = $item['applied_date'];
+
+                $applied_date = $item['applied_date'];
+                if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $applied_date, $matches)) {
+                    $year = $matches[1];
+                    $month = intval($matches[2]);
+                    $applied_date = "{$year}年{$month}月";
+                }
+                $mergedData[$saId]['applied_date'] = $applied_date;
             }
 
             foreach ($mergedData as $saId => $data) {
@@ -126,6 +137,7 @@ class SalaryForm extends Component
         if ($this->loading) return;
         $this->loading = true;
         unset($this->salaryData[$salaryKey]);
+        $this->salaryData = array_values($this->salaryData);
         $this->loading = false;
         $this->dispatch('salary-removed');
     }
@@ -134,6 +146,7 @@ class SalaryForm extends Component
     {
         $defaultValues = [
             'sa-id' => 0,
+            'sa-key' => str_replace('.', '', uniqid('salary_item', true)),
             'sa-payroll_deadline' => '',
             'sa-payroll_month' => '',
             'sa-payroll_day' => '',
