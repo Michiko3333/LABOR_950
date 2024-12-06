@@ -41,26 +41,31 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_certificate_or_payment_status']" :file_original_names="[
-                                    'wage_certificate_or_payment_status' =>
-                                        '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
-                                    'childcare' => '育児の事実が確認できる書類',
-                                    'nursing_care' => '介護の事実が確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'wage_certificate_or_payment_status' =>
+                                            '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                        'childcare' => '育児の事実が確認できる書類',
+                                        'nursing_care' => '介護の事実が確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -68,9 +73,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
-                            <div class="content" style="overflow-x: auto; overflow-y: auto; max-height: 650px;">
+                            <div class="content" style="overflow-y: auto;">
                                 <x-form.employment_insured_leave_start_amount_monthly_certificate />
                             </div>
                         </div>

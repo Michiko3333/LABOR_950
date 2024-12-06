@@ -41,32 +41,37 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_childcare']" :file_original_names="[
-                                    'childcare' => '育児の事実が確認できる書類',
-                                    'wage_amount' =>
-                                        '休業開始時賃金月額証明書に記載された育児休業を開始した日及びその日前の賃金の額が確認できる書類',
-                                    'wage_certificate' => '雇用保険被保険者休業開始時賃金月額証明票',
-                                    'confirmation_document' =>
-                                        '支給申請書に記載した賃金額、就業した日数及び時間、出産予定日、出産日、育児休業開始日、育児休業終了日等記載内容を確認できる書類',
-                                    'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
-                                    'extension_reason' => '延長事由に該当することを確認できる書類',
-                                    'spouse' => '被保険者の配偶者であることを確認できる書類',
-                                    'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'childcare' => '育児の事実が確認できる書類',
+                                        'wage_amount' =>
+                                            '休業開始時賃金月額証明書に記載された育児休業を開始した日及びその日前の賃金の額が確認できる書類',
+                                        'wage_certificate' => '雇用保険被保険者休業開始時賃金月額証明票',
+                                        'confirmation_document' =>
+                                            '支給申請書に記載した賃金額、就業した日数及び時間、出産予定日、出産日、育児休業開始日、育児休業終了日等記載内容を確認できる書類',
+                                        'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
+                                        'extension_reason' => '延長事由に該当することを確認できる書類',
+                                        'spouse' => '被保険者の配偶者であることを確認できる書類',
+                                        'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -74,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui top attached tabular menu">
@@ -90,7 +95,8 @@
                                 <div class="ui bottom attached segment" data-tab="sample">
                                     <x-form.parental_leave_benefits_claim_form />
                                 </div>
-                                <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
+                                <div class="ui bottom attached segment" data-tab="sample2"
+                                    style="display: none;">
                                     <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
                                 </div>
                             </div>

@@ -38,15 +38,18 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                        <div class="ui card card-shadow">
+                    </div>
+                    <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
                             <div class="content">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h2>70歳以上</h2>
@@ -85,6 +88,8 @@
                                 ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -92,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <x-form.health_and_pension_insured_bonus_payment_notification :dataUri="$dataUri" />

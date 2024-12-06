@@ -39,15 +39,18 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                        <div class="ui card card-shadow">
+                    </div>
+                    <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
                             <div class="content">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h2>70歳以上</h2>
@@ -65,8 +68,8 @@
                                         style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
                                         <label style="font-size: 11.2px;">個人番号</label>
                                         <input id="personal_number" maxlength="12" type="text" placeholder=""
-                                            name="my_number_or_basic_pension_number"
-                                            value="{{ old('my_number_or_basic_pension_number') }}" value="">
+                                            name="mynumber_no_or_pension_no"
+                                            value="{{ old('mynumber_no_or_pension_no') }}" value="">
                                     </div>
                                     <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
                                         <label style="font-size: 11.2px;">基礎年金番号</label>
@@ -88,6 +91,8 @@
                                 ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -95,13 +100,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.insured_person_monthly_remuneratio_basic_calculation_notification
-                                        :dataUri="$dataUri" />
-                                </div>
+                                <x-form.insured_person_monthly_remuneratio_basic_calculation_notification
+                                            :dataUri="$dataUri" />
                             </div>
                         </div>
                     </div>
@@ -162,7 +165,7 @@
                 $('#over_70_check').change(function() {
                     checkOver70();
                 });
-                $('#N50_005F_8E73_8A4F_8BC9').change(function() {
+                $('#N55_005F_8E73_8A4F_8BC7_94D4').change(function() {
                     checkOver70_2();
                 });
                 $('#N60_005F_8E73_8A4F_8BC7_9432').change(function() {
@@ -173,21 +176,25 @@
                     if ($('#over_70_check').prop('checked')) {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', false);
+                        $('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked', true);
                     } else {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
+                        $('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked', false);
                     }
                 }
 
                 function checkOver70_2() {
-                    if ($('#N50_005F_8E73_8A4F_8BC9').prop('checked')) {
+                    if ($('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked')) {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', false);
+                        $('#over_70_check').prop('checked', true);
                     } else {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
+                        $('#over_70_check').prop('checked', false);
                     }
                 }
 

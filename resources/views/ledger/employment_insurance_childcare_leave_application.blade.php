@@ -43,28 +43,33 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_amount_days_time']" :file_original_names="[
-                                    'amount_days_time' =>
-                                        '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
-                                    'written_consent' => '支給申請に係る承諾書',
-                                    'extension_reason' => '延長事由に該当することを確認できる書類',
-                                    'spouse' => '被保険者の配偶者であることを確認できる書類',
-                                    'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'amount_days_time' =>
+                                            '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
+                                        'written_consent' => '支給申請に係る承諾書',
+                                        'extension_reason' => '延長事由に該当することを確認できる書類',
+                                        'spouse' => '被保険者の配偶者であることを確認できる書類',
+                                        'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -72,12 +77,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.childcare_leave_allowance_application_form />
-                                </div>
+                                <x-form.childcare_leave_allowance_application_form />
                             </div>
                         </div>
                     </div>
