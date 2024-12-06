@@ -192,28 +192,30 @@ class EmployeeController extends Controller
         $existsCompany = CurrentUser::currentCompany();
         $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
         if (empty($existsBranch)) {
-            \Log::info('不正利用者：' . $sinner->email);
+            \Log::error('不正利用者：' . $sinner->email);
             return abort(404);
         }
-        if($request->input('departments')) {
-            foreach($request->input('departments') as $department) {
+        if ($request->input('departments')) {
+            foreach ($request->input('departments') as $department) {
                 $existsDepartment = Department::where('id', $department)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsDepartment)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
         }
-        $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
-        if (empty($existsManagerialPosition)) {
-            \Log::info('不正利用者：' . $sinner->email);
-            return abort(404);
+        if ($request->input('managerial_position_id')) {
+            $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
+            if (empty($existsManagerialPosition)) {
+                \Log::error('不正利用者：' . $sinner->email);
+                return abort(404);
+            }
         }
-        if($request->input('qualifications')) {
-            foreach($request->input('qualifications') as $qualification) {
+        if ($request->input('qualifications')) {
+            foreach ($request->input('qualifications') as $qualification) {
                 $existsQualification = Qualifications::where('id', $qualification)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsQualification)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
@@ -487,7 +489,7 @@ class EmployeeController extends Controller
         } else {
             $formatted_de_date_of_authorisation = $input_date2;
         }
-        if(isset($requestData['de-date_of_expiry'][$index])) {
+        if (isset($requestData['de-date_of_expiry'][$index])) {
             $input_date3 = $requestData['de-date_of_expiry'][$index];
             if (!is_null($input_date3) && strtotime($input_date3) === false) {
                 $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');

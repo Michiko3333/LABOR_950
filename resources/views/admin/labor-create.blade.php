@@ -263,12 +263,6 @@
                         <div style="text-align:right;">
                             <button class="ui button" type="button" id="company_btn">会社・支店検索</button>
                         </div>
-                        <div class="field {{ err($errors, 'departments[]') }}">
-                            <label for="departments[]">所属部署</label>
-                            <select class="ui fluid search dropdown multiple clearable department_select"
-                                multiple="" name="departments[]">
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div class="ui horizontal card card-shadow item-2">
@@ -368,40 +362,6 @@
     <script type="module">
         $(document).ready(function() {
             $('.ui.dropdown.dropdown.multiple').dropdown({});
-
-            function getDepartmentList(id, first = false) {
-                $.ajax({
-                        url: '{{ route('admin.get_departments') }}',
-                        data: {
-                            company_id: id
-                        },
-                        type: 'post'
-                    })
-                    .done((data) => {
-                        $('select[name="departments[]"]').empty();
-                        data.forEach(element => {
-                            $('<option>').attr({
-                                value: element.id
-                            }).text(element.name).appendTo('select[name="departments[]"]');
-                        });
-                        $('.ui.dropdown.dropdown.multiple').dropdown('clear');
-
-                        if (first) {
-                            const def = @json(old('departments', $departments));
-                            def.forEach(v => {
-                                let a = $('select[name="departments[]"] option[value=' + v + ']').prop(
-                                    'selected', true);
-                            });
-                        }
-                    });
-            }
-            const company_id = $('input[name=company_id]').val();
-            if (company_id) {
-                getDepartmentList(company_id, true);
-            }
-            addEventCompanyModal((data) => {
-                getDepartmentList(data['id']);
-            });
         });
 
         $('#iconChangeInput').on('change', function() {

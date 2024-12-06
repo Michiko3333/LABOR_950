@@ -273,7 +273,7 @@ class AdminController extends Controller
                         }
                         $departments = $data['sa-departments'][$branchIndex][$saIndex] ?? null;
                         if ($said > 0) {
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Salary::updateOrCreate(
                                         [
@@ -290,9 +290,9 @@ class AdminController extends Controller
                                     );
                                 }
                                 Salary::where('salary_id', $said)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $salaryHistoryData = [
                                     'salary_id' => $newSalaryId,
@@ -305,8 +305,8 @@ class AdminController extends Controller
                                 ];
                                 Salary_history::create($salaryHistoryData);
                             };
-                        }else{
-                            if(!is_null($departments)){
+                        } else {
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $salaryData = [
                                         'salary_id' => $newSalaryId,
@@ -349,7 +349,7 @@ class AdminController extends Controller
                             $bonus_payment_month_processed = null;
                         }
                         if ($boid > 0) {
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Bonus::updateOrCreate(
                                         [
@@ -364,9 +364,9 @@ class AdminController extends Controller
                                     );
                                 }
                                 Bonus::where('bonus_id', $boid)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $bonusHistoryData = [
                                     'bonus_id' => $newBonusId,
@@ -377,8 +377,8 @@ class AdminController extends Controller
                                 ];
                                 Bonus_history::create($bonusHistoryData);
                             };
-                        }else{
-                            if(!is_null($departments)){
+                        } else {
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $bonusData = [
                                         'bonus_id' => $newBonusId,
@@ -417,7 +417,7 @@ class AdminController extends Controller
                             $bonus_payment_month_processed = null;
                         }
                         if ($bouid > 0) {
-                            if(!is_null($departments)){
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     Bounty::updateOrCreate(
                                         [
@@ -432,9 +432,9 @@ class AdminController extends Controller
                                     );
                                 }
                                 Bounty::where('bounty_id', $bouid)
-                                ->where('branch_id', $brid)
-                                ->whereNotIn('department_id', $departments)
-                                ->update(['delete_flg' => 1]);
+                                    ->where('branch_id', $brid)
+                                    ->whereNotIn('department_id', $departments)
+                                    ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
                                 $bountyHistoryData = [
                                     'bounty_id' => $newBountyId,
@@ -445,8 +445,8 @@ class AdminController extends Controller
                                 ];
                                 Bounty_history::create($bountyHistoryData);
                             };
-                        }else{
-                            if(!is_null($departments)){
+                        } else {
+                            if (!is_null($departments)) {
                                 foreach ($departments as $department_processed) {
                                     $bountyData = [
                                         'bounty_id' => $newBountyId,
@@ -484,7 +484,7 @@ class AdminController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['bou-departments'][$branchIndex][$bouIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             $bonus_payment_month = $data['bou-bonus_payment_month'][$branchIndex][$bouIndex] ?? null;
                             if (!is_null($bonus_payment_month)) {
                                 $bonus_payment_month_processed = implode('，', $bonus_payment_month);
@@ -521,7 +521,7 @@ class AdminController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['bo-departments'][$branchIndex][$boIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             $bonus_payment_month = $data['bo-bonus_payment_month'][$branchIndex][$boIndex] ?? null;
                             if (!is_null($bonus_payment_month)) {
                                 $bonus_payment_month_processed = implode('，', $bonus_payment_month);
@@ -558,7 +558,7 @@ class AdminController extends Controller
                             $formatted_applied_date = $applied_date;
                         }
                         $departments = $data['sa-departments'][$branchIndex][$saIndex] ?? null;
-                        if(!is_null($departments)){
+                        if (!is_null($departments)) {
                             foreach ($departments as $department_processed) {
                                 $salaryData = [
                                     'salary_id' => $SalaryId,
@@ -909,6 +909,18 @@ class AdminController extends Controller
 
     public function labor_create_post(AdminLaborCreateRequest $request)
     {
+        $currentUser = CurrentUser::info();
+        $sinner = User::where('employee_id', $currentUser->id)->first();
+        $existsCompany = Company::find($request->input('company_id'));
+        if (empty($existsCompany)) {
+            \Log::error('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+        $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
+        if (empty($existsBranch)) {
+            \Log::error('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
 
         DB::beginTransaction();
 
@@ -1017,6 +1029,19 @@ class AdminController extends Controller
 
     public function labor_update_post(AdminLaborUpdateRequest $request, $id)
     {
+        $currentUser = CurrentUser::info();
+        $sinner = User::where('employee_id', $currentUser->id)->first();
+        $existsCompany = Company::find($request->input('company_id'));
+        if (empty($existsCompany)) {
+            \Log::error('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+        $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
+        if (empty($existsBranch)) {
+            \Log::error('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -1153,33 +1178,35 @@ class AdminController extends Controller
         $sinner = User::where('employee_id', $currentUser->id)->first();
         $existsCompany = Company::find($request->input('company_id'));
         if (empty($existsCompany)) {
-            \Log::info('不正利用者：' . $sinner->email);
+            \Log::error('不正利用者：' . $sinner->email);
             return abort(404);
         }
         $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
         if (empty($existsBranch)) {
-            \Log::info('不正利用者：' . $sinner->email);
+            \Log::error('不正利用者：' . $sinner->email);
             return abort(404);
         }
-        if($request->input('departments')) {
-            foreach($request->input('departments') as $department) {
+        if ($request->input('departments')) {
+            foreach ($request->input('departments') as $department) {
                 $existsDepartment = Department::where('id', $department)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsDepartment)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
         }
-        $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
-        if (empty($existsManagerialPosition)) {
-            \Log::info('不正利用者：' . $sinner->email);
-            return abort(404);
+        if ($request->input('managerial_position_id')) {
+            $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
+            if (empty($existsManagerialPosition)) {
+                \Log::error('不正利用者：' . $sinner->email);
+                return abort(404);
+            }
         }
-        if($request->input('qualifications')) {
-            foreach($request->input('qualifications') as $qualification) {
+        if ($request->input('qualifications')) {
+            foreach ($request->input('qualifications') as $qualification) {
                 $existsQualification = Qualifications::where('id', $qualification)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsQualification)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
@@ -1464,33 +1491,35 @@ class AdminController extends Controller
         $sinner = User::where('employee_id', $currentUser->id)->first();
         $existsCompany = Company::find($request->input('company_id'));
         if (empty($existsCompany)) {
-            \Log::info('不正利用者：' . $sinner->email);
+            \Log::error('不正利用者：' . $sinner->email);
             return abort(404);
         }
         $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
         if (empty($existsBranch)) {
-            \Log::info('不正利用者：' . $sinner->email);
+            \Log::error('不正利用者：' . $sinner->email);
             return abort(404);
         }
-        if($request->input('departments')) {
-            foreach($request->input('departments') as $department) {
+        if ($request->input('departments')) {
+            foreach ($request->input('departments') as $department) {
                 $existsDepartment = Department::where('id', $department)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsDepartment)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
         }
-        $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
-        if (empty($existsManagerialPosition)) {
-            \Log::info('不正利用者：' . $sinner->email);
-            return abort(404);
+        if ($request->input('managerial_position_id')) {
+            $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
+            if (empty($existsManagerialPosition)) {
+                \Log::error('不正利用者：' . $sinner->email);
+                return abort(404);
+            }
         }
-        if($request->input('qualifications')) {
-            foreach($request->input('qualifications') as $qualification) {
+        if ($request->input('qualifications')) {
+            foreach ($request->input('qualifications') as $qualification) {
                 $existsQualification = Qualifications::where('id', $qualification)->where('company_id', $existsCompany->id)->first();
                 if (empty($existsQualification)) {
-                    \Log::info('不正利用者：' . $sinner->email);
+                    \Log::error('不正利用者：' . $sinner->email);
                     return abort(404);
                 }
             }
@@ -1750,7 +1779,7 @@ class AdminController extends Controller
         } else {
             $formatted_de_date_of_authorisation = $input_date2;
         }
-        if(isset($requestData['de-date_of_expiry'][$index])) {
+        if (isset($requestData['de-date_of_expiry'][$index])) {
             $input_date3 = $requestData['de-date_of_expiry'][$index];
             if (!is_null($input_date3) && strtotime($input_date3) === false) {
                 $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
