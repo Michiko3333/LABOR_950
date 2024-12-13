@@ -111,10 +111,12 @@ class Calendar extends Component
 
         $this->todayFirstOfMonth = Carbon::today()->firstOfMonth();
 
+        $current_user = CurrentUser::info();
+
         $this->current_company = CurrentUser::currentCompany();
 
         $permission = new Permission();
-        $this->editPermission = ($permission->isGeneralAffair() && !$permission->isAdmin()) ? true : false;
+        $this->editPermission = ($permission->isGeneralAffair() && !$permission->isAdmin()) && $current_user->employee_status !== 1;
 
         if (!empty($this->current_company->start_day_of_week)) {
             $this->start_day = $this->current_company->start_day_of_week;

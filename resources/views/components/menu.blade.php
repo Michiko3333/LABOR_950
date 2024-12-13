@@ -149,21 +149,23 @@
                     @endif
                 @endif
             @endif
-            @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12))
+            @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12) || $userPermission->isReadableFor(13))
                 <li class="title">スケジュール</li>
-                <li class="item">
-                    <a href="{{ route('calendar.index') }}">
+                @if($userPermission->isReadableFor(11))
+                    <li class="item">
+                        <a href="{{ route('calendar.index') }}">
 
-                        カレンダー</a>
-                </li>
-                @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment())
+                            カレンダー</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
 
                             年間勤務予定表</a>
                     </li>
                 @endif
-                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment())
+                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                     <li class="item">
                         <a href="{{ route('pickup.setting') }}">
 

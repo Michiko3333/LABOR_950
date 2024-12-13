@@ -387,7 +387,7 @@
                 </div>
             </div>
 
-            @if(!$userPermission->isAdmin() && ($userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13)))
+            @if(!$userPermission->isAdmin() && ($userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13)) && $userPermission->getEmployeeStatus() !== 1)
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('home.index') }}"
                         style="width: 200px;">キャンセル</a>
@@ -399,7 +399,7 @@
 
     <script type="module">
         $(document).ready(function() {
-            const readonly = @json($userPermission->isAdmin() || !$userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13));
+            const readonly = @json($userPermission->isAdmin() || !$userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13) || $userPermission->getEmployeeStatus() !== 1);
             if (readonly) {
                 $sectionReadonly();
                 const def = @json($officers);

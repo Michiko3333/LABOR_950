@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
+use App\Permission;
 use App\Models\CurrentUser;
 use App\Models\Employee;
 use App\Models\Pickup_setting;
@@ -17,6 +18,12 @@ class PickUpController extends Controller
 {
     public function setting()
     {
+        $userPermission = new Permission();
+        if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() == 1) {
+            return redirect()->route('home.index');
+        }
+
+        $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
         $pickupSetting = Pickup_setting::where('company_id', $current_company->id)->first();
 

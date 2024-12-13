@@ -116,6 +116,7 @@ class UserModalContent extends Component
         if (!empty($user)) {
             $this->role_id = (new Permission())->getRoleId();
             $employee = CurrentUser::info();
+            $this->employee_id = $employee->id;
             $this->login_email = $user->email;
             $this->login_email_edit = $this->login_email;
             if (!empty($user) || !empty($employee)) {
@@ -141,17 +142,18 @@ class UserModalContent extends Component
                     $this->profiles['departments'] = Employee_department::select('name')
                         ->where('m_employee_department.delete_flg', 0)
                         ->leftJoin('m_department as d', 'department_id', '=', 'd.id')
-                        ->where('employee_id', $employee->id)
+                        ->where('employee_id', $this->employee_id)
                         ->pluck('name')->toArray();
                     if ($this->role_id === 100) {
+                        $employee_status = $employee->employee_status;
                         $departmentPermissionId = Employee_department::select('d.department_permission_id')
                             ->join('m_department as d', 'm_employee_department.department_id', '=', 'd.id')
                             ->where('m_employee_department.delete_flg', 0)
                             ->where('d.delete_flg', 0)
-                            ->where('m_employee_department.employee_id', $employee->id)
+                            ->where('m_employee_department.employee_id', $this->employee_id)
                             ->pluck('d.department_permission_id')
                             ->toArray();
-                        if (!in_array(2, $departmentPermissionId)){
+                        if (!in_array(2, $departmentPermissionId) || $employee_status === 1){
                             $this->profiles['human_resources_permissions'] = false;
                         }
                     }
@@ -248,6 +250,7 @@ class UserModalContent extends Component
 
             $result = $this->icon_file->storeAs($filePath);
 
+            \Log::info([$this->profiles['file_path']]);
             if ($result) {
                 $this->profiles['file_path'] = $filePath . '?v=' . time();
                 $this->icon_change_state = false;

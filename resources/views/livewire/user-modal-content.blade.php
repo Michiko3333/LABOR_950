@@ -87,13 +87,13 @@
                             <label for="old_last_name">旧氏</label>
                             <input type="text" id="old_last_name" name="old_last_name"
                                 wire:model.live="names_edit.old_last_name"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'names_edit.old_first_name') }}">
                             <label for="old_first_name">旧名</label>
                             <input type="text" id="old_first_name" name="old_first_name"
                                 wire:model.live="names_edit.old_first_name"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
 
                         </div>
                     </div>
@@ -102,13 +102,13 @@
                             <label for="old_last_name_kana">旧氏（カナ）</label>
                             <input type="text" id="old_last_name_kana" name="old_last_name_kana"
                                 wire:model.live="names_edit.old_last_name_kana"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'names_edit.old_first_name_kana') }}">
                             <label for="old_first_name_kana">旧名（カナ）</label>
                             <input type="text" id="old_first_name_kana" name="old_first_name_kana"
                                 wire:model.live="names_edit.old_first_name_kana"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="two fields">
@@ -116,13 +116,13 @@
                             <label for="old_last_name_alphabet">旧氏（アルファベット）</label>
                             <input type="text" id="old_last_name_alphabet" name="old_last_name_alphabet"
                                 wire:model.live="names_edit.old_last_name_alphabet"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'names_edit.old_first_name_alphabet') }}">
                             <label for="old_first_name_alphabet">旧名（アルファベット）</label>
                             <input type="text" id="old_first_name_alphabet" name="old_first_name_alphabet"
                                 wire:model.live="names_edit.old_first_name_alphabet"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="two fields">
@@ -130,13 +130,13 @@
                             <label for="name_common">通称名</label>
                             <input type="text" id="name_common" name="name_common"
                                 wire:model.live="names_edit.name_common"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'names_edit.name_common_kana') }}">
                             <label for="name_common_kana">通称名（カナ）</label>
                             <input type="text" id="name_common_kana" name="name_common_kana"
                                 wire:model.live="names_edit.name_common_kana"
-                                {{ $names_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $names_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="ui divider"></div>
@@ -163,27 +163,27 @@
                             <label for="emergency_contact1">緊急連絡先名</label>
                             <input type="text" id="emergency_contact1" name="emergency_contact1"
                                 wire:model.live="emergency_edit.emergency_contact1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_relationship1') }}">
                             <label for="emergency_relationship1">続柄</label>
                             <input type="text" id="emergency_relationship1" name="emergency_relationship1"
                                 wire:model.live="emergency_edit.emergency_relationship1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="field {{ err($errors, 'emergency_edit.emergency_tel1') }}">
                         <label for="emergency_tel1">電話番号</label>
                         <input type="text" id="emergency_tel1" name="emergency_tel1"
                             wire:model.live="emergency_edit.emergency_tel1" pattern="[\d\-]*" maxlength="12"
-                            {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                            {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                     </div>
                     <div class="three fields">
                         <div class="field {{ err($errors, 'emergency_edit.emergency_post_code1') }}">
                             <label for="emergency_post_code1">郵便番号</label>
                             <input type="text" name="emergency_post_code1"
                                 wire:model.live="emergency_edit.emergency_post_code1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture1') }}">
                             <label for="emergency_address_prefecture1">都道府県</label>
@@ -200,7 +200,7 @@
                             <label for="emergency_address_city1">市区町村</label>
                             <input type="text" id="emergency_address_city1" name="emergency_address_city1"
                                 wire:model.live="emergency_edit.emergency_address_city1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="two fields">
@@ -208,14 +208,14 @@
                             <label for="emergency_address_ward1">丁目・番地</label>
                             <input type="text" id="emergency_address_ward1" name="emergency_address_ward1"
                                 wire:model.live="emergency_edit.emergency_address_ward1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_apartment1') }}">
                             <label for="emergency_address_apartment1">アパート・マンション名等</label>
                             <input type="text" id="emergency_address_apartment1"
                                 name="emergency_address_apartment1"
                                 wire:model.live="emergency_edit.emergency_address_apartment1"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="ui divider"></div>
@@ -225,27 +225,27 @@
                             <label for="emergency_contact2">緊急連絡先名</label>
                             <input type="text" id="emergency_contact2" name="emergency_contact2"
                                 wire:model.live="emergency_edit.emergency_contact2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_relationship2') }}">
                             <label for="emergency_relationship2">続柄</label>
                             <input type="text" id="emergency_relationship2" name="emergency_relationship2"
                                 wire:model.live="emergency_edit.emergency_relationship2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="field {{ err($errors, 'emergency_edit.emergency_tel2') }}">
                         <label for="emergency_tel1">電話番号</label>
                         <input type="text" id="emergency_tel2" name="emergency_tel2"
                             wire:model.live="emergency_edit.emergency_tel2" pattern="[\d\-]*" maxlength="12"
-                            {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                            {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                     </div>
                     <div class="three fields">
                         <div class="field {{ err($errors, 'emergency_edit.emergency_post_code2') }}">
                             <label for="emergency_post_code2">郵便番号</label>
                             <input type="text" name="emergency_post_code2"
                                 wire:model.live="emergency_edit.emergency_post_code2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_prefecture2') }}">
                             <label for="emergency_address_prefecture2">都道府県</label>
@@ -262,7 +262,7 @@
                             <label for="emergency_address_city2">市区町村</label>
                             <input type="text" id="emergency_address_city2" name="emergency_address_city2"
                                 wire:model.live="emergency_edit.emergency_address_city2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
                     <div class="two fields">
@@ -270,14 +270,14 @@
                             <label for="emergency_address_ward2">丁目・番地</label>
                             <input type="text" id="emergency_address_ward2" name="emergency_address_ward2"
                                 wire:model.live="emergency_edit.emergency_address_ward2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                         <div class="field {{ err($errors, 'emergency_edit.emergency_address_apartment2') }}">
                             <label for="emergency_address_apartment2">アパート・マンション名等</label>
                             <input type="text" id="emergency_address_apartment2"
                                 name="emergency_address_apartment2"
                                 wire:model.live="emergency_edit.emergency_address_apartment2"
-                                {{ $emergency_edit_flg == false ? 'readonly' : '' }}>
+                                {{ $emergency_edit_flg == false ? 'readonly' : '' }} autocomplete="off">
                         </div>
                     </div>
 

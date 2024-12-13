@@ -278,14 +278,14 @@
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment())
+                            @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('calendar.shift') }}" class="item">
                                     <div class="content">
                                         <div class="header">年間勤務予定表</div>
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment())
+                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('pickup.setting') }}" class="item">
                                     <div class="content">
                                         <div class="header">Pick up設定</div>
