@@ -1,3 +1,6 @@
+<!-- 4950008680048000 -->
+<!-- 雇用保険被保険者休業開始時賃金月額証明書又は同休業・所定労働時間短縮開始時賃金証明書の提出（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:980px; height:2728px;">
 
     <script type="text/javascript">

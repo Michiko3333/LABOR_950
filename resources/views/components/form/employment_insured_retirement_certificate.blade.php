@@ -1,3 +1,6 @@
+<!-- 4950008680035000 -->
+<!-- 雇用保険被保険者資格喪失届（離職票交付あり）（令和４年６月以降手続き）/雇用保険被保険者離職証明書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:1566px; height:2320px;">
     <style>
         :not(.preview-area) input[type="text"].clear:disabled {

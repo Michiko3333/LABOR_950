@@ -136,9 +136,17 @@
                     $history_flg = $item['de-history_flg'];
                 @endphp
                 @if ($item['de-spouse_flag'] == '1')
-                    【{{ $relationship_spouse }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
+                    @if($history_flg === 1)
+                        【{{ $relationship_spouse }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}-履歴
+                    @else
+                        【{{ $relationship_spouse }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
+                    @endif
                 @elseif ($item['de-spouse_flag'] != '1')
-                    【{{ $relationship_dependent }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
+                    @if($history_flg === 1)
+                        【{{ $relationship_dependent }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}-履歴
+                    @else
+                        【{{ $relationship_dependent }}】&nbsp;{{ $item['de-last_name'] }}{{ $item['de-first_name'] }}
+                    @endif
                 @endif
             </div>
             <div data-accordion="{{ $key }}" class="{{ $item['de-class_content'] }}">
@@ -146,7 +154,7 @@
                 <div class="content_inner">
                     <h3>基本情報</h3>
                     <div class="two fields">
-                        @if ($key == 0 && $item['de-spouse_flag'] == 1)
+                        @if ($item['de-spouse_flag'] == 1)
                             <div class="field required {{ err_bind($errs, 'de-relationship_spouse', $key) }}">
                                 <label for="de-relationship_spouse">続柄</label>
                                 @if($history_flg === 0)
@@ -215,8 +223,10 @@
                                     </select>
                                 @endif
                             </div>
+                            <input type="hidden" name="de-relationship_spouse[]" value="">
+                            <input type="hidden" name="de-spouse_flag[]" value="">
                         @endif
-                        @if ($key == 0)
+                        @if ($item['de-spouse_flag'] == '1' || $history_flg === 0 && $this->isSpouse)
                             <div class="field {{ err_bind($errs, 'de-spouse_flag', $key) }}">
                                 <div class="ui checkbox mr-1">
                                     @if($history_flg === 0)

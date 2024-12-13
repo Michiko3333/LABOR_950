@@ -1,4 +1,7 @@
-<DIV style="position:relative; left:-20px; top:0; width:800px; height:1120px;">
+<!-- 4950008680050000 -->
+<!-- 雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き） -->
+
+<DIV style="position:relative; left:-40px; top:-20px; width:800px; height:1099px;">
 
     <script type="text/javascript">
         function teateumuCtl(f) {

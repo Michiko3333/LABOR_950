@@ -459,7 +459,6 @@
                                             O</option>
                                     </select>
                                 </div>
-{{-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
                                 <div class="thirteen wide field {{ err($errors, 'qualifications[]') }}">
                                     <label for="qualifications[]">資格情報</label>
                                     <select id="qualifications_dropdown"
@@ -467,7 +466,6 @@
                                         name="qualifications[]">
                                     </select>
                                 </div>
-{{-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
                             </div>
                             <div class="ui divider my-2"></div>
                             <div class="two fields">
@@ -1447,7 +1445,7 @@
                         value: element.id
                     }).text(element.name).appendTo('select[name="departments[]"]');
                 });
-                $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                $('.ui.dropdown.dropdown.multiple.department_select').dropdown('clear');
                 const def = @json(old('departments', $departments));
                 def.forEach(v => {
                     let a = $('select[name="departments[]"] option[value=' + v + ']').prop(
@@ -1488,7 +1486,7 @@
                         value: element.id
                     }).text(element.qualification_name).appendTo('select[name="qualifications[]"]');
                 });
-                $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                $('.ui.dropdown.dropdown.multiple.qualifications_select').dropdown('clear');
                 const def = @json(old('employee_qualifications', $employee_qualifications));
                 def.forEach(v => {
                     let a = $('select[name="qualifications[]"] option[value=' + v + ']').prop(

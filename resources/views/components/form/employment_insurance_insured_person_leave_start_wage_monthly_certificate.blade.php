@@ -1,3 +1,6 @@
+<!-- 4950008680182000 -->
+<!-- 雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）/雇用保険被保険者休業開始時賃金月額証明書／所定労働時間短縮開始時賃金証明書 -->
+
 <DIV style="position:relative; left:-100px; top:-180px; width:980px; height:2328px; transform: scale(0.85);">
 
     <script type="text/javascript">

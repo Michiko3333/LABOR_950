@@ -65,6 +65,9 @@ class AdminEmployeeUpdateRequest extends BaseRequest
         if (isset($data['de-birthday'])) {
             foreach ($data['de-birthday'] as &$birthday) {
                 if($birthday){
+                    if (Carbon::hasFormat($birthday, 'Y-m-d')) {
+                        continue;
+                    }
                     $birthday = Carbon::createFromFormat('Y年n月j日', $birthday)->format('Y-m-d');
                 }
             }

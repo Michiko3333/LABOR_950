@@ -1,3 +1,6 @@
+<!-- 4950008680034000 -->
+<!-- 雇用保険被保険者資格喪失届（離職票交付なし）（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1100px;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:19px; top:11px; width:200px; height:15px; text-align:left; font-size:11px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">様式第4号（第7条関係）（第1面）</SPAN>

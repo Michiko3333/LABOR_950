@@ -1451,7 +1451,7 @@ class AdminController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $employee->company_id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
-        $dependent = $employee->dependent()->where('delete_flg', 0)->get();
+        $dependent = $employee->dependent()->where('delete_flg', 0)->orderBy('history_flg', 'desc')->get();
         $qualifications = Qualifications::select('id', 'qualification_name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $employee_qualifications = Employee_qualifications::join('m_qualifications', 'm_employee_qualifications.qualifications_id', '=', 'm_qualifications.id')
             ->where('m_employee_qualifications.employee_id', $employee->id)

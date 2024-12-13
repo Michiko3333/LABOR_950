@@ -1,3 +1,6 @@
+<!-- 4950008680033000 -->
+<!-- 雇用保険被保険者資格取得届（令和４年６月以降手続き） -->
+
 <style type="text/css">
 .flex-container {
 display: flex;

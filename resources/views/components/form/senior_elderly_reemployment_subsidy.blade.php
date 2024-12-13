@@ -1,3 +1,6 @@
+<!-- 4950008680047000 -->
+<!-- 雇用保険高年齢雇用継続給付（高年齢再就職給付金）の申請（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:752px; height:1048px;">
 
     <script type="text/javascript">

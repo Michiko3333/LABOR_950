@@ -1,3 +1,6 @@
+<!-- 4950008680051000 -->
+<!-- 雇用保険介護休業給付（介護休業給付金）の申請（令和４年６月以降手続き）/雇用保険被保険者休業開始時賃金月額証明書所定労働時間短縮開始時賃金証明書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:2700px;">
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {

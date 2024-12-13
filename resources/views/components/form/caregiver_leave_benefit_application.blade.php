@@ -1,3 +1,6 @@
+<!-- 4950008680051000 -->
+<!-- 雇用保険介護休業給付（介護休業給付金）の申請（令和４年６月以降手続き）/介護休業給付金支給申請書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1150px;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:307px; width:99px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">10介護対象家族の姓</SPAN>

@@ -1,3 +1,6 @@
+<!-- 4950008680182000 -->
+<!-- 雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）/育児休業給付受給資格確認票・（初回）育児休業給付金支給申請書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:785px; height:1120px; transform: scale(0.9);">
 
     <script type="text/javascript">

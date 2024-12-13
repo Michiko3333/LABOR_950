@@ -340,6 +340,5 @@
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot
-        </script>
     </section>
 </x-layout>

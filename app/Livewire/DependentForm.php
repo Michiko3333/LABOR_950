@@ -15,6 +15,8 @@ class DependentForm extends Component
     public $errs = [];
     public $loading = false;
 
+    public $isSpouse = false;
+
     public function mount($errors, $dependent = [], $id = null)
     {
         if (!empty($id)) {
@@ -36,6 +38,12 @@ class DependentForm extends Component
         } else {
             foreach ($dependent as $item) {
                 $d = $this->defaultValues();
+                if($item->history_flg === 1) {
+                    $class_content = 'content';
+                } else {
+                    $class_content = 'content active';
+                }
+                $d['de-class_content'] = $class_content;
                 $d['de-id'] = $item->id;
                 $d['de-relationship_spouse'] = $item->relationship_spouse;
                 $d['de-relationship_dependent'] = $item->relationship_dependent;
@@ -69,6 +77,11 @@ class DependentForm extends Component
     }
     public function render()
     {
+        $this->isSpouse = empty(array_filter($this->data, function ($item) {
+            return isset($item['de-spouse_flag'], $item['de-history_flg']) 
+                && $item['de-spouse_flag'] == 1
+                && $item['de-history_flg'] == 0;
+        }));
         return view('livewire.dependent-form');
     }
 

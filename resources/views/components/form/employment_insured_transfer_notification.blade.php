@@ -1,3 +1,6 @@
+<!-- 4950008680040000 -->
+<!-- 雇用保険被保険者転勤届（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1049px;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:36px; top:807px; width:47px; height:55px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:37px 0px 0px 0px;"></SPAN>
