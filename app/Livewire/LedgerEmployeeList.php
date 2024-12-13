@@ -18,6 +18,7 @@ use App\Models\Retirement_reason_employee_decision_change_job_type;
 use App\Models\Retirement_reason_employee_decision_change_office;
 use App\Models\Retirement_reason_employee_decision_reasons;
 use App\Http\Controllers\Controller;
+use App\Models\Closure_information;
 use App\Models\Hello_work;
 use App\Models\Prefecture;
 use Carbon\Carbon;
@@ -235,6 +236,134 @@ class LedgerEmployeeList extends BaseTable
                 'day' => $date_of_expiry_convert['japanese_calendar_result']->day,
             ];
         }
+        $closure_1_data_4950008680182000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
+        ->get()->filter(function ($item) {
+            $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+            $finalDeadline = (clone $start_date_of_closed)->addMonths(4)->endOfMonth();
+            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+        })->sortByDesc('created_at')->first();
+        $closure_1_data_4950008680050000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
+        ->get()->filter(function ($item) {
+            $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+            $finalDeadline = (clone $start_date_of_closed)->addDays(10);
+            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+        })->sortByDesc('created_at')->first();
+        $closure_2_data = Closure_information::where('employee_id', $employee_id)->where('closure_type', '2')->where('delete_flg', '0')
+        ->get()->filter(function ($item) {
+            $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
+            $finalDeadline = (clone $end_date_of_losed)->addMonths(2)->endOfMonth();
+            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+        })->sortByDesc('created_at')->first();
+        if (!empty($closure_1_data_4950008680182000->start_date_of_closed)) {
+            $start_date_of_closed_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->start_date_of_closed);
+            $start_date_of_closed_4950008680182000 = Controller::convertWesternCalendarToJapaneseCalendar($start_date_of_closed_4950008680182000);
+            $start_date_of_closed_4950008680182000 = [
+                'era' => $start_date_of_closed_4950008680182000['japanese_calendar_era_string'],
+                'year' => $start_date_of_closed_4950008680182000['japanese_calendar_result']->year,
+                'month' => $start_date_of_closed_4950008680182000['japanese_calendar_result']->month,
+                'day' => $start_date_of_closed_4950008680182000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680182000->date_of_return_to_work)) {
+            $date_of_return_to_work_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->date_of_return_to_work);
+            $date_of_return_to_work_4950008680182000 = Controller::convertWesternCalendarToJapaneseCalendar($date_of_return_to_work_4950008680182000);
+            $date_of_return_to_work_4950008680182000 = [
+                'era' => $date_of_return_to_work_4950008680182000['japanese_calendar_era_string'],
+                'year' => $date_of_return_to_work_4950008680182000['japanese_calendar_result']->year,
+                'month' => $date_of_return_to_work_4950008680182000['japanese_calendar_result']->month,
+                'day' => $date_of_return_to_work_4950008680182000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680182000->date_of_return_to_work)) {
+            $before_date_of_return_to_work_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->date_of_return_to_work)->subDay();
+            $before_date_of_return_to_work_4950008680182000 = Controller::convertWesternCalendarToJapaneseCalendar($before_date_of_return_to_work_4950008680182000);
+            $before_date_of_return_to_work_4950008680182000 = [
+                'era' => $before_date_of_return_to_work_4950008680182000['japanese_calendar_era_string'],
+                'year' => $before_date_of_return_to_work_4950008680182000['japanese_calendar_result']->year,
+                'month' => $before_date_of_return_to_work_4950008680182000['japanese_calendar_result']->month,
+                'day' => $before_date_of_return_to_work_4950008680182000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680182000->date_of_birth)) {
+            $date_of_birth_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->date_of_birth);
+            $date_of_birth_4950008680182000 = Controller::convertWesternCalendarToJapaneseCalendar($date_of_birth_4950008680182000);
+            $date_of_birth_4950008680182000 = [
+                'era' => $date_of_birth_4950008680182000['japanese_calendar_era_string'],
+                'year' => $date_of_birth_4950008680182000['japanese_calendar_result']->year,
+                'month' => $date_of_birth_4950008680182000['japanese_calendar_result']->month,
+                'day' => $date_of_birth_4950008680182000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680182000->due_date)) {
+            $due_date_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->due_date);
+            $due_date_4950008680182000 = Controller::convertWesternCalendarToJapaneseCalendar($due_date_4950008680182000);
+            $due_date_4950008680182000 = [
+                'era' => $due_date_4950008680182000['japanese_calendar_era_string'],
+                'year' => $due_date_4950008680182000['japanese_calendar_result']->year,
+                'month' => $due_date_4950008680182000['japanese_calendar_result']->month,
+                'day' => $due_date_4950008680182000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680050000->start_date_of_closed)) {
+            $start_date_of_closed_4950008680050000 = Carbon::parse($closure_1_data_4950008680050000->start_date_of_closed);
+            $start_date_of_closed_4950008680050000 = Controller::convertWesternCalendarToJapaneseCalendar($start_date_of_closed_4950008680050000);
+            $start_date_of_closed_4950008680050000 = [
+                'era' => $start_date_of_closed_4950008680050000['japanese_calendar_era_string'],
+                'year' => $start_date_of_closed_4950008680050000['japanese_calendar_result']->year,
+                'month' => $start_date_of_closed_4950008680050000['japanese_calendar_result']->month,
+                'day' => $start_date_of_closed_4950008680050000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680050000->date_of_return_to_work)) {
+            $date_of_return_to_work_4950008680050000 = Carbon::parse($closure_1_data_4950008680050000->date_of_return_to_work);
+            $date_of_return_to_work_4950008680050000 = Controller::convertWesternCalendarToJapaneseCalendar($date_of_return_to_work_4950008680050000);
+            $date_of_return_to_work_4950008680050000 = [
+                'era' => $date_of_return_to_work_4950008680050000['japanese_calendar_era_string'],
+                'year' => $date_of_return_to_work_4950008680050000['japanese_calendar_result']->year,
+                'month' => $date_of_return_to_work_4950008680050000['japanese_calendar_result']->month,
+                'day' => $date_of_return_to_work_4950008680050000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680050000->date_of_return_to_work)) {
+            $before_date_of_return_to_work_4950008680050000 = Carbon::parse($closure_1_data_4950008680050000->date_of_return_to_work)->subDay();
+            $before_date_of_return_to_work_4950008680050000 = Controller::convertWesternCalendarToJapaneseCalendar($before_date_of_return_to_work_4950008680050000);
+            $before_date_of_return_to_work_4950008680050000 = [
+                'era' => $before_date_of_return_to_work_4950008680050000['japanese_calendar_era_string'],
+                'year' => $before_date_of_return_to_work_4950008680050000['japanese_calendar_result']->year,
+                'month' => $before_date_of_return_to_work_4950008680050000['japanese_calendar_result']->month,
+                'day' => $before_date_of_return_to_work_4950008680050000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950008680050000->date_of_birth)) {
+            $date_of_birth_4950008680050000 = Carbon::parse($closure_1_data_4950008680050000->date_of_birth);
+            $date_of_birth_4950008680050000 = Controller::convertWesternCalendarToJapaneseCalendar($date_of_birth_4950008680050000);
+            $date_of_birth_4950008680050000 = [
+                'era' => $date_of_birth_4950008680050000['japanese_calendar_era_string'],
+                'year' => $date_of_birth_4950008680050000['japanese_calendar_result']->year,
+                'month' => $date_of_birth_4950008680050000['japanese_calendar_result']->month,
+                'day' => $date_of_birth_4950008680050000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_2_data->start_date_of_closed)) {
+            $start_date_of_closed = Carbon::parse($closure_2_data->start_date_of_closed);
+            $start_date_of_closed = Controller::convertWesternCalendarToJapaneseCalendar($start_date_of_closed);
+            $start_date_of_closed = [
+                'era' => $start_date_of_closed['japanese_calendar_era_string'],
+                'year' => $start_date_of_closed['japanese_calendar_result']->year,
+                'month' => $start_date_of_closed['japanese_calendar_result']->month,
+                'day' => $start_date_of_closed['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_2_data->end_date_of_losed)) {
+            $end_date_of_losed = Carbon::parse($closure_2_data->end_date_of_losed);
+            $end_date_of_losed = Controller::convertWesternCalendarToJapaneseCalendar($end_date_of_losed);
+            $end_date_of_losed = [
+                'era' => $end_date_of_losed['japanese_calendar_era_string'],
+                'year' => $end_date_of_losed['japanese_calendar_result']->year,
+                'month' => $end_date_of_losed['japanese_calendar_result']->month,
+                'day' => $end_date_of_losed['japanese_calendar_result']->day,
+            ];
+        }
 
         $output = [
             'employee' => $employeeData,
@@ -270,6 +399,17 @@ class LedgerEmployeeList extends BaseTable
             'date_of_authorisation_convert' => $date_of_authorisation_convert ?? '',
             'date_of_expiry_convert' => $date_of_expiry_convert ?? '',
             'loss_convert_date' => $loss_convert_date ?? '',
+            'start_date_of_closed_4950008680182000' => $start_date_of_closed_4950008680182000 ?? '',
+            'date_of_return_to_work_4950008680182000' => $date_of_return_to_work_4950008680182000 ?? '',
+            'date_of_birth_4950008680182000' => $date_of_birth_4950008680182000 ?? '',
+            'due_date_4950008680182000' => $due_date_4950008680182000 ?? '',
+            'before_date_of_return_to_work_4950008680182000' => $before_date_of_return_to_work_4950008680182000 ?? '',
+            'start_date_of_closed_4950008680050000' => $start_date_of_closed_4950008680050000 ?? '',
+            'date_of_return_to_work_4950008680050000' => $date_of_return_to_work_4950008680050000 ?? '',
+            'date_of_birth_4950008680050000' => $date_of_birth_4950008680050000 ?? '',
+            'before_date_of_return_to_work_4950008680050000' => $before_date_of_return_to_work_4950008680050000 ?? '',
+            'start_date_of_closed' => $start_date_of_closed ?? '',
+            'end_date_of_losed' => $end_date_of_losed ?? '',
         ];
 
         $this->selected_id = $id;

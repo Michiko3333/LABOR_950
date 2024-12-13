@@ -206,6 +206,8 @@
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+                const start_date_of_closed_2 = data['start_date_of_closed'];
+                const end_date_of_losed_2 = data['end_date_of_losed'];
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 const headquartersAddress = (headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (
@@ -238,6 +240,28 @@
                     $('#J6_005F_944E').val("");
                     $('#J7_005F_8C8E').val("");
                     $('#J8_005F_93FA').val("");
+                }
+                if (start_date_of_closed_2 != null) {
+                    $('#J14_005F_944E_8D86').val(start_date_of_closed_2['era']);
+                    $('#J15_005F_944E').val(start_date_of_closed_2['year']);
+                    $('#J16_005F_8C8E').val(start_date_of_closed_2['month']);
+                    $('#J17_005F_93FA').val(start_date_of_closed_2['day']);
+                } else {
+                    $('#J14_005F_944E_8D86').val("");
+                    $('#J15_005F_944E').val("");
+                    $('#J16_005F_8C8E').val("");
+                    $('#J17_005F_93FA').val("");
+                }
+                if (end_date_of_losed_2 != null) {
+                    $('#J52_005F_944E_8D86').val(end_date_of_losed_2['era']);
+                    $('#J53_005F_944E').val(end_date_of_losed_2['year']);
+                    $('#J54_005F_8C8E').val(end_date_of_losed_2['month']);
+                    $('#J55_005F_93FA').val(end_date_of_losed_2['day']);
+                } else {
+                    $('#J52_005F_944E_8D86').val("");
+                    $('#J53_005F_944E').val("");
+                    $('#J54_005F_8C8E').val("");
+                    $('#J55_005F_93FA').val("");
                 }
                 $('#J123_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeName);
                 $('#employment_fullname').val(employeeName);

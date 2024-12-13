@@ -67,6 +67,10 @@ class FeatureSeeder extends Seeder
                 'name' => 'pickup設定',
             ],
             [
+                'id' => '14',
+                'name' => '休業情報',
+            ],
+            [
                 'id' => '16',
                 'name' => '資格マスタ',
             ],

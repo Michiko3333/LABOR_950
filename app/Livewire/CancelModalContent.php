@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Employee;
+use App\Models\Closure_information;
 use App\Models\Receptionist;
 use App\Models\Managerial_position;
 use Livewire\Component;
@@ -13,14 +13,17 @@ class CancelModalContent extends BaseTable
 {
     public $receptionistId;
     public $managerialPositionId;
+    public $closureId;
 
     #[On('cancelModalOpened')]
-    public function cancelModalOpened($receptionistId, $managerialPositionId)
+    public function cancelModalOpened($receptionistId, $managerialPositionId, $closureId)
     {
-        if(!$managerialPositionId) {
+        if ($receptionistId) {
             $this->receptionistId = $receptionistId;
-        } elseif(!$receptionistId) {
+        } elseif ($managerialPositionId) {
             $this->managerialPositionId = $managerialPositionId;
+        } elseif ($closureId) {
+            $this->closureId = $closureId;
         }
     }
 
@@ -49,6 +52,13 @@ class CancelModalContent extends BaseTable
             'delete_flg' => 1
         ]);
 
+        $this->dispatch('closeCancelModal');
+    }
+
+    public function cancelClosure() {
+        Closure_information::where('id', $this->closureId)->update([
+            'delete_flg' => 1
+        ]);
         $this->dispatch('closeCancelModal');
     }
 }

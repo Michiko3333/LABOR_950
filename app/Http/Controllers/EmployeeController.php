@@ -96,6 +96,52 @@ class EmployeeController extends Controller
         return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList]);
     }
 
+    public function closure_information_list(Request $request)
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(14)) {
+            return redirect()->route('home.index');
+        }
+
+        $currentUser = CurrentUser::info();
+        $currentCompany = CurrentUser::CurrentCompany();
+        $company_id = $currentCompany->id;
+        $division = $currentCompany->company_division;
+
+        $paginate = [
+            'page' => $request->input('page', 1),
+            'limit' => 20,
+            'search' => $request->input('search'),
+        ];
+
+        $columnList = FilterEmployeeList::select('name', 'value');
+
+        if ($userPermission->isBasicDepartment()) {
+            $columnList = $columnList->where('hidden_basic_department', 0);
+        }
+
+        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
+        $userDefaultList = [];
+        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        if (count($userList) > 0) {
+            foreach ($userList as $key => $value) {
+                $key = array_search($value, array_column($masterColumnList, 'value'));
+                $userDefaultList[] = $masterColumnList[$key];
+            }
+        } else {
+            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
+            $userDefaultList = $defaultList;
+        }
+
+
+        return view('employee.closure_information', [
+            'division' => $division,
+            'columnList' => $masterColumnList,
+            'defaultList' => $userDefaultList,
+            'company_id' => $company_id,
+        ]);
+    }
+
     public function employee_update(Request $request, $id)
     {
         $userPermission = new Permission();

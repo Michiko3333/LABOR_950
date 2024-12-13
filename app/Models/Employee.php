@@ -354,4 +354,9 @@ class Employee extends Model
     {
         return $this->hasMany(Employee_qualifications::class);
     }
+
+    public function closure_information()
+    {
+        return $this->hasMany(Closure_information::class);
+    }
 }

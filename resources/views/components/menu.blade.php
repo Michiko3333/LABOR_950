@@ -112,6 +112,13 @@
                                 労働契約書作成</a>
                         </li>
                     @endif
+                    @if ($userPermission->isReadableFor(14) && $userPermission->isBasicDepartment())
+                        <li class="item">
+                            <a href="{{ route('closure_information') }}">
+
+                            休業情報</a>
+                        </li>
+                    @endif
                 @endif
                 @if (
                     !$userPermission->denyProcedure() &&

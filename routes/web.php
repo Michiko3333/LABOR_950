@@ -288,6 +288,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
         Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
 
+        Route::get('/employee/closure_information', [EmployeeController::class, 'closure_information_list'])->name('closure_information');
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
