@@ -72,7 +72,7 @@
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
-                                <livewire:submission-selector :mode="0" />
+                                <livewire:submission-selector :mode="1" />
                             </div>
                         </div>
                     </div>

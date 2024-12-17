@@ -11,30 +11,44 @@ use App\Models\Employee;
 use App\Models\Managerial_position;
 use App\Models\Prefecture;
 use App\Models\Egov_application;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\EgovAPI\Egov;
 use App\EgovAPI\EgovTestLog;
 use App\Http\Controllers\FinalExamController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MixXmlEgovSigner
 {
     private $companyId;
+    private $employeeId;
     private $password;
     private $pfxFilepath;
     private $procedureId;
     private $signer;
     private $workingDirectory;
     private $afterLedgerPath;
+    private $roleId;
+    private array $applicantRequiredColumns = ['last_name', 'first_name', 'last_name_kana', 'first_name_kana', 'post_code',
+                                                'address_prefecture', 'address_city', 'address_ward',
+                                                'address_prefecture_kana', 'address_city_kana', 'address_ward_kana',
+                                                'tel_area_code', 'tel_city_code', 'tel_subscriber_code',];
+    private string $contactRequiredColumn = 'mail_address';
 
     /* -- 引数説明 --
      * 通常利用は$requestのみ設定
      * コマンド利用時には$request=nullかつ、$companyIdを設定
     */
-    public function __construct($request=null, $companyId=null)
+    public function __construct(Request $request=null, int $companyId=null)
     {
         if ($request != null || $companyId === null) {
-            $this->companyId = $request->session()->get('company_id');
+            $this->employeeId = ($request->session()->get('permissions')['employee_id']);
+            $this->roleId = ($request->session()->get('permissions')['role_id']);
+            if ($this->roleId === 999 || $this->roleId == 500) {
+                $this->companyId = ($request->session()->get('company_id'));
+            } else {
+                $this->companyId = Branch::where('id', Employee::where('id', $this->employeeId)->value('branch_id'))->value('company_id');
+            }
             $pathInfo = $request->getPathInfo();
             $this->procedureId = preg_replace('~^/.*?/~', '', $pathInfo);
             $this->signer = new Signer();
@@ -55,296 +69,346 @@ class MixXmlEgovSigner
             preg_match('#/app/(.*)#', $this->workingDirectory, $matches);
             $this->afterLedgerPath = $matches[1];
         }
-
     }
 
-    /* -- 引数説明 --
-     * $separaterをTrueにすることで個別ファイル署名形式として送信
-     * False or 設定しないことで標準形式での送信
+    /**
+     * 送られたrequestデータを元に申請を行う
+     *
+     * @param Request $request
+     * @param bool $separate|null Trueにすることで個別ファイル署名形式として送信,引数なしで標準形式での送信
+     * @param string $csvText|null csv帳票の申請に必要
+     * @return array [bool, string]申請可否とエラーメッセージ
     */
-    public function run($request, $separater=False, $csvText=null)
+    public function run(Request $request, bool $separater=False, string $csvText=null):array
     {
-        EgovTestLog::info(print_r('******************************** MixEgovSigner start ********************************', true));
-        $inputFolderPath = $this->xmlInput($request, $separater);
-        $this->getPfx();
-        Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/zip/');
-        $signerFolderPath = $this->workingDirectory . '/afterSigner/zip/';
-        $this->copyFolder($inputFolderPath, $signerFolderPath);
-        $this->putAttachment($request);
-        $this->putcsv($csvText);
-        $this->egovSigner($separater);
-        $kouseiFilePath = $signerFolderPath . "kousei.xml";
-        $this->transformEmptyTags($kouseiFilePath);
-        $base64Data = $this->zipBinary();
-        $response = $this->sendProcedure($base64Data);
-        if ((!isset($_SERVER['EGOV_TEST'])) or ($_SERVER['EGOV_TEST'] == 'false')) {
-            $this->signer->removeDir();
+        try{
+            EgovTestLog::info(print_r('******************************** MixEgovSigner start ********************************', true));
+            $inputFolderPath = $this->xmlInput($request, $separater);
+            $this->getPfx();
+            Storage::makeDirectory($this->afterLedgerPath . '/afterSigner/zip/');
+            $signerFolderPath = $this->workingDirectory . '/afterSigner/zip/';
+            $this->copyFolder($inputFolderPath, $signerFolderPath);
+            $this->putAttachment($request);
+            $this->putcsv($csvText);
+            $this->egovSigner($separater);
+            $kouseiFilePath = $signerFolderPath . "kousei.xml";
+            $this->transformEmptyTags($kouseiFilePath);
+            $base64Data = $this->zipBinary();
+            $response = $this->sendProcedure($base64Data);
+            if ((!isset($_SERVER['EGOV_TEST'])) or ($_SERVER['EGOV_TEST'] == 'false')) {
+                $this->signer->removeDir();
+            }
+            EgovTestLog::info(print_r('******************************** MixEgovSigner end ********************************', true));
+            return $response;
+        } catch (\Throwable $t) {
+            return [false, $t->getMessage()];
         }
-        EgovTestLog::info(print_r('******************************** MixEgovSigner end ********************************', true));
-        return $response;
+    }
+
+    /**
+    * 取得したレコードの申請者または連絡先情報の必須カラムをチェック
+    *
+    * @param stdClass $data 取得したレコード
+    * @param bool|null $contactflg　trueのときに連絡先情報のカラムを追加してチェック
+    */
+    private function dbDataCheck(\stdClass $data, bool $contactflg=false)
+    {
+        $checkType = '申請者';
+        if ($contactflg === True) {
+            array_push($this->applicantRequiredColumns, $this->contactRequiredColumn);
+            $checkType = '連絡先';
+        }
+        $missingFields = array_filter($this->applicantRequiredColumns, function ($field) use ($data) {
+            return !isset($data->$field) || is_null($data->$field);
+        });
+        if (!empty($missingFields)) {
+            $mes = $checkType . '情報の必須項目にnullが入っています';
+            \Log::error($mes);
+            throw new \Exception($mes . ': ' . implode(', ', $missingFields));
+        }
     }
 
     // requestに沿ってxmlファイルを編集
-    public function xmlInput($request, $separater)
+    public function xmlInput(Request $request, bool $separater)
     {
-        // 申請者情報の設定
-        $companyId = $request->session()->get('company_id');
-        $companyName = $request->session()->get('company_name');
-        $company = Company::where('id', $companyId)->where('delete_flg', 0)->first();
-        $headquarter = Branch::where('company_id', $companyId)->where('delete_flg', 0)->where('branch_type', 1)->first();
-        $president = Employee::whereHas('branch', function ($query) use ($companyId) {
-            $query->where('company_id', $companyId);
-            })
-            ->where('employee_type', 1)
-            ->where('delete_flg', 0)
-            ->orderBy('id', 'asc')
-            ->select('last_name', 'last_name_kana', 'first_name', 'first_name_kana', 'managerial_position_id', 'division_name', 'division_name_kana')
-            ->first();
-        if (!is_null($headquarter)){
-            $prefectures = Prefecture::where('id', $headquarter->address_prefecture)->get('name', 'nama_kana')->first();
-        }
-        if (!is_null($president)){
-            $managerialPositionName = Managerial_position::where('id', $president->managerial_position_id)
-            ->where('company_id', $companyId)->pluck('name')->first();
-        }
-        if (!is_null($president)){
-            if (!is_null($president->last_name) && !is_null($president->first_name)) $request->merge(['applicant_name' => $president->last_name . '　' . $president->first_name]);
-            if (!is_null($president->last_name_kana) && !is_null($president->first_name_kana)) $request->merge(['applicant_name_kana' => $president->last_name_kana . '　' . $president->first_name_kana]);
-            if (!is_null($managerialPositionName)) $request->merge(['applicant_managerial_position' => $managerialPositionName]);
-            if (!is_null($president->division_name)) $request->merge(['applicant_division_name' => $president->division_name]);
-            if (!is_null($president->division_name_kana)) $request->merge(['applicant_division_name_kana' => $president->division_name_kana]);
-        }
-        if (!is_null($companyName)) $request->merge(['applicant_corporate_name' => $companyName]);
-        if (!is_null($company->name_kana)) $request->merge(['applicant_corporate_name_kana' => $company->name_kana]);
-        if (!is_null($headquarter)){
-            if (!is_null($headquarter->post_code)) $request->merge(['applicant_post_code' => $headquarter->post_code]);
-            if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward)) {
-                $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . ($headquarter->address_apartment ?? '');
-                $request->merge(['applicant_address' => $address]);
+        try{
+            // 今後、代表取締役を選定する場合は、employee_type=1（代表取締役）の社員のうち選定したidの情報を取得予定
+            $companyData = DB::table('m_company')
+                ->where('m_company.id', $this->companyId)
+                ->join('m_branch', function ($join) {
+                    $join->on('m_company.id', '=', 'm_branch.company_id')
+                        ->where('m_branch.branch_type', 1);
+                })
+                ->join('m_employee', function ($join) {
+                    $join->on('m_branch.id', '=', 'm_employee.branch_id')
+                        ->where('m_employee.employee_type', 1);
+                })
+                ->join('m_prefecture', 'm_branch.address_prefecture', '=', 'm_prefecture.id')
+                ->leftJoin('m_managerial_position', 'm_employee.managerial_position_id', '=', 'm_managerial_position.id')
+                ->select(
+                    'm_employee.id',
+                    'm_employee.last_name',
+                    'm_employee.first_name',
+                    'm_employee.last_name_kana',
+                    'm_employee.first_name_kana',
+                    'm_employee.division_name',
+                    'm_employee.division_name_kana',
+                    'm_managerial_position.name AS managerial_position_name',
+                    'm_company.name AS company_name',
+                    'm_company.name_kana AS company_name_kana',
+                    'm_branch.post_code',
+                    'm_prefecture.name AS address_prefecture',
+                    'm_branch.address_city',
+                    'm_branch.address_ward',
+                    'm_branch.address_apartment',
+                    'm_prefecture.name_kana AS address_prefecture_kana',
+                    'm_branch.address_city_kana',
+                    'm_branch.address_ward_kana',
+                    'm_branch.address_apartment_kana',
+                    'm_branch.fax',
+                    'm_branch.mail_address',
+                    'm_branch.tel_area_code',
+                    'm_branch.tel_city_code',
+                    'm_branch.tel_subscriber_code'
+                )
+                ->first();
+            $this->dbDataCheck($companyData);
+            $request->merge([
+                'applicant_name' => $companyData->last_name . '　' . $companyData->first_name,
+                'applicant_name_kana' => $companyData->last_name_kana . '　' . $companyData->first_name_kana,
+                'applicant_managerial_position' => $companyData->managerial_position_name,
+                'applicant_corporate_name' => $companyData->company_name,
+                'applicant_corporate_name_kana' => $companyData->company_name_kana,
+                'applicant_division_name' => $companyData->division_name,
+                'applicant_division_name_kana' => $companyData->division_name_kana,
+                'applicant_post_code' => $companyData->post_code,
+                'applicant_address' => $companyData->address_prefecture . $companyData->address_city . $companyData->address_ward . $companyData->address_apartment,
+                'applicant_address_kana' => $companyData->address_prefecture_kana . $companyData->address_city_kana . $companyData->address_ward_kana . $companyData->address_apartment_kana,
+                'applicant_tel' => $companyData->tel_area_code . '-' . $companyData->tel_city_code . '-' . $companyData->tel_subscriber_code,
+                'applicant_fax' => $companyData->fax,
+                'applicant_email_address' => $companyData->mail_address,
+            ]);
+            // 連絡先情報の設定　社労士
+            if ( $this->roleId == 500 ) {
+                $laborData = DB::table('m_employee')->where('m_employee.id', $this->employeeId)
+                    ->join('m_branch', 'm_employee.branch_id', '=', 'm_branch.id')
+                    ->join('m_company', 'm_branch.company_id', '=', 'm_company.id')
+                    ->leftJoin('m_managerial_position', function ($join) {
+                        $join->on('m_employee.managerial_position_id', '=', 'm_managerial_position.id')
+                             ->whereNotNull('m_employee.managerial_position_id');
+                    })
+                    ->join('m_prefecture', 'm_branch.address_prefecture', '=', 'm_prefecture.id')
+                    ->select(
+                        'm_employee.id',
+                        'm_employee.last_name',
+                        'm_employee.first_name',
+                        'm_employee.last_name_kana',
+                        'm_employee.first_name_kana',
+                        'm_employee.division_name',
+                        'm_employee.division_name_kana',
+                        DB::raw('IFNULL(m_managerial_position.name, null) AS managerial_position_name'),
+                        'm_company.name AS company_name',
+                        'm_company.name_kana AS company_name_kana',
+                        'm_branch.post_code',
+                        'm_prefecture.name AS address_prefecture',
+                        'm_branch.address_city',
+                        'm_branch.address_ward',
+                        'm_branch.address_apartment',
+                        'm_prefecture.name_kana AS address_prefecture_kana',
+                        'm_branch.address_city_kana',
+                        'm_branch.address_ward_kana',
+                        'm_branch.address_apartment_kana',
+                        'm_branch.fax',
+                        'm_branch.mail_address',
+                        'm_branch.tel_area_code',
+                        'm_branch.tel_city_code',
+                        'm_branch.tel_subscriber_code'
+                    )
+                    ->first();
+                $this->dbDataCheck($laborData, true);
+                $request->merge([
+                    'contact_name' => $laborData->last_name . '　' . $laborData->first_name,
+                    'contact_name_kana' => $laborData->last_name_kana . '　' . $laborData->first_name_kana,
+                    'contact_managerial_position' => $laborData->managerial_position_name,
+                    'contact_corporate_name' => $laborData->company_name,
+                    'contact_corporate_name_kana' => $laborData->company_name_kana,
+                    'contact_division_name' => $laborData->division_name,
+                    'contact_division_name_kana' => $laborData->division_name_kana,
+                    'contact_post_code' => $laborData->post_code,
+                    'contact_address' => $laborData->address_prefecture . $laborData->address_city . $laborData->address_ward . $laborData->address_apartment,
+                    'contact_address_kana' => $laborData->address_prefecture_kana . $laborData->address_city_kana . $laborData->address_ward_kana . $laborData->address_apartment_kana,
+                    'contact_tel' => $laborData->tel_area_code . '-' . $laborData->tel_city_code . '-' . $laborData->tel_subscriber_code,
+                    'contact_fax' => $laborData->fax,
+                    'contact_email_address' => $laborData->mail_address,
+                ]);
+            } else {
+                // 連絡先情報の設定　会社情報
+                $this->dbDataCheck($companyData, true);
+                $request->merge([
+                    'contact_name' => $companyData->last_name . '　' . $companyData->first_name,
+                    'contact_name_kana' => $companyData->last_name_kana . '　' . $companyData->first_name_kana,
+                    'contact_managerial_position' => $companyData->managerial_position_name,
+                    'contact_corporate_name' => $companyData->company_name,
+                    'contact_corporate_name_kana' => $companyData->company_name_kana,
+                    'contact_division_name' => $companyData->division_name,
+                    'contact_division_name_kana' => $companyData->division_name_kana,
+                    'contact_post_code' => $companyData->post_code,
+                    'contact_address' => $companyData->address_prefecture . $companyData->address_city . $companyData->address_ward . $companyData->address_apartment,
+                    'contact_address_kana' => $companyData->address_prefecture_kana . $companyData->address_city_kana . $companyData->address_ward_kana . $companyData->address_apartment_kana,
+                    'contact_tel' => $companyData->tel_area_code . '-' . $companyData->tel_city_code . '-' . $companyData->tel_subscriber_code,
+                    'contact_fax' => $companyData->fax,
+                    'contact_email_address' => $companyData->mail_address,
+                ]);
             }
-            if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward)) {
-                $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . ($headquarter->address_apartment_kana ?? '');
-                $request->merge(['applicant_address_kana' => $address_kana]);
-            }
-            if (!is_null($headquarter->tel_area_code) && !is_null($headquarter->tel_city_code) && !is_null($headquarter->tel_subscriber_code)){
-                $request->merge(['applicant_tel' => $headquarter->tel_area_code . '-' . $headquarter->tel_city_code . '-' . $headquarter->tel_subscriber_code]);
-            }
-            if (!is_null($headquarter->fax)) $request->merge(['applicant_fax' => $headquarter->fax]);
-            if (!is_null($headquarter->mail_address)) $request->merge(['applicant_email_address' => $headquarter->mail_address]);
-        }
 
-        // 連絡先情報の設定
-        $user = CurrentUser::info();
-        // 社労士の場合は社労士情報
-        if ( $user->role_id == 500 ) {
-            $laborConsultantCompanyId = Branch::where('id', $user->branch_id)->where('delete_flg', 0)->pluck('company_id')->first();
-            if (!is_null($laborConsultantCompanyId)){
-                $laborConsultantCompany = Company::where('id', $laborConsultantCompanyId)->where('delete_flg', 0)->first();
-                $laborConsultantManagerialPositionName = Managerial_position::where('id', $user->managerial_position_id)
-                ->where('company_id', $laborConsultantCompanyId)->pluck('name')->first();
-            }
-            if (!is_null($laborConsultantCompany)){
-                $laborConsultantHeadquarter = Branch::where('company_id', $laborConsultantCompany->id)->where('delete_flg', 0)->where('branch_type', 1)->first();
-                $laborHeadquarterPrefectures = Prefecture::where('id', $laborConsultantHeadquarter->address_prefecture)->get('name', 'nama_kana')->first();
-            }
-            if (!is_null($user->last_name) && !is_null($user->first_name)) $request->merge(['contact_name' => $user->last_name . '　' . $user->first_name]);
-            if (!is_null($user->last_name_kana) && !is_null($user->first_name_kana)) $request->merge(['contact_name_kana' => $user->last_name_kana . '　' . $user->first_name_kana]);
+            // 手続IDとパスの取得
+            $pathInfo = $request->getPathInfo();
+            $procedureID = preg_replace('~^/.*?/~', '', $pathInfo);
+            $folderPath = storage_path('/app/ledger-template/' . $procedureID);
+            Storage::makeDirectory($this->afterLedgerPath . '/input_xml/');
+            $outputPath = $this->workingDirectory . '/input_xml/';
 
-            if (!is_null($laborConsultantManagerialPositionName)) $request->merge(['contact_managerial_position' => $laborConsultantManagerialPositionName]);
-            if (!is_null($laborConsultantCompany)){
-                if (!is_null($laborConsultantCompany->name)) $request->merge(['contact_corporate_name' => $laborConsultantCompany->name]);
-                if (!is_null($laborConsultantCompany->name_kana)) $request->merge(['contact_corporate_name_kana' => $laborConsultantCompany->name_kana]);
-            }
-            if (!is_null($user->division_name)) $request->merge(['contact_division_name' => $user->division_name]);
-            if (!is_null($user->division_name_kana)) $request->merge(['contact_division_name_kana' => $user->division_name_kana]);
-            if (!is_null($laborConsultantHeadquarter)){
-                if (!is_null($laborConsultantHeadquarter->post_code)) $request->merge(['contact_post_code' => $laborConsultantHeadquarter->post_code]);
-                if (!is_null($laborHeadquarterPrefectures) && !is_null($laborConsultantHeadquarter->address_city) && !is_null($laborConsultantHeadquarter->address_ward)) {
-                    $laborConsultantAddress = $laborHeadquarterPrefectures->name . $laborConsultantHeadquarter->address_city . $laborConsultantHeadquarter->address_ward . ($laborConsultantHeadquarter->address_apartment ?? '');
-                    $request->merge(['contact_address' => $laborConsultantAddress]);
-                }
-                if (!is_null($laborHeadquarterPrefectures) && !is_null($laborConsultantHeadquarter->address_city_kana) && !is_null($laborConsultantHeadquarter->address_ward)) {
-                    $laborConsultantAddress_kana = $laborHeadquarterPrefectures->name_kana . $laborConsultantHeadquarter->address_city_kana . $laborConsultantHeadquarter->address_ward_kana . ($laborConsultantHeadquarter->address_apartment_kana ?? '');
-                    $request->merge(['contact_address_kana' => $laborConsultantAddress_kana]);
-                }
-                if (!is_null($laborConsultantHeadquarter->tel_area_code) && !is_null($laborConsultantHeadquarter->tel_city_code) && !is_null($laborConsultantHeadquarter->tel_subscriber_code)){
-                    $request->merge(['contact_tel' => $laborConsultantHeadquarter->tel_area_code . '-' . $laborConsultantHeadquarter->tel_city_code . '-' . $laborConsultantHeadquarter->tel_subscriber_code]);
-                }
-                if (!is_null($laborConsultantHeadquarter->fax)) $request->merge(['contact_fax' => $laborConsultantHeadquarter->fax]);
-                if (!is_null($laborConsultantHeadquarter->mail_address)) $request->merge(['contact_email_address' => $laborConsultantHeadquarter->mail_address]);
-            }
-        }else{
-            // 社労士でなければ会社情報
-            if (!is_null($president)){
-                if (!is_null($president->last_name) && !is_null($president->first_name)) $request->merge(['contact_name' => $president->last_name . '　' . $president->first_name]);
-                if (!is_null($president->last_name_kana) && !is_null($president->first_name_kana)) $request->merge(['contact_name_kana' => $president->last_name_kana . '　' . $president->first_name_kana]);
-                if (!is_null($managerialPositionName)) $request->merge(['contact_managerial_position' => $managerialPositionName]);  
-                if (!is_null($president->division_name)) $request->merge(['contact_division_name' => $president->division_name]);
-                if (!is_null($president->division_name_kana)) $request->merge(['contact_division_name_kana' => $president->division_name_kana]);
-            }
-            if (!is_null($companyName)) $request->merge(['contact_corporate_name' => $companyName]);
-            if (!is_null($company->name_kana)) $request->merge(['contact_corporate_name_kana' => $company->name_kana]);
-            if (!is_null($headquarter)){
-                if (!is_null($headquarter->post_code)) $request->merge(['contact_post_code' => $headquarter->post_code]);
-                if (!is_null($prefectures) && !is_null($headquarter->address_city) && !is_null($headquarter->address_ward)) {
-                    $address = $prefectures->name . $headquarter->address_city . $headquarter->address_ward . ($headquarter->address_apartment ?? '');
-                    $request->merge(['contact_address' => $address]);
-                }
-                if (!is_null($prefectures) && !is_null($headquarter->address_city_kana) && !is_null($headquarter->address_ward)) {
-                    $address_kana = $prefectures->name_kana . $headquarter->address_city_kana . $headquarter->address_ward_kana . ($headquarter->address_apartment_kana ?? '');
-                    $request->merge(['contact_address_kana' => $address_kana]);
-                }
-                if (!is_null($headquarter->tel_area_code) && !is_null($headquarter->tel_city_code) && !is_null($headquarter->tel_subscriber_code)){
-                    $request->merge(['contact_tel' => $headquarter->tel_area_code . '-' . $headquarter->tel_city_code . '-' . $headquarter->tel_subscriber_code]);
-                }
-                if (!is_null($headquarter->fax)) $request->merge(['contact_fax' => $headquarter->fax]);
-                if (!is_null($headquarter->mail_address)) $request->merge(['contact_email_address' => $headquarter->mail_address]);
-            }
-        }
+            $this->copyFolder($folderPath, $outputPath);
+            EgovTestLog::info(print_r('テンプレートフォルダのコピーが成功しました', true));
+            $templatePath = $folderPath;
+            $folderPath = $outputPath;
 
-        // 手続IDとパスの取得
-        $pathInfo = $request->getPathInfo();
-        $procedureID = preg_replace('~^/.*?/~', '', $pathInfo);
-        $folderPath = storage_path('/app/ledger-template/' . $procedureID);
-        Storage::makeDirectory($this->afterLedgerPath . '/input_xml/');
-        $outputPath = $this->workingDirectory . '/input_xml/';
+            $files = $this->getAllFilesInFolder($folderPath);
+            foreach ($files as $file) {
+                $xml = new \DOMDocument();
+                $xml->load($file);
+                $xpath = new \DOMXPath($xml);
 
-        $this->copyFolder($folderPath, $outputPath);
-        EgovTestLog::info(print_r('テンプレートフォルダのコピーが成功しました', true));
-        $templatePath = $folderPath;
-        $folderPath = $outputPath;
-
-        $files = $this->getAllFilesInFolder($folderPath);
-        foreach ($files as $file){
-            $xml = new \DOMDocument();
-            $xml->load($file);
-            $xpath = new \DOMXPath($xml);
-
-            foreach ($request->all() as $key => $value) {
-                if (isset($requestData['certificate_checkbox_1'])) {
-                    continue;
-                }
-                else if (isset($requestData['certificate_checkbox_2'])) {
-                    continue;
-                }
-                $keyName = substr($key, 1);
-                $query = "//*[contains(text(), '$keyName')]";
-                $targetElements = $xpath->query($query);
-                foreach ($targetElements as $element) {
-                    if ($key == ($element->nodeValue)){
-                        $element->nodeValue = str_replace($key, $value, $element->nodeValue);
+                foreach ($request->all() as $key => $value) {
+                    if (isset($requestData['certificate_checkbox_1'])) {
+                        continue;
+                    }
+                    else if (isset($requestData['certificate_checkbox_2'])) {
+                        continue;
+                    }
+                    $keyName = substr($key, 1);
+                    $query = "//*[contains(text(), '$keyName')]";
+                    $targetElements = $xpath->query($query);
+                    foreach ($targetElements as $element) {
+                        if ($key == ($element->nodeValue)) {
+                            $element->nodeValue = str_replace($key, $value, $element->nodeValue);
+                        }
                     }
                 }
+                $xml->save($file);
             }
-            $xml->save($file);
-        }
 
-        // 添付情報付与
-        $attachments = $request->input('attachment');
-        $attachmentPath = $outputPath . 'kousei.xml';
-        $counter = 0;
-        if ($attachments) {
-            while (True) {
-                $xml = new \DOMDocument();
-                $xml->preserveWhiteSpace = true;
-                $xml->formatOutput = true;
-                $xml->load($attachmentPath);
+            // 添付情報付与
+            $attachments = $request->input('attachment');
+            $attachmentPath = $outputPath . 'kousei.xml';
+            $counter = 0;
+            if ($attachments) {
+                while (True) {
+                    $xml = new \DOMDocument();
+                    $xml->preserveWhiteSpace = true;
+                    $xml->formatOutput = true;
+                    $xml->load($attachmentPath);
 
-                $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
-                foreach ($attachments as $attachment) {
-                    $newElement = $xml->createElement('添付書類属性情報');
-                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                    $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
+                    foreach ($attachments as $attachment) {
+                        $newElement = $xml->createElement('添付書類属性情報');
+                        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                    $newElement->appendChild($xml->createElement('添付種別', $attachment['attachment_type']));
-                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                        $newElement->appendChild($xml->createElement('添付種別', $attachment['attachment_type']));
+                        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                    $newElement->appendChild($xml->createElement('添付書類名称', $attachment['attached_document_name']));
-                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                        $newElement->appendChild($xml->createElement('添付書類名称', $attachment['attached_document_name']));
+                        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                    $newElement->appendChild($xml->createElement('添付書類ファイル名称', $attachment['attachment_file_name']));
-                    $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
+                        $newElement->appendChild($xml->createElement('添付書類ファイル名称', $attachment['attachment_file_name']));
+                        $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 
-                    $newElement->appendChild($xml->createElement('提出情報', $attachment['submission_info']));
-                    $newElement->appendChild($xml->createTextNode("\n\t\t"));
+                        $newElement->appendChild($xml->createElement('提出情報', $attachment['submission_info']));
+                        $newElement->appendChild($xml->createTextNode("\n\t\t"));
 
-                    $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
-                    $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
-                }
-                $xml->save($attachmentPath);
-                if ($counter == 1) {
-                    break;
-                }
-                if ($separater) {
-                    $attachmentPath = $this->getAttachmentSignPath($outputPath, '申請種別', '添付書類署名');
-                    if ($attachmentPath==[]) {
+                        $submitInfoElement->parentNode->insertBefore($newElement, $submitInfoElement->nextSibling);
+                        $submitInfoElement->parentNode->insertBefore($xml->createTextNode("\n\t\t"), $submitInfoElement->nextSibling);
+                    }
+                    $xml->save($attachmentPath);
+                    if ($counter == 1) {
                         break;
                     }
-                    $counter++;
-                    continue;
-                }
-                break;
-            }
-        }
-
-        // 変換されなかったテンプレート値を空にする
-        foreach ($files as $file) {
-            $file = str_replace('//', '/', $file);
-            $xmlA = new \DOMDocument();
-            $xmlB = new \DOMDocument();
-            $outputFileName = basename($file);
-            $templateFiles = $this->getAllFilesInFolder($templatePath);
-            // 同名のフォルダ
-            foreach ($templateFiles as $templateFile) {
-                $tempFileName = basename($templateFile);
-                if ($tempFileName == $outputFileName){
-                    $xmlA ->load($templateFile);
+                    if ($separater) {
+                        $attachmentPath = $this->getAttachmentSignPath($outputPath, '申請種別', '添付書類署名');
+                        if ($attachmentPath==[]) {
+                            break;
+                        }
+                        $counter++;
+                        continue;
+                    }
                     break;
                 }
             }
-            $xmlB ->load($file);
-            $xpathA = new \DOMXPath($xmlA);
-            $xpathB = new \DOMXPath($xmlB);
-            // 変換対象にならないタグ一覧、全帳票共通で固定値があれば追加
-            $ignoreTags = ['様式ID', '様式バージョン', 'STYLESHEET', '受付行政機関ID', '手続ID', '手続名称', '申請種別', '申請書様式ID', '申請書様式バージョン',
-                            '申請書様式名称', '申請書ファイル名称', '様式コピー情報', 'Doctype', '帳票種別', '給付金の種類', 'Xmit',
-                            '添付種別', '添付書類名称', '添付書類ファイル名称', '提出情報'];
-            // 最奥部のネストの値のみを取得
-            $valuesA = [];
-            // ネストがない要素を選択
-            $elementsA = $xpathA->query('//*[not(*) and normalize-space()]');
-            foreach ($elementsA as $element) {
-                $valuesA[] = $element->nodeValue;
-            }
-            foreach ($valuesA as $valueA){
-                // 値からタグをサーチ
-                $querySerch = "//*[text()='{$valueA}']";
-                $targetElementsSerch = $xpathA->query($querySerch);
-                $elementSerch = $targetElementsSerch->item(0);
-                // 値よりタグ名取得
-                $tagName = $elementSerch->nodeName;
-                // 比較しないタグであれば次へ
-                if ( in_array($tagName, $ignoreTags) ) {
-                    continue;
-                }
-                // Bにサーチしたタグがあるか調べる
-                $queryB = "//{$tagName}/text()";
-                $targetElementsSerchB = $xpathB->query($queryB);
-                foreach ($targetElementsSerchB as $elementB) {
-                    // Bの値を取得
-                    $tagValueB = $elementB->nodeValue;
-                    if ( $valueA==$tagValueB ){
-                        $elementB->nodeValue = "";
+
+            // 変換されなかったテンプレート値を空にする
+            foreach ($files as $file) {
+                $file = str_replace('//', '/', $file);
+                $xmlA = new \DOMDocument();
+                $xmlB = new \DOMDocument();
+                $outputFileName = basename($file);
+                $templateFiles = $this->getAllFilesInFolder($templatePath);
+                // 同名のフォルダ
+                foreach ($templateFiles as $templateFile) {
+                    $tempFileName = basename($templateFile);
+                    if ($tempFileName == $outputFileName) {
+                        $xmlA ->load($templateFile);
+                        break;
                     }
                 }
+                $xmlB ->load($file);
+                $xpathA = new \DOMXPath($xmlA);
+                $xpathB = new \DOMXPath($xmlB);
+                // 変換対象にならないタグ一覧、全帳票共通で固定値があれば追加
+                $ignoreTags = ['様式ID', '様式バージョン', 'STYLESHEET', '受付行政機関ID', '手続ID', '手続名称', '申請種別', '申請書様式ID', '申請書様式バージョン',
+                                '申請書様式名称', '申請書ファイル名称', '様式コピー情報', 'Doctype', '帳票種別', '給付金の種類', 'Xmit',
+                                '添付種別', '添付書類名称', '添付書類ファイル名称', '提出情報'];
+                // 最奥部のネストの値のみを取得
+                $valuesA = [];
+                // ネストがない要素を選択
+                $elementsA = $xpathA->query('//*[not(*) and normalize-space()]');
+                foreach ($elementsA as $element) {
+                    $valuesA[] = $element->nodeValue;
+                }
+                foreach ($valuesA as $valueA) {
+                    // 値からタグをサーチ
+                    $querySerch = "//*[text()='{$valueA}']";
+                    $targetElementsSerch = $xpathA->query($querySerch);
+                    $elementSerch = $targetElementsSerch->item(0);
+                    // 値よりタグ名取得
+                    $tagName = $elementSerch->nodeName;
+                    // 比較しないタグであれば次へ
+                    if ( in_array($tagName, $ignoreTags) ) {
+                        continue;
+                    }
+                    // Bにサーチしたタグがあるか調べる
+                    $queryB = "//{$tagName}/text()";
+                    $targetElementsSerchB = $xpathB->query($queryB);
+                    foreach ($targetElementsSerchB as $elementB) {
+                        // Bの値を取得
+                        $tagValueB = $elementB->nodeValue;
+                        if ( $valueA==$tagValueB ) {
+                            $elementB->nodeValue = "";
+                        }
+                    }
+                }
+                $xmlB->save($file);
+                EgovTestLog::info(print_r($file . 'のデータ変換が成功しました', true));
             }
-            $xmlB->save($file);
-            EgovTestLog::info(print_r($file . 'のデータ変換が成功しました', true));
+            return $outputPath;
+        } catch (\Throwable $t) {
+            $mes = "申請ファイルの作成に失敗しました。登録しているデータを確認してください。";
+            \Log::error(print_r($mes . ($t->__toString()), true));
+            throw new \Exception($mes , 0, $t);
         }
-        return $outputPath;
     }
 
     // フォルダーごと再帰コピー
-    function copyFolder($source, $destination) {
+    function copyFolder($source, string $destination) {
         if (!is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
@@ -363,7 +427,7 @@ class MixXmlEgovSigner
     }
 
     // 指定フォルダから全てのファイルを取得
-    function getAllFilesInFolder($folderPath) {
+    function getAllFilesInFolder(string $folderPath) {
         $files = [];
         $entries = scandir($folderPath);
         foreach ($entries as $entry) {
@@ -383,16 +447,24 @@ class MixXmlEgovSigner
     //　pfxバイナリとパスワードをテーブルより取得し、pfxファイルに復元する。パスワードとパスは署名で再利用
     public function getPfx()
     {
-        $pfx = Certificate::where('company_id', $this->companyId)->where('delete_flg', 0)->select('file', 'password')->first();
-        $binarypfx = $pfx->file;
-        $this->password = $pfx->password;
-        $this->pfxFilepath = $this->workingDirectory . '/input_xml/certificate.pfx';
-        file_put_contents($this->pfxFilepath, $binarypfx);
-        EgovTestLog::info(print_r('pfxファイルの復元に成功しました', true));
+        try{
+            $selectCompanyId = $this->companyId;
+            $pfx = Certificate::where('company_id', $selectCompanyId)->where('delete_flg', 0)->select('file', 'password')->first();
+            // dd($pfx);
+            $binarypfx = $pfx->file;
+            $this->password = $pfx->password;
+            $this->pfxFilepath = $this->workingDirectory . '/input_xml/certificate.pfx';
+            file_put_contents($this->pfxFilepath, $binarypfx);
+            EgovTestLog::info(print_r('pfxファイルの復元に成功しました', true));
+        } catch (\Throwable $t) {
+            $mes = "電子証明書に異常が起きました。電子証明書のファイルを確認してください。";
+            \Log::error(print_r($mes . ($t->__toString()), true));
+            throw new \Exception($mes , 0, $t);
+        }
     }
 
     //　添付ファイルを/afterSignerフォルダに配置
-    public function putAttachment($request)
+    public function putAttachment(Request $request)
     {
         if ($request->files->count() !== 0) {
             foreach ($request->file() as $key => $file) {
@@ -410,7 +482,7 @@ class MixXmlEgovSigner
                         break;
                     } else {
                         $counter--;
-                        if ($counter == 0){
+                        if ($counter == 0) {
                             throw new \Exception('添付ファイルが正しく移動しませんでした');
                         }
                     }
@@ -420,11 +492,11 @@ class MixXmlEgovSigner
     }
 
     //署名
-    public function egovSigner($separater)
+    public function egovSigner(bool $separater)
     {
         // 署名用フォルダ
         $afterSignerFolder = $this->workingDirectory . '/afterSigner/zip';
-        if ($separater){
+        if ($separater) {
             $serchDirectory = $this->workingDirectory . '/afterSigner/zip/';
             $filenamePattern = 'kousei' . date("Y") . '*.xml';
             $files = glob($serchDirectory . $filenamePattern);
@@ -432,14 +504,18 @@ class MixXmlEgovSigner
                 $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password, basename($file), basename($file));
             }
             if ( $signerBool==False ) {
-                EgovTestLog::error("個別ファイル署名形式の署名に失敗しました");
+                $mes = "e-Gov連携に異常が発生しています。再度eGov連携および電子証明書の登録を行ってください。";
+                \Log::error("個別ファイル署名形式の署名に失敗しました" . $mes);
+                throw new \Exception($mes , 0);
             }else{
                 EgovTestLog::info(print_r('個別ファイル署名形式の署名に成功しました', true));
             }
         } else {
             $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password);
             if ( $signerBool==False ) {
-                EgovTestLog::error("標準形式の署名に失敗しました");
+                $mes = "e-Gov連携に異常が発生しています。再度eGov連携および電子証明書の登録を行ってください。";
+                \Log::error(print_r("標準形式の署名に失敗しました:". $mes, true));
+                throw new \Exception($mes , 0);
             }else{
                 EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
             }
@@ -483,7 +559,7 @@ class MixXmlEgovSigner
     }
 
     //申請データ送信
-    public function sendProcedure($base64Data)
+    public function sendProcedure(string $base64Data)
     {
         $send_file = new \stdClass();
         $send_file->file_name = $this->procedureId . '.zip';
@@ -491,7 +567,7 @@ class MixXmlEgovSigner
 
         $counter = 0;
         $returnData = [];
-        while (True){
+        while (True) {
             $counter++;
             $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
             $api = Egov::accessToken($account->access_token);
@@ -500,7 +576,7 @@ class MixXmlEgovSigner
             $body = $r->body();
             //　返却値が空だった場合、トークン再取得。
             if (empty($body)) {
-                if ( $counter > 3 ){
+                if ( $counter > 3 ) {
                     EgovTestLog::error("予期せぬエラー：申請データ送信に失敗しました");
                     EgovTestLog::info(print_r($r->collect(), true));
                     $returnData = [
@@ -525,7 +601,7 @@ class MixXmlEgovSigner
                     false, [ 'title' => '', 'detail' => '' ]
                 ];
                 $errorReport = [];
-                if ($statusCode == 200){
+                if ($statusCode == 200) {
                     EgovTestLog::info(print_r($r, true));
                     EgovTestLog::info(print_r('手続送信に成功しました', true));
                     EgovTestLog::info(print_r($r->collect(), true));
@@ -590,7 +666,7 @@ class MixXmlEgovSigner
         $response = $r->collect();
         $result = $response['results'];
         $currentDateTime = date('Y-m-d H:i:s');
-        if ( $result['apply_pay_list'] == [] ){
+        if ( $result['apply_pay_list'] == [] ) {
             $apply_pay_list = null;
         }else{
             $apply_pay_list = $result['apply_pay_list'][0];
@@ -614,10 +690,9 @@ class MixXmlEgovSigner
     }
 
     //空タグを署名用に変換
-    public function transformEmptyTags($targetPath)
+    public function transformEmptyTags(string $targetPath)
     {
         $xmlContent = file_get_contents($targetPath);
-
         // 変換対象
         $elements = [
             '役職', '法人団体名', '法人団体名フリガナ', '部門名', '部門名フリガナ', '郵便番号',
@@ -632,14 +707,14 @@ class MixXmlEgovSigner
                 $xmlContent
             );
         }
-        if (isset($xmlContent)){
+        if (isset($xmlContent)) {
             file_put_contents($targetPath, $xmlContent);
             EgovTestLog::info('申請データ用のタグ変換が行われました');
         }
     }
 
     // csvファイルの配置と添付情報の付与
-    public function putcsv($csvText=null)
+    public function putcsv(string $csvText=null)
     {
         if ($csvText == null) {
             return;
@@ -679,12 +754,13 @@ class MixXmlEgovSigner
      * 個別署名での添付書類署名が必要なパスを取得
      * フォルダ内のxmlファイルが指定タグと指定値を一致するパスの取得
      * 再帰的に末端タグまで検索
+     *
      * @param string $directory フォルダパス
      * @param string $tagName タグ名
      * @param string $tagValue タグ値
-     * @return string or array | null 一致パスが一つであればパスを返し、複数あれば配列で返す
+     * @return string|array|null 一致パスが一つであればパスを返し、複数あれば配列で返す
      */
-    public function getAttachmentSignPath($directory, $tagName, $tagValue)
+    public function getAttachmentSignPath(string $directory, string $tagName, string $tagValue):string|array
     {
         function checkTagValue($node, $tagName, $tagValue) {
             if ($node->nodeName === $tagName && $node->nodeValue === $tagValue) {
@@ -739,7 +815,7 @@ class MixXmlEgovSigner
      *  個別：dev_separate
      *  共通：zip置き場のledgertmpフォルダ
      */
-    public function runExam($proc_id, $signerNUM=1, $examNo)
+    public function runExam(string $proc_id, int $signerNUM=1, int $examNo)
     {
         EgovTestLog::info(print_r('******************************** MixEgovSigner exam start ********************************', true));
         EgovTestLog::info(print_r($this->workingDirectory . $this->afterLedgerPath, true));
@@ -774,7 +850,7 @@ class MixXmlEgovSigner
         // 署名
         if ('egovSigner' && $signerNUM!=9) {
             $signer = new Signer();
-            if ($signerNUM==2){
+            if ($signerNUM==2) {
                     $filenamePattern = 'kousei' . date("Y") . '*.xml';
                     $files = glob($signerFolderPath . $filenamePattern);
                     $signerTargetPath = $files[0];
@@ -788,14 +864,14 @@ class MixXmlEgovSigner
                 }else{
                     EgovTestLog::info(print_r('個別ファイル署名形式の署名に成功しました', true));
                 }
-            } elseif ($signerNUM==1){
+            } elseif ($signerNUM==1) {
                 $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
                 if ( $signerBool==False ) {
                     EgovTestLog::error("標準形式の署名に失敗しました");
                 }else{
                     EgovTestLog::info(print_r('標準形式の署名に成功しました', true));
                 }
-            } elseif ($signerNUM==3){
+            } elseif ($signerNUM==3) {
                 $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
                 $signerBool = $signer->run($signerFolderPath, $this->pfxFilepath, $this->password);
                 if ( $signerBool==False ) {
@@ -845,7 +921,7 @@ class MixXmlEgovSigner
 
             $counter = 0;
             $response = null;
-            while (True){
+            while (True) {
                 $counter++;
                 $account = Egov_account::where('company_id', $this->companyId)->where('delete_flg', 0)->first();
                 $api = Egov::accessToken($account->access_token);
@@ -856,7 +932,7 @@ class MixXmlEgovSigner
                 $body = $r->body();
                 //　返却値が空だった場合、トークン再取得。
                 if (empty($body)) {
-                    if ( $counter > 3 ){
+                    if ( $counter > 3 ) {
                         EgovTestLog::error("予期せぬエラー：申請データ送信に失敗しました");
                         EgovTestLog::info(print_r($r->collect(), true));
                         $returnData = [
@@ -877,7 +953,7 @@ class MixXmlEgovSigner
                         $headersText .= $name . ': ' . implode(",\n", $values) . "\n";
                     }
                     EgovTestLog::info(print_r($proc_id . '/headers :' . $headersText, true));
-                    if ($statusCode == 200){
+                    if ($statusCode == 200) {
                         EgovTestLog::info(print_r($r, true));
                         EgovTestLog::info(print_r('手続送信に成功しました', true));
                         EgovTestLog::info(print_r($r->collect(), true));
