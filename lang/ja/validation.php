@@ -86,7 +86,7 @@ return [
     'lte' => [
         'array' => 'The :attribute field must not have more than :value items.',
         'file' => 'The :attribute field must be less than or equal to :value kilobytes.',
-        'numeric' => 'The :attribute field must be less than or equal to :value.',
+        'numeric' => ':attributeは:value以前を入力してください',
         'string' => 'The :attribute field must be less than or equal to :value characters.',
     ],
     'mac_address' => 'The :attribute field must be a valid MAC address.',

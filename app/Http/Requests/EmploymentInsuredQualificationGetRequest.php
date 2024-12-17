@@ -84,7 +84,7 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
             'employment_status' => 'int|in:1,2,3,4,5,6,7',
             'occupation_type' => 'string|between:01,11',
             'employment_route' => 'int|in:1,2,3,4',
-            'agreed_hours_week_hour' => 'string|between:0,168|regex:/^[0-9]{1,3}$/u',
+            'agreed_hours_week_hour' => 'string|between:0,99|regex:/^[0-9]{1,3}$/u',
             'agreed_hours_week_minute' => 'string|between:0,60|regex:/^[0-9]{1,2}$/u',
             'contract_period_flg' => 'string|in:有,無',
             'contract_start_era' => 'nullable|string|in:平成,令和',
@@ -99,7 +99,7 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
             'branch_name' => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             'insured_reason_detail' => 'nullable|string|max:255',
             'first_alphabet' => 'nullable|string|max:255|regex:/\A[A-Z ]+\z/u',
-            'residence_card_no' => 'nullable|string|max:12|regex:/\A[0-9A-Z　]+\z/u',
+            'residence_card_no' => 'nullable|string|max:12|regex:/\A[0-9A-Z]+\z/u',
             'stay_date_period_year' => 'nullable|int|max:2100|required_with:stay_date_period_month,stay_date_period_day',
             'stay_date_period_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_year,stay_date_period_day',
             'stay_date_period_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:stay_date_period_month,stay_date_period_year',
@@ -119,14 +119,14 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
             'notification_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'notification_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'create_era' => 'nullable|string|in:平成,令和',
-            'create_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'create_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'create_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
+            'create_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:create_month,create_day',
+            'create_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:create_year,create_day',
+            'create_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:create_year,create_month',
             'agent_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
+            'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u|required_with:labor_consultant_tel_city_code,labor_consultant_tel_subscriber_code',
+            'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u|required_with:labor_consultant_tel_area_code,labor_consultant_tel_subscriber_code',
+            'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u|required_with:labor_consultant_tel_area_code,labor_consultant_tel_city_code',
             'memo' => 'nullable|string|max:255',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
@@ -254,10 +254,10 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
         $validator->sometimes('contract_start_day', 'gte:8', function ($input) {
             return $input->contract_start_era === '平成' && $input->contract_start_year == 1 && $input->contract_start_month == 1;
         });
-        $validator->sometimes('contract_start_month', 'between:1,4', function ($input) {
+        $validator->sometimes('contract_start_month', 'lte:4', function ($input) {
             return $input->contract_start_era === '平成' && $input->contract_start_year >= 31;
         });
-        $validator->sometimes('contract_start_day', 'between:1,30', function ($input) {
+        $validator->sometimes('contract_start_day', 'lte:30', function ($input) {
             return $input->contract_start_era === '平成' && $input->contract_start_year >= 31 && $input->contract_start_month === 4;
         });
     }
@@ -280,6 +280,12 @@ class EmploymentInsuredQualificationGetRequest extends BaseRequest
             'stay_date_period_year.required_with' => '在留期間_年を入力してください。',
             'stay_date_period_month.required_with' => '在留期間_月を入力してください。',
             'stay_date_period_day.required_with' => '在留期間_日を入力してください。',
+            'create_year.required_with' => '社会保険労務士記載欄_作成年月日_年を入力してください。',
+            'create_month.required_with' => '社会保険労務士記載欄_作成年月日_月を入力してください。',
+            'create_day.required_with' => '社会保険労務士記載欄_作成年月日_日を入力してください。',
+            'labor_consultant_tel_area_code.required_with' => '社会保険労務士記載欄_電話番号_市外局番を入力してください。',
+            'labor_consultant_tel_city_code.required_with' => '社会保険労務士記載欄_電話番号_市内局番を入力してください。',
+            'labor_consultant_tel_subscriber_code.required_with' => '社会保険労務士記載欄_電話番号_加入者番号を入力してください。',
         ];
     }
 
