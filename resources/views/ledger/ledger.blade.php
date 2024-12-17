@@ -2,8 +2,14 @@
     <style type="text/css">
         .ui.table {
             border: none;
-            borde-radius: 8px;
+            border-radius: 8px;
             margin-top: 0;
+            border-collapse: collapse;
+        }
+
+        .ui.table>tbody>tr {
+            border-left: 2px solid white;
+            border-right: 2px solid white;
         }
 
         .ui.table>tbody>tr>td {
@@ -13,12 +19,27 @@
         div.filter {
             background: #f9fafb;
             padding: 1em;
-            borde-radius: 8px;
+            border-radius: 8px;
         }
 
         div.pagination {
             display: flex;
             justify-content: center;
+        }
+
+        .fade-highlight {
+            animation: fadeHighlight 0.5s ease-out forwards;
+        }
+        @keyframes fadeHighlight {
+            0% {
+                border: none;
+            }
+            50% {
+                border: 2px solid rgba(153, 153, 153, 0.5);
+            }
+            100% {
+                border: 2px solid #999999;
+            }
         }
     </style>
     <section class="content">

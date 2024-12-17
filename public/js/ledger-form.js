@@ -100,3 +100,10 @@ $('#ledger-submit-btn').click((event) => {
     $(event.target).prop('disabled', true);
     $('#ledger-form').submit();
 });
+
+function handlePageHistory() {
+    const sessionHistory = JSON.parse(sessionStorage.getItem('pageHistory'));
+    $('#ledger-back').attr('href', sessionHistory.toString());
+}
+
+document.addEventListener("DOMContentLoaded", handlePageHistory);

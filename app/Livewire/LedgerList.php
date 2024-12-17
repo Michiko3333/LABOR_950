@@ -9,14 +9,18 @@ class LedgerList extends BaseTable
     public $limit = 10;
     public $search = '';
 
-    public function mount($page = 1, $search = '')
+    public function mount($search = '')
     {
-        $this->page = $page;
+        $this->page = request()->get('p', 1);
+        $this->paginated = true;
+        $this->pageMemory = true;
         $this->search = $search;
     }
 
     public function render()
     {
+        $ids = [];
+
         $condition = Ledger::select(
             'procedure_id',
             'procedure_name'
@@ -28,6 +32,12 @@ class LedgerList extends BaseTable
         }
 
         $this->data = $this->getData($condition);
+
+        foreach($this->data['items'] as $item) {
+            $ids[] = $item->procedure_id;
+        }
+
+        $this->RestrictingQueryParameters($ids);
 
         return view('livewire.ledger-list');
     }

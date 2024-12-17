@@ -44,11 +44,11 @@ class EgovIssuesController extends Controller
             return redirect()->route('home.index');
         }
 
-
         $currentCompany = CurrentUser::currentCompany();
         $account = Egov_account::where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
         $detail = new \stdClass();
         $detail->status = "";
+        $detail->status_color = "";
         $detail->arrive_id = "";
         $detail->arrive_date = "";
         $detail->corporation_name = "";
@@ -61,6 +61,7 @@ class EgovIssuesController extends Controller
         $detail->doc_count = 0;
         $detail->apply_pay_count = 0;
 
+        $notice_list = [];
         $official_list = [];
 
         try {
@@ -88,7 +89,7 @@ class EgovIssuesController extends Controller
                 $arrive_date = new Carbon($results['arrive_date']) ?? '';
                 $detail->status = $results['status'];
                 $detail->arrive_id = $results['arrive_id'];
-                $detail->arrive_date = $arrive_date->format('Y年m月d日 H時i分');
+                $detail->arrive_date = $arrive_date->format('Y/m/d/ H:i');
                 $detail->corporation_name = $results['corporation_name'];
                 $detail->applicant_name = $results['applicant_name'];
                 $detail->proc_name = $results['proc_name'];
@@ -98,7 +99,46 @@ class EgovIssuesController extends Controller
                 $detail->notice_count = $results['notice_count'];
                 $detail->doc_count = $results['doc_count'];
                 $detail->apply_pay_count = $results['apply_pay_count'];
+                $detail->notice_list = $results['notice_list'];
                 $detail->official_list = $results['official_list'];
+
+                foreach ($detail->notice_list as $notice) {
+                    $d = new \stdClass();
+
+                    $d->notice_sub_id = $notice['notice_sub_id'];
+                    $d->notice_title = $notice['notice_title'];
+                    $d->notice_sentence = $notice['notice_sentence'];
+                    $d->file = false;
+                    $notice_list[] = $d;
+                }
+                foreach ($notice_list as &$notice) {
+                    $api = Egov::accessToken($account->access_token);
+                    $r = $this->call_notice($api, $detail->arrive_id, $notice->notice_sub_id);
+                    if ($r->status() == 401) {
+                        \Log::info('トークン再取得：開始');
+                        $refreshed = Egov::refreshToken($account->refresh_token)->getToken();
+                        if ($refreshed && $refreshed->status() == 200) {
+                            \Log::info('トークン再取得：成功');
+                            $access_token = $refreshed['access_token'];
+                            $refresh_token = $refreshed['refresh_token'];
+                            $account->access_token = $access_token;
+                            $account->refresh_token = $refresh_token;
+                            $account->delete_flg = 0;
+                            $account->save();
+                            $api = Egov::accessToken($access_token);
+                            $r = $this->call_notice($api, $detail->arrive_id, $notice->notice_sub_id);
+                        }
+                    }
+
+                    if ($r->status() == 200) {
+                        $response = $r->json();
+                        $results = $response['results'];
+
+                        if(!empty($results['notice']['attached_file_list'])) {
+                            $notice->file = true;
+                        }
+                    }
+                }
 
                 foreach ($detail->official_list as $official) {
                     $d = new \stdClass();
@@ -117,7 +157,76 @@ class EgovIssuesController extends Controller
         } catch (\Exception $err) {
             \Log::error($err);
         }
-        return view('ledger.detail', ['detail' => $detail, 'official_list' => $official_list]);
+        return view('ledger.detail', ['detail' => $detail, 'official_list' => $official_list, 'notice_list' => $notice_list]);
+    }
+
+    public function getNotice(Request $request, $id)
+    {
+        
+        $req = $request->validate([
+            'notice_sub_id' => 'required',
+        ]);
+
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(9) || !$userPermission->isWritableFor(9)) {
+            return redirect()->route('home.index');
+        }
+
+        $arrive_id = $id;
+        $notice_sub_id = $req['notice_sub_id'];
+
+        $currentCompany = CurrentUser::currentCompany();
+        $account = Egov_account::where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
+
+        try {
+            $api = Egov::accessToken($account->access_token);
+            $r = $this->call_notice($api, $arrive_id, $notice_sub_id);
+            if ($r->status() == 401) {
+                \Log::info('トークン再取得：開始');
+                $refreshed = Egov::refreshToken($account->refresh_token)->getToken();
+                if ($refreshed && $refreshed->status() == 200) {
+                    \Log::info('トークン再取得：成功');
+                    $access_token = $refreshed['access_token'];
+                    $refresh_token = $refreshed['refresh_token'];
+                    $account->access_token = $access_token;
+                    $account->refresh_token = $refresh_token;
+                    $account->delete_flg = 0;
+                    $account->save();
+                    $api = Egov::accessToken($access_token);
+                    $r = $this->call_notice($api, $arrive_id, $notice_sub_id);
+                }
+            }
+
+            if ($r->status() == 200) {
+                $response = $r->json();
+                $results = $response['results']['notice'];
+                $attached_file_list = $results['attached_file_list'];
+
+                $zip = new \ZipArchive();
+                $zipFileName = $arrive_id . '_' . $notice_sub_id . 'notice_files.zip';
+                $zipPath = storage_path("app/{$zipFileName}");
+
+                if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+                    throw new \Exception("ZIPファイルの作成に失敗しました");
+                }
+
+                foreach ($attached_file_list as $file) {
+                    $file_name = $file['file_name'];
+                    $file_data = $file['file_data'];
+                    $binary_data = base64_decode($file_data);
+
+                    $zip->addFromString($file_name, $binary_data);
+                }
+
+                $zip->close();
+
+                return response()->download($zipPath)->deleteFileAfterSend(true);
+            }
+        } catch (\Exception $err) {
+            \Log::error($err);
+        }
+        session()->flash('error', 'コメント添付ファイルのダウンロードに失敗しました');
+        return redirect()->back();
     }
 
     public function getOfficial(Request $request, $id)
@@ -180,6 +289,11 @@ class EgovIssuesController extends Controller
     private function call($api, $arrive_id)
     {
         return $api->getMatterFiling($arrive_id);
+    }
+
+    private function call_notice($api, $arrive_id, $notice_sub_id)
+    {
+        return $api->getNotificationInformation($arrive_id, $notice_sub_id);
     }
 
     private function call_official($api, $arrive_id, $notice_sub_id)

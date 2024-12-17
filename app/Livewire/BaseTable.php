@@ -18,6 +18,8 @@ class BaseTable extends Component
     public $useColumnFilter = false;
     public $showColumns = [];
 
+    public $pageMemory = false;
+
     protected function getData($condition)
     {
         if (!$this->paginated) $this->page = 1;
@@ -47,6 +49,25 @@ class BaseTable extends Component
         ];
     }
 
+    // クエリパラメーターのバリデーション
+    public function RestrictingQueryParameters(array $ids)
+    {
+        $queryParameterP = request()->get('p');
+        $totalPages = $this->data['pagination']['totalPages'];
+        if(isset($queryParameterP)) {
+            if(1 > $queryParameterP || $queryParameterP > $totalPages) {
+                abort(404);
+            }
+        }
+
+        $queryParameterId = request()->query('id');
+        if(isset($queryParameterId)) {
+            if (!in_array($queryParameterId, $ids)) {
+                abort(404);
+            }
+        }
+    }
+
     public function isShowColumn($value)
     {
         $key = array_search($value, array_column($this->showColumns, 'value'));
@@ -64,19 +85,31 @@ class BaseTable extends Component
     public function movePage($page)
     {
         $this->paginated = true;
+        if($page === 0) {
+            return;
+        }
         $this->page = $page;
+        if($this->pageMemory) {
+            $this->dispatch('pageMemory', $this->page);
+        }
     }
     #[On('onPrev')]
     public function onPrev()
     {
         $this->paginated = true;
         $this->page = $this->page - 1;
+        if($this->pageMemory) {
+            $this->dispatch('pageMemory', $this->page);
+        }
     }
     #[On('onNext')]
     public function onNext()
     {
         $this->paginated = true;
         $this->page = $this->page + 1;
+        if($this->pageMemory) {
+            $this->dispatch('pageMemory', $this->page);
+        }
     }
     #[On('refresh-filter')]
     public function filterColumn($list)
