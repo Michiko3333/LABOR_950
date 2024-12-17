@@ -18,7 +18,7 @@ use App\EgovAPI\CsvFormatter;
 use App\Permission;
 use App\Models\Employee;
 
-class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController extends Controller
+class OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController extends Controller
 {
     public function __construct(Request $request)
     {
@@ -34,7 +34,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
 
     public function index(Request $request)
     {
-        $imagePath = public_path('img/4950013521024000.png');
+        $imagePath = public_path('img/4950013520989000.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;

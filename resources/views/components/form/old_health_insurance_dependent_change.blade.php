@@ -1,6 +1,3 @@
-<!-- 4950013520996000 -->
-<!-- 健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２２年１０月以降手続き）/健康保険被扶養者（異動）届／国民年金第３号被保険者関係届 -->
-
 <div class="egovui-application-form-input-area">
     <div id="eGovForm">
    <style>
@@ -10874,23 +10871,23 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 250px; top: 136px;">
        <input class="egov-tool-field-rect onImage" id="N11_P1" maxlength="4" name="headquarters_post_code_latter" value="{{ old('headquarters_post_code_latter') }}" required="required" style="width: 68px; height: 23px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 160px;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 162px;">
        <input class="egov-tool-field-rect onImage" id="N12_P1" maxlength="50" name="headquarters_address" value="{{ old('headquarters_address') }}" required="required" style="width: 358px; height: 54px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 216px;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 218px;">
        <input class="egov-tool-field-rect onImage" id="N13_P1" maxlength="25" name="company_name" value="{{ old('company_name') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 250px;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 252px;">
        <input class="egov-tool-field-rect onImage" id="N14_P1" maxlength="25" name="headquarters_representative" value="{{ old('headquarters_representative') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="5" name="headquarters_tel_area_code" value="{{ old('headquarters_tel_area_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 133px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="5" name="headquarters_tel_area_code" value="{{ old('headquarters_tel_area_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 236px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N17_P1" maxlength="4" name="headquarters_tel_city_code" value="{{ old('headquarters_tel_city_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 236px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N17_P1" maxlength="4" name="headquarters_tel_city_code" value="{{ old('headquarters_tel_city_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 353px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N18_P1" maxlength="5" name="headquarters_tel_subscriber_code" value="{{ old('headquarters_tel_subscriber_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 353px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N18_P1" maxlength="5" name="headquarters_tel_subscriber_code" value="{{ old('headquarters_tel_subscriber_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 503px; top: 253px;">
        <input class="egov-tool-field-rect onImage" id="N19_P1" maxlength="40" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" style="width: 239px; height: 45px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
@@ -10910,17 +10907,17 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 691px; top: 312px;">
        <input class="egov-tool-field-rect onImage" id="N24_P1" name="accepted_day" value="{{ old('accepted_day') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 593px; top: 358px;">
+      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 593px; top: 356px;">
        <input id="N25_P1_0" name="application_category" type="radio" value="該当" {{ old('application_category') == '該当' ? 'checked' : '' }}>
        <label class="egovuiForm-label" for="N25_P1_0" style="font-size: 12px;">
        </label>
       </span>
-      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 641px; top: 358px;">
+      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 641px; top: 356px;">
        <input id="N25_P1_1" name="application_category" required="required" type="radio" value="非該当" <?php echo (old('application_category') == '非該当') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N25_P1_1" style="font-size: 12px;">
        </label>
       </span>
-      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 701px; top: 358px;">
+      <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 701px; top: 356px;">
        <input id="N25_P1_2" name="application_category" required="required" type="radio" value="変更" <?php echo (old('application_category') == '変更') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N25_P1_2" style="font-size: 12px;">
        </label>
@@ -11082,7 +11079,7 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 560px; top: 673px;">
        <input class="egov-tool-field-rect onImage" id="N61_P1" maxlength="12" name="spouse_alias_name" value="{{ old('spouse_alias_name') }}" style="width: 186px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 122px; top: 695px;">
+      <div class="egov-tool-field-origin" style="left: 122px; top: 696px;">
        <select class="egov-tool-field-rect" id="N62_P1" name="spouse_living_type" style="width: 62px; height: 40px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
@@ -11130,8 +11127,14 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 671px; top: 715px;">
        <input class="egov-tool-field-rect onImage" id="N70_P1" maxlength="5" name="spouse_tel_subscriber_code" value="{{ old('spouse_tel_subscriber_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 129px; top: 769px;">
-       <select class="egov-tool-field-rect" id="N73_P1" name="spouse_become_date_era" style="width: 64px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 92px; top: 748px;">
+       <input type="checkbox" name="confirmation_notification_0" value="" checked style="display: none;">
+       <input id="N71_P1_0" name="confirmation_notification_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="1" <?php echo (old('confirmation_notification_0') == '1') ? 'checked' : ''; ?>/>
+       <label class="egovuiForm-label" for="N71_P1_0" style="font-size: 12px;">
+       </label>
+      </span>
+      <div class="egov-tool-field-origin" style="left: 143px; top: 787px;">
+       <select class="egov-tool-field-rect" id="N73_P1" name="spouse_become_date_era" style="width: 62px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('spouse_become_date_era') == '7' ? 'selected' : '' }}>
@@ -11142,41 +11145,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 197px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N74_P1" name="spouse_become_date_year" value="{{ old('spouse_become_date_year') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 209px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N74_P1" name="spouse_become_date_year" value="{{ old('spouse_become_date_year') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 222px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N75_P1" name="spouse_become_date_month" value="{{ old('spouse_become_date_month') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 242px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N75_P1" name="spouse_become_date_month" value="{{ old('spouse_become_date_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 248px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N76_P1" name="spouse_become_date_day" value="{{ old('spouse_become_date_day') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 274px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N76_P1" name="spouse_become_date_day" value="{{ old('spouse_become_date_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 347px; top: 737px;">
-        <select class="egov-tool-field-rect" id="N199_P1" name="spouse_reason_type_2" value="{{ old('spouse_reason_type_2') }}" style="width: 203px; height: 45px; font-size: 12px; text-align: left; line-height: 45px; padding: inherit;">
-         <option value="">
-         </option>
-         <option value="配偶者の就職" {{ old('spouse_reason_type_2') == '配偶者の就職' ? 'selected' : '' }}>
-          配偶者の就職
-         </option>
-         <option value="婚姻" {{ old('spouse_reason_type_2') == '婚姻' ? 'selected' : '' }}>
-          婚姻
-         </option>
-         <option value="離職" {{ old('spouse_reason_type_2') == '離職' ? 'selected' : '' }}>
-          離職
-         </option>
-         <option value="収入減少" {{ old('spouse_reason_type_2') == '収入減少' ? 'selected' : '' }}>
-          収入減少
-         </option>
-         <option value="その他" {{ old('spouse_reason_type_2') == 'その他' ? 'selected' : '' }}>
-          その他
-         </option>
-        </select>
-       </div>
-       <div class="egov-tool-field-origin" style="left: 414px; top: 785px;">
-        <input class="egov-tool-field-rect onImage" id="N200_P1" maxlength="9" name="spouse_reason_2" value="{{ old('spouse_reason_2') }}" style="width: 130px; height: 15px; font-size: 11px; text-align: left; line-height: 21px; padding: inherit;" type="text"/>
-       </div>
-      <div class="egov-tool-field-origin" style="left: 129px; top: 835px;">
-       <select class="egov-tool-field-rect" id="N78_P1" name="spouse_remove_date_era" value="{{ old('spouse_remove_date_era') }}" style="width: 64px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 143px; top: 855px;">
+       <select class="egov-tool-field-rect" id="N78_P1" name="spouse_remove_date_era" value="{{ old('spouse_remove_date_era') }}" style="width: 62px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('spouse_remove_date_era') == '7' ? 'selected' : '' }}>
@@ -11187,18 +11166,30 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 197px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N79_P1" name="spouse_remove_date_year" value="{{ old('spouse_remove_date_year') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 209px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N79_P1" name="spouse_remove_date_year" value="{{ old('spouse_remove_date_year') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 222px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N80_P1" name="spouse_remove_date_month" value="{{ old('spouse_remove_date_month') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 242px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N80_P1" name="spouse_remove_date_month" value="{{ old('spouse_remove_date_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 248px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N81_P1" name="spouse_remove_date_day" value="{{ old('spouse_remove_date_day') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 274px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N81_P1" name="spouse_remove_date_day" value="{{ old('spouse_remove_date_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 347px; top: 804px;">
-       <select class="egov-tool-field-rect" id="N82_P1" name="spouse_reason_type" value="{{ old('spouse_reason_type') }}" style="width: 203px; height: 26px; font-size: 12px; text-align: left; line-height: 56px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 342px; top: 775px;">
+       <select class="egov-tool-field-rect" id="N82_P1" name="spouse_reason_type" value="{{ old('spouse_reason_type') }}" style="width: 193px; height: 53px; font-size: 12px; text-align: left; line-height: 56px; padding: inherit;">
         <option value="">
+        </option>
+        <option value="配偶者の就職" {{ old('spouse_reason_type') == '配偶者の就職' ? 'selected' : '' }}>
+         配偶者の就職
+        </option>
+        <option value="婚姻" {{ old('spouse_reason_type') == '婚姻' ? 'selected' : '' }}>
+         婚姻
+        </option>
+        <option value="離職" {{ old('spouse_reason_type') == '離職' ? 'selected' : '' }}>
+         離職
+        </option>
+        <option value="収入減少" {{ old('spouse_reason_type') == '収入減少' ? 'selected' : '' }}>
+         収入減少
         </option>
         <option value="死亡" {{ old('spouse_reason_type') == '死亡' ? 'selected' : '' }}>
          死亡
@@ -11220,20 +11211,20 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 437px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N84_P1" name="spouse_passed_away_date_year" value="{{ old('spouse_passed_away_date_year') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 401px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N84_P1" name="spouse_passed_away_date_year" value="{{ old('spouse_passed_away_date_year') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 473px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N85_P1" name="spouse_passed_away_date_month" value="{{ old('spouse_passed_away_date_month') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 439px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N85_P1" name="spouse_passed_away_date_month" value="{{ old('spouse_passed_away_date_month') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 510px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N86_P1" name="spouse_passed_away_date_day" value="{{ old('spouse_passed_away_date_day') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 477px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N86_P1" name="spouse_passed_away_date_day" value="{{ old('spouse_passed_away_date_day') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 414px; top: 850.5px;">
-       <input class="egov-tool-field-rect onImage" id="N87_P1" maxlength="9" name="spouse_reason" value="{{ old('spouse_reason') }}" style="width: 130px; height: 15px; font-size: 11px; text-align: left; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 377px; top: 877px;">
+       <input class="egov-tool-field-rect onImage" id="N87_P1" maxlength="9" name="spouse_reason" value="{{ old('spouse_reason') }}" style="width: 130px; height: 21px; font-size: 12px; text-align: left; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 590px; top: 737px;">
-       <select class="egov-tool-field-rect" id="N88_P1" name="spouse_occupation_type" value="{{ old('spouse_occupation_type') }}" style="width: 155px; height: 36px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 574px; top: 775px;">
+       <select class="egov-tool-field-rect" id="N88_P1" name="spouse_occupation_type" value="{{ old('spouse_occupation_type') }}" style="width: 171px; height: 38px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
         <option value="">
         </option>
         <option value="無職" {{ old('spouse_occupation_type') == '無職' ? 'selected' : '' }}>
@@ -11250,13 +11241,13 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 599px; top: 790px;">
-       <input class="egov-tool-field-rect onImage" id="N89_P1" maxlength="11" name="spouse_occupation" value="{{ old('spouse_occupation') }}" style="width: 141px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 595px; top: 827px;">
+       <input class="egov-tool-field-rect onImage" id="N89_P1" maxlength="11" name="spouse_occupation" value="{{ old('spouse_occupation') }}" style="width: 142px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 590px; top: 825px;">
-       <input class="egov-tool-field-rect onImage" id="N90_P1" maxlength="7" name="dependent_annual_income" value="{{ old('dependent_annual_income') }}" style="width: 135px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 575px; top: 870px;">
+       <input class="egov-tool-field-rect onImage" id="N90_P1" maxlength="7" name="dependent_annual_income" value="{{ old('dependent_annual_income') }}" style="width: 150px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 129px; top: 905px;">
+      <div class="egov-tool-field-origin" style="left: 129px; top: 950px;">
        <select class="egov-tool-field-rect" id="N91_P1" name="spouse_special_requirements_applicable_flg"style="width: 79px; height: 35px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
         <option value="">
         </option>
@@ -11268,24 +11259,24 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 320px; top: 881px;">
-       <select class="egov-tool-field-rect" id="N93_P1" name="spouse_special_requirements_applicable_date_era" style="width: 63px; height: 34px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 320px; top: 918px;">
+       <select class="egov-tool-field-rect" id="N93_P1" name="spouse_special_requirements_applicable_date_era" style="width: 63px; height: 35px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
         <option selected="" value="9" {{ old('spouse_special_requirements_applicable_date_era') == '9' ? 'selected' : '' }}>
          令和
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 386px; top: 881px;">
+      <div class="egov-tool-field-origin" style="left: 386px; top: 918px;">
        <input class="egov-tool-field-rect onImage" id="N94_P1" name="spouse_special_requirements_applicable_date_year" value="{{ old('spouse_special_requirements_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 420px; top: 881px;">
+      <div class="egov-tool-field-origin" style="left: 420px; top: 918px;">
        <input class="egov-tool-field-rect onImage" id="N95_P1" name="spouse_special_requirements_applicable_date_month" value="{{ old('spouse_special_requirements_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 452px; top: 881px;">
+      <div class="egov-tool-field-origin" style="left: 453px; top: 918px;">
        <input class="egov-tool-field-rect onImage" id="N96_P1" name="spouse_special_requirements_applicable_date_day" value="{{ old('spouse_special_requirements_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 520px; top: 869px;">
-       <select class="egov-tool-field-rect" id="N97_P1" name="spouse_special_requirements_applicable_reason_type" style="width: 226px; height: 30px; font-size: 12px; text-align: left; line-height: 32px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 520px; top: 905px;">
+       <select class="egov-tool-field-rect" id="N97_P1" name="spouse_special_requirements_applicable_reason_type" style="width: 226px; height: 32px; font-size: 12px; text-align: left; line-height: 32px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('spouse_special_requirements_applicable_reason_type') == '1' ? 'selected' : '' }}>
@@ -11305,27 +11296,27 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 605px; top: 900px;">
-       <input class="egov-tool-field-rect onImage" id="N98_P1" maxlength="11" name="spouse_special_requirements_applicable_reason" value="{{ old('spouse_special_requirements_applicable_reason') }}" style="width: 131px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 604px; top: 938px;">
+       <input class="egov-tool-field-rect onImage" id="N98_P1" maxlength="11" name="spouse_special_requirements_applicable_reason" value="{{ old('spouse_special_requirements_applicable_reason') }}" style="width: 133px; height: 14px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 321px; top: 931px;">
+      <div class="egov-tool-field-origin" style="left: 320px; top: 968px;">
        <select class="egov-tool-field-rect" id="N100_P1" name="spouse_special_requirements_non_applicable_date_era" style="width: 62px; height: 35px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
         <option selected="" value="9" {{ old('spouse_special_requirements_non_applicable_date_era') == '9' ? 'selected' : '' }}>
          令和
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 386px; top: 931px;">
+      <div class="egov-tool-field-origin" style="left: 386px; top: 968px;">
        <input class="egov-tool-field-rect onImage" id="N101_P1" name="spouse_special_requirements_non_applicable_date_year" value="{{ old('spouse_special_requirements_non_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 420px; top: 931px;">
+      <div class="egov-tool-field-origin" style="left: 420px; top: 968px;">
        <input class="egov-tool-field-rect onImage" id="N102_P1" name="spouse_special_requirements_non_applicable_date_month" value="{{ old('spouse_special_requirements_non_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 452px; top: 931px;">
+      <div class="egov-tool-field-origin" style="left: 453px; top: 968px;">
        <input class="egov-tool-field-rect onImage" id="N103_P1" name="spouse_special_requirements_non_applicable_date_day" value="{{ old('spouse_special_requirements_non_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 520px; top: 920px;">
-       <select class="egov-tool-field-rect" id="N104_P1" name="spouse_special_requirements_non_applicable_reason_type" style="width: 226px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 520px; top: 956px;">
+       <select class="egov-tool-field-rect" id="N104_P1" name="spouse_special_requirements_non_applicable_reason_type" style="width: 226px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('spouse_special_requirements_non_applicable_reason_type') == '1' ? 'selected' : '' }}>
@@ -11336,39 +11327,30 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 623px; top: 937px;">
+      <div class="egov-tool-field-origin" style="left: 625px; top: 975px;">
        <input class="egov-tool-field-rect onImage" id="N106_P1" name="spouse_domestic_transfer_date_year" value="{{ old('spouse_domestic_transfer_date_year') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 660px; top: 937px;">
+      <div class="egov-tool-field-origin" style="left: 660px; top: 975px;">
        <input class="egov-tool-field-rect onImage" id="N107_P1" name="spouse_domestic_transfer_date_month" value="{{ old('spouse_domestic_transfer_date_month') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 699px; top: 937px;">
+      <div class="egov-tool-field-origin" style="left: 700px; top: 975px;">
        <input class="egov-tool-field-rect onImage" id="N108_P1" name="spouse_domestic_transfer_date_day" value="{{ old('spouse_domestic_transfer_date_day') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 598px; top: 951px;">
-       <input class="egov-tool-field-rect onImage" id="N109_P1" maxlength="11" name="spouse_special_requirements_non_applicable_reason" value="{{ old('spouse_special_requirements_non_applicable_reason') }}" style="width: 132px; height: 15px; font-size: 12px; text-align: left; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 598px; top: 988px;">
+       <input class="egov-tool-field-rect onImage" id="N109_P1" maxlength="11" name="spouse_special_requirements_non_applicable_reason" value="{{ old('spouse_special_requirements_non_applicable_reason') }}" style="width: 132px; height: 14px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 162px; top: 971px;">
+      <div class="egov-tool-field-origin" style="left: 162px; top: 1007px;">
        <input class="egov-tool-field-rect onImage" id="N110_P1" maxlength="39" name="spouse_remarks" value="{{ old('spouse_remarks') }}" style="width: 308px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;left: 548px; top: 984px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;left: 548px; top: 1021px;">
        <input type="checkbox" name="spouse_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N111_P1_0" name="spouse_confirmation_relationship_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:13px; height:13px; margin:auto;" value="確認済" <?php echo (old('spouse_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N111_P1_0" style="font-size: 12px;">
        </label>
       </span>
-      <div class="egov-tool-field-origin" style="left: 354px; top: 1002px;">
-       <input class="egov-tool-field-rect onImage" id="N113_P1" maxlength="7" name="spouse_annual_income" value="{{ old('spouse_annual_income') }}" style="width: 152px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 368px; top: 1043px;">
+       <input class="egov-tool-field-rect onImage" id="N113_P1" maxlength="7" name="spouse_annual_income" value="{{ old('spouse_annual_income') }}" style="width: 181px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 622px; top: 1002px;">
-        <select class="egov-tool-field-rect" id="N204_P1" name="eligibility_confirmation_letter_1" style="width: 123px; height: 26px; font-size: 11px; text-align: left; line-height: 41px; padding: inherit;">
-            <option value="">
-            </option>
-            <option value="1" {{ old('eligibility_confirmation_letter_1') == '1' ? 'selected' : '' }}>
-                １：発行が必要
-            </option>
-        </select>
-    </div>
       <div class="egov-tool-field-origin" style="left: 165px; top: 1166px;">
        <input class="egov-tool-field-rect onImage" id="N117_P2" maxlength="25" name="other_dependent1_name_kana" value="{{ old('other_dependent1_name_kana') }}" style="width: 189px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
@@ -11471,8 +11453,8 @@ div.popup {
       <div class="egov-tool-field-origin" style="left: 172px; top: 1318px;">
        <input class="egov-tool-field-rect onImage" id="N130_P2" maxlength="37" name="other_dependent1_address" value="{{ old('other_dependent1_address') }}" style="width: 574px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 144px; top: 1357px;">
-       <select class="egov-tool-field-rect" id="N132_P2" name="other_dependent1_become_date_era" style="width: 63px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 161px; top: 1371px;">
+       <select class="egov-tool-field-rect" id="N132_P2" name="other_dependent1_become_date_era" style="width: 62px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('other_dependent1_become_date_era') == '7' ? 'selected' : '' }}>
@@ -11483,17 +11465,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N133_P2" name="other_dependent1_become_date_year" value="{{ old('other_dependent1_become_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N133_P2" name="other_dependent1_become_date_year" value="{{ old('other_dependent1_become_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N134_P2" name="other_dependent1_become_date_month" value="{{ old('other_dependent1_become_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N134_P2" name="other_dependent1_become_date_month" value="{{ old('other_dependent1_become_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-    <div class="egov-tool-field-origin" style="left: 263px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N135_P2" name="other_dependent1_become_date_day" value="{{ old('other_dependent1_become_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N135_P2" name="other_dependent1_become_date_day" value="{{ old('other_dependent1_become_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 560px; top: 1344px;">
-       <select class="egov-tool-field-rect" id="N136_P2" name="other_dependent1_occupation_type" style="width: 185px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1344px;">
+       <select class="egov-tool-field-rect" id="N136_P2" name="other_dependent1_occupation_type" style="width: 142px; height: 34px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
         <option value="">
         </option>
         <option value="無職" {{ old('other_dependent1_occupation_type') == '無職' ? 'selected' : '' }}>
@@ -11517,17 +11499,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 667px; top: 1363px;">
-       <input class="egov-tool-field-rect onImage" id="N137_P2" maxlength="1" name="other_dependent1_occupation_type_grade" value="{{ old('other_dependent1_occupation_type_grade') }}" style="width: 39px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 657px; top: 1344px;">
+       <input class="egov-tool-field-rect onImage" id="N137_P2" maxlength="1" name="other_dependent1_occupation_type_grade" value="{{ old('other_dependent1_occupation_type_grade') }}" style="width: 40px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 612px; top: 1392px;">
-       <input class="egov-tool-field-rect onImage" id="N138_P2" maxlength="10" name="other_dependent1_occupation" value="{{ old('other_dependent1_occupation') }}" style="width: 128px; height: 14px; font-size: 12px; text-align: left; line-height: 14px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 600px; top: 1362px;">
+       <input class="egov-tool-field-rect onImage" id="N138_P2" maxlength="10" name="other_dependent1_occupation" value="{{ old('other_dependent1_occupation') }}" style="width: 133px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 561px; top: 1418px;">
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1382px;">
        <input class="egov-tool-field-rect onImage" id="N139_P2" maxlength="7" name="other_dependent1_annual_income" value="{{ old('other_dependent1_annual_income') }}" style="width: 168px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 144px; top: 1414px;">
-       <select class="egov-tool-field-rect" id="N141_P2" name="other_dependent1_remove_date_era" style="width: 63px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 161px; top: 1441px;">
+       <select class="egov-tool-field-rect" id="N141_P2" name="other_dependent1_remove_date_era" style="width: 62px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('other_dependent1_remove_date_era') == '7' ? 'selected' : '' }}>
@@ -11538,44 +11520,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N142_P2" name="other_dependent1_remove_date_year" value="{{ old('other_dependent1_remove_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N142_P2" name="other_dependent1_remove_date_year" value="{{ old('other_dependent1_remove_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N143_P2" name="other_dependent1_remove_date_month" value="{{ old('other_dependent1_remove_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N143_P2" name="other_dependent1_remove_date_month" value="{{ old('other_dependent1_remove_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N144_P2" name="other_dependent1_remove_date_day" value="{{ old('other_dependent1_remove_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N144_P2" name="other_dependent1_remove_date_day" value="{{ old('other_dependent1_remove_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 365px; top: 1402px;">
-        <select class="egov-tool-field-rect" id="N201_P2" name="other_dependent1_reason_type_2" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
-            <option value="">
-            </option>
-            <option value="死亡" {{ old('other_dependent1_reason_type_2') == '死亡' ? 'selected' : '' }}>
-                死亡
-            </option>
-            <option value="就職" {{ old('other_dependent1_reason_type_2') == '就職' ? 'selected' : '' }}>
-                就職
-            </option>
-            <option value="収入増加" {{ old('other_dependent1_reason_type_2') == '収入増加' ? 'selected' : '' }}>
-                収入増加
-            </option>
-            <option value="75歳到達" {{ old('other_dependent1_reason_type_2') == '75歳到達' ? 'selected' : '' }}>
-                75歳到達
-            </option>
-            <option value="障害認定" {{ old('other_dependent1_reason_type_2') == '障害認定' ? 'selected' : '' }}>
-                障害認定
-            </option>
-            <option value="その他" {{ old('other_dependent1_reason_type_2') == 'その他' ? 'selected' : '' }}>
-                その他
-            </option>
-        </select>
-       </div>
-       <div class="egov-tool-field-origin" style="left: 372px; top: 1437px;">
-        <input class="egov-tool-field-rect onImage" id="N202_P2" maxlength="9" name="other_dependent1_reason_2" value="{{ old('other_dependent1_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
-       </div>
-      <div class="egov-tool-field-origin" style="left: 365px; top: 1344px;">
-       <select class="egov-tool-field-rect" id="N145_P2" name="other_dependent1_reason_type" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1420px;">
+       <select class="egov-tool-field-rect" id="N145_P2" name="other_dependent1_reason_type" style="width: 181px; height: 40px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
         <option value="">
         </option>
         <option value="出生" {{ old('other_dependent1_reason_type') == '出生' ? 'selected' : '' }}>
@@ -11590,34 +11545,40 @@ div.popup {
         <option value="同居" {{ old('other_dependent1_reason_type') == '同居' ? 'selected' : '' }}>
          同居
         </option>
+        <option value="死亡" {{ old('other_dependent1_reason_type') == '死亡' ? 'selected' : '' }}>
+         死亡
+        </option>
+        <option value="就職" {{ old('other_dependent1_reason_type') == '就職' ? 'selected' : '' }}>
+         就職
+        </option>
+        <option value="収入増加" {{ old('other_dependent1_reason_type') == '収入増加' ? 'selected' : '' }}>
+         収入増加
+        </option>
+        <option value="75歳到達" {{ old('other_dependent1_reason_type') == '75歳到達' ? 'selected' : '' }}>
+         75歳到達
+        </option>
+        <option value="障害認定" {{ old('other_dependent1_reason_type') == '障害認定' ? 'selected' : '' }}>
+         障害認定
+        </option>
         <option value="その他" {{ old('other_dependent1_reason_type') == 'その他' ? 'selected' : '' }}>
          その他
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 372px; top: 1380px;">
-       <input class="egov-tool-field-rect onImage" id="N146_P2" maxlength="9" name="other_dependent1_reason" value="{{ old('other_dependent1_reason') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 421px; top: 1478px;">
+       <input class="egov-tool-field-rect onImage" id="N146_P2" maxlength="9" name="other_dependent1_reason" value="{{ old('other_dependent1_reason') }}" style="width: 128px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 110px; top: 1460px;">
-       <input class="egov-tool-field-rect onImage" id="N147_P2" maxlength="39" name="other_dependent1_remarks" value="{{ old('other_dependent1_remarks') }}" style="width: 284px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 619px; top: 1380px;">
+       <input class="egov-tool-field-rect onImage" id="N147_P2" maxlength="39" name="other_dependent1_remarks" value="{{ old('other_dependent1_remarks') }}" style="width: 126px; height: 101px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 483px; top: 1481px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1480px;">
        <input type="checkbox" name="other_dependent1_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N148_P2_0" name="other_dependent1_confirmation_relationship_0" type="checkbox"  style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="確認済" <?php echo (old('other_dependent1_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N148_P2_0" style="font-size: 12px;">
        </label>
-    </span>
-    <div class="egov-tool-field-origin" style="left: 622px; top: 1460px;">
-        <select class="egov-tool-field-rect" id="N205_P1" name="eligibility_confirmation_letter_2" style="width: 123px; height: 40px; font-size: 11px; text-align: left; line-height: 41px; padding: inherit;">
-            <option value="">
-            </option>
-            <option value="1" {{ old('eligibility_confirmation_letter_2') == '1' ? 'selected' : '' }}>
-                １：発行が必要
-            </option>
-        </select>
-    </div>
-      <div class="egov-tool-field-origin" style="left: 249px; top: 1503px;">
-       <select class="egov-tool-field-rect" id="N149_P2" name="other_dependent1_special_requirements_applicable_flg" style="width: 82px; height: 99px; font-size: 12px; text-align: left; line-height: 99px; padding: inherit;">
+</span>
+      <div class="egov-tool-field-origin" style="left: 250px; top: 1500px;">
+       <select class="egov-tool-field-rect" id="N149_P2" name="other_dependent1_special_requirements_applicable_flg" style="width: 83px; height: 112px; font-size: 12px; text-align: left; line-height: 117px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent1_special_requirements_applicable_flg') == '1' ? 'selected' : '' }}>
@@ -11628,8 +11589,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 401px; top: 1503px;">
-       <select class="egov-tool-field-rect" id="N150_P2" name="other_dependent1_special_requirements_applicable_reason_type" style="width: 117px; height: 48px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 400px; top: 1500px;">
+       <select class="egov-tool-field-rect" id="N150_P2" name="other_dependent1_special_requirements_applicable_reason_type" style="width: 117px; height: 55px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent1_special_requirements_applicable_reason_type') == '1' ? 'selected' : '' }}>
@@ -11649,11 +11610,11 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 527px; top: 1532px;">
+      <div class="egov-tool-field-origin" style="left: 528px; top: 1537px;">
        <input class="egov-tool-field-rect onImage" id="N151_P2" maxlength="11" name="other_dependent1_special_requirements_applicable_reason" value="{{ old('other_dependent1_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 400px; top: 1554px;">
-       <select class="egov-tool-field-rect" id="N152_P2" name="other_dependent1_special_requirements_non_applicable_reason_type" style="width: 117px; height: 48px; font-size: 12px; text-align: left; line-height: 48px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 400px; top: 1558px;">
+       <select class="egov-tool-field-rect" id="N152_P2" name="other_dependent1_special_requirements_non_applicable_reason_type" style="width: 117px; height: 55px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent1_special_requirements_non_applicable_reason_type') == '1' ? 'selected' : '' }}>
@@ -11664,25 +11625,25 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 1554px;">
+      <div class="egov-tool-field-origin" style="left: 614px; top: 1558px;">
        <input class="egov-tool-field-rect onImage" id="N154_P2" name="other_dependent1_domestic_transfer_date_year" value="{{ old('other_dependent1_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 652px; top: 1554px;">
+      <div class="egov-tool-field-origin" style="left: 652px; top: 1558px;">
        <input class="egov-tool-field-rect onImage" id="N155_P2" name="other_dependent1_domestic_transfer_date_month" value="{{ old('other_dependent1_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 692px; top: 1554px;">
+      <div class="egov-tool-field-origin" style="left: 692px; top: 1558px;">
        <input class="egov-tool-field-rect onImage" id="N156_P2" name="other_dependent1_domestic_transfer_date_day" value="{{ old('other_dependent1_domestic_transfer_date_day') }}"  style="width: 24px; height: 22px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 581px; top: 1583px;">
+      <div class="egov-tool-field-origin" style="left: 580px; top: 1592px;">
        <input class="egov-tool-field-rect onImage" id="N157_P2" maxlength="11" name="other_dependent1_special_requirements_non_applicable_reason" value="{{ old('other_dependent1_special_requirements_non_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 164px; top: 1634px;">
+      <div class="egov-tool-field-origin" style="left: 165px; top: 1645px;">
        <input class="egov-tool-field-rect onImage" id="N158_P2" maxlength="25" name="other_dependent2_name_kana" value="{{ old('other_dependent2_name_kana') }}" style="width: 190px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 122px; top: 1680px;">
+      <div class="egov-tool-field-origin" style="left: 121px; top: 1693px;">
        <input class="egov-tool-field-rect onImage" id="N159_P2" maxlength="12" name="other_dependent2_name" value="{{ old('other_dependent2_name') }}" style="width: 231px; height: 47px; font-size: 12px; text-align: left; line-height: 50px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 408px; top: 1646px;">
+      <div class="egov-tool-field-origin" style="left: 408px; top: 1657px;">
        <select class="egov-tool-field-rect" id="N161_P2" name="other_dependent2_birthday_era" style="width: 59px; height: 21px; font-size: 12px; text-align: left; line-height: 21px; padding: inherit;">
         <option value="">
         </option>
@@ -11697,17 +11658,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 470px; top: 1646px;">
+      <div class="egov-tool-field-origin" style="left: 470px; top: 1657px;">
        <input class="egov-tool-field-rect onImage" id="N162_P2" name="other_dependent2_birthday_year" value="{{ old('other_dependent2_birthday_year') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 503px; top: 1646px;">
+      <div class="egov-tool-field-origin" style="left: 503px; top: 1657px;">
        <input class="egov-tool-field-rect onImage" id="N163_P2" name="other_dependent2_birthday_month" value="{{ old('other_dependent2_birthday_month') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 535px; top: 1646px;">
+      <div class="egov-tool-field-origin" style="left: 535px; top: 1657px;">
        <input class="egov-tool-field-rect onImage" id="N164_P2" name="other_dependent2_birthday_day" value="{{ old('other_dependent2_birthday_day') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 611px; top: 1634px;">
-       <select class="egov-tool-field-rect" id="N165_P2" name="other_dependent2_sex" style="width: 135px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 611px; top: 1645px;">
+       <select class="egov-tool-field-rect" id="N165_P2" name="other_dependent2_sex" style="width: 135px; height: 30px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent2_sex') == '1' ? 'selected' : '' }}>
@@ -11718,7 +11679,7 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 400px; top: 1670px;">
+      <div class="egov-tool-field-origin" style="left: 400px; top: 1682px;">
        <select class="egov-tool-field-rect" id="N166_P2" name="other_dependent2_relationship" style="width: 346px; height: 58px; font-size: 12px; text-align: left; line-height: 61px; padding: inherit;">
         <option value="">
         </option>
@@ -11754,11 +11715,11 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 187px; top: 1732px;">
+      <div class="egov-tool-field-origin" style="left: 187px; top: 1743px;">
        <input class="egov-tool-field-rect onImage" id="N167_P2" maxlength="12" name="other_dependent2_mynumber_card_no" value="{{ old('other_dependent2_mynumber_card_no') }}" style="width: 559px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 110px; top: 1769px;">
-       <select class="egov-tool-field-rect" id="N168_P2" name="other_dependent2_living_type" style="width: 59px; height: 38px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 110px; top: 1780px;">
+       <select class="egov-tool-field-rect" id="N168_P2" name="other_dependent2_living_type" style="width: 59px; height: 35px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
         <option value="同居" {{ old('other_dependent2_living_type') == '同居' ? 'selected' : '' }}>
@@ -11769,17 +11730,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 195px; top: 1769px;">
-       <input class="egov-tool-field-rect onImage" id="N169_P2" maxlength="3" name="other_dependent2_post_code_former" value="{{ old('other_dependent2_post_code_former') }}" style="width: 62px; height: 15px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 195px; top: 1780px;">
+       <input class="egov-tool-field-rect onImage" id="N169_P2" maxlength="3" name="other_dependent2_post_code_former" value="{{ old('other_dependent2_post_code_former') }}" style="width: 62px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 285px; top: 1769px;">
-       <input class="egov-tool-field-rect onImage" id="N170_P2" maxlength="4" name="other_dependent2_post_code_latter" value="{{ old('other_dependent2_post_code_latter') }}" style="width: 78px; height: 15px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 285px; top: 1780px;">
+       <input class="egov-tool-field-rect onImage" id="N170_P2" maxlength="4" name="other_dependent2_post_code_latter" value="{{ old('other_dependent2_post_code_latter') }}" style="width: 78px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 172px; top: 1784px;">
+      <div class="egov-tool-field-origin" style="left: 172px; top: 1795px;">
        <input class="egov-tool-field-rect onImage" id="N171_P2" maxlength="37" name="other_dependent2_address" value="{{ old('other_dependent2_address') }}" style="width: 573px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <div class="egov-tool-field-origin" style="left: 143px; top: 1824px;">
-       <select class="egov-tool-field-rect" id="N173_P2" name="other_dependent2_become_date_era" style="width: 65px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 161px; top: 1840px;">
+       <select class="egov-tool-field-rect" id="N173_P2" name="other_dependent2_become_date_era" style="width: 61px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('other_dependent2_become_date_era') == '7' ? 'selected' : '' }}>
@@ -11790,17 +11751,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N174_P2" name="other_dependent2_become_date_year" value="{{ old('other_dependent2_become_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N174_P2" name="other_dependent2_become_date_year" value="{{ old('other_dependent2_become_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N175_P2" name="other_dependent2_become_date_month" value="{{ old('other_dependent2_become_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N175_P2" name="other_dependent2_become_date_month" value="{{ old('other_dependent2_become_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N176_P2" name="other_dependent2_become_date_day" value="{{ old('other_dependent2_become_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N176_P2" name="other_dependent2_become_date_day" value="{{ old('other_dependent2_become_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 560px; top: 1811px;">
-       <select class="egov-tool-field-rect" id="N177_P2" name="other_dependent2_occupation_type" style="width: 185px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1824px;">
+       <select class="egov-tool-field-rect" id="N177_P2" name="other_dependent2_occupation_type" style="width: 145px; height: 32px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
         <option value="">
         </option>
         <option value="無職" {{ old('other_dependent2_occupation_type') == '無職' ? 'selected' : '' }}>
@@ -11824,17 +11785,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 668px; top: 1831px;">
+      <div class="egov-tool-field-origin" style="left: 657px; top: 1823px;">
        <input class="egov-tool-field-rect onImage" id="N178_P2" maxlength="1" name="other_dependent2_occupation_type_grade" value="{{ old('other_dependent2_occupation_type_grade') }}" style="width: 40px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 1860px;">
-       <input class="egov-tool-field-rect onImage" id="N179_P2" maxlength="10" name="other_dependent2_occupation" value="{{ old('other_dependent2_occupation') }}" style="width: 128px; height: 14px; font-size: 12px; text-align: left; line-height: 14px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 600px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N179_P2" maxlength="10" name="other_dependent2_occupation" value="{{ old('other_dependent2_occupation') }}" style="width: 133px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 560px; top: 1886px;">
-       <input class="egov-tool-field-rect onImage" id="N180_P2" maxlength="7" name="other_dependent2_annual_income" value="{{ old('other_dependent2_annual_income') }}" style="width: 168px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1860px;">
+       <input class="egov-tool-field-rect onImage" id="N180_P2" maxlength="7" name="other_dependent2_annual_income" value="{{ old('other_dependent2_annual_income') }}" style="width: 161px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 143px; top: 1882px;">
-       <select class="egov-tool-field-rect" id="N182_P2" name="other_dependent2_remove_date_era" style="width: 65px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 161px; top: 1910px;">
+       <select class="egov-tool-field-rect" id="N182_P2" name="other_dependent2_remove_date_era" style="width: 62px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
         <option value="">
         </option>
         <option value="7" {{ old('other_dependent2_remove_date_era') == '7' ? 'selected' : '' }}>
@@ -11845,44 +11806,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N183_P2" name="other_dependent2_remove_date_year" value="{{ old('other_dependent2_remove_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N183_P2" name="other_dependent2_remove_date_year" value="{{ old('other_dependent2_remove_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N184_P2" name="other_dependent2_remove_date_month" value="{{ old('other_dependent2_remove_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N184_P2" name="other_dependent2_remove_date_month" value="{{ old('other_dependent2_remove_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N185_P2" name="other_dependent2_remove_date_day" value="{{ old('other_dependent2_remove_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N185_P2" name="other_dependent2_remove_date_day" value="{{ old('other_dependent2_remove_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 365px; top: 1870px;">
-        <select class="egov-tool-field-rect" id="N186_P2" name="other_dependent2_reason_type_2" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 23px; padding: inherit;">
-            <option value="">
-            </option>
-            <option value="死亡" {{ old('other_dependent2_reasonother_dependent2_reason_type_2_type') == '死亡' ? 'selected' : '' }}>
-                死亡
-            </option>
-            <option value="就職" {{ old('other_dependent2_reason_type') == '就職' ? 'selected' : '' }}>
-                就職
-            </option>
-            <option value="収入増加" {{ old('other_dependent2_reason_type') == '収入増加' ? 'selected' : '' }}>
-                収入増加
-            </option>
-            <option value="75歳到達" {{ old('other_dependent2_reason_type') == '75歳到達' ? 'selected' : '' }}>
-                75歳到達
-            </option>
-            <option value="障害認定" {{ old('other_dependent2_reason_type') == '障害認定' ? 'selected' : '' }}>
-                障害認定
-            </option>
-            <option value="その他" {{ old('other_dependent2_reason_type') == 'その他' ? 'selected' : '' }}>
-                その他
-            </option>
-        </select>
-       </div>
-       <div class="egov-tool-field-origin" style="left: 372px; top: 1906px;">
-        <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason_2" value="{{ old('other_dependent2_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
-       </div>
-      <div class="egov-tool-field-origin" style="left: 365px; top: 1811px;">
-       <select class="egov-tool-field-rect" id="N186_P2" name="other_dependent2_reason_type" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 23px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1898px;">
+       <select class="egov-tool-field-rect" id="N186_P2" name="other_dependent2_reason_type" style="width: 182px; height: 40px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
         <option value="">
         </option>
         <option value="出生" {{ old('other_dependent2_reason_type') == '出生' ? 'selected' : '' }}>
@@ -11897,34 +11831,40 @@ div.popup {
         <option value="同居" {{ old('other_dependent2_reason_type') == '同居' ? 'selected' : '' }}>
          同居
         </option>
+        <option value="死亡" {{ old('other_dependent2_reason_type') == '死亡' ? 'selected' : '' }}>
+         死亡
+        </option>
+        <option value="就職" {{ old('other_dependent2_reason_type') == '就職' ? 'selected' : '' }}>
+         就職
+        </option>
+        <option value="収入増加" {{ old('other_dependent2_reason_type') == '収入増加' ? 'selected' : '' }}>
+         収入増加
+        </option>
+        <option value="75歳到達" {{ old('other_dependent2_reason_type') == '75歳到達' ? 'selected' : '' }}>
+         75歳到達
+        </option>
+        <option value="障害認定" {{ old('other_dependent2_reason_type') == '障害認定' ? 'selected' : '' }}>
+         障害認定
+        </option>
         <option value="その他" {{ old('other_dependent2_reason_type') == 'その他' ? 'selected' : '' }}>
          その他
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 372px; top: 1848px;">
-       <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason" value="{{ old('other_dependent2_reason') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 421px; top: 1953px;">
+       <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason" value="{{ old('other_dependent2_reason') }}" style="width: 127px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 110px; top: 1927px;">
-       <input class="egov-tool-field-rect onImage" id="N188_P2" maxlength="39" name="other_dependent2_remarks" value="{{ old('other_dependent2_remarks') }}" style="width: 284px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 619px; top: 1860px;">
+       <input class="egov-tool-field-rect onImage" id="N188_P2" maxlength="39" name="other_dependent2_remarks" value="{{ old('other_dependent2_remarks') }}" style="width: 127px; height: 98px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
       </div>
-      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 483px; top: 1949px;">
+      <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 725px; top: 1958px;">
        <input type="checkbox" name="other_dependent2_confirmation_relationship_0" value="" checked style="display: none;">
        <input id="N189_P2_0" name="other_dependent2_confirmation_relationship_0" type="checkbox" style="position:absolute; top:1px; left:1px; box-sizing:border-box; -moz-box-sizing:border-box; width:14px; height:14px; margin:auto;" value="確認済" <?php echo (old('other_dependent2_confirmation_relationship_0') == '確認済') ? 'checked' : ''; ?>/>
        <label class="egovuiForm-label" for="N189_P2_0" style="font-size: 12px;">
        </label>
       </span>
-      <div class="egov-tool-field-origin" style="left: 622px; top: 1928px;">
-        <select class="egov-tool-field-rect" id="N206_P1" name="eligibility_confirmation_letter_3" style="width: 123px; height: 40px; font-size: 11px; text-align: left; line-height: 41px; padding: inherit;">
-            <option value="">
-            </option>
-            <option value="1" {{ old('eligibility_confirmation_letter_3') == '1' ? 'selected' : '' }}>
-                １：発行が必要
-            </option>
-        </select>
-    </div>
-      <div class="egov-tool-field-origin" style="left: 249px; top: 1971px;">
-       <select class="egov-tool-field-rect" id="N190_P2" name="other_dependent2_special_requirements_applicable_flg" style="width: 83px; height: 112px; font-size: 12px; text-align: left; line-height: 117px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 250px; top: 1979px;">
+       <select class="egov-tool-field-rect" id="N190_P2" name="other_dependent2_special_requirements_applicable_flg" style="width: 82px; height: 112px; font-size: 12px; text-align: left; line-height: 117px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent2_special_requirements_applicable_flg') == '1' ? 'selected' : '' }}>
@@ -11935,8 +11875,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 400px; top: 1970px;">
-       <select class="egov-tool-field-rect" id="N191_P2" name="other_dependent2_special_requirements_applicable_reason_type" style="width: 117px; height: 55px; font-size: 12px; text-align: left; line-height: 55px; padding: inherit;">
+      <div class="egov-tool-field-origin" style="left: 400px; top: 1979px;">
+       <select class="egov-tool-field-rect" id="N191_P2" name="other_dependent2_special_requirements_applicable_reason_type" style="width: 117px; height: 54px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
         <option value="">
         </option>
         <option value="1" {{ old('other_dependent2_special_requirements_applicable_reason_type') == '1' ? 'selected' : '' }}>
@@ -11956,10 +11896,10 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 527px; top: 2007px;">
+      <div class="egov-tool-field-origin" style="left: 528px; top: 2015px;">
        <input class="egov-tool-field-rect onImage" id="N192_P2" maxlength="11" name="other_dependent2_special_requirements_applicable_reason" value="{{ old('other_dependent2_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 400px; top: 2029px;">
+      <div class="egov-tool-field-origin" style="left: 400px; top: 2037px;">
        <select class="egov-tool-field-rect" id="N193_P2" name="other_dependent2_special_requirements_non_applicable_reason_type" style="width: 117px; height: 54px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
         <option value="">
         </option>
@@ -11971,16 +11911,16 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 2029px;">
+      <div class="egov-tool-field-origin" style="left: 614px; top: 2037px;">
        <input class="egov-tool-field-rect onImage" id="N195_P2" name="other_dependent2_domestic_transfer_date_year" value="{{ old('other_dependent2_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 652px; top: 2029px;">
+      <div class="egov-tool-field-origin" style="left: 652px; top: 2037px;">
        <input class="egov-tool-field-rect onImage" id="N196_P2" name="other_dependent2_domestic_transfer_date_month" value="{{ old('other_dependent2_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 692px; top: 2029px;">
+      <div class="egov-tool-field-origin" style="left: 692px; top: 2037px;">
        <input class="egov-tool-field-rect onImage" id="N197_P2" name="other_dependent2_domestic_transfer_date_day" value="{{ old('other_dependent2_domestic_transfer_date_day') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 580px; top: 2065px;">
+      <div class="egov-tool-field-origin" style="left: 580px; top: 2072px;">
        <input class="egov-tool-field-rect onImage" id="N198_P2" maxlength="11" name="other_dependent2_special_requirements_non_applicable_reason"value="{{ old('other_dependent2_special_requirements_non_applicable_reason') }}" style="width: 153px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" />
       </div>
         <img alt="法令様式画像" src="{{ $dataUri }}" /> 

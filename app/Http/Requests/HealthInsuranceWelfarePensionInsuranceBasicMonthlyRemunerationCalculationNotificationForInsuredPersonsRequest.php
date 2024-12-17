@@ -23,7 +23,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     {
         return [
             "over_70_check" => 'nullable|string|in:on',
-            "my_number_or_basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
+            "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
@@ -190,7 +190,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             }
         });
 
-        $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
+        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
             return $input->over_70_check === 'on';
         });
 
@@ -202,7 +202,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     public function messages()
     {
         return [
-            'my_number_or_basic_pension_number.required_without_all' => '',
+            'mynumber_no_or_pension_no.required_without_all' => '',
             'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
             'remarks_calculation_basic_month_month1.required_without_all' => '',
             'remarks_calculation_basic_month_month2.required_without_all' => '備考_70歳以上被用者算定_算定基礎月を入力してください。',

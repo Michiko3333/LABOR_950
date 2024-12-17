@@ -19,7 +19,7 @@ use App\Permission;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Log;
 
-class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController extends Controller
+class OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController extends Controller
 {
     public function __construct(Request $request)
     {
@@ -35,7 +35,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
 
     public function index(Request $request)
     {
-        $imagePath = public_path('img/4950013521025000.png');
+        $imagePath = public_path('img/4950013520990000.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;
@@ -78,7 +78,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             ->exists();
 
         return view(
-            'ledger.health_insurance_employee_pension_insurance_monthly_remuneration_change_notification',
+            'ledger.old_health_insurance_employee_pension_insurance_monthly_remuneration_change_notification',
             [
                 'company' => $company,
                 'todaySet' => $todaySet,
@@ -94,6 +94,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
     }
 
     public function post(HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest $request)
+    // public function post(Request $request)
     {
         $csvFormatter = new CsvFormatter();
         $request = $csvFormatter->csvFomat($request);

@@ -124,13 +124,13 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0', 
             ],
             [
-                'id' => '13', 
-                'procedure_id' => '4950013520711000', 
-                'procedure_name' => '健康保険・厚生年金保険被保険者資格取得届（単記用）（２０１９年５月以降手続き）',
-                'formal_procedure_name' => '健康保険・厚生年金保険被保険者資格取得届（単記用）（２０１９年５月以降手続き）／電子申請',
-                'abbreviation' => '健・厚：資格取得届',
-                'procedure_type' => NULL, 
-                'delete_flg' => '0', 
+                'id' => '13',
+                'procedure_id' => '4950013521019000',// 4950013520711000
+                'procedure_name' => '健康保険・厚生年金保険被保険者資格取得届（単記用）（２０２４年１２月以降手続き）',
+              　'formal_procedure_name' => '健康保険・厚生年金保険被保険者資格取得届（単記用）（２０２４年１２月以降手続き）／電子申請',
+              　'abbreviation' => '健・厚：資格取得届',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
             ],
             [
                 'id' => '14', 
@@ -142,17 +142,17 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0', 
             ],
             [
-                'id' => '15', 
-                'procedure_id' => '4950013520996000', 
-                'procedure_name' => '健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２２年１０月以降手続き）',
-                'formal_procedure_name' => '健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２２年１０月以降手続き）／電子申請',
+                'id' => '15',
+                'procedure_id' => '4950013521021000',// 4950013520996000
+                'procedure_name' => '健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２４年１２月以降手続き）',
+              　'formal_procedure_name' => '健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２４年１２月以降手続き）／電子申請',
                 'abbreviation' => '被扶養者・第3号関係届',
-                'procedure_type' => NULL, 
-                'delete_flg' => '0', 
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
             ],
             [
-                'id' => '16', 
-                'procedure_id' => '4950013520990000', 
+                'id' => '16',
+                'procedure_id' => '4950013521025000',// 4950013520990000
                 'procedure_name' => '健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届',
                 'formal_procedure_name' => '健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届（ＣＳＶファイル添付方式）（２０２２年１０月以降手続き）／電子申請',
                 'abbreviation' => '健・厚：月額変更届',
@@ -160,8 +160,8 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0', 
             ],
             [
-                'id' => '17', 
-                'procedure_id' => '4950013520989000', 
+                'id' => '17',
+                'procedure_id' => '4950013521024000',// 4950013520989000
                 'procedure_name' => '健康保険・厚生年金保険被保険者報酬月額算定基礎届／７０歳以上被用者算定基礎届',
                 'formal_procedure_name' => '健康保険・厚生年金保険被保険者報酬月額算定基礎届／７０歳以上被用者算定基礎届（ＣＳＶファイル添付方式）（２０２２年１０月以降手続き）／電子申請',
                 'abbreviation' => '健・厚：算定基礎届',
@@ -169,8 +169,8 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0', 
             ],
             [
-                'id' => '18', 
-                'procedure_id' => '4950013520991000', 
+                'id' => '18',
+                'procedure_id' => '4950013521026000',// 4950013520991000
                 'procedure_name' => '健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届',
                 'formal_procedure_name' => '健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届（ＣＳＶファイル添付方式）（２０２２年１０月以降手続き）／電子申請',
                 'abbreviation' => '健・厚：賞与支払届',

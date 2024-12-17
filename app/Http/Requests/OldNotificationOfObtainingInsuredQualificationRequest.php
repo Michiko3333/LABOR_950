@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
-class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
+class OldNotificationOfObtainingInsuredQualificationRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -51,8 +51,8 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
-            "health_insurance" => 'string|in:健康保険',
-            "welfare_pension_insurance" => 'string|in:厚生年金保険',
+            "health_insurance" => 'nullable|int|in:1',
+            "welfare_pension_insurance" => 'nullable|int|in:1',
             "input_date_japan_era_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "input_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "input_date_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -97,7 +97,6 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "acquisition_reason" => 'nullable|string|in:海外在住,短期在留,その他',
             "other_acquisition_reason" =>   'nullable|string|max:255',
-            "eligibility_confirmation_letter" => 'nullable|int|in:1',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];
@@ -260,7 +259,6 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             'employee_address' => '被保険者住所欄_所在地',
             'acquisition_reason' => '理由',
             'other_acquisition_reason' => '理由_その他記入欄',
-            'eligibility_confirmation_letter' => '資格確認書発行要否',
             'apply_to_code' => '提出先選択_大分類（都道府県）',
             'apply_to_name' => '提出先選択_中分類（公共職業安定所）'
         ];

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Ledger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Http\Requests\NotificationOfObtainingInsuredQualificationRequest;
+use App\Http\Requests\OldNotificationOfObtainingInsuredQualificationRequest;
 use App\EgovAPI\MixXmlEgovSigner;
 use Illuminate\Support\Facades\File;
 use App\Models\CurrentUser;
@@ -15,7 +15,7 @@ use App\Models\Branch;
 use App\Permission;
 use App\Models\Employee;
 
-class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
+class OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController extends Controller
 {
     public function __construct(Request $request)
     {
@@ -31,7 +31,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
 
     public function index(Request $request)
     {
-        $imagePath = public_path('img/4950013521019000.png');
+        $imagePath = public_path('img/tyohyo155.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;
@@ -69,10 +69,10 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
             ->where('delete_flg', 0)
             ->exists();
 
-        return view('ledger.health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount', 'current_employee', 'current_branch', 'existPresident'));
+        return view('ledger.old_health_insurance_welfare_pension_insurance_eligibility_acquisition_notification', compact('company', 'todaySet', 'dataUri', 'certificate', 'procedureName', 'egovAcount', 'current_employee', 'current_branch', 'existPresident'));
     }
 
-    public function post(NotificationOfObtainingInsuredQualificationRequest $request)
+    public function post(OldNotificationOfObtainingInsuredQualificationRequest $request)
     {
         $attachment = [];
 
@@ -162,7 +162,6 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
                 'employee_address' => $request->input('employee_address'),
                 'acquisition_reason' => $request->input('acquisition_reason'),
                 'other_acquisition_reason' => $request->input('other_acquisition_reason'),
-                'eligibility_confirmation_letter' => $request->input('eligibility_confirmation_letter'),
                 'apply_to_code' => $request->input('apply_to_code'),
                 'apply_to_name' => $request->input('apply_to_name')
             ];
