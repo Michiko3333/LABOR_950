@@ -18,4 +18,24 @@ class Department extends Model
     {
         return $this->hasOne(DepartmentPermission::class, 'department_permission_id');
     }
+
+    public function salary()
+    {
+        return $this->hasMany(Salary::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function bonus()
+    {
+        return $this->hasMany(Bonus::class);
+    }
+
+    public function bounty()
+    {
+        return $this->hasMany(Bounty::class);
+    }
 }

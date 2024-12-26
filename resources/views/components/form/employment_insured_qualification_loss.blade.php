@@ -1,3 +1,6 @@
+<!-- 4950008680035000 -->
+<!-- 雇用保険被保険者資格喪失届（離職票交付あり）（令和４年６月以降手続き）/雇用保険被保険者資格喪失届 -->
+
 <DIV style="position:relative; left:-15px; top:0px; width:792px; height:1113px;">
 
     <SPAN
@@ -5,7 +8,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:230px; top:24px; width:250px; height:23px; text-align:center; font-size:18px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">雇用保険被保険者資格喪失届</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:491px; top:41px; width:299px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">（必ず記載要領の注意事項を読んでから入力してください。）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:483px; top:41px; width:299px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">（必ず記載要領の注意事項を読んでから入力してください。）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:22px; top:72px; width:61px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">帳票種別</SPAN>
     <SPAN
@@ -424,7 +427,7 @@
             tabindex="41"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:351px; max-width:351px; height:17px; ime-mode:disabled;"
             type="TEXT" id="J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A" name="name_alphabet"
-            value="{{ old('name_alphabet') }}" maxlength="40"></SPAN>
+            value="{{ old('name_alphabet') }}" maxlength="40" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:19px; top:563px; width:97px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">15在留カードの番号</SPAN>
     <SPAN
@@ -434,7 +437,7 @@
             tabindex="42"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:218px; max-width:218px; height:17px; ime-mode:disabled;"
             type="TEXT" id="J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86" name="residence_card_no"
-            value="{{ old('residence_card_no') }}" maxlength="12"></SPAN>
+            value="{{ old('residence_card_no') }}" maxlength="12" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:270px; top:573px; width:95px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">16在留期間</SPAN>
     <SPAN
@@ -444,7 +447,7 @@
             tabindex="43"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:62px; max-width:62px; height:17px; ime-mode:disabled;"
             type="TEXT" id="J49_005F_944E" name="stay_date_period_year"
-            value="{{ old('stay_date_period_year') }}" maxlength="4"></SPAN>
+            value="{{ old('stay_date_period_year') }}" maxlength="4" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:361px; top:589px; width:11px; height:26px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">年</SPAN>
     <SPAN
@@ -452,7 +455,7 @@
             tabindex="44"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:39px; max-width:39px; height:17px; ime-mode:disabled;"
             type="TEXT" id="J50_005F_8C8E" name="stay_date_period_month"
-            value="{{ old('stay_date_period_month') }}" maxlength="2"></SPAN>
+            value="{{ old('stay_date_period_month') }}" maxlength="2" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:418px; top:589px; width:12px; height:26px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">月</SPAN>
     <SPAN
@@ -460,7 +463,7 @@
             tabindex="45"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:39px; max-width:39px; height:17px; ime-mode:disabled;"
             type="TEXT" id="J51_005F_93FA" name="stay_date_period_day" value="{{ old('stay_date_period_day') }}"
-            maxlength="2"></SPAN>
+            maxlength="2" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:475px; top:589px; width:12px; height:26px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">日</SPAN>
     <SPAN
@@ -469,7 +472,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:515px; top:589px; width:38px; height:21px; font-size:13px;"><SELECT
             size="1" tabindex="46"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:38px; height:21px;"
-            id="J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA" name="employment_type">
+            id="J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA" name="employment_type" @if(old('country') == null ) disabled @endif>
             <OPTION value="" selected="selected"></OPTION>
             <OPTION value="1" {{ old('employment_type') == '1' ? 'selected' : '' }}>1</OPTION>
             <OPTION value="2" {{ old('employment_type') == '2' ? 'selected' : '' }}>2</OPTION>
@@ -494,7 +497,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:19px; top:638px; width:369px; height:20px; font-size:12px;"><SELECT
             size="1" tabindex="47"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:369px; height:20px;"
-            id="J53_005F_8D91_90D0_005F_926E_88E6" name="country">
+            id="J53_005F_8D91_90D0_005F_926E_88E6" name="country" @if(old('country') == null ) disabled @endif>
             <OPTION value="" selected="selected"></OPTION>
             @foreach ($countries as $country)
                 <option value="{{ $country->setting_value }}"
@@ -510,7 +513,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:19px; top:688px; width:423px; height:20px; font-size:12px;"><SELECT
             size="1" tabindex="48"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:423px; height:20px;"
-            id="J54_005F_8DDD_97AF_8E91_8A69" name="residential_status">
+            id="J54_005F_8DDD_97AF_8E91_8A69" name="residential_status" @if(old('country') == null ) disabled @endif>
             <OPTION value="" selected="selected"></OPTION>
             @foreach ($residentials as $residential_status)
                 <option value="{{ $residential_status->setting_value }}"
@@ -529,7 +532,7 @@
             tabindex="49"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 30px 0px 0px; width:274px; height:44px; ime-mode:active;"
             id="J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752" name="residential_status_unknown_reason"
-            value="{{ old('residential_status_unknown_reason') }}"></SPAN>
+            value="{{ old('residential_status_unknown_reason') }}" @if(old('country') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:759px; top:673px; width:11px; height:45px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; padding:9px 0px 0px 0px;"></SPAN>
     <SPAN
@@ -577,7 +580,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:118px; top:750px; width:491px; line-height:26px; height:28px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="54"
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:491px; height:28px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J63_005F_8F5A_8F8A" name="headquarters_address" value="{{ old('headquarters_address') }}"></SPAN>
+            id="J63_005F_8F5A_8F8A" name="headquarters_address" value="{{ old('headquarters_address') }}" maxlength="80"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:64px; top:784px; width:46px; height:27px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">氏　　名</SPAN>
     <SPAN
@@ -710,7 +713,7 @@
             style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 20px 0px 0px; width:411px; height:82px; ime-mode:active;"
             id="J79_005F_9574_8B4C_9793" name="other_notes" value="{{ old('other_notes') }}"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:3px; top:1013px; width:12px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">※</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:9px; top:1013px; width:12px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">※</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:19px; top:1013px; width:20px; height:50px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; padding:18px 0px 0px 0px;"></SPAN>
     <SPAN

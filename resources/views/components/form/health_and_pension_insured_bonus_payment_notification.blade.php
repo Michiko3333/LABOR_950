@@ -1,3 +1,6 @@
+<!-- 4950013520991000 -->
+<!-- 健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届 -->
+
 <div>
     <div id="modal-recertification" class="modal-recertification">
         <input type="hidden" id="transUrlAccount"
@@ -227,13 +230,13 @@
                                 <select class="egov-tool-field-rect onImage" id="N31_005F_89C1_93FC"
                                     name="bonus_payment_date_era" required="required"
                                     style="width: 48px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color:#ddeeff;">
-                                    <option selected="" value="7"
-                                        {{ old('bonus_payment_date_era') == '7' ? 'selected' : '' }}>
-                                        平成
-                                    </option>
                                     <option value="9"
                                         {{ old('bonus_payment_date_era') == '9' ? 'selected' : '' }}>
                                         令和
+                                    </option>
+                                    <option value="7"
+                                        {{ old('bonus_payment_date_era') == '7' ? 'selected' : '' }}>
+                                        平成
                                     </option>
                                 </select>
                             </div>
@@ -276,8 +279,8 @@
                                 <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E"
                                     maxlength="4" value="{{ old('bonus_payment_sum') }}" name="bonus_payment_sum"
                                     required="required"
-                                    style="width: 50px; height: 36.5px; font-size: 12px; text-align: right; line-height: 36.5px; padding: inherit; background-color:#ddeeff;"
-                                    type="text" />
+                                    style="width: 50px; height: 36.5px; font-size: 12px; text-align: right; line-height: 36.5px; padding: inherit;"
+                                    type="text" readonly/>
                             </div>
 
                             <SPAN

@@ -87,7 +87,8 @@
         window.openCancelModal = (receptionistId) => {
             $wire.dispatch('cancelModalOpened', {
                 receptionistId: receptionistId,
-                managerialPositionId: 0
+                managerialPositionId: null,
+                closureId: null,
             });
             setTimeout(() => {
                 $('.cancel-modal').modal({

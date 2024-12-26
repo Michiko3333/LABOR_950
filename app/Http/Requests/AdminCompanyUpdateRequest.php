@@ -67,6 +67,34 @@ class AdminCompanyUpdateRequest extends BaseRequest
                 $apartment = str_replace(['-', '‐'], '－', $apartment);
             }
         }
+        foreach ($this->input('sa-applied_date', []) as $branchIndex => $array) {
+            foreach ($array as $index => $value) {
+                if (!isset($data['sa-departments'][$branchIndex][$index])){
+                    $data['sa-departments'][$branchIndex][$index] = [];
+                }
+            }
+        }
+        foreach ($this->input('bo-applied_date', []) as $branchIndex => $array) {
+            foreach ($array as $index => $value) {
+                if (!isset($data['bo-departments'][$branchIndex][$index])){
+                    $data['bo-departments'][$branchIndex][$index] = [];
+                }
+                if (!isset($data['bo-bonus_payment_month'][$branchIndex][$index])){
+                    $data['bo-bonus_payment_month'][$branchIndex][$index] = [];
+                }
+            } 
+        }
+        foreach ($this->input('bou-applied_date', []) as $branchIndex => $array) {
+            foreach ($array as $index => $value) {
+                if (!isset($data['bou-departments'][$branchIndex][$index])){
+                    $data['bou-departments'][$branchIndex][$index] = [];
+                }
+                if (!isset($data['bou-bonus_payment_month'][$branchIndex][$index])){
+                    $data['bou-bonus_payment_month'][$branchIndex][$index] = [];
+                }
+            } 
+        }
+        $this->replace($data);
         return $data;
     }
 
@@ -116,7 +144,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
-            'representative' => ['required', 'string', 'max:100', new noSymbol(false)],
+            'representative' => ['required', 'string', 'max:25', new noSymbol(false)],
             'bank_name' => ['nullable', 'string', 'max:300', new noSymbol(true)],
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
@@ -124,6 +152,9 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'financial_statement' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'articles_of_incorporation' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'stock_information' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'start_month_of_year' => 'numeric|between:1,12|max_digits:2',
+            'start_day_of_month' => 'numeric|between:1,31|max_digits:2',
+            'start_day_of_week' => 'numeric|between:1,7',
             'br-name' => 'required|array',
             'br-name.*' => 'string|max:40',
             'br-branch_type' => 'required|array',
@@ -236,9 +267,6 @@ class AdminCompanyUpdateRequest extends BaseRequest
             "br-insurance_office_name.*" => 'nullable|string|max:100',
             "br-insurance_applicable_date" => 'array',
             "br-insurance_applicable_date.*" => 'nullable|integer|between:1,12',
-            "br-bonus_payment_month" => 'array',
-            'br-bonus_payment_month.*' => 'nullable|array',
-            'br-bonus_payment_month.*.*' => 'nullable|string|max:255',
             "br-pension_office_name" => 'array',
             "br-pension_office_name.*" => 'nullable|string|max:100',
             "br-employment_insurance_rate" => 'array',
@@ -247,6 +275,39 @@ class AdminCompanyUpdateRequest extends BaseRequest
             "br-rate_pattern_id.*" => 'nullable|integer',
             "br-fractional_adjustment_pattern_id" => 'array',
             "br-fractional_adjustment_pattern_id.*" => 'nullable|integer',
+            'sa-departments' => 'array', 
+            'sa-departments.*' => 'required|array', 
+            'sa-departments.*.*' => 'required',
+            'sa-payroll_deadline' => 'array', 
+            'sa-payroll_deadline.*' => 'required|array', 
+            'sa-payroll_deadline.*.*' => 'required|integer',
+            'sa-payroll_month' => 'array', 
+            'sa-payroll_month.*' => 'required|array', 
+            'sa-payroll_month.*.*' => 'required|integer',
+            'sa-payroll_day' => 'array', 
+            'sa-payroll_day.*' => 'required|array', 
+            'sa-payroll_day.*.*' => 'required|integer',
+            'sa-applied_date' => 'array', 
+            'sa-applied_date.*' => 'required|array', 
+            'sa-applied_date.*.*' => 'required|string',
+            'bo-departments' => 'array', 
+            'bo-departments.*' => 'required|array', 
+            'bo-departments.*.*' => 'required',
+            'bo-bonus_payment_month' => 'array', 
+            'bo-bonus_payment_month.*' => 'required|array', 
+            'bo-bonus_payment_month.*.*' => 'required',
+            'bo-applied_date' => 'array', 
+            'bo-applied_date.*' => 'required|array', 
+            'bo-applied_date.*.*' => 'required|string',
+            'bou-departments' => 'array', 
+            'bou-departments.*' => 'required|array', 
+            'bou-departments.*.*' => 'required',
+            'bou-bonus_payment_month' => 'array', 
+            'bou-bonus_payment_month.*' => 'required|array', 
+            'bou-bonus_payment_month.*.*' => 'required',
+            'bou-applied_date' => 'array', 
+            'bou-applied_date.*' => 'required|array', 
+            'bou-applied_date.*.*' => 'required|string',
         ];
     }
 
@@ -297,6 +358,9 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'financial_statement' => '業績情報へ決算書の添付（直近1期分）',
             'articles_of_incorporation' => '事業目的へ定款の添付（最新）',
             'stock_information' => '株式情報へ株主を添付（最新）',
+            'start_month_of_year' => '起算日（年の始まり）',
+            'start_day_of_month' => '起算日（月の始まり）',
+            'start_day_of_week' => '起算日（曜日の始まり）',
             'br-name' => '名称',
             'br-branch_type' => '区分',
             'br-place_type' => '国内外',
@@ -519,9 +583,6 @@ class AdminCompanyUpdateRequest extends BaseRequest
         foreach ($this->input('br-insurance_office_name', []) as $index => $value) {
             $Attributes["br-insurance_office_name.{$index}"] = ($index + 1) . "事業所_健康保険組合・名称";
         }
-        foreach ($this->input('br-bonus_payment_month', []) as $index => $value) {
-            $Attributes["br-bonus_payment_month.{$index}"] = ($index + 1) . "事業所_賞与支払い月";
-        }
         foreach ($this->input('br-pension_office_name', []) as $index => $value) {
             $Attributes["br-pension_office_name.{$index}"] = ($index + 1) . "事業所_厚生年金基金・名称";
         }
@@ -536,6 +597,83 @@ class AdminCompanyUpdateRequest extends BaseRequest
         }
         foreach ($this->input('br-insurance_applicable_date', []) as $index => $value) {
             $Attributes["br-insurance_applicable_date.{$index}"] = ($index + 1) . "事業所_社保適用年月";
+        }
+        foreach ($this->input('sa-departments', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["sa-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_部署";
+                }
+            }
+        }
+        foreach ($this->input('sa-payroll_deadline', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["sa-payroll_deadline.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_締め日";
+                }
+            }
+        }
+        foreach ($this->input('sa-payroll_month', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["sa-payroll_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_支払月";
+                }
+            }
+        }
+        foreach ($this->input('sa-payroll_day', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["sa-payroll_day.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_支払日";
+                }
+            }   
+        }
+        foreach ($this->input('sa-applied_date', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["sa-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_適用年月";
+                }
+            }   
+        }
+        foreach ($this->input('bo-departments', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bo-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_部署";
+                }
+            }
+        }
+        foreach ($this->input('bo-bonus_payment_month', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bo-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_支払月";
+                }
+            }   
+        }
+        foreach ($this->input('bo-applied_date', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bo-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_適用年月";
+                }
+            }   
+        }
+        foreach ($this->input('bou-departments', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bou-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_部署";
+                }
+            }
+        }
+        foreach ($this->input('bou-bonus_payment_month', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bou-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_支払月";
+                }
+            }   
+        }
+        foreach ($this->input('bou-applied_date', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["bou-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_適用年月";
+                }
+            }   
         }
 
         return $Attributes;

@@ -12,10 +12,10 @@ class ValuesBranchPlaceTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_branch_place_type')->truncate();
         DB::table('m_values_branch_place_type')->insert([
             ['name' => '国内'],
             ['name' => '国外']
         ]);
-
     }
 }

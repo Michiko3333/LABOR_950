@@ -1,3 +1,6 @@
+<!-- 4950008680046000 -->
+<!-- 雇用保険高年齢雇用継続給付（高年齢雇用継続基本給付金）の申請（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:752px; height:1048px;">
 
     <script type="text/javascript">
@@ -582,22 +585,22 @@
             type="TEXT" id="J60_005F_82A0_82C4_90E6" value="{{ old('destination') }}" name="destination"
             maxlength="10"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:206px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:225px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="61"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0);font-size:10px; font-family:'ＭＳ 明朝', serif; width:206px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname" readonly></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:225px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
+            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:400px; top:874px; width:282px; line-height:0px; height:0px;"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:416px; top:741px; width:240px; line-height:53px; height:54px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="55"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:240px; height:53px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J54_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_name') }}" name="employer_name"></SPAN>
+            id="J54_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_name') }}" name="employer_name" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:416px; top:673px; width:285px; line-height:42px; height:42px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="51"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:285px; height:41px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}"
+            id="J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="63"
             name="headquarters_address"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:317px; top:797px; width:384px; line-height:0px; height:0px;"></SPAN>

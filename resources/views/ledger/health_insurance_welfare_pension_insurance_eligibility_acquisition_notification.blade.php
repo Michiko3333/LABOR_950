@@ -40,22 +40,27 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'" />
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.jpg,.jpeg,.pdf'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -63,9 +68,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
-                            <div class="content" style="margin-bottom: 20px;">
+                            <div class="content">
                                 <x-form.notification_of_obtainingInsured_qualification :dataUri="$dataUri" />
                             </div>
                         </div>
@@ -110,7 +115,7 @@
                 $('#N6_005F_93FA').val('{{ old('input_date_month', $todaySet['month']) }}');
                 $('#N7_005F_944E_8D86').val('{{ old('input_date_day', $todaySet['date']) }}');
 
-                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative', $company->representative) }}');
+                $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative') }}' ? '{{ old('company_representative') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                 @else
@@ -140,7 +145,6 @@
                     var branch_post_code_first = '';
                     var branch_post_code_last = '';
                 }
-                const branch_name = branch.name;
                 const branch_tel_area_code = branch.tel_area_code;
                 const branch_tel_city_code = branch.tel_city_code;
                 const branch_tel_subscriber_code = branch.tel_subscriber_code;
@@ -175,7 +179,7 @@
                 $('#N13_005F_8374_838A_834B_8369').val(branch_post_code_last ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((branch_prefecture_data.name ?? '') + (branch
                     .address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N16_005F_905C_90BF').val(branch_name ?? '');
+                $('#N16_005F_905C_90BF').val(company.name ?? '');
                 $('#N18_005F_8CC2_906C_94D4').val(branch_tel_area_code ?? '');
                 $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch_tel_city_code ?? '');
                 $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(branch_tel_subscriber_code ?? '');
@@ -187,11 +191,12 @@
                 $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['year'] ?? "");
                 $('#N28_8D864_8C85').val(birthdayConvertJapan['month'] ?? "");
                 $('#N29_005F_8E73').val(birthdayConvertJapan['day'] ?? "");
+                $('#N30_93E0_8BC7_94D4').val(employee.sex);
                 $('#N36_005F_8E96_8BC6_8F8A').val(employee_mynumber_card_no ?? '');
                 $('#N51_005F_8E73_8A4F_8BC7').val(employee_post_code_first ?? '');
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
                 $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (
-                    employee.address_ward ?? '') + (employee.address_apartment ?? ''));
+                    employee.address_ward ?? ''));
             }
             Livewire.on('onSelectEmployee', ({
                 data
@@ -199,7 +204,30 @@
                 insertDataFromEmployee(data)
             });
         </script>
+        <script type="module">
+            $(document).ready(function() {
+            function calculateTotal() {
+                var nullFlg = true;
 
+                var valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
+                var valueB = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N42_005F_8F8A_8DDD_926E').val() == "" && $('#N43_947A_9242_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N44_005F_92AC_88E6').val(val);
+                } else {
+                    $('#N44_005F_92AC_88E6').val("");
+                }
+            }
+
+            $('#N42_005F_8F8A_8DDD_926E, #N43_947A_9242_8BC7_94D4').on('input', calculateTotal);
+        });
+        </script>
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot

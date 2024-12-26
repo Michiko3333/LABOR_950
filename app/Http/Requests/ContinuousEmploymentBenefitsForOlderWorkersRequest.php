@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContinuousEmploymentBenefitsForOlderWorkersRequest extends BaseRequest
@@ -49,6 +50,7 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             'file_wage_amount' => 'required_unless:radio_file_wage_amount,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'file_stable_job' => 'required_unless:radio_file_stable_job,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -69,16 +71,16 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends BaseRequest
             'fullname' =>  'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             'payer_japan_era_year1' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'payer_month1' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
-            'wages_paid1' => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            'wage_reduction_days1' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            'wages_paid1' => 'int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
+            'wage_reduction_days1' => 'int|between:0,99|regex:/^[0-9]{1,2}$/u',
             'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payer_month2',
             'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2',
-            'wages_paid2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            'wage_reduction_days2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            'wages_paid2' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
+            'wage_reduction_days2' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
             'payer_japan_era_year3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payer_month3',
             'payer_month3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year3',
-            'wages_paid3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            'wage_reduction_days3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
+            'wages_paid3' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
+            'wage_reduction_days3' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
             'note' => 'nullable|string|max:255',
             'jurisdiction' => 'nullable|int|between:1,9|regex:/^[0-9]{1}$/u',
             'employment_insurance_office_no_4digit' => 'nullable|string|regex:/^[0-9]{4}$/u',
@@ -91,8 +93,8 @@ class ContinuousEmploymentBenefitsForOlderWorkersRequest extends BaseRequest
             'today_japan_era_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'destination' => 'string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'employer_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
+            'employer_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'headquarters_address' => ['nullable', 'string', 'max:63', new FullwidthAndMiscellaneousChars(true)],
             'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',

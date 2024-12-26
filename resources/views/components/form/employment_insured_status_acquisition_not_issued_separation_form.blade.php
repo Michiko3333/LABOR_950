@@ -1,3 +1,6 @@
+<!-- 4950008680034000 -->
+<!-- 雇用保険被保険者資格喪失届（離職票交付なし）（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1100px;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:19px; top:11px; width:200px; height:15px; text-align:left; font-size:11px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">様式第4号（第7条関係）（第1面）</SPAN>
@@ -432,7 +435,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:19px; top:529px; width:351px; height:28px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:4px 0px 0px 0px;"><INPUT
             tabindex="41"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:left; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:351px; max-width:351px; height:17px; ime-mode:disabled;"
-            type="TEXT" id="J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A" disabled
+            type="TEXT" id="J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A" @if(old('country_id') == null ) disabled @endif
             name="insured_fullname_alphabet" maxlength="40" value="{{ old('insured_fullname_alphabet') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:19px; top:563px; width:95px; height:11px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">15在留カードの番号</SPAN>
@@ -442,7 +445,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:19px; top:589px; width:218px; height:28px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:4px 0px 0px 0px;"><INPUT
             tabindex="42"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:218px; max-width:218px; height:17px; ime-mode:disabled;"
-            type="TEXT" id="J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86" disabled name="residence_card_no"
+            type="TEXT" id="J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86" @if(old('country_id') == null ) disabled @endif name="residence_card_no"
             maxlength="12" value="{{ old('residence_card_no') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:270px; top:573px; width:95px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">16在留期間</SPAN>
@@ -452,7 +455,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:296px; top:589px; width:62px; height:27px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:3px 0px 0px 0px;"><INPUT
             tabindex="43"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:62px; max-width:62px; height:17px; ime-mode:disabled;"
-            type="TEXT" id="J49_005F_944E" disabled name="stay_date_period_year" maxlength="4"
+            type="TEXT" id="J49_005F_944E" @if(old('country_id') == null ) disabled @endif name="stay_date_period_year" maxlength="4"
             value="{{ old('stay_date_period_year') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:361px; top:589px; width:11px; height:26px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">年</SPAN>
@@ -460,7 +463,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:376px; top:589px; width:39px; height:27px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:3px 0px 0px 0px;"><INPUT
             tabindex="44"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:39px; max-width:39px; height:17px; ime-mode:disabled;"
-            type="TEXT" id="J50_005F_8C8E" disabled name="stay_date_period_month" maxlength="2"
+            type="TEXT" id="J50_005F_8C8E" @if(old('country_id') == null ) disabled @endif name="stay_date_period_month" maxlength="2"
             value="{{ old('stay_date_period_month') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:418px; top:589px; width:12px; height:26px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">月</SPAN>
@@ -468,7 +471,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:433px; top:589px; width:39px; height:27px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:3px 0px 0px 0px;"><INPUT
             tabindex="45"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:39px; max-width:39px; height:17px; ime-mode:disabled;"
-            type="TEXT" id="J51_005F_93FA" disabled name="stay_date_period_day" maxlength="2"
+            type="TEXT" id="J51_005F_93FA" @if(old('country_id') == null ) disabled @endif name="stay_date_period_day" maxlength="2"
             value="{{ old('stay_date_period_day') }}"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:475px; top:589px; width:12px; height:26px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">日</SPAN>
@@ -478,7 +481,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:515px; top:589px; width:38px; height:19px; font-size:13px;"><SELECT
             size="1" tabindex="46"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:13px; font-family:'ＭＳ 明朝', serif; width:38px; height:19px;"
-            id="J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA" name="employment_type">
+            id="J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA" name="employment_type" @if(old('country_id') == null ) disabled @endif>
             <OPTION value="" selected="selected"></OPTION>
             <OPTION value="1" {{ old('employment_type')=='1' ? 'selected' : '' }}>1</OPTION>
             <OPTION value="2" {{ old('employment_type')=='2' ? 'selected' : '' }}>2</OPTION>
@@ -503,10 +506,10 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:19px; top:638px; width:369px; height:18px; font-size:12px;"><SELECT
             size="1" tabindex="47"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:369px; height:18px;"
-            id="J53_005F_8D91_90D0_005F_926E_88E6" disabled name="country_id">
+            id="J53_005F_8D91_90D0_005F_926E_88E6" @if(old('country_id') == null ) disabled @endif name="country_id">
             <OPTION value="" selected="selected"></OPTION>
-            @foreach($countries as $country)
-            <option value="{{ $country->setting_value }}" {{ (old('country_id')==$country->setting_value || old('country_id') == $country->country_name) ? 'selected' : '' }}>{{ $country->country_name }}</option>
+            @foreach($countries as $country_id)
+            <option value="{{ $country_id->setting_value }}" {{ (old('country_id')==$country_id->setting_value || old('country_id') == $country_id->country_name) ? 'selected' : '' }}>{{ $country_id->country_name }}</option>
             @endforeach
         </SELECT></SPAN>
     <SPAN
@@ -515,7 +518,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:19px; top:688px; width:423px; height:18px; font-size:12px;"><SELECT
             size="1" tabindex="48"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:423px; height:18px;"
-            id="J54_005F_8DDD_97AF_8E91_8A69" disabled name="residential_status_id">
+            id="J54_005F_8DDD_97AF_8E91_8A69" @if(old('country_id') == null ) disabled @endif name="residential_status_id">
             <OPTION value="" selected="selected"></OPTION>
             @foreach($residentials as $residential_status)
             <option value="{{ $residential_status->setting_value }}" {{ (old('residential_status_id')==$residential_status->setting_value ||
@@ -533,8 +536,8 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:480px; top:673px; width:274px; line-height:45px; height:45px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="49"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 30px 0px 0px; width:274px; height:44px; ime-mode:active;"
-            id="J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752" disabled name="residential_status_unknown_reason"
-            value="{{ old('residential_status_unknown_reason') }}" type="text"></SPAN>
+            id="J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752" name="residential_status_unknown_reason"
+            value="{{ old('residential_status_unknown_reason') }}" type="text" @if(old('country_id') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:759px; top:673px; width:11px; height:45px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; padding:9px 0px 0px 0px;"></SPAN>
     <SPAN
@@ -582,7 +585,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:118px; top:750px; width:491px; line-height:26px; height:28px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="54"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:491px; height:28px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J63_005F_8F5A_8F8A" name="branch_address" value="{{ old('branch_address') }}" type="text"></SPAN>
+            id="J63_005F_8F5A_8F8A" name="branch_address" value="{{ old('branch_address') }}" type="text" maxlength="80"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:64px; top:784px; width:46px; height:27px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:7px 0px 0px 0px;">氏　　名</SPAN>
     <SPAN

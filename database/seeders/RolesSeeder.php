@@ -16,6 +16,7 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
+        Roles::truncate();
         $roles_data = [
             ['id' => 999, 'name' => '管理者'],
             ['id' => 500, 'name' => '社労士'],

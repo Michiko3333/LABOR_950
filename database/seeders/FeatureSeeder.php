@@ -12,6 +12,7 @@ class FeatureSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_feature')->truncate();
         DB::table('m_feature')->insert([
             [
                 'id' => '1',
@@ -56,7 +57,23 @@ class FeatureSeeder extends Seeder
             [
                 'id' => '11',
                 'name' => 'カレンダー',
-            ]
+            ],
+            [
+                'id' => '12',
+                'name' => '年間勤務予定表',
+            ],
+            [
+                'id' => '13',
+                'name' => 'pickup設定',
+            ],
+            [
+                'id' => '14',
+                'name' => '休業情報',
+            ],
+            [
+                'id' => '16',
+                'name' => '資格マスタ',
+            ],
         ]);
     }
 }

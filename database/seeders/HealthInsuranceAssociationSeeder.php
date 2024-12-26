@@ -12,6 +12,7 @@ class HealthInsuranceAssociationSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_health_insurance_association')->truncate();
         DB::table('m_health_insurance_association')->insert([
             [
                 'post_code'  => '0018511',

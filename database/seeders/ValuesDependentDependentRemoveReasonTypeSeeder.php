@@ -12,6 +12,7 @@ class ValuesDependentDependentRemoveReasonTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_dependent_remove_reason_type')->truncate();
         DB::table('m_values_dependent_dependent_remove_reason_type')->insert([
             ['name' => '死亡'],
             ['name' => '離婚'],

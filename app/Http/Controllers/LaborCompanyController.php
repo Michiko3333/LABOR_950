@@ -169,13 +169,6 @@ class LaborCompanyController extends Controller
             }
         }
 
-        $bonus_payment_month = $requestData['br-bonus_payment_month'][$index] ?? null;
-        if(!is_null($bonus_payment_month)){
-            $bonus_payment_month_processed = implode(',', $bonus_payment_month);
-        } else {
-            $bonus_payment_month_processed = null;
-        }
-
         return [
             'name' => $request->input('br-name')[$index],
             'company_id' => $company_id,
@@ -234,7 +227,6 @@ class LaborCompanyController extends Controller
             'kenpo_no' => $request['br-kenpo_no'][$index],
             'insurance_office_name' => $request['br-insurance_office_name'][$index],
             'insurance_applicable_date' => $request['br-insurance_applicable_date'][$index],
-            'bonus_payment_month' => $bonus_payment_month_processed,
             'pension_office_name' => $request['br-pension_office_name'][$index],
             'employment_insurance_rate' => $request['br-employment_insurance_rate'][$index],
             'rate_pattern_id' => $request['br-rate_pattern_id'][$index],

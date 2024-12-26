@@ -12,6 +12,7 @@ class CompanyTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_company_type')->truncate();
         DB::table('m_company_type')->insert([
             [
                 'name' => '株式会社',

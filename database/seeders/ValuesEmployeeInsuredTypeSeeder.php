@@ -12,6 +12,7 @@ class ValuesEmployeeInsuredTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_insured_type')->truncate();
         DB::table('m_values_employee_insured_type')->insert([
             [
                 // 本当は0だけどidに0指定不可の為99に設定
@@ -20,15 +21,15 @@ class ValuesEmployeeInsuredTypeSeeder extends Seeder
             ],
             [
                 'id' => '1',
-                'name' => '健保・厚年', 
+                'name' => '健保・厚年',
             ],
             [
                 'id' => '3',
-                'name' => '船保任継', 
+                'name' => '船保任継',
             ],
             [
                 'id' => '4',
-                'name' => '共済出向', 
+                'name' => '共済出向',
             ],
         ]);
     }

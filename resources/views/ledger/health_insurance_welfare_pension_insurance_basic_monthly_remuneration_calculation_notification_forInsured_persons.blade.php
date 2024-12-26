@@ -39,15 +39,18 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                        <div class="ui card card-shadow">
+                    </div>
+                    <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
                             <div class="content">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h2>70歳以上</h2>
@@ -65,8 +68,8 @@
                                         style="display: flex; flex-direction: column; width: 49%; margin-right: 2%;">
                                         <label style="font-size: 11.2px;">個人番号</label>
                                         <input id="personal_number" maxlength="12" type="text" placeholder=""
-                                            name="my_number_or_basic_pension_number"
-                                            value="{{ old('my_number_or_basic_pension_number') }}" value="">
+                                            name="mynumber_no_or_pension_no"
+                                            value="{{ old('mynumber_no_or_pension_no') }}" value="">
                                     </div>
                                     <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
                                         <label style="font-size: 11.2px;">基礎年金番号</label>
@@ -88,6 +91,8 @@
                                 ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -95,13 +100,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.insured_person_monthly_remuneratio_basic_calculation_notification
-                                        :dataUri="$dataUri" />
-                                </div>
+                                <x-form.insured_person_monthly_remuneratio_basic_calculation_notification
+                                            :dataUri="$dataUri" />
                             </div>
                         </div>
                     </div>
@@ -173,10 +176,12 @@
                     if ($('#over_70_check').prop('checked')) {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', false);
+                        $('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked', true);
                     } else {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
+                        $('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked', false);
                     }
                 }
 
@@ -184,10 +189,12 @@
                     if ($('#N55_005F_8E73_8A4F_8BC7_94D4').prop('checked')) {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', false);
+                        $('#over_70_check').prop('checked', true);
                     } else {
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').prop(
                             'disabled', true);
                         $('#personal_number, #basic_pension_number, #N64_005F_8F5A_8F8A, #N65_005F_8F5A_8F8B').val('');
+                        $('#over_70_check').prop('checked', false);
                     }
                 }
 
@@ -223,7 +230,7 @@
             });
             $(function() {
                 var cb1 = $('#over_70_check');
-                var cb2 = $('#N55_005F_8E73_8A4F_8BC7_94D4');
+                var cb2 = $('#N50_005F_8E73_8A4F_8BC9');
                 cb1.change(function() {
                     if (cb1.prop('checked')) {
                         cb2.prop('checked', true);
@@ -245,6 +252,7 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -270,7 +278,7 @@
                 }
                 $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val((branch_prefecture_data.name ?? '') + (branch
                     .address_city ?? '') + (branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#N12_005F_905C_90BF_8ED2_8E81').val(branch.name ?? '');
+                $('#N12_005F_905C_90BF_8ED2_8E81').val(company.name ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(branch.tel_area_code ?? '');
                 $('#N16_005F_905C_90BF').val(branch.tel_city_code ?? '');
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val(branch.tel_subscriber_code ?? '');
@@ -290,7 +298,180 @@
                 insertDataFromEmployee(data)
             });
         </script>
+        <script type="module">
+            $(document).ready(function() {
+            function cal1() {
+                var nullFlg = true;
 
+                var valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
+                var valueB = parseFloat($('#N45__005F_8E73_8A4F_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N42_005F_8F8A_8DDD_926E').val() == "" && $('#N45__005F_8E73_8A4F_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N48_005F_8E73_8A4F_8BC7').val(val);
+                } else {
+                    $('#N48_005F_8E73_8A4F_8BC7').val("");
+                }
+            }
+            function cal2() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
+                var valueB = parseFloat($('#N46__005F_8E73_93E0_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N43_947A_9242_8BC7_94D4').val() == "" && $('#N46__005F_8E73_93E0_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N49_005F_8E73_8A4F_8BC8').val(val);
+                } else {
+                    $('#N49_005F_8E73_8A4F_8BC8').val("");
+                }
+            }
+            function cal3() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N44_005F_92AC_88E6').val()) || 0;
+                var valueB = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N44_005F_92AC_88E6').val() == "" && $('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N50_005F_8E73_8A4F_8BC9').val(val);
+                } else {
+                    $('#N50_005F_8E73_8A4F_8BC9').val("");
+                }
+            }
+            function cal4() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;
+
+                var val = valueA + valueB + valueC;
+
+                if ($('#N48_005F_8E73_8A4F_8BC7').val() == "" && $('#N49_005F_8E73_8A4F_8BC8').val() == "" && $('#N50_005F_8E73_8A4F_8BC9').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N51_005F_8E73_8A4F_8BC7').val(val);
+                } else {
+                    $('#N51_005F_8E73_8A4F_8BC7').val("");
+                }
+            }
+            function cal5() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if (val !== null && !isNaN(val)) {
+                    $('#N52_005F_8E73_8A4F').val(val);
+                } else {
+                    $('#N52_005F_8E73_8A4F').val("");
+                }
+            }
+            function cal6() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
+                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
+                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
+                var valueD = parseFloat($('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                if (valueD !== "") {
+                    var parsedD = parseFloat(valueD);
+                    if (!isNaN(parsedD)) {
+                        sum = sum-parsedD;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if(valueD !== null && !isNaN(valueD)){
+                    if (val !== null && !isNaN(val)) {
+                        $('#N53_005F_8E73_93E0').val(val);
+                    } else {
+                        $('#N53_005F_8E73_93E0').val("");
+                    }
+                }
+            }
+
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4').on('input', cal1);
+            $('#N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4').on('input', cal2);
+            $('#N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal3);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal4);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal5);
+            $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E, #N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal6);
+        });
+        </script>
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot

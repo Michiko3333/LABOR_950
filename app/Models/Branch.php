@@ -107,4 +107,19 @@ class Branch extends Model
     {
         return $this->hasOne(Csv_count::class);
     }
+
+    public function salary()
+    {
+        return $this->hasMany(Salary::class);
+    }
+
+    public function bonus()
+    {
+        return $this->hasMany(Bonus::class);
+    }
+
+    public function bounty()
+    {
+        return $this->hasMany(Bounty::class);
+    }
 }

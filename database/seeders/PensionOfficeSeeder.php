@@ -13,6 +13,7 @@ class PensionOfficeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_pension_office')->truncate();
         DB::table('m_pension_office')->insert([
             [
                 'name'   => '札幌北',

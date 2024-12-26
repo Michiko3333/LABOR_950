@@ -6,7 +6,7 @@
 
         $employee_id = !empty($employee) ? $employee->id : '';
         $role_id = !empty($employee) ? $employee->role_id : '';
-        if($role_id !== 999) {
+        if ($role_id !== 999) {
             $branch = $employee->branch()->first();
             $company = $branch->company()->first();
             $company_id = $company->id;
@@ -14,11 +14,11 @@
             $files = Storage::files($directory);
             foreach ($files as $file) {
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
-                if ((int)$fileName === $employee_id) {
+                if ((int) $fileName === $employee_id) {
                     $filePath = '/' . $file;
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         } else {
@@ -89,6 +89,13 @@
                             役職マスタ</a>
                     </li>
                 @endif
+                @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
+                    <li class="item">
+                        <a href="{{ route('qualifications') }}">
+
+                            資格マスタ</a>
+                    </li>
+                @endif
                 @if ($userPermission->isBasicDepartment() && $userPermission->isReadableAtleast([5, 7]))
                     <li class="title">社員管理</li>
                     @if ($userPermission->isReadableFor(5))
@@ -103,6 +110,13 @@
                             <a href="{{ route('contract.index') }}">
 
                                 労働契約書作成</a>
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(14) && $userPermission->isBasicDepartment())
+                        <li class="item">
+                            <a href="{{ route('closure_information') }}">
+
+                            休業情報</a>
                         </li>
                     @endif
                 @endif
@@ -135,13 +149,29 @@
                     @endif
                 @endif
             @endif
-            @if ($userPermission->isReadableFor(11))
+            @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12) || $userPermission->isReadableFor(13))
                 <li class="title">スケジュール</li>
-                <li class="item">
-                    <a href="{{ route('calendar.index') }}">
+                @if($userPermission->isReadableFor(11))
+                    <li class="item">
+                        <a href="{{ route('calendar.index') }}">
 
-                        カレンダー</a>
-                </li>
+                            カレンダー</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                    <li class="item">
+                        <a href="{{ route('calendar.shift') }}">
+
+                            年間勤務予定表</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                    <li class="item">
+                        <a href="{{ route('pickup.setting') }}">
+
+                            Pick up設定</a>
+                    </li>
+                @endif
             @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"

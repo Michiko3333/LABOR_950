@@ -1,3 +1,6 @@
+<!-- 4950013520714000 -->
+<!-- 健康保険・厚生年金保険被保険者資格喪失届（単記用）（２０１９年５月以降手続き） -->
+
 <div class="egovui-application-form-grid pb2">
     <div class="egovui-application-form-input-area">
 
@@ -7191,7 +7194,7 @@
                                 <input class="egov-tool-field-rect onImage" id="N15_P1" maxlength="50" name="branch_address" value="{{ old('branch_address') }}" required="required" style="width: 276px; height: 26px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;">
                             </div>
                             <div class="egov-tool-field-origin" style="left: 173px; top: 153px;">
-                                <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="40" name="branch_name" value="{{ old('branch_name') }}" required="required" style="width: 276px; height: 26px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;">
+                                <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="34" name="branch_name" value="{{ old('branch_name') }}" required="required" style="width: 276px; height: 26px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;">
                             </div>
                             <div class="egov-tool-field-origin" style="left: 173px; top: 181px;">
                                 <input class="egov-tool-field-rect onImage" id="N17_P1" maxlength="25" name="entrepreneur_name" value="{{ old('entrepreneur_name') }}" required="required" style="width: 276px; height: 26px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;">

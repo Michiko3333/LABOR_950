@@ -40,22 +40,27 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :file_original_names="[
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -63,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <x-form.employment_insured_transfer_notification />
@@ -108,7 +113,7 @@
                 $('#J38_005F_8C8E').val('{{ old('today_month', $today['month']) }}');
                 $('#J39_005F_93FA').val('{{ old('today_date', $today['date']) }}');
 
-                $('#J31_005F_8E81_96BC').val('{{ old('headquarter_name', $company->representative) }}');
+                $('#J31_005F_8E81_96BC').val('{{ old('headquarter_name') }}' ? '{{ old('headquarter_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J42_005F_944E_8D86').val('{{ old('labor_consultant_today_era', $today['era']) }}');
@@ -137,6 +142,8 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
+                const hello_work = data['hello_work'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
@@ -186,17 +193,16 @@
                     $('#J21_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
                     $('#J22_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
                 }
-                const branchInfo = (branch.name || '') + '　' + (branch_prefecture_data.name || '') + (branch
+                const branchInfo = (company.name || '') + '　' + (branch_prefecture_data.name || '') + (branch
                     .address_city || '') + (branch.address_ward || '') + (branch.address_apartment || '');
                 const headquartersAddress = (branch_prefecture_data.name || '') + (branch.address_city || '') + (
                     branch.address_ward || '') + (branch.address_apartment || '');
                 $('#J28_005F_935D_8BCE_914F_8E96_8BC6_8F8A_96BC_8FCC_8F8A_8DDD_926E').val(branchInfo);
-                $('#J60_005F_95CF_8D58_914F_8E81_96BC').val(employeeName);
-                $('#J59_005F_95CF_8D58_914F_8E81_96BC_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J30_005F_8F5A_8F8A').val(headquartersAddress);
                 $('#J32_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code);
                 $('#J33_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code);
                 $('#J34_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code);
+                $('#J40_005F_82A0_82C4_90E6').val(hello_work);
             }
 
             Livewire.on('onSelectEmployee', ({

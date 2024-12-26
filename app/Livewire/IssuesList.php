@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use App\EgovAPI\Egov;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use App\Models\Ledger;
 use App\Models\CurrentUser;
 use App\Models\Egov_account;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 
 class IssuesList extends BaseTable
 {
@@ -15,10 +18,13 @@ class IssuesList extends BaseTable
     public $date_from = '2024-04-19';
     public $date_to = '2024-06-01';
 
-    public function mount($page = 1, $search = '')
+    public $procedure_name_map = [];
+
+    public function mount()
     {
-        $this->page = $page;
-        $this->search = $search;
+        $this->pageMemory = true;
+        $this->page = request()->get('p', 1);
+        $this->paginated = true;
 
         $today = date('Y-m-d');
         $current_date = date('Y', strtotime($today));
@@ -29,11 +35,15 @@ class IssuesList extends BaseTable
             'items' => [],
             'pagination' => [
                 'totalItems' => 0,
-                'currentPage' => 1,
+                'currentPage' => $this->page,
                 'pageSize' => $this->limit,
                 'totalPages' => 1,
             ],
         ];
+
+        $this->scrollPositionId = request()->get('id', null);
+
+        $this->procedure_name_map = Ledger::pluck('abbreviation', 'formal_procedure_name');
     }
 
     public function render()
@@ -41,6 +51,7 @@ class IssuesList extends BaseTable
         $currentCompany = CurrentUser::currentCompany();
         $account = Egov_account::where('company_id', $currentCompany->id)->where('delete_flg', 0)->first();
         $this->offset = ($this->page - 1) * $this->limit;
+        $ids = [];
         if (!empty($account)) {
             $api = Egov::accessToken($account->access_token);
             $r = $this->call($api);
@@ -62,21 +73,44 @@ class IssuesList extends BaseTable
 
             if ($r->status() == 200) {
                 $response = $r->json();
-                $resultset = $response['resultset'];
+                $resultset = $response['resultset']['all_count'];
                 $results = $response['results']['apply_list'];
+
                 $this->data = $this->getDataFromAPI($resultset, $results);
+
+                foreach($this->data['items'] as &$item) {
+                    $item['arrive_date'] = Carbon::parse($item['arrive_date'])->format('Y/n/j');
+                    $item['proc_name'] = $this->procedure_name_map[$item['proc_name']] ?? $item['proc_name'];
+                }
+                foreach($this->data['items'] as &$item) {
+                    if($item['status'] === '審査終了' || $item['status'] === '手続終了' || $item['status'] === '手続終了（取下げ済み）') {
+                        $item['status_color'] = 'completion';
+                    } elseif($item['status'] === 'エラー' || $item['status'] === '手続終了（返戻）') {
+                        $item['status_color'] = 'returned';
+                    } else {
+                        $item['status_color'] = '';
+                    }
+
+                    $item['status'] = str_replace('（', '<br>（', $item['status']);
+                }
+                foreach($this->data['items'] as &$item) {
+                    $ids[] = $item['arrive_id'];
+                }
             } else {
                 $this->data = [
                     'items' => [],
                     'pagination' => [
                         'totalItems' => 0,
-                        'currentPage' => 1,
+                        'currentPage' => $this->page,
                         'pageSize' => $this->limit,
                         'totalPages' => 1,
                     ],
                 ];
             }
         }
+
+        $this->RestrictingQueryParameters($ids);
+
         return view('livewire.issues-list');
     }
 
@@ -87,7 +121,7 @@ class IssuesList extends BaseTable
         $pageSize = $this->limit;
 
         // 条件を満たす全アイテム数を効率的に取得
-        $totalItems = $resultset['all_count'];
+        $totalItems = $resultset;
         // 全ページ数を計算
         $totalPages = ceil($totalItems / $pageSize);
 

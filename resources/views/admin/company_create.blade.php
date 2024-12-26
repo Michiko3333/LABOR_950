@@ -226,6 +226,16 @@
                 color: var(--color-red);
                 text-decoration: underline;
             }
+
+            .branch-payment-confirm-modal .red-text {
+                font-weight: bold;
+                color: var(--color-red);
+            }
+
+            .tab-error,
+            .tab-error.active {
+                color: #912d2b !important;
+            }
         </style>
     @endslot
 
@@ -520,6 +530,60 @@
                                     placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守">
                             @endif
                         </div>
+                        <div class="three fields">
+                            <div class="field">
+                                <label for="start_month_of_year">起算日（年の始まり）</label>
+                                <div class="ui right labeled input">
+                                    <select class="ui fluid dropdown" name="start_month_of_year"
+                                        value="{{ old('start_month_of_year') }}">
+                                        @for ($i = 1; $i < 13; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ old('start_month_of_year') == "$i" ||
+                                                (isset($company) && old('start_month_of_year', $company->start_month_of_year) == "$i")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <div class="ui basic label">
+                                        月
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="start_day_of_month">起算日（月の始まり）</label>
+                                <div class="ui right labeled input">
+                                    <select class="ui fluid dropdown" name="start_day_of_month"
+                                        value="{{ old('start_day_of_month') }}">
+                                        @for ($i = 1; $i < 32; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ old('start_day_of_month') == "$i" ||
+                                                (isset($company) && old('start_day_of_month', $company->start_day_of_month) == "$i")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <div class="ui basic label">
+                                        日
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="start_day_of_week">起算日（曜日の始まり）</label>
+                                <select class="ui fluid dropdown" name="start_day_of_week"
+                                    value="{{ old('start_day_of_week') }}">
+                                    @foreach ($start_days_of_week as $k => $value)
+                                        <option value="{{ $k }}"
+                                            {{ old('start_day_of_week') == "$k" ||
+                                            (isset($company) && old('start_day_of_week', $company->start_day_of_week) == "$k")
+                                                ? 'selected'
+                                                : '' }}>
+                                            {{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="field {{ err($errors, 'stock_code') }} my-2">
                             <div class="ui toggle checkbox">
                                 @if (!isset($company_id))
@@ -805,8 +869,17 @@
             <h2 class="pl-1">事業所情報</h2>
 
             <!-- 支店情報 -->
-            <livewire:admin-branch-form :branch="$branch" :prefectures="$prefectures" :labor_insurance_payment_method="$labor_insurance_payment_method" :place_type="$place_type"
-                :start_days_of_week="$start_days_of_week" :work_style_type="$work_style_type" :errors="$errors" :id="$company_id ?? ''" />
+            @livewire('branch-form', [
+                'id' => $company_id ?? '',
+                'branch' => $branch,
+                'departments' => $departments ?? [],
+                'prefectures' => $prefectures,
+                'labor_insurance_payment_method' => $labor_insurance_payment_method,
+                'place_type' => $place_type,
+                'start_days_of_week' => $start_days_of_week,
+                'work_style_type' => $work_style_type,
+                'errors' => $errors,
+            ])
 
             <div class="my-4" style="text-align: right; margin-right: 1em;">
                 <a class="ui button negative basic" href="{{ route('admin.company') }}"
@@ -818,6 +891,9 @@
                 @endif
             </div>
         </form>
+        <div class="ui modal branch-payment-confirm-modal">
+            <livewire:branch-payment-confirm-modal />
+        </div>
     </section>
 
     <!-- 業種選択モーダル -->

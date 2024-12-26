@@ -40,24 +40,29 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_amount']" :file_original_names="[
-                                    'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
-                                    'written_consent' => '支給申請に係る承諾書',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
+                                        'written_consent' => '支給申請に係る承諾書',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -65,12 +70,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.senior_employment_continuation_benefit_claim_form />
-                                </div>
+                                <x-form.senior_employment_continuation_benefit_claim_form />
                             </div>
                         </div>
                     </div>
@@ -116,7 +119,7 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
 
-                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name', $company->representative) }}');
+                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name') }}' ? '{{ old('employer_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J65_005F_8E73_8A4F_8BC7_94D4').val(
@@ -154,10 +157,12 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
                 const todaySet = data['todaySet'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+                const employee_prefecture_data = data['employee_prefecture_data'];
                 var employmentInsuredNo = employee.employment_insured_no;
                 if (employmentInsuredNo && employmentInsuredNo.length === 11) {
                     var employmentInsuredNo4digit = employmentInsuredNo.substring(0, 4);
@@ -204,9 +209,11 @@
                     $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
                         employee.first_name_kana);
                 }
+                const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
+                    employee.address_ward || "") + (employee.address_apartment || "");
                 if (employee.last_name && employee.first_name) {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
-                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
+                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '　' + employee.last_name + '　' + employee.first_name);
                 } else {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val("");
                     $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val("");
@@ -223,15 +230,12 @@
                 $('#J50_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (
                     branch.address_city ?? '') + (branch.address_ward ?? '') + (branch
                     .address_apartment ?? ''));
+                $('#J60_005F_82A0_82C4_90E6').val(hello_work);
             }
 
             setTimeout(() => {
                 $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
                     $('#J2_005F_8E81_96BC').val($(this).val());
-                });
-                $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
-                    console.log('a');
-                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val($(this).val());
                 });
             }, 0);
 

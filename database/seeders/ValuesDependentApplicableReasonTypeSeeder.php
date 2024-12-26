@@ -12,6 +12,7 @@ class ValuesDependentApplicableReasonTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_applicable_reason_type')->truncate();
         DB::table('m_values_dependent_applicable_reason_type')->insert([
             ['name' => '留学'],
             ['name' => '同行家族'],

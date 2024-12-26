@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuredTransferNotificationRequest extends BaseRequest
@@ -61,6 +62,7 @@ class EmploymentInsuredTransferNotificationRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
@@ -96,8 +98,8 @@ class EmploymentInsuredTransferNotificationRequest extends BaseRequest
             'name_changed_date_month' => 'nullable|int|between:1,12|required_with:name_changed_date_year,name_changed_date_era,name_changed_date_date',
             'name_changed_date_date' => 'nullable|int|between:1,31|required_with:name_changed_date_year,name_changed_date_month,name_changed_date_era',
             'remarks' => 'nullable|string|max:255',
-            'headquarter_address' => 'string|max:255|regex:/\A[ぁ-んァ-ンー一-龥０-９ａ-ｚＡ-Ｚ－　]+\z/u',
-            'headquarter_name' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々]+[　][ぁ-んァ-ヴー一-龥々]+$/u',
+            'headquarter_address' => ['required', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'headquarter_name' => ['required', 'string', 'max:32', new FullwidthAndMiscellaneousChars(true)],
             'headquarter_tel_area_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'headquarter_tel_city_code' => 'string|regex:/^[0-9]{1,5}$/u',
             'headquarter_tel_subscriber_code' => 'string|regex:/^[0-9]{1,5}$/u',

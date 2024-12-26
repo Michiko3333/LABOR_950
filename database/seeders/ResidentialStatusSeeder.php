@@ -12,6 +12,7 @@ class ResidentialStatusSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_residential_status')->truncate();
         DB::table('m_residential_status')->insert([
             [
                 'setting_value' => '35',

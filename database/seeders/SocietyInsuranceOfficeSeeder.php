@@ -12,6 +12,7 @@ class SocietyInsuranceOfficeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_social_insurance_office')->truncate();
         DB::table('m_social_insurance_office')->insert([
             [
                 'name'   => '札幌東',

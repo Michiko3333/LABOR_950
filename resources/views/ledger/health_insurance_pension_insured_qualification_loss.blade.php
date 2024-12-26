@@ -44,26 +44,31 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_insurance', 'required_dependent']" :file_original_names="[
-                                    'insurance' => '被保険者証',
-                                    'dependent' => '被扶養者証',
-                                    'remote_dependent' => '遠隔地被扶養者証',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.jpg,.jpeg,.pdf'"
-                                    :separateDisabled='true' />
+                                <x-ledger-attachment :file_original_names="[
+                                        'insurance' => '被保険者証',
+                                        'dependent' => '被扶養者証',
+                                        'remote_dependent' => '遠隔地被扶養者証',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.jpg,.jpeg,.pdf'"
+                                        :separateDisabled='true' />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -71,9 +76,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
-                            <div class="content" style="margin-bottom: 20px;">
+                            <div class="content">
                                 <x-form.health_insurance_pension_insured_qualification_loss :dataUri="$dataUri" />
                             </div>
                         </div>
@@ -115,7 +120,7 @@
                 $('#N7_P1').val('{{ old('submission_month') ?? $todaySet['month'] }}');
                 $('#N8_P1').val('{{ old('submission_day') ?? $todaySet['day'] }}');
 
-                $('#N17_P1').val('{{ old('entrepreneur_name', $company->representative) }}');
+                $('#N17_P1').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                 @else
@@ -128,12 +133,14 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const insurance_loss_convert_date = data['insurance_loss_convert_date'];
                 const over_70_non_applicable_convert_date = data['over_70_non_applicable_convert_date'];
                 const employment_retirement_convert_date = data['employment_retirement_convert_date'];
                 const passed_away_convert_date = data['passed_away_convert_date'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
+                const loss_convert_date = data['loss_convert_date'];
                 var eraMapping = {
                     '昭和': '5',
                     '平成': '7',
@@ -145,10 +152,10 @@
                 $('#N28_P1').val(birthdayConvertJapan['year'] ?? "");
                 $('#N29_P1').val(birthdayConvertJapan['month'] ?? "");
                 $('#N30_P1').val(birthdayConvertJapan['day'] ?? "");
-                $('#N33_P1').val(insurance_loss_convert_date['era'] ?? "");
-                $('#N34_P1').val(insurance_loss_convert_date['year'] ?? "");
-                $('#N35_P1').val(insurance_loss_convert_date['month'] ?? "");
-                $('#N36_P1').val(insurance_loss_convert_date['day'] ?? "");
+                $('#N33_P1').val(loss_convert_date['era'] ?? "");
+                $('#N34_P1').val(loss_convert_date['year'] ?? "");
+                $('#N35_P1').val(loss_convert_date['month'] ?? "");
+                $('#N36_P1').val(loss_convert_date['day'] ?? "");
                 $('#N9_P1').val(branch.pension_office_reference_prefecture || '');
                 $('#N10_P1').val(branch.pension_office_reference_no_cities || '');
                 $('#N11_P1').val(branch.pension_office_reference_no_office || '');
@@ -163,7 +170,7 @@
                 }
                 $('#N15_P1').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch.address_ward ??
                     '') + (branch.address_apartment ?? ''));
-                $('#N16_P1').val(branch.name || '');
+                $('#N16_P1').val(company.name || '');
                 $('#N19_P1').val(branch.tel_area_code || '');
                 $('#N20_P1').val(branch.tel_city_code || '');
                 $('#N21_P1').val(branch.tel_subscriber_code || '');

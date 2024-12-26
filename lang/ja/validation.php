@@ -24,7 +24,7 @@ return [
     'array' => 'The :attribute field must be an array.',
     'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
     'before' => 'The :attribute field must be a date before :date.',
-    'before_or_equal' => 'The :attribute field must be a date before or equal to :date.',
+    'before_or_equal' => ':attributeは本日以前の日付を選択してください。',
     'between' => [
         'array' => 'The :attribute field must have between :min and :max items.',
         'file' => 'The :attribute field must be between :min and :max kilobytes.',
@@ -86,7 +86,7 @@ return [
     'lte' => [
         'array' => 'The :attribute field must not have more than :value items.',
         'file' => 'The :attribute field must be less than or equal to :value kilobytes.',
-        'numeric' => 'The :attribute field must be less than or equal to :value.',
+        'numeric' => ':attributeは:value以前を入力してください',
         'string' => 'The :attribute field must be less than or equal to :value characters.',
     ],
     'mac_address' => 'The :attribute field must be a valid MAC address.',

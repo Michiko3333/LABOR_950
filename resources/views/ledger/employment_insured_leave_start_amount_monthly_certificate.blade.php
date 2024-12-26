@@ -41,26 +41,31 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_certificate_or_payment_status']" :file_original_names="[
-                                    'wage_certificate_or_payment_status' =>
-                                        '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
-                                    'childcare' => '育児の事実が確認できる書類',
-                                    'nursing_care' => '介護の事実が確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'wage_certificate_or_payment_status' =>
+                                            '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                        'childcare' => '育児の事実が確認できる書類',
+                                        'nursing_care' => '介護の事実が確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -68,9 +73,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
-                            <div class="content" style="overflow-x: auto; overflow-y: auto; max-height: 650px;">
+                            <div class="content" style="overflow-y: auto;">
                                 <x-form.employment_insured_leave_start_amount_monthly_certificate />
                             </div>
                         </div>
@@ -109,7 +114,7 @@
 
         <script type="module">
             $(document).ready(function() {
-                $('#J28_005F_8E81_96BC').val('{{ old('headquarters_employee_name', $company->representative) }}');
+                $('#J28_005F_8E81_96BC').val('{{ old('headquarters_employee_name') }}' ? '{{ old('headquarters_employee_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J74_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
@@ -138,6 +143,7 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
                 const headquarters = data['headquarters'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
@@ -164,9 +170,9 @@
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
-                $('#J16_005F_96BC_8FCC').val(branch.name);
-                const branchAddress = (branch_prefecture_data.name || "") + ' ' + (branch.address_city || "") + ' ' + (branch
-                    .address_ward || "") + ' ' + (branch.address_apartment || "");
+                $('#J16_005F_96BC_8FCC').val(company.name);
+                const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
+                    .address_ward || "") + (branch.address_apartment || "");
                 $('#J17_005F_8F8A_8DDD_926E').val(branchAddress);
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');
@@ -178,14 +184,14 @@
                     $('#J21_005F_947A_9242_8BC7_94D4_8D86').val("");
                     $('#J22_005F_92AC_88E6_94D4_8D86').val("");
                 }
-                const employeeAddress = (employee_prefecture_data.name || "") + ' ' + (employee.address_city || "") + ' ' + (
-                    employee.address_ward || "") + ' ' + (employee.address_apartment || "");
+                const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
+                    employee.address_ward || "");
                 $('#J23_005F_8F5A_8F8A').val(employeeAddress);
                 $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code);
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code);
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code);
-                const headquarterAddress = (branch_prefecture_data.name || "") + ' ' + (branch.address_city || "") +
-                    ' ' + (branch.address_ward || "") + ' ' + (branch.address_apartment || "");
+                const headquarterAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") 
+                + (branch.address_ward || "") + (branch.address_apartment || "");
                 $('#J27_005F_8F5A_8F8A').val(headquarterAddress);
             }
             $('#J14_005F_8C8E').on('change', function() {

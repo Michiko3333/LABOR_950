@@ -12,6 +12,7 @@ class ValuesDependentDependentOccupationTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_dependent_dependent_occupation_type')->truncate();
         DB::table('m_values_dependent_dependent_occupation_type')->insert([
             ['name' => '無職'],
             ['name' => 'パート'],

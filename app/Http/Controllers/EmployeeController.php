@@ -27,7 +27,13 @@ use App\Models\Managerial_position;
 use App\Models\Residential_status;
 use App\Models\User;
 use App\Models\Dependent;
+use App\Models\FilterEmployeeList;
+use App\Models\UserFilterEmployeeList;
 use App\Models\Values_employee_insured_age_type;
+use App\Models\Qualifications;
+use App\Models\Employee_qualifications;
+use App\Models\Company;
+use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +64,7 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
+        $currentUser = CurrentUser::info();
         $currentCompany = CurrentUser::CurrentCompany();
         $division = $currentCompany->company_division;
 
@@ -66,7 +73,73 @@ class EmployeeController extends Controller
             'limit' => 20,
             'search' => $request->input('search'),
         ];
-        return view('employee.employees', compact('division'));
+
+        $columnList = FilterEmployeeList::select('name', 'value');
+
+        if ($userPermission->isBasicDepartment()) {
+            $columnList = $columnList->where('hidden_basic_department', 0);
+        }
+
+        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
+        $userDefaultList = [];
+        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        if (count($userList) > 0) {
+            foreach ($userList as $key => $value) {
+                $key = array_search($value, array_column($masterColumnList, 'value'));
+                $userDefaultList[] = $masterColumnList[$key];
+            }
+        } else {
+            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
+            $userDefaultList = $defaultList;
+        }
+
+        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList]);
+    }
+
+    public function closure_information_list(Request $request)
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(14)) {
+            return redirect()->route('home.index');
+        }
+
+        $currentUser = CurrentUser::info();
+        $currentCompany = CurrentUser::CurrentCompany();
+        $company_id = $currentCompany->id;
+        $division = $currentCompany->company_division;
+
+        $paginate = [
+            'page' => $request->input('page', 1),
+            'limit' => 20,
+            'search' => $request->input('search'),
+        ];
+
+        $columnList = FilterEmployeeList::select('name', 'value');
+
+        if ($userPermission->isBasicDepartment()) {
+            $columnList = $columnList->where('hidden_basic_department', 0);
+        }
+
+        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
+        $userDefaultList = [];
+        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        if (count($userList) > 0) {
+            foreach ($userList as $key => $value) {
+                $key = array_search($value, array_column($masterColumnList, 'value'));
+                $userDefaultList[] = $masterColumnList[$key];
+            }
+        } else {
+            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
+            $userDefaultList = $defaultList;
+        }
+
+
+        return view('employee.closure_information', [
+            'division' => $division,
+            'columnList' => $masterColumnList,
+            'defaultList' => $userDefaultList,
+            'company_id' => $company_id,
+        ]);
     }
 
     public function employee_update(Request $request, $id)
@@ -93,7 +166,7 @@ class EmployeeController extends Controller
                     $filePath = '/' . $file . '?v=' . time();
                 }
             }
-            if(!isset($filePath)) {
+            if (!isset($filePath)) {
                 $filePath = '/img/image.png';
             }
         }
@@ -113,13 +186,19 @@ class EmployeeController extends Controller
         $employment_insurance_type = Values_employee_employment_insurance_type::pluck('name', 'id');
         $insurance_loss_reason = Values_employee_insurance_loss_reason::pluck('name', 'id');
         $over_retired_insurance_loss_reason = Values_employee_over_retired_insurance_loss_reason::pluck('name', 'id');
-        $occupation_type = Values_employee_occupation_type::pluck('name', 'id');
+        $occupation_type = Values_employee_occupation_type::pluck('name', 'option_no');
         $departments = Employee_department::where('employee_id', $id)->where('delete_flg', 0)->pluck('department_id');
         $departments_list = Department::select('id', 'name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $managerial_position_list = Managerial_position::where('company_id', $company->id)->where('delete_flg', 0)->get();
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
-        $dependent = $employee->dependent()->where('delete_flg', 0)->get();
+        $dependent = $employee->dependent()->where('delete_flg', 0)->orderBy('history_flg', 'desc')->get();
+        $qualifications = Qualifications::select('id', 'qualification_name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
+        $employee_qualifications = Employee_qualifications::join('m_qualifications', 'm_employee_qualifications.qualifications_id', '=', 'm_qualifications.id')
+            ->where('m_employee_qualifications.employee_id', $employee->id)
+            ->where('m_qualifications.delete_flg', 0)
+            ->where('m_employee_qualifications.delete_flg', 0)
+            ->pluck('m_qualifications.id');
 
         return view('employee.employee_create', [
             'filePath' => $filePath,
@@ -142,6 +221,8 @@ class EmployeeController extends Controller
             'residential_status' => $residential_status,
             'employee_insured_age_type' => $employee_insured_age_type,
             'dependent' => $dependent,
+            'qualifications' => $qualifications,
+            'employee_qualifications' => $employee_qualifications,
         ]);
     }
 
@@ -150,6 +231,40 @@ class EmployeeController extends Controller
         $userPermission = new Permission();
         if (!$userPermission->isReadableFor(6) || !$userPermission->isWritableFor(6)) {
             return redirect()->route('home.index');
+        }
+
+        $currentUser = CurrentUser::info();
+        $sinner = User::where('employee_id', $currentUser->id)->first();
+        $existsCompany = CurrentUser::currentCompany();
+        $existsBranch = Branch::where('id', $request->input('branch_id'))->where('company_id', $existsCompany->id)->first();
+        if (empty($existsBranch)) {
+            \Log::error('不正利用者：' . $sinner->email);
+            return abort(404);
+        }
+        if ($request->input('departments')) {
+            foreach ($request->input('departments') as $department) {
+                $existsDepartment = Department::where('id', $department)->where('company_id', $existsCompany->id)->first();
+                if (empty($existsDepartment)) {
+                    \Log::error('不正利用者：' . $sinner->email);
+                    return abort(404);
+                }
+            }
+        }
+        if ($request->input('managerial_position_id')) {
+            $existsManagerialPosition = Managerial_position::where('id', $request->input('managerial_position_id'))->where('company_id', $existsCompany->id)->first();
+            if (empty($existsManagerialPosition)) {
+                \Log::error('不正利用者：' . $sinner->email);
+                return abort(404);
+            }
+        }
+        if ($request->input('qualifications')) {
+            foreach ($request->input('qualifications') as $qualification) {
+                $existsQualification = Qualifications::where('id', $qualification)->where('company_id', $existsCompany->id)->first();
+                if (empty($existsQualification)) {
+                    \Log::error('不正利用者：' . $sinner->email);
+                    return abort(404);
+                }
+            }
         }
 
         $fax = implode('-', [
@@ -273,7 +388,7 @@ class EmployeeController extends Controller
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                     'blood_type' => $request->input('blood_type'),
-                    'qualifications' => $request->input('qualifications'),
+                    // 'qualifications' => $request->input('qualifications'),
                     'insured_status' => $request->input('insured_status'),
                     'health_insurance_association_number' => $request->input('health_insurance_association_number'),
                     'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),
@@ -289,10 +404,11 @@ class EmployeeController extends Controller
             $employee = Employee::find($request->input('employee_id'));
             $employee->update(['mynumber_card_no' => $request->input('mynumber_card_no')]);
 
-            $deids = $request->input('de-id',[]);
+            $deids = $request->input('de-id', []);
             $excepts = [];
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
+
                 if ($deid > 0) {
                     $dependent = Dependent::find($deid);
                     if ($dependent) {
@@ -306,6 +422,27 @@ class EmployeeController extends Controller
                 }
             }
             Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+
+
+            $qualifications = $request->input('qualifications', []);
+            Employee_qualifications::whereNotIn('qualifications_id', $qualifications)
+                ->where('employee_id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->update(['delete_flg' => 1]);
+
+            $existingQualificationsRecords = Employee_qualifications::whereIn('qualifications_id', $qualifications)->where('employee_id', $request->input('employee_id'))->where('delete_flg', 0)->get();
+
+            $existingQualificationsIds = $existingQualificationsRecords->pluck('qualifications_id')->toArray();
+            $newQualificationsIds = array_diff($qualifications, $existingQualificationsIds);
+            if (!empty($newQualificationsIds)) {
+                foreach ($newQualificationsIds as $qualificationsId) {
+                    Employee_qualifications::insert([
+                        'employee_id' => $request->input('employee_id'),
+                        'qualifications_id' => $qualificationsId,
+                    ]);
+                }
+            }
+
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)
@@ -333,8 +470,8 @@ class EmployeeController extends Controller
             $company_id = $company->id;
             $icon_file = $request->file('icon_file');
             $icon_delete_flg = $request->input('icon_delete_flg');
-            if($company_id && $employee_id) {
-                if($icon_delete_flg === "1") {
+            if ($company_id && $employee_id) {
+                if ($icon_delete_flg === "1") {
                     $directory = 'photo/' . $company_id;
 
                     foreach (Storage::files($directory) as $file) {
@@ -398,11 +535,13 @@ class EmployeeController extends Controller
         } else {
             $formatted_de_date_of_authorisation = $input_date2;
         }
-        $input_date3 = $requestData['de-date_of_expiry'][$index];
-        if (!is_null($input_date3) && strtotime($input_date3) === false) {
-            $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
-        } else {
-            $formatted_de_date_of_expiry = $input_date3;
+        if (isset($requestData['de-date_of_expiry'][$index])) {
+            $input_date3 = $requestData['de-date_of_expiry'][$index];
+            if (!is_null($input_date3) && strtotime($input_date3) === false) {
+                $formatted_de_date_of_expiry = Carbon::createFromFormat('Y年n月j日', $input_date3)->format('Y-m-d');
+            } else {
+                $formatted_de_date_of_expiry = $input_date3;
+            }
         }
 
         return [
@@ -410,23 +549,23 @@ class EmployeeController extends Controller
             'relationship_spouse' => $requestData['de-relationship_spouse'][$index] ?? null,
             'relationship_dependent' => $requestData['de-relationship_dependent'][$index] ?? null,
             'spouse_flag' => $requestData['de-spouse_flag'][$index] ?? null,
+            'dependent_type' => $requestData['de-dependent_type'][$index] ?? null,
             'last_name' => $requestData['de-last_name'][$index],
             'first_name' => $requestData['de-first_name'][$index],
             'last_name_kana' => $requestData['de-last_name_kana'][$index],
             'first_name_kana' => $requestData['de-first_name_kana'][$index],
             'sex' => $requestData['de-sex'][$index],
-            'age' => $requestData['de-age'][$index],
             'occupation' => $requestData['de-occupation'][$index],
             'annual_income' => $requestData['de-annual_income'][$index],
             'contact' => $requestData['de-contact'][$index],
-            'dependent_type' => $requestData['de-dependent_type'][$index],
             'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
             'pension_no' => $requestData['de-pension_no'][$index],
             'other_1' => $requestData['de-other_1'][$index],
             'other_2' => $requestData['de-other_2'][$index],
+            'history_flg' => $requestData['de-history'][$index] ?? 0,
             'birthday' => $formatted_de_birthday,
             'date_of_authorisation' => $formatted_de_date_of_authorisation,
-            'date_of_expiry' => $formatted_de_date_of_expiry,
+            'date_of_expiry' => $formatted_de_date_of_expiry ?? null,
         ];
     }
 }

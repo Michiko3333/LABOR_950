@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
@@ -48,6 +49,7 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_amount_days_time" => 'required_unless:radio_file_amount_days_time,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_written_consent" => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -84,27 +86,27 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
             'payer_day1' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'payer_end_month1' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'payer_end_day1' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'workday_count1' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours1' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid1' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count1' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours1' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid1' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'payer_japan_era2' => 'nullable|string|max:2',
             'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:payer_month2,payer_day2,payer_month_end2,payer_day_end2',
             'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_day2,payer_month_end2,payer_day_end2',
             'payer_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_month_end2,payer_day_end2',
             'payer_end_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_day2,payer_day_end2',
             'payer_end_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:payer_japan_era_year2,payer_month2,payer_day2,payer_month_end2',
-            'workday_count2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours2' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count2' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours2' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid2' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'last_payer_japan_era' => 'nullable|string|max:2',
             'last_payer_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_end_month,last_payer_end_day',
             'last_payer_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:last_payer_japan_era_year,last_payer_japan_day,last_payer_end_month,last_payer_end_day',
             'last_payer_japan_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_era_year,last_payer_end_month,last_payer_end_day',
             'last_payer_end_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_japan_era_year,last_payer_end_day',
             'last_payer_end_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_if:last_payer_month,last_payer_japan_day,last_payer_end_month,last_payer_japan_era_year',
-            'workday_count3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours3' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count3' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours3' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid3' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'return_from_resignation_japan_era' => 'nullable|string|max:2',
             'return_from_resignation_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_if:return_from_resignation_month,return_from_resignation_day',
             'return_from_resignation_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_if:return_from_resignation_japan_era_year,return_from_resignation_day',
@@ -126,11 +128,11 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
             'today_japan_era_year' => 'required|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'today_japan_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
+            'headquarters_address' => ['nullable', 'string', 'max:63', new FullwidthAndMiscellaneousChars(true)],
             'headquarters_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'employer_company_managerial_position_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'employer_company_managerial_position_name' => ['nullable', 'string', 'max:60', new FullwidthAndMiscellaneousChars(true)],
             'destination' => 'required|string|max:255|regex:/\A[ぁ-んァ-ンー一-龥々０-Ａ-Ｚ　]+\z/u',
             'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',

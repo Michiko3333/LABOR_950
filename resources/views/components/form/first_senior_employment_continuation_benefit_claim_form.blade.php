@@ -1,3 +1,8 @@
+<!-- 4950008680045000 -->
+<!-- 雇用保険被保険者六十歳到達時等賃金証明書の提出及び高年齢雇用継続給付受給資格確認・高年齢雇用継続給付（高年齢雇用継続基本給付金・高年齢再就職給付金）の申請（初回申請）（令和４年６月以降手続き）/高年齢雇用継続給付受給資格確認票・（初回）高年齢雇用継続給付支給申請書 -->
+<!-- 4950008680044000 -->
+<!-- 雇用保険被保険者六十歳到達時等賃金証明書の提出及び高年齢雇用継続給付受給資格確認（令和４年６月以降手続き）/高年齢雇用継続給付受給資格確認票・（初回）高年齢雇用継続給付支給申請書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:797px; height:1121px;">
 
     <script type="text/javascript">
@@ -574,13 +579,13 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:495px; top:634px; width:217px; line-height:49px; height:49px; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px;"><input
             tabindex="72"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:216px; height:48px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J71_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
+            id="J71_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="64"
             name="employer_company_managerial_position_name"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:495px; top:575px; width:236px; line-height:38px; height:39px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="68"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:236px; height:38px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J67_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquartersAddress') }}"
+            id="J67_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquartersAddress') }}" maxlength="66"
             name="headquartersAddress"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:70px; top:716px; width:50px; height:17px; font-size:11px; padding:0px 0px 0px 0px;"><input

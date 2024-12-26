@@ -41,14 +41,17 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
@@ -59,6 +62,8 @@
                                 ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -66,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui top attached tabular menu">
@@ -135,9 +140,11 @@
                 $('#J62_005F_93FA').val('{{ old('notification_day', $today['date']) }}');
 
                 $('#J64_005F_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
                 $('#J28_005F_8E81_96BC_005F_89BA_9269').val(
                     '{{ old('employer_managerial_position_name', $company->representative) }}');
+                $('#J27_005F_8E81_96BC_005F_8FE3_9269').val(
+                    '{{ old('employer_managerial_position_name', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
@@ -179,6 +186,7 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const hello_work = data['hello_work'];
                 const countryValue = data['country_value'];
                 const residentialStatusValue = data['residential_status_value'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
@@ -233,13 +241,10 @@
                     $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
                     $('#J6_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
                 }
-                if (branch.insurance_office_no != null && branch.insurance_office_no.length == 11) {
-                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.insurance_office_no.substring(0, 4));
-                    $('#J8_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
-                    $('#J9_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10, 11));
-                    $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.insurance_office_no.substring(0, 4));
-                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
-                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10, 11));
+                if (branch.employment_insurance_office_no != null && branch.employment_insurance_office_no.length == 11) {
+                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.employment_insurance_office_no.substring(0, 4));
+                    $('#J8_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.employment_insurance_office_no.substring(4, 10));
+                    $('#J9_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.employment_insurance_office_no.substring(10, 11));
                 } else {
                     $('#J7_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val('');
                     $('#J8_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
@@ -275,7 +280,7 @@
                 $('#J35_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
                 $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(insured_age_type_data ?? "");
                 $('#J41_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
-                $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(branch.name);
+                $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(company.name);
                 $('#J45_005F_8F5A_8F8A_9694_82CD_8B8F_8F8A').val((employee_prefecture_data.name ?? '') + (employee
                     .address_city ??
                     '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
@@ -289,11 +294,24 @@
                         $('#J50_005F_8C8E').val(parseInt(stay_date_period[1], 10));
                         $('#J51_005F_93FA').val(parseInt(stay_date_period[2], 10));
                     }
-                    $('#J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').val(employee.employment_type ?? '');
+                    if (employee.dispatch_contract_completion != '' && employee.dispatch_contract_completion != null) {
+                        $('#J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').val(employee.dispatch_contract_completion);
+                    } else {
+                        $('#J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').val('1');
+                    }
                     $('#J53_005F_8D91_90D0_005F_926E_88E6').val(countryValue ?? "");
                     $('#J54_005F_8DDD_97AF_8E91_8A69').val(residentialStatusValue ?? "");
                     $('#J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').val(employee
                         .residential_status_unknown_reason ?? '');
+                    $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').prop('disabled', false);
+                    $('#J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86').prop('disabled', false);
+                    $('#J49_005F_944E').prop('disabled', false);
+                    $('#J50_005F_8C8E').prop('disabled', false);
+                    $('#J51_005F_93FA').prop('disabled', false);
+                    $('#J52_005F_9468_8CAD_005F_90BF_9589_8F41_984A_8BE6_95AA').prop('disabled', false);
+                    $('#J53_005F_8D91_90D0_005F_926E_88E6').prop('disabled', false);
+                    $('#J54_005F_8DDD_97AF_8E91_8A69').prop('disabled', false);
+                    $('#J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752').prop('disabled', false);
                 } else {
                     $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').val('').prop('disabled', true);
                     $('#J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86').val('').prop('disabled', true);
@@ -310,6 +328,7 @@
                 $('#J65_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code ?? '');
                 $('#J66_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code ?? '');
                 $('#J67_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code ?? '');
+                $('#J68_005F_82A0_82C4_90E6').val(hello_work);
 
                 // 帳票2枚目
                 if (employee.employment_insured_no && employee.employment_insured_no.length == 11) {
@@ -321,10 +340,10 @@
                     $('#J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
                     $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
                 }
-                if (branch.insurance_office_no && branch.insurance_office_no.length == 11) {
-                    $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.insurance_office_no.substring(0, 4));
-                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.insurance_office_no.substring(4, 10));
-                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.insurance_office_no.substring(10, 11));
+                if (branch.employment_insurance_office_no && branch.employment_insurance_office_no.length == 11) {
+                    $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val(branch.employment_insurance_office_no.substring(0, 4));
+                    $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val(branch.employment_insurance_office_no.substring(4, 10));
+                    $('#J7_005F_8E96_8BC6_8F8A_94D4_8D86CD').val(branch.employment_insurance_office_no.substring(10, 11));
                 } else {
                     $('#J5_005F_8E96_8BC6_8F8A_94D4_8D864_8C85').val('');
                     $('#J6_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
@@ -337,7 +356,7 @@
                 $('#J12_005F_944').val(employmentRetirementConvertDate['year'] ?? "");
                 $('#J13_005F_8C8').val(employmentRetirementConvertDate['month'] ?? "");
                 $('#J14_005F_93F').val(employmentRetirementConvertDate['day'] ?? "");
-                $('#J15_005F_96BC_8FCC').val(branch.name ?? '');
+                $('#J15_005F_96BC_8FCC').val(company.name ?? '');
                 $('#J16_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#J17_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code ?? '');
@@ -586,9 +605,6 @@
             });
             $('#J63_005F_8F5A_8F8A').on('input', function() {
                 $('#J26_005F_8F5A_8F8A').val($(this).val());
-            });
-            $('#J64_005F_8E81_96BC').on('input', function() {
-                $('#J28_005F_8E81_96BC_005F_89BA_9269').val($(this).val());
             });
             $('#J71_005F_944E').on('change', function() {
                 $('#J73_005F_944E').val($(this).val());

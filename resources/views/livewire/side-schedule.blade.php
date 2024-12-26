@@ -10,7 +10,7 @@
         @if ($userPermission->isReadableFor(11))
             <div class="schedule-list">
                 @foreach ($events as $event)
-                    <div class="schedule-item {{ $event[5] }}">
+                    <div class="schedule-item">
                         <h2>{{ $event[1] }}</h2>
                         <p class="datetime">
                             {{ date('Y年m月d日', strtotime($event[2])) }}

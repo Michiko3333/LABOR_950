@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
@@ -21,6 +22,8 @@ class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "file_nursing_facts" => 'required_unless:radio_file_nursing_facts,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_nursing_care_recipient" => 'required_unless:radio_file_nursing_care_recipient,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -64,24 +67,24 @@ class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
             'pay_target_period_day_start_1' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'pay_target_period_month_end_1' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'pay_target_period_day_end_1' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'full_time_leave_days_1' => 'int|between:1,99|regex:/^[0-9]{1,7}$/u',
-            'paid_wage_amount_1' => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'full_time_leave_days_1' => 'int|between:0,99|regex:/^[0-9]{1,7}$/u',
+            'paid_wage_amount_1' => 'int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'pay_target_period_era_2' => 'nullable|string|max:2',
             'pay_target_period_year_start_2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
             'pay_target_period_month_start_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_year_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
             'pay_target_period_day_start_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_year_start_2,pay_target_period_month_end_2,pay_target_period_day_end_2',
             'pay_target_period_month_end_2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_year_start_2,pay_target_period_day_end_2',
             'pay_target_period_day_end_2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_2,pay_target_period_day_start_2,pay_target_period_month_end_2,pay_target_period_year_start_2',
-            'full_time_leave_days_2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,7}$/u',
-            'paid_wage_amount_2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'full_time_leave_days_2' => 'nullable|int|between:0,99|regex:/^[0-9]{1,7}$/u',
+            'paid_wage_amount_2' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'pay_target_period_era_3' => 'nullable|string|max:2',
             'pay_target_period_year_start_3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
             'pay_target_period_month_start_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_year_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
             'pay_target_period_day_start_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_year_start_3,pay_target_period_month_end_3,pay_target_period_day_end_3',
             'pay_target_period_month_end_3' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_year_start_3,pay_target_period_day_end_3',
             'pay_target_period_day_end_3' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:pay_target_period_month_start_3,pay_target_period_day_start_3,pay_target_period_month_end_3,pay_target_period_year_start_3',
-            'full_time_leave_days_3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,7}$/u',
-            'paid_wage_amount_3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'full_time_leave_days_3' => 'nullable|int|between:0,99|regex:/^[0-9]{1,7}$/u',
+            'paid_wage_amount_3' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'caregiver_leave_end_date_era' => 'nullable|string|max:2',
             'caregiver_leave_end_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_end_date_month,caregiver_leave_end_date_day',
             'caregiver_leave_end_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:caregiver_leave_end_date_year,caregiver_leave_end_date_year',
@@ -91,8 +94,8 @@ class CaregiverLeaveBenefitApplicationRequest extends BaseRequest
             'verification_date_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'verification_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'verification_date_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'branch' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
-            'entrepreneur_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'branch' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
+            'entrepreneur_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'application_date_era' => 'string|max:2',
             'application_date_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'application_date_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicApplicationRequest extends BaseRequest
@@ -42,15 +43,16 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "radio_file_other" => 'nullable|string|in:2',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "business_location_ship_owner_address" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            "business_name_name_of_ship_owner" => 'required|string|max:25',
-            "business_owner_name_representative_name" => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "business_location_ship_owner_address" => ['required', 'string', 'max:50', new FullwidthAndMiscellaneousChars(true)],
+            "business_name_name_of_ship_owner" => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
+            "business_owner_name_representative_name" => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
             "changed_bonus_payment_schedule_month1" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],
             "changed_bonus_payment_schedule_month2" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],
             "changed_bonus_payment_schedule_month3" => ['nullable', 'regex:/^([0-9]|1[0-2]|00)$/'],

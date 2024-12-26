@@ -12,6 +12,7 @@ class ValuesCompanyCompanyDivisionSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_company_company_division')->truncate();
         DB::table('m_values_company_company_division')->insert([
             ['name' => '労務事務所'],
             ['name' => '顧客企業']

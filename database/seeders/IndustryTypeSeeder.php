@@ -12,6 +12,7 @@ class IndustryTypeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_industry_type')->truncate();
         DB::table('m_industry_type')->insert([
             [
                 'industry_type_code'   => '0100',

@@ -220,7 +220,10 @@
             color: var(--color-blue) !important;
             padding: 0.8em 0 !important;
         }
-
+        .dropdown-readonly {
+            border: none !important;
+            pointer-events: none !important;
+        }
         @media screen and (max-width: 1250px) {
             .right-container {
                 display: none;
@@ -281,6 +284,10 @@
             $("section.content textarea").addClass("permission-readonly");
             $(".hidden-readonly").remove();
             $("i.calendar.icon").remove();
+            $(".ui.fluid.dropdown.multiple i.dropdown.icon").remove();
+            $("i.delete.icon").remove();
+            $(".branch-calendar").addClass("dropdown-readonly");
+            $("section.content .dropdown.multiple").addClass("dropdown-readonly");
         }
     </script>
     {{ $header ?? '' }}

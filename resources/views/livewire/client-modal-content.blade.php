@@ -28,19 +28,21 @@
         <div class="two fields">
             <div class="field">
                 <label>契約開始年月日</label>
-                <div class="ui calendar client-calendar" wire:ignore>
+                <div class="ui calendar client-calendar start">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="startCalendar" wire:model.live="startDate" placeholder="YYYY年M月D日">
+                        <input type="text" id="startCalendar" class="startCalendar" wire:model.live="startDate"
+                            placeholder="YYYY年M月D日">
                     </div>
                 </div>
             </div>
             <div class="field">
                 <label>契約終了年月日</label>
-                <div class="ui calendar client-calendar" wire:ignore>
+                <div class="ui calendar client-calendar end">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="endCalendar" wire:model.live="endDate" placeholder="YYYY年M月D日">
+                        <input type="text" id="endCalendar" class="endCalendar" wire:model.live="endDate"
+                            placeholder="YYYY年M月D日">
                     </div>
                 </div>
             </div>
@@ -110,33 +112,43 @@
     </div>
 </div>
 
-<script>
-    function changeButtonText() {
-        $('#buttonText').innerText = '選択中';
-    }
-</script>
-
 @script
     <script type="module">
-        $(document).ready(function() {
-            $('.client-calendar').calendar({
-                type: 'date',
-                formatter: {
-                    date: 'Y"年"M"月"D"日"'
-                },
-                text: {
-                    days: ['日', '月', '火', '水', '木', '金', '土'],
-                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                },
-                initialDate: "",
-            });
-        });
-
-        $('#startCalendar').on('change', function() {
-            @this.set('startDate', $(this).val());
-        });
-        $('#endCalendar').on('change', function() {
-            @this.set('endDate', $(this).val());
+        Livewire.on('client-modal-render', (data) => {
+            setTimeout(() => {
+                $('.client-calendar.start').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+                            '12月'
+                        ],
+                    },
+                    initialDate: "",
+                    onChange: (_, t) => {
+                        @this.set('startDate', t);
+                    }
+                });
+                $('.client-calendar.end').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+                            '12月'
+                        ],
+                    },
+                    initialDate: "",
+                    onChange: (_, t) => {
+                        @this.set('endDate', t);
+                    }
+                });
+            }, 0);
         });
     </script>
 @endscript

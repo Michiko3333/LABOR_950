@@ -1,3 +1,6 @@
+<!-- 4950008680182000 -->
+<!-- 雇用保険育児休業給付（育児休業給付金）の申請（初回申請）（令和４年１０月以降手続き）/育児休業給付受給資格確認票・（初回）育児休業給付金支給申請書 -->
+
 <DIV style="position:relative; left:0px; top:0px; width:785px; height:1120px; transform: scale(0.9);">
 
     <script type="text/javascript">
@@ -1395,7 +1398,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:752px; width:343px; line-height:26px; height:26px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="110"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:343px; height:25px; ime-mode:active;"
-            id="J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}"
+            id="J149_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="64"
             name="headquarters_address"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:779px; width:38px; height:15px; font-size:11px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
@@ -1421,7 +1424,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:369px; top:795px; width:343px; line-height:26px; height:27px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="114"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:343px; height:26px; ime-mode:active;"
-            id="J154_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}"
+            id="J154_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="64"
             name="employer_company_managerial_position_name"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:861px; width:50px; height:16px; font-size:10px;"><input
@@ -1463,8 +1466,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:489px; top:870px; width:223px; line-height:26px; height:26px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="121"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:223px; height:25px; ime-mode:active;"
-            id="J163_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"
-            disabled></span>
+            id="J163_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('fullname') }}" name="fullname"></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:0px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:256px; top:922px; width:205px; line-height:26px; height:27px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="123"

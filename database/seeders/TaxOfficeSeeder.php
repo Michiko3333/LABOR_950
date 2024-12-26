@@ -12,6 +12,7 @@ class TaxOfficeSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_tax_office')->truncate();
         DB::table('m_tax_office')->insert([
             [
                 'name'   => '旭川中',

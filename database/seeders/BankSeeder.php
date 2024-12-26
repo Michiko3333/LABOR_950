@@ -12,6 +12,7 @@ class BankSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		DB::table('m_bank')->truncate();
 		DB::table('m_bank')->insert([
 			[
 				'bank_code'   => '0001',

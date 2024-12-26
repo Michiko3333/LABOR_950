@@ -12,6 +12,7 @@ class ValuesBranchStartDaysOfWeekSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_branch_start_days_of_week')->truncate();
         DB::table('m_values_branch_start_days_of_week')->insert([
             ['name' => '月曜日'],
             ['name' => '火曜日'],

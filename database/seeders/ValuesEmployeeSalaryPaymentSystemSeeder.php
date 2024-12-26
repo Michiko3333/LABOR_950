@@ -12,6 +12,7 @@ class ValuesEmployeeSalaryPaymentSystemSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_values_employee_salary_payment_system')->truncate();
         DB::table('m_values_employee_salary_payment_system')->insert([
             ['name' => '月給'],
             ['name' => '週給'],

@@ -12,6 +12,7 @@ class HelloWorkSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_hello_work')->truncate();
         DB::table('m_hello_work')->insert([
             [
                 'name'   => '札幌',

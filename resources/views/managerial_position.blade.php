@@ -38,6 +38,10 @@
                 top: 0;
                 left: -1.4em;
             }
+
+            #edit-managerial-position label {
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">

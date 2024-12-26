@@ -31,7 +31,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
 
     public function index(Request $request)
     {
-        $imagePath = public_path('img/tyohyo155.png');
+        $imagePath = public_path('img/4950013521019000.png');
         $imageData = File::get($imagePath);
         $base64Data = base64_encode($imageData);
         $dataUri = 'data:image/png;base64,' . $base64Data;
@@ -162,6 +162,7 @@ class HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationCo
                 'employee_address' => $request->input('employee_address'),
                 'acquisition_reason' => $request->input('acquisition_reason'),
                 'other_acquisition_reason' => $request->input('other_acquisition_reason'),
+                'eligibility_confirmation_letter' => $request->input('eligibility_confirmation_letter'),
                 'apply_to_code' => $request->input('apply_to_code'),
                 'apply_to_name' => $request->input('apply_to_name')
             ];

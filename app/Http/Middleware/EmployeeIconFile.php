@@ -21,7 +21,9 @@ class EmployeeIconFile
         $company_id = 0;
         if(Auth::check()) {
             $currentCompany = CurrentUser::currentCompany();
-            $company_id = $currentCompany->id;
+            if(!empty($currentCompany)){
+                $company_id = $currentCompany->id;
+            }
         }
         $requestedPath = $request->path();
         if (str_starts_with($requestedPath, 'storage/photo')) {

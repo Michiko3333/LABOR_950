@@ -12,6 +12,7 @@ class CompensationApplicableIndustrySeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_compensation_applicable_industry')->truncate();
         DB::table('m_compensation_applicable_industry')->insert([
             [
                 'industry_classification'   => '林業',

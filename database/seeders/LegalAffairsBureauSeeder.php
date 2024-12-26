@@ -12,6 +12,7 @@ class LegalAffairsBureauSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('m_legal_affairs_bureau')->truncate();
         DB::table('m_legal_affairs_bureau')->insert([
             [
                 'name'   => '札幌',

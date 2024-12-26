@@ -58,7 +58,6 @@ class CompanyController extends Controller
         $articles_of_incorporation = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 2)->where('delete_flg', 0)->first();
         $stock_information = Company_files::select('file_name')->where('company_id', $currentCompany->id)->where('document_type', 3)->where('delete_flg', 0)->first();
         $current_industry_type = Industry_type::select('id', 'industry_type_code')->whereIn('id', $industry_type)->pluck('industry_type_code');
-
         return view('company', [
             'currentCompany' => $currentCompany,
             'company_listed_type' => $company_listed_type,
@@ -220,6 +219,9 @@ class CompanyController extends Controller
             'bank_name' => $requestData['bank_name'],
             'url' => $requestData['url'],
             'purpose' => $requestData['purpose'],
+            'start_month_of_year' => $requestData['start_month_of_year'],
+            'start_day_of_month' => $requestData['start_day_of_month'],
+            'start_day_of_week' => $requestData['start_day_of_week']
         ];
     }
 

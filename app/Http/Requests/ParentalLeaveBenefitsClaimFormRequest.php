@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
@@ -21,6 +22,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             'file_childcare' => 'required_unless:radio_file_childcare,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             'file_wage_amount' => 'required_if:radio_file_wage_amount,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
@@ -74,27 +77,27 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'payer_day1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year1,payer_month1,payer_month_end1,payer_day_end1',
             'payer_month_end1' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year1,payer_month1,payer_day1,payer_day_end1',
             'payer_day_end1' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year1,payer_month1,payer_day1,payer_month_end1',
-            'workday_count1' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours1' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid1' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count1' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours1' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid1' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'payer_japan_era2' => 'nullable|string|max:2',
             'payer_japan_era_year2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:payer_month2,payer_day2,payer_month_end2,payer_day_end2',
             'payer_month2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2,payer_day2,payer_month_end2,payer_day_end2',
             'payer_day2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2,payer_month2,payer_month_end2,payer_day_end2',
             'payer_month_end2' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2,payer_month2,payer_day2,payer_day_end2',
             'payer_day_end2' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payer_japan_era_year2,payer_month2,payer_day2,payer_month_end2',
-            'workday_count2' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours2' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid2' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count2' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours2' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid2' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'payment_period_last_japan_era' => 'nullable|string|max:2',
             'payment_period_last_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:,ayment_period_last_month,payment_period_last_day,payment_period_last_month_end,payment_period_last_day_end',
             'payment_period_last_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_period_last_japan_era_year,payment_period_last_day,payment_period_last_month_end,payment_period_last_day_end',
             'payment_period_last_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_period_last_japan_era_year,payment_period_last_month,payment_period_last_month_end,payment_period_last_day_end',
             'payment_period_last_month_end' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:payment_period_last_japan_era_year,payment_period_last_month,payment_period_last_day,payment_period_last_day_end',
             'payment_period_last_day_end' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:payment_period_last_japan_era_year,payment_period_last_month,payment_period_last_day,payment_period_last_month_end',
-            'workday_count3' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
-            'working_hours3' => 'nullable|int|between:1,999|regex:/^[0-9]{1,3}$/u',
-            'wages_paid3' => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            'workday_count3' => 'nullable|int|between:0,99|regex:/^[0-9]{1,2}$/u',
+            'working_hours3' => 'nullable|int|between:0,999|regex:/^[0-9]{1,3}$/u',
+            'wages_paid3' => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             'return_from_resignation_date_japan_era' => 'nullable|string|max:2',
             'return_from_resignation_date_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:return_from_resignation_date_month,return_from_resignation_date_day',
             'return_from_resignation_date_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:return_from_resignation_date_japan_era_year,return_from_resignation_date_day',
@@ -115,11 +118,11 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'today_japan_era_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'headquarters_address' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
+            'headquarters_address' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'headquarters_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_city_code_name' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'headquarters_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
-            'employer_company_managerial_position_name' => 'nullable|string|max:255',
+            'employer_company_managerial_position_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'destination' => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々　]+\z/u',
             'financial_Institutions_name_kana' => 'nullable|string|max:255|regex:/^[ァ-ヴー　]+\z/u',
             'financial_institution_name' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々　]+\z/u',
@@ -136,8 +139,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'commuting_allowance_period' => 'nullable|string|max:3',
             'commuting_allowance_period_other' => 'nullable|string|max:4',
             'note' => 'nullable|string|max:255',
-            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255',
-            'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:30',
+            'labor_consultant_name' => ['nullable', 'string', 'max:33', new FullwidthAndMiscellaneousChars(true)],
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -527,8 +530,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'payment_period_extension_reason_japan_era_year.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_年を入力してください。',
             'payment_period_extension_reason_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_月を入力してください。',
             'payment_period_extension_reason_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_日を入力してください。',
-            'payment_period_extension_reason_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_月を入力してください。',
-            'payment_period_extension_reason_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_日を入力してください。',
+            'payment_period_extension_reason_last_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_月を入力してください。',
+            'payment_period_extension_reason_last_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_日を入力してください。',
         ];
     }
 

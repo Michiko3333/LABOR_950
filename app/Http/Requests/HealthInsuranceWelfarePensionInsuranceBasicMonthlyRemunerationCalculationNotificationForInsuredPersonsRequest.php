@@ -23,7 +23,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     {
         return [
             "over_70_check" => 'nullable|string|in:on',
-            "my_number_or_basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
+            "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
@@ -56,27 +56,27 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             "applicable_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
             "previous_standard_monthly_remuneration_health_insurance" => 'nullable|int|between:1,9999|regex:/^[0-9]{1,4}+$/',
             "previous_standard_monthly_remuneration_employees_pension" => 'nullable|int|between:1,9999|regex:/^[0-9]{1,4}+$/',
-            "previous_revision_year" => 'nullable|int|between:1989,9999|regex:/^[0-9]{1,4}+$/',
-            "previous_revision_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}+$/',
+            "previous_revision_year" => 'int|between:1989,9999|regex:/^[0-9]{1,4}+$/',
+            "previous_revision_month" => 'int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "monthly_salary_increase" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "salary_increase" => 'nullable|string|max:2',
             "retroactive_payment_amount_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}+$/',
-            "retroactive_payment_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "basic_number_of_days_for_payroll_calculatio1" => 'required|int|between:1,31|regex:/^[0-9]{1,2}+$/',
-            "basic_number_of_days_for_payroll_calculatio2" => 'required|int|between:1,31|regex:/^[0-9]{1,2}+$/',
-            "basic_number_of_days_for_payroll_calculatio3" => 'required|int|between:1,31|regex:/^[0-9]{1,2}+$/',
-            "monthly_remuneration_amount_in_currency1" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_amount_in_currency2" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_amount_in_currency3" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_amount_in_kind1" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_amount_in_kind2" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_amount_in_kind3" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_total1" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_total2" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "monthly_remuneration_total3" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "grand_total" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "average_amount" => 'required|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
-            "adjusted_average_amount" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}+$/',
+            "retroactive_payment_amount" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "basic_number_of_days_for_payroll_calculatio1" => 'required|int|between:0,31|regex:/^[0-9]{1,2}+$/',
+            "basic_number_of_days_for_payroll_calculatio2" => 'required|int|between:0,31|regex:/^[0-9]{1,2}+$/',
+            "basic_number_of_days_for_payroll_calculatio3" => 'required|int|between:0,31|regex:/^[0-9]{1,2}+$/',
+            "monthly_remuneration_amount_in_currency1" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_amount_in_currency2" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_amount_in_currency3" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_amount_in_kind1" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_amount_in_kind2" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_amount_in_kind3" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_total1" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_total2" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "monthly_remuneration_total3" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "grand_total" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "average_amount" => 'required|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
+            "adjusted_average_amount" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}+$/',
             "remarks_and_calculation_of_employees_aged_70_and_over" => 'nullable|int|in:1',
             "remarks_and_two_or_more_jobs" => 'nullable|int|in:1',
             "remarks_and_scheduled_monthly_changes" => 'nullable|int|in:1',
@@ -190,7 +190,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
             }
         });
 
-        $validator->sometimes(['my_number_or_basic_pension_number', 'basic_pension_number'], 'required_without_all:my_number_or_basic_pension_number,basic_pension_number', function ($input) {
+        $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {
             return $input->over_70_check === 'on';
         });
 
@@ -202,7 +202,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
     public function messages()
     {
         return [
-            'my_number_or_basic_pension_number.required_without_all' => '',
+            'mynumber_no_or_pension_no.required_without_all' => '',
             'basic_pension_number.required_without_all' => '個人番号または基礎年金番号のいずれかを入力してください。',
             'remarks_calculation_basic_month_month1.required_without_all' => '',
             'remarks_calculation_basic_month_month2.required_without_all' => '備考_70歳以上被用者算定_算定基礎月を入力してください。',

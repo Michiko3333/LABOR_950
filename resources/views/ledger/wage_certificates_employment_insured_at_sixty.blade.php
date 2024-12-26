@@ -41,29 +41,34 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_payment_status']" :file_original_names="[
-                                    'wage_payment_status' =>
-                                        '六十歳到達時等賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
-                                    'insured_age' => '被保険者の年齢が確認できる書類',
-                                    'separation_form' =>
-                                        '直前の被保険者資格喪失の日前の賃金支払い状況を記した雇用保険被保険者離職票－２',
-                                    'insured_period' => '被保険者期間等証明書',
-                                    'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'wage_payment_status' =>
+                                            '六十歳到達時等賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                        'insured_age' => '被保険者の年齢が確認できる書類',
+                                        'separation_form' =>
+                                            '直前の被保険者資格喪失の日前の賃金支払い状況を記した雇用保険被保険者離職票－２',
+                                        'insured_period' => '被保険者期間等証明書',
+                                        'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -71,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui top attached tabular menu">
@@ -87,7 +92,8 @@
                                 <div class="ui bottom attached segment" data-tab="sample">
                                     <x-form.first_senior_employment_continuation_benefit_claim_form :isDisabled="true" />
                                 </div>
-                                <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
+                                <div class="ui bottom attached segment" data-tab="sample2"
+                                    style="display: none; overflow-x: auto;">
                                     <x-form.employment_insurance_insured_person_wage_certificate_at_sixty />
                                 </div>
                             </div>
@@ -143,9 +149,9 @@
                 $('#J76_005F_93FA').val('{{ $todaySet['day'] }}');
 
                 $('#J71_005F_8E96_8BC6_8EE5_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
                 $('#J30_005F_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J114_005F_8E73_8A4F_8BC7_94D4').val(
@@ -196,8 +202,11 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
                 const todaySet = data['todaySet'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
+                const sixty_convert_japan = data['sixty_convert_japan'];
+                const day_after_sixty_convert_japan = data['day_after_sixty_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -267,9 +276,7 @@
                     .address_apartment ?? ''));
                 $('#J29_005F_8F5A_8F8A').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (
                     branch.address_ward ?? '') + (branch.address_apartment ?? ''));
-                $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ??
-                    '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
-                $('#J10_005F_96BC_8FCC').val(branch.name ?? '');
+                $('#J10_005F_96BC_8FCC').val(company.name ?? '');
                 $('#J11_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
                 var postCode = employee.post_code;
@@ -302,13 +309,20 @@
                     $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val("");
                 }
                 $('#J120_005F_905C_90BF_8ED2_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ??
-                    '') + (employee.address_ward ?? '') + (employee.address_apartment ?? ''));
+                    '') + (employee.address_ward ?? ''));
                 $('#J17_005F_8F5A_8F8A').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (employee
-                    .address_ward ?? '') + (employee.address_apartment ?? ''));
+                    .address_ward ?? ''));
                 $('#birthdayEra').val(birthdayConvertJapan['era'] ?? "");
                 $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
                 $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
+                $('#J21_005F_944E_8D86').val(sixty_convert_japan['era'] ?? "");
+                $('#J22_005F_944E').val(sixty_convert_japan['year'] ?? "");
+                $('#J23_005F_8C8E').val(sixty_convert_japan['month'] ?? "");
+                $('#J24_005F_93FA').val(sixty_convert_japan['day'] ?? "");
+                $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
+                $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
+                $('#J77_005F_82A0_82C4_90E6').val(hello_work);
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;

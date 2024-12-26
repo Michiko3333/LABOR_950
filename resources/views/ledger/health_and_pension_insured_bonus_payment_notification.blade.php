@@ -38,15 +38,18 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                        <div class="ui card card-shadow">
+                    </div>
+                    <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
                             <div class="content">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h2>70歳以上</h2>
@@ -85,6 +88,8 @@
                                 ]" :extensions="'.csv,.jpg,.jpeg,.pdf'" :separateDisabled="true" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -92,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <x-form.health_and_pension_insured_bonus_payment_notification :dataUri="$dataUri" />
@@ -222,6 +227,7 @@
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
+                const company = data['company'];
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -245,7 +251,7 @@
                 const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (
                     branch.address_ward || "") + (branch.address_apartment || "");
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(branchAddress);
-                $('#N16_005F_905C_90BF').val(branch.name || '');
+                $('#N16_005F_905C_90BF').val(company.name || '');
                 $('#N18_005F_8CC2_906C_94D4').val(branch.tel_area_code || '');
                 $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(branch.tel_city_code || '');
                 $('#N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866').val(branch.tel_subscriber_code || '');
@@ -267,7 +273,31 @@
                 insertDataFromEmployee(data)
             });
         </script>
+        <script type="module">
+            $(document).ready(function() {
+            function calculateTotal() {
+                var nullFlg = true;
 
+                var valueA = parseFloat($('#N36_005F_8E96_8BC6_8F8A').val()) || 0;
+                var valueB = parseFloat($('#N37_96BC_005F_8F8A_8DDD_926E').val()) || 0;
+
+                var val = valueA + valueB;
+                var truncatedSum = Math.floor(val / 1000);
+
+                if ($('#N36_005F_8E96_8BC6_8F8A').val() == "" && $('#N37_96BC_005F_8F8A_8DDD_926E').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val(truncatedSum);
+                } else {
+                    $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val("");
+                }
+            }
+
+            $('#N36_005F_8E96_8BC6_8F8A, #N37_96BC_005F_8F8A_8DDD_926E').on('input', calculateTotal);
+        });
+        </script>
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot

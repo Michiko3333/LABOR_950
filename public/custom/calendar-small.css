@@ -1,0 +1,203 @@
+.calendar-small {
+    display: flex;
+    flex-flow: column;
+    width: 320px;
+}
+
+.calendar-small .calendar-small-month {
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0.5em 0.5em 1em 0.5em;
+}
+
+.calendar-small .header .month-year {
+    font-size: 20px;
+    font-weight: bold;
+    color: #636e73;
+    padding: 20px 0;
+}
+
+.calendar-small .header .control {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+
+.calendar-small .header .control .date-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.calendar-small .days {
+    display: flex;
+    flex-flow: wrap;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.calendar-small .days .day_name {
+    width: calc(100% / 7);
+    padding: 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-black);
+    text-align: center;
+}
+
+.calendar-small .days .day_name:nth-child(7) {
+    border: none;
+}
+
+.calendar-small .days .day_num {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% / 7);
+    padding: 2px;
+    font-weight: bold;
+    color: #7c878d;
+    min-height: 45px;
+}
+
+.calendar-small .days .day_num div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    border-radius: 20%;
+}
+
+.calendar-small .days .day_num>span.mark.dot {
+    position: absolute;
+    padding: 3px;
+    border-radius: 50%;
+    top: 0.5rem;
+    right: 0.5rem;
+    pointer-events: none;
+}
+
+.calendar-small .days .day_num>span.mark.holiday {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border: solid 2px;
+    border-radius: 25%;
+    background-color: transparent !important;
+    pointer-events: none;
+}
+
+.calendar-small .days .day_num .event {
+    margin-top: 4px;
+    font-weight: 500;
+    font-size: 0.8em;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background-color: var(--color-blue);
+    color: #fff;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.calendar-small .days .day_num button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.calendar-small .days .day_num button:hover {
+    border: none;
+    outline: none;
+    background-color: color-mix(in srgb, var(--color-black) 10%, #fff);
+}
+
+.calendar-small .days .day_num button.active {
+    background-color: var(--color-blue);
+    color: #fff;
+}
+
+/* Colors */
+.calendar-small .days .day_num .event.labor {
+    background-color: var(--color-yellow);
+}
+
+.calendar-small .days .day_num .event.employee {
+    background-color: var(--color-blue);
+}
+
+.calendar-small .days .day_num .event.admin {
+    background-color: var(--color-red);
+}
+
+.calendar-small .days .day_num .event.normal {
+    background-color: gray;
+}
+
+.calendar-small .days .day_num:nth-child(7n + 1) {}
+
+.calendar-small .days .day_num:hover {
+    /* background-color: #fdfdfd; */
+}
+
+.calendar-small .days .day_num.ignore {
+    /* background-color: #fdfdfd; */
+    color: #ced2d4;
+    cursor: inherit;
+}
+
+.calendar-small .days .day_num.selected {
+    background-color: #f1f2f3;
+    cursor: inherit;
+}
+
+/* CalendarForm */
+.calendars {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: space-around;
+}
+
+.ui.card.shift-calendar-inputs {
+    margin-bottom: 2em;
+}
+
+.ui.card.shift-calendar-inputs span.bold {
+    font-weight: bold;
+}
+
+#detailCalendar .header.labor {
+    font-weight: bold;
+    background-color: var(--color-yellow);
+}
+
+#detailCalendar .header.admin {
+    font-weight: bold;
+    background-color: var(--color-red);
+}
+
+#detailCalendar .header.employee {
+    font-weight: bold;
+    background-color: var(--color-blue);
+}
+
+.ui.card.shift-calendar-inputs select.ui.dropdown {
+    height: 48px;
+}

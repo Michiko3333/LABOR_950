@@ -43,28 +43,33 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_amount_days_time']" :file_original_names="[
-                                    'amount_days_time' =>
-                                        '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
-                                    'written_consent' => '支給申請に係る承諾書',
-                                    'extension_reason' => '延長事由に該当することを確認できる書類',
-                                    'spouse' => '被保険者の配偶者であることを確認できる書類',
-                                    'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'amount_days_time' =>
+                                            '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
+                                        'written_consent' => '支給申請に係る承諾書',
+                                        'extension_reason' => '延長事由に該当することを確認できる書類',
+                                        'spouse' => '被保険者の配偶者であることを確認できる書類',
+                                        'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -72,12 +77,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <div class="ui bottom attached segment" data-tab="sample">
-                                    <x-form.childcare_leave_allowance_application_form />
-                                </div>
+                                <x-form.childcare_leave_allowance_application_form />
                             </div>
                         </div>
                     </div>
@@ -124,7 +127,7 @@
                 $('#J100_005F_93FA').val('{{ $todaySet['day'] }}');
 
                 $('#J95_005F_8E96_8BC6_8EE5_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J107_005F_8E73_8A4F_8BC7_94D4').val(
@@ -159,10 +162,17 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
+                const spouse = data['spouse'];
                 const todaySet = data['todaySet'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+                const employee_prefecture_data = data['employee_prefecture_data'];
+                const start_date_of_closed_1 = data['start_date_of_closed_4950008680050000'];
+                const date_of_birth_1 = data['date_of_birth_4950008680050000'];
+                const date_of_return_to_work_1 = data['date_of_return_to_work_4950008680050000'];
+                const before_date_of_return_to_work = data['before_date_of_return_to_work_4950008680050000'];
                 if (employee.last_name_kana && employee.first_name_kana) {
                     $('#J8_005F_8E81_96BC').val(employee.last_name_kana + '　' + employee.first_name_kana);
                     $('#J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
@@ -198,6 +208,54 @@
                     $('#J15_005F_8C8E').val("");
                     $('#J16_005F_93FA').val("");
                 }
+                if (start_date_of_closed_1 != null) {
+                    $('#J18_005F_944E_8D86').val(start_date_of_closed_1['era']);
+                    $('#J19_005F_944E').val(start_date_of_closed_1['year']);
+                    $('#J20_005F_8C8E').val(start_date_of_closed_1['month']);
+                    $('#J21_005F_93FA').val(start_date_of_closed_1['day']);
+                    $('#J130_005F_944E_8D86').val(start_date_of_closed_1['era']);
+                    $('#J70_005F_944E').val(start_date_of_closed_1['year']);
+                    $('#J71_005F_8C8E').val(start_date_of_closed_1['month']);
+                    $('#J72_005F_93FA').val(start_date_of_closed_1['day']);
+                } else {
+                    $('#J18_005F_944E_8D86').val("");
+                    $('#J19_005F_944E').val("");
+                    $('#J20_005F_8C8E').val("");
+                    $('#J21_005F_93FA').val("");
+                    $('#J130_005F_944E_8D86').val("");
+                    $('#J70_005F_944E').val("");
+                    $('#J71_005F_8C8E').val("");
+                    $('#J72_005F_93FA').val("");
+                }
+                if (date_of_birth_1 != null) {
+                    $('#J30_005F_944E_8D86').val(date_of_birth_1['era']);
+                    $('#J31_005F_944E').val(date_of_birth_1['year']);
+                    $('#J32_005F_8C8E').val(date_of_birth_1['month']);
+                    $('#J33_005F_93FA').val(date_of_birth_1['day']);
+                } else {
+                    $('#J30_005F_944E_8D86').val("");
+                    $('#J31_005F_944E').val("");
+                    $('#J32_005F_8C8E').val("");
+                    $('#J33_005F_93FA').val("");
+                }
+                if (date_of_return_to_work_1 != null) {
+                    $('#J65_005F_944E_8D86').val(date_of_return_to_work_1['era']);
+                    $('#J66_005F_944E').val(date_of_return_to_work_1['year']);
+                    $('#J67_005F_8C8E').val(date_of_return_to_work_1['month']);
+                    $('#J68_005F_93FA').val(date_of_return_to_work_1['day']);
+                } else {
+                    $('#J65_005F_944E_8D86').val("");
+                    $('#J66_005F_944E').val("");
+                    $('#J67_005F_8C8E').val("");
+                    $('#J68_005F_93FA').val("");
+                }
+                if (before_date_of_return_to_work != null) {
+                    $('#J73_005F_8C8E').val(before_date_of_return_to_work['month']);
+                    $('#J74_005F_93FA').val(before_date_of_return_to_work['day']);
+                } else {
+                    $('#J73_005F_8C8E').val("");
+                    $('#J74_005F_93FA').val("");
+                }
                 var branchInsuranceOfficeNo = branch.employment_insurance_office_no;
                 if (branchInsuranceOfficeNo && branchInsuranceOfficeNo.length === 11) {
                     var branchInsuranceOfficeNo4digit = branchInsuranceOfficeNo.substring(0, 4);
@@ -211,8 +269,10 @@
                     $('#J23_005F_8E96_8BC6_8F8A_94D4_8D866_8C85').val('');
                     $('#J24_005F_8E96_8BC6_8F8A_94D4_8D86CD').val('');
                 }
+                const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
+                    employee.address_ward || "") + (employee.address_apartment || "");
                 if (employee.last_name && employee.first_name) {
-                    $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
+                    $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '　' + employee.last_name + '　' + employee.first_name);
                     $('#J131_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                 } else {
                     $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val('');
@@ -230,12 +290,10 @@
                 $('#J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name ?? '') + (
                     branch.address_city ?? '') + (branch.address_ward ?? '') + (branch
                     .address_apartment ?? ''));
-                $('#J131_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
-                    $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val($(this).val());
-                });
                 $('#J8_005F_8E81_96BC').on('input', function() {
                     $('#J132_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val($(this).val());
                 });
+                $('#J101_005F_82A0_82C4_90E6').val(hello_work);
             }
             Livewire.on('onSelectEmployee', ({
                 data

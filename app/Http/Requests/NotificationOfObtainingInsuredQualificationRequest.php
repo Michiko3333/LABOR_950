@@ -51,8 +51,8 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
         return [
             "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
             "input_file_other" => 'required_if:checked_other,on|string|max:255',
-            "health_insurance" => 'nullable|int|in:1',
-            "welfare_pension_insurance" => 'nullable|int|in:1',
+            "health_insurance" => 'string|in:健康保険',
+            "welfare_pension_insurance" => 'string|in:厚生年金保険',
             "input_date_japan_era_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "input_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "input_date_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
@@ -62,9 +62,9 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "branch_insurance_office_no" => 'string|regex:/^[0-9]{5}$/u',
             "branch_post_code_first" => 'string|regex:/^[0-9]{3}$/u',
             "branch_post_code_last" => 'string|regex:/^[0-9]{4}$/u',
-            "branch_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
-            "branch_name" => ['required', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
-            "company_representative" => 'string|max:255',
+            "branch_address" => ['nullable', 'string', 'max:50', new FullwidthAndMiscellaneousChars(true)],
+            "branch_name" => ['required', 'string', 'max:34', new FullwidthAndMiscellaneousChars(true)],
+            "company_representative" => ['required', 'string', 'max:25', new FullwidthAndMiscellaneousChars(true)],
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',
@@ -83,9 +83,9 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "employee_employment_insured_date_month" => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "employee_employment_insured_date_day" => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',
             "employee_dependent_flg" => 'nullable|string|in:有,無',
-            "monthly_remuneration_all" => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            "monthly_remuneration_part" => 'nullable|int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
-            "monthly_remuneration_total" => 'int|between:1,9999999|regex:/^[0-9]{1,7}$/u',
+            "monthly_remuneration_all" => 'int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
+            "monthly_remuneration_part" => 'nullable|int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
+            "monthly_remuneration_total" => 'int|between:0,9999999|regex:/^[0-9]{1,7}$/u',
             "note_over_70_years_old" => 'nullable|int|in:1',
             "note_multiple_office_workers" => 'nullable|int|in:1',
             "note_short_time_work" => 'nullable|int|in:1',
@@ -97,6 +97,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "employee_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　－]+\z/u',
             "acquisition_reason" => 'nullable|string|in:海外在住,短期在留,その他',
             "other_acquisition_reason" =>   'nullable|string|max:255',
+            "eligibility_confirmation_letter" => 'nullable|int|in:1',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];
@@ -259,6 +260,7 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             'employee_address' => '被保険者住所欄_所在地',
             'acquisition_reason' => '理由',
             'other_acquisition_reason' => '理由_その他記入欄',
+            'eligibility_confirmation_letter' => '資格確認書発行要否',
             'apply_to_code' => '提出先選択_大分類（都道府県）',
             'apply_to_name' => '提出先選択_中分類（公共職業安定所）'
         ];

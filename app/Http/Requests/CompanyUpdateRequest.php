@@ -63,7 +63,7 @@ class CompanyUpdateRequest extends BaseRequest
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
-            'representative' => ['required', 'string', 'max:100', new noSymbol(false)],
+            'representative' => ['required', 'string', 'max:25', new noSymbol(false)],
             'bank_name' => ['nullable', 'string', 'max:300', new noSymbol(true)],
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',
@@ -71,6 +71,9 @@ class CompanyUpdateRequest extends BaseRequest
             'financial_statement' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'articles_of_incorporation' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
             'stock_information' => 'nullable|file|mimetypes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,application/pdf|max:5000',
+            'start_month_of_year' => 'numeric|between:1,12|max_digits:2',
+            'start_day_of_month' => 'numeric|between:1,31|max_digits:2',
+            'start_day_of_week' => 'numeric|between:1,7',
         ];
     }
 
@@ -106,6 +109,9 @@ class CompanyUpdateRequest extends BaseRequest
             'financial_statement' => '業績情報へ決算書の添付（直近1期分）',
             'articles_of_incorporation' => '事業目的へ定款の添付（最新）',
             'stock_information' => '株式情報へ株主を添付（最新）',
+            'start_month_of_year' => '起算日（年の始まり）',
+            'start_day_of_month' => '起算日（月の始まり）',
+            'start_day_of_week' => '起算日（曜日の始まり）',
         ];
 
         foreach ($this->input('industry_type', []) as $index => $value) {

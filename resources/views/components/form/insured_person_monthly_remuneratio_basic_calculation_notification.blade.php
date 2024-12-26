@@ -1,3 +1,6 @@
+<!-- 4950013520989000 -->
+<!-- 健康保険・厚生年金保険被保険者報酬月額算定基礎届／７０歳以上被用者算定基礎届 -->
+
 <div>
                             <div id="eGovForm">
 
@@ -4598,16 +4601,21 @@
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 450px; top: 272px;">
                                                 <select class="egov-tool-field-rect onImage" id="N28_8D864_8C85" name="applicable_era_name" required="required" style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                                                    <option value="7" {{ old('applicable_era_name') == '7' ? 'selected' : '' }} selected="selected">
-                                                    平成
-                                                    </option>
                                                     <option value="9" {{ old('applicable_era_name') == '9' ? 'selected' : '' }}>
                                                     令和
+                                                    </option>
+                                                    <option value="7" {{ old('applicable_era_name') == '7' ? 'selected' : '' }}>
+                                                    平成
                                                     </option>
                                                 </select>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 500px; top: 277px;">
                                                 <input class="egov-tool-field-rect onImage" id="N29_005F_8E73" name="applicable_year" required="required" style="width: 25px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('applicable_year') }}"/>
+                                            </div>
+                                            <div class="egov-tool-field-origin" style="left: 552px; top: 285px;">
+                                                <p class="egov-tool-field-rect onImage"
+                                                    style="width: 180px; height: 24px; font-size: 10px; text-align: center; line-height: 30px; padding: inherit; background-color:transparent;"
+                                                    type="text">※⑨従前改定月の年項目は西暦を記入</p>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 76px; top: 327px;">
                                                 <input class="egov-tool-field-rect onImage" id="N30_93E0_8BC7_94D4" maxlength="4" name="previous_standard_monthly_remuneration_health_insurance" style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('previous_standard_monthly_remuneration_health_insurance') }}"/>
@@ -4638,7 +4646,7 @@
                                                 <input class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E" name="retroactive_payment_amount_month" style="width: 35px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('retroactive_payment_amount_month') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 468px; top: 327px;">
-                                                <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E'" maxlength="7" name="retroactive_payment_amount" style="width: 52px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('retroactive_payment_amount') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E" maxlength="7" name="retroactive_payment_amount" style="width: 52px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('retroactive_payment_amount') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 101px; top: 389px;">
                                                 <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF" name="basic_number_of_days_for_payroll_calculatio1" required="required" style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('basic_number_of_days_for_payroll_calculatio1') }}"/>
@@ -4668,22 +4676,22 @@
                                                 <input class="egov-tool-field-rect onImage" id="N47_005F_89C1_93FC_8ED2_94D4_8D86" maxlength="7" name="monthly_remuneration_amount_in_kind3" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_amount_in_kind3') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 291px; top: 389px;">
-                                                <input class="egov-tool-field-rect onImage" id="N48_005F_8E73_8A4F_8BC7" maxlength="7" name="monthly_remuneration_total1" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_total1') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N48_005F_8E73_8A4F_8BC7" maxlength="7" name="monthly_remuneration_total1" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('monthly_remuneration_total1') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 291px; top: 407px;">
-                                                <input class="egov-tool-field-rect onImage" id="N49_005F_8E73_8A4F_8BC8" maxlength="7" name="monthly_remuneration_total2" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_total2') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N49_005F_8E73_8A4F_8BC8" maxlength="7" name="monthly_remuneration_total2" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('monthly_remuneration_total2') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 291px; top: 425px;">
-                                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="7" name="monthly_remuneration_total3" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('monthly_remuneration_total3') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="7" name="monthly_remuneration_total3" required="required" style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('monthly_remuneration_total3') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 430px; top: 389px;">
-                                                <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="7" name="grand_total" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('grand_total') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="7" name="grand_total" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('grand_total') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 430px; top: 407px;">
-                                                <input class="egov-tool-field-rect onImage" id="N52_005F_8E73_8A4F" maxlength="7" name="average_amount" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('average_amount') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N52_005F_8E73_8A4F" maxlength="7" name="average_amount" required="required" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('average_amount') }}"/>
                                             </div>
                                             <div class="egov-tool-field-origin" style="left: 430px; top: 425px;">
-                                                <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7" name="adjusted_average_amount" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('adjusted_average_amount') }}"/>
+                                                <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7" name="adjusted_average_amount" style="width: 91px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;" readonly type="text" value="{{ old('adjusted_average_amount') }}"/>
                                             </div>
 
 

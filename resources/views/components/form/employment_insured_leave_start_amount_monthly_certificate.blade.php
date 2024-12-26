@@ -1,3 +1,6 @@
+<!-- 4950008680048000 -->
+<!-- 雇用保険被保険者休業開始時賃金月額証明書又は同休業・所定労働時間短縮開始時賃金証明書の提出（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:980px; height:2728px;">
 
     <script type="text/javascript">
@@ -569,24 +572,24 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:251px; width:343px; line-height:26px; height:27px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="26"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J27_005F_8F5A_8F8A" value="{{ old('headquarters_address') }}" name="headquarters_address"
+            id="J27_005F_8F5A_8F8A" value="{{ old('headquarters_address') }}" name="headquarters_address" maxlength="64"
             type="text"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:155px; width:343px; line-height:26px; height:27px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="15"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J16_005F_96BC_8FCC" value="{{ old('branch_name') }}" name="branch_name" type="text" maxlength="40"></SPAN>
+            id="J16_005F_96BC_8FCC" value="{{ old('branch_name') }}" name="branch_name" type="text" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:183px; width:343px; line-height:26px; height:27px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="16"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J17_005F_8F8A_8DDD_926E" value="{{ old('branch_address') }}" name="branch_address"
+            id="J17_005F_8F8A_8DDD_926E" value="{{ old('branch_address') }}" name="branch_address" maxlength="64"
             type="text"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:280px; width:343px; line-height:26px; height:27px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="27"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:343px; height:26px; ime-mode:active;"
-            id="J28_005F_8E81_96BC" value="{{ old('headquarters_employee_name') }}" name="headquarters_employee_name"
+            id="J28_005F_8E81_96BC" value="{{ old('headquarters_employee_name') }}" name="headquarters_employee_name" maxlength="64"
             type="text"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:135px; top:212px; width:42px; height:16px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px;"><INPUT

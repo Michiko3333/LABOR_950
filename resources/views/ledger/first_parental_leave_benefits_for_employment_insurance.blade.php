@@ -41,32 +41,37 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>社員選択</h2>
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_childcare']" :file_original_names="[
-                                    'childcare' => '育児の事実が確認できる書類',
-                                    'wage_amount' =>
-                                        '休業開始時賃金月額証明書に記載された育児休業を開始した日及びその日前の賃金の額が確認できる書類',
-                                    'wage_certificate' => '雇用保険被保険者休業開始時賃金月額証明票',
-                                    'confirmation_document' =>
-                                        '支給申請書に記載した賃金額、就業した日数及び時間、出産予定日、出産日、育児休業開始日、育児休業終了日等記載内容を確認できる書類',
-                                    'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
-                                    'extension_reason' => '延長事由に該当することを確認できる書類',
-                                    'spouse' => '被保険者の配偶者であることを確認できる書類',
-                                    'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
-                                    'other' => 'その他の添付書類',
-                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                        'childcare' => '育児の事実が確認できる書類',
+                                        'wage_amount' =>
+                                            '休業開始時賃金月額証明書に記載された育児休業を開始した日及びその日前の賃金の額が確認できる書類',
+                                        'wage_certificate' => '雇用保険被保険者休業開始時賃金月額証明票',
+                                        'confirmation_document' =>
+                                            '支給申請書に記載した賃金額、就業した日数及び時間、出産予定日、出産日、育児休業開始日、育児休業終了日等記載内容を確認できる書類',
+                                        'passbook' => '払渡希望金融機関の口座に係る被保険者名義の通帳',
+                                        'extension_reason' => '延長事由に該当することを確認できる書類',
+                                        'spouse' => '被保険者の配偶者であることを確認できる書類',
+                                        'spouse_childcare_leave' => '被保険者の配偶者の育児休業の取得を確認できる書類',
+                                        'other' => 'その他の添付書類',
+                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -74,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui top attached tabular menu">
@@ -90,7 +95,8 @@
                                 <div class="ui bottom attached segment" data-tab="sample">
                                     <x-form.parental_leave_benefits_claim_form />
                                 </div>
-                                <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
+                                <div class="ui bottom attached segment" data-tab="sample2"
+                                    style="display: none;">
                                     <x-form.employment_insurance_insured_person_leave_start_wage_monthly_certificate />
                                 </div>
                             </div>
@@ -146,9 +152,9 @@
                 $('#J160_005F_93FA').val('{{ $todaySet['day'] }}');
 
                 $('#J154_005F_8E96_8BC6_8EE5_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
                 $('#J28_005F_8E81_96BC').val(
-                    '{{ old('employer_company_managerial_position_name', $company->representative) }}');
+                    '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J198_005F_8E73_8A4F_8BC7_94D4').val(
@@ -195,11 +201,17 @@
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
+                const hello_work = data['hello_work'];
                 const todaySet = data['todaySet'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+                const start_date_of_closed_1 = data['start_date_of_closed_4950008680182000'];
+                const date_of_return_to_work_1 = data['date_of_return_to_work_4950008680182000'];
+                const due_date_1 = data['due_date_4950008680182000'];
+                const date_of_birth_1 = data['date_of_birth_4950008680182000'];
+                const before_date_of_return_to_work = data['before_date_of_return_to_work_4950008680182000'];
                 if (employee.employment_insured_no !== null && employee.employment_insured_no.length == 11) {
                     $('#J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J13_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
@@ -226,13 +238,74 @@
                     $('#J18_005F_8C8E').val("");
                     $('#J19_005F_93FA').val("");
                 }
+                if (start_date_of_closed_1 != null) {
+                    $('#J27_005F_944E_8D86').val(start_date_of_closed_1['era']);
+                    $('#J28_005F_944E').val(start_date_of_closed_1['year']);
+                    $('#J29_005F_8C8E').val(start_date_of_closed_1['month']);
+                    $('#J30_005F_93FA').val(start_date_of_closed_1['day']);
+                    $('#J97_005F_944E_8D86').val(start_date_of_closed_1['era']);
+                    $('#J98_005F_944E').val(start_date_of_closed_1['year']);
+                    $('#J99_005F_8C8E').val(start_date_of_closed_1['month']);
+                    $('#J100_005F_93FA').val(start_date_of_closed_1['day']);
+                } else {
+                    $('#J27_005F_944E_8D86').val("");
+                    $('#J28_005F_944E').val("");
+                    $('#J29_005F_8C8E').val("");
+                    $('#J30_005F_93FA').val("");
+                    $('#J97_005F_944E_8D86').val("");
+                    $('#J98_005F_944E').val("");
+                    $('#J99_005F_8C8E').val("");
+                    $('#J100_005F_93FA').val("");
+                }
+                if (date_of_birth_1 != null) {
+                    $('#J32_005F_944E_8D86').val(date_of_birth_1['era']);
+                    $('#J33_005F_944E').val(date_of_birth_1['year']);
+                    $('#J34_005F_8C8E').val(date_of_birth_1['month']);
+                    $('#J35_005F_93FA').val(date_of_birth_1['day']);
+                } else {
+                    $('#J32_005F_944E_8D86').val("");
+                    $('#J33_005F_944E').val("");
+                    $('#J34_005F_8C8E').val("");
+                    $('#J35_005F_93FA').val("");
+                }
+                if (due_date_1 != null) {
+                    $('#J37_005F_944E_8D86').val(due_date_1['era']);
+                    $('#J38_005F_944E').val(due_date_1['year']);
+                    $('#J39_005F_8C8E').val(due_date_1['month']);
+                    $('#J40_005F_93FA').val(due_date_1['day']);
+                } else {
+                    $('#J37_005F_944E_8D86').val("");
+                    $('#J38_005F_944E').val("");
+                    $('#J39_005F_8C8E').val("");
+                    $('#J40_005F_93FA').val("");
+                }
+                if (date_of_return_to_work_1 != null) {
+                    $('#J90_005F_944E_8D86').val(date_of_return_to_work_1['era']);
+                    $('#J91_005F_944E').val(date_of_return_to_work_1['year']);
+                    $('#J92_005F_8C8E').val(date_of_return_to_work_1['month']);
+                    $('#J93_005F_93FA').val(date_of_return_to_work_1['day']);
+                } else {
+                    $('#J90_005F_944E_8D86').val("");
+                    $('#J91_005F_944E').val("");
+                    $('#J92_005F_8C8E').val("");
+                    $('#J93_005F_93FA').val("");
+                }
+                if (before_date_of_return_to_work != null) {
+                    $('#J102_005F_8C8E').val(before_date_of_return_to_work['month']);
+                    $('#J103_005F_93FA').val(before_date_of_return_to_work['day']);
+                } else {
+                    $('#J102_005F_8C8E').val("");
+                    $('#J103_005F_93FA').val("");
+                }
 
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
+                const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
+                    employee.address_ward || "");
                 $('#J21_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J20_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeName);
                 $('#J162_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employeeNameKana);
-                $('#J163_005F_905C_90BF_8ED2_8E81_96BC').val(employeeName);
+                $('#J163_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '　' + employeeName);
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
 
@@ -280,20 +353,21 @@
                 $('#J151_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J152_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');
                 $('#J153_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code || '');
-                $('#J16_005F_96BC_8FCC').val(branch.name || '');
+                $('#J16_005F_96BC_8FCC').val(company.name || '');
                 $('#J17_005F_8F8A_8DDD_926E').val((branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
                     .address_ward || "") + (branch.address_apartment || ""));
                 $('#J18_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J19_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');
                 $('#J20_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code || '');
                 $('#J23_005F_8F5A_8F8A').val((employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
-                    .address_ward || "") + (employee.address_apartment || ""));
+                    .address_ward || ""));
                 $('#J24_005F_8E73_8A4F_8BC7_94D4').val(employee.tel_area_code || '');
                 $('#J25_005F_8E73_93E0_8BC7_94D4').val(employee.tel_city_code || '');
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || '');
                 $('#J27_005F_8F5A_8F8A').val((branch_prefecture_data.name || "") + (branch.address_city || "") + (
                     branch.address_ward || "") + (branch.address_apartment || ""));
-            }
+                $('#J161_005F_82A0_82C4_90E6').val(hello_work);
+                }
             document.getElementById('J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').value = this.value;
             });
@@ -327,7 +401,6 @@
                 document.getElementById('J30_005F_93FA1').value = this.value;
             });
             document.getElementById('J20_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').addEventListener('input', function() {
-                document.getElementById('J163_005F_905C_90BF_8ED2_8E81_96BC').value = this.value;
                 document.getElementById('J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').value =
                     this.value;
             });

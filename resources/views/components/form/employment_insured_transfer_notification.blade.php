@@ -1,3 +1,6 @@
+<!-- 4950008680040000 -->
+<!-- 雇用保険被保険者転勤届（令和４年６月以降手続き） -->
+
 <DIV style="position:relative; left:0px; top:0px; width:792px; height:1049px;">
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:36px; top:807px; width:47px; height:55px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:37px 0px 0px 0px;"></SPAN>
@@ -26,7 +29,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:752px; width:350px; line-height:27px; height:27px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="36"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:350px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J31_005F_8E81_96BC" value="{{ old('headquarter_name') }}" name="headquarter_name"></SPAN>
+            id="J31_005F_8E81_96BC" value="{{ old('headquarter_name') }}" name="headquarter_name" maxlength="32"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:227px; top:408px; width:463px; line-height:30px; height:31px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="26"
@@ -64,7 +67,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:714px; width:350px; line-height:30px; height:30px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="35"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:350px; height:29px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J30_005F_8F5A_8F8A" value="{{ old('headquarter_address') }}" name="headquarter_address"></SPAN>
+            id="J30_005F_8F5A_8F8A" value="{{ old('headquarter_address') }}" name="headquarter_address" maxlength="64"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:483px; top:810px; width:136px; height:16px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="44"

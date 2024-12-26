@@ -39,14 +39,17 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ledger-twocol my-2">
-                    <div class="left-col">
+
+                <div class="ledger-grid my-2">
+                    <div class="employee-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>事業所選択</h2>
                                 <livewire:ledger-branch-list />
                             </div>
                         </div>
+                    </div>
+                    <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>添付ファイル</h2>
@@ -55,6 +58,8 @@
                                 ]" :extensions="'.jpg,.jpeg,.pdf'" :separateDisabled='true' />
                             </div>
                         </div>
+                    </div>
+                    <div class="submission-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>提出先選択</h2>
@@ -62,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right-col">
+                    <div class="qualification-card">
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <div class="ui bottom attached segment" data-tab="sample">
@@ -109,7 +114,8 @@
                 $('#_93FA_002E6').val('{{ old('today_japan_era_day', $todaySet['day']) }}');
 
                 $('#_8E96_8BC6_8EE5_8E81_96BCx_91E3_955C_8ED2_8E81_96BC_002E17').val(
-                    '{{ old('business_owner_name_representative_name', $company->representative) }}');
+                    '{{ old('business_owner_name_representative_name') }}' ? '{{ old('business_owner_name_representative_name') }}' : '{{ $company->representative }}');
+                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val('{{ old('business_name_name_of_ship_owner', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                 @else
@@ -139,7 +145,6 @@
                 const pensionOfficeReferenceNoOffice = branch.pension_office_reference_no_office;
                 const pensionOfficeNo = branch.pension_office_no;
                 const postCode = branch.post_code;
-                const name = branch.name;
                 const telAreaCode = branch.tel_area_code;
                 const telCityCode = branch.tel_city_code;
                 const telSubscriberCode = branch.tel_subscriber_code;
@@ -161,7 +166,6 @@
                 $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9144_9495_8F8A_974C_8ED2_8F5A_8F8A_002E15').val((branch
                     .address_prefecture ?? '') + (branch.address_city ?? '') + (branch.address_ward ?? '') + (branch
                     .address_apartment ?? ''));
-                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(name ?? '');
                 $('#_9364_9862_94D4_8D86x_8E73_8A4F_8BC7_94D4_002E18').val(telAreaCode ?? '');
                 $('#_9364_9862_94D4_8D86x_8BC7_94D4_002E19').val(telCityCode ?? '');
                 $('#_9364_9862_94D4_8D86x_94D4_8D86_002E20').val(telSubscriberCode ?? '');

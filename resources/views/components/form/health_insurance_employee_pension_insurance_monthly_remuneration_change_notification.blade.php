@@ -1,3 +1,6 @@
+<!-- 4950013520990000 -->
+<!-- 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届 -->
+
 <div>
     <div id="eGovForm">
         <script>
@@ -5010,11 +5013,11 @@
                         <select class="egov-tool-field-rect onImage" id="N29_005F_8E73"
                             value="{{ old('revision_date_era') }}" name="revision_date_era" required="required"
                             style="width: 46px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit; background-color:#ddeeff;">
-                            <option value="7" {{ old('revision_date_era') == 7 ? 'selected' : '' }}>
-                                平成
-                            </option>
                             <option value="9" {{ old('revision_date_era') == 9 ? 'selected' : '' }}>
                                 令和
+                            </option>
+                            <option value="7" {{ old('revision_date_era') == 7 ? 'selected' : '' }}>
+                                平成
                             </option>
                         </select>
                     </div>
@@ -5031,6 +5034,11 @@
                             onfocus="addlength(this,2)" required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
+                    </div>
+                    <div class="egov-tool-field-origin" style="left: 552px; top: 285px;">
+                        <p class="egov-tool-field-rect onImage"
+                            style="width: 180px; height: 24px; font-size: 10px; text-align: center; line-height: 30px; padding: inherit; background-color:transparent;"
+                            type="text">※⑨従前改定月の年項目は西暦を記入</p>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 76px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N33_005F_8E73_8A4F" maxlength="4"
@@ -5177,39 +5185,39 @@
                     <div class="egov-tool-field-origin" style="left: 291px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7"
                             value="{{ old('monthly_salary_sum1') }}" name="monthly_salary_sum1" required="required"
-                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 291px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N54_005F_89C1_93FC_8ED2_94D4_8D86"
                             maxlength="7" value="{{ old('monthly_salary_sum2') }}" name="monthly_salary_sum2"
                             required="required"
-                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 291px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N55_005F_8E73_8A4F_8BC7_94D4" maxlength="7"
                             value="{{ old('monthly_salary_sum3') }}" name="monthly_salary_sum3" required="required"
-                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 430px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N56_005F_8E73_8A4F_8BC7_94D7" maxlength="7"
                             value="{{ old('sum') }}" name="sum" required="required"
-                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 430px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N57_005F_8E73_8A4F_8BC7_94D9" maxlength="7"
                             value="{{ old('average_amount') }}" name="average_amount" required="required"
-                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 430px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N58_005F_8E73_8A4F_8BC7_9410" maxlength="7"
                             value="{{ old('adjusted_average_amount') }}" name="adjusted_average_amount"
-                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            style="width: 92px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit;"
+                            type="text" value="" readonly/>
                     </div>
 
                     <SPAN
@@ -5296,6 +5304,180 @@
                     ele.setAttribute("maxlength", ml);
                 }
             }
+        </script>
+        <script type="module">
+            $(document).ready(function() {
+            function cal1() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
+                var valueB = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val() == "" && $('#N50_005F_8E73_8A4F_8BC9').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N53_005F_8E73_93E0').val(val);
+                } else {
+                    $('#N53_005F_8E73_93E0').val("");
+                }
+            }
+            function cal2() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;
+                var valueB = parseFloat($('#N51_005F_8E73_8A4F_8BC7').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N48_005F_8E73_8A4F_8BC7').val() == "" && $('#N51_005F_8E73_8A4F_8BC7').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val(val);
+                } else {
+                    $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val("");
+                }
+            }
+            function cal3() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;
+                var valueB = parseFloat($('#N52_005F_8E73_8A4F').val()) || 0;
+
+                var val = valueA + valueB;
+
+                if ($('#N49_005F_8E73_8A4F_8BC8').val() == "" && $('#N52_005F_8E73_8A4F').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N55_005F_8E73_8A4F_8BC7_94D4').val(val);
+                } else {
+                    $('#N55_005F_8E73_8A4F_8BC7_94D4').val("");
+                }
+            }
+            function cal4() {
+                var nullFlg = true;
+
+                var valueA = parseFloat($('#N53_005F_8E73_93E0').val()) || 0;
+                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
+                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val()) || 0;
+
+                var val = valueA + valueB + valueC;
+
+                if ($('#N53_005F_8E73_93E0').val() == "" && $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val() == "" && $('#N55_005F_8E73_8A4F_8BC7_94D4').val() == "") {
+                    nullFlg = false;
+                }
+
+                if (!isNaN(val) && nullFlg) {
+                    $('#N56_005F_8E73_8A4F_8BC7_94D7').val(val);
+                } else {
+                    $('#N56_005F_8E73_8A4F_8BC7_94D7').val("");
+                }
+            }
+            function cal5() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N53_005F_8E73_93E0').val());
+                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val());
+                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if (val !== null && !isNaN(val)) {
+                    $('#N57_005F_8E73_8A4F_8BC7_94D9').val(val);
+                } else {
+                    $('#N57_005F_8E73_8A4F_8BC7_94D9').val("");
+                }
+            }
+            function cal6() {
+                var sum = 0;
+                var count = 0;
+
+                var valueA = parseFloat($('#N53_005F_8E73_93E0').val());
+                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val());
+                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val());
+                var valueD = parseFloat($('#N40_905C_90BF_8ED2').val());
+
+                if (valueA !== "") {
+                    var parsedA = parseFloat(valueA);
+                    if (!isNaN(parsedA)) {
+                        sum += parsedA;
+                        count++;
+                    }
+                }
+
+                if (valueB !== "") {
+                    var parsedB = parseFloat(valueB);
+                    if (!isNaN(parsedB)) {
+                        sum += parsedB;
+                        count++;
+                    }
+                }
+
+                if (valueC !== "") {
+                    var parsedC = parseFloat(valueC);
+                    if (!isNaN(parsedC)) {
+                        sum += parsedC;
+                        count++;
+                    }
+                }
+
+                if (valueD !== "") {
+                    var parsedD = parseFloat(valueD);
+                    if (!isNaN(parsedD)) {
+                        sum = sum-parsedD;
+                    }
+                }
+
+                var val = (count > 0) ? Math.floor(sum / count) : null;
+
+                if(valueD !== null && !isNaN(valueD)){
+                    if (val !== null && !isNaN(val)) {
+                        $('#N58_005F_8E73_8A4F_8BC7_9410').val(val);
+                    } else {
+                        $('#N58_005F_8E73_8A4F_8BC7_9410').val("");
+                    }
+                }
+            }
+
+            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9').on('input', cal1);
+            $('#N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7').on('input', cal2);
+            $('#N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal3);
+            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal4);
+            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal5);
+            $('#N40_905C_90BF_8ED2, #N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal6);
+        });
         </script>
     </div>
 </div>

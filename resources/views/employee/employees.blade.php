@@ -1,4 +1,4 @@
-<x-layout title="管理画面" useRightContent="{{ true }}">
+<x-layout title="社員一覧" useRightContent="{{ true }}">
     @slot('header')
         <style type="text/css">
             .ui.table {
@@ -32,6 +32,17 @@
                 font-weight: 700;
                 border-radius: 0.2em;
             }
+
+            .employee-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .employee-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         </style>
     @endslot
     <section class="content">
@@ -41,6 +52,20 @@
             <div class="active section">社員一覧</div>
         </div>
         <h1 class="mt-0">社員一覧</h1>
+        <div id="FilterModal" class="ui modal small filter-employee-list-modal" style="max-width: 480px;">
+            <i class="close icon"></i>
+            <div class="header">
+                表示項目の切替
+            </div>
+            @livewire('filter-employee-list', [
+                'columns' => $columnList,
+                'default' => $defaultList,
+            ])
+            <div class="actions">
+                <button class="ui button cancel" type="button">キャンセル</button>
+                <div class="ui approve primary button" onClick="javascript:$lw.onSave()">保存</div>
+            </div>
+        </div>
         <div class="ui card full card-shadow item-0">
             <div class="content">
                 <livewire:employee-list />
@@ -48,14 +73,11 @@
         </div>
     </section>
     <script type="module">
-        $('#new')
-            .dropdown({
-                action: 'hide'
-            });
-        $('#company_btn').click(_ => {
-            $('#company_select').modal({
-                blurring: true
-            }).modal('show');
+        const filterModal = $('#FilterModal').modal({
+            blurring: true
+        });
+        $('#openFilterColumn').click(_ => {
+            filterModal.modal('show');
         });
     </script>
 </x-layout>

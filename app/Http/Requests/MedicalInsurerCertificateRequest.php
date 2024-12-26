@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MedicalInsurerCertificateRequest extends BaseRequest
@@ -21,6 +22,8 @@ class MedicalInsurerCertificateRequest extends BaseRequest
      */
     public static function rules(): array
     {
+        $instance = new self();
+        FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "certificate_checkbox_2" => 'nullable|string|in:提出',
             "certification_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:certification_month,certification_day',
@@ -28,9 +31,9 @@ class MedicalInsurerCertificateRequest extends BaseRequest
             "certification_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:certification_month,certification_year',
             "medical_insurer_post_code_former" => 'nullable|string|regex:/^[0-9]{3}$/u',
             "medical_insurer_post_code_latter" => 'nullable|string|regex:/^[0-9]{4}$/u',
-            "medical_insurer_address" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ－　]+\z/u',
-            "medical_insurer_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
-            "medical_insurer_representative" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "medical_insurer_address" => ['nullable', 'string', 'max:50', new FullwidthAndMiscellaneousChars(true)],
+            "medical_insurer_name" => 'nullable|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
+            "medical_insurer_representative" => 'nullable|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
             "medical_insurer_tel_area_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "medical_insurer_tel_city_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "medical_insurer_tel_subscriber_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',

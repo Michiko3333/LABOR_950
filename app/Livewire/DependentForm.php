@@ -15,6 +15,8 @@ class DependentForm extends Component
     public $errs = [];
     public $loading = false;
 
+    public $isSpouse = false;
+
     public function mount($errors, $dependent = [], $id = null)
     {
         if (!empty($id)) {
@@ -36,6 +38,12 @@ class DependentForm extends Component
         } else {
             foreach ($dependent as $item) {
                 $d = $this->defaultValues();
+                if($item->history_flg === 1) {
+                    $class_content = 'content';
+                } else {
+                    $class_content = 'content active';
+                }
+                $d['de-class_content'] = $class_content;
                 $d['de-id'] = $item->id;
                 $d['de-relationship_spouse'] = $item->relationship_spouse;
                 $d['de-relationship_dependent'] = $item->relationship_dependent;
@@ -46,7 +54,6 @@ class DependentForm extends Component
                 $d['de-first_name_kana'] = $item->first_name_kana;
                 $d['de-sex'] = $item->sex;
                 $d['de-birthday'] = $item->birthday;
-                $d['de-age'] = $item->age;
                 $d['de-occupation'] = $item->occupation;
                 $d['de-annual_income'] = $item->annual_income;
                 $d['de-contact'] = $item->contact;
@@ -57,6 +64,7 @@ class DependentForm extends Component
                 $d['de-pension_no'] = $item->pension_no;
                 $d['de-other_1'] = $item->other_1;
                 $d['de-other_2'] = $item->other_2;
+                $d['de-history_flg'] = $item->history_flg;
                 array_push($this->data, $d);
             }
         }
@@ -69,6 +77,11 @@ class DependentForm extends Component
     }
     public function render()
     {
+        $this->isSpouse = empty(array_filter($this->data, function ($item) {
+            return isset($item['de-spouse_flag'], $item['de-history_flg']) 
+                && $item['de-spouse_flag'] == 1
+                && $item['de-history_flg'] == 0;
+        }));
         return view('livewire.dependent-form');
     }
 
@@ -94,6 +107,7 @@ class DependentForm extends Component
             $v = $d['value'];
             $this->data[$i]['de-class_content'] = $v;
         }
+        $this->dispatch('change-state');
     }
 
     public function remove($index)
@@ -103,6 +117,14 @@ class DependentForm extends Component
         unset($this->data[$index]);
         $this->data = array_values($this->data);
         $this->loading = false;
+        $this->dispatch('remove');
+    }
+
+    public function history($index)
+    {
+        if ($this->loading) return;
+        $this->data[$index]['de-history_flg'] = 1;
+        $this->dispatch('history_flg-change', ['index' => $index]);
     }
 
     private function defaultValues()
@@ -119,7 +141,6 @@ class DependentForm extends Component
             'de-first_name_kana' => '',
             'de-sex' => '',
             'de-birthday' => '',
-            'de-age' => '',
             'de-occupation' => '',
             'de-annual_income' => '',
             'de-contact' => '',
@@ -130,6 +151,7 @@ class DependentForm extends Component
             'de-pension_no' => '',
             'de-other_1' => '',
             'de-other_2' => '',
+            'de-history_flg' => 0,
         ];
 
         return $defaultValues;

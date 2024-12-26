@@ -31,7 +31,7 @@ class HealthInsuranceDependentChangeController extends Controller
 
     public function index(Request $request)
     {
-        $imagePath1 = public_path('img/health_insurance_dependent_change.jpg');
+        $imagePath1 = public_path('img/4950013521021000_1.png');
         $imageData1 = File::get($imagePath1);
         $base64Data1 = base64_encode($imageData1);
         $dataUri1 = 'data:image/png;base64,' . $base64Data1;
@@ -200,11 +200,12 @@ class HealthInsuranceDependentChangeController extends Controller
                 'spouse_tel_area_code' => $request->input('spouse_tel_area_code'),
                 'spouse_tel_city_code' => $request->input('spouse_tel_city_code'),
                 'spouse_tel_subscriber_code' => $request->input('spouse_tel_subscriber_code'),
-                'confirmation_notification_0' => $request->input('confirmation_notification_0'),
                 'spouse_become_date_era' => $request->input('spouse_become_date_era'),
                 'spouse_become_date_year' => $request->input('spouse_become_date_year'),
                 'spouse_become_date_month' => $request->input('spouse_become_date_month'),
                 'spouse_become_date_day' => $request->input('spouse_become_date_day'),
+                'spouse_reason_type_2' => $request->input('spouse_reason_type_2'),
+                'spouse_reason_2' => $request->input('spouse_reason_2'),
                 'spouse_remove_date_era' => $request->input('spouse_remove_date_era'),
                 'spouse_remove_date_year' => $request->input('spouse_remove_date_year'),
                 'spouse_remove_date_month' => $request->input('spouse_remove_date_month'),
@@ -236,6 +237,7 @@ class HealthInsuranceDependentChangeController extends Controller
                 'spouse_remarks' => $request->input('spouse_remarks'),
                 'spouse_confirmation_relationship_0' => $request->input('spouse_confirmation_relationship_0'),
                 'spouse_annual_income' => $request->input('spouse_annual_income'),
+                'eligibility_confirmation_letter_1' => $request->input('eligibility_confirmation_letter_1'),
                 'other_dependent1_name' => $request->input('other_dependent1_name'),
                 'other_dependent1_name_kana' => $request->input('other_dependent1_name_kana'),
                 'other_dependent1_sex' => $request->input('other_dependent1_sex'),
@@ -257,6 +259,8 @@ class HealthInsuranceDependentChangeController extends Controller
                 'other_dependent1_remove_date_year' => $request->input('other_dependent1_remove_date_year'),
                 'other_dependent1_remove_date_month' => $request->input('other_dependent1_remove_date_month'),
                 'other_dependent1_remove_date_day' => $request->input('other_dependent1_remove_date_day'),
+                'other_dependent1_reason_type_2' => $request->input('other_dependent1_reason_type_2'),
+                'other_dependent1_reason_2' => $request->input('other_dependent1_reason_2'),
                 'other_dependent1_reason_type' => $request->input('other_dependent1_reason_type'),
                 'other_dependent1_reason' => $request->input('other_dependent1_reason'),
                 'other_dependent1_occupation_type' => $request->input('other_dependent1_occupation_type'),
@@ -273,6 +277,7 @@ class HealthInsuranceDependentChangeController extends Controller
                 'other_dependent1_domestic_transfer_date_day' => $request->input('other_dependent1_domestic_transfer_date_day'),
                 'other_dependent1_remarks' => $request->input('other_dependent1_remarks'),
                 'other_dependent1_confirmation_relationship_0' => $request->input('other_dependent1_confirmation_relationship_0'),
+                'eligibility_confirmation_letter_2' => $request->input('eligibility_confirmation_letter_2'),
                 'other_dependent2_name' => $request->input('other_dependent2_name'),
                 'other_dependent2_name_kana' => $request->input('other_dependent2_name_kana'),
                 'other_dependent2_sex' => $request->input('other_dependent2_sex'),
@@ -294,6 +299,8 @@ class HealthInsuranceDependentChangeController extends Controller
                 'other_dependent2_remove_date_year' => $request->input('other_dependent2_remove_date_year'),
                 'other_dependent2_remove_date_month' => $request->input('other_dependent2_remove_date_month'),
                 'other_dependent2_remove_date_day' => $request->input('other_dependent2_remove_date_day'),
+                'other_dependent2_reason_type_2' => $request->input('other_dependent2_reason_type_2'),
+                'other_dependent2_reason_2' => $request->input('other_dependent2_reason_2'),
                 'other_dependent2_reason_type' => $request->input('other_dependent2_reason_type'),
                 'other_dependent2_reason' => $request->input('other_dependent2_reason'),
                 'other_dependent2_occupation_type' => $request->input('other_dependent2_occupation_type'),
@@ -309,6 +316,7 @@ class HealthInsuranceDependentChangeController extends Controller
                 'other_dependent2_domestic_transfer_date_month' => $request->input('other_dependent2_domestic_transfer_date_month'),
                 'other_dependent2_domestic_transfer_date_day' => $request->input('other_dependent2_domestic_transfer_date_day'),
                 'other_dependent2_remarks' => $request->input('other_dependent2_remarks'),
+                'other_dependent2_confirmation_relationship_0' => $request->input('other_dependent2_confirmation_relationship_0'),
                 'headquarters_post_code_former' => $request->input('headquarters_post_code_former'),
                 'headquarters_post_code_latter' => $request->input('headquarters_post_code_latter'),
                 'headquarters_address' => $request->input('headquarters_address'),

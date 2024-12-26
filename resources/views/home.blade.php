@@ -157,6 +157,18 @@
                                         </div>
                                     </a>
                                 @endif
+                                <a class="item" style="pointer-events: none;">
+                                    <div class="content">
+                                        <div class="header">各種設定</div>
+                                    </div>
+                                </a>
+                                @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
+                                    <a href="{{ route('qualifications') }}" class="item">
+                                        <div class="header">
+                                            　-　資格マスタ
+                                        </div>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -175,17 +187,27 @@
                             <div class="ui middle aligned selection list">
                                 @if ($userPermission->isReadableFor(5))
                                     <a href="{{ route('employee') }}" class="item">
-
                                         <div class="content">
-                                            <div class="header">社員一覧</div>
+                                            <div class="header">従業員一覧</div>
                                         </div>
                                     </a>
                                 @endif
                                 @if ($userPermission->isReadableFor(7))
                                     <a href="{{ route('contract.index') }}" class="item">
-
                                         <div class="content">
                                             <div class="header">労働契約書作成</div>
+                                        </div>
+                                    </a>
+                                @endif
+                                    <a class="item" style="pointer-events: none;">
+                                        <div class="content">
+                                            <div class="header">各種設定</div>
+                                        </div>
+                                    </a>
+                                @if ($userPermission->isReadableFor(14))
+                                    <a href="{{ route('closure_information') }}" class="item">
+                                        <div class="header">
+                                            　-　休業設定
                                         </div>
                                     </a>
                                 @endif
@@ -253,6 +275,20 @@
                                 <a href="{{ route('calendar.index') }}" class="item">
                                     <div class="content">
                                         <div class="header">カレンダー閲覧</div>
+                                    </div>
+                                </a>
+                            @endif
+                            @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('calendar.shift') }}" class="item">
+                                    <div class="content">
+                                        <div class="header">年間勤務予定表</div>
+                                    </div>
+                                </a>
+                            @endif
+                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('pickup.setting') }}" class="item">
+                                    <div class="content">
+                                        <div class="header">Pick up設定</div>
                                     </div>
                                 </a>
                             @endif

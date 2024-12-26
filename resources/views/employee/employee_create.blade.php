@@ -180,6 +180,10 @@
                 flex-direction: column-reverse;
                 align-items: flex-end;
             }
+
+            .ui.bottom.attached.segment label {
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">
@@ -277,7 +281,6 @@
                     'de-relationship_spouse.*',
                     'de-relationship_dependent.*',
                     'de-spouse_flag.*',
-                    'de-age.*',
                     'de-contact.*',
                     'de-occupation.*',
                     'de-annual_income.*',
@@ -420,7 +423,7 @@
                                 </div>
                                 <div class="required field {{ err($errors, 'birthday_date') }}">
                                     <label>生年月日</label>
-                                    <div class="ui calendar" id="birthday_calendar">
+                                    <div class="ui calendar birthday" id="birthday_calendar">
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="birthday_date"
@@ -429,6 +432,11 @@
                                                 id="formatted_birthday_date" value="{{ old('birthday_date') }}">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="field">
+                                    <label for="age">年齢</label>
+                                        <input type="text" name="age" class="age"
+                                        placeholder="" readonly style="border: none;">
                                 </div>
                             </div>
                             <div class="fields">
@@ -451,13 +459,12 @@
                                             O</option>
                                     </select>
                                 </div>
-                                <div class="thirteen wide field {{ err($errors, 'qualifications') }}">
-                                    <label>資格情報</label>
-                                    @if (!isset($employee_id))
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications') }}</textarea>
-                                    @else
-                                        <textarea id="qualifications" name="qualifications" style="resize: none; height: 100px;" maxlength="255">{{ old('qualifications', $employee->qualifications) }}</textarea>
-                                    @endif
+                                <div class="thirteen wide field {{ err($errors, 'qualifications[]') }}">
+                                    <label for="qualifications[]">資格情報</label>
+                                    <select id="qualifications_dropdown"
+                                        class="ui fluid search dropdown multiple qualifications_select" multiple=""
+                                        name="qualifications[]">
+                                    </select>
                                 </div>
                             </div>
                             <div class="ui divider my-2"></div>
@@ -1366,7 +1373,7 @@
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'dispatch_contract_completion') }}">
-                                <label for="dispatch_contract_completion">派遣請負修了区分</label>
+                                <label for="dispatch_contract_completion">派遣請負就労区分</label>
                                 <select class="ui fluid dropdown" name="dispatch_contract_completion"
                                     value="{{ old('dispatch_contract_completion', isset($employee_id) ? $employee->dispatch_contract_completion : '') }}">
                                     <option value="">未選択</option>
@@ -1438,7 +1445,7 @@
                         value: element.id
                     }).text(element.name).appendTo('select[name="departments[]"]');
                 });
-                $('.ui.dropdown.dropdown.multiple').dropdown('clear');
+                $('.ui.dropdown.dropdown.multiple.department_select').dropdown('clear');
                 const def = @json(old('departments', $departments));
                 def.forEach(v => {
                     let a = $('select[name="departments[]"] option[value=' + v + ']').prop(
@@ -1467,6 +1474,26 @@
                 }
             }
 
+            function getQualificationsList() {
+                $('select[name="qualifications[]"]').empty();
+                let data = @json($qualifications);
+                data = [{
+                    id: '',
+                    name: '未選択'
+                }, ...data];
+                data.forEach(element => {
+                    $('<option>').attr({
+                        value: element.id
+                    }).text(element.qualification_name).appendTo('select[name="qualifications[]"]');
+                });
+                $('.ui.dropdown.dropdown.multiple.qualifications_select').dropdown('clear');
+                const def = @json(old('employee_qualifications', $employee_qualifications));
+                def.forEach(v => {
+                    let a = $('select[name="qualifications[]"] option[value=' + v + ']').prop(
+                        'selected', true);
+                });
+            }
+
             const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(6));
             if (readonly) {
                 $sectionReadonly();
@@ -1482,9 +1509,60 @@
                     },
                     initialDate: "",
                 });
+                $('.ui.calendar.birthday').calendar({
+                    type: 'date',
+                    formatter: {
+                        date: 'Y"年"M"月"D"日"'
+                    },
+                    text: {
+                        days: ['日', '月', '火', '水', '木', '金', '土'],
+                        months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    },
+                    initialDate: "",
+                    onChange: (date, text, mode) => {
+                        const match = text.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                        if (match) {
+                            const year = parseInt(match[1], 10);
+                            const month = parseInt(match[2], 10) - 1;
+                            const day = parseInt(match[3], 10);
+                            const birthDate = new Date(year, month, day);
+                            const today = new Date();
+
+                            let age = today.getFullYear() - birthDate.getFullYear();
+                            let monthDiff = today.getMonth() - birthDate.getMonth();
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                age -= 1;
+                                monthDiff += 12;
+                            }
+
+                            let ageMonths = monthDiff;
+                            const ageString = `${age}歳${ageMonths}ヵ月`;
+                            $(".age").val(ageString);
+                        }
+                    }
+                });
+                const date = $('#formatted_birthday_date').val();
+                if(date){
+                    const match = date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                    const year = parseInt(match[1], 10);
+                    const month = parseInt(match[2], 10) - 1;
+                    const day = parseInt(match[3], 10);
+                    const birthDate = new Date(year, month, day);
+                    const today = new Date();
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    let monthDiff = today.getMonth() - birthDate.getMonth();
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                        age -= 1;
+                        monthDiff += 12;
+                    }
+                    let ageMonths = monthDiff;
+                    const ageString = `${age}歳${ageMonths}ヵ月`;
+                    $(".age").val(ageString);
+                }
                 $('.ui.dropdown.dropdown.multiple').dropdown({});
                 getDepartmentList();
                 getPositionList();
+                getQualificationsList();
             }
         });
     </script>
@@ -1514,12 +1592,13 @@
 
         $('#iconDelete').on('click', function () {
             const flg = $('#iconDeleteFlg').val();
-            console.log(flg);
             if(flg === "0") {
                 $('#iconDeleteFlg').val("1");
                 $('#icon').attr('src', '/img/image.png');
                 $('#iconChangeInput').val('');
             }
         });
+
+        $('.ui.dropdown.edit-select').dropdown();
     </script>
 </x-layout>
