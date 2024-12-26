@@ -205,6 +205,8 @@
                 const hello_work = data['hello_work'];
                 const todaySet = data['todaySet'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
+                const sixty_convert_japan = data['sixty_convert_japan'];
+                const day_after_sixty_convert_japan = data['day_after_sixty_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -314,6 +316,12 @@
                 $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
                 $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
+                $('#J21_005F_944E_8D86').val(sixty_convert_japan['era'] ?? "");
+                $('#J22_005F_944E').val(sixty_convert_japan['year'] ?? "");
+                $('#J23_005F_8C8E').val(sixty_convert_japan['month'] ?? "");
+                $('#J24_005F_93FA').val(sixty_convert_japan['day'] ?? "");
+                $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
+                $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
                 $('#J77_005F_82A0_82C4_90E6').val(hello_work);
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {

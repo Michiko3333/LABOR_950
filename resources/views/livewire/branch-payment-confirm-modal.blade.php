@@ -243,7 +243,7 @@
                                     <tbody><tr>
                                         <td class="departments-cell ${oldBonus.department_names !== departmentNames ? 'red-text' : ''}">${departmentNames}</td>
                                         <td class="month-cell ${oldBonus.bonus_payment_month !== monthElement ? 'red-text' : ''}">${monthElement}</td>
-                                        <td class="applied-date-cell ${oldBonus.applied_date !== dateElement ? 'red-text' : ''}">${dateElement}</td>
+                                        <td class="applied-date-cell ${oldBonus.applied_date.substring(0, 7) !== dateElement ? 'red-text' : ''}">${dateElement}</td>
                                         <td class="register-date-cell">${formattedDate}</td>
                                     </tr></tbody>
                                 </table>
@@ -327,7 +327,7 @@
                                     <tbody><tr>
                                         <td class="departments-cell ${oldBounty.department_names !== departmentNames ? 'red-text' : ''}">${departmentNames}</td>
                                         <td class="month-cell ${oldBounty.bonus_payment_month !== monthElement ? 'red-text' : ''}">${monthElement}</td>
-                                        <td class="applied-date-cell ${oldBounty.applied_date !== dateElement ? 'red-text' : ''}">${dateElement}</td>
+                                        <td class="applied-date-cell ${oldBounty.applied_date.substring(0, 7) !== dateElement ? 'red-text' : ''}">${dateElement}</td>
                                         <td class="register-date-cell">${formattedDate}</td>
                                     </tr></tbody>
                                 </table>

@@ -144,7 +144,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'supplier_company' => 'nullable|string|max:255',
             'outsourcing_company' => 'nullable|string|max:255',
             'sales_company' => 'nullable|string|max:255',
-            'representative' => ['required', 'string', 'max:100', new noSymbol(false)],
+            'representative' => ['required', 'string', 'max:25', new noSymbol(false)],
             'bank_name' => ['nullable', 'string', 'max:300', new noSymbol(true)],
             'url' => 'nullable|string|max:255|url',
             'purpose' => 'string|max:255',

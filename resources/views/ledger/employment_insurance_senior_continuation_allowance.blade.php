@@ -237,9 +237,6 @@
                 $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').on('input', function() {
                     $('#J2_005F_8E81_96BC').val($(this).val());
                 });
-                $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').on('input', function() {
-                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val($(this).val());
-                });
             }, 0);
 
             Livewire.on('onSelectEmployee', ({

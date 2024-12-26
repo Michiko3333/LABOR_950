@@ -1,5 +1,5 @@
 <div>
-    @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isWritableFor(16))
+    @if ($userPermission->isWritableFor(16) && $userPermission->isBasicDepartment())
         <div style="padding: 1em 0;">
             <button class="ui button primary" type="button" style="width: 100px;" wire:click='new'>追加</button>
         </div>
@@ -12,7 +12,7 @@
                         <li class="item">
                             <div class="qualification_name">{{ $item['qualification_name'] }}：{{ $item['qualification_allowance'] ?? 0 }}円</div>
                             <div class="actions">
-                                @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isWritableFor(16))
+                                @if ($userPermission->isWritableFor(16) && $userPermission->isBasicDepartment())
                                     <button class="ui button edit" type="button"
                                         wire:click='edit("{{ $item['id'] }}")'>編集</button>
                                     <button class="ui button icon basic negative" type="button"
@@ -50,7 +50,7 @@
                         <input class="edit-qualifications-form_qualification_name" name="edit-qualifications-form_qualification_name"
                             type="text" placeholder="資格名" maxlength="50">
                     </div>
-                    <div class="field mb-2">
+                    <div class="field required mb-2">
                         <label>資格手当</label>
                         <input class="edit-qualifications-form_qualification_allowance"
                             name="edit-qualifications-form_qualification_allowance" type="number" placeholder="5000"

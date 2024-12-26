@@ -216,7 +216,7 @@ class Calendar extends Component
 
         $grouped_events = [];
         $position_map = [];
-        $end_day_of_week = ($this->start_day % 6) - 1;
+        $end_day_of_week = ($this->start_day % 7) - 1;
 
         if(empty($events_list)) {
             $this->events = [];

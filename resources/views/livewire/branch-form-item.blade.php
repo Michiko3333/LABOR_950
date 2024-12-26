@@ -200,7 +200,7 @@
                             @continue;
                         @endif
                         <button
-                            class="item {{ $tab == $item['lw-current_tab'] ? 'active' : '' }} {{ $anyErrorTab[$tab] ? 'tab-error' : '' }}"
+                            class="tab item {{ $tab == $item['lw-current_tab'] ? 'active' : '' }} {{ $anyErrorTab[$tab] ? 'tab-error' : '' }}"
                             type="button" wire:click="changeTab('{{ $tab }}')">{{ $tab }}</a>
                     @endforeach
                 </div>
@@ -954,6 +954,7 @@
                     @endforeach
                 </div>
             </div>
+        @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
             @if ($key != 0)
                 <div class="branch-control p-1" style="text-align: right;">
                     <button class="ui negative button" type="button"
@@ -962,6 +963,7 @@
                     </button>
                 </div>
             @endif
+        @endif
         </div>
     </div>
 </div>

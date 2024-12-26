@@ -129,6 +129,8 @@
             key($key)
         )
     @endforeach
+    @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
     <button class="append-branch mt-1" type="button" wire:click="append" {{ count($data) > 9 ? 'disabled' : '' }}><i
             class="plus circle icon"></i>事業所を追加</button>
+    @endif
 </div>

@@ -111,21 +111,20 @@
                         '4' => '妻(未届)',
                     ];
                     $relationship_dependent_group = [
-                        '1' => '配偶者',
-                        '2' => '子供',
-                        '3' => '養子',
-                        '4' => '孫',
-                        '5' => '兄弟姉妹',
-                        '6' => '父母',
-                        '7' => '祖父母',
-                        '8' => '義父母',
-                        '9' => '義兄弟姉妹',
-                        '10' => '従兄弟姉妹',
-                        '11' => '甥・姪',
-                        '12' => 'おじ・おば',
-                        '13' => '継父母',
-                        '14' => '継子',
-                        '15' => 'その他の親族'
+                        '1' => '子供',
+                        '2' => '養子',
+                        '3' => '孫',
+                        '4' => '兄弟姉妹',
+                        '5' => '父母',
+                        '6' => '祖父母',
+                        '7' => '義父母',
+                        '8' => '義兄弟姉妹',
+                        '9' => '従兄弟姉妹',
+                        '10' => '甥・姪',
+                        '11' => 'おじ・おば',
+                        '12' => '継父母',
+                        '13' => '継子',
+                        '14' => 'その他の親族'
                     ];
 
                     $relationship_spouse_value = $item['de-relationship_spouse'] ?? '';
@@ -185,41 +184,39 @@
                                     <select class="ui fluid dropdown" name="de-relationship_dependent[]"
                                         wire:model.live="data.{{ $key }}.de-relationship_dependent">
                                         <option value="">未選択</option>
-                                        <option value="1">配偶者</option>
-                                        <option value="2">子供</option>
-                                        <option value="3">養子</option>
-                                        <option value="4">孫</option>
-                                        <option value="5">兄弟姉妹</option>
-                                        <option value="6">父母</option>
-                                        <option value="7">祖父母</option>
-                                        <option value="8">義父母</option>
-                                        <option value="9">義兄弟姉妹</option>
-                                        <option value="10">従兄弟姉妹</option>
-                                        <option value="11">甥・姪</option>
-                                        <option value="12">おじ・おば</option>
-                                        <option value="13">継父母</option>
-                                        <option value="14">継子</option>
-                                        <option value="15">その他の親族</option>
+                                        <option value="1">子供</option>
+                                        <option value="2">養子</option>
+                                        <option value="3">孫</option>
+                                        <option value="4">兄弟姉妹</option>
+                                        <option value="5">父母</option>
+                                        <option value="6">祖父母</option>
+                                        <option value="7">義父母</option>
+                                        <option value="8">義兄弟姉妹</option>
+                                        <option value="9">従兄弟姉妹</option>
+                                        <option value="10">甥・姪</option>
+                                        <option value="11">おじ・おば</option>
+                                        <option value="12">継父母</option>
+                                        <option value="13">継子</option>
+                                        <option value="14">その他の親族</option>
                                     </select>
                                 @else
                                     <select class="ui fluid dropdown" name="de-relationship_dependent[]"
                                         wire:model.live="data.{{ $key }}.de-relationship_dependent" style="pointer-events: none; border: none;">
                                         <option value="">未選択</option>
-                                        <option value="1">配偶者</option>
-                                        <option value="2">子供</option>
-                                        <option value="3">養子</option>
-                                        <option value="4">孫</option>
-                                        <option value="5">兄弟姉妹</option>
-                                        <option value="6">父母</option>
-                                        <option value="7">祖父母</option>
-                                        <option value="8">義父母</option>
-                                        <option value="9">義兄弟姉妹</option>
-                                        <option value="10">従兄弟姉妹</option>
-                                        <option value="11">甥・姪</option>
-                                        <option value="12">おじ・おば</option>
-                                        <option value="13">継父母</option>
-                                        <option value="14">継子</option>
-                                        <option value="15">その他の親族</option>
+                                        <option value="1">子供</option>
+                                        <option value="2">養子</option>
+                                        <option value="3">孫</option>
+                                        <option value="4">兄弟姉妹</option>
+                                        <option value="5">父母</option>
+                                        <option value="6">祖父母</option>
+                                        <option value="7">義父母</option>
+                                        <option value="8">義兄弟姉妹</option>
+                                        <option value="9">従兄弟姉妹</option>
+                                        <option value="10">甥・姪</option>
+                                        <option value="11">おじ・おば</option>
+                                        <option value="12">継父母</option>
+                                        <option value="13">継子</option>
+                                        <option value="14">その他の親族</option>
                                     </select>
                                 @endif
                             </div>

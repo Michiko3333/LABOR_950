@@ -401,7 +401,7 @@ class ShiftForm extends Component
 
     public function onChangeShiftId()
     {
-        $current_company = CurrentUser::info();
+        $current_company = CurrentUser::currentCompany();
         $main_branch = Branch::where('company_id', $current_company->id)->where('branch_type', 1)->first();
 
         $this->values = [];

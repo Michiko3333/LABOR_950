@@ -199,6 +199,8 @@
                 const company = data['company'];
                 const hello_work = data['hello_work'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
+                const sixty_convert_japan = data['sixty_convert_japan'];
+                const day_after_sixty_convert_japan = data['day_after_sixty_convert_japan'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -255,6 +257,12 @@
                 $('#J26_005F_944E').val(birthdayConvertJapan['year'] ?? "");
                 $('#J27_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J28_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
+                $('#J21_005F_944E_8D86').val(sixty_convert_japan['era'] ?? "");
+                $('#J22_005F_944E').val(sixty_convert_japan['year'] ?? "");
+                $('#J23_005F_8C8E').val(sixty_convert_japan['month'] ?? "");
+                $('#J24_005F_93FA').val(sixty_convert_japan['day'] ?? "");
+                $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
+                $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
                 $('#J119_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no || '');
                 $('#J68_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');
                 $('#J69_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code || '');

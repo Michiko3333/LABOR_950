@@ -285,6 +285,11 @@
             const readonly = @json(!$userPermission->isBasicDepartment() || !$userPermission->isWritableFor(2));
             if (readonly) {
                 $sectionReadonly();
+                $('.tab').on('click', function () {
+                    setTimeout(() => {
+                        $sectionReadonly();
+                    }, 550);
+                });
             }
         });
     </script>

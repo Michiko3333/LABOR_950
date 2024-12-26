@@ -120,7 +120,7 @@
                 $('#N7_P1').val('{{ old('submission_month') ?? $todaySet['month'] }}');
                 $('#N8_P1').val('{{ old('submission_day') ?? $todaySet['day'] }}');
 
-                $('#N17_P1').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
+                $('#N17_P1').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                 @else

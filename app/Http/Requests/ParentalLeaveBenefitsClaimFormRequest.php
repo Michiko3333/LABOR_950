@@ -139,8 +139,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'commuting_allowance_period' => 'nullable|string|max:3',
             'commuting_allowance_period_other' => 'nullable|string|max:4',
             'note' => 'nullable|string|max:255',
-            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:255',
-            'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'labor_consultant_acting_as_agent_name' => 'nullable|string|max:30',
+            'labor_consultant_name' => ['nullable', 'string', 'max:33', new FullwidthAndMiscellaneousChars(true)],
             'labor_consultant_tel_treacode' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -530,8 +530,8 @@ class ParentalLeaveBenefitsClaimFormRequest extends BaseRequest
             'payment_period_extension_reason_japan_era_year.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_年を入力してください。',
             'payment_period_extension_reason_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_月を入力してください。',
             'payment_period_extension_reason_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_開始日付_日を入力してください。',
-            'payment_period_extension_reason_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_月を入力してください。',
-            'payment_period_extension_reason_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_日を入力してください。',
+            'payment_period_extension_reason_last_month.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_月を入力してください。',
+            'payment_period_extension_reason_last_day.required_with' => '1枚目_支給対象となる期間の延長事由－期間_終了日付_日を入力してください。',
         ];
     }
 

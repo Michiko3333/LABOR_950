@@ -136,6 +136,22 @@ class LedgerEmployeeList extends BaseTable
         if (!empty($employee->birthday)) {
             $birthday = Carbon::parse($employee->birthday);
             $birthday_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($birthday);
+            $sixty_years_old_date = $birthday->copy()->addYears(60);
+            $day_after_sixty_years_old = $sixty_years_old_date->copy()->addDay();
+            $sixty_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($sixty_years_old_date);
+            $sixty_convert_japan = [
+                'era' => $sixty_convert_japan['japanese_calendar_era_string'],
+                'year' => $sixty_convert_japan['japanese_calendar_result']->year,
+                'month' => $sixty_convert_japan['japanese_calendar_result']->month,
+                'day' => $sixty_convert_japan['japanese_calendar_result']->day,
+            ];
+            $day_after_sixty_convert_japan = Controller::convertWesternCalendarToJapaneseCalendar($day_after_sixty_years_old);
+            $day_after_sixty_convert_japan = [
+                'era' => $day_after_sixty_convert_japan['japanese_calendar_era_string'],
+                'year' => $day_after_sixty_convert_japan['japanese_calendar_result']->year,
+                'month' => $day_after_sixty_convert_japan['japanese_calendar_result']->month,
+                'day' => $day_after_sixty_convert_japan['japanese_calendar_result']->day,
+            ];
             $birthday_convert_japan = [
                 'era' => $birthday_convert_japan['japanese_calendar_era_string'],
                 'year' => $birthday_convert_japan['japanese_calendar_result']->year,
@@ -383,6 +399,8 @@ class LedgerEmployeeList extends BaseTable
             'country_value' => $country_value ?? '',
             'residential_status_value' => $residential_status_value ?? '',
             'birthday_convert_japan' => $birthday_convert_japan ?? '',
+            'sixty_convert_japan' => $sixty_convert_japan ?? '',
+            'day_after_sixty_convert_japan' => $day_after_sixty_convert_japan ?? '',
             'employment_insured_convert_date' => $employment_insured_convert_date ?? '',
             'employment_retirement_convert_date' => $employment_retirement_convert_date ?? '',
             'passed_away_convert_date' => $passed_away_convert_date ?? '',
