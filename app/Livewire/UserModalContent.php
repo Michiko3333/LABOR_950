@@ -7,6 +7,7 @@ use App\Models\CurrentUser;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Employee_department;
+use App\Models\Managerial_position;
 use App\Models\User;
 use App\Models\Prefecture;
 use App\Rules\noEmoji;
@@ -33,6 +34,7 @@ class UserModalContent extends Component
         'company_name' => '',
         'branch_name' => '',
         'departments' => [],
+        'managerial_position' => '',
         'human_resources_permissions' => true
     ];
     public $names = [
@@ -122,7 +124,7 @@ class UserModalContent extends Component
             if (!empty($user) || !empty($employee)) {
                 if ($this->role_id !== 999) {
                     $company = CurrentUser::currentCompany();
-                    if($this->role_id === 500) {
+                    if ($this->role_id === 500) {
                         $branch = $employee->branch()->first();
                         $company = $branch->company()->first();
                     }
@@ -153,11 +155,13 @@ class UserModalContent extends Component
                             ->where('m_employee_department.employee_id', $this->employee_id)
                             ->pluck('d.department_permission_id')
                             ->toArray();
-                        if (!in_array(2, $departmentPermissionId) || $employee_status === 1){
+                        if (!in_array(2, $departmentPermissionId) || $employee_status === 1) {
                             $this->profiles['human_resources_permissions'] = false;
                         }
                     }
 
+                    $mp = Managerial_position::select('name')->where('id', $employee->managerial_position_id)->first();
+                    if (!empty($mp)) $this->profiles['managerial_position'] = $mp->name;
                 } elseif ($this->role_id = 999) {
                     $this->profiles['branch_name'] = "-";
                     $this->profiles['departments'] = ["-"];
@@ -215,7 +219,8 @@ class UserModalContent extends Component
         $this->icon_change_state = !$this->icon_change_state;
     }
 
-    public function changeIcon() {
+    public function changeIcon()
+    {
         $this->dispatch('changeIcon');
     }
 

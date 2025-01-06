@@ -31,10 +31,14 @@
             #control-panel .control-panel-menu .extra.content a .content .header {
                 position: relative;
                 padding-left: 1.2em;
-
             }
 
-            #control-panel .control-panel-menu .extra.content a .content .header::before {
+            #control-panel .control-panel-menu .extra.content a .content.sub .header {
+                position: relative;
+                padding-left: 2.2em;
+            }
+
+            #control-panel .control-panel-menu .extra.content a .content:not(.sub) .header::before {
                 position: absolute;
                 content: "";
                 top: 8px;
@@ -42,6 +46,19 @@
                 width: 8px;
                 height: 8px;
                 background-color: var(--color-red);
+            }
+
+            #control-panel .control-panel-menu .extra.content a .content.sub .header::before {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                content: "-";
+                top: 6px;
+                left: 1.2em;
+                width: 16px;
+                height: 10px;
+                color: var(--color-black);
             }
 
 
@@ -164,8 +181,8 @@
                                 </a>
                                 @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
                                     <a href="{{ route('qualifications') }}" class="item">
-                                        <div class="header">
-                                            　-　資格マスタ
+                                        <div class="content sub">
+                                            <div class="header">資格マスタ</div>
                                         </div>
                                     </a>
                                 @endif
@@ -192,6 +209,22 @@
                                         </div>
                                     </a>
                                 @endif
+                                @if ($userPermission->isReadableFor(5))
+                                    <a href="{{ route('wages.index') }}" class="item">
+
+                                        <div class="content">
+                                            <div class="header">賃金情報</div>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($userPermission->isReadableFor(5))
+                                    <a href="{{ route('wages-ledger.index') }}" class="item">
+
+                                        <div class="content">
+                                            <div class="header">賃金台帳作成</div>
+                                        </div>
+                                    </a>
+                                @endif
                                 @if ($userPermission->isReadableFor(7))
                                     <a href="{{ route('contract.index') }}" class="item">
                                         <div class="content">
@@ -199,15 +232,15 @@
                                         </div>
                                     </a>
                                 @endif
-                                    <a class="item" style="pointer-events: none;">
-                                        <div class="content">
-                                            <div class="header">各種設定</div>
-                                        </div>
-                                    </a>
+                                <a class="item" style="pointer-events: none;">
+                                    <div class="content">
+                                        <div class="header">各種設定</div>
+                                    </div>
+                                </a>
                                 @if ($userPermission->isReadableFor(14))
                                     <a href="{{ route('closure_information') }}" class="item">
-                                        <div class="header">
-                                            　-　休業設定
+                                        <div class="content sub">
+                                            <div class="header">休業設定</div>
                                         </div>
                                     </a>
                                 @endif
@@ -278,14 +311,20 @@
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                            @if (
+                                $userPermission->isReadableFor(12) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('calendar.shift') }}" class="item">
                                     <div class="content">
                                         <div class="header">年間勤務予定表</div>
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                            @if (
+                                $userPermission->isReadableFor(13) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('pickup.setting') }}" class="item">
                                     <div class="content">
                                         <div class="header">Pick up設定</div>

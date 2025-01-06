@@ -353,7 +353,7 @@
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        z-index: 102;
+        z-index: 900;
         background-color: white;
         transition: 0.5s;
         box-shadow: 8px 0px 12px rgba(0, 0, 0, 0.1);
@@ -435,7 +435,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 101;
+        z-index: 850;
         opacity: 0;
         pointer-events: none;
         transition: 0.8s;

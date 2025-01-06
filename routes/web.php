@@ -46,6 +46,7 @@ use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
+use App\Http\Controllers\WagesEmployeeController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
@@ -145,7 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
         }
     })->where('path', '.*');
 
-     // 帳票
+    // 帳票
     Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
     Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
 
@@ -161,7 +162,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
         Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
         Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
-        Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('/calendar/shift', [ShiftCalendarController::class, 'index'])->name('calendar.shift');
         Route::get('/calendar/shift/download', [ShiftCalendarController::class, 'download'])->name('calendar.shift_download');
@@ -301,9 +301,22 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
         Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
 
+        Route::get('/employee/wages', [WagesEmployeeController::class, 'wages'])->name('wages.index');
+        Route::get('/employee/wages/ledger', [WagesEmployeeController::class, 'index'])->name('wages-ledger.index');
+        Route::post('/employee/wages/ledger/edit', [WagesEmployeeController::class, 'select'])->name('wages-ledger.edit');
+        Route::get('/employee/wages/ledger/edit', function () {
+            return redirect()->route('wages-ledger.index');
+        });
+        Route::post('/employee/wages/list/edit', [WagesEmployeeController::class, 'wage_post'])->name('wages.post');
+        Route::get('/employee/wages/list/filter-load', [WagesEmployeeController::class, 'wage_filter_load'])->name('wages.filter.load');
+        Route::post('/employee/wages/list/filter-save', [WagesEmployeeController::class, 'wage_filter_save'])->name('wages.filter.save');
+        Route::post('/employee/wages/list/filter-remove', [WagesEmployeeController::class, 'wage_filter_remove'])->name('wages.filter.remove');
+        Route::get('/employee/wages/list/filter-showlist', [WagesEmployeeController::class, 'wage_filter_showlist'])->name('wages.filter.showlist');
         Route::get('/employee/closure_information', [EmployeeController::class, 'closure_information_list'])->name('closure_information');
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
     });
+
+    Route::get('/employee/wages/list', [WagesEmployeeController::class, 'wages_list'])->name('wages.list');
 });

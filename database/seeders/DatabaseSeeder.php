@@ -74,5 +74,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureSeeder::class);
         $this->call(FilterEmployeeListSeeder::class);
         $this->call(PickupSettingSeeder::class);
+        $this->call(wageColumnSeeder::class);
     }
 }

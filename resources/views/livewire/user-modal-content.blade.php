@@ -39,20 +39,24 @@
                             </div>
                         @endif
                         <div class="user-icon">
-                            @if($icon_change_state === false)
+                            @if ($icon_change_state === false)
                                 <img src="{{ $profiles['file_path'] }}">
                             @elseif($role_id !== 999)
-                                <img src="{{ $profiles['file_path'] }}" wire:ignore wire:click="changeIcon" id="icon" style="display: block; filter: brightness(50%);">
-                                <strong style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.4rem; pointer-events: none;">アップロード</strong>
-                                <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" wire:model.live="icon_file" id="iconChangeInput" style="display: none;">
+                                <img src="{{ $profiles['file_path'] }}" wire:ignore wire:click="changeIcon"
+                                    id="icon" style="display: block; filter: brightness(50%);">
+                                <strong
+                                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.4rem; pointer-events: none;">アップロード</strong>
+                                <input type="file" accept=".jpeg,.jpg,.png" name="icon_file"
+                                    wire:model.live="icon_file" id="iconChangeInput" style="display: none;">
                             @endif
                         </div>
                         <div style="display: flex; justify-content: center;">
-                            @if($role_id === 500)
-                                @if($icon_change_state === false)
+                            @if ($role_id === 500)
+                                @if ($icon_change_state === false)
                                     <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="iconChangeState">変更</a>
                                 @else
-                                    <a style="margin: 0.4rem 1.2rem 0 0; cursor: pointer; color: var(--color-red);" wire:click="iconChangeState">キャンセル</a>
+                                    <a style="margin: 0.4rem 1.2rem 0 0; cursor: pointer; color: var(--color-red);"
+                                        wire:click="iconChangeState">キャンセル</a>
                                     <a style="margin-top: 0.4rem; cursor: pointer;" wire:click="saveIcon">保存</a>
                                 @endif
                             @endif
@@ -72,7 +76,7 @@
                         <h3>{{ $profiles['company_name'] }}</h3>
                         <p>配属：{{ $profiles['branch_name'] }}</p>
                         <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
-                        <p>役職：{{ empty($profiles['managerial_position']) ? '-' : $profiles['managerial_position']->name }}
+                        <p>役職：{{ $profiles['managerial_position'] }}
                         </p>
                     </div>
                 </div>
