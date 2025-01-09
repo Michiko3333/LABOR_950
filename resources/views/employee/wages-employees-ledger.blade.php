@@ -54,6 +54,15 @@
         <h1 class="mt-0">賃金台帳（社員選択）</h1>
         <p>選択した社員の賃金情報を元に、賃金台帳を作成します。</p>
 
+        @if (session('errors'))
+            <div class="ui error message">
+                <div class="header">入力エラー</div>
+                <ul class="list">
+                    <li>従業員を１人以上選択してください</li>
+                </ul>
+            </div>
+        @endif
+
         <div id="FilterModal" class="ui modal small filter-employee-list-modal" style="max-width: 480px;">
             <i class="close icon"></i>
             <div class="actions">

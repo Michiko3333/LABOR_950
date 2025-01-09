@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('employee_no')->comment('社員番号');
             $table->string('employee_name')->comment('従業員氏名');
             $table->string('branch_name')->comment('事業所');
-            $table->string('departments')->comment('部署');
-            $table->string('employment_type')->comment('雇用区分');
-            $table->string('work_type')->comment('勤務区分');
-            $table->string('grade')->comment('等級区分');
-            $table->string('gradational_salary')->comment('号棒区分');
-            $table->string('other_type')->comment('その他区分');
+            $table->string('departments')->nullable()->comment('部署');
+            $table->string('employment_type')->nullable()->comment('雇用区分');
+            $table->string('work_type')->nullable()->comment('勤務区分');
+            $table->string('grade')->nullable()->comment('等級区分');
+            $table->string('gradational_salary')->nullable()->comment('号棒区分');
+            $table->string('other_type')->nullable()->comment('その他区分');
             $table->date('month')->comment('月');
             $table->string('wage_type', 5)->comment('賃金区分');
             $table->integer('wage_base_amount')->nullable()->comment('基本給');

@@ -74,6 +74,18 @@ class FeatureSeeder extends Seeder
                 'id' => '16',
                 'name' => '資格マスタ',
             ],
+            [
+                'id' => '17',
+                'name' => '賃金情報',
+            ],
+            [
+                'id' => '18',
+                'name' => '賃金台帳',
+            ],
+            [
+                'id' => '19',
+                'name' => '勤怠情報',
+            ],
         ]);
     }
 }

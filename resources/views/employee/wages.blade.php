@@ -111,6 +111,10 @@
                 width: 100%;
                 padding: 1em 1em;
                 gap: 1em;
+
+                max-height: 300px;
+                overflow-y: scroll;
+                margin-bottom: 1em;
             }
 
             #wage-filter #wage-filter-conditions-action {
@@ -159,6 +163,44 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
+
+            .table-wage table th::before,
+            .table-wage table th::after {
+                content: "";
+                height: 0;
+                width: 0;
+                position: absolute;
+                border: 5px solid transparent;
+                right: 10px;
+                top: 50%;
+            }
+
+            .table-wage table th {
+                position: relative;
+            }
+
+            .table-wage table #wage-list-header:not(.edit) th {
+                padding-right: 30px;
+                cursor: pointer;
+            }
+
+            .table-wage table #wage-list-header:not(.edit) th::before {
+                border-bottom-color: #aaa;
+                margin-top: -10px;
+            }
+
+            .table-wage table #wage-list-header:not(.edit) th::after {
+                border-top-color: #aaa;
+                margin-top: 2px;
+            }
+
+            .table-wage table #wage-list-header:not(.edit) th.asc::before {
+                border-bottom-color: #555;
+            }
+
+            .table-wage table #wage-list-header:not(.edit) th.desc::after {
+                border-top-color: #555;
+            }
         </style>
     @endslot
     <section class="content">
@@ -173,6 +215,7 @@
             <div class="content">
                 <div class="wage-actions-top">
                     <button class="ui button small" id="wage-filter-button">絞り込み・表示設定</button>
+                    <button class="ui button small" id="wage-insurance-button">保険対象賃金設定</button>
                 </div>
                 <div id="wage-list" class="table-wage">
                     <table>
@@ -192,7 +235,7 @@
         </div>
         <div id="wage-filter" class="ui modal wage-filter-coupled">
             <div class="header">絞り込み・表示設定</div>
-            <div class="content scrolling">
+            <div class="content">
                 <form id="wage_filter" class="ui form wage-filter-wrapper">
                     <div class="ui top attached tabular menu wage-menu">
                         <div class="item active" data-tab="filter1" style="cursor: pointer;">絞り込み</div>
@@ -240,32 +283,62 @@
                                 </select>
                             </div>
                             <div class="four wide field">
-                                <label for="wage_departments">所属部署</label>
-                                <input type="text" name="wage_department" placeholder="〇〇部">
+                                <label for="wage_department">所属部署</label>
+                                <select class="ui fluid dropdown wage" name="wage_department">
+                                    <option value="">指定なし</option>
+                                    @foreach ($departments as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="fields">
                             <div class="four wide field">
                                 <label for="employment_type">雇用区分</label>
-                                <input type="text" name="employment_type" placeholder="正社員">
+                                <select class="ui fluid dropdown wage" name="employment_type">
+                                    <option value="">指定なし</option>
+                                    @foreach ($employment_type as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="four wide field">
-                                <label for="work_type">勤務区分</label>
-                                <input type="text" name="work_type" placeholder="〇〇〇">
+                                <label for="work_type">勤務形態</label>
+                                <select class="ui fluid dropdown wage" name="work_type">
+                                    <option value="">指定なし</option>
+                                    @foreach ($work_type as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="four wide field">
                                 <label for="grade">等級区分</label>
-                                <input type="text" name="grade" placeholder="〇〇等級">
+                                <select class="ui fluid dropdown wage" name="grade">
+                                    <option value="">指定なし</option>
+                                    @foreach ($grade as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="four wide field">
                                 <label for="gradational_salary">号棒区分</label>
-                                <input type="text" name="gradational_salary" placeholder="〇〇号棒">
+                                <select class="ui fluid dropdown wage" name="gradational_salary">
+                                    <option value="">指定なし</option>
+                                    @foreach ($gradational_salary as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="fields">
                             <div class="four wide field">
                                 <label for="other_type">その他区分</label>
-                                <input type="text" name="other_type" placeholder="〇〇">
+                                <select class="ui fluid dropdown wage" name="other_type">
+                                    <option value="">指定なし</option>
+                                    @foreach ($other_type as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -295,6 +368,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="wage-insurance-modal" class="ui modal tiny">
+            <div class="header">保険対象賃金設定</div>
+            <div class="content ui form">
+                <div class="field">
+                    <label for="labor_insurance_target">労働保険対象賃金</label>
+                    <select id="labor_insurance_target" multiple="" name="skills"
+                        class="ui fluid normal dropdown wage-insurance-dd"></select>
+                </div>
+                <div class="field">
+                    <label for="social_insurance_target">社会保険対象賃金</label>
+                    <select id="social_insurance_target" multiple="" name="skills"
+                        class="ui fluid normal dropdown wage-insurance-dd"></select>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="ui button cancel">キャンセル</button>
+                <button class="ui button approve primary">保存</button>
             </div>
         </div>
         <div id="add-column-modal" class="ui modal mini">
@@ -338,6 +430,8 @@
                 "{{ route('wages.filter.load') }}",
                 "{{ route('wages.filter.save') }}",
                 "{{ route('wages.filter.remove') }}",
+                "{{ route('wages.insurance.get') }}",
+                "{{ route('wages.insurance.save') }}",
                 'wage-list');
             const wageFilter = new WageFilter(wageList);
             wageList.showFilter = () => {
@@ -410,6 +504,84 @@
             }
             // Wageをロード
             wageFilter.init();
+
+            $('#wage-insurance-button').click(e => {
+                const list = wageList.getCalcableColumns();
+                const labors = wageList.labor_insurances;
+                const social = wageList.social_insurances;
+
+                const select_labor = $('#labor_insurance_target.wage-insurance-dd');
+                const select_social = $('#social_insurance_target.wage-insurance-dd');
+
+                $('#wage-insurance-modal')
+                    .modal({
+                        onShow: () => {
+                            const labors_values = list.map(e => {
+                                return {
+                                    name: e.name,
+                                    value: e.key,
+                                    selected: labors.includes(e.key)
+                                }
+                            });
+                            const social_values = list.map(e => {
+                                return {
+                                    name: e.name,
+                                    value: e.key,
+                                    selected: social.includes(e.key)
+                                }
+                            });
+
+                            select_labor
+                                .dropdown({
+                                    values: labors_values
+                                })
+                                .dropdown('save defaults');
+                            select_social
+                                .dropdown({
+                                    values: social_values
+                                })
+                                .dropdown('save defaults');
+
+                        },
+                        onHidden: () => {
+                            select_labor.dropdown('restore defaults');
+                            select_social.dropdown('restore defaults');
+
+                        },
+                        onApprove: () => {
+                            const labor_insurance_target = document.getElementById(
+                                'labor_insurance_target');
+                            const social_insurance_target = document.getElementById(
+                                'social_insurance_target');
+
+                            const data = {
+                                labor: [],
+                                social: []
+                            }
+
+                            for (let i = 0; i < labor_insurance_target.options.length; i++) {
+                                const option = labor_insurance_target.options[i];
+                                if (option.selected) {
+                                    data.labor.push(option.value);
+                                }
+                            }
+                            for (let i = 0; i < social_insurance_target.options.length; i++) {
+                                const option = social_insurance_target.options[i];
+                                if (option.selected) {
+                                    data.social.push(option.value);
+                                }
+                            }
+
+                            wageFilter.saveInsurances(data);
+
+                            select_labor.dropdown('save defaults');
+                            select_social.dropdown('save defaults');
+
+                            return true;
+                        }
+                    })
+                    .modal('show');
+            })
 
             // Fomantic
             $('.wage-menu .item')

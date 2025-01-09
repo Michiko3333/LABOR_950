@@ -17,7 +17,7 @@ class wageColumnSeeder extends Seeder
         DB::table('m_wage_columns')->truncate();
         DB::table('m_wage_columns')->insert([
             ['key' => 'employee_no', 'name' => '従業員CD', 'width' => 120, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 1, 'ledger_order' => 1, 'hide_bonus' => 1],
-            ['key' => 'employee_name', 'name' => '従業員氏名', 'width' => 120, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 2, 'ledger_order' => 2, 'hide_bonus' => 1],
+            ['key' => 'employee_name', 'name' => '従業員氏名', 'width' => 140, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 2, 'ledger_order' => 2, 'hide_bonus' => 1],
             ['key' => 'branch_name', 'name' => '事業所名', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 3, 'ledger_order' => 3, 'hide_bonus' => 1],
             ['key' => 'departments', 'name' => '部署', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 3, 'ledger_order' => 4, 'hide_bonus' => 1],
             ['key' => 'employment_type', 'name' => '雇用区分', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 4, 'ledger_order' => 5, 'hide_bonus' => 1],
@@ -45,8 +45,8 @@ class wageColumnSeeder extends Seeder
             ['key' => 'non_taxable_paymment', 'name' => '非課税支額', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 1, 'order' => 22, 'ledger_order' => 20, 'hide_bonus' => 0],
             ['key' => 'taxable_paymment_label', 'name' => '支給合計', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 23, 'ledger_order' => 21, 'hide_bonus' => 1],
 
-            ['key' => 'labor_insurance_target', 'name' => '労働保険対象賃金', 'width' => 140, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 1, 'order' => 24, 'ledger_order' => 22, 'hide_bonus' => 1],
-            ['key' => 'social_insurance_target', 'name' => '社会保険対象賃金', 'width' => 140, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 1, 'order' => 25, 'ledger_order' => 23, 'hide_bonus' => 1],
+            ['key' => 'labor_insurance_target', 'name' => '労働保険対象賃金', 'width' => 150, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 1, 'order' => 24, 'ledger_order' => 22, 'hide_bonus' => 0],
+            ['key' => 'social_insurance_target', 'name' => '社会保険対象賃金', 'width' => 150, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 1, 'order' => 25, 'ledger_order' => 23, 'hide_bonus' => 0],
 
             ['key' => 'health_insurance_deduction', 'name' => '健康保険', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 2, 'show' => 0, 'is_ledger' => 1, 'order' => 26, 'ledger_order' => 27, 'hide_bonus' => 0],
             ['key' => 'nursing_care_insurance_deduction', 'name' => '介護保険', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 2, 'show' => 0, 'is_ledger' => 1, 'order' => 27, 'ledger_order' => 28, 'hide_bonus' => 0],

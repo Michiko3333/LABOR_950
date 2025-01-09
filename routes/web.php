@@ -47,6 +47,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
 use App\Http\Controllers\WagesEmployeeController;
+use App\Http\Controllers\AttendanceEmployeeController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
@@ -314,9 +315,22 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee/wages/list/filter-showlist', [WagesEmployeeController::class, 'wage_filter_showlist'])->name('wages.filter.showlist');
         Route::get('/employee/closure_information', [EmployeeController::class, 'closure_information_list'])->name('closure_information');
 
+        Route::get('/employee/wages/list/insurance-get', [WagesEmployeeController::class, 'wage_insurance_get'])->name('wages.insurance.get');
+        Route::post('/employee/wages/list/insurance-save', [WagesEmployeeController::class, 'wage_insurance_save'])->name('wages.insurance.save');
+
+        Route::get('/employee/attendances', [AttendanceEmployeeController::class, 'attendances'])->name('attendances.index');
+        Route::post('/employee/attendances/list/edit', [AttendanceEmployeeController::class, 'attendance_post'])->name('attendances.post');
+        Route::get('/employee/attendances/list/filter-load', [AttendanceEmployeeController::class, 'attendance_filter_load'])->name('attendances.filter.load');
+        Route::post('/employee/attendances/list/filter-save', [AttendanceEmployeeController::class, 'attendance_filter_save'])->name('attendances.filter.save');
+        Route::post('/employee/attendances/list/filter-remove', [AttendanceEmployeeController::class, 'attendance_filter_remove'])->name('attendances.filter.remove');
+        Route::get('/employee/attendances/list/filter-showlist', [AttendanceEmployeeController::class, 'attendance_filter_showlist'])->name('attendances.filter.showlist');
+
+
+
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
     });
 
     Route::get('/employee/wages/list', [WagesEmployeeController::class, 'wages_list'])->name('wages.list');
+    Route::get('/employee/attendances/list', [AttendanceEmployeeController::class, 'attendance_list'])->name('attendances.list');
 });

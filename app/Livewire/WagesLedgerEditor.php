@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Attendance;
+use App\Models\AttendanceColumns;
 use App\Models\Branch;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CurrentUser;
@@ -29,6 +31,8 @@ class WagesLedgerEditor extends Component
     public $wage_column = null;
     public $wage_column_names = [];
     public $bonus_column_names = [];
+    public $attendance_column = null;
+    public $attendance_column_names = [];
     public $data = [];
     public $current_id = 0;
     public $employee_icon = '';
@@ -46,6 +50,10 @@ class WagesLedgerEditor extends Component
 
     public $disablePrev = true;
     public $disableNext = true;
+
+    public $currentTab = 'wage';
+
+    public $errorMessage = '';
 
     public function mount($employee_ids, $year = 2024)
     {
@@ -80,6 +88,15 @@ class WagesLedgerEditor extends Component
             ->orderBy('month')
             ->get();
 
+        $attendance = Attendance::where('company_id', $current_company->id)
+            ->whereIn('employee_id', $this->employee_ids)
+            ->whereBetween('month', [
+                $carbon_start->format('Y-m-d'),
+                $carbon_start->clone()->addYear()->subday()->format('Y-m-d')
+            ])
+            ->orderBy('month')
+            ->get();
+
         $this->wage_column = WageColumns::select('id', 'key', 'name', 'calc', 'hide_bonus')
             ->where('is_ledger', 1)
             ->where('delete_flg', 0)
@@ -96,11 +113,24 @@ class WagesLedgerEditor extends Component
         $base_month['overtime_values'] = [];
         $base_month['allowance_values'] = [];
 
+        $this->attendance_column = AttendanceColumns::select('id', 'key', 'name')
+            ->where('is_ledger', 1)
+            ->where('delete_flg', 0)
+            ->get();
+        $this->attendance_column_names = $this->attendance_column->pluck('name', 'key')->toArray();
+        $attendance_column_keys = $this->attendance_column->pluck('key')->toArray();
+        $base_atd_month = [];
+        foreach ($attendance_column_keys as $key => $key_name) {
+            $base_atd_month[$key_name] = '';
+        }
+
         for ($i = 0; $i < count($this->employee_ids); $i++) {
             $employee_id = $this->employee_ids[$i];
             $d = [
                 'month' => [],
-                'bonus_month' => []
+                'bonus_month' => [],
+                'atd_month' => [],
+                'remarks' => ''
             ];
             $carbon_month_start = Carbon::create($this->year, $this->start_month, 1, 0, 0, 0);
             foreach ($this->month_order as $key => &$month) {
@@ -128,6 +158,18 @@ class WagesLedgerEditor extends Component
                     }
                 }
                 $d['month'][$month] = array_merge($base_month, $wage_data);
+
+
+                $attendance_data = $attendance->where('employee_id', $employee_id)
+                    ->whereBetween('month', [
+                        $carbon_month_start->format('Y-m-d'),
+                        $carbon_month_start->clone()->addMonth()->subday()->format('Y-m-d')
+                    ])
+                    ->first();
+                if (empty($attendance_data)) $attendance_data = [];
+                else $attendance_data = $attendance_data->toArray();
+                $d['atd_month'][$month] = array_merge($base_atd_month, $attendance_data);
+
                 $carbon_month_start->addMonth();
             }
 
@@ -193,14 +235,46 @@ class WagesLedgerEditor extends Component
 
     public function onSubmit()
     {
-        new WageLedger([
-            'data' => $this->data,
-            'wage_column_names' => $this->wage_column_names,
-            'bonus_column_names' => $this->bonus_column_names,
-            'salary_names' => $this->salary_names,
-            'overtime_names' => $this->overtime_names,
-            'allowance_names' => $this->allowance_names
-        ], $this->month_order);
+        try {
+            $current_company = CurrentUser::currentCompany();
+            $now = Carbon::now();
+            $name = $current_company->name;
+
+            $wageLedger = new WageLedger([
+                'data' => $this->data,
+                'wage_column_names' => $this->wage_column_names,
+                'bonus_column_names' => $this->bonus_column_names,
+                'salary_names' => $this->salary_names,
+                'overtime_names' => $this->overtime_names,
+                'allowance_names' => $this->allowance_names
+            ], $this->month_order);
+
+
+            $path = 'wage-ledger/' . $current_company->id . '/' . $now->year;
+            if (!Storage::exists('wage-ledger/' . $current_company->id)) {
+                Storage::makeDirectory('wage-ledger/' . $current_company->id);
+            }
+            if (!Storage::exists($path)) {
+                Storage::makeDirectory($path);
+            }
+
+            $file = $now->format('YmdHis');
+            $xlsx = Storage::path($path . '/' . $file . '.xlsx');
+            $pdf = $path . '/' . $file . '.pdf';
+
+            $wageLedger->outputToFile($xlsx);
+            $res = $wageLedger->export($xlsx, Storage::path($path));
+            \Log::info($res); // ログ出力
+
+            if (!Storage::exists($pdf)) {
+                throw new \Exception('faild to create pdffile at ' . $file . '.pdf');
+            }
+
+            return Storage::download($pdf, '賃金台帳_' . $name . '.pdf');
+        } catch (\Exception $err) {
+            \Log::error($err->getMessage());
+            $this->errorMessage = '予期せぬエラーが発生しました';
+        }
     }
 
     public function currentData($str = null)
@@ -212,6 +286,17 @@ class WagesLedgerEditor extends Component
     public function getRowSum($key, $is_bonus = false)
     {
         $target = $is_bonus ? 'bonus_month' : 'month';
+        $month_list = $this->currentData($target);
+        $sum = 0;
+        foreach ($month_list as $month) {
+            $sum += !empty($month[$key]) ? (int) $month[$key] : 0;
+        }
+        return $sum;
+    }
+
+    public function getRowSumAttendance($key)
+    {
+        $target = 'atd_month';
         $month_list = $this->currentData($target);
         $sum = 0;
         foreach ($month_list as $month) {
@@ -398,6 +483,11 @@ class WagesLedgerEditor extends Component
         $nextIndex = $this->currentIndex() - 1;
         $key = $this->employee_ids[$nextIndex];
         $this->current_id = $key;
+    }
+
+    public function changeTab($name)
+    {
+        $this->currentTab = $name;
     }
 
     private function listMonths($startMonth)

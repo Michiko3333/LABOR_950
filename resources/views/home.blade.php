@@ -12,6 +12,12 @@
                 margin: 0;
             }
 
+            #control-panel .ui.card.control-panel-menu {
+                display: flex;
+                flex-direction: column !important;
+                flex-flow: unset;
+            }
+
             #control-panel .control-panel-menu .title.content {
                 position: relative;
                 padding: 0;
@@ -209,7 +215,7 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($userPermission->isReadableFor(5))
+                                @if ($userPermission->isReadableFor(17))
                                     <a href="{{ route('wages.index') }}" class="item">
 
                                         <div class="content">
@@ -217,7 +223,15 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($userPermission->isReadableFor(5))
+                                @if ($userPermission->isReadableFor(19))
+                                    <a href="{{ route('attendances.index') }}" class="item">
+
+                                        <div class="content">
+                                            <div class="header">勤怠情報</div>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($userPermission->isReadableFor(18))
                                     <a href="{{ route('wages-ledger.index') }}" class="item">
 
                                         <div class="content">

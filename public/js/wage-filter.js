@@ -23,6 +23,26 @@ class WageFilter {
     }
 
     init() {
+        this.wageList.get(this.wageList.insurance_get_uri).then(r => {
+            const res = JSON.parse(r);            
+            const insurances = {labor: [], social: []};
+            if (!Object.keys(res).length < 1) {
+                for (let i = 0; i < res.length; i++) {
+                    const ins = res[i];
+                    if (ins.type) {
+                        insurances.social = ins.keys.split(',');
+                        if (!insurances.social) insurances.social = [];
+                    } else {
+                        insurances.labor = ins.keys.split(',');
+                        if (!insurances.labor) insurances.labor = [];
+                    }
+                }
+                this.setInsurances(insurances);
+            } else {
+                this.setInsurances(insurances);
+            }
+            
+        });
         this.wageList.get(this.wageList.filter_showlist_uri).then(r => {
             const res = JSON.parse(r);
             const showlist_wrapper = document.getElementById('filter-showlist-wrapper');
@@ -70,6 +90,18 @@ class WageFilter {
         } else {
             btn.forEach(el => el.classList.add('hidden'));
         }
+    }
+
+    setInsurances(insurances) {
+        this.wageList.labor_insurances = insurances.labor;
+        this.wageList.social_insurances = insurances.social;
+    }
+
+    saveInsurances(data) {        
+        this.wageList.submit(this.wageList.insurance_save_uri, JSON.stringify(data)).then(r => {
+            this.setInsurances(data);
+            this.wageList.load();
+        })
     }
 
     setFilter(j) {

@@ -10,6 +10,7 @@ use App\Models\Wage;
 use App\Models\WageAllowance;
 use App\Models\WageColumns;
 use App\Models\WageFilterConfig;
+use App\Models\WageInsuranceColumn;
 use App\Models\WageOvertime;
 use App\Models\WageSalary;
 use App\Permission;
@@ -23,7 +24,7 @@ class WagesEmployeeController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $userPermission = new Permission();
-            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1) {
+            if (!$userPermission->isSelectedCompany() || $userPermission->getEmployeeStatus() == 1 || !$userPermission->isBasicDepartment()) {
                 return redirect()->route('home.index');
             }
             return $next($request);
@@ -33,7 +34,7 @@ class WagesEmployeeController extends Controller
     public function index(Request $request)
     {
         $userPermission = new Permission();
-        if (!$userPermission->isReadableFor(5)) {
+        if (!$userPermission->isReadableFor(18) || !$userPermission->isWritableFor(18)) {
             return redirect()->route('home.index');
         }
 
@@ -76,19 +77,60 @@ class WagesEmployeeController extends Controller
             'selected.*' => 'int',
         ]);
 
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(18) || !$userPermission->isWritableFor(18)) {
+            return redirect()->route('home.index');
+        }
+
         $employee_ids = $request->input('selected', []);
         return view('employee.wages-employees-ledger-edit', ['employee_ids' => $employee_ids]);
     }
 
     public function wages(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(17)) {
+            return redirect()->route('home.index');
+        }
+
         $current_company = CurrentUser::currentCompany();
-        $branch_list = Wage::select('branch_name')->where('company_id', $current_company->id)->distinct()->pluck('branch_name');
-        return view('employee.wages', ['branch_list' => $branch_list]);
+        $branch_list = Wage::select('branch_name')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('branch_name');
+        $departments = Wage::select('departments')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('departments');
+        $employment_type = Wage::select('employment_type')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('employment_type');
+        $work_type = Wage::select('work_type')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('work_type');
+        $grade = Wage::select('grade')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('grade');
+        $gradational_salary = Wage::select('gradational_salary')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('gradational_salary');
+        $other_type = Wage::select('other_type')->where('company_id', $current_company->id)->where('delete_flg', 0)->distinct()->pluck('other_type');
+
+        $departments = array_reduce(
+            array_map(fn($item) => explode(', ', $item), $departments->toArray()),
+            'array_merge',
+            []
+        );
+
+        return view('employee.wages', [
+            'branch_list' => $branch_list,
+            'departments' => $departments,
+            'employment_type' => $employment_type,
+            'work_type' => $work_type,
+            'grade' => $grade,
+            'gradational_salary' => $gradational_salary,
+            'other_type' => $other_type
+        ]);
     }
 
     public function wages_list(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(17)) {
+            return response()->json([
+                'columns_map' => [],
+                'salary_columns' => [],
+                'allowance_columns' => [],
+                'overtime_columns' => [],
+                'data' => []
+            ]);
+        }
         $cond_target = $request->input('cond_target', []);
         $cond_amount = $request->input('cond_amount', []);
         $cond_comparison = $request->input('cond_comparison', []);
@@ -229,6 +271,21 @@ class WagesEmployeeController extends Controller
 
     public function wage_post(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(17)) {
+            return response()->json(['result' => 0]);
+        }
+
+        $validated = $request->validate([
+            'column' => 'array',
+            'salary' => 'array',
+            'allowance' => 'array',
+            'overtime' => 'array',
+            'change_name' => 'array',
+            'remove_name' => 'array',
+            'conditions' => 'array',
+        ]);
+
         $current_company = CurrentUser::currentCompany();
 
         $columns = $request->input('column');
@@ -248,24 +305,10 @@ class WagesEmployeeController extends Controller
                     ->where('id', $id)
                     ->update($values);
             }
-            foreach ($allowances as $wage_id => $values) {
-                foreach ($values as $key => $v) {
-                    $q = WageAllowance::where('wage_id', $wage_id)->where('name', $key);
-                    if ($q->exists()) {
-                        $q->update(['amount' => $v]);
-                    } else {
-                        WageAllowance::create([
-                            'company_id' => $current_company->id,
-                            'wage_id' => $wage_id,
-                            'name' => $key,
-                            'amount' => $v
-                        ]);
-                    }
-                }
-            }
+
             foreach ($salaries as $wage_id => $values) {
                 foreach ($values as $key => $v) {
-                    $q = WageSalary::where('wage_id', $wage_id)->where('name', $key);
+                    $q = WageSalary::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
                     if ($q->exists()) {
                         $q->update(['amount' => $v]);
                     } else {
@@ -281,11 +324,27 @@ class WagesEmployeeController extends Controller
 
             foreach ($overtimes as $wage_id => $values) {
                 foreach ($values as $key => $v) {
-                    $q = WageOvertime::where('wage_id', $wage_id)->where('name', $key);
+                    $q = WageOvertime::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
                     if ($q->exists()) {
                         $q->update(['amount' => $v]);
                     } else {
                         WageOvertime::create([
+                            'company_id' => $current_company->id,
+                            'wage_id' => $wage_id,
+                            'name' => $key,
+                            'amount' => $v
+                        ]);
+                    }
+                }
+            }
+
+            foreach ($allowances as $wage_id => $values) {
+                foreach ($values as $key => $v) {
+                    $q = WageAllowance::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
+                    if ($q->exists()) {
+                        $q->update(['amount' => $v]);
+                    } else {
+                        WageAllowance::create([
                             'company_id' => $current_company->id,
                             'wage_id' => $wage_id,
                             'name' => $key,
@@ -382,7 +441,7 @@ class WagesEmployeeController extends Controller
     {
         $current_company = CurrentUser::currentCompany();
         $current_user = CurrentUser::info();
-        $data = WageFilterConfig::where('company_id', $current_company->id)
+        $data = WageFilterConfig::select('data')->where('company_id', $current_company->id)
             ->where('employee_id', $current_user->id)
             ->where('delete_flg', 0)
             ->first();
@@ -392,6 +451,10 @@ class WagesEmployeeController extends Controller
 
     public function wage_filter_save(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(17)) {
+            return response()->json(['result' => 0]);
+        }
         DB::beginTransaction();
         try {
             $current_company = CurrentUser::currentCompany();
@@ -463,11 +526,84 @@ class WagesEmployeeController extends Controller
 
     public function wage_filter_remove(Request $request)
     {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(17)) {
+            return response()->json(['result' => 0]);
+        }
         $current_company = CurrentUser::currentCompany();
         $current_user = CurrentUser::info();
         WageFilterConfig::where('company_id', $current_company->id)
             ->where('employee_id', $current_user->id)
             ->update(['delete_flg' => 1]);
+        return response()->json(['result' => 1]);
+    }
+
+    public function wage_insurance_get(Request $request)
+    {
+        $current_company = CurrentUser::currentCompany();
+        $current_user = CurrentUser::info();
+        $data = WageInsuranceColumn::select('keys', 'type')->where('company_id', $current_company->id)
+            ->where('employee_id', $current_user->id)
+            ->where('delete_flg', 0)
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function wage_insurance_save(Request $request)
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(17)) {
+            return response()->json(['result' => 0]);
+        }
+
+        $validated = $request->validate([
+            'labor' => 'array|required',
+            'social' => 'array|required',
+        ]);
+
+        $current_company = CurrentUser::currentCompany();
+        $current_user = CurrentUser::info();
+
+        DB::beginTransaction();
+        try {
+            $labor = $request->input('labor');
+            $social = $request->input('social');
+            $query = WageInsuranceColumn::where('company_id', $current_company->id)
+                ->where('employee_id', $current_user->id)
+                ->where('delete_flg', 0);
+
+            if ($query->where('type', 0)->exists()) {
+                $query->where('type', 0)->update([
+                    'keys' => implode(',', $labor)
+                ]);
+            } else {
+                $query->create([
+                    'company_id' => $current_company->id,
+                    'employee_id' => $current_user->id,
+                    'type' => 0,
+                    'keys' => implode(',', $labor)
+                ]);
+            }
+            if ($query->where('type', 1)->exists()) {
+                $query->where('type', 1)->update([
+                    'keys' => implode(',', $social)
+                ]);
+            } else {
+                $query->create([
+                    'company_id' => $current_company->id,
+                    'employee_id' => $current_user->id,
+                    'type' => 1,
+                    'keys' => implode(',', $social)
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $err) {
+            DB::rollback();
+            \Log::error($err->getMessage());
+            return response()->json(['result' => 0]);
+        }
         return response()->json(['result' => 1]);
     }
 
@@ -497,20 +633,16 @@ class WagesEmployeeController extends Controller
         if (!empty($conditions['wage_month'])) {
             $start_month = $conditions['wage_month'];
             $start_date = Carbon::create($start_year, $start_month, $start_day, 0, 0, 0);
-            //$end_date = Carbon::create($start_year, $start_month, $start_day, 0, 0, 0)->addMonth();
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
                 $start_date->clone()->addYear()->subday()->format('Y/m/d')
             ]);
-            // $wage = $wage->where('month', '>=', $start_date->format('Y/m/d'))->where('month', '<', $end_date->format('Y/m/d'));
         } else {
             $start_date = Carbon::create($start_year, 1, $start_day, 0, 0, 0);
-            //$end_date = $this->getOneYearLater($start_year, 1, $start_day);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
                 $start_date->clone()->addYear()->subday()->format('Y/m/d')
             ]);
-            // $wage = $wage->where('month', '>=', $start_date->format('Y/m/d'))->where('month', '<', $end_date->format('Y/m/d'));
         }
 
         if (!empty($conditions['wage_branch'])) {

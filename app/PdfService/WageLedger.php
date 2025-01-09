@@ -2,6 +2,7 @@
 
 namespace App\PdfService;
 
+use App\Models\AttendanceColumns;
 use App\Models\CurrentUser;
 use App\Models\Employee;
 use App\Models\Employee_department;
@@ -24,6 +25,7 @@ class WageLedger
     private $spreadsheet = null;
 
     private $wage_column = null;
+    private $attendance_column = null;
 
     private $salary_names = [];
     private $overtime_names = [];
@@ -45,12 +47,16 @@ class WageLedger
             ->orderBy('ledger_order')
             ->get();
 
+        $this->attendance_column = AttendanceColumns::select('id', 'key', 'name')
+            ->where('is_ledger', 1)
+            ->where('delete_flg', 0)
+            ->orderBy('order')
+            ->get();
+
         $template = Storage::path('wage-template/ledger-format.xlsx');
         $reader = new XlsxReader();
         $this->spreadsheet = $reader->load($template);
         $this->createWageSheet();
-        $this->outputToFile(Storage::path('wage-template/output.xlsx'));
-        $this->export(Storage::path('wage-template/output.xlsx'), Storage::path('wage-template'));
     }
 
     public function createWageSheet()
@@ -196,7 +202,6 @@ class WageLedger
                 $col = $bonus_cols[$bonus_month_i];
                 $sheet->setCellValue($col . '8', $key . '月分');
                 $sheet->setCellValue($col . $rowIndex, $item['wage_base_amount']);
-                \Log::info(print_r($item['wage_base_amount'], true));
                 $bonus_month_i++;
             }
             $sheet->setCellValue('U' . $rowIndex, '=SUM(Q' . $rowIndex . ':T' . $rowIndex . ')');
@@ -204,18 +209,43 @@ class WageLedger
             $sheet->insertNewRowBefore($rowIndex, 1);
             $rowIndex++;
 
-            $rowIndex += 2;
-
-            // 非課税課税
-
-            $rowIndex += 1;
-
+            // 課税非課税
+            $tax_month_i = 0;
             foreach ($this->month_order as $month) {
-                //$sheet->setCellValue('P' . $rowIndex, '=SUM(D10:O' . $rowIndex . ')');
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['taxable_paymment'] ?? '');
+                $tax_month_i++;
             }
-
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['non_taxable_paymment'] ?? '');
+                $tax_month_i++;
+            }
             $rowIndex += 2;
 
+            // 保険対象賃金
+            $ins_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$ins_month_i];
+                $sheet->setCellValue($col . $rowIndex, 1 ?? '');
+                $ins_month_i++;
+            }
+            $rowIndex++;
+            $ins_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$ins_month_i];
+                $sheet->setCellValue($col . $rowIndex, 2 ?? '');
+                $ins_month_i++;
+            }
+            $rowIndex += 4;
+
+            // 控除
             $wage_deduction = $this->wage_column->where('calc', 2)->toArray();
             foreach ($wage_deduction as $wage_col) {
                 $sheet->insertNewRowBefore($rowIndex, 1);
@@ -236,6 +266,30 @@ class WageLedger
                 if ($wage_col['key'] == 'other_insurance_deduction') {
                     $rowIndex += 3;
                 }
+            }
+            $rowIndex += 4;
+
+            // 勤怠情報
+            $attendance_list = $this->attendance_column->toArray();
+            $count = 0;
+            foreach ($attendance_list as $atd_col) {
+                if ($count > 6) $sheet->insertNewRowBefore($rowIndex, 1);
+                $sheet->setCellValue('C' . $rowIndex, $atd_col['name']);
+                $month_i = 0;
+                foreach ($this->month_order as $month) {
+                    $atd_data = $wage['atd_month'][$month];
+                    $col = $month_cols[$month_i];
+                    $sheet->setCellValue($col . $rowIndex, $atd_data[$atd_col['key']] ?? '');
+                    $month_i++;
+                }
+                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+                if ($count == 1) {
+                    $sheet->setCellValue('R' . $rowIndex, $wage['remarks']);
+                }
+
+                $rowIndex++;
+                $count++;
             }
         }
         //\Log::info(print_r($thisdata, true));
@@ -278,8 +332,7 @@ class WageLedger
         if (file_exists($export_excel_path)) {
             $path = app_path() . '/PdfService';
             $cmd = 'export HOME=/tmp; export LANG=ja_JP.UTF-8; export LC_ALL=ja_JP.UTF-; libreoffice --headless -env:UserInstallation=file://' . $path . ' --convert-to pdf --outdir ' . $export_pdf_path . ' ' . $export_excel_path;
-            $result = exec($cmd);
-            \Log::info(print_r($result, true));
+            return exec($cmd);
         }
     }
 }

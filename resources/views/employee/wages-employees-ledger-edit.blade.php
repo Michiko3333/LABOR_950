@@ -125,23 +125,7 @@
             <div class="ui approve primary button">追加</div>
         </div>
     </div>
-    <div id="DeductionModal" class="ui modal mini add-deduction-modal" style="max-width: 480px;">
-        <i class="close icon"></i>
-        <div class="header">
-            控除を追加
-        </div>
-        <div class="content ui form">
-            <div class="field">
-                <label for="AllowanceAddName">名称</label>
-                <input type="text" name="" id="DeductionAddName" class="ui input" placeholder="〇〇控除"
-                    maxLength="15">
-            </div>
-        </div>
-        <div class="actions">
-            <button class="ui button cancel" type="button">キャンセル</button>
-            <div class="ui approve primary button">追加</div>
-        </div>
-    </div>
+
     <script type="module">
         const AdditionModal = $('#AdditionModal').modal({
             blurring: true,
@@ -162,25 +146,15 @@
                 return true;
             }
         });
-        const DeductionModal = $('#DeductionModal').modal({
-            blurring: true,
-            onHidden: () => {
-                $('#DeductionAddName').val('');
-            },
-            onApprove: () => {
-                const name = $('#DeductionAddName').val();
-                if (!name) return false;
-                Livewire.dispatch('add-deduction', {
-                    name: name
-                });
-                return true;
-            }
-        });
+
         $('#openNewAddition').click(_ => {
             AdditionModal.modal('show');
         });
-        $('#openAddDeduction').click(_ => {
-            DeductionModal.modal('show');
+
+        $('#ledger-create-button').click(_ => {
+            $('#ledger-create-button').prop('disabled', true);
+            console.log('submit');
+
         });
     </script>
 </x-layout>
