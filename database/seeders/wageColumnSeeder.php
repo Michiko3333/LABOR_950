@@ -37,6 +37,8 @@ class wageColumnSeeder extends Seeder
             ['key' => 'allowance_label', 'name' => '諸手当合計', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 16, 'ledger_order' => 17, 'hide_bonus' => 1],
             ['key' => 'allowance_values', 'name' => '手当', 'width' => 120, 'type' => 'array', 'fixed' => 0, 'fixed' => 0, 'calc' => 0, 'show' => 1, 'is_ledger' => 1, 'order' => 17, 'ledger_order' => 18, 'hide_bonus' => 1],
 
+            ['key' => 'salary_in_kind', 'name' => '現物給与', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 1, 'show' => 0, 'is_ledger' => 1, 'order' => 18, 'ledger_order' => 18, 'hide_bonus' => 1],
+
             ['key' => 'absence_deduction', 'name' => '欠勤控除', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 2, 'show' => 0, 'is_ledger' => 1, 'order' => 18, 'ledger_order' => 24, 'hide_bonus' => 1],
             ['key' => 'late_deduction', 'name' => '遅早控除', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 2, 'show' => 0, 'is_ledger' => 1, 'order' => 19, 'ledger_order' => 25, 'hide_bonus' => 1],
             ['key' => 'other_deduction', 'name' => 'その他控除', 'width' => 120, 'type' => 'number', 'fixed' => 0, 'calc' => 2, 'show' => 0, 'is_ledger' => 1, 'order' => 20, 'ledger_order' => 26, 'hide_bonus' => 1],

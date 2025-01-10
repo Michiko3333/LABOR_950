@@ -18,6 +18,7 @@ use Carbon\Carbon;
 class WageLedger
 {
 
+    private $year = null;
     private $data = [];
     private $wage_column_names = [];
     private $bonus_column_names = [];
@@ -33,6 +34,7 @@ class WageLedger
 
     public function __construct($data, $month_order)
     {
+        $this->year = $data['year'];
         $this->data = $data['data'];
         $this->wage_column_names = $data['wage_column_names'];
         $this->bonus_column_names = $data['bonus_column_names'];
@@ -62,6 +64,10 @@ class WageLedger
     public function createWageSheet()
     {
         $current_company = CurrentUser::currentCompany();
+        $start_month = $current_company->start_month_of_year ?? 1;
+        $carbon_start = Carbon::create($this->year, $start_month, 1, 0, 0, 0);
+        $carbon_end = $carbon_start->clone()->addYear()->subDay();
+
         foreach ($this->data as $employee_id => $wage) {
             $employee_data = Employee::where('id', $employee_id)->where('delete_flg', 0)->first();
             $employee_no = $employee_data->employee_no;
@@ -90,6 +96,7 @@ class WageLedger
             $this->duplicateSheet($employee_name);
             $sheet = $this->spreadsheet->getSheetByName($employee_name);
 
+            $sheet->setCellValue('B5', $carbon_start->format('Y年m月') . '～' . $carbon_end->format('Y年m月'));
             $sheet->setCellValue('F5', $current_company->name);
             $sheet->setCellValue('I5', $branch_department);
             $sheet->setCellValue('L5', $employee_managerial_position);
@@ -217,6 +224,8 @@ class WageLedger
                 $sheet->setCellValue($col . $rowIndex, $wage_data['taxable_paymment'] ?? '');
                 $tax_month_i++;
             }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
             $rowIndex++;
             $tax_month_i = 0;
             foreach ($this->month_order as $month) {
@@ -225,6 +234,8 @@ class WageLedger
                 $sheet->setCellValue($col . $rowIndex, $wage_data['non_taxable_paymment'] ?? '');
                 $tax_month_i++;
             }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
             $rowIndex += 2;
 
             // 保険対象賃金
@@ -232,17 +243,21 @@ class WageLedger
             foreach ($this->month_order as $month) {
                 $wage_data = $wage['month'][$month];
                 $col = $month_cols[$ins_month_i];
-                $sheet->setCellValue($col . $rowIndex, 1 ?? '');
+                $sheet->setCellValue($col . $rowIndex, $wage_data['labor_insurance_target'] ?? '');
                 $ins_month_i++;
             }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
             $rowIndex++;
             $ins_month_i = 0;
             foreach ($this->month_order as $month) {
                 $wage_data = $wage['month'][$month];
                 $col = $month_cols[$ins_month_i];
-                $sheet->setCellValue($col . $rowIndex, 2 ?? '');
+                $sheet->setCellValue($col . $rowIndex, $wage_data['social_insurance_target'] ?? '');
                 $ins_month_i++;
             }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
             $rowIndex += 4;
 
             // 控除
@@ -292,29 +307,24 @@ class WageLedger
                 $count++;
             }
         }
-        //\Log::info(print_r($thisdata, true));
     }
 
     public function duplicateSheet($newSheetName, $sheetName = 'base')
     {
-        // Get the sheet to duplicate
         $sheet = $this->spreadsheet->getSheetByName($sheetName);
 
         if (!$sheet) {
             throw new \PhpOffice\PhpSpreadsheet\Exception("Sheet with name '{$sheetName}' does not exist.");
         }
 
-        // Duplicate the sheet
         $newSheet = $sheet->copy();
         $newSheet->setTitle($newSheetName);
 
-        // Add the new sheet to the spreadsheet
         $this->spreadsheet->addSheet($newSheet);
     }
 
     public function duplicateRow($sheet, $rowIndex)
     {
-        // Insert a new row below the specified row
         $sheet->insertNewRowBefore($rowIndex + 1, 1);
         return $rowIndex + 1;
     }

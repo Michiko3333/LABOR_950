@@ -704,7 +704,7 @@ class WageList {
                             switch (key) {
                                 case 'total_amount':
                                     div.textContent = this.comma(
-                                        item.wage_base_amount + this.getSumArrType(item.salary_values) + this.getSumArrType(item.allowance_values) + this.getSumArrType(item.overtime_values)
+                                        item.wage_base_amount + item.salary_in_kind + this.getSumArrType(item.salary_values) + this.getSumArrType(item.allowance_values) + this.getSumArrType(item.overtime_values)
                                     );
                                     div.style.fontWeight = 'bold';
                                     break;
@@ -743,6 +743,7 @@ class WageList {
                                     }
                                     let wage_amount = 0;
                                     wage_amount += item.wage_base_amount;
+                                    wage_amount += item.salary_in_kind;
                                     wage_amount += this.getSumArrType(item.salary_values);
                                     wage_amount += this.getSumArrType(item.allowance_values);
                                     wage_amount += this.getSumArrType(item.overtime_values);
@@ -1058,10 +1059,13 @@ class WageList {
         }
 
         const base_amount_key = 'wage_base_amount';
-        const total_amount_key = 'total_amount';
         const base_amount_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + base_amount_key + '"]');
+        const salary_in_kind_key = 'salary_in_kind';
+        const salary_in_kind_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + salary_in_kind_key + '"]');
+        const total_amount_key = 'total_amount';
         const total_amount_label = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + total_amount_key + '"]');
-        const base_amount = this.replaceInt(base_amount_nodes[0].value);
+        const base_amount = this.replaceInt(base_amount_nodes[0].value) + this.replaceInt(salary_in_kind_nodes[0].value);
+
 
         const taxable_paymment_key = 'taxable_paymment';
         const non_taxable_paymment_key = 'non_taxable_paymment';

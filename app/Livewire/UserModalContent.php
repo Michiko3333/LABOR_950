@@ -255,7 +255,6 @@ class UserModalContent extends Component
 
             $result = $this->icon_file->storeAs($filePath);
 
-            \Log::info([$this->profiles['file_path']]);
             if ($result) {
                 $this->profiles['file_path'] = $filePath . '?v=' . time();
                 $this->icon_change_state = false;

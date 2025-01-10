@@ -12,6 +12,7 @@ use App\Models\Employee_department;
 use App\Models\Managerial_position;
 use App\Models\Wage;
 use App\Models\WageColumns;
+use App\Models\WageInsuranceColumn;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Carbon\Carbon;
@@ -55,9 +56,10 @@ class WagesLedgerEditor extends Component
 
     public $errorMessage = '';
 
-    public function mount($employee_ids, $year = 2024)
+    public function mount($employee_ids, $year)
     {
         $current_company = CurrentUser::currentCompany();
+        $current_user = CurrentUser::info();
         $branch_ids = $current_company->branch()->where('delete_flg', 0)->pluck('id')->toArray();
         $this->employees = Employee::whereIn('id', $employee_ids)->whereIn('branch_id', $branch_ids)->where('delete_flg', 0)->get();
         $this->employee_ids = $this->employees->pluck('id')->toArray();
@@ -198,6 +200,17 @@ class WagesLedgerEditor extends Component
         $this->overtime_names = array_unique($this->overtime_names, SORT_STRING);
         $this->allowance_names = array_unique($this->allowance_names, SORT_STRING);
 
+        $labor = WageInsuranceColumn::select('keys', 'type')->where('company_id', $current_company->id)
+            ->where('employee_id', $current_user->id)
+            ->where('type', 0)
+            ->where('delete_flg', 0)
+            ->first();
+        $social = WageInsuranceColumn::select('keys', 'type')->where('company_id', $current_company->id)
+            ->where('employee_id', $current_user->id)
+            ->where('type', 1)
+            ->where('delete_flg', 0)
+            ->first();
+
         foreach ($this->data as &$item) {
             foreach ($this->month_order as $_month) {
                 $monthly_data = &$item['month'][$_month];
@@ -205,6 +218,49 @@ class WagesLedgerEditor extends Component
                     if (!in_array($name, array_keys($monthly_data['salary_values']))) {
                         $monthly_data['salary_values'][$name] = '';
                     }
+                }
+                foreach ($this->overtime_names as $name) {
+                    if (!in_array($name, array_keys($monthly_data['overtime_values']))) {
+                        $monthly_data['overtime_values'][$name] = '';
+                    }
+                }
+                foreach ($this->allowance_names as $name) {
+                    if (!in_array($name, array_keys($monthly_data['allowance_values']))) {
+                        $monthly_data['allowance_values'][$name] = '';
+                    }
+                }
+
+                if (!empty($labor)) {
+                    $arr = explode(',', $labor->keys);
+                    $sum = 0;
+                    foreach ($arr as $name) {
+                        if (in_array($name, array_keys($monthly_data))) {
+                            $sum += (int) $monthly_data[$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['salary_values']))) {
+                            $sum += (int) $monthly_data['salary_values'][$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['overtime_values']))) {
+                            $sum += (int) $monthly_data['overtime_values'][$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['allowance_values']))) {
+                            $sum += (int) $monthly_data['allowance_values'][$name] ?? 0;
+                        }
+                    }
+                    $monthly_data['labor_insurance_target'] = $sum;
+                }
+                if (!empty($social)) {
+                    $arr = explode(',', $social->keys);
+                    $sum = 0;
+                    foreach ($arr as $name) {
+                        if (in_array($name, array_keys($monthly_data))) {
+                            $sum += (int) $monthly_data[$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['salary_values']))) {
+                            $sum += (int) $monthly_data['salary_values'][$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['overtime_values']))) {
+                            $sum += (int) $monthly_data['overtime_values'][$name] ?? 0;
+                        } else if (in_array($name, array_keys($monthly_data['allowance_values']))) {
+                            $sum += (int) $monthly_data['allowance_values'][$name] ?? 0;
+                        }
+                    }
+                    $monthly_data['social_insurance_target'] = $sum;
                 }
             }
         }
@@ -241,6 +297,7 @@ class WagesLedgerEditor extends Component
             $name = $current_company->name;
 
             $wageLedger = new WageLedger([
+                'year' => $this->year,
                 'data' => $this->data,
                 'wage_column_names' => $this->wage_column_names,
                 'bonus_column_names' => $this->bonus_column_names,
@@ -264,7 +321,7 @@ class WagesLedgerEditor extends Component
 
             $wageLedger->outputToFile($xlsx);
             $res = $wageLedger->export($xlsx, Storage::path($path));
-            \Log::info($res); // ログ出力
+            \Log::info($res); // 出力結果をログ出力
 
             if (!Storage::exists($pdf)) {
                 throw new \Exception('faild to create pdffile at ' . $file . '.pdf');

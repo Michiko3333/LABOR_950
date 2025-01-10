@@ -116,6 +116,25 @@ class AttendanceEmployeeController extends Controller
         DB::beginTransaction();
         try {
             foreach ($columns as $id => $values) {
+                $except = [
+                    'id',
+                    'company_id',
+                    'branch_id',
+                    'employee_id',
+                    'employee_no',
+                    'employee_name',
+                    'branch_name',
+                    'departments',
+                    'employment_type',
+                    'work_type',
+                    'month',
+                    'delete_flg',
+                    'created_at',
+                    'updated_at',
+                ];
+                if (in_array(array_keys($values), $except)) {
+                    throw new \Exception('Unknown Error');
+                }
                 Attendance::where('company_id', $current_company->id)
                     ->where('id', $id)
                     ->update($values);

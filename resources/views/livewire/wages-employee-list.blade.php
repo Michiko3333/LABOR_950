@@ -86,6 +86,7 @@
 
     <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
     <form id="wages-form" action="{{ route('wages-ledger.edit') }}" method="post">
+        <input type="hidden" id="wage-year" name="year">
         @csrf
         @foreach ($selected as $key => $item)
             @if ($item == 1)

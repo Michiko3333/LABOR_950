@@ -76,11 +76,20 @@
             </div>
         </div>
         <div class="py-2" style="text-align: right;">
+            <div class="ui calendar" id="wage-year_calendar" style="display: inline-block;">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="20xx" maxLength="4" name="wage_year">
+                </div>
+            </div>
             <button id="startBtn" type="button" class="ui button primary">確認</button>
         </div>
     </section>
     <script type="module">
         $(document).ready(function() {
+            const now = new Date();
+            let old = '{{ old('year') }}';
+            let year = old ? old : now.getFullYear();
             const filterModal = $('#FilterModal').modal({
                 blurring: true
             });
@@ -88,8 +97,23 @@
                 filterModal.modal('show');
             });
             $('#startBtn').click(_ => {
+                $('#wage-year').val(year);
                 $('form#wages-form').submit();
             });
+            $('#wage-year').val(year);
+            $('#wage-year_calendar')
+                .calendar({
+                    type: 'year',
+                    initialDate: year,
+                    formatter: {
+                        year: 'YYYY年度'
+                    },
+                    onChange: (date, text, mode) => {
+                        if (date) {
+                            year = date.getFullYear();
+                        }
+                    }
+                });
         });
     </script>
 </x-layout>

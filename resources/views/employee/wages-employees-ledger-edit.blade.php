@@ -97,8 +97,8 @@
             <i class="right chevron icon divider"></i>
             <div class="active section">賃金台帳（入力）</div>
         </div>
-        <h1 class="mt-0">賃金台帳（入力）</h1>
-        @livewire('wages-ledger-editor', ['employee_ids' => $employee_ids])
+        <h1 class="mt-0">{{ $year }}年度　賃金台帳（入力）</h1>
+        @livewire('wages-ledger-editor', ['employee_ids' => $employee_ids, 'year' => $year])
     </section>
     <div id="AdditionModal" class="ui modal mini addition-modal">
         <i class="close icon"></i>
@@ -153,8 +153,6 @@
 
         $('#ledger-create-button').click(_ => {
             $('#ledger-create-button').prop('disabled', true);
-            console.log('submit');
-
         });
     </script>
 </x-layout>

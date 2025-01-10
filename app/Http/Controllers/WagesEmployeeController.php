@@ -73,6 +73,7 @@ class WagesEmployeeController extends Controller
     public function select(Request $request)
     {
         $validated = $request->validate([
+            'year' => 'required|regex:/^[0-9]{4}$/u',
             'selected' => 'array|required',
             'selected.*' => 'int',
         ]);
@@ -83,7 +84,7 @@ class WagesEmployeeController extends Controller
         }
 
         $employee_ids = $request->input('selected', []);
-        return view('employee.wages-employees-ledger-edit', ['employee_ids' => $employee_ids]);
+        return view('employee.wages-employees-ledger-edit', ['year' => $request->input('year'), 'employee_ids' => $employee_ids]);
     }
 
     public function wages(Request $request)
@@ -301,6 +302,29 @@ class WagesEmployeeController extends Controller
         DB::beginTransaction();
         try {
             foreach ($columns as $id => $values) {
+                $except = [
+                    'id',
+                    'company_id',
+                    'branch_id',
+                    'employee_id',
+                    'employee_no',
+                    'employee_name',
+                    'branch_name',
+                    'departments',
+                    'employment_type',
+                    'work_type',
+                    'grade',
+                    'gradational_salary',
+                    'other_type',
+                    'month',
+                    'wage_type',
+                    'delete_flg',
+                    'created_at',
+                    'updated_at',
+                ];
+                if (in_array(array_keys($values), $except)) {
+                    throw new \Exception('Unknown Error');
+                }
                 Wage::where('company_id', $current_company->id)
                     ->where('id', $id)
                     ->update($values);
@@ -569,28 +593,34 @@ class WagesEmployeeController extends Controller
         try {
             $labor = $request->input('labor');
             $social = $request->input('social');
-            $query = WageInsuranceColumn::where('company_id', $current_company->id)
+            $labor_query = WageInsuranceColumn::where('company_id', $current_company->id)
                 ->where('employee_id', $current_user->id)
+                ->where('type', 0)
+                ->where('delete_flg', 0);
+            $social_query = WageInsuranceColumn::where('company_id', $current_company->id)
+                ->where('employee_id', $current_user->id)
+                ->where('type', 1)
                 ->where('delete_flg', 0);
 
-            if ($query->where('type', 0)->exists()) {
-                $query->where('type', 0)->update([
+            if ($labor_query->exists()) {
+                $labor_query->update([
                     'keys' => implode(',', $labor)
                 ]);
             } else {
-                $query->create([
+                $labor_query->create([
                     'company_id' => $current_company->id,
                     'employee_id' => $current_user->id,
                     'type' => 0,
                     'keys' => implode(',', $labor)
                 ]);
             }
-            if ($query->where('type', 1)->exists()) {
-                $query->where('type', 1)->update([
+
+            if ($social_query->exists()) {
+                $social_query->update([
                     'keys' => implode(',', $social)
                 ]);
             } else {
-                $query->create([
+                $social_query->create([
                     'company_id' => $current_company->id,
                     'employee_id' => $current_user->id,
                     'type' => 1,
