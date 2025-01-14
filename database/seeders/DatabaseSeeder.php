@@ -73,7 +73,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentPermissionSeeder::class);
         $this->call(FeatureSeeder::class);
         $this->call(FilterEmployeeListSeeder::class);
-        $this->call(PickupSettingSeeder::class);
         $this->call(LedgerCategorySeeder::class);
         $this->call(LedgerCategoryBigSeeder::class);
         $this->call(LedgerCategoryMediumSeeder::class);
