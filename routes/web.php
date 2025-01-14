@@ -285,6 +285,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/company/branch', [BranchController::class, 'branch_post'])->name('branch_post');
 
         Route::get('/company/qualifications', [QualificationsController::class, 'qualifications'])->name('qualifications');
+        Route::post('/company/qualifications/api/position/list', [QualificationsController::class, 'get_position'])->name('qualifications.get_position');
 
         Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
         Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');

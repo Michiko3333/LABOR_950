@@ -3,11 +3,12 @@
 namespace App\Livewire;
 
 use App\Models\Qualifications;
+use App\Models\Managerial_position;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Rules\noEmoji;
 
-class QualificationsList extends Component
+class QualificationsList extends BaseTable
 {
     public $company_id = 0;
     public $data = [];
@@ -16,6 +17,8 @@ class QualificationsList extends Component
     public $form_qualification_name = '';
     public $form_qualification_allowance = '';
     public $form_applicable_grade = '';
+    public $form_managerial_position_ids = '';
+    public $form_other = '';
 
     public $remove_tmp = 0;
 
@@ -25,17 +28,27 @@ class QualificationsList extends Component
     }
     public function render()
     {
-        $this->data = Qualifications::select('id', 'qualification_name', 'qualification_allowance', 'applicable_grade')
+        $condition = Qualifications::select('id', 'qualification_name', 'qualification_allowance', 'applicable_grade', 'managerial_position_ids', 'other')
             ->where('company_id', $this->company_id)
-            ->where('delete_flg', 0)
-            ->orderBy('applicable_grade', 'asc')
-            ->get();
+            ->where('delete_flg', 0);
+            // ->orderBy('applicable_grade', 'asc')
 
-        foreach($this->data as $item) {
+        $this->data = $this->getData($condition);
+        $items = $this->data['items'];
+
+        foreach ($items as &$item) {
             $item['qualification_allowance'] = number_format($item['qualification_allowance']);
+
+            $managerial_ids = array_map('trim', explode(',', $item['managerial_position_ids']));
+            $managerial_positions = Managerial_position::select('name')
+                ->whereIn('id', $managerial_ids)
+                ->where('delete_flg', 0)
+                ->get();
+
+            $item['managerial_position_ids'] = $managerial_positions;
         }
 
-            return view('livewire.qualifications-list');
+        return view('livewire.qualifications-list');
     }
 
     public function new()
@@ -47,7 +60,7 @@ class QualificationsList extends Component
     public function edit($id)
     {
         $this->resetForm();
-        $position = Qualifications::select('id', 'qualification_name', 'qualification_allowance', 'applicable_grade')
+        $position = Qualifications::select('id', 'qualification_name', 'qualification_allowance', 'applicable_grade', 'managerial_position_ids', 'other')
             ->where('id', $id)
             ->where('company_id', $this->company_id)
             ->where('delete_flg', 0)
@@ -59,6 +72,11 @@ class QualificationsList extends Component
         $this->form_qualification_name = $position->qualification_name;
         $this->form_qualification_allowance = $position->qualification_allowance;
         $this->form_applicable_grade = $position->applicable_grade;
+        $this->form_managerial_position_ids = $position->managerial_position_ids;
+        if (!empty($position->managerial_position_ids)) {
+            $this->form_managerial_position_ids = array_map('trim', explode(',', $position->managerial_position_ids));
+        }
+        $this->form_other = $position->other;
 
         $this->dispatch('showModal', $this->setData());
     }
@@ -70,13 +88,15 @@ class QualificationsList extends Component
             'form_qualification_name' => $this->form_qualification_name,
             'form_qualification_allowance' => $this->form_qualification_allowance,
             'form_applicable_grade' => $this->form_applicable_grade,
+            'form_managerial_position_ids' => $this->form_managerial_position_ids,
+            'form_other' => $this->form_other,
         ];
     }
 
     #[On('onEditQualification')]
     public function onEditQualification($data = null)
     {
-        if (empty($data['form_qualification_name']) || strlen($data['form_qualification_name']) > 50) {
+        if (empty($data['form_qualification_name']) || mb_strlen($data['form_qualification_name']) > 50) {
             $this->dispatch('showErrorMessage');
             return;
         }
@@ -84,13 +104,22 @@ class QualificationsList extends Component
             $this->dispatch('showErrorMessage');
             return;
         }
-        if ($data['form_qualification_allowance'] < 0 || $data['form_qualification_allowance'] > 10000000) {
+        if (empty($data['form_qualification_allowance']) || $data['form_qualification_allowance'] < 0 || $data['form_qualification_allowance'] > 10000000) {
             $this->dispatch('showErrorMessage');
             return;
         }
-        if ($data['form_applicable_grade'] < 0) {
+        if ($data['form_applicable_grade'] < 0 || $data['form_applicable_grade'] > 1000000) {
             $this->dispatch('showErrorMessage');
             return;
+        }
+        if (mb_strlen($data['form_other']) > 100) {
+            $this->dispatch('showErrorMessage');
+            return;
+        }
+
+        $format_managerial_position_ids = '';
+        if(!empty($data['form_managerial_position_ids'])) {
+            $format_managerial_position_ids = implode(',', $data['form_managerial_position_ids']);
         }
 
         if (!empty($data['form_id'])) {
@@ -98,6 +127,8 @@ class QualificationsList extends Component
                 'qualification_name' => $data['form_qualification_name'],
                 'qualification_allowance' => (int) $data['form_qualification_allowance'],
                 'applicable_grade' => $data['form_applicable_grade'],
+                'managerial_position_ids' => $format_managerial_position_ids,
+                'other' => $data['form_other'],
             ]);
         } else {
             Qualifications::insert([
@@ -105,6 +136,8 @@ class QualificationsList extends Component
                 'qualification_name' => $data['form_qualification_name'],
                 'qualification_allowance' => (int) $data['form_qualification_allowance'],
                 'applicable_grade' => $data['form_applicable_grade'],
+                'managerial_position_ids' => $format_managerial_position_ids,
+                'other' => $data['form_other'],
             ]);
         }
         $this->dispatch('closeModal');
@@ -141,5 +174,7 @@ class QualificationsList extends Component
         $this->form_qualification_name = '';
         $this->form_qualification_allowance = '';
         $this->form_applicable_grade = '';
+        $this->form_managerial_position_ids = [];
+        $this->form_other = '';
     }
 }

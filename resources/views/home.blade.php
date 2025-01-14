@@ -260,8 +260,8 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(20))
                                     <a href="{{ route('allowance') }}" class="item">
-                                        <div class="header">
-                                            　-　手当マスタ
+                                        <div class="content sub">
+                                            <div class="header">手当マスタ</div>
                                         </div>
                                     </a>
                                 @endif
@@ -349,7 +349,10 @@
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                            @if (
+                                $userPermission->isReadableFor(13) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('pickup.setting') }}" class="item">
                                     <div class="content">
                                         <div class="header">Pick up設定</div>
