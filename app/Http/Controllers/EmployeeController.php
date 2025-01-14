@@ -6,7 +6,6 @@ use App\Http\Requests\AdminEmployeeCreateRequest;
 use App\Http\Requests\AdminEmployeeUpdateRequest;
 use App\Http\Requests\AdminLaborCreateRequest;
 use App\Http\Requests\AdminLaborUpdateRequest;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\CurrentUser;
@@ -35,8 +34,8 @@ use App\Models\Pickup;
 use App\Models\Pickup_message;
 use App\Models\Qualifications;
 use App\Models\Employee_qualifications;
-use App\Models\Company;
 use App\Models\Branch;
+use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -142,6 +141,54 @@ class EmployeeController extends Controller
             'columnList' => $masterColumnList,
             'defaultList' => $userDefaultList,
             'company_id' => $company_id,
+        ]);
+    }
+
+    public function allowance_list(Request $request)
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(14)) {
+            return redirect()->route('home.index');
+        }
+
+        $currentUser = CurrentUser::info();
+        $currentCompany = CurrentUser::CurrentCompany();
+        $company_id = $currentCompany->id;
+        $branch = Branch::where('company_id', $company_id)->get()->pluck('name','id')->toArray();
+        $division = $currentCompany->company_division;
+
+        $paginate = [
+            'page' => $request->input('page', 1),
+            'limit' => 20,
+            'search' => $request->input('search'),
+        ];
+
+        $columnList = FilterEmployeeList::select('name', 'value');
+
+        if ($userPermission->isBasicDepartment()) {
+            $columnList = $columnList->where('hidden_basic_department', 0);
+        }
+
+        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
+        $userDefaultList = [];
+        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        if (count($userList) > 0) {
+            foreach ($userList as $key => $value) {
+                $key = array_search($value, array_column($masterColumnList, 'value'));
+                $userDefaultList[] = $masterColumnList[$key];
+            }
+        } else {
+            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
+            $userDefaultList = $defaultList;
+        }
+
+
+        return view('employee.allowance', [
+            'division' => $division,
+            'columnList' => $masterColumnList,
+            'defaultList' => $userDefaultList,
+            'company_id' => $company_id,
+            'branch' => $branch,
         ]);
     }
 

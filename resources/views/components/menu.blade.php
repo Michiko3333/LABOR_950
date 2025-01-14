@@ -140,6 +140,13 @@
                                 休業情報</a>
                         </li>
                     @endif
+                    @if ($userPermission->isReadableFor(20))
+                        <li class="item">
+                            <a href="{{ route('allowance') }}">
+
+                            手当マスタ</a>
+                        </li>
+                    @endif
                 @endif
                 @if (
                     !$userPermission->denyProcedure() &&

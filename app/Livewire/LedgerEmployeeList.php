@@ -255,20 +255,17 @@ class LedgerEmployeeList extends BaseTable
         $closure_1_data_4950008680182000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
         ->get()->filter(function ($item) {
             $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-            $finalDeadline = (clone $start_date_of_closed)->addMonths(4)->endOfMonth();
-            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+            return Carbon::today()->lessThan($start_date_of_closed);
         })->sortByDesc('created_at')->first();
         $closure_1_data_4950008680050000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
         ->get()->filter(function ($item) {
             $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-            $finalDeadline = (clone $start_date_of_closed)->addDays(10);
-            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+            return Carbon::today()->lessThan($start_date_of_closed);
         })->sortByDesc('created_at')->first();
         $closure_2_data = Closure_information::where('employee_id', $employee_id)->where('closure_type', '2')->where('delete_flg', '0')
         ->get()->filter(function ($item) {
             $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
-            $finalDeadline = (clone $end_date_of_losed)->addMonths(2)->endOfMonth();
-            return Carbon::today()->lessThanOrEqualTo($finalDeadline);
+            return Carbon::today()->lessThan($end_date_of_losed);
         })->sortByDesc('created_at')->first();
         if (!empty($closure_1_data_4950008680182000->start_date_of_closed)) {
             $start_date_of_closed_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->start_date_of_closed);

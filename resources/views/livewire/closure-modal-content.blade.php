@@ -412,5 +412,31 @@
                 initializeCalendar('.closure-calendar.date-of-commencement-of-special-childcare-provision', 'dateOfCommencementOfSpecialChildcareProvision');
             },0);
         });
+        window.closeClosureModal = () => {
+            $('.closure-modal').modal('hide');
+            @this.set('startDateOfClosed', '');
+            $('.start-date-of-closed').calendar('clear');
+            @this.set('endDateOfLosed', '');
+            $('.end-date-of-losed').calendar('clear');
+            @this.set('dateOfReturnToWork', '');
+            $('.date-of-return-to-work').calendar('clear');
+            @this.set('dueDate', '');
+            $('.due-date').calendar('clear');
+            @this.set('plannedEndDateOfClosure', '');
+            $('.planned-end-date-of-closure').calendar('clear');
+            @this.set('dateOfBirth', '');
+            $('.date-of-birth').calendar('clear');
+            @this.set('dateOfStartOfFosterCare', '');
+            $('.date-of-start-of-foster-care').calendar('clear');
+            @this.set('plannedEndDateOfChildSupport', '');
+            $('.planned-end-date-of-child-support').calendar('clear');
+            @this.set('endDateOfFosterCare', '');
+            $('.end-date-of-foster-care').calendar('clear');
+            @this.set('dateOfCommencementOfSpecialChildcareProvision', '');
+            $('.date-of-commencement-of-special-childcare-provision').calendar('clear');
+            $('.item.selected').removeClass('selected');
+            $('#employee_id').val('');
+            @this.set('employee_id', '');
+        };
     </script>
 @endscript

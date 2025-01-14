@@ -99,12 +99,12 @@
                 id: id
             });
             setTimeout(() => {
-                $('.closure-modal').modal('show');
+                $('.closure-modal').modal({
+                        blurring: true,
+                        closable: false
+                    }).modal('show');
                 $('.closure-modal-header').text(closure_name);
             }, 500);
-        };
-        window.closeClosureModal = () => {
-            $('.closure-modal').modal('hide');
         };
         window.addEventListener('closeClosureModal', () => {
             $('.closure-modal').modal({

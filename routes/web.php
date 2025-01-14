@@ -308,6 +308,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
         Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
 
+        Route::get('/employee/allowance', [EmployeeController::class, 'allowance_list'])->name('allowance');
         Route::get('/employee/wages', [WagesEmployeeController::class, 'wages'])->name('wages.index');
         Route::get('/employee/wages/ledger', [WagesEmployeeController::class, 'index'])->name('wages-ledger.index');
         Route::post('/employee/wages/ledger/edit', [WagesEmployeeController::class, 'select'])->name('wages-ledger.edit');

@@ -90,6 +90,10 @@ class FeatureSeeder extends Seeder
                 'id' => '19',
                 'name' => '勤怠情報',
             ],
+            [
+                'id' => '20',
+                'name' => '手当情報',
+            ],
         ]);
     }
 }

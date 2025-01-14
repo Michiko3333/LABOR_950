@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Allowance;
+use App\Models\Employee;
 use App\Models\Closure_information;
 use App\Models\Receptionist;
 use App\Models\Managerial_position;
@@ -13,18 +15,30 @@ class CancelModalContent extends BaseTable
 {
     public $receptionistId;
     public $managerialPositionId;
+    public $allowanceId;
+    public $name;
     public $closureId;
+    public $allowanceHistoryId;
 
     #[On('cancelModalOpened')]
-    public function cancelModalOpened($receptionistId, $managerialPositionId, $closureId)
+    public function cancelModalOpened($receptionistId, $managerialPositionId, 
+    $closureId, $allowanceId, $name, $allowanceHistoryId)
     {
         if ($receptionistId) {
             $this->receptionistId = $receptionistId;
         } elseif ($managerialPositionId) {
             $this->managerialPositionId = $managerialPositionId;
+        } elseif ($allowanceId) {
+            $this->allowanceId = $allowanceId;
+        } elseif ($allowanceHistoryId) {
+            $this->allowanceHistoryId = $allowanceHistoryId;
         } elseif ($closureId) {
             $this->closureId = $closureId;
         }
+        
+        if($name){
+            $this->name = $name;
+        } 
     }
 
     public function render()
@@ -52,6 +66,12 @@ class CancelModalContent extends BaseTable
             'delete_flg' => 1
         ]);
 
+        $this->dispatch('closeCancelModal');
+    }
+
+    public function cancelAllowance() {
+        Allowance::whereIn('id', array_filter([$this->allowanceId, $this->allowanceHistoryId]))
+        ->update(['delete_flg' => 1]);
         $this->dispatch('closeCancelModal');
     }
 

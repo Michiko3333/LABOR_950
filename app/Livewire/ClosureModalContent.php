@@ -55,6 +55,7 @@ class ClosureModalContent extends BaseTable
 
     public function closureModalOpened($closure_type, $id)
     {
+        $this->resetErrorBag();
         $this->closure_type = $closure_type;
         $this->id = $id;
         if($id){

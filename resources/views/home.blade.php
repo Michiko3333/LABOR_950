@@ -258,6 +258,13 @@
                                         </div>
                                     </a>
                                 @endif
+                                @if ($userPermission->isReadableFor(20))
+                                    <a href="{{ route('allowance') }}" class="item">
+                                        <div class="header">
+                                            　-　手当マスタ
+                                        </div>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
