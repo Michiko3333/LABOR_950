@@ -144,7 +144,7 @@
                         <li class="item">
                             <a href="{{ route('allowance') }}">
 
-                            手当マスタ</a>
+                                手当マスタ</a>
                         </li>
                     @endif
                 @endif
@@ -182,14 +182,10 @@
                 @if ($userPermission->isReadableFor(11))
                     <li class="item">
                         <a href="{{ route('calendar.index') }}">
-
                             カレンダー</a>
                     </li>
                 @endif
-                @if (
-                    $userPermission->isReadableFor(12) &&
-                        $userPermission->isBasicDepartment() &&
-                        $userPermission->getEmployeeStatus() !== 1)
+                @if ($userPermission->isReadableFor(12))
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
 
@@ -203,7 +199,10 @@
                             Pick upリスト</a>
                     </li>
                 @endif
-                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                @if (
+                    $userPermission->isReadableFor(13) &&
+                        $userPermission->isBasicDepartment() &&
+                        $userPermission->getEmployeeStatus() !== 1)
                     <li class="item">
                         <a href="{{ route('pickup.setting') }}">
 

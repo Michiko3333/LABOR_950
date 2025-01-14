@@ -71,7 +71,9 @@
 </head>
 
 <body>
-    <p style="font-size: 28px; text-align: center; margin: 0;">{{ $origin['title'] }}</p>
+    <div style="width: 100%; height: 50px;">
+        <p style="font-size: 28px; text-align: center; margin: 0;">{{ $origin['title'] }}</p>
+    </div>
     <p style="font-size: 12px; text-align: left; padding-bottom: 24px;">
         {{ $company_name }}<br>
         起算日：{{ $origin['year'] }}年{{ $origin['month'] }}月{{ $origin['day'] }}日</p>
@@ -275,7 +277,23 @@
                 <tr>
                     <td>総実働時間</td>
                     @foreach ($render_months as $month)
-                        <td>{{ $num_work[$month] * $work_time }}</td>
+                        <td>{{ fmod($num_work[$month] * $work_time, 1) == 0 ? $num_work[$month] * $work_time : number_format($num_work[$month] * $work_time, 1) }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>週平均
+                        <br>実働時間
+                    </td>
+                    @foreach ($render_months as $month)
+                    <td>{{ fmod(($num_work[$month] * $work_time) * 12 / 52, 1) == 0 ? ($num_work[$month] * $work_time) * 12 / 52 : number_format(($num_work[$month] * $work_time) * 12 / 52, 1) }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>1日所定
+                        <br>実働時間
+                    </td>
+                    @foreach ($render_months as $month)
+                        <td>{{ $agreed_hours_day_h }}:{{ $agreed_hours_day_m }}</td>
                     @endforeach
                 </tr>
             </tbody>
