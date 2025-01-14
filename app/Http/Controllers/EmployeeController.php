@@ -155,6 +155,10 @@ class EmployeeController extends Controller
         $employee = Employee::where('id', $id)->where('delete_flg', 0)->first();
         $branch = $employee->branch()->first();
         $company = $branch->company()->first();
+        $currentCompany = CurrentUser::CurrentCompany();
+        if($company->id !== $currentCompany->id) {
+            return abort(404);
+        }
 
         $employee->company_name = $company->name;
         $employee->company_id = $company->id;
