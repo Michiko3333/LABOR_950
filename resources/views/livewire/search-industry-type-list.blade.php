@@ -2,7 +2,7 @@
     <div style="display: flex; justify-content: space-between;">
         <div class="field" style="width: 300px;">
             <label style="font-size: .8em; font-weight: 700; text-transform: uppercase;">大分類</label>
-            <select class="ui fluid selection clearable dropdown big_category" style="width:; margin-top: 4px;" name="big_category_name" wire:model.live="big_category_code">
+            <select class="ui fluid selection clearable dropdown big_category" style="margin-top: 4px;" name="big_category_name" wire:model.live="big_category_code">
                 <option value="">未選択</option>
                 @foreach ($big_categories as $big_category_code => $big_category_name)
                     <option value="{{ $big_category_code }}">

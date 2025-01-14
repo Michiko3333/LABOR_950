@@ -13,5 +13,10 @@ class Ledger extends Model
     {
         return $this->hasMany(ApplicationForm::class);
     }
+
+    public function ledger_category()
+    {
+        return $this->belongsTo(LedgerCategory::class,'id', 'ledger_id');
+    }
 }
 
