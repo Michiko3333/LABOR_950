@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Models\Calendar_event;
 use App\Models\CurrentUser;
 use App\Models\Values_calendar_event_category_type;
+use App\Models\Pickup_setting;
+use App\Models\Pickup;
+use App\Models\Pickup_message;
 use App\Permission;
 use Livewire\Component;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class Calendar extends Component
 {
@@ -76,6 +77,7 @@ class Calendar extends Component
     public $todayNextMonth, $todayAfterNextMonth;
 
     public $editPermission = false;
+    public $userPermission = false;
 
     public $nextMonthEvent = [];
     public $afterNextMonthEvent = [];
@@ -116,6 +118,7 @@ class Calendar extends Component
         $this->current_company = CurrentUser::currentCompany();
 
         $permission = new Permission();
+        $this->userPermission = $permission->isWritableFor(13);
         $this->editPermission = ($permission->isGeneralAffair() && !$permission->isAdmin()) && $current_user->employee_status !== 1;
 
         if (!empty($this->current_company->start_day_of_week)) {
@@ -141,11 +144,6 @@ class Calendar extends Component
         $before_start_day = array_slice($this->day_base, 0, $this->start_day);
         $after_start_day = array_slice($this->day_base, $this->start_day);
         $this->days = array_merge($after_start_day, $before_start_day);
-
-        $min = strtotime($this->years['one_year_ago'] . '-01-01 00:00');
-        $max = strtotime($this->years['one_year_later'] . '-12-31 23:59');
-        $date_start = new Carbon($min);
-        $date_to = new Carbon($max);
 
         $this->num_days = date('t', strtotime('01-' . $this->active_month . '-' . $this->active_year));
         $this->num_days_last_month = date('j', strtotime('last day of previous month', strtotime('01-' . $this->active_month . '-' . $this->active_year)));
@@ -173,7 +171,6 @@ class Calendar extends Component
         $date_start = new Carbon($min);
         $date_to = new Carbon($max);
 
-        $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
         $events_list = [];
 
@@ -708,6 +705,8 @@ class Calendar extends Component
 
         if($data['inputs_category'] !== '7') {
             $data['inputs_subsidies_name'] = '';
+        } else {
+            $data['inputs_repetition'] = 0;
         }
         // 新規登録
         if (empty($this->inputs_edit_id)) {
@@ -828,7 +827,6 @@ class Calendar extends Component
                         $comparison_from_date->addMonth(1);
                         $day = $new_from_date->format('d');
                         if (!checkdate($comparison_from_date->format('m'), $day, $comparison_from_date->format('Y'))) {
-                            Log::info([$comparison_from_date->format('m'), $day, $comparison_from_date->format('Y')]);
                             continue;
                         } else {
                             $new_from_date->addMonth(1);
@@ -875,18 +873,33 @@ class Calendar extends Component
                     break;
 
                 default: // 繰り返しなし
-                    $insertData[] = [
-                        'employee_id' => $current_user->id,
-                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                        'name' => $data['inputs_name'],
-                        'subsidies_name' => $data['inputs_subsidies_name'],
-                        'category_type' => $data['inputs_category'],
-                        'from' => $from_date->toDateTimeString(),
-                        'to' => $to_date ? $to_date->toDateTimeString() :null,
-                        'contents' => $data['inputs_contents'],
-                        'repetition_type' => $data['inputs_repetition'],
-                        'identifier' => null,
-                    ];
+                    if($data['inputs_category'] === '7') {
+                        Calendar_event::create([
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $from_date->toDateTimeString(),
+                            'to' => $to_date ? $to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => null,
+                        ]);
+                    } else {
+                        $insertData[] = [
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $from_date->toDateTimeString(),
+                            'to' => $to_date ? $to_date->toDateTimeString() :null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => null,
+                        ];
+                    }
                     break;
             }
         // 編集
@@ -894,25 +907,44 @@ class Calendar extends Component
             $select_event_type = $data['inputs_select_events_type'];
             $exitingFirstsEvents = null;
             $existingEvents = [];
-            $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)->first();
+            $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)
+                ->select('id', 'category_type', 'identifier')
+                ->first();
 
             if($existingEvent->identifier === null) {
                 if($data['inputs_repetition'] === '0') {
                     $identifier = null;
                 }
-                Calendar_event::where('id', $this->inputs_edit_id)
-                    ->update([
-                        'employee_id' => $current_user->id,
-                        'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
-                        'name' => $data['inputs_name'],
-                        'subsidies_name' => $data['inputs_subsidies_name'],
-                        'category_type' => $data['inputs_category'],
-                        'from' => $from_date->toDateTimeString(),
-                        'to' => $to_date ? $to_date->toDateTimeString() : null,
-                        'contents' => $data['inputs_contents'],
-                        'repetition_type' => $data['inputs_repetition'],
-                        'identifier' => $identifier,
-                    ]);
+
+                if($data['inputs_category'] === '7') {
+                    Calendar_event::where('id', $this->inputs_edit_id)
+                        ->update([
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $from_date->toDateTimeString(),
+                            'to' => $to_date ? $to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => null,
+                        ]);
+                } else {
+                    Calendar_event::where('id', $this->inputs_edit_id)
+                        ->update([
+                            'employee_id' => $current_user->id,
+                            'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
+                            'name' => $data['inputs_name'],
+                            'subsidies_name' => $data['inputs_subsidies_name'],
+                            'category_type' => $data['inputs_category'],
+                            'from' => $from_date->toDateTimeString(),
+                            'to' => $to_date ? $to_date->toDateTimeString() : null,
+                            'contents' => $data['inputs_contents'],
+                            'repetition_type' => $data['inputs_repetition'],
+                            'identifier' => $identifier,
+                        ]);
+                }
 
                 $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)->first();
             }

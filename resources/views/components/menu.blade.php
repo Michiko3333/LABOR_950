@@ -189,10 +189,14 @@
                             年間勤務予定表</a>
                     </li>
                 @endif
-                @if (
-                    $userPermission->isReadableFor(13) &&
-                        $userPermission->isBasicDepartment() &&
-                        $userPermission->getEmployeeStatus() !== 1)
+                @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
+                    <li class="item">
+                        <a href="{{ route('pickup.pickup') }}">
+
+                            Pick upリスト</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                     <li class="item">
                         <a href="{{ route('pickup.setting') }}">
 

@@ -335,10 +335,14 @@
                                     </div>
                                 </a>
                             @endif
-                            @if (
-                                $userPermission->isReadableFor(13) &&
-                                    $userPermission->isBasicDepartment() &&
-                                    $userPermission->getEmployeeStatus() !== 1)
+                            @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
+                                <a href="{{ route('pickup.pickup') }}" class="item">
+                                    <div class="content">
+                                        <div class="header">Pick upリスト</div>
+                                    </div>
+                                </a>
+                            @endif
+                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('pickup.setting') }}" class="item">
                                     <div class="content">
                                         <div class="header">Pick up設定</div>

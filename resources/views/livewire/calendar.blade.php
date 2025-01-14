@@ -174,7 +174,7 @@ class="angle right icon"></i></button>
 @foreach ($this->events as $event)
 @if ($this->checkdate($event, $i, 0))
 @if ($event[5] === true)
-<div class="event {{ $event[4] }} days_{{ $event[3] }} {{ $event[7] }}" style="z-index: 100; width: calc({{ $event[6] }}% + {{ $event[8] }}px);" wire:click='detail({{ $event[0] }})'>
+<div class="event {{ $event[4] }} days_{{ $event[3] }} {{ $event[7] }}" style="z-index: 20; width: calc({{ $event[6] }}% + {{ $event[8] }}px);" wire:click='detail({{ $event[0] }})'>
 {{ $event[1] }}</div>
 @else
 <div class="event {{ $event[4] }} days_{{ $event[3] }}" style="opacity: 0; cursor: default;">
@@ -264,7 +264,7 @@ class="edit-calendar-to" wire:ignore>
 </div>
 </div>
 </form>
-@if ($this->editPermission)
+@if ($this->editPermission && $this->userPermission)
 <div class="remove-area mt-2">
 <div class="open-remove-select ui hidden">
 <button type="button">この予定を削除する</button>
@@ -299,7 +299,7 @@ class="edit-calendar-to" wire:ignore>
 <div class="actions">
 <button class="ui negative button" type="button"
 onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
-@if ($this->editPermission)
+@if ($this->editPermission && $this->userPermission)
 <div class="ui primary button" onClick="javascript:$calendar_modal.onEdit()">登録</div>
 @endif
 </div>
@@ -335,7 +335,7 @@ onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
 <label>カテゴリ</label>
 <input type="text" class="category" readonly>
 </div>
-<div class="field">
+<div class="field repetition hidden">
 <label>繰り返し</label>
 <input type="text" class="repetition" readonly>
 </div>
@@ -346,7 +346,7 @@ onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
 </div>
 </div>
 </div>
-@if ($this->editPermission)
+@if ($this->editPermission && $this->userPermission)
 <div class="actions no-repetition-event hidden">
 <button class="ui primary button approve">編集</button>
 </div>

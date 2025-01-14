@@ -30,6 +30,9 @@ use App\Models\Dependent;
 use App\Models\FilterEmployeeList;
 use App\Models\UserFilterEmployeeList;
 use App\Models\Values_employee_insured_age_type;
+use App\Models\Pickup_setting;
+use App\Models\Pickup;
+use App\Models\Pickup_message;
 use App\Models\Qualifications;
 use App\Models\Employee_qualifications;
 use App\Models\Company;
@@ -274,6 +277,16 @@ class EmployeeController extends Controller
         ]);
         DB::beginTransaction();
         try {
+            $old_employee_data = Employee::where('id', $request->input('employee_id'))
+                ->select('hired_date', 'retirement_date', 'intended_retirement_date')
+                ->first();
+            $old_hired_date = $old_employee_data->hired_date;
+            $old_hired_date = $old_hired_date ? Carbon::parse($old_hired_date)->startOfDay() : null;
+            $old_retirement_date = $old_employee_data->retirement_date;
+            $old_retirement_date = $old_retirement_date ? Carbon::parse($old_retirement_date)->startOfDay() : null;
+            $old_intended_retirement_date = $old_employee_data->intended_retirement_date;
+            $old_intended_retirement_date = $old_intended_retirement_date ? Carbon::parse($old_intended_retirement_date)->startOfDay() : null;
+
             $data = $request->validationData($request);
             $address_ward = $data['address_ward'];
             $address_apartment = $data['address_apartment'];
@@ -406,21 +419,404 @@ class EmployeeController extends Controller
 
             $deids = $request->input('de-id', []);
             $excepts = [];
+
+            $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
+                ->where('m_branch.id', $request->input('branch_id'))
+                ->select('company.id')
+                ->first();
+
+            $pickup_setting = Pickup_setting::where('company_id', $company_id->id)
+                ->select('change_in_dependent_status')
+                ->first();
+            if (empty($companyPickupSetting)) {
+                $companyPickupSetting = new Pickup_setting([
+                    'company_id' => $company_id->id,
+                    'nursing_care_insurance_premium_deduction_begins' => 60,
+                    'application_for_attainment_wage_certificate' => 30,
+                    'end_of_nursing_care_insurance_premium_deduction' => 30,
+                    'loss_of_eligibility_for_employees_pension_insurance' => 30,
+                    'loss_of_health_insurance_status' => 30,
+                    'labor_insurance_annual_renewal_start' => '05-01',
+                    'year_end_tax_adjustment_start' => '12-01',
+                    'year_end_tax_adjustment_end' => '12-31',
+                    'retirement_age' => 65,
+                    'retirement' => 365,
+                    'officers_ids' => null,
+                    'officers_birthday' => 1,
+                    'settlement_date' => 30,
+                    'start_of_closure' => 30,
+                    'end_of_closure' => 30,
+                    'change_in_dependent_status' => 5,
+                    'subsidies_and_grants' => 30,
+                    'report_on_the_status_of_elderly_and_disabled_people' => '06-01',
+                    'bonus_payment_notice' => 30,
+                    'basis_of_calculation' => '06-15',
+                ]);
+            }
+
+            $insertData = [];
+
+            $hired_date = $this->formatDate($request->input('hired_date'));
+            if($hired_date) {
+                $hired_date = Carbon::parse($hired_date);
+                $due_date = $hired_date->copy()->addMonth()->day(10);
+
+                if(!$hired_date->isSameDay($old_hired_date) && $due_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 21)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'starting_date', 'due_date'];
+                    $replace = [
+                        '資格取得届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $hired_date->copy()->format('Y年n月j日'),
+                        $due_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 21)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 21,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => $hired_date,
+                        'due_date' => $due_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
+            $retirement_date = $this->formatDate($request->input('retirement_date')) ?? null;
+            $intended_retirement_date = $this->formatDate($request->input('intended_retirement_date')) ?? null;
+            if($retirement_date) {
+                $retirement_date = Carbon::parse($retirement_date);
+
+                if(!empty($retirement_date) && ($old_retirement_date === null || !$retirement_date->isSameDay($old_retirement_date)) && $retirement_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 24)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'due_date'];
+                    $replace = [
+                        '資格喪失届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $retirement_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 24,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => null,
+                        'due_date' => $retirement_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            } elseif($intended_retirement_date) {
+                $intended_retirement_date = Carbon::parse($intended_retirement_date);
+
+                if(!empty($intended_retirement_date) && !$intended_retirement_date->isSameDay($old_intended_retirement_date) && $intended_retirement_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 24)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'due_date'];
+                    $replace = [
+                        '資格喪失届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $intended_retirement_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 24,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => null,
+                        'due_date' => $intended_retirement_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
 
                 if ($deid > 0) {
                     $dependent = Dependent::find($deid);
+                    $old_date_of_expiry = null;
+                    $old_date_of_authorisation = null;
+                    $old_dependent_type = null;
                     if ($dependent) {
+                        $old_date_of_expiry = $dependent->date_of_expiry;
+                        $old_date_of_expiry = $old_date_of_expiry ? Carbon::parse($old_date_of_expiry)->startOfDay() : null;
+                        $old_date_of_authorisation = $dependent->date_of_authorisation;
+                        $old_date_of_authorisation = $old_date_of_authorisation ? Carbon::parse($old_date_of_authorisation)->startOfDay() : null;
+                        $old_dependent_type = $dependent->dependent_type;
+
                         $dependent->fill($dedata);
                         $dependent->save();
                     }
                     $excepts[] = $deid;
+
+                    if(!empty($pickup_setting)) {
+                        $relationship_spouses = [
+                            '未選択',
+                            '夫',
+                            '妻',
+                            '夫(未届)',
+                            '妻(未届)',
+                        ];
+                        $relationship_dependents = [
+                            '未選択',
+                            '配偶者',
+                            '子供',
+                            '養子',
+                            '孫',
+                            '兄弟姉妹',
+                            '父母',
+                            '祖父母',
+                            '義父母',
+                            '義兄弟姉妹',
+                            '従兄弟姉妹',
+                            '甥・姪',
+                            'おじ・おば',
+                            '継父母',
+                            '継子',
+                            'その他の親族',
+                        ];
+                        $relationship_spouse = $dedata['relationship_spouse'] ?? null;
+                        $relationship_dependent = $dedata['relationship_dependent'] ?? null;
+                        $relation = '';
+                        if(!empty($relationship_spouse)) {
+                            $relation = $relationship_spouses[$relationship_spouse];
+                        } elseif(!empty($relationship_dependent)) {
+                            $relation = $relationship_dependents[$relationship_dependent];
+                        }
+
+                        $dependent_name = $dedata['last_name'] . ' ' . $dedata['first_name'];
+
+                        $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                            ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                            ->where('m_pickup_type.id', 15)
+                            ->first();
+
+                        $search = ['pickup_type', 'employee', 'relation', 'dependent'];
+                        $replace = [
+                            '扶養変更',
+                            $request->input('last_name') . ' ' . $request->input('first_name'),
+                            $relation,
+                            $dependent_name,
+                        ];
+
+                        $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                        $content = str_replace($search, $replace, $pickupMessage->content);
+
+                        if(!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type'])) {
+                            if($dedata['date_of_expiry'] && ($old_date_of_expiry === null || !Carbon::parse($dedata['date_of_expiry'])->isSameDay($old_date_of_expiry))) {
+                                $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
+                                if($due_date->gte(Carbon::today())) {
+                                    $insertData[] = [
+                                        'company_id' => $company_id->id,
+                                        'pickup_type_id' => 15,
+                                        'employee_id' => $request->input('employee_id'),
+                                        'dependent_id' => $deid,
+                                        'starting_date' => null,
+                                        'due_date' => $due_date,
+                                        'business_name' => $business_name,
+                                        'content' => $content,
+                                        'created_at' => now(),
+                                    ];
+                                }
+                            } elseif(($dedata['date_of_authorisation'] && $old_date_of_authorisation === null || !Carbon::parse($dedata['date_of_authorisation'])->isSameDay($old_date_of_authorisation))) {
+                                $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
+                                if($due_date->gte(Carbon::today())) {
+                                    $insertData[] = [
+                                        'company_id' => $company_id->id,
+                                        'pickup_type_id' => 15,
+                                        'employee_id' => $request->input('employee_id'),
+                                        'dependent_id' => $deid,
+                                        'starting_date' => null,
+                                        'due_date' => $due_date,
+                                        'business_name' => $business_name,
+                                        'content' => $content,
+                                        'created_at' => now(),
+                                    ];
+                                }
+                            } elseif($dedata['dependent_type'] && $old_dependent_type === null || $old_dependent_type !== (int)$dedata['dependent_type']) {
+                                $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $deid,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        }
+                    }
                 } else {
                     $created_id = Dependent::create($dedata)->id;
                     $excepts[] = $created_id;
+
+                    if(!empty($pickup_setting)) {
+                        $relationship_spouses = [
+                            '未選択',
+                            '夫',
+                            '妻',
+                            '夫(未届)',
+                            '妻(未届)',
+                        ];
+                        $relationship_dependents = [
+                            '未選択',
+                            '配偶者',
+                            '子供',
+                            '養子',
+                            '孫',
+                            '兄弟姉妹',
+                            '父母',
+                            '祖父母',
+                            '義父母',
+                            '義兄弟姉妹',
+                            '従兄弟姉妹',
+                            '甥・姪',
+                            'おじ・おば',
+                            '継父母',
+                            '継子',
+                            'その他の親族',
+                        ];
+                        $relationship_spouse = $dedata['relationship_spouse'] ?? null;
+                        $relationship_dependent = $dedata['relationship_dependent'] ?? null;
+                        $relation = '';
+                        if(!empty($relationship_spouse)) {
+                            $relation = $relationship_spouses[$relationship_spouse];
+                        } elseif(!empty($relationship_dependent)) {
+                            $relation = $relationship_dependents[$relationship_dependent];
+                        }
+
+                        $dependent_name = $dedata['last_name'] . ' ' . $dedata['first_name'];
+
+                        $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                            ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                            ->where('m_pickup_type.id', 15)
+                            ->first();
+
+                        $search = ['pickup_type', 'employee', 'relation', 'dependent'];
+                        $replace = [
+                            '扶養変更',
+                            $request->input('last_name') . ' ' . $request->input('first_name'),
+                            $relation,
+                            $dependent_name,
+                        ];
+
+                        $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                        $content = str_replace($search, $replace, $pickupMessage->content);
+
+                        if(!empty($dedata['date_of_expiry'])) {
+                            $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $created_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['date_of_authorisation'])) {
+                            $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $created_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['dependent_type'])) {
+                            $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
+
+                            $insertData[] = [
+                                'company_id' => $company_id->id,
+                                'pickup_type_id' => 15,
+                                'employee_id' => $request->input('employee_id'),
+                                'dependent_id' => $created_id,
+                                'starting_date' => null,
+                                'due_date' => $due_date,
+                                'business_name' => $business_name,
+                                'content' => $content,
+                                'created_at' => now(),
+                            ];
+                        }
+                    }
                 }
             }
+            Pickup::insert($insertData);
+
             Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
 

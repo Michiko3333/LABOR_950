@@ -17,7 +17,6 @@ class Pickup_setting extends Model
         'loss_of_eligibility_for_employees_pension_insurance',
         'loss_of_health_insurance_status',
         'labor_insurance_annual_renewal_start',
-        'labor_insurance_annual_renewal_end',
         'year_end_tax_adjustment_start',
         'year_end_tax_adjustment_end',
         'retirement_age',
@@ -30,6 +29,8 @@ class Pickup_setting extends Model
         'change_in_dependent_status',
         'subsidies_and_grants',
         'report_on_the_status_of_elderly_and_disabled_people',
+        'bonus_payment_notice',
+        'basis_of_calculation',
     ];
 
     public function company()

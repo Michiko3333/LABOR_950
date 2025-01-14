@@ -107,4 +107,9 @@ class Dependent extends Model
     {
         return $this->belongsTo(Values_sex::class,'sex','id');
     }
+
+    public function pickup()
+    {
+        return $this->hasMany(Pickup::class);
+    }
 }

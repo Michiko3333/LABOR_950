@@ -5,15 +5,63 @@
     @endslot
 
     <section class="content pb-3">
-        <div class="ui huge breadcrumb mb-0 mb-2">
-            <a class="section" href="{{ route('home.index') }}">ホーム</a>
-            <i class="right chevron icon divider"></i>
-            <div class="active section">カレンダー</div>
+        <div style="display: flex; justify-content: space-between;">
+            <div class="ui huge breadcrumb mb-0 mb-2">
+                <a class="section" href="{{ route('home.index') }}">ホーム</a>
+                <i class="right chevron icon divider"></i>
+                <div class="active section">カレンダー</div>
+            </div>
+            <div>
+                @if($editPermission)
+                    <i class="inverted secondary big bell icon notification-icon" style="visibility: visible; cursor: pointer;"></i>
+                    <div class="ui card card-shadow" id="notification-modal" style="position: absolute; top: 190px; display: none; width: 400px; max-height: 428px; z-index: 30; overflow-y: auto;">
+                        <div class="content" style="background-color: var(--color-red);">
+                            <div class="header" style="color: white;">
+                                通知
+                            </div>
+                        </div>
+                        @if(count($pickups) == 0)
+                            <div class="content" style="height: 150px; color: #c0c0c0; text-align: center; line-height: 122px; user-select: none; pointer-events: none;">
+                                通知はありません
+                            </div>
+                        @else
+                            @foreach($pickups as $pickup)
+                                <div class="content pickup_item pickup_{{ $pickup->id }}" onclick="window.location.href='{{ route('pickup.pickup', ['p' => $pickup->pickup_page, 'id' => $pickup->id]) }}'">
+                                    <p>
+                                        {{ $pickup->business_name }}
+                                    </p>
+                                    <p style="text-align: right;">
+                                        {{ $pickup->days_difference }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                @endif
+            </div>
         </div>
         @livewire('calendar')
     </section>
 
     <script type="module">
+        $(document).ready(function () {
+            $('.notification-icon').on('click', function () {
+                const modal = $('#notification-modal');
+
+                if (!modal.is(':visible')) {
+                    modal.transition('fade down');
+                }
+            });
+
+            $(document).mouseup(function (e) {
+                const modal = $('#notification-modal');
+
+                if (modal.is(':visible') && !modal.is(e.target) && modal.has(e.target).length === 0) {
+                    modal.transition('fade down');
+                }
+            });
+        });
+
         window.$_calendar = {
             calendar_date_from: '',
             calendar_date_to: ''
@@ -132,6 +180,7 @@
                 $('.edit-calendar-modal .remove-link').addClass('hidden');
             }
 
+            $('.subsidies').css('display', 'none');
             subsidiesSwitching();
         });
 
@@ -158,8 +207,10 @@
 
                     if(info.subsidies_name) {
                         $('#detailCalendar .field.subsidies_name').removeClass('hidden');
+                        $('#detailCalendar .field.repetition').addClass('hidden');
                     } else {
                         $('#detailCalendar .field.subsidies_name').addClass('hidden');
+                        $('#detailCalendar .field.repetition').removeClass('hidden');
                     }
 
                     $('#detailCalendar .title').val(info.name);
@@ -257,10 +308,16 @@
         });
 
         function subsidiesSwitching() {
+            $('.subsidies').css('display', 'none');
             if($('.edit-calendar-inputs_category').eq(1).val() == 7) {
+                $('.select-repetition').eq(1).css('display', 'none');
                 $('.subsidies').eq(1).css('display', 'block');
+                $('.edit-calendar-inputs_repetition').eq(1).val('0');
+                console.log();
             } else {
-                $('.subsidies').css('display', 'none');
+                $('.select-repetition').eq(1).css('display', 'block');
+                $('.subsidies').eq(1).css('display', 'none');
+                $('.edit-calendar-inputs_subsidies_name').eq(1).val('');
             }
         }
 

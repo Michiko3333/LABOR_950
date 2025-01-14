@@ -147,6 +147,8 @@ Route::group(['middleware' => 'auth'], function () {
         }
     })->where('path', '.*');
 
+    Route::get('/pick_up', [PickUpController::class, 'index'])->name('pickup.pickup');
+  
     // 帳票
     Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
     Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');

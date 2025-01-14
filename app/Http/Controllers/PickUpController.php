@@ -16,6 +16,16 @@ use App\Models\Pickup_setting;
 
 class PickUpController extends Controller
 {
+    public function index()
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isReadableFor(15)) {
+            return redirect()->route('home.index');
+        }
+
+        return view('pickup.pickup');
+    }
+
     public function setting()
     {
         $userPermission = new Permission();
@@ -100,12 +110,6 @@ class PickUpController extends Controller
                 $request->input('labor_insurance_annual_renewal_start_day')
             );
 
-            $labor_insurance_annual_renewal_end = sprintf(
-                '%02d-%02d',
-                $request->input('labor_insurance_annual_renewal_end_month'),
-                $request->input('labor_insurance_annual_renewal_end_day')
-            );
-
             $year_end_tax_adjustment_start = sprintf(
                 '%02d-%02d',
                 $request->input('year_end_tax_adjustment_start_month'),
@@ -136,7 +140,6 @@ class PickUpController extends Controller
                     'loss_of_eligibility_for_employees_pension_insurance' => $request->input('loss_of_eligibility_for_employees_pension_insurance'),
                     'loss_of_health_insurance_status' => $request->input('loss_of_health_insurance_status'),
                     'labor_insurance_annual_renewal_start' => $labor_insurance_annual_renewal_start,
-                    'labor_insurance_annual_renewal_end' => $labor_insurance_annual_renewal_end,
                     'year_end_tax_adjustment_start' => $year_end_tax_adjustment_start,
                     'year_end_tax_adjustment_end' => $year_end_tax_adjustment_end,
                     'retirement_age' => $request->input('retirement_age'),
@@ -149,6 +152,7 @@ class PickUpController extends Controller
                     'change_in_dependent_status' => $request->input('change_in_dependent_status'),
                     'subsidies_and_grants' => $request->input('subsidies_and_grants'),
                     'report_on_the_status_of_elderly_and_disabled_people' => $report_on_the_status_of_elderly_and_disabled_people,
+                    'bonus_payment_notice' => $request->input('bonus_payment_notice'),
                 ]);
             } else {
                 $pickupSetting->update([
@@ -159,7 +163,6 @@ class PickUpController extends Controller
                     'loss_of_eligibility_for_employees_pension_insurance' => $request->input('loss_of_eligibility_for_employees_pension_insurance'),
                     'loss_of_health_insurance_status' => $request->input('loss_of_health_insurance_status'),
                     'labor_insurance_annual_renewal_start' => $labor_insurance_annual_renewal_start,
-                    'labor_insurance_annual_renewal_end' => $labor_insurance_annual_renewal_end,
                     'year_end_tax_adjustment_start' => $year_end_tax_adjustment_start,
                     'year_end_tax_adjustment_end' => $year_end_tax_adjustment_end,
                     'retirement_age' => $request->input('retirement_age'),
@@ -172,6 +175,7 @@ class PickUpController extends Controller
                     'change_in_dependent_status' => $request->input('change_in_dependent_status'),
                     'subsidies_and_grants' => $request->input('subsidies_and_grants'),
                     'report_on_the_status_of_elderly_and_disabled_people' => $report_on_the_status_of_elderly_and_disabled_people,
+                    'bonus_payment_notice' => $request->input('bonus_payment_notice'),
                 ]);
             }
 

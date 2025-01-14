@@ -126,8 +126,7 @@
             }
 
             .company-data-area .ui.card.item-1 {
-                grid-area: 4 / 1 / 5 / 3;
-                min-width: 460px;
+                grid-area: 3 / 4 / 4 / 5;
             }
 
             .company-data-area .ui.card.item-2 {
@@ -139,15 +138,19 @@
             }
 
             .company-data-area .ui.card.item-4 {
-                grid-area: 5 / 1 / 4 / 3;
+                grid-area: 4 / 1 / 5 / 3;
             }
 
             .company-data-area .ui.card.item-5 {
-                grid-area: 3 / 4 / 4 / 5;
+                grid-area: 5 / 1 / 6 / 3;
             }
 
             .company-data-area .ui.card.item-6 {
-                grid-area: 4 / 3 / 4 / 5;
+                grid-area: 4 / 3 / 5 / 5;
+            }
+
+            .company-data-area label {
+                font-size: 1em !important;
             }
 
             .company-data-area label {
@@ -170,21 +173,20 @@
 
             @media (max-width: 820px) {
                 .company-data-area .ui.card.item-0 {
-                    grid-area: 1 / 1 / 1 / 4;
+                    grid-area: 1 / 1 / 2 / 4;
                     min-width: 450px;
                 }
 
                 .company-data-area .ui.card.item-1 {
-                    grid-area: 2 / 1 / 2 / 4;
-                    min-width: 460px;
+                    grid-area: 4 / 1 / 4 / 4;
                 }
 
                 .company-data-area .ui.card.item-2 {
-                    grid-area: 3 / 1 / 3 / 4;
+                    grid-area: 2 / 1 / 2 / 4;
                 }
 
                 .company-data-area .ui.card.item-3 {
-                    grid-area: 4 / 1 / 4 / 4;
+                    grid-area: 3 / 1 / 3 / 4;
                 }
 
                 .company-data-area .ui.card.item-4 {
@@ -192,11 +194,11 @@
                 }
 
                 .company-data-area .ui.card.item-5 {
-                    grid-area: 6 / 1 / 6 / 4;
+                    grid-area: 7 / 1 / 7 / 4;
                 }
 
                 .company-data-area .ui.card.item-6 {
-                    grid-area: 7 / 1 / 7 / 4;
+                    grid-area: 6 / 1 / 6 / 4;
                 }
 
                 .ui.styled.accordion .content {
@@ -534,57 +536,55 @@
                 <div class="ui horizontal card card-shadow item-1">
                     <div class="content">
                         <h2>資本情報</h2>
-                        <div class="three fields">
-                            <div class="field {{ err($errors, 'capital') }}">
-                                <label for="capital">資本金</label>
-                                @if (!isset($currentCompany->id))
-                                    <input type="text" id="capital" name="capital"
-                                        value="{{ old('capital') }}" placeholder="999999">
-                                @else
-                                    <input type="text" id="capital" name="capital"
-                                        value="{{ old('capital', $currentCompany->capital) }}" placeholder="999999">
-                                @endif
-                                <div class="ui error message"></div>
-                            </div>
-                            <div class="field {{ err($errors, 'founding_date') }}">
-                                <label>創業年月</label>
-                                <div class="ui calendar" id="founding_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        @if (!isset($currentCompany->id))
-                                            <input type="text" placeholder="Date" name="founding_date"
-                                                value="{{ old('formatted_founding_date') }}">
-                                            <input type="hidden" name="formatted_founding_date"
-                                                id="formatted_founding_date" value="{{ old('founding_date') }}">
-                                        @else
-                                            <input type="text" placeholder="Date" name="founding_date"
-                                                id="founding_date" value="{{ $currentCompany->founding_date }}">
-                                            <input type="hidden" name="formatted_founding_date"
-                                                id="formatted_founding_date"
-                                                value="{{ old('formatted_founding_date') }}">
-                                        @endif
-                                    </div>
+                        <div class="field {{ err($errors, 'capital') }}">
+                            <label for="capital">資本金</label>
+                            @if (!isset($currentCompany->id))
+                                <input type="text" id="capital" name="capital"
+                                    value="{{ old('capital') }}" placeholder="999999">
+                            @else
+                                <input type="text" id="capital" name="capital"
+                                    value="{{ old('capital', $currentCompany->capital) }}" placeholder="999999">
+                            @endif
+                            <div class="ui error message"></div>
+                        </div>
+                        <div class="field {{ err($errors, 'founding_date') }}">
+                            <label>創業年月</label>
+                            <div class="ui calendar" id="founding_date_calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" placeholder="Date" name="founding_date"
+                                            value="{{ old('formatted_founding_date') }}">
+                                        <input type="hidden" name="formatted_founding_date"
+                                            id="formatted_founding_date" value="{{ old('founding_date') }}">
+                                    @else
+                                        <input type="text" placeholder="Date" name="founding_date"
+                                            id="founding_date" value="{{ $currentCompany->founding_date }}">
+                                        <input type="hidden" name="formatted_founding_date"
+                                            id="formatted_founding_date"
+                                            value="{{ old('formatted_founding_date') }}">
+                                    @endif
                                 </div>
                             </div>
-                            <div class="field {{ err($errors, 'establishment_date') }}">
-                                <label>設立年月</label>
-                                <div class="ui calendar" id="establishment_date_calendar">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        @if (!isset($currentCompany->id))
-                                            <input type="text" placeholder="Date" name="establishment_date"
-                                                value="{{ old('establishment_date') }}">
-                                            <input type="hidden" name="formatted_establishment_date"
-                                                id="formatted_establishment_date"
-                                                value="{{ old('establishment_date') }}">
-                                        @else
-                                            <input type="text" placeholder="Date" name="establishment_date"
-                                                value="{{ $currentCompany->establishment_date }}">
-                                            <input type="hidden" name="formatted_establishment_date"
-                                                id="formatted_establishment_date"
-                                                value="{{ old('formatted_establishment_date') }}">
-                                        @endif
-                                    </div>
+                        </div>
+                        <div class="field {{ err($errors, 'establishment_date') }}">
+                            <label>設立年月</label>
+                            <div class="ui calendar" id="establishment_date_calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    @if (!isset($currentCompany->id))
+                                        <input type="text" placeholder="Date" name="establishment_date"
+                                            value="{{ old('establishment_date') }}">
+                                        <input type="hidden" name="formatted_establishment_date"
+                                            id="formatted_establishment_date"
+                                            value="{{ old('establishment_date') }}">
+                                    @else
+                                        <input type="text" placeholder="Date" name="establishment_date"
+                                            value="{{ $currentCompany->establishment_date }}">
+                                        <input type="hidden" name="formatted_establishment_date"
+                                            id="formatted_establishment_date"
+                                            value="{{ old('formatted_establishment_date') }}">
+                                    @endif
                                 </div>
                             </div>
                         </div>
