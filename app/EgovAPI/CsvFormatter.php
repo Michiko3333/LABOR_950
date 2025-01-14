@@ -2,9 +2,13 @@
 
 namespace App\EgovAPI;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Company;
 use App\Models\Csv_count;
 use App\Models\CurrentUser;
+use App\Models\Employee;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class CsvFormatter
 {
@@ -25,6 +29,7 @@ class CsvFormatter
         '4950013521025000', // 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
         '4950013521024000', // 健康保険・厚生年金保険被保険者報酬月額算定基礎届／７０歳以上被用者算定基礎届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
         '4950013521026000', // 健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
+        '4950013521030000', // 健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届
     ];
 
     public function __construct()
@@ -172,6 +177,23 @@ class CsvFormatter
                 $csv_tel_city_code = $request->input('branch_tel_city_code');
                 $csv_tel_subscriber_code = $request->input('branch_tel_subscriber_code');
                 $csv_submission_agent = $request->input('labor_consultant_submission_agent_name');
+                $csv_labor_and_social_security_attorney_registration_no = $request->input('labor_and_social_security_attorney_registration_no');
+            break;
+            // 新様式(元4950013520995000)
+            case '4950013521030000':
+                $business_serial_number_prefecture = $request->input('business_establishment_code_prefecture_code');
+                $business_serial_number_city = $request->input('office_arrangement_code_county_city_ward_code');
+                $business_serial_number_office = $request->input('office_reference_symbol_office_symbol');
+                $csv_pension_office_no = $request->input('csv_pension_office_no');
+                $csv_post_code_first = $request->input('post_code_former');
+                $csv_post_code_last = $request->input('post_code_latter');
+                $csv_business_address = $request->input('branch_address');
+                $csv_business_name = $request->input('branch_name');
+                $csv_business_owner = $request->input('employer_company_managerial_position_name');
+                $csv_tel_area_code = $request->input('branch_tel_area_code');
+                $csv_tel_city_code = $request->input('branch_tel_city_code');
+                $csv_tel_subscriber_code = $request->input('branch_tel_subscriber_code');
+                $csv_submission_agent = $request->input('labor_consultant_name');
                 $csv_labor_and_social_security_attorney_registration_no = $request->input('labor_and_social_security_attorney_registration_no');
             break;
         }
@@ -651,6 +673,44 @@ class CsvFormatter
                     '70歳以上被用者届のみ提出' => $over_70_check
                 ];
                 break;
+            // 健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届
+            case '4950013521030000':
+                $this->data = [
+                    '様式コード' => 2273700,
+                    '都道府県コード' => $request->input('business_establishment_code_prefecture_code'),
+                    '郡市区符号' => $request->input('office_arrangement_code_county_city_ward_code'),
+                    '事業所記号' => mb_convert_kana($request->input('office_reference_symbol_office_symbol'), 'k'),
+                    '被保険者整理番号' => $request->input('insured_person_reference_number'),
+                    '被保険者氏名（カナ）' => mb_convert_kana($request->input('fullname_kana'), 'ks'),
+                    '被保険者氏名（漢字）' => $request->input('fullname'),
+                    '被保険者の個人番号' => $request->input('mynumber_card_no'),
+                    '被保険者の基礎年金番号（課所符号）' => substr($request->input('basic_pension_number'),0,4),
+                    '被保険者の基礎年金番号（一連番号）' => substr($request->input('basic_pension_number'),4,10),
+                    '被保険者の生年月日（元号）' => $request->input('year_of_birth_era'),
+                    '被保険者の生年月日（年月日）' => str_pad($request->input('year_of_birth'), 2, '0', STR_PAD_LEFT).str_pad($request->input('month_of_birth'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth'), 2, '0', STR_PAD_LEFT),
+                    '出産予定年月日（元号）' => 9,
+                    '出産予定年月日（年月日）' => str_pad($request->input('due_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('due_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('due_date_day'), 2, '0', STR_PAD_LEFT),
+                    '出産種別' => $request->input('birth_type'),
+                    '産前産後休業開始年月日（元号）' => 9,
+                    '産前産後休業開始年月日（年月日）' => str_pad($request->input('maternity_leave_start_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_start_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_start_date_day'), 2, '0', STR_PAD_LEFT),
+                    '産前産後休業終了予定年月日（元号）' => 9,
+                    '産前産後休業終了予定年月日（年月日）' => str_pad($request->input('maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT),
+                    '予備１' => '',
+                    '予備２' => '',
+                    '出産年月日（元号）' => is_null($request->input('date_of_birth_year')) && is_null($request->input('date_of_birth_month')) && is_null($request->input('date_of_birth_day')) ? '' : 9,
+                    '出産年月日（年月日）' => str_pad($request->input('date_of_birth_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth_day'), 2, '0', STR_PAD_LEFT),
+                    '備考' => $request->input('remarks'),
+                    '変更後の出産予定年月日（元号）' => is_null($request->input('change_due_date_year')) && is_null($request->input('change_due_date_month')) && is_null($request->input('change_due_date_day')) ? '': 9,
+                    '変更後の出産予定年月日（年月日）' => str_pad($request->input('change_due_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_due_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_due_date_day'), 2, '0', STR_PAD_LEFT),
+                    '変更後の出産種別' => $request->input('change_birth_type'),
+                    '変更後の産前産後休業開始年月日（元号）' => is_null($request->input('change_maternity_leave_start_date_year')) && is_null($request->input('change_maternity_leave_start_date_month')) && is_null($request->input('change_maternity_leave_start_date_day')) ? '' : 9,
+                    '変更後の産前産後休業開始年月日（年月日）' => str_pad($request->input('change_maternity_leave_start_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_start_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_start_date_day'), 2, '0', STR_PAD_LEFT),
+                    '変更後の産前産後休業終了予定年月日（元号）' => is_null($request->input('change_maternity_leave_end_date_year')) && is_null($request->input('change_maternity_leave_end_date_month')) && is_null($request->input('change_maternity_leave_end_date_day')) ? '' : 9,
+                    '変更後の産前産後休業終了予定年月日（年月日）' => str_pad($request->input('change_maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT),
+                    '産前産後休業終了年月日（元号）' => is_null($request->input('early_maternity_leave_end_date_year')) && is_null($request->input('early_maternity_leave_end_date_month')) && is_null($request->input('early_maternity_leave_end_date_day')) ? '' : 9,
+                    '産前産後休業終了年月日（年月日）' => str_pad($request->input('early_maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('early_maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('early_maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT)
+                ];
+                break;
             default:
                 # nothing
                 break;
@@ -681,6 +741,7 @@ class CsvFormatter
                 $monthly_change_sheets = 1;
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 0;
+                $maternity_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -701,6 +762,7 @@ class CsvFormatter
                 $monthly_change_sheets = 0;
                 $basis_of_calculation_sheets = 1;
                 $bonus_payment_sheets = 0;
+                $maternity_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -721,6 +783,7 @@ class CsvFormatter
                 $monthly_change_sheets = 0;
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 1;
+                $maternity_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -822,6 +885,36 @@ class CsvFormatter
                     $radio_file_wage_ledger_2 = 1;
                 }
             break;
+            // 新様式（元4950013520995000）
+            case '4950013521030000':
+                $current_employee = CurrentUser::info();
+                $monthly_change_sheets = 0;
+                $basis_of_calculation_sheets = 0;
+                $bonus_payment_sheets = 0;
+                $maternity_leave_sheets = 1;
+                $identification_information_1 = $request->input('business_establishment_code_prefecture_code').$request->input('office_arrangement_code_county_city_ward_code').$request->input('office_reference_symbol_office_symbol');
+                $business_serial_number_prefecture = $request->input('business_establishment_code_prefecture_code');
+                $business_serial_number_city = $request->input('office_arrangement_code_county_city_ward_code');
+                $business_serial_number_office = $request->input('office_reference_symbol_office_symbol');
+                $csv_pension_office_no = $request->input('csv_pension_office_no');
+                $csv_post_code_first = $request->input('post_code_former');
+                $csv_post_code_last = $request->input('post_code_latter');
+                $csv_business_address = $request->input('branch_address');
+                $csv_business_name = $request->input('branch_name');
+                $csv_business_owner = $request->input('employer_company_managerial_position_name');
+                $csv_tel_area_code = $request->input('branch_tel_area_code');
+                $csv_tel_city_code = $request->input('branch_tel_city_code');
+                $csv_tel_subscriber_code = $request->input('branch_tel_subscriber_code');
+                $csv_submission_agent = $request->input('labor_consultant_name');
+                $csv_labor_and_social_security_attorney_registration_no = $current_employee->labor_and_social_security_attorney_registration_no;
+                $radio_file_wage_ledger_1 = '';
+                $radio_file_wage_ledger_2 = '';
+                if($request->hasFile('file_wage_ledger') || $request->hasFile('file_other')) {
+                    $radio_file_wage_ledger_1 = 1;
+                } else {
+                    $radio_file_wage_ledger_2 = 1;
+                }
+            break;
         }
 
         $today_year = self::convertToWareki(now()->format('Y'), 0);
@@ -843,7 +936,7 @@ class CsvFormatter
             'basis_of_calculation_sheets' => $basis_of_calculation_sheets,
             'bonus_payment_sheets' => $bonus_payment_sheets,
             'childcare_leave_sheets' => 0,
-            'maternity_leave_sheets' => 0,
+            'maternity_leave_sheets' => $maternity_leave_sheets,
             'csv_sheets_total' => 1,
             'national_pension_sheets' => 0,
             'sheets_total' => 0,

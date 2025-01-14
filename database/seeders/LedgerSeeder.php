@@ -185,6 +185,16 @@ class LedgerSeeder extends Seeder
                 'abbreviation' => '健・厚：賞与不支給報告書',
                 'procedure_type' => NULL,
                 'delete_flg' => '0',
+            ],
+            [
+                'id' => '20', 
+                'procedure_id' => '4950013521030000', 
+                'procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届', 
+                'formal_procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）／電子申請',
+                'abbreviation' => '健・厚：産休取得者申出書',
+                'procedure_type' => NULL, 
+                'delete_flg' => '0', 
+                
             ]
         ]);
     }

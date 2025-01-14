@@ -4835,19 +4835,19 @@
                 <div class="egov-tool-wrapper">
                     <div class="egov-tool-field-origin" style="left: 82px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N4_005F_944E" name="today_year"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 112px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="today_month"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 142px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" name="today_date"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -4950,7 +4950,7 @@
                     <div class="egov-tool-field-origin" style="left: 62px; top: 267px;">
                         <input class="egov-tool-field-rect onImage" id="N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866"
                             value="{{ old('insurer_reference_no') }}" name="insurer_reference_no"
-                            onfocus="addlength(this,6)"
+                            maxlength="6"
                             style="width: 55px; height: 40px; font-size: 9px; text-align: right; line-height: 62px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -4990,21 +4990,21 @@
                     </div>
                     <div class="egov-tool-field-origin" style="left: 365.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N25_005F_8E96_8BC6_8F8A"
-                            value="{{ old('birthday_year') }}" name="birthday_year" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_year') }}" name="birthday_year" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 393.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N26_005F_8E96_8BC6_8F8A_94D4"
-                            value="{{ old('birthday_month') }}" name="birthday_month" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_month') }}" name="birthday_month" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 422.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N28_8D864_8C85"
-                            value="{{ old('birthday_date') }}" name="birthday_date" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_date') }}" name="birthday_date" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
@@ -5024,14 +5024,14 @@
                     <div class="egov-tool-field-origin" style="left: 498.8px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N30_93E0_8BC7_94D4"
                             value="{{ old('revision_date_year') }}" name="revision_date_year"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 527.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N31__005F_89C1_93FC"
                             value="{{ old('revision_date_month') }}" name="revision_date_month"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -5057,21 +5057,21 @@
                     <div class="egov-tool-field-origin" style="left: 216px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N35_94D4_8D86"
                             value="{{ old('before_revision_date_year') }}" name="before_revision_date_year"
-                            onfocus="addlength(this,4)"
+                            maxlength="4"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A"
                             value="{{ old('before_revision_date_month') }}" name="before_revision_date_month"
-                            onfocus="addlength(this,2)"
+                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 306px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_raise_and_reduction_month') }}"
-                            name="salary_raise_and_reduction_month" onfocus="addlength(this,2)"
+                            name="salary_raise_and_reduction_month" maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -5091,7 +5091,7 @@
                     <div class="egov-tool-field-origin" style="left: 422px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF"
                             value="{{ old('retroactive_payment_month') }}" name="retroactive_payment_month"
-                            onfocus="addlength(this,2)"
+                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -5104,42 +5104,42 @@
                     <div class="egov-tool-field-origin" style="left: 63px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N41_005F_96BC_8FCC"
                             value="{{ old('salary_payment_month1') }}" name="salary_payment_month1"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N42_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_payment_month2') }}" name="salary_payment_month2"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4"
                             value="{{ old('salary_payment_month3') }}" name="salary_payment_month3"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6"
                             value="{{ old('salary_calculation_basic_days1') }}" name="salary_calculation_basic_days1"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N45__005F_8E73_8A4F_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days2') }}" name="salary_calculation_basic_days2"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N46__005F_8E73_93E0_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days3') }}" name="salary_calculation_basic_days3"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
                             type="text" value="" />
                     </div>
@@ -5296,15 +5296,6 @@
         </div>
 
 
-        <script>
-            function addlength(ele, ml) {
-                var tmp = ele.getAttribute("maxlength");
-
-                if (tmp == null) {
-                    ele.setAttribute("maxlength", ml);
-                }
-            }
-        </script>
         <script type="module">
             $(document).ready(function() {
             function cal1() {
