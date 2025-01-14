@@ -103,7 +103,10 @@ $('#ledger-submit-btn').click((event) => {
 
 function handlePageHistory() {
     const sessionHistory = JSON.parse(sessionStorage.getItem('pageHistory'));
-    $('#ledger-back').attr('href', sessionHistory.toString());
+    if (sessionHistory) {
+        $('#queryParameter').val(sessionHistory.toString());
+        $('#ledger-back').attr('href', sessionHistory.toString());
+    }
 }
 
 document.addEventListener("DOMContentLoaded", handlePageHistory);

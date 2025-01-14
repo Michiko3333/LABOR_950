@@ -110,6 +110,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="query_parameter" id="queryParameter">
                 </div>
 
                 <div class="prevew-btn">
