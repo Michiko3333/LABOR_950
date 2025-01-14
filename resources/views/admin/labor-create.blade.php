@@ -170,7 +170,7 @@
                                 <label for="employee_no">社員番号</label>
                                 <input type="text" id="employee_no" name="employee_no"
                                     value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
-                                    placeholder="E9999999">
+                                    placeholder="E9999999" autocomplete="off">
                             </div>
                             <div class="required field {{ err($errors, 'employee_type') }}">
                                 <label>社員区分</label>
@@ -191,13 +191,13 @@
                                 <label for="last_name">氏</label>
                                 <input type="text" id="last_name" name="last_name"
                                     value="{{ old('last_name', isset($employee_id) ? $employee->last_name : '') }}"
-                                    placeholder="田中">
+                                    placeholder="田中" autocomplete="off">
                             </div>
                             <div class="required field {{ err($errors, 'first_name') }}">
                                 <label for="first_name">名</label>
                                 <input type="text" id="first_name" name="first_name"
                                     value="{{ old('first_name', isset($employee_id) ? $employee->first_name : '') }}"
-                                    placeholder="太郎">
+                                    placeholder="太郎" autocomplete="off">
                             </div>
                         </div>
                         <div class="two fields">
@@ -205,13 +205,13 @@
                                 <label for="last_name_kana">氏（カナ）</label>
                                 <input type="text" id="last_name_kana" name="last_name_kana"
                                     value="{{ old('last_name_kana', isset($employee_id) ? $employee->last_name_kana : '') }}"
-                                    placeholder="タナカ">
+                                    placeholder="タナカ" autocomplete="off">
                             </div>
                             <div class="required field {{ err($errors, 'first_name_kana') }}">
                                 <label for="first_name_kana">名（カナ）</label>
                                 <input type="text" id="first_name_kana" name="first_name_kana"
                                     value="{{ old('first_name_kana', isset($employee_id) ? $employee->first_name_kana : '') }}"
-                                    placeholder="タロウ">
+                                    placeholder="タロウ" autocomplete="off">
                             </div>
                         </div>
                         <div class="two fields">
@@ -219,13 +219,13 @@
                                 <label for="last_name_alphabet">氏（アルファベット）</label>
                                 <input type="text" id="last_name_alphabet" name="last_name_alphabet"
                                     value="{{ old('last_name_alphabet', isset($employee_id) ? $employee->last_name_alphabet : '') }}"
-                                    placeholder="TANAKA">
+                                    placeholder="TANAKA" autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'first_name_alphabet') }}">
                                 <label for="first_name_alphabet">名（アルファベット）</label>
                                 <input type="text" id="first_name_alphabet" name="first_name_alphabet"
                                     value="{{ old('first_name_alphabet', isset($employee_id) ? $employee->first_name_alphabet : '') }}"
-                                    placeholder="TARO">
+                                    placeholder="TARO" autocomplete="off">
                             </div>
                         </div>
                         <div class="two fields">
@@ -235,7 +235,7 @@
                                 <input type="text" id="labor_and_social_security_attorney_registration_no"
                                     name="labor_and_social_security_attorney_registration_no"
                                     value="{{ old('labor_and_social_security_attorney_registration_no', isset($employee_id) ? $employee->labor_and_social_security_attorney_registration_no : '') }}"
-                                    placeholder="01234567">
+                                    placeholder="01234567" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -276,7 +276,7 @@
                                     <input type="tel" pattern="[0-9]{1,5}" id="tel_area_code"
                                         name="tel_area_code"
                                         value="{{ old('tel_area_code', isset($employee_id) ? $employee->tel_area_code : '') }}"
-                                        placeholder="市外局番" maxlength="4">
+                                        placeholder="市外局番" maxlength="4" autocomplete="off">
                                 </div>
 
                                 <div class="field tel-hyphen {{ err($errors, 'tel_city_code') }}">
@@ -284,7 +284,7 @@
                                     <input type="tel" pattern="[0-9]{1,4}" id="tel_city_code"
                                         name="tel_city_code"
                                         value="{{ old('tel_city_code', isset($employee_id) ? $employee->tel_city_code : '') }}"
-                                        placeholder="市内局番" maxlength="4">
+                                        placeholder="市内局番" maxlength="4" autocomplete="off">
                                 </div>
 
                                 <div class="field {{ err($errors, 'tel_subscriber_code') }}"
@@ -293,14 +293,14 @@
                                     <input type="tel" pattern="[0-9]{4,7}" id="tel_subscriber_code"
                                         name="tel_subscriber_code"
                                         value="{{ old('tel_subscriber_code', isset($employee_id) ? $employee->tel_subscriber_code : '') }}"
-                                        placeholder="加入者番号" maxlength="4">
+                                        placeholder="加入者番号" maxlength="4" autocomplete="off">
                                 </div>
                             </div>
                             <div class="field {{ err($errors, 'mail_address2') }}">
                                 <label for="mail_address2">メールアドレス</label>
                                 <input type="email" id="mail_address2" name="mail_address2"
                                     value="{{ old('mail_address2', isset($employee_id) ? $employee->mail_address2 : '') }}"
-                                    placeholder="karte_xxxx@xxx.com">
+                                    placeholder="karte_xxxx@xxx.com" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -314,12 +314,12 @@
                                     <label for="user_email">メールアドレス</label>
                                     <input type="text" id="user_email" name="user_email"
                                         placeholder="karte_xxxx@xxx.com"
-                                        value="{{ old('user_email', isset($employee_id) ? $employee->user_email : '') }}">
+                                        value="{{ old('user_email', isset($employee_id) ? $employee->user_email : '') }}" autocomplete="off">
                                 </div>
                                 <div class="required field {{ err($errors, 'user_pass') }}">
                                     <label for="user_pass">パスワード</label>
                                     <input type="password" id="user_pass" name="user_pass"
-                                        value="{{ old('user_pass', isset($employee_id) ? $employee->user_pass : '') }}">
+                                        value="{{ old('user_pass', isset($employee_id) ? $employee->user_pass : '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>

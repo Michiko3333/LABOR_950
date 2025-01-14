@@ -12,7 +12,7 @@
             </select>
         </div>
         <div class="ui action input">
-            <input id="company_name" type="text" placeholder="会社名" wire:model.live="company_name">
+            <input id="company_name" type="text" placeholder="会社名" wire:model.live="company_name" autocomplete="off">
             <button id="company_btn" class="ui button">会社検索</button>
         </div>
     </div>

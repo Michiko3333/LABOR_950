@@ -301,10 +301,10 @@
                                 <label for="name">会社名</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="name" name="name" value="{{ old('name') }}"
-                                        placeholder="株式会社Karte">
+                                        placeholder="株式会社Karte" autocomplete="off">
                                 @else
                                     <input type="text" id="name" name="name"
-                                        value="{{ old('name', $company->name) }}" placeholder="株式会社Karte">
+                                        value="{{ old('name', $company->name) }}" placeholder="株式会社Karte" autocomplete="off">
                                 @endif
                                 <div class="ui error message"></div>
                             </div>
@@ -313,10 +313,10 @@
                                 <label for="name_kana">会社名（カナ）</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="name_kana" name="name_kana"
-                                        value="{{ old('name_kana') }}" placeholder="カブシキガイシャカルテ">
+                                        value="{{ old('name_kana') }}" placeholder="カブシキガイシャカルテ" autocomplete="off">
                                 @else
                                     <input type="text" id="name_kana" name="name_kana"
-                                        value="{{ old('name_kana', $company->name_kana) }}" placeholder="カブシキガイシャカルテ">
+                                        value="{{ old('name_kana', $company->name_kana) }}" placeholder="カブシキガイシャカルテ" autocomplete="off">
                                 @endif
 
                             </div>
@@ -326,10 +326,10 @@
                                 <label for="name_en">会社名（英語表記）</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="name_en" name="name_en" value="{{ old('name_en') }}"
-                                        placeholder="Karte.co.ltd">
+                                        placeholder="Karte.co.ltd" autocomplete="off">
                                 @else
                                     <input type="text" id="name_en" name="name_en"
-                                        value="{{ old('name_en', $company->name_en) }}" placeholder="Karte.co.ltd">
+                                        value="{{ old('name_en', $company->name_en) }}" placeholder="Karte.co.ltd" autocomplete="off">
                                 @endif
 
                             </div>
@@ -337,11 +337,11 @@
                                 <label for="name_abbreviation">会社名（略称表記）</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="name_abbreviation" name="name_abbreviation"
-                                        value="{{ old('name_abbreviation') }}" placeholder="KRT">
+                                        value="{{ old('name_abbreviation') }}" placeholder="KRT" autocomplete="off">
                                 @else
                                     <input type="text" id="name_abbreviation" name="name_abbreviation"
                                         value="{{ old('name_abbreviation', $company->name_abbreviation) }}"
-                                        placeholder="KRT">
+                                        placeholder="KRT" autocomplete="off">
                                 @endif
                             </div>
                         </div>
@@ -351,11 +351,11 @@
                                     <label for="representative">代表者</label>
                                     @if (!isset($company_id))
                                         <input type="text" id="representative" name="representative"
-                                            value="{{ old('representative') }}" placeholder="">
+                                            value="{{ old('representative') }}" placeholder="" autocomplete="off">
                                     @else
                                         <input type="text" id="representative" name="representative"
                                             value="{{ old('representative', $company->representative) }}"
-                                            placeholder="">
+                                            placeholder="" autocomplete="off">
                                     @endif
                                 </div>
                             </div>
@@ -365,10 +365,10 @@
                                 <label for="company_no">法人番号</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="company_no" name="company_no"
-                                        value="{{ old('company_no') }}" placeholder="">
+                                        value="{{ old('company_no') }}" placeholder="" autocomplete="off">
                                 @else
                                     <input type="text" id="company_no" name="company_no"
-                                        value="{{ old('company_no', $company->company_no) }}" placeholder="">
+                                        value="{{ old('company_no', $company->company_no) }}" placeholder="" autocomplete="off">
                                 @endif
 
                             </div>
@@ -392,10 +392,10 @@
                                 <label for="license_no">許認可番号</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="license_no" name="license_no"
-                                        value="{{ old('license_no') }}" placeholder="">
+                                        value="{{ old('license_no') }}" placeholder="" autocomplete="off">
                                 @else
                                     <input type="text" id="license_no" name="license_no"
-                                        value="{{ old('license_no', $company->license_no) }}" placeholder="">
+                                        value="{{ old('license_no', $company->license_no) }}" placeholder="" autocomplete="off">
                                 @endif
                             </div>
                         </div>
@@ -511,11 +511,11 @@
                                 <label for="stock_code">証券コード</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="stock_code" name="stock_code"
-                                        value="{{ old('stock_code') }}" placeholder="非上場は記入しない">
+                                        value="{{ old('stock_code') }}" placeholder="非上場は記入しない" autocomplete="off">
                                 @else
                                     <input type="text" id="stock_code" name="stock_code"
                                         value="{{ old('stock_code', $company->stock_code) }}"
-                                        placeholder="非上場は記入しない">
+                                        placeholder="非上場は記入しない" autocomplete="off">
                                 @endif
                             </div>
                         </div>
@@ -523,11 +523,11 @@
                             <label for="purpose">事業目的</label>
                             @if (!isset($company_id))
                                 <input type="text" id="purpose" name="purpose" value="{{ old('purpose') }}"
-                                    placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守">
+                                    placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守" autocomplete="off">
                             @else
                                 <input type="text" id="purpose" name="purpose"
                                     value="{{ old('purpose', $company->purpose) }}"
-                                    placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守">
+                                    placeholder="ハードウェア・ソフトウェアの企画、開発、制作、販売及び保守" autocomplete="off">
                             @endif
                         </div>
                         <div class="three fields">
@@ -589,11 +589,11 @@
                                 @if (!isset($company_id))
                                     <input type="hidden" name="procedure_hidden_flg" value="0">
                                     <input type="checkbox" name="procedure_hidden_flg" value="1"
-                                        {{ old('procedure_hidden_flg') == '1' ? 'checked' : '' }}>
+                                        {{ old('procedure_hidden_flg') == '1' ? 'checked' : '' }} autocomplete="off">
                                 @else
                                     <input type="hidden" name="procedure_hidden_flg" value="0">
                                     <input type="checkbox" name="procedure_hidden_flg" value="1"
-                                        {{ $company->procedure_hidden_flg == '1' ? 'checked' : '' }}>
+                                        {{ $company->procedure_hidden_flg == '1' ? 'checked' : '' }} autocomplete="off">
                                 @endif
                                 <label for="procedure_hidden_flg">行政手続きを非表示</label>
                             </div>
@@ -609,10 +609,10 @@
                                 <label for="capital">資本金</label>
                                 @if (!isset($company_id))
                                     <input type="text" id="capital" name="capital"
-                                        value="{{ old('capital') }}" placeholder="999999">
+                                        value="{{ old('capital') }}" placeholder="999999" autocomplete="off">
                                 @else
                                     <input type="text" id="capital" name="capital"
-                                        value="{{ old('capital', $company->capital) }}" placeholder="999999">
+                                        value="{{ old('capital', $company->capital) }}" placeholder="999999" autocomplete="off">
                                 @endif
                                 <div class="ui error message"></div>
                             </div>
@@ -623,12 +623,12 @@
                                         <i class="calendar icon"></i>
                                         @if (!isset($company_id))
                                             <input type="text" placeholder="Date" name="founding_date"
-                                                value="{{ old('formatted_founding_date') }}">
+                                                value="{{ old('formatted_founding_date') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_founding_date"
                                                 id="formatted_founding_date" value="{{ old('founding_date') }}">
                                         @else
                                             <input type="text" placeholder="Date" name="founding_date"
-                                                id="founding_date" value="{{ $company->founding_date }}">
+                                                id="founding_date" value="{{ $company->founding_date }}" autocomplete="off">
                                             <input type="hidden" name="formatted_founding_date"
                                                 id="formatted_founding_date"
                                                 value="{{ old('formatted_founding_date') }}">
@@ -643,13 +643,13 @@
                                         <i class="calendar icon"></i>
                                         @if (!isset($company_id))
                                             <input type="text" placeholder="Date" name="establishment_date"
-                                                value="{{ old('establishment_date') }}">
+                                                value="{{ old('establishment_date') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_establishment_date"
                                                 id="formatted_establishment_date"
                                                 value="{{ old('establishment_date') }}">
                                         @else
                                             <input type="text" placeholder="Date" name="establishment_date"
-                                                value="{{ $company->establishment_date }}">
+                                                value="{{ $company->establishment_date }}" autocomplete="off">
                                             <input type="hidden" name="formatted_establishment_date"
                                                 id="formatted_establishment_date"
                                                 value="{{ old('formatted_establishment_date') }}">
@@ -669,11 +669,11 @@
                                 @if (!isset($company_id))
                                     <input type="number" id="annual_sales" name="annual_sales"
                                         value="{{ old('annual_sales') }}" placeholder="99999999" min="0"
-                                        max="999999999999999999">
+                                        max="999999999999999999" autocomplete="off">
                                 @else
                                     <input type="number" id="annual_sales" name="annual_sales"
                                         value="{{ old('annual_sales', $company->annual_sales) }}"
-                                        placeholder="99999999" min="0" max="999999999999999999">
+                                        placeholder="99999999" min="0" max="999999999999999999" autocomplete="off">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'employee_sum') }}">
@@ -681,11 +681,11 @@
                                 @if (!isset($company_id))
                                     <input type="number" id="employee_sum" name="employee_sum"
                                         value="{{ old('employee_sum') }}" placeholder="999" min="0"
-                                        max="999999999">
+                                        max="999999999" autocomplete="off">
                                 @else
                                     <input type="number" id="employee_sum" name="employee_sum"
                                         value="{{ old('employee_sum', $company->employee_sum) }}" placeholder="999"
-                                        min="0" max="999999999">
+                                        min="0" max="999999999" autocomplete="off">
                                 @endif
                             </div>
                         </div>
@@ -700,11 +700,11 @@
                                 @if (!isset($company_id))
                                     <input type="number" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares') }}" placeholder="1200" min="0"
-                                        max="999999999999999999">
+                                        max="999999999999999999" autocomplete="off">
                                 @else
                                     <input type="number" id="authorized_shares" name="authorized_shares"
                                         value="{{ old('authorized_shares', $company->authorized_shares) }}"
-                                        placeholder="1200" min="0" max="999999999999999999">
+                                        placeholder="1200" min="0" max="999999999999999999" autocomplete="off">
                                 @endif
                             </div>
                             <div class="field {{ err($errors, 'issued_shares') }}">
@@ -712,11 +712,11 @@
                                 @if (!isset($company_id))
                                     <input type="number" id="issued_shares" name="issued_shares"
                                         value="{{ old('issued_shares') }}" placeholder="100" min="0"
-                                        max="999999999999999999">
+                                        max="999999999999999999" autocomplete="off">
                                 @else
                                     <input type="number" id="issued_shares" name="issued_shares"
                                         value="{{ old('issued_shares', $company->issued_shares) }}" placeholder="100"
-                                        min="0" max="999999999999999999">
+                                        min="0" max="999999999999999999" autocomplete="off">
                                 @endif
                             </div>
                         </div>
@@ -732,33 +732,33 @@
                                     <label for="supplier_company">仕入先名称</label>
                                     @if (!isset($company_id))
                                         <input type="text" id="supplier_company" name="supplier_company"
-                                            value="{{ old('supplier_company') }}" placeholder="有限会社〇〇">
+                                            value="{{ old('supplier_company') }}" placeholder="有限会社〇〇" autocomplete="off">
                                     @else
                                         <input type="text" id="supplier_company" name="supplier_company"
                                             value="{{ old('supplier_company', $company->supplier_company) }}"
-                                            placeholder="有限会社〇〇">
+                                            placeholder="有限会社〇〇" autocomplete="off">
                                     @endif
                                 </div>
                                 <div class="field {{ err($errors, 'outsourcing_company') }}">
                                     <label for="outsourcing_company">外注先名称</label>
                                     @if (!isset($company_id))
                                         <input type="text" id="outsourcing_company" name="outsourcing_company"
-                                            value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇">
+                                            value="{{ old('outsourcing_company') }}" placeholder="有限会社〇〇" autocomplete="off">
                                     @else
                                         <input type="text" id="outsourcing_company" name="outsourcing_company"
                                             value="{{ old('outsourcing_company', $company->outsourcing_company) }}"
-                                            placeholder="有限会社〇〇">
+                                            placeholder="有限会社〇〇" autocomplete="off">
                                     @endif
                                 </div>
                                 <div class="field {{ err($errors, 'sales_company') }}">
                                     <label for="sales_company">販売先名称</label>
                                     @if (!isset($company_id))
                                         <input type="text" id="sales_company" name="sales_company"
-                                            value="{{ old('sales_company') }}" placeholder="株式会社〇〇">
+                                            value="{{ old('sales_company') }}" placeholder="株式会社〇〇" autocomplete="off">
                                     @else
                                         <input type="text" id="sales_company" name="sales_company"
                                             value="{{ old('sales_company', $company->sales_company) }}"
-                                            placeholder="株式会社〇〇">
+                                            placeholder="株式会社〇〇" autocomplete="off">
                                     @endif
                                 </div>
                             </div>
@@ -780,21 +780,21 @@
                             <label for="qualification">保有資格</label>
                             @if (!isset($company_id))
                                 <input type="text" id="qualification" name="qualification"
-                                    value="{{ old('qualification') }}" placeholder="ISO 9001:2015">
+                                    value="{{ old('qualification') }}" placeholder="ISO 9001:2015" autocomplete="off">
                             @else
                                 <input type="text" id="qualification" name="qualification"
                                     value="{{ old('qualification', $company->qualification) }}"
-                                    placeholder="ISO 9001:2015">
+                                    placeholder="ISO 9001:2015" autocomplete="off">
                             @endif
                         </div>
                         <div class="field {{ err($errors, 'url') }}">
                             <label for="url">ホームページアドレス</label>
                             @if (!isset($company_id))
                                 <input type="text" id="url" name="url" value="{{ old('url') }}"
-                                    placeholder="https://xxxxxxx">
+                                    placeholder="https://xxxxxxx" autocomplete="off">
                             @else
                                 <input type="text" id="url" name="url"
-                                    value="{{ old('url', $company->url) }}" placeholder="https://xxxxxxx">
+                                    value="{{ old('url', $company->url) }}" placeholder="https://xxxxxxx" autocomplete="off">
                             @endif
                         </div>
                     </div>

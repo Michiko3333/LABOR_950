@@ -69,7 +69,7 @@
                     <div class="field required mb-2">
                         <label>部署名</label>
                         <input class="edit-department-form_name" name="edit-department-form_name" type="text"
-                            placeholder="部署名" maxlength="15">
+                            placeholder="部署名" maxlength="15" autocomplete="off">
                     </div>
                     <div class="field mb-2">
                         <label>部署権限</label>

@@ -353,7 +353,7 @@
                                     <label for="employee_no">社員番号</label>
                                     <input type="text" id="employee_no" name="employee_no"
                                         value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
-                                        placeholder="E9999999">
+                                        placeholder="E9999999" autocomplete="off">
                                 </div>
                                 <div class="required field {{ err($errors, 'employee_type') }}">
                                     <label>社員区分</label>
@@ -389,13 +389,13 @@
                                         <label for="last_name">氏</label>
                                         <input type="text" id="last_name" name="last_name"
                                             value="{{ old('last_name', isset($employee_id) ? $employee->last_name : '') }}"
-                                            placeholder="田中">
+                                            placeholder="田中" autocomplete="off">
                                     </div>
                                     <div class="required field {{ err($errors, 'first_name') }}">
                                         <label for="first_name">名</label>
                                         <input type="text" id="first_name" name="first_name"
                                             value="{{ old('first_name', isset($employee_id) ? $employee->first_name : '') }}"
-                                            placeholder="太郎">
+                                            placeholder="太郎" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -403,13 +403,13 @@
                                         <label for="last_name_kana">氏（カナ）</label>
                                         <input type="text" id="last_name_kana" name="last_name_kana"
                                             value="{{ old('last_name_kana', isset($employee_id) ? $employee->last_name_kana : '') }}"
-                                            placeholder="タナカ">
+                                            placeholder="タナカ" autocomplete="off">
                                     </div>
                                     <div class="required field {{ err($errors, 'first_name_kana') }}">
                                         <label for="first_name_kana">名（カナ）</label>
                                         <input type="text" id="first_name_kana" name="first_name_kana"
                                             value="{{ old('first_name_kana', isset($employee_id) ? $employee->first_name_kana : '') }}"
-                                            placeholder="タロウ">
+                                            placeholder="タロウ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -432,7 +432,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="birthday_date"
-                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}">
+                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_birthday_date"
                                                 id="formatted_birthday_date" value="{{ old('birthday_date') }}">
                                         </div>
@@ -479,13 +479,13 @@
                                         <label for="last_name_alphabet">氏（アルファベット）</label>
                                         <input type="text" id="last_name_alphabet" name="last_name_alphabet"
                                             value="{{ old('last_name_alphabet', isset($employee_id) ? $employee->last_name_alphabet : '') }}"
-                                            placeholder="TANAKA">
+                                            placeholder="TANAKA" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'first_name_alphabet') }}">
                                         <label for="first_name_alphabet">名（アルファベット）</label>
                                         <input type="text" id="first_name_alphabet" name="first_name_alphabet"
                                             value="{{ old('first_name_alphabet', isset($employee_id) ? $employee->first_name_alphabet : '') }}"
-                                            placeholder="TARO">
+                                            placeholder="TARO" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -495,13 +495,13 @@
                                         <label for="old_last_name">旧氏</label>
                                         <input type="text" id="old_last_name" name="old_last_name"
                                             value="{{ old('old_last_name', isset($employee_id) ? $employee->old_last_name : '') }}"
-                                            placeholder="鈴木">
+                                            placeholder="鈴木" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name') }}">
                                         <label for="old_first_name">旧名</label>
                                         <input type="text" id="old_first_name" name="old_first_name"
                                             value="{{ old('old_first_name', isset($employee_id) ? $employee->old_first_name : '') }}"
-                                            placeholder="太郎">
+                                            placeholder="太郎" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -509,13 +509,13 @@
                                         <label for="old_last_name_kana">旧氏（カナ）</label>
                                         <input type="text" id="old_last_name_kana" name="old_last_name_kana"
                                             value="{{ old('old_last_name_kana', isset($employee_id) ? $employee->old_last_name_kana : '') }}"
-                                            placeholder="スズキ">
+                                            placeholder="スズキ" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name_kana') }}">
                                         <label for="old_first_name_kana">旧名（カナ）</label>
                                         <input type="text" id="old_first_name_kana" name="old_first_name_kana"
                                             value="{{ old('old_first_name_kana', isset($employee_id) ? $employee->old_first_name_kana : '') }}"
-                                            placeholder="タロウ">
+                                            placeholder="タロウ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -526,14 +526,14 @@
                                         <input type="text" id="old_last_name_alphabet"
                                             name="old_last_name_alphabet"
                                             value="{{ old('old_last_name_alphabet', isset($employee_id) ? $employee->old_last_name_alphabet : '') }}"
-                                            placeholder="TANAKA">
+                                            placeholder="TANAKA" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name_alphabet') }}">
                                         <label for="old_first_name_alphabet">旧名（アルファベット）</label>
                                         <input type="text" id="old_first_name_alphabet"
                                             name="old_first_name_alphabet"
                                             value="{{ old('old_first_name_alphabet', isset($employee_id) ? $employee->old_first_name_alphabet : '') }}"
-                                            placeholder="TARO">
+                                            placeholder="TARO" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -541,13 +541,13 @@
                                         <label for="name_common">通称名</label>
                                         <input type="text" id="name_common" name="name_common"
                                             value="{{ old('name_common', isset($employee_id) ? $employee->name_common : '') }}"
-                                            placeholder="田中">
+                                            placeholder="田中" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'name_common_kana') }}">
                                         <label for="name_common_kana">通称名（カナ）</label>
                                         <input type="text" id="name_common_kana" name="name_common_kana"
                                             value="{{ old('name_common_kana', isset($employee_id) ? $employee->name_common_kana : '') }}"
-                                            placeholder="タナカ">
+                                            placeholder="タナカ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -561,9 +561,9 @@
                                 <div class="required field {{ err($errors, 'branch_id') }}">
                                     <label for="branch_name">支店</label>
                                     <input type="text" id="branch_name" name="branch_name" readonly
-                                        value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}">
+                                        value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}" autocomplete="off">
                                     <input type="hidden" id="branch_id" name="branch_id"
-                                        value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}">
+                                        value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}" autocomplete="off">
                                 </div>
                             </div>
                             @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
@@ -596,7 +596,7 @@
                                         <input type="tel" pattern="[0-9]{1,5}" id="tel_area_code"
                                             name="tel_area_code"
                                             value="{{ old('tel_area_code', isset($employee_id) ? $employee->tel_area_code : '') }}"
-                                            placeholder="市外局番" maxlength="4">
+                                            placeholder="市外局番" maxlength="4" autocomplete="off">
                                     </div>
 
                                     <div class="field tel-hyphen {{ err($errors, 'tel_city_code') }}">
@@ -604,7 +604,7 @@
                                         <input type="tel" pattern="[0-9]{1,4}" id="tel_city_code"
                                             name="tel_city_code"
                                             value="{{ old('tel_city_code', isset($employee_id) ? $employee->tel_city_code : '') }}"
-                                            placeholder="市内局番" maxlength="4">
+                                            placeholder="市内局番" maxlength="4" autocomplete="off">
                                     </div>
 
                                     <div class="field {{ err($errors, 'tel_subscriber_code') }}"
@@ -613,7 +613,7 @@
                                         <input type="tel" pattern="[0-9]{4,7}" id="tel_subscriber_code"
                                             name="tel_subscriber_code"
                                             value="{{ old('tel_subscriber_code', isset($employee_id) ? $employee->tel_subscriber_code : '') }}"
-                                            placeholder="加入者番号" maxlength="4">
+                                            placeholder="加入者番号" maxlength="4" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="ui unstackable three fields field" style="padding: 0;">
@@ -621,18 +621,18 @@
                                         style="padding-right: 0.8em;">
                                         <label for="fax">FAX</label>
                                         <input type="text" name="fax1"
-                                            value="{{ old('fax1', $faxParts[0]) }}">
+                                            value="{{ old('fax1', $faxParts[0]) }}" autocomplete="off">
                                     </div>
                                     <div class="field tel-hyphen {{ err($errors, 'fax2') }}"
                                         style="padding-right: 0.8em;">
                                         <label for="fax2"></label>
                                         <input type="text" name="fax2"
-                                            value="{{ old('fax2', $faxParts[1]) }}">
+                                            value="{{ old('fax2', $faxParts[1]) }}" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
                                         <label for="fax3"></label>
                                         <input type="text" name="fax3"
-                                            value="{{ old('fax3', $faxParts[2]) }}">
+                                            value="{{ old('fax3', $faxParts[2]) }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -641,7 +641,7 @@
                                     <label for="post_code">郵便番号</label>
                                     <input type="text" name="post_code" id="post_code"
                                         value="{{ old('post_code', isset($employee_id) ? $employee->post_code : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
                                     <label for="address_prefecture">住所（都道府県）</label>
@@ -662,7 +662,7 @@
                                     <label for="address_city">住所（市区町村）</label>
                                     <input type="text" name="address_city" id="address_city"
                                         value="{{ old('address_city', isset($employee_id) ? $employee->address_city : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -670,13 +670,13 @@
                                     <label for="address_ward">住所（丁目・番地）</label>
                                     <input type="text" name="address_ward"  id="address_ward"
                                         value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'address_apartment') }}">
                                     <label for="address_apartment">住所（アパート・マンション名等）</label>
                                     <input type="text" name="address_apartment"  id="address_apartment"
                                         value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -684,13 +684,13 @@
                                     <label for="mail_address1">メールアドレス１</label>
                                     <input type="email" id="mail_address1" name="mail_address1"
                                         value="{{ old('mail_address1', isset($employee_id) ? $employee->mail_address1 : '') }}"
-                                        placeholder="karte_xxxx@xxx.com">
+                                        placeholder="karte_xxxx@xxx.com" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'mail_address2') }}">
                                     <label for="mail_address2">メールアドレス２</label>
                                     <input type="email" id="mail_address2" name="mail_address2"
                                         value="{{ old('mail_address2', isset($employee_id) ? $employee->mail_address2 : '') }}"
-                                        placeholder="karte_xxxx@xxx.com">
+                                        placeholder="karte_xxxx@xxx.com" autocomplete="off">
                                 </div>
                             </div>
                             <div class="ui divider my-2"></div>
@@ -700,14 +700,14 @@
                                     <label for="emergency_contact1">氏名</label>
                                     <input type="text" id="emergency_contact1" name="emergency_contact1"
                                         value="{{ old('emergency_contact1', isset($employee_id) ? $employee->emergency_contact1 : '') }}"
-                                        placeholder="田中 太郎">
+                                        placeholder="田中 太郎" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
                                     <div class="field" style="padding-right: 0.8em;">
                                         <label for="emergency_tel1">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
                                             name="emergency_tel1"
-                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
+                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -716,13 +716,13 @@
                                     <label for="emergency_relationship1">続柄</label>
                                     <input type="text" id="emergency_relationship1" name="emergency_relationship1"
                                         value="{{ old('emergency_relationship1', isset($employee_id) ? $employee->emergency_relationship1 : '') }}"
-                                        placeholder="父">
+                                        placeholder="父" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_post_code1') }}">
                                     <label for="emergency_post_code1">郵便番号</label>
                                     <input type="text" name="emergency_post_code1"
                                         value="{{ old('emergency_post_code1', isset($employee_id) ? $employee->emergency_post_code1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_address_prefecture1') }}">
                                     <label for="emergency_address_prefecture1">住所（都道府県）</label>
@@ -744,7 +744,7 @@
                                     <label for="emergency_address_city1">住所（市区町村）</label>
                                     <input type="text" name="emergency_address_city1"
                                         value="{{ old('emergency_address_city1', isset($employee_id) ? $employee->emergency_address_city1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -752,13 +752,13 @@
                                     <label for="emergency_address_ward1">住所（丁目・番地）</label>
                                     <input type="text" name="emergency_address_ward1"
                                         value="{{ old('emergency_address_ward1', isset($employee_id) ? $employee->emergency_address_ward1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_address_apartment1') }}">
                                     <label for="emergency_address_apartment1">住所（アパート・マンション名等）</label>
                                     <input type="text" name="emergency_address_apartment1"
                                         value="{{ old('emergency_address_apartment1', isset($employee_id) ? $employee->emergency_address_apartment1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
 
@@ -768,14 +768,14 @@
                                     <label for="emergency_contact2">氏名</label>
                                     <input type="text" id="emergency_contact2" name="emergency_contact2"
                                         value="{{ old('emergency_contact2', isset($employee_id) ? $employee->emergency_contact2 : '') }}"
-                                        placeholder="田中 太郎">
+                                        placeholder="田中 太郎" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
                                     <div class="field" style="padding-right: 0.8em;">
                                         <label for="emergency_tel2">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
                                             name="emergency_tel2"
-                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
+                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -784,13 +784,13 @@
                                     <label for="emergency_relationship2">続柄</label>
                                     <input type="text" id="emergency_relationship2" name="emergency_relationship2"
                                         value="{{ old('emergency_relationship2', isset($employee_id) ? $employee->emergency_relationship2 : '') }}"
-                                        placeholder="父">
+                                        placeholder="父" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_post_code2') }}">
                                     <label for="emergency_post_code2">郵便番号</label>
                                     <input type="text" name="emergency_post_code2"
                                         value="{{ old('emergency_post_code2', isset($employee_id) ? $employee->emergency_post_code2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_address_prefecture2') }}">
                                     <label for="emergency_address_prefecture2">住所（都道府県）</label>
@@ -812,7 +812,7 @@
                                     <label for="emergency_address_city2">住所（市区町村）</label>
                                     <input type="text" name="emergency_address_city2"
                                         value="{{ old('emergency_address_city2', isset($employee_id) ? $employee->emergency_address_city2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -820,13 +820,13 @@
                                     <label for="emergency_address_ward2">住所（丁目・番地）</label>
                                     <input type="text" name="emergency_address_ward2"
                                         value="{{ old('emergency_address_ward2', isset($employee_id) ? $employee->emergency_address_ward2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_address_apartment2') }}">
                                     <label for="emergency_address_apartment2">住所（アパート・マンション名等）</label>
                                     <input type="text" name="emergency_address_apartment2"
                                         value="{{ old('emergency_address_apartment2', isset($employee_id) ? $employee->emergency_address_apartment2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -892,7 +892,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_start_date"
-                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}">
+                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_contract_start_date"
                                                 id="formatted_contract_start_date"
                                                 value="{{ old('contract_start_date') }}">
@@ -905,7 +905,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_end_date"
-                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}">
+                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_contract_end_date"
                                                 id="formatted_contract_end_date"
                                                 value="{{ old('contract_end_date') }}">
@@ -920,7 +920,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="hired_date"
-                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}">
+                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_hired_date"
                                                 id="formatted_hired_date" value="{{ old('hired_date') }}">
                                         </div>
@@ -932,7 +932,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="retirement_date"
-                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}">
+                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_retirement_date"
                                                 id="formatted_retirement_date" value="{{ old('retirement_date') }}">
                                         </div>
@@ -944,7 +944,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="intended_retirement_date"
-                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}">
+                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_intended_retirement_date"
                                                 id="formatted_intended_retirement_date"
                                                 value="{{ old('intended_retirement_date') }}">
@@ -1000,7 +1000,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="passed_away_date"
-                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}">
+                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_passed_away_date"
                                                 id="formatted_passed_away_date"
                                                 value="{{ old('passed_away_date') }}">
@@ -1070,7 +1070,7 @@
                                 <label for="mynumber_card_no">マイナンバーカード番号</label>
                                 <input type="text" id="mynumber_card_no" name="mynumber_card_no"
                                     value="{{ old('mynumber_card_no', isset($employee_id) ? $employee->mynumber_card_no : '') }}"
-                                    placeholder="123456789012" maxlength='12'>
+                                    placeholder="123456789012" maxlength='12' autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -1137,7 +1137,7 @@
                                 <label for="employment_insured_no">被保険者番号（雇用）</label>
                                 <input type="text" id="employment_insured_no" name="employment_insured_no"
                                     value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
-                                    placeholder="01234567891" maxLength="11">
+                                    placeholder="01234567891" maxLength="11" autocomplete="off">
                             </div>
                         </div>
                         <div class="four fields">
@@ -1164,7 +1164,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
+                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_insurance_applied_date"
                                             id="employment_insurance_applied_date"
                                             value="{{ old('employment_insurance_applied_date') }}">
@@ -1177,7 +1177,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_insured_date"
-                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
+                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_insured_date"
                                             id="employment_insured_date"
                                             value="{{ old('employment_insured_date') }}">
@@ -1190,7 +1190,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_not_insured_date"
-                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}">
+                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_not_insured_date"
                                             id="employment_not_insured_date"
                                             value="{{ old('employment_not_insured_date') }}">
@@ -1218,13 +1218,13 @@
                                 <label for="health_insurance_association_number">健保組合番号</label>
                                 <input type="text" id="health_insurance_association_number" name="health_insurance_association_number"
                                     value="{{ old('health_insurance_association_number', isset($employee_id) ? $employee->health_insurance_association_number : '') }}"
-                                    placeholder="01234567" maxlength='8'>
+                                    placeholder="01234567" maxlength='8' autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'pension_no') }}">
                                 <label for="pension_no">基礎年金番号</label>
                                 <input type="text" id="pension_no" name="pension_no"
                                     value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
-                                    placeholder="0123456789" maxlength='10'>
+                                    placeholder="0123456789" maxlength='10' autocomplete="off">
                             </div>
                         </div>
                         <div class="three fields">
@@ -1251,7 +1251,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="health_insurance_acquisition_date"
-                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}">
+                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="health_insurance_acquisition_date"
                                             id="health_insurance_acquisition_date"
                                             value="{{ old('health_insurance_acquisition_date') }}">
@@ -1265,7 +1265,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="health_insurance_loss_date"
-                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}">
+                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="health_insurance_loss_date"
                                             id="health_insurance_loss_date"
                                             value="{{ old('health_insurance_loss_date') }}">
@@ -1297,7 +1297,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_exception_date"
-                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}">
+                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="overseas_special_exception_date"
                                             id="overseas_special_exception_date"
                                             value="{{ old('overseas_special_exception_date') }}">
@@ -1311,7 +1311,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_not_exception_date"
-                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}">
+                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="overseas_special_not_exception_date"
                                             id="overseas_special_not_exception_date"
                                             value="{{ old('overseas_special_not_exception_date') }}">
@@ -1324,19 +1324,19 @@
                                 <label for="social_insurance_no">社会保険番号</label>
                                 <input type="text" id="social_insurance_no" name="social_insurance_no"
                                     value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
-                                    placeholder="12345678" maxlength='8'>
+                                    placeholder="12345678" maxlength='8' autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'insurer_no') }}">
                                 <label for="insurer_no">被保険者番号（健保）</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="01234567" maxLength="8">
+                                    placeholder="01234567" maxLength="8" autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'insurer_reference_no') }}">
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="012345" maxLength="6">
+                                    placeholder="012345" maxLength="6" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -1363,14 +1363,14 @@
                                 <input type="text" pattern="^[0-9A-Z]{1,12}$" id="residence_card_no"
                                     name="residence_card_no"
                                     value="{{ old('residence_card_no', isset($employee_id) ? $employee->residence_card_no : '') }}"
-                                    placeholder="AB12345678CD" maxLength="12">
+                                    placeholder="AB12345678CD" maxLength="12" autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'residential_status_unknown_reason') }}">
                                 <label>在留資格不明理由</label>
                                 <input type="text" id="residential_status_unknown_reason"
                                     name="residential_status_unknown_reason"
                                     value="{{ old('residential_status_unknown_reason', isset($employee_id) ? $employee->residential_status_unknown_reason : '') }}"
-                                    placeholder="" maxLength="255">
+                                    placeholder="" maxLength="255" autocomplete="off">
                             </div>
                             <div class="field">
                                 <div
@@ -1418,7 +1418,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="stay_date_period"
-                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
+                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}" autocomplete="off">
                                         <input type="hidden" name="formatted_stay_date_period"
                                             id="formatted_stay_date_period"
                                             value="{{ old('stay_date_period') }}">

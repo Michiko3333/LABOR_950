@@ -19,7 +19,7 @@
                 <div class="ui form" style="width: 50%;">
                     <div class="field required">
                         <label for="title_value">タイトル</label>
-                        <input type="text" id="title_value" name="title_value" wire:model="title_value">
+                        <input type="text" id="title_value" name="title_value" wire:model="title_value" autocomplete="off">
                     </div>
                     <div class="field required">
                         <label for="br-start_days_of_week">事業所</label>

@@ -10860,40 +10860,40 @@ div.popup {
        <input class="egov-tool-field-rect onImage" id="N6_P1" name="submission_day" required="required" style="width: 25px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text" readonly />
       </div>
       <div class="egov-tool-field-origin" style="left: 147px; top: 107px;">
-       <input class="egov-tool-field-rect onImage" id="N7_P1" maxlength="2" name="pension_office_reference_prefecture" value="{{ old('pension_office_reference_prefecture') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N7_P1" maxlength="2" name="pension_office_reference_prefecture" value="{{ old('pension_office_reference_prefecture') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 219px; top: 107px;">
-       <input class="egov-tool-field-rect onImage" id="N8_P1" maxlength="4" name="pension_office_reference_no_cities" value="{{ old('pension_office_reference_no_cities') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N8_P1" maxlength="4" name="pension_office_reference_no_cities" value="{{ old('pension_office_reference_no_cities') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 292px; top: 107px;">
-       <input class="egov-tool-field-rect onImage" id="N9_P1" maxlength="4" name="pension_office_reference_no_office" value="{{ old('pension_office_reference_no_office') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N9_P1" maxlength="4" name="pension_office_reference_no_office" value="{{ old('pension_office_reference_no_office') }}" required="required" style="width: 68px; height: 25px; font-size: 12px; text-align: left; line-height: 27px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 156px; top: 136px;">
-       <input class="egov-tool-field-rect onImage" id="N10_P1" maxlength="3" name="headquarters_post_code_former" value="{{ old('headquarters_post_code_former') }}" required="required" style="width: 68px; height: 23px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N10_P1" maxlength="3" name="headquarters_post_code_former" value="{{ old('headquarters_post_code_former') }}" required="required" style="width: 68px; height: 23px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 250px; top: 136px;">
-       <input class="egov-tool-field-rect onImage" id="N11_P1" maxlength="4" name="headquarters_post_code_latter" value="{{ old('headquarters_post_code_latter') }}" required="required" style="width: 68px; height: 23px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N11_P1" maxlength="4" name="headquarters_post_code_latter" value="{{ old('headquarters_post_code_latter') }}" required="required" style="width: 68px; height: 23px; font-size: 12px; text-align: center; line-height: 23px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 160px;">
-       <input class="egov-tool-field-rect onImage" id="N12_P1" maxlength="50" name="headquarters_address" value="{{ old('headquarters_address') }}" required="required" style="width: 358px; height: 54px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 162px;">
+       <input class="egov-tool-field-rect onImage" id="N12_P1" maxlength="50" name="headquarters_address" value="{{ old('headquarters_address') }}" required="required" style="width: 358px; height: 54px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 216px;">
-       <input class="egov-tool-field-rect onImage" id="N13_P1" maxlength="25" name="company_name" value="{{ old('company_name') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 218px;">
+       <input class="egov-tool-field-rect onImage" id="N13_P1" maxlength="25" name="company_name" value="{{ old('company_name') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 250px;">
-       <input class="egov-tool-field-rect onImage" id="N14_P1" maxlength="25" name="headquarters_representative" value="{{ old('headquarters_representative') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 133px; top: 252px;">
+       <input class="egov-tool-field-rect onImage" id="N14_P1" maxlength="25" name="headquarters_representative" value="{{ old('headquarters_representative') }}" required="required" style="width: 358px; height: 32px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
-      <div class="egov-tool-field-origin" style="left: 133px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="5" name="headquarters_tel_area_code" value="{{ old('headquarters_tel_area_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 133px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N16_P1" maxlength="5" name="headquarters_tel_area_code" value="{{ old('headquarters_tel_area_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 236px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N17_P1" maxlength="4" name="headquarters_tel_city_code" value="{{ old('headquarters_tel_city_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 236px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N17_P1" maxlength="4" name="headquarters_tel_city_code" value="{{ old('headquarters_tel_city_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 353px; top: 284px;">
-       <input class="egov-tool-field-rect onImage" id="N18_P1" maxlength="5" name="headquarters_tel_subscriber_code" value="{{ old('headquarters_tel_subscriber_code') }}" required="required" style="width: 86px; height: 22px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 353px; top: 286px;">
+       <input class="egov-tool-field-rect onImage" id="N18_P1" maxlength="5" name="headquarters_tel_subscriber_code" value="{{ old('headquarters_tel_subscriber_code') }}" required="required" style="width: 86px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 503px; top: 253px;">
-       <input class="egov-tool-field-rect onImage" id="N19_P1" maxlength="40" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" style="width: 239px; height: 45px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N19_P1" maxlength="40" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" style="width: 239px; height: 45px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 134px; top: 317px;">
        <input type="checkbox" name="employer_confirmation" value="" checked style="display: none;">
@@ -10902,13 +10902,13 @@ div.popup {
        </label>
       </span>
       <div class="egov-tool-field-origin" style="left: 580px; top: 312px;">
-       <input class="egov-tool-field-rect onImage" id="N22_P1" name="accepted_year" value="{{ old('accepted_year') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N22_P1" name="accepted_year" value="{{ old('accepted_year') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 636px; top: 312px;">
-       <input class="egov-tool-field-rect onImage" id="N23_P1" name="accepted_month" value="{{ old('accepted_month') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N23_P1" name="accepted_month" value="{{ old('accepted_month') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 691px; top: 312px;">
-       <input class="egov-tool-field-rect onImage" id="N24_P1" name="accepted_day" value="{{ old('accepted_day') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N24_P1" name="accepted_day" value="{{ old('accepted_day') }}"  style="width: 27px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 593px; top: 358px;">
        <input id="N25_P1_0" name="application_category" type="radio" value="該当" {{ old('application_category') == '該当' ? 'checked' : '' }}>
@@ -10926,13 +10926,13 @@ div.popup {
        </label>
       </span>
       <div class="egov-tool-field-origin" style="left: 121px; top: 409px;">
-       <input class="egov-tool-field-rect onImage" id="N26_P1" name="insured_reference_number" value="{{ old('insured_reference_number') }}" maxlength="6" style="width: 86px; height: 53px; font-size: 12px; text-align: right; line-height: 57px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N26_P1" name="insured_reference_number" value="{{ old('insured_reference_number') }}" maxlength="6" style="width: 86px; height: 53px; font-size: 12px; text-align: right; line-height: 57px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 320px; top: 408px;">
-       <input class="egov-tool-field-rect onImage" id="N27_P1" maxlength="25" name="name_kana" value="{{ old('name_kana') }}" required="required" style="width: 131px; height: 27px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N27_P1" maxlength="25" name="name_kana" value="{{ old('name_kana') }}" required="required" style="width: 131px; height: 27px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 278px; top: 437px;">
-       <input class="egov-tool-field-rect onImage" id="N28_P1" maxlength="12" name="name" value="{{ old('name') }}" required="required" style="width: 173px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N28_P1" maxlength="12" name="name" value="{{ old('name') }}" required="required" style="width: 173px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 506px; top: 420px;">
        <select class="egov-tool-field-rect" id="N30_P1" name="birthday_era" required="required" style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); font-size:13px; font-family:'ＭＳ 明朝', serif; width:58px; height:30px;">
@@ -10950,13 +10950,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 568px; top: 420px;">
-       <input class="egov-tool-field-rect onImage" id="N31_P1" name="birthday_year" value="{{ old('birthday_year') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N31_P1" name="birthday_year" value="{{ old('birthday_year') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 601px; top: 420px;">
-       <input class="egov-tool-field-rect onImage" id="N32_P1" name="birthday_month" value="{{ old('birthday_month') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N32_P1" name="birthday_month" value="{{ old('birthday_month') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 633px; top: 420px;">
-       <input class="egov-tool-field-rect onImage" id="N33_P1" name="birthday_day" value="{{ old('birthday_day') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N33_P1" name="birthday_day" value="{{ old('birthday_day') }}"  required="required" style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 704px; top: 413px;">
        <input id="N34_P1_0" name="sex" required="required" type="radio" value="男" <?php echo (old('sex') == '男') ? 'checked' : ''; ?>/>
@@ -10969,7 +10969,7 @@ div.popup {
        </label>
       </span>
       <div class="egov-tool-field-origin" style="left: 201px; top: 468px;">
-       <input class="egov-tool-field-rect onImage" id="N35_P1" maxlength="12" name="mynumber_card_no" value="{{ old('mynumber_card_no') }}" style="width: 275px; height: 31px; font-size: 12px; text-align: left; line-height: 33px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N35_P1" maxlength="12" name="mynumber_card_no" value="{{ old('mynumber_card_no') }}" style="width: 275px; height: 31px; font-size: 12px; text-align: left; line-height: 33px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 110px; top: 520px;">
        <select class="egov-tool-field-rect" id="N37_P1" name="acquisition_era" style="width: 58px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
@@ -10987,40 +10987,40 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 172px; top: 520px;">
-       <input class="egov-tool-field-rect onImage" id="N38_P1" name="acquisition_year" value="{{ old('acquisition_year') }}"  style="width: 30px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N38_P1" name="acquisition_year" value="{{ old('acquisition_year') }}"  style="width: 30px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 206px; top: 520px;">
-       <input class="egov-tool-field-rect onImage" id="N39_P1" name="acquisition_month" value="{{ old('acquisition_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N39_P1" name="acquisition_month" value="{{ old('acquisition_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 239px; top: 520px;">
-       <input class="egov-tool-field-rect onImage" id="N40_P1" name="acquisition_day" value="{{ old('acquisition_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N40_P1" name="acquisition_day" value="{{ old('acquisition_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 325px; top: 520px;">
-       <input class="egov-tool-field-rect onImage" id="N41_P1" maxlength="7" name="annual_income" value="{{ old('annual_income') }}" style="width: 85px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N41_P1" maxlength="7" name="annual_income" value="{{ old('annual_income') }}" style="width: 85px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 499px; top: 503px;">
-       <input class="egov-tool-field-rect onImage" id="N42_P1" maxlength="3" name="employee_post_code_former" value="{{ old('employee_post_code_former') }}" style="width: 68px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N42_P1" maxlength="3" name="employee_post_code_former" value="{{ old('employee_post_code_former') }}" style="width: 68px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 591px; top: 503px;">
-       <input class="egov-tool-field-rect onImage" id="N43_P1" maxlength="4" name="employee_post_code_latter" value="{{ old('employee_post_code_latter') }}" style="width: 68px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N43_P1" maxlength="4" name="employee_post_code_latter" value="{{ old('employee_post_code_latter') }}" style="width: 68px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 481px; top: 520px;">
-       <input class="egov-tool-field-rect onImage" id="N44_P1" maxlength="37" name="employee_address" value="{{ old('employee_address') }}" style="width: 264px; height: 30px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N44_P1" maxlength="37" name="employee_address" value="{{ old('employee_address') }}" style="width: 264px; height: 30px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 150px; top: 580px;">
-       <input class="egov-tool-field-rect onImage" id="N46_P1" name="notification_year" value="{{ old('notification_year') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N46_P1" name="notification_year" value="{{ old('notification_year') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 200px; top: 580px;">
-       <input class="egov-tool-field-rect onImage" id="N47_P1" name="notification_month" value="{{ old('notification_month') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N47_P1" name="notification_month" value="{{ old('notification_month') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 254px; top: 580px;">
-       <input class="egov-tool-field-rect onImage" id="N48_P1" name="notification_day" value="{{ old('notification_day') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N48_P1" name="notification_day" value="{{ old('notification_day') }}"  style="width: 28px; height: 18px; font-size: 12px; text-align: center; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 164px; top: 598px;">
-       <input class="egov-tool-field-rect onImage" id="N49_P1" maxlength="25" name="spouse_name_kana" value="{{ old('spouse_name_kana') }}" style="width: 190px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N49_P1" maxlength="25" name="spouse_name_kana" value="{{ old('spouse_name_kana') }}" style="width: 190px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 122px; top: 630px;">
-       <input class="egov-tool-field-rect onImage" id="N50_P1" maxlength="12" name="spouse_name" value="{{ old('spouse_name') }}" style="width: 233px; height: 25px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N50_P1" maxlength="12" name="spouse_name" value="{{ old('spouse_name') }}" style="width: 233px; height: 25px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 329px; top: 664px;">
        <input type="checkbox" name="appointment" value="" checked style="display: none;">
@@ -11044,13 +11044,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 470px; top: 591px;">
-       <input class="egov-tool-field-rect onImage" id="N54_P1" name="spouse_birthday_year" value="{{ old('spouse_birthday_year') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N54_P1" name="spouse_birthday_year" value="{{ old('spouse_birthday_year') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 503px; top: 591px;">
-       <input class="egov-tool-field-rect onImage" id="N55_P1" name="spouse_birthday_month" value="{{ old('spouse_birthday_month') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N55_P1" name="spouse_birthday_month" value="{{ old('spouse_birthday_month') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 535px; top: 591px;">
-       <input class="egov-tool-field-rect onImage" id="N56_P1" name="spouse_birthday_day" value="{{ old('spouse_birthday_day') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N56_P1" name="spouse_birthday_day" value="{{ old('spouse_birthday_day') }}"  style="width: 29px; height: 27px; font-size: 12px; text-align: center; line-height: 29px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 612px; top: 580px;">
        <select class="egov-tool-field-rect" id="N57_P1" name="spouse_sex" style="width: 133px; height: 38px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
@@ -11071,16 +11071,16 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 488px; top: 622px;">
-       <input class="egov-tool-field-rect onImage" id="N58_P1" maxlength="12" name="spouse_mynumber_card_no" value="{{ old('spouse_mynumber_card_no') }}" style="width: 257px; height: 25px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N58_P1" maxlength="12" name="spouse_mynumber_card_no" value="{{ old('spouse_mynumber_card_no') }}" style="width: 257px; height: 25px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 415px; top: 651px;">
-       <input class="egov-tool-field-rect onImage" id="N59_P1" maxlength="10" name="spouse_country" value="{{ old('spouse_country') }}" style="width: 84px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N59_P1" maxlength="10" name="spouse_country" value="{{ old('spouse_country') }}" style="width: 84px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 604px; top: 651px;">
-       <input class="egov-tool-field-rect onImage" id="N60_P1" maxlength="25" name="spouse_alias_name_kana" value="{{ old('spouse_alias_name_kana') }}" style="width: 142px; height: 18px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N60_P1" maxlength="25" name="spouse_alias_name_kana" value="{{ old('spouse_alias_name_kana') }}" style="width: 142px; height: 18px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 560px; top: 673px;">
-       <input class="egov-tool-field-rect onImage" id="N61_P1" maxlength="12" name="spouse_alias_name" value="{{ old('spouse_alias_name') }}" style="width: 186px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N61_P1" maxlength="12" name="spouse_alias_name" value="{{ old('spouse_alias_name') }}" style="width: 186px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 122px; top: 695px;">
        <select class="egov-tool-field-rect" id="N62_P1" name="spouse_living_type" style="width: 62px; height: 40px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11095,13 +11095,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 205px; top: 696px;">
-       <input class="egov-tool-field-rect onImage" id="N63_P1" maxlength="3" name="spouse_post_code_former" value="{{ old('spouse_post_code_former') }}" style="width: 60px; height: 14px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N63_P1" maxlength="3" name="spouse_post_code_former" value="{{ old('spouse_post_code_former') }}" style="width: 60px; height: 14px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 290px; top: 696px;">
-       <input class="egov-tool-field-rect onImage" id="N64_P1" maxlength="4" name="spouse_post_code_latter" value="{{ old('spouse_post_code_latter') }}" style="width: 80px; height: 14px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N64_P1" maxlength="4" name="spouse_post_code_latter" value="{{ old('spouse_post_code_latter') }}" style="width: 80px; height: 14px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 187px; top: 711px;">
-       <input class="egov-tool-field-rect onImage" id="N65_P1" maxlength="37" name="spouse_address" value="{{ old('spouse_address') }}" style="width: 265px; height: 24px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N65_P1" maxlength="37" name="spouse_address" value="{{ old('spouse_address') }}" style="width: 265px; height: 24px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 505px; top: 695px;">
        <select class="egov-tool-field-rect" id="N66_P1" name="spouse_tel_type" style="width: 241px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;">
@@ -11122,13 +11122,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 505px; top: 715px;">
-       <input class="egov-tool-field-rect onImage" id="N68_P1" maxlength="5" name="spouse_tel_area_code" value="{{ old('spouse_tel_area_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N68_P1" maxlength="5" name="spouse_tel_area_code" value="{{ old('spouse_tel_area_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 586px; top: 715px;">
-       <input class="egov-tool-field-rect onImage" id="N69_P1" maxlength="4" name="spouse_tel_city_code" value="{{ old('spouse_tel_city_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N69_P1" maxlength="4" name="spouse_tel_city_code" value="{{ old('spouse_tel_city_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 671px; top: 715px;">
-       <input class="egov-tool-field-rect onImage" id="N70_P1" maxlength="5" name="spouse_tel_subscriber_code" value="{{ old('spouse_tel_subscriber_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N70_P1" maxlength="5" name="spouse_tel_subscriber_code" value="{{ old('spouse_tel_subscriber_code') }}" style="width: 74px; height: 19px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 129px; top: 769px;">
        <select class="egov-tool-field-rect" id="N73_P1" name="spouse_become_date_era" style="width: 64px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
@@ -11142,14 +11142,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 197px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N74_P1" name="spouse_become_date_year" value="{{ old('spouse_become_date_year') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 209px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N74_P1" name="spouse_become_date_year" value="{{ old('spouse_become_date_year') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 222px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N75_P1" name="spouse_become_date_month" value="{{ old('spouse_become_date_month') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 242px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N75_P1" name="spouse_become_date_month" value="{{ old('spouse_become_date_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 248px; top: 769px;">
-       <input class="egov-tool-field-rect onImage" id="N76_P1" name="spouse_become_date_day" value="{{ old('spouse_become_date_day') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 274px; top: 787px;">
+       <input class="egov-tool-field-rect onImage" id="N76_P1" name="spouse_become_date_day" value="{{ old('spouse_become_date_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 347px; top: 737px;">
         <select class="egov-tool-field-rect" id="N199_P1" name="spouse_reason_type_2" value="{{ old('spouse_reason_type_2') }}" style="width: 203px; height: 45px; font-size: 12px; text-align: left; line-height: 45px; padding: inherit;">
@@ -11187,14 +11187,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 197px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N79_P1" name="spouse_remove_date_year" value="{{ old('spouse_remove_date_year') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 209px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N79_P1" name="spouse_remove_date_year" value="{{ old('spouse_remove_date_year') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 222px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N80_P1" name="spouse_remove_date_month" value="{{ old('spouse_remove_date_month') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 242px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N80_P1" name="spouse_remove_date_month" value="{{ old('spouse_remove_date_month') }}"  style="width: 29px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 248px; top: 835px;">
-       <input class="egov-tool-field-rect onImage" id="N81_P1" name="spouse_remove_date_day" value="{{ old('spouse_remove_date_day') }}"  style="width: 23px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 274px; top: 855px;">
+       <input class="egov-tool-field-rect onImage" id="N81_P1" name="spouse_remove_date_day" value="{{ old('spouse_remove_date_day') }}"  style="width: 28px; height: 30px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 347px; top: 804px;">
        <select class="egov-tool-field-rect" id="N82_P1" name="spouse_reason_type" value="{{ old('spouse_reason_type') }}" style="width: 203px; height: 26px; font-size: 12px; text-align: left; line-height: 56px; padding: inherit;">
@@ -11220,17 +11220,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 437px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N84_P1" name="spouse_passed_away_date_year" value="{{ old('spouse_passed_away_date_year') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 401px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N84_P1" name="spouse_passed_away_date_year" value="{{ old('spouse_passed_away_date_year') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 473px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N85_P1" name="spouse_passed_away_date_month" value="{{ old('spouse_passed_away_date_month') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 439px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N85_P1" name="spouse_passed_away_date_month" value="{{ old('spouse_passed_away_date_month') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 510px; top: 831px;">
-       <input class="egov-tool-field-rect onImage" id="N86_P1" name="spouse_passed_away_date_day" value="{{ old('spouse_passed_away_date_day') }}"  style="width: 24px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 477px; top: 842px;">
+       <input class="egov-tool-field-rect onImage" id="N86_P1" name="spouse_passed_away_date_day" value="{{ old('spouse_passed_away_date_day') }}"  style="width: 23px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 414px; top: 850.5px;">
-       <input class="egov-tool-field-rect onImage" id="N87_P1" maxlength="9" name="spouse_reason" value="{{ old('spouse_reason') }}" style="width: 130px; height: 15px; font-size: 11px; text-align: left; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 377px; top: 877px;">
+       <input class="egov-tool-field-rect onImage" id="N87_P1" maxlength="9" name="spouse_reason" value="{{ old('spouse_reason') }}" style="width: 130px; height: 21px; font-size: 12px; text-align: left; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 590px; top: 737px;">
        <select class="egov-tool-field-rect" id="N88_P1" name="spouse_occupation_type" value="{{ old('spouse_occupation_type') }}" style="width: 155px; height: 36px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
@@ -11250,11 +11250,11 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 599px; top: 790px;">
-       <input class="egov-tool-field-rect onImage" id="N89_P1" maxlength="11" name="spouse_occupation" value="{{ old('spouse_occupation') }}" style="width: 141px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 595px; top: 827px;">
+       <input class="egov-tool-field-rect onImage" id="N89_P1" maxlength="11" name="spouse_occupation" value="{{ old('spouse_occupation') }}" style="width: 142px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 590px; top: 825px;">
-       <input class="egov-tool-field-rect onImage" id="N90_P1" maxlength="7" name="dependent_annual_income" value="{{ old('dependent_annual_income') }}" style="width: 135px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 575px; top: 870px;">
+       <input class="egov-tool-field-rect onImage" id="N90_P1" maxlength="7" name="dependent_annual_income" value="{{ old('dependent_annual_income') }}" style="width: 150px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 129px; top: 905px;">
        <select class="egov-tool-field-rect" id="N91_P1" name="spouse_special_requirements_applicable_flg"style="width: 79px; height: 35px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
@@ -11275,14 +11275,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 386px; top: 881px;">
-       <input class="egov-tool-field-rect onImage" id="N94_P1" name="spouse_special_requirements_applicable_date_year" value="{{ old('spouse_special_requirements_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 386px; top: 918px;">
+       <input class="egov-tool-field-rect onImage" id="N94_P1" name="spouse_special_requirements_applicable_date_year" value="{{ old('spouse_special_requirements_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 420px; top: 881px;">
-       <input class="egov-tool-field-rect onImage" id="N95_P1" name="spouse_special_requirements_applicable_date_month" value="{{ old('spouse_special_requirements_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 420px; top: 918px;">
+       <input class="egov-tool-field-rect onImage" id="N95_P1" name="spouse_special_requirements_applicable_date_month" value="{{ old('spouse_special_requirements_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 452px; top: 881px;">
-       <input class="egov-tool-field-rect onImage" id="N96_P1" name="spouse_special_requirements_applicable_date_day" value="{{ old('spouse_special_requirements_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 453px; top: 918px;">
+       <input class="egov-tool-field-rect onImage" id="N96_P1" name="spouse_special_requirements_applicable_date_day" value="{{ old('spouse_special_requirements_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 520px; top: 869px;">
        <select class="egov-tool-field-rect" id="N97_P1" name="spouse_special_requirements_applicable_reason_type" style="width: 226px; height: 30px; font-size: 12px; text-align: left; line-height: 32px; padding: inherit;">
@@ -11305,8 +11305,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 605px; top: 900px;">
-       <input class="egov-tool-field-rect onImage" id="N98_P1" maxlength="11" name="spouse_special_requirements_applicable_reason" value="{{ old('spouse_special_requirements_applicable_reason') }}" style="width: 131px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 604px; top: 938px;">
+       <input class="egov-tool-field-rect onImage" id="N98_P1" maxlength="11" name="spouse_special_requirements_applicable_reason" value="{{ old('spouse_special_requirements_applicable_reason') }}" style="width: 133px; height: 14px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 321px; top: 931px;">
        <select class="egov-tool-field-rect" id="N100_P1" name="spouse_special_requirements_non_applicable_date_era" style="width: 62px; height: 35px; font-size: 12px; text-align: left; line-height: 35px; padding: inherit;">
@@ -11315,14 +11315,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 386px; top: 931px;">
-       <input class="egov-tool-field-rect onImage" id="N101_P1" name="spouse_special_requirements_non_applicable_date_year" value="{{ old('spouse_special_requirements_non_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 386px; top: 968px;">
+       <input class="egov-tool-field-rect onImage" id="N101_P1" name="spouse_special_requirements_non_applicable_date_year" value="{{ old('spouse_special_requirements_non_applicable_date_year') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 420px; top: 931px;">
-       <input class="egov-tool-field-rect onImage" id="N102_P1" name="spouse_special_requirements_non_applicable_date_month" value="{{ old('spouse_special_requirements_non_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 420px; top: 968px;">
+       <input class="egov-tool-field-rect onImage" id="N102_P1" name="spouse_special_requirements_non_applicable_date_month" value="{{ old('spouse_special_requirements_non_applicable_date_month') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 452px; top: 931px;">
-       <input class="egov-tool-field-rect onImage" id="N103_P1" name="spouse_special_requirements_non_applicable_date_day" value="{{ old('spouse_special_requirements_non_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 453px; top: 968px;">
+       <input class="egov-tool-field-rect onImage" id="N103_P1" name="spouse_special_requirements_non_applicable_date_day" value="{{ old('spouse_special_requirements_non_applicable_date_day') }}"  style="width: 29px; height: 35px; font-size: 12px; text-align: center; line-height: 35px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 520px; top: 920px;">
        <select class="egov-tool-field-rect" id="N104_P1" name="spouse_special_requirements_non_applicable_reason_type" style="width: 226px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;">
@@ -11336,20 +11336,20 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 623px; top: 937px;">
-       <input class="egov-tool-field-rect onImage" id="N106_P1" name="spouse_domestic_transfer_date_year" value="{{ old('spouse_domestic_transfer_date_year') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 625px; top: 975px;">
+       <input class="egov-tool-field-rect onImage" id="N106_P1" name="spouse_domestic_transfer_date_year" value="{{ old('spouse_domestic_transfer_date_year') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 660px; top: 937px;">
-       <input class="egov-tool-field-rect onImage" id="N107_P1" name="spouse_domestic_transfer_date_month" value="{{ old('spouse_domestic_transfer_date_month') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 660px; top: 975px;">
+       <input class="egov-tool-field-rect onImage" id="N107_P1" name="spouse_domestic_transfer_date_month" value="{{ old('spouse_domestic_transfer_date_month') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 699px; top: 937px;">
-       <input class="egov-tool-field-rect onImage" id="N108_P1" name="spouse_domestic_transfer_date_day" value="{{ old('spouse_domestic_transfer_date_day') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 700px; top: 975px;">
+       <input class="egov-tool-field-rect onImage" id="N108_P1" name="spouse_domestic_transfer_date_day" value="{{ old('spouse_domestic_transfer_date_day') }}"  style="width: 22px; height: 13px; font-size: 12px; text-align: center; line-height: 13px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 598px; top: 951px;">
-       <input class="egov-tool-field-rect onImage" id="N109_P1" maxlength="11" name="spouse_special_requirements_non_applicable_reason" value="{{ old('spouse_special_requirements_non_applicable_reason') }}" style="width: 132px; height: 15px; font-size: 12px; text-align: left; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 598px; top: 988px;">
+       <input class="egov-tool-field-rect onImage" id="N109_P1" maxlength="11" name="spouse_special_requirements_non_applicable_reason" value="{{ old('spouse_special_requirements_non_applicable_reason') }}" style="width: 132px; height: 14px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 162px; top: 971px;">
-       <input class="egov-tool-field-rect onImage" id="N110_P1" maxlength="39" name="spouse_remarks" value="{{ old('spouse_remarks') }}" style="width: 308px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 162px; top: 1007px;">
+       <input class="egov-tool-field-rect onImage" id="N110_P1" maxlength="39" name="spouse_remarks" value="{{ old('spouse_remarks') }}" style="width: 308px; height: 28px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;left: 548px; top: 984px;">
        <input type="checkbox" name="spouse_confirmation_relationship_0" value="" checked style="display: none;">
@@ -11357,8 +11357,8 @@ div.popup {
        <label class="egovuiForm-label" for="N111_P1_0" style="font-size: 12px;">
        </label>
       </span>
-      <div class="egov-tool-field-origin" style="left: 354px; top: 1002px;">
-       <input class="egov-tool-field-rect onImage" id="N113_P1" maxlength="7" name="spouse_annual_income" value="{{ old('spouse_annual_income') }}" style="width: 152px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 368px; top: 1043px;">
+       <input class="egov-tool-field-rect onImage" id="N113_P1" maxlength="7" name="spouse_annual_income" value="{{ old('spouse_annual_income') }}" style="width: 181px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 622px; top: 1002px;">
         <select class="egov-tool-field-rect" id="N204_P1" name="eligibility_confirmation_letter_1" style="width: 123px; height: 26px; font-size: 11px; text-align: left; line-height: 41px; padding: inherit;">
@@ -11370,10 +11370,10 @@ div.popup {
         </select>
     </div>
       <div class="egov-tool-field-origin" style="left: 165px; top: 1166px;">
-       <input class="egov-tool-field-rect onImage" id="N117_P2" maxlength="25" name="other_dependent1_name_kana" value="{{ old('other_dependent1_name_kana') }}" style="width: 189px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N117_P2" maxlength="25" name="other_dependent1_name_kana" value="{{ old('other_dependent1_name_kana') }}" style="width: 189px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 121px; top: 1214px;">
-       <input class="egov-tool-field-rect onImage" id="N118_P2" maxlength="12" name="other_dependent1_name" value="{{ old('other_dependent1_name') }}" style="width: 233px; height: 46px; font-size: 12px; text-align: left; line-height: 50px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N118_P2" maxlength="12" name="other_dependent1_name" value="{{ old('other_dependent1_name') }}" style="width: 233px; height: 46px; font-size: 12px; text-align: left; line-height: 50px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 408px; top: 1178px;">
        <select class="egov-tool-field-rect" id="N120_P2" name="other_dependent1_birthday_era" style="width: 58px; height: 21px; font-size: 12px; text-align: left; line-height: 21px; padding: inherit;">
@@ -11391,13 +11391,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 470px; top: 1178px;">
-       <input class="egov-tool-field-rect onImage" id="N121_P2" name="other_dependent1_birthday_year" value="{{ old('other_dependent1_birthday_year') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N121_P2" name="other_dependent1_birthday_year" value="{{ old('other_dependent1_birthday_year') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 503px; top: 1178px;">
-       <input class="egov-tool-field-rect onImage" id="N122_P2" name="other_dependent1_birthday_month" value="{{ old('other_dependent1_birthday_month') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N122_P2" name="other_dependent1_birthday_month" value="{{ old('other_dependent1_birthday_month') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 535px; top: 1178px;">
-       <input class="egov-tool-field-rect onImage" id="N123_P2" name="other_dependent1_birthday_day" value="{{ old('other_dependent1_birthday_day') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N123_P2" name="other_dependent1_birthday_day" value="{{ old('other_dependent1_birthday_day') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 611px; top: 1166px;">
        <select class="egov-tool-field-rect" id="N124_P2" name="other_dependent1_sex"style="width: 135px; height: 34px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;">
@@ -11448,7 +11448,7 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 187px; top: 1265px;">
-       <input class="egov-tool-field-rect onImage" id="N126_P2" maxlength="12" name="other_dependent1_mynumber_card_no" value="{{ old('other_dependent1_mynumber_card_no') }}" style="width: 557px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N126_P2" maxlength="12" name="other_dependent1_mynumber_card_no" value="{{ old('other_dependent1_mynumber_card_no') }}" style="width: 557px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 111px; top: 1300px;">
        <select class="egov-tool-field-rect" id="N127_P2" name="other_dependent1_living_type" style="width: 58px; height: 41px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11463,13 +11463,13 @@ div.popup {
        </select>
       </div>
       <div class="egov-tool-field-origin" style="left: 195px; top: 1300px;">
-       <input class="egov-tool-field-rect onImage" id="N128_P2" maxlength="3" name="other_dependent1_post_code_former" value="{{ old('other_dependent1_post_code_former') }}" style="width: 62px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N128_P2" maxlength="3" name="other_dependent1_post_code_former" value="{{ old('other_dependent1_post_code_former') }}" style="width: 62px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 285px; top: 1300px;">
-       <input class="egov-tool-field-rect onImage" id="N129_P2" maxlength="4" name="other_dependent1_post_code_latter" value="{{ old('other_dependent1_post_code_latter') }}" style="width: 78px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text"/>
+       <input class="egov-tool-field-rect onImage" id="N129_P2" maxlength="4" name="other_dependent1_post_code_latter" value="{{ old('other_dependent1_post_code_latter') }}" style="width: 78px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 172px; top: 1318px;">
-       <input class="egov-tool-field-rect onImage" id="N130_P2" maxlength="37" name="other_dependent1_address" value="{{ old('other_dependent1_address') }}" style="width: 574px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+       <input class="egov-tool-field-rect onImage" id="N130_P2" maxlength="37" name="other_dependent1_address" value="{{ old('other_dependent1_address') }}" style="width: 574px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 144px; top: 1357px;">
        <select class="egov-tool-field-rect" id="N132_P2" name="other_dependent1_become_date_era" style="width: 63px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11483,14 +11483,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N133_P2" name="other_dependent1_become_date_year" value="{{ old('other_dependent1_become_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N133_P2" name="other_dependent1_become_date_year" value="{{ old('other_dependent1_become_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N134_P2" name="other_dependent1_become_date_month" value="{{ old('other_dependent1_become_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N134_P2" name="other_dependent1_become_date_month" value="{{ old('other_dependent1_become_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-    <div class="egov-tool-field-origin" style="left: 263px; top: 1357px;">
-       <input class="egov-tool-field-rect onImage" id="N135_P2" name="other_dependent1_become_date_day" value="{{ old('other_dependent1_become_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1371px;">
+       <input class="egov-tool-field-rect onImage" id="N135_P2" name="other_dependent1_become_date_day" value="{{ old('other_dependent1_become_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 560px; top: 1344px;">
        <select class="egov-tool-field-rect" id="N136_P2" name="other_dependent1_occupation_type" style="width: 185px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;">
@@ -11517,14 +11517,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 667px; top: 1363px;">
-       <input class="egov-tool-field-rect onImage" id="N137_P2" maxlength="1" name="other_dependent1_occupation_type_grade" value="{{ old('other_dependent1_occupation_type_grade') }}" style="width: 39px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 657px; top: 1344px;">
+       <input class="egov-tool-field-rect onImage" id="N137_P2" maxlength="1" name="other_dependent1_occupation_type_grade" value="{{ old('other_dependent1_occupation_type_grade') }}" style="width: 40px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 612px; top: 1392px;">
-       <input class="egov-tool-field-rect onImage" id="N138_P2" maxlength="10" name="other_dependent1_occupation" value="{{ old('other_dependent1_occupation') }}" style="width: 128px; height: 14px; font-size: 12px; text-align: left; line-height: 14px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 600px; top: 1362px;">
+       <input class="egov-tool-field-rect onImage" id="N138_P2" maxlength="10" name="other_dependent1_occupation" value="{{ old('other_dependent1_occupation') }}" style="width: 133px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 561px; top: 1418px;">
-       <input class="egov-tool-field-rect onImage" id="N139_P2" maxlength="7" name="other_dependent1_annual_income" value="{{ old('other_dependent1_annual_income') }}" style="width: 168px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1382px;">
+       <input class="egov-tool-field-rect onImage" id="N139_P2" maxlength="7" name="other_dependent1_annual_income" value="{{ old('other_dependent1_annual_income') }}" style="width: 168px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 144px; top: 1414px;">
        <select class="egov-tool-field-rect" id="N141_P2" name="other_dependent1_remove_date_era" style="width: 63px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11538,14 +11538,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N142_P2" name="other_dependent1_remove_date_year" value="{{ old('other_dependent1_remove_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N142_P2" name="other_dependent1_remove_date_year" value="{{ old('other_dependent1_remove_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N143_P2" name="other_dependent1_remove_date_month" value="{{ old('other_dependent1_remove_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N143_P2" name="other_dependent1_remove_date_month" value="{{ old('other_dependent1_remove_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1414px;">
-       <input class="egov-tool-field-rect onImage" id="N144_P2" name="other_dependent1_remove_date_day" value="{{ old('other_dependent1_remove_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1441px;">
+       <input class="egov-tool-field-rect onImage" id="N144_P2" name="other_dependent1_remove_date_day" value="{{ old('other_dependent1_remove_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 365px; top: 1402px;">
         <select class="egov-tool-field-rect" id="N201_P2" name="other_dependent1_reason_type_2" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
@@ -11595,11 +11595,11 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 372px; top: 1380px;">
-       <input class="egov-tool-field-rect onImage" id="N146_P2" maxlength="9" name="other_dependent1_reason" value="{{ old('other_dependent1_reason') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 421px; top: 1478px;">
+       <input class="egov-tool-field-rect onImage" id="N146_P2" maxlength="9" name="other_dependent1_reason" value="{{ old('other_dependent1_reason') }}" style="width: 128px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 110px; top: 1460px;">
-       <input class="egov-tool-field-rect onImage" id="N147_P2" maxlength="39" name="other_dependent1_remarks" value="{{ old('other_dependent1_remarks') }}" style="width: 284px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 619px; top: 1380px;">
+       <input class="egov-tool-field-rect onImage" id="N147_P2" maxlength="39" name="other_dependent1_remarks" value="{{ old('other_dependent1_remarks') }}" style="width: 126px; height: 101px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 483px; top: 1481px;">
        <input type="checkbox" name="other_dependent1_confirmation_relationship_0" value="" checked style="display: none;">
@@ -11649,8 +11649,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 527px; top: 1532px;">
-       <input class="egov-tool-field-rect onImage" id="N151_P2" maxlength="11" name="other_dependent1_special_requirements_applicable_reason" value="{{ old('other_dependent1_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 528px; top: 1537px;">
+       <input class="egov-tool-field-rect onImage" id="N151_P2" maxlength="11" name="other_dependent1_special_requirements_applicable_reason" value="{{ old('other_dependent1_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 400px; top: 1554px;">
        <select class="egov-tool-field-rect" id="N152_P2" name="other_dependent1_special_requirements_non_applicable_reason_type" style="width: 117px; height: 48px; font-size: 12px; text-align: left; line-height: 48px; padding: inherit;">
@@ -11664,23 +11664,23 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 1554px;">
-       <input class="egov-tool-field-rect onImage" id="N154_P2" name="other_dependent1_domestic_transfer_date_year" value="{{ old('other_dependent1_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 614px; top: 1558px;">
+       <input class="egov-tool-field-rect onImage" id="N154_P2" name="other_dependent1_domestic_transfer_date_year" value="{{ old('other_dependent1_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 652px; top: 1554px;">
-       <input class="egov-tool-field-rect onImage" id="N155_P2" name="other_dependent1_domestic_transfer_date_month" value="{{ old('other_dependent1_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 652px; top: 1558px;">
+       <input class="egov-tool-field-rect onImage" id="N155_P2" name="other_dependent1_domestic_transfer_date_month" value="{{ old('other_dependent1_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 692px; top: 1554px;">
-       <input class="egov-tool-field-rect onImage" id="N156_P2" name="other_dependent1_domestic_transfer_date_day" value="{{ old('other_dependent1_domestic_transfer_date_day') }}"  style="width: 24px; height: 22px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 692px; top: 1558px;">
+       <input class="egov-tool-field-rect onImage" id="N156_P2" name="other_dependent1_domestic_transfer_date_day" value="{{ old('other_dependent1_domestic_transfer_date_day') }}"  style="width: 24px; height: 22px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 581px; top: 1583px;">
-       <input class="egov-tool-field-rect onImage" id="N157_P2" maxlength="11" name="other_dependent1_special_requirements_non_applicable_reason" value="{{ old('other_dependent1_special_requirements_non_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 580px; top: 1592px;">
+       <input class="egov-tool-field-rect onImage" id="N157_P2" maxlength="11" name="other_dependent1_special_requirements_non_applicable_reason" value="{{ old('other_dependent1_special_requirements_non_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 164px; top: 1634px;">
-       <input class="egov-tool-field-rect onImage" id="N158_P2" maxlength="25" name="other_dependent2_name_kana" value="{{ old('other_dependent2_name_kana') }}" style="width: 190px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 165px; top: 1645px;">
+       <input class="egov-tool-field-rect onImage" id="N158_P2" maxlength="25" name="other_dependent2_name_kana" value="{{ old('other_dependent2_name_kana') }}" style="width: 190px; height: 43px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
-      <div class="egov-tool-field-origin" style="left: 122px; top: 1680px;">
-       <input class="egov-tool-field-rect onImage" id="N159_P2" maxlength="12" name="other_dependent2_name" value="{{ old('other_dependent2_name') }}" style="width: 231px; height: 47px; font-size: 12px; text-align: left; line-height: 50px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 121px; top: 1693px;">
+       <input class="egov-tool-field-rect onImage" id="N159_P2" maxlength="12" name="other_dependent2_name" value="{{ old('other_dependent2_name') }}" style="width: 231px; height: 47px; font-size: 12px; text-align: left; line-height: 50px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 408px; top: 1646px;">
        <select class="egov-tool-field-rect" id="N161_P2" name="other_dependent2_birthday_era" style="width: 59px; height: 21px; font-size: 12px; text-align: left; line-height: 21px; padding: inherit;">
@@ -11697,14 +11697,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 470px; top: 1646px;">
-       <input class="egov-tool-field-rect onImage" id="N162_P2" name="other_dependent2_birthday_year" value="{{ old('other_dependent2_birthday_year') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 470px; top: 1657px;">
+       <input class="egov-tool-field-rect onImage" id="N162_P2" name="other_dependent2_birthday_year" value="{{ old('other_dependent2_birthday_year') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 503px; top: 1646px;">
-       <input class="egov-tool-field-rect onImage" id="N163_P2" name="other_dependent2_birthday_month" value="{{ old('other_dependent2_birthday_month') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 503px; top: 1657px;">
+       <input class="egov-tool-field-rect onImage" id="N163_P2" name="other_dependent2_birthday_month" value="{{ old('other_dependent2_birthday_month') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 535px; top: 1646px;">
-       <input class="egov-tool-field-rect onImage" id="N164_P2" name="other_dependent2_birthday_day" value="{{ old('other_dependent2_birthday_day') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 535px; top: 1657px;">
+       <input class="egov-tool-field-rect onImage" id="N164_P2" name="other_dependent2_birthday_day" value="{{ old('other_dependent2_birthday_day') }}"  style="width: 29px; height: 21px; font-size: 12px; text-align: center; line-height: 21px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 611px; top: 1634px;">
        <select class="egov-tool-field-rect" id="N165_P2" name="other_dependent2_sex" style="width: 135px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;">
@@ -11754,8 +11754,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 187px; top: 1732px;">
-       <input class="egov-tool-field-rect onImage" id="N167_P2" maxlength="12" name="other_dependent2_mynumber_card_no" value="{{ old('other_dependent2_mynumber_card_no') }}" style="width: 559px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 187px; top: 1743px;">
+       <input class="egov-tool-field-rect onImage" id="N167_P2" maxlength="12" name="other_dependent2_mynumber_card_no" value="{{ old('other_dependent2_mynumber_card_no') }}" style="width: 559px; height: 32px; font-size: 12px; text-align: left; line-height: 34px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 110px; top: 1769px;">
        <select class="egov-tool-field-rect" id="N168_P2" name="other_dependent2_living_type" style="width: 59px; height: 38px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11769,14 +11769,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 195px; top: 1769px;">
-       <input class="egov-tool-field-rect onImage" id="N169_P2" maxlength="3" name="other_dependent2_post_code_former" value="{{ old('other_dependent2_post_code_former') }}" style="width: 62px; height: 15px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 195px; top: 1780px;">
+       <input class="egov-tool-field-rect onImage" id="N169_P2" maxlength="3" name="other_dependent2_post_code_former" value="{{ old('other_dependent2_post_code_former') }}" style="width: 62px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 285px; top: 1769px;">
-       <input class="egov-tool-field-rect onImage" id="N170_P2" maxlength="4" name="other_dependent2_post_code_latter" value="{{ old('other_dependent2_post_code_latter') }}" style="width: 78px; height: 15px; font-size: 12px; text-align: center; line-height: 15px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 285px; top: 1780px;">
+       <input class="egov-tool-field-rect onImage" id="N170_P2" maxlength="4" name="other_dependent2_post_code_latter" value="{{ old('other_dependent2_post_code_latter') }}" style="width: 78px; height: 16px; font-size: 12px; text-align: center; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 172px; top: 1784px;">
-       <input class="egov-tool-field-rect onImage" id="N171_P2" maxlength="37" name="other_dependent2_address" value="{{ old('other_dependent2_address') }}" style="width: 573px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 172px; top: 1795px;">
+       <input class="egov-tool-field-rect onImage" id="N171_P2" maxlength="37" name="other_dependent2_address" value="{{ old('other_dependent2_address') }}" style="width: 573px; height: 23px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <div class="egov-tool-field-origin" style="left: 143px; top: 1824px;">
        <select class="egov-tool-field-rect" id="N173_P2" name="other_dependent2_become_date_era" style="width: 65px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11790,14 +11790,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N174_P2" name="other_dependent2_become_date_year" value="{{ old('other_dependent2_become_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N174_P2" name="other_dependent2_become_date_year" value="{{ old('other_dependent2_become_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N175_P2" name="other_dependent2_become_date_month" value="{{ old('other_dependent2_become_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N175_P2" name="other_dependent2_become_date_month" value="{{ old('other_dependent2_become_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1824px;">
-       <input class="egov-tool-field-rect onImage" id="N176_P2" name="other_dependent2_become_date_day" value="{{ old('other_dependent2_become_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N176_P2" name="other_dependent2_become_date_day" value="{{ old('other_dependent2_become_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 560px; top: 1811px;">
        <select class="egov-tool-field-rect" id="N177_P2" name="other_dependent2_occupation_type" style="width: 185px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;">
@@ -11824,14 +11824,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 668px; top: 1831px;">
-       <input class="egov-tool-field-rect onImage" id="N178_P2" maxlength="1" name="other_dependent2_occupation_type_grade" value="{{ old('other_dependent2_occupation_type_grade') }}" style="width: 40px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 657px; top: 1823px;">
+       <input class="egov-tool-field-rect onImage" id="N178_P2" maxlength="1" name="other_dependent2_occupation_type_grade" value="{{ old('other_dependent2_occupation_type_grade') }}" style="width: 40px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 1860px;">
-       <input class="egov-tool-field-rect onImage" id="N179_P2" maxlength="10" name="other_dependent2_occupation" value="{{ old('other_dependent2_occupation') }}" style="width: 128px; height: 14px; font-size: 12px; text-align: left; line-height: 14px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 600px; top: 1840px;">
+       <input class="egov-tool-field-rect onImage" id="N179_P2" maxlength="10" name="other_dependent2_occupation" value="{{ old('other_dependent2_occupation') }}" style="width: 133px; height: 16px; font-size: 12px; text-align: left; line-height: 16px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 560px; top: 1886px;">
-       <input class="egov-tool-field-rect onImage" id="N180_P2" maxlength="7" name="other_dependent2_annual_income" value="{{ old('other_dependent2_annual_income') }}" style="width: 168px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 379px; top: 1860px;">
+       <input class="egov-tool-field-rect onImage" id="N180_P2" maxlength="7" name="other_dependent2_annual_income" value="{{ old('other_dependent2_annual_income') }}" style="width: 161px; height: 30px; font-size: 12px; text-align: right; line-height: 30px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 143px; top: 1882px;">
        <select class="egov-tool-field-rect" id="N182_P2" name="other_dependent2_remove_date_era" style="width: 65px; height: 42px; font-size: 12px; text-align: left; line-height: 42px; padding: inherit;">
@@ -11845,14 +11845,14 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 212px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N183_P2" name="other_dependent2_remove_date_year" value="{{ old('other_dependent2_remove_date_year') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 227px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N183_P2" name="other_dependent2_remove_date_year" value="{{ old('other_dependent2_remove_date_year') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 237px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N184_P2" name="other_dependent2_remove_date_month" value="{{ old('other_dependent2_remove_date_month') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 260px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N184_P2" name="other_dependent2_remove_date_month" value="{{ old('other_dependent2_remove_date_month') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 263px; top: 1882px;">
-       <input class="egov-tool-field-rect onImage" id="N185_P2" name="other_dependent2_remove_date_day" value="{{ old('other_dependent2_remove_date_day') }}"  style="width: 23px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 293px; top: 1910px;">
+       <input class="egov-tool-field-rect onImage" id="N185_P2" name="other_dependent2_remove_date_day" value="{{ old('other_dependent2_remove_date_day') }}"  style="width: 29px; height: 42px; font-size: 12px; text-align: center; line-height: 42px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 365px; top: 1870px;">
         <select class="egov-tool-field-rect" id="N186_P2" name="other_dependent2_reason_type_2" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 23px; padding: inherit;">
@@ -11902,11 +11902,11 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 372px; top: 1848px;">
-       <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason" value="{{ old('other_dependent2_reason') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 421px; top: 1953px;">
+       <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason" value="{{ old('other_dependent2_reason') }}" style="width: 127px; height: 20px; font-size: 12px; text-align: left; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 110px; top: 1927px;">
-       <input class="egov-tool-field-rect onImage" id="N188_P2" maxlength="39" name="other_dependent2_remarks" value="{{ old('other_dependent2_remarks') }}" style="width: 284px; height: 41px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;">
+      <div class="egov-tool-field-origin" style="left: 619px; top: 1860px;">
+       <input class="egov-tool-field-rect onImage" id="N188_P2" maxlength="39" name="other_dependent2_remarks" value="{{ old('other_dependent2_remarks') }}" style="width: 127px; height: 98px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; overflow-wrap: break-word; word-wrap: break-word;" autocomplete="off">
       </div>
       <span style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; width: 15px; line-height:12px; height:15px; text-align:left; font-size:12px; font-family:'ＭＳ 明朝', serif; white-space:nowrap; left: 483px; top: 1949px;">
        <input type="checkbox" name="other_dependent2_confirmation_relationship_0" value="" checked style="display: none;">
@@ -11956,8 +11956,8 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 527px; top: 2007px;">
-       <input class="egov-tool-field-rect onImage" id="N192_P2" maxlength="11" name="other_dependent2_special_requirements_applicable_reason" value="{{ old('other_dependent2_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 528px; top: 2015px;">
+       <input class="egov-tool-field-rect onImage" id="N192_P2" maxlength="11" name="other_dependent2_special_requirements_applicable_reason" value="{{ old('other_dependent2_special_requirements_applicable_reason') }}" style="width: 150px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 400px; top: 2029px;">
        <select class="egov-tool-field-rect" id="N193_P2" name="other_dependent2_special_requirements_non_applicable_reason_type" style="width: 117px; height: 54px; font-size: 12px; text-align: left; line-height: 57px; padding: inherit;">
@@ -11971,17 +11971,17 @@ div.popup {
         </option>
        </select>
       </div>
-      <div class="egov-tool-field-origin" style="left: 614px; top: 2029px;">
-       <input class="egov-tool-field-rect onImage" id="N195_P2" name="other_dependent2_domestic_transfer_date_year" value="{{ old('other_dependent2_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 614px; top: 2037px;">
+       <input class="egov-tool-field-rect onImage" id="N195_P2" name="other_dependent2_domestic_transfer_date_year" value="{{ old('other_dependent2_domestic_transfer_date_year') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 652px; top: 2029px;">
-       <input class="egov-tool-field-rect onImage" id="N196_P2" name="other_dependent2_domestic_transfer_date_month" value="{{ old('other_dependent2_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 652px; top: 2037px;">
+       <input class="egov-tool-field-rect onImage" id="N196_P2" name="other_dependent2_domestic_transfer_date_month" value="{{ old('other_dependent2_domestic_transfer_date_month') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 692px; top: 2029px;">
-       <input class="egov-tool-field-rect onImage" id="N197_P2" name="other_dependent2_domestic_transfer_date_day" value="{{ old('other_dependent2_domestic_transfer_date_day') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text"/>
+      <div class="egov-tool-field-origin" style="left: 692px; top: 2037px;">
+       <input class="egov-tool-field-rect onImage" id="N197_P2" name="other_dependent2_domestic_transfer_date_day" value="{{ old('other_dependent2_domestic_transfer_date_day') }}"  style="width: 24px; height: 20px; font-size: 12px; text-align: center; line-height: 20px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
-      <div class="egov-tool-field-origin" style="left: 580px; top: 2065px;">
-       <input class="egov-tool-field-rect onImage" id="N198_P2" maxlength="11" name="other_dependent2_special_requirements_non_applicable_reason"value="{{ old('other_dependent2_special_requirements_non_applicable_reason') }}" style="width: 153px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" />
+      <div class="egov-tool-field-origin" style="left: 580px; top: 2072px;">
+       <input class="egov-tool-field-rect onImage" id="N198_P2" maxlength="11" name="other_dependent2_special_requirements_non_applicable_reason"value="{{ old('other_dependent2_special_requirements_non_applicable_reason') }}" style="width: 153px; height: 18px; font-size: 12px; text-align: left; line-height: 18px; padding: inherit;" type="text" autocomplete="off"/>
       </div>
         <img alt="法令様式画像" src="{{ $dataUri }}" /> 
      </div>
