@@ -159,13 +159,14 @@
         </script>
 
         <script type="module">
+            let spouse = {};
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
                 const hello_work = data['hello_work'];
-                const spouse = data['spouse'];
+                spouse = data['spouse'];
                 const todaySet = data['todaySet'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
@@ -296,7 +297,27 @@
                     $('#J132_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val($(this).val());
                 });
                 $('#J101_005F_82A0_82C4_90E6').val(hello_work);
+                $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val('');
+                $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val('');
+                $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val('');
+                if($('#J75_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').val() == 1 
+                && spouse !== null && spouse.insurance_office_no !== null){
+                    $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
+                    $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
+                    $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                }
             }
+            document.getElementById('J75_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').addEventListener('change', function() {
+                if(this.value == 1 && spouse !== null && spouse.insurance_office_no !== null){
+                    $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
+                    $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
+                    $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                }else{
+                    $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val('');
+                    $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val('');
+                    $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val('');
+                }
+            });
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {

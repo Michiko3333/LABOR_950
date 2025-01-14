@@ -28,10 +28,17 @@ class Dependent extends Model
         'mynumber_card_no',
         'pension_no',
         'dependent_type',
-        'other_1',
-        'other_2',
         'history_flg',
         'delete_flg',
+        'insurer_no',
+        'remarks',
+        'living_type',
+        'post_code',
+        'address_prefecture',
+        'address_city',
+        'address_ward',
+        'address_apartment',
+        'insurance_office_no',
     ];
 
     protected $casts = [

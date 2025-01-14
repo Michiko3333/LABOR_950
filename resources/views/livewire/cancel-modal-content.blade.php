@@ -3,6 +3,8 @@
         <div class="ui header" style="min-height: 60px; text-align: center; font-size: 18px;">担当から削除しますか？</div>
     @elseif($this->managerialPositionId !== null)
         <div class="ui header" style="min-height: 60px; text-align: center; font-size: 18px;">役職を削除しますか？</div>
+    @elseif($this->dependentId !== null)
+        <div class="ui header" style="min-height: 60px; text-align: center; font-size: 18px;">扶養者履歴を削除しますか？</div>
     @elseif($this->closureId !== null)
         <div class="ui header" style="min-height: 60px; text-align: center; font-size: 18px;">休業情報を削除しますか？</div>
     @elseif($this->allowanceId !== null)
@@ -28,7 +30,10 @@
                 style="width: 100px;">削除</button>
         @elseif($this->managerialPositionId !== null)
             <button type="button" class="ui negative basic button button-disable" wire:click="cancelManagerialPosition"
-                style="width: 100px;">削除</button>
+                style="width: 150px;">削除</button>
+        @elseif($this->dependentId !== null)
+            <button type="button" class="ui negative basic button button-disable" wire:click="cancelDependent"
+                style="width: 150px;">削除</button>
         @elseif($this->allowanceId !== null || $this->allowanceHistoryId !== null)
             <button type="button" class="ui negative basic button button-disable" wire:click="cancelAllowance"
                 style="width: 100px;">削除</button>

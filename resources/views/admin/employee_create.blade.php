@@ -278,8 +278,13 @@
                     'de-mynumber_card_no.*',
                     'de-pension_no.*',
                     'de-dependent_type.*',
-                    'de-other_1.*',
-                    'de-other_2.*',
+                    'de-insurer_no.*',
+                    'de-remarks.*',
+                    'de-post_code.*',
+                    'de-address_prefecture.*',
+                    'de-address_city.*',
+                    'de-address_ward.*',
+                    'de-address_apartment.*',
                 ]);
                 $field3 = $errors->hasAny([
                     'mynumber_card_no',
@@ -635,13 +640,13 @@
                             <div class="fields">
                                 <div class="four wide field required {{ err($errors, 'post_code') }}">
                                     <label for="post_code">郵便番号</label>
-                                    <input type="text" name="post_code"
+                                    <input type="text" name="post_code" id="post_code"
                                         value="{{ old('post_code', isset($employee_id) ? $employee->post_code : '') }}"
                                         placeholder="">
                                 </div>
                                 <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
                                     <label for="address_prefecture">住所（都道府県）</label>
-                                    <select class="ui fluid dropdown" name="address_prefecture">
+                                    <select class="ui fluid dropdown" name="address_prefecture" id="address_prefecture">
                                         <option value="">未選択</option>
                                         @foreach ($prefectures as $k => $value)
                                             <option value="{{ $k }}"
@@ -656,7 +661,7 @@
                                 </div>
                                 <div class="eight wide field required {{ err($errors, 'address_city') }}">
                                     <label for="address_city">住所（市区町村）</label>
-                                    <input type="text" name="address_city"
+                                    <input type="text" name="address_city" id="address_city"
                                         value="{{ old('address_city', isset($employee_id) ? $employee->address_city : '') }}"
                                         placeholder="">
                                 </div>
@@ -664,13 +669,13 @@
                             <div class="two fields">
                                 <div class="field required {{ err($errors, 'address_ward') }}">
                                     <label for="address_ward">住所（丁目・番地）</label>
-                                    <input type="text" name="address_ward"
+                                    <input type="text" name="address_ward" id="address_ward"
                                         value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
                                         placeholder="">
                                 </div>
                                 <div class="field {{ err($errors, 'address_apartment') }}">
                                     <label for="address_apartment">住所（アパート・マンション名等）</label>
-                                    <input type="text" name="address_apartment"
+                                    <input type="text" name="address_apartment" id="address_apartment"
                                         value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
                                         placeholder="">
                                 </div>
@@ -1045,7 +1050,29 @@
                 </div>
             </div>
             <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
-                <livewire:dependent-form :dependent="$dependent" :errors="$errors" :id="$employee_id ?? ''" />
+            <button type="button" class="ui small grey basic button mb-1 dependent-button">履歴</button>
+                <div class="ui large modal dependent-history" wire:ignore>
+                    <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">扶養者履歴</div>
+                    <div class="content">
+                        <livewire:dependent-history-modal-content :dependent="$dependent" :prefectures="$prefectures"/>
+                    </div>
+                    <div class="basic actions">
+                        <div class="ui button negative basic">戻る</div>
+                    </div>
+                </div>
+                <div id="removeInformation" class="ui modal mini cancel-modal">
+                    <i class="close icon"></i>
+                    <div class="header">確認</div>
+                    <div class="content">
+                        <livewire:cancel-modal-content />
+                    </div>
+                </div>
+                @livewire('dependent-form', [
+                    'id' => $id,
+                    'prefectures' => $prefectures,
+                    'dependent' => $dependent,
+                    'errors' => $errors,
+                ])
             </div>
             <div class="ui bottom attached segment" data-tab="sample3" style="display: none;">
                 <div class="ui horizontal card card-shadow" style="width: 100%;">
@@ -1119,7 +1146,7 @@
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'employment_insured_no') }}">
-                                <label for="employment_insured_no">雇用保険番号</label>
+                                <label for="employment_insured_no">被保険者番号（雇用）</label>
                                 <input type="text" id="employment_insured_no" name="employment_insured_no"
                                     value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
                                     placeholder="01234567891" maxLength="11">
@@ -1312,7 +1339,7 @@
                                     placeholder="12345678" maxlength='8'>
                             </div>
                             <div class="field {{ err($errors, 'insurer_no') }}">
-                                <label for="insurer_no">被保険者番号</label>
+                                <label for="insurer_no">被保険者番号（健保）</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
                                     placeholder="01234567" maxLength="8">
@@ -1655,5 +1682,31 @@
         });
 
         $('.ui.dropdown.edit-select').dropdown();
+
+        $('.ui.modal').modal({
+            allowMultiple: true
+        });
+        $('.dependent-button').click(_ => {
+            $('.dependent-history').modal({
+                blurring: true,
+            }).modal('show');
+        });
+        window.removeDependentHistory = (dependentId) => {
+            Livewire.dispatch('cancelModalOpened', {
+                dependentId: dependentId,
+                receptionistId: null,
+                managerialPositionId: null,
+            });
+            setTimeout(() => {
+                $('.cancel-modal').modal('show');
+            }, 0)
+        };
+        window.closeCancelModal = () => {
+            $('.cancel-modal').modal('hide');
+        };
+        window.addEventListener('closeCancelModal', () => {
+            $('.cancel-modal').modal('hide');
+            location.reload();
+        });
     </script>
 </x-layout>

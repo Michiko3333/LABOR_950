@@ -262,9 +262,9 @@
                             ''));
                         $('#N61_P1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
                     }
-                    if (spouse.living_type === 1) {
+                    if (spouse.living_type == 1) {
                         $('#N62_P1').val('同居');
-                    } else if (spouse.living_type === 2) {
+                    } else if (spouse.living_type == 0) {
                         $('#N62_P1').val('別居');
                     }
                     if (spouse.post_code != null) {

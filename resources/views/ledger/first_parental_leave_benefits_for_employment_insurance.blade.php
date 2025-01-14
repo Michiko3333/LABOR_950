@@ -198,8 +198,10 @@
         </script>
 
         <script type="module">
+            let spouse = {};
             function insertDataFromEmployee(data) {
                 const employee = data['employee'];
+                spouse = data['spouse'];
                 const branch = data['branch'];
                 const headquarters = data['headquarters'];
                 const company = data['company'];
@@ -369,6 +371,15 @@
                 $('#J27_005F_8F5A_8F8A').val((branch_prefecture_data.name || "") + (branch.address_city || "") + (
                     branch.address_ward || "") + (branch.address_apartment || ""));
                 $('#J161_005F_82A0_82C4_90E6').val(hello_work);
+                $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
+                $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
+                $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
+                if(('#J104_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').val() == 1
+                && spouse !== null && spouse.insurance_office_no !== null){
+                    $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
+                    $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
+                    $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                }
                 }
             document.getElementById('J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').value = this.value;
@@ -448,6 +459,17 @@
             });
             document.getElementById('J200_005F_89C1_93FC_8ED2_94D4_8D86').addEventListener('input', function() {
                 document.getElementById('J82_005F_89C1_93FC_8ED2_94D4_8D86').value = this.value;
+            });
+            document.getElementById('J104_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').addEventListener('change', function() {
+                if(this.value == 1 && spouse !== null && spouse.insurance_office_no !== null){
+                    $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
+                    $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
+                    $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                }else{
+                    $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
+                    $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
+                    $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
+                }
             });
 
 

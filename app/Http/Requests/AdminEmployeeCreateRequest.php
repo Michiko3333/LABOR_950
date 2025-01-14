@@ -65,6 +65,24 @@ class AdminEmployeeCreateRequest extends BaseRequest
             $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'RANKS');
             $data['emergency_address_apartment2'] = str_replace(['-', '‐'], '－', $data['emergency_address_apartment2']);
         }
+        if (isset($data['de-address_city'])) {
+            foreach ($data['de-address_city'] as &$city) {
+                $city = mb_convert_kana($city, 'RANKS');
+                $city = str_replace(['-', '‐'], '－', $city);
+            }
+        }
+        if (isset($data['de-address_ward'])) {
+            foreach ($data['de-address_ward'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
+            }
+        }
+        if (isset($data['de-address_apartment'])) {
+            foreach ($data['de-address_apartment'] as &$apartment) {
+                $apartment = mb_convert_kana($apartment, 'RANKS');
+                $apartment = str_replace(['-', '‐'], '－', $apartment);
+            }
+        }
         if (isset($data['birthday_date'])) {
             $data['birthday_date'] = Carbon::createFromFormat('Y年n月j日', $data['birthday_date'])->format('Y-m-d');
         }
@@ -233,16 +251,28 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-pension_no.*" => ['nullable', 'string', new NumberOnly(10)],
             "de-dependent_type" => 'array',
             "de-dependent_type.*" => 'nullable|integer|in:1,2,3,4',
-            "de-other_1" => 'array',
-            "de-other_1.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
-            "de-other_2" => 'array',
-            "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             'insured_status' => 'nullable|string|max:21',
             'health_insurance_association_number' => ['nullable', 'string', new NumberOnly(8)],
             'acquisition_of_distinction' => 'nullable|integer',
             'welfare_pension' => 'nullable|integer',
             'overseas_special_exception' => 'nullable|integer',
             'dispatch_contract_completion' => 'nullable|integer',
+            "de-insurer_no" => 'array',
+            "de-insurer_no.*" => ['nullable', 'string', new NumberOnly(8)],
+            "de-insurance_office_no" => 'array',
+            "de-insurance_office_no.*" => ['nullable', 'string', new NumberOnly(11)],
+            "de-remarks" => 'array',
+            "de-remarks.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            "de-post_code" => 'array',
+            'de-post_code.*' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            "de-address_prefecture" => 'array',
+            'de-address_prefecture.*' => 'nullable|integer',
+            "de-address_city" => 'array',
+            'de-address_city.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "de-address_ward" => 'array',
+            'de-address_ward.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "de-address_apartment" => 'array',
+            'de-address_apartment.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
         ];
     }
 
@@ -347,10 +377,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'mynumber_card_no' => 'マイナンバーカード番号',
             'social_insurance_no' => '社会保険番号',
             'pension_no' => '基礎年金番号',
-            'insurer_no' => '被保険者番号',
+            'insurer_no' => '被保険者番号（健保）',
             'insured_age_type' => '取得時被保険者種類',
             'insurer_reference_no' => '被保険者整理番号',
-            'employment_insured_no' => '雇用保険番号',
+            'employment_insured_no' => '被保険者番号（雇用）',
             'employment_insurance_applied_date' => '雇用保険届出日',
             'employment_insured_date' => '雇用保険取得日',
             'employee_type' => '社員区分',
@@ -404,9 +434,6 @@ class AdminEmployeeCreateRequest extends BaseRequest
         foreach ($this->input('de-relationship_dependent', []) as $index => $value) {
             $Attributes["de-relationship_dependent.{$index}"] = ($index + 1) . "扶養者_続柄（扶養者）";
         }
-        foreach ($this->input('de-spouse_flag', []) as $index => $value) {
-            $Attributes["de-spouse_flag.{$index}"] = ($index + 1) . "扶養者_配偶者フラグ";
-        }
         foreach ($this->input('de-contact', []) as $index => $value) {
             $Attributes["de-contact.{$index}"] = ($index + 1) . "扶養者_連絡先";
         }
@@ -425,11 +452,29 @@ class AdminEmployeeCreateRequest extends BaseRequest
         foreach ($this->input('de-dependent_type', []) as $index => $value) {
             $Attributes["de-dependent_type.{$index}"] = ($index + 1) . "扶養者_扶養区分";
         }
-        foreach ($this->input('de-other_1', []) as $index => $value) {
-            $Attributes["de-other_1.{$index}"] = ($index + 1) . "扶養者_その他①";
+        foreach ($this->input('de-insurer_no', []) as $index => $value) {
+            $Attributes["de-insurer_no.{$index}"] = ($index + 1) . "扶養者_被保険者番号（健保）";
         }
-        foreach ($this->input('de-other_2', []) as $index => $value) {
-            $Attributes["de-other_2.{$index}"] = ($index + 1) . "扶養者_その他②";
+        foreach ($this->input('de-insurance_office_no', []) as $index => $value) {
+            $Attributes["de-insurance_office_no.{$index}"] = ($index + 1) . "扶養者_被保険者番号（雇用）";
+        }
+        foreach ($this->input('de-remarks', []) as $index => $value) {
+            $Attributes["de-remarks.{$index}"] = ($index + 1) . "扶養者_備考";
+        }
+        foreach ($this->input('de-post_code', []) as $index => $value) {
+            $Attributes["de-post_code.{$index}"] = ($index + 1) . "扶養者_郵便番号（ハイフン無し）";
+        }
+        foreach ($this->input('de-address_prefecture', []) as $index => $value) {
+            $Attributes["de-address_prefecture.{$index}"] = ($index + 1) . "扶養者_住所（都道府県）";
+        }
+        foreach ($this->input('de-address_city', []) as $index => $value) {
+            $Attributes["de-address_city.{$index}"] = ($index + 1) . "扶養者_住所（市区町村）";
+        }
+        foreach ($this->input('de-address_ward', []) as $index => $value) {
+            $Attributes["de-address_ward.{$index}"] = ($index + 1) . "扶養者_住所（丁目・番地）";
+        }
+        foreach ($this->input('de-address_apartment', []) as $index => $value) {
+            $Attributes["de-address_apartment.{$index}"] = ($index + 1) . "扶養者_住所（アパート・マンション名等）";
         }
 
         return $Attributes;

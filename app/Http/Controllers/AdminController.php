@@ -1666,7 +1666,7 @@ class AdminController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $employee->company_id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
-        $dependent = $employee->dependent()->where('delete_flg', 0)->orderBy('history_flg', 'desc')->get();
+        $dependent = $employee->dependent()->where('delete_flg', 0)->orderByRaw('spouse_flag DESC')->orderBy('history_flg', 'desc')->get();
         $qualifications = Qualifications::select('id', 'qualification_name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $employee_qualifications = Employee_qualifications::join('m_qualifications', 'm_employee_qualifications.qualifications_id', '=', 'm_qualifications.id')
             ->where('m_employee_qualifications.employee_id', $employee->id)
@@ -2288,8 +2288,7 @@ class AdminController extends Controller
                 }
             }
             Pickup::insert($insertData);
-
-            Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+            Dependent::where('employee_id', $request->input('employee_id'))->where('history_flg',0)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $qualifications = $request->input('qualifications', []);
             Employee_qualifications::whereNotIn('qualifications_id', $qualifications)
@@ -2413,12 +2412,19 @@ class AdminController extends Controller
             'contact' => $requestData['de-contact'][$index],
             'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
             'pension_no' => $requestData['de-pension_no'][$index],
-            'other_1' => $requestData['de-other_1'][$index],
-            'other_2' => $requestData['de-other_2'][$index],
-            'history_flg' => $requestData['de-history'][$index] ?? 0,
+            'history_flg' => $requestData['de-history_flg'][$index] ?? 0,
             'birthday' => $formatted_de_birthday,
             'date_of_authorisation' => $formatted_de_date_of_authorisation,
             'date_of_expiry' => $formatted_de_date_of_expiry ?? null,
+            'insurer_no' => $requestData['de-insurer_no'][$index],
+            'remarks' => $requestData['de-remarks'][$index],
+            'living_type' => $requestData['de-living_type'][$index] ?? 0,
+            'post_code' => $requestData['de-post_code'][$index],
+            'address_prefecture' => $requestData['de-address_prefecture'][$index],
+            'address_city' => $requestData['de-address_city'][$index],
+            'address_ward' => $requestData['de-address_ward'][$index],
+            'address_apartment' => $requestData['de-address_apartment'][$index],
+            'insurance_office_no' => $requestData['de-insurance_office_no'][$index],
         ];
     }
 
