@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('t_wage', function (Blueprint $table) {
-            $table->integer('salary_in_kind')->nullable()->comment('現物給与')->after('wage_base_amount');
+        Schema::table('m_attendance_columns', function (Blueprint $table) {
+            $table->integer('ledger_order')->nullable()->default(0)->comment('台帳整列順');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('t_wage', function (Blueprint $table) {
-            $table->dropColumn('salary_in_kind');
+        Schema::table('m_attendance_columns', function (Blueprint $table) {
+            //
         });
     }
 };

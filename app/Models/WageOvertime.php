@@ -15,7 +15,8 @@ class WageOvertime extends Model
         'company_id',
         'wage_id',
         'name',
-        'amount'
+        'amount',
+        'delete_flg'
     ];
 
     public function wage()

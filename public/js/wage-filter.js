@@ -155,7 +155,7 @@ class WageFilter {
 
         this.filterConditionNodes = [];
 
-        json.conditions.forEach(cond => {
+        json.conditions.forEach(cond => {            
             const row = this.createNode();
             const cond_target = row.querySelectorAll('[name="cond_target[]"]');
             cond_target.forEach(el => el.value = cond.name);
@@ -164,8 +164,8 @@ class WageFilter {
             const cond_comparison = row.querySelectorAll('[name="cond_comparison[]"]');
             cond_comparison.forEach(select => {
                 for (let i = 0; i < select.children.length; i++) {
-                    const option = select.children[i];
-                    if (option.value == cond.cond_comparison) {
+                    const option = select.children[i];                    
+                    if (option.value == cond.comparison) {
                         option.dataset.n = 0;
                         option.selected = true;
                     }
@@ -183,6 +183,43 @@ class WageFilter {
 
         this.onLoadedShowlist();
         this.render();
+
+        // 絞り込み条件を表示
+        const condition_preview = [];
+        for (let i = 0; i < json.conditions.length; i++) {
+            const element = json.conditions[i];
+            condition_preview.push({
+                name: element.name,
+                text: element.amount + '円' + (element.comparison ? '以上' : '以下')
+            });
+        }
+
+        for (let i = 0; i < Object.keys(json).length; i++) {
+            const key = Object.keys(json)[i];
+            let name = key;
+            const q = document.forms.wage_filter.querySelector('label[for="' + key + '"]');
+            if (q) name = q.textContent;
+            
+            if (json[key] && typeof json[key] == 'string' && key != 'wage_year' && !/^show-.*/.test(key)) {
+                condition_preview.push({
+                    name: name,
+                    text: json[key]
+                });
+            }
+            
+        }
+        const box = document.getElementById('wage-condition-message');
+        box.innerText = '';
+        if (condition_preview.length > 0) {
+            let str = '';
+            condition_preview.forEach(el => {
+                str = str + el.name + '→' + el.text + ', ';
+            });
+            box.innerText = str.slice(0, -2);
+            box.classList.add('show');
+        } else {
+            box.classList.remove('show');
+        }
     }
 
     onAdd() {
@@ -200,6 +237,7 @@ class WageFilter {
             node.dataset.key = i;
             wrapper.appendChild(node);
         });
+        
         this.onRender();
     }
 

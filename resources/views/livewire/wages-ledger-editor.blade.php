@@ -70,28 +70,8 @@
                                                 <td></td>
                                             </tr>
                                         @endif
-                                        @if ($key == 'salary_values')
-                                            @foreach ($salary_names as $name)
-                                                <tr>
-                                                    <td>
-                                                        <button class="remove-cotrollable" type="button"
-                                                            wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
-                                                                class="trash alternate outline icon"></i></button>{{ $name }}
-                                                    </td>
-                                                    @foreach ($this->month_order as $month)
-                                                        <td>
-                                                            <div class="ui input month">
-                                                                <input class="hide-spin" type="number"
-                                                                    name="{{ $key }}[]" placeholder="" min="0"
-                                                                    max="99999999"
-                                                                    wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
-                                                            </div>
-                                                        </td>
-                                                    @endforeach
-                                                    <td>{{ $this->getControllableRowSum($key, $name) }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @elseif ($key == 'overtime_values')
+
+                                        @if ($key == 'overtime_values')
                                             @foreach ($overtime_names as $name)
                                                 <tr>
                                                     <td>
@@ -114,6 +94,27 @@
                                             @endforeach
                                         @elseif ($key == 'allowance_values')
                                             @foreach ($allowance_names as $name)
+                                                <tr>
+                                                    <td>
+                                                        <button class="remove-cotrollable" type="button"
+                                                            wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
+                                                                class="trash alternate outline icon"></i></button>{{ $name }}
+                                                    </td>
+                                                    @foreach ($this->month_order as $month)
+                                                        <td>
+                                                            <div class="ui input month">
+                                                                <input class="hide-spin" type="number"
+                                                                    name="{{ $key }}[]" placeholder="" min="0"
+                                                                    max="99999999"
+                                                                    wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                    <td>{{ $this->getControllableRowSum($key, $name) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @elseif ($key == 'salary_values')
+                                            @foreach ($salary_names as $name)
                                                 <tr>
                                                     <td>
                                                         <button class="remove-cotrollable" type="button"
@@ -218,16 +219,28 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($bonus_column_names as $key => $name)
-                                        @if ($key == 'taxable_paymment')
-                                            <tr class="empty-line">
-                                                <td></td>
-                                                @foreach ($bonus_month_order as $month)
-                                                    <td style="border-left: none;"></td>
-                                                @endforeach
-                                                <td></td>
-                                            </tr>
-                                        @endif
-                                        @if ($key == 'deduction_sum')
+                                        @if ($key == 'salary_values')
+                                            @foreach ($bonus_salary_names as $salary_name)
+                                                <tr>
+                                                    <td>
+                                                        <button class="remove-cotrollable" type="button"
+                                                            wire:click="removeAdditionBonus('{{ $salary_name }}', '{{ $key }}')"><i
+                                                                class="trash alternate outline icon"></i></button>{{ $salary_name }}
+                                                    </td>
+                                                    @foreach ($bonus_month_order as $month)
+                                                        <td>
+                                                            <div class="ui input month">
+                                                                <input class="hide-spin" type="number"
+                                                                    name="{{ $key }}[]" placeholder=""
+                                                                    min="0" max="99999999"
+                                                                    wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}">
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                    <td>{{ $this->getControllableRowSumBonus($key, $salary_name) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @elseif ($key == 'deduction_sum')
                                             <tr class="label">
                                                 <td>{{ $name }}</td>
                                                 @foreach ($this->bonus_month_order as $month)

@@ -164,6 +164,8 @@ class WageList {
             if (isReady) this.ready();
             this.rows();
             this.setSortHeder();
+
+            document.getElementById('wage-result-num').textContent = this.item_nodes.length;
         })
     }
 
@@ -545,6 +547,12 @@ class WageList {
             tr.dataset.id = item['id'];            
             for (let j = 0; j < columnKeys.length; j++) {
                 const key = columnKeys[j];
+                const isBonusHidden = (
+                    (item['wage_type'] == 2 && key == 'mutual_aid') ||
+                    (item['wage_type'] == 2 && key == 'asset_saving') ||
+                    (item['wage_type'] == 2 && key == 'absence_deduction') ||
+                    (item['wage_type'] == 2 && key == 'late_deduction')
+                );
                 switch (key) {
                     case 'salary_values':
                         const salary_data = this.sortSalaryDataByColumns(item[key], this.salary_columns);
@@ -588,32 +596,45 @@ class WageList {
                             const sk = allowanceKeys[t];
                             const obj = allowance_data[sk];
                             const allowance_td = document.createElement('td');
-                            const allowance_input = document.createElement('input');
-                            allowance_input.classList.add('edit-input');
-                            allowance_input.type = "text";
-                            allowance_input.dataset.id = item['id'];
-                            allowance_input.dataset.section = 'allowance';
-                            allowance_input.dataset.key = obj.name;
-                            allowance_input.readOnly = true;
-                            if (obj['amount'] != null) allowance_input.value = parseInt(obj['amount'], 10)
-                                .toLocaleString('ja-JP');
-                            else allowance_input.value = 0;
-                            allowance_input.addEventListener('focus', e => { this.onFocusInput(e) });
-                            allowance_input.addEventListener('blur', e => { this.onBlurInput(e) });
-                            allowance_input.addEventListener('change', e => { this.onChangeInput(e) });
-                            allowance_input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
-                            allowance_td.appendChild(allowance_input);
-                            tr.appendChild(allowance_td);
+                            if (item['wage_type'] == 1) {
+                                const allowance_input = document.createElement('input');
+                                allowance_input.classList.add('edit-input');
+                                allowance_input.type = "text";
+                                allowance_input.dataset.id = item['id'];
+                                allowance_input.dataset.section = 'allowance';
+                                allowance_input.dataset.key = obj.name;
+                                allowance_input.readOnly = true;
+                                if (obj['amount'] != null) allowance_input.value = parseInt(obj['amount'], 10)
+                                    .toLocaleString('ja-JP');
+                                else allowance_input.value = 0;
+                                allowance_input.addEventListener('focus', e => { this.onFocusInput(e) });
+                                allowance_input.addEventListener('blur', e => { this.onBlurInput(e) });
+                                allowance_input.addEventListener('change', e => { this.onChangeInput(e) });
+                                allowance_input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
+                                allowance_td.appendChild(allowance_input);
+                                tr.appendChild(allowance_td);
 
-                            const allowance_label = document.createElement('div');
-                            allowance_label.classList.add('view');
-                            allowance_label.dataset.id = item['id'];
-                            if (obj['amount'] != null) allowance_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
-                            else allowance_label.textContent = 0;
-                            allowance_td.appendChild(allowance_label);
-                            allowance_td.dataset.amount = allowance_input.value;
-                            allowance_td.dataset.key = obj.name;
-                            allowance_td.dataset.section = 'allowance';
+                                const allowance_label = document.createElement('div');
+                                allowance_label.classList.add('view');
+                                allowance_label.dataset.id = item['id'];
+                                if (obj['amount'] != null) allowance_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
+                                else allowance_label.textContent = 0;
+                                allowance_td.appendChild(allowance_label);
+                                allowance_td.dataset.amount = allowance_input.value;
+                                allowance_td.dataset.key = obj.name;
+                                allowance_td.dataset.section = 'allowance';
+                            } else {
+                                const allowance_label = document.createElement('div');
+                                allowance_label.classList.add('view');
+                                allowance_label.dataset.id = item['id'];
+                                if (obj['amount'] != null) allowance_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
+                                else allowance_label.textContent = 0;
+                                allowance_td.appendChild(allowance_label);
+                                allowance_td.dataset.amount = allowance_label.textContent;
+                                allowance_td.dataset.key = obj.name;
+                                allowance_td.dataset.section = 'allowance';
+                                tr.appendChild(allowance_td);
+                            }
                         }
                         break;
                     case 'overtime_values':
@@ -623,37 +644,49 @@ class WageList {
                             const sk = overtimeKeys[t];
                             const obj = overtime_data[sk];
                             const overtime_td = document.createElement('td');
-                            const overtime_input = document.createElement('input');
-                            overtime_input.classList.add('edit-input');
-                            overtime_input.type = "text";
-                            overtime_input.dataset.id = item['id'];
-                            overtime_input.dataset.section = 'overtime';
-                            overtime_input.dataset.key = obj.name;
-                            overtime_input.readOnly = true;
-                            if (obj['amount'] != null) overtime_input.value = parseInt(obj['amount'], 10)
-                                .toLocaleString('ja-JP');
-                            else overtime_input.value = 0;
-                            overtime_input.addEventListener('focus', e => { this.onFocusInput(e) });
-                            overtime_input.addEventListener('blur', e => { this.onBlurInput(e) });
-                            overtime_input.addEventListener('change', e => { this.onChangeInput(e) });
-                            overtime_input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
-                            overtime_td.dataset.section = 'overtime';
-                            overtime_td.appendChild(overtime_input);
-                            tr.appendChild(overtime_td);
+                            if (item['wage_type'] == 1) {
+                                const overtime_input = document.createElement('input');
+                                overtime_input.classList.add('edit-input');
+                                overtime_input.type = "text";
+                                overtime_input.dataset.id = item['id'];
+                                overtime_input.dataset.section = 'overtime';
+                                overtime_input.dataset.key = obj.name;
+                                overtime_input.readOnly = true;
+                                if (obj['amount'] != null) overtime_input.value = parseInt(obj['amount'], 10)
+                                    .toLocaleString('ja-JP');
+                                else overtime_input.value = 0;
+                                overtime_input.addEventListener('focus', e => { this.onFocusInput(e) });
+                                overtime_input.addEventListener('blur', e => { this.onBlurInput(e) });
+                                overtime_input.addEventListener('change', e => { this.onChangeInput(e) });
+                                overtime_input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
+                                overtime_td.dataset.section = 'overtime';
+                                overtime_td.appendChild(overtime_input);
+                                tr.appendChild(overtime_td);
 
-                            const overtime_label = document.createElement('div');
-                            overtime_label.classList.add('view');
-                            overtime_label.dataset.id = item['id'];
-                            if (obj['amount'] != null) overtime_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
-                            else overtime_label.textContent = 0;
-                            overtime_td.appendChild(overtime_label);
-                            overtime_td.dataset.amount = overtime_input.value;
-                            overtime_td.dataset.key = obj.name;
+                                const overtime_label = document.createElement('div');
+                                overtime_label.classList.add('view');
+                                overtime_label.dataset.id = item['id'];
+                                if (obj['amount'] != null) overtime_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
+                                else overtime_label.textContent = 0;
+                                overtime_td.appendChild(overtime_label);
+                                overtime_td.dataset.amount = overtime_input.value;
+                                overtime_td.dataset.key = obj.name;
+                            } else {
+                                const overtime_label = document.createElement('div');
+                                overtime_label.classList.add('view');
+                                overtime_label.dataset.id = item['id'];
+                                if (obj['amount'] != null) overtime_label.textContent = parseInt(obj['amount'], 10).toLocaleString('ja-JP');
+                                else overtime_label.textContent = 0;
+                                overtime_td.appendChild(overtime_label);
+                                overtime_td.dataset.amount = overtime_label.textContent;
+                                overtime_td.dataset.key = obj.name;
+                                tr.appendChild(overtime_td);
+                            }
                         }
                         break;
-                    default:
+                    default:                        
                         const td = document.createElement('td');
-                        if (this.columns_map[key]['type'] === 'number') {
+                        if (this.columns_map[key]['type'] === 'number' && !isBonusHidden) {
                             const number_input = document.createElement('input');
                             number_input.classList.add('edit-input');
                             number_input.dataset.id = item['id'];
@@ -704,7 +737,7 @@ class WageList {
                             switch (key) {
                                 case 'total_amount':
                                     div.textContent = this.comma(
-                                        item.wage_base_amount + item.salary_in_kind + this.getSumArrType(item.salary_values) + this.getSumArrType(item.allowance_values) + this.getSumArrType(item.overtime_values)
+                                        item.wage_base_amount + this.getSumArrType(item.salary_values) + this.getSumArrType(item.allowance_values) + this.getSumArrType(item.overtime_values)
                                     );
                                     div.style.fontWeight = 'bold';
                                     break;
@@ -716,8 +749,8 @@ class WageList {
                                     div.textContent = this.comma(this.getSumArrType(item.overtime_values));
                                     div.style.fontWeight = 'bold';
                                     break;
-                                case 'taxable_paymment_label':
-                                    div.textContent = this.comma(item.taxable_paymment + item.non_taxable_paymment);
+                                case 'salary_amount':                                    
+                                    div.textContent = this.comma(item.taxable_paymment + item.non_taxable_paymment);                                    
                                     div.style.fontWeight = 'bold';
                                     break;
                                 case 'deduction_sum':
@@ -743,7 +776,6 @@ class WageList {
                                     }
                                     let wage_amount = 0;
                                     wage_amount += item.wage_base_amount;
-                                    wage_amount += item.salary_in_kind;
                                     wage_amount += this.getSumArrType(item.salary_values);
                                     wage_amount += this.getSumArrType(item.allowance_values);
                                     wage_amount += this.getSumArrType(item.overtime_values);
@@ -977,6 +1009,8 @@ class WageList {
         let str = '';
         if (num != '') {
             str = parseInt(num, 10).toLocaleString('ja-JP');
+        } else {
+            str = 0;
         }
         return str;
     }
@@ -1016,9 +1050,7 @@ class WageList {
             }
         }
         const salary_section = 'salary';
-        const salary_key = 'salary_label';
         const salary_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="'+ salary_section + '"]');
-        const salary_label = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + salary_key + '"]');
         let salary = 0;                                
         for (let i = 0; i < salary_nodes.length; i++) {
             const node = salary_nodes[i];
@@ -1060,19 +1092,17 @@ class WageList {
 
         const base_amount_key = 'wage_base_amount';
         const base_amount_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + base_amount_key + '"]');
-        const salary_in_kind_key = 'salary_in_kind';
-        const salary_in_kind_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + salary_in_kind_key + '"]');
         const total_amount_key = 'total_amount';
         const total_amount_label = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + total_amount_key + '"]');
-        const base_amount = this.replaceInt(base_amount_nodes[0].value) + this.replaceInt(salary_in_kind_nodes[0].value);
+        const base_amount = this.replaceInt(base_amount_nodes[0].value);
 
 
         const taxable_paymment_key = 'taxable_paymment';
         const non_taxable_paymment_key = 'non_taxable_paymment';
-        const taxable_paymment_label_key = 'taxable_paymment_label';
+        const salary_amount_key = 'salary_amount';
         const taxable_paymment_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + taxable_paymment_key + '"]');
         const non_taxable_paymment_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-key="' + non_taxable_paymment_key + '"]');
-        const taxable_paymment_label_nodes = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + taxable_paymment_label_key + '"]');
+        const salary_amount_nodes = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + salary_amount_key + '"]');
 
         const deduction_sum_key = 'deduction_sum';
         const deduction_sum_label = element.querySelectorAll('div.label[data-id="' + id + '"][data-key="' + deduction_sum_key + '"]');
@@ -1082,9 +1112,53 @@ class WageList {
         total_amount_label[0].textContent = this.comma(base_amount + salary + overtime + allowance);
         allowance_label[0].textContent = this.comma(allowance);
         overtime_label[0].textContent = this.comma(overtime);
-        taxable_paymment_label_nodes[0].textContent = this.comma(this.replaceInt(taxable_paymment_nodes[0].value) + this.replaceInt(non_taxable_paymment_nodes[0].value));
+        salary_amount_nodes[0].textContent = this.comma(this.replaceInt(taxable_paymment_nodes[0].value) + this.replaceInt(non_taxable_paymment_nodes[0].value));
         deduction_sum_label[0].textContent = this.comma(deductions);
         wage_amount_label[0].textContent = this.comma(base_amount + salary + overtime + allowance - deductions);
+        
+        const update_list = [
+            {
+                key: allowance_key,
+                value: allowance
+            },
+            {
+                key: overtime_key,
+                value: overtime
+            },
+            {
+                key: total_amount_key,
+                value: base_amount + salary + overtime + allowance
+            },
+            {
+                key: salary_amount_key,
+                value: this.replaceInt(taxable_paymment_nodes[0].value) + this.replaceInt(non_taxable_paymment_nodes[0].value)
+            },
+            {
+                key: deduction_sum_key,
+                value: deductions
+            },
+            {
+                key: wage_amount_key,
+                value: base_amount + salary + overtime + allowance - deductions
+            },
+        ];
+        update_list.forEach(el => {
+            const idx = this.dirtyVal.findIndex(d => {
+                return d.id == id && d.key == el.key
+            });
+    
+            if (idx >= 0) {
+                this.dirtyVal[idx].val = el.value;
+            } else {
+                this.dirtyVal.push({
+                    id: id,
+                    key: el.key,
+                    val: el.value,
+                    section: 'column'
+                });
+            }
+        });
+
     }
 
     getCalcableColumns() {

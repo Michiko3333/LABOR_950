@@ -155,6 +155,7 @@ class WagesEmployeeController extends Controller
             'grade' => $request->input('grade', null),
             'gradational_salary' => $request->input('gradational_salary', null),
             'other_type' => $request->input('other_type', null),
+            'wage_type' => $request->input('wage_type', null),
             'details' => $details
         ];
 
@@ -388,6 +389,7 @@ class WagesEmployeeController extends Controller
                 'grade' => $condition_data['conditions']['grade'] ?? null,
                 'gradational_salary' => $condition_data['conditions']['gradational_salary'] ?? null,
                 'other_type' => $condition_data['conditions']['other_type'] ?? null,
+                'wage_type' => $condition_data['conditions']['wage_type'] ?? null,
                 'details' => $condition_data['detail']
             ];
 
@@ -486,7 +488,7 @@ class WagesEmployeeController extends Controller
             $data = [
                 'wage_year' => $request->input('wage_year', ''),
                 'wage_month' => $request->input('wage_month', ''),
-                'wage_type' => $request->input('wage_type', null),
+                'wage_type' => $request->input('wage_type', ''),
                 'wage_branch' => $request->input('wage_branch', ''),
                 'wage_department' => $request->input('wage_department', ''),
                 'employment_type' => $request->input('employment_type', ''),
@@ -677,31 +679,35 @@ class WagesEmployeeController extends Controller
 
         if (!empty($conditions['wage_branch'])) {
             $str = $conditions['wage_branch'];
-            $wage = $wage->where('branch_name', 'LIKE', "%$str%");
+            $wage = $wage->where('branch_name', $str);
         }
         if (!empty($conditions['wage_department'])) {
             $str = $conditions['wage_department'];
-            $wage = $wage->where('departments', 'LIKE', "%$str%");
+            $wage = $wage->where('departments', $str);
         }
         if (!empty($conditions['employment_type'])) {
             $str = $conditions['employment_type'];
-            $wage = $wage->where('employment_type', 'LIKE', "%$str%");
+            $wage = $wage->where('employment_type', $str);
         }
         if (!empty($conditions['work_type'])) {
             $str = $conditions['work_type'];
-            $wage = $wage->where('work_type', 'LIKE', "%$str%");
+            $wage = $wage->where('work_type', $str);
         }
         if (!empty($conditions['grade'])) {
             $str = $conditions['grade'];
-            $wage = $wage->where('grade', 'LIKE', "%$str%");
+            $wage = $wage->where('grade', $str);
         }
         if (!empty($conditions['gradational_salary'])) {
             $str = $conditions['gradational_salary'];
-            $wage = $wage->where('gradational_salary', 'LIKE', "%$str%");
+            $wage = $wage->where('gradational_salary', $str);
         }
         if (!empty($conditions['other_type'])) {
             $str = $conditions['other_type'];
-            $wage = $wage->where('other_type', 'LIKE', "%$str%");
+            $wage = $wage->where('other_type', $str);
+        }
+        if (!empty($conditions['wage_type'])) {
+            $str = $conditions['wage_type'];
+            $wage = $wage->where('wage_type', $str);
         }
 
         // 固定項目の詳細条件

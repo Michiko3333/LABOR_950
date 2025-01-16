@@ -25,10 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('t_attendance', function (Blueprint $table) {
-            $table->dropIndex('branch_name');
-            $table->dropIndex('departments');
-            $table->dropIndex('employment_type');
-            $table->dropIndex('work_type');
+            $table->dropIndex(['branch_name']);
+            $table->dropIndex(['departments']);
+            $table->dropIndex(['employment_type']);
+            $table->dropIndex(['work_type']);
         });
     }
 };

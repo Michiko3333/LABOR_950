@@ -1,7 +1,7 @@
 class PowerTableList {
     constructor(options = {}) {
 
-        const option_data = {
+        this.option_data = {
             mode: 'api',
             api: {
                 list: '',
@@ -13,7 +13,7 @@ class PowerTableList {
             ...options
         }
         
-        this.mode = option_data.mode;
+        this.mode = this.option_data.mode;
 
         this.rowHeight = 32;
         this.totalRows = 0;
@@ -27,8 +27,8 @@ class PowerTableList {
         this.ticking = false;
         this.isEdit = false;
 
-        this.userFilter = option_data.userFilter;
-        this.useEdit = option_data.useEdit;
+        this.userFilter = this.option_data.userFilter;
+        this.useEdit = this.option_data.useEdit;
 
         this.elementIds = {
             wrapper: 'pt',
@@ -40,11 +40,13 @@ class PowerTableList {
             cancelbtn: 'pt-cancel-button',
             submitbtn: 'pt-submit-button',
             filter: 'pt-filter-form',
-            ...option_data.elementIds
+            result_num : 'pt-result-num',
+            ...this.option_data.elementIds
         };
 
         this.height_container = document.getElementById(this.elementIds.heaight_container);
         this.data = [];
+        this.json = { data: [], columns_map: [] };
         this.columns_map = [];
         this.item_nodes = [];
 
@@ -52,8 +54,8 @@ class PowerTableList {
         this.dirtyName= [];
         this.dirtyRemove = [];
 
-        this.base_uri = option_data.api.list;
-        this.post_uri = option_data.api.post;
+        this.base_uri = this.option_data.api.list;
+        this.post_uri = this.option_data.api.post;
 
         this.useSort = true;
         this.sortKey = '';
@@ -63,7 +65,7 @@ class PowerTableList {
         const currentYear = currentDate.getFullYear();
         this.currentYear = currentYear;
 
-        this.wrapper = document.getElementById(this.elementIds.wrapper);
+        this.wrapper = document.getElementById(this.elementIds.wrapper);        
 
         this.wrapper.addEventListener('scroll', (e) => {
             if (!this.ticking) {
@@ -159,7 +161,12 @@ class PowerTableList {
         }
     }
 
+    setJson(json) {
+        this.json = json;
+    }
+
     onLoad(d) {}
+    afterLoaded() {}
     onRefreshRow() {}
     onReady() {}
     onRefreshed() {}
@@ -177,6 +184,7 @@ class PowerTableList {
         });
         return url.toString();
     }
+    createdNodes(columnKeys, ListHeader, ListBody) {}
     onCreateHeader(parent, key, item) {
         const th = this.createHeaderElement(item);
         parent.appendChild(th);
@@ -267,7 +275,26 @@ class PowerTableList {
                 if (isReady) this.ready();
                 this.rows();
                 this.setSortHeder();
+                this.afterLoaded();
+
+                const resultNum = document.getElementById(this.elementIds.result_num);
+                if (resultNum) resultNum.textContent = this.item_nodes.length;
             })
+        } else if (this.mode == 'json') {            
+            this.data = this.json['data'];
+            this.columns_map = this.json['columns_map'];
+            this.onLoad(this.json);
+    
+            this.createNodes();
+            this.startIndex = 0;            
+            this.totalRows = this.item_nodes.length;
+            if (isReady) this.ready();
+            this.rows();
+            this.setSortHeder();
+            this.afterLoaded();
+
+            const resultNum = document.getElementById(this.elementIds.result_num);
+            if (resultNum) resultNum.textContent = this.item_nodes.length;
         }
     }
 
@@ -278,11 +305,11 @@ class PowerTableList {
         const endIndex = Math.min(this.startIndex + this.visibleRows, this.totalRows);
         this.spacerTop.style.height = `${this.startIndex * this.rowHeight}px`;
         this.spacerBottom.style.height =
-            `${(this.totalRows - endIndex) * this.rowHeight}px` - ListHeader.height;
-        if (this.item_nodes.length > 0) {
+            `${(this.totalRows - endIndex) * this.rowHeight}px` - ListHeader.height;            
+        if (this.item_nodes.length > 0) {            
             for (let i = 0; i < this.visibleRows; i++) {
                 const currentIndex = this.startIndex + i;
-                if (currentIndex < this.totalRows) {
+                if (currentIndex < this.totalRows) {                    
                     const row = this.item_nodes.slice(currentIndex) ?? [];
                     if (row.length > 0) ListBody.appendChild(...row);
                     const viewElements = ListBody.querySelectorAll('.view');
@@ -348,7 +375,7 @@ class PowerTableList {
         }
 
         // Content
-        for (let i = 0; i < this.data.length; i++) {
+        for (let i = 0; i < this.data.length; i++) {            
             const item = this.data[i];
             const tr = document.createElement('tr');
             tr.dataset.id = item['id'];
@@ -359,6 +386,7 @@ class PowerTableList {
             this.item_nodes.push(tr);
         }
         if (this.sortKey && this.useSort) this.sortItemNodes(this.sortKey, this.sortOrder);
+        this.createdNodes(columnKeys, ListHeader, ListBody);
     }
 
     createHeaderElement(item) {

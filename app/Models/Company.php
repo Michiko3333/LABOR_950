@@ -51,6 +51,12 @@ class Company extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function employees()
+    {
+        $branch_ids = $this->branch()->select('id')->where('delete_flg', 0)->get()->pluck('id')->toArray();
+        return Employee::whereIn('branch_id', $branch_ids);
+    }
+
     public function contracted_bank()
     {
         return $this->hasMany(Contracted_bank::class);

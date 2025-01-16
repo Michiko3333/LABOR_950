@@ -49,6 +49,8 @@ class WagesLedgerEditor extends Component
     public $overtime_names = [];
     public $allowance_names = [];
 
+    public $bonus_salary_names = [];
+
     public $disablePrev = true;
     public $disableNext = true;
 
@@ -118,6 +120,7 @@ class WagesLedgerEditor extends Component
         $this->attendance_column = AttendanceColumns::select('id', 'key', 'name')
             ->where('is_ledger', 1)
             ->where('delete_flg', 0)
+            ->orderBy('ledger_order')
             ->get();
         $this->attendance_column_names = $this->attendance_column->pluck('name', 'key')->toArray();
         $attendance_column_keys = $this->attendance_column->pluck('key')->toArray();
@@ -171,11 +174,16 @@ class WagesLedgerEditor extends Component
                 if (empty($attendance_data)) $attendance_data = [];
                 else $attendance_data = $attendance_data->toArray();
                 $d['atd_month'][$month] = array_merge($base_atd_month, $attendance_data);
+                $d['atd_month'][$month]['late_days'] = (int) $d['atd_month'][$month]['late_days'] ?? 0;
+                $d['atd_month'][$month]['late_days'] += (int) $d['atd_month'][$month]['early_days'] ?? 0;
+
+                $d['atd_month'][$month]['late_time'] = (int) $d['atd_month'][$month]['late_time'] ?? 0;
+                $d['atd_month'][$month]['late_time'] += (int) $d['atd_month'][$month]['early_time'] ?? 0;
 
                 $carbon_month_start->addMonth();
             }
 
-            $bonus_month_tmp = $wage->where('employee_id', $employee_id)->where('wage_type', 2)->pluck('month')->toArray();
+            $bonus_month_tmp = $wage->where('employee_id', $employee_id)->where('wage_type', 2)->where('hide_bonus', 0)->pluck('month')->toArray();
             $this->bonus_month_order = [];
             foreach ($bonus_month_tmp as $date) {
                 $date = Carbon::createFromFormat('Y-m-d', $date);
@@ -188,17 +196,30 @@ class WagesLedgerEditor extends Component
                     ])
                     ->where('wage_type', 2)
                     ->first();
+
                 $this->bonus_month_order[] = $bonus_month;
-                $d['bonus_month'][$bonus_month] = $bonus_data->toArray();
+                $bonus_data = $bonus_data->toArray();
+                foreach ($bonus_data['salary'] as $key => $value) {
+                    $this->bonus_salary_names[] = $value['name'];
+                    $bonus_data['salary_values'][$value['name']] = $value['amount'];
+                }
+                $d['bonus_month'][$bonus_month] = $bonus_data;
             }
 
             $this->data[$employee_id] = $d;
             if ($i === 0) $this->current_id = $employee_id;
         }
 
+        unset($this->attendance_column_names['early_days']);
+        unset($this->attendance_column_names['early_time']);
+        $this->attendance_column_names['late_days'] = '遅刻・早退日数';
+        $this->attendance_column_names['late_time'] = '遅刻・早退時間';
+
         $this->salary_names = array_unique($this->salary_names, SORT_STRING);
         $this->overtime_names = array_unique($this->overtime_names, SORT_STRING);
         $this->allowance_names = array_unique($this->allowance_names, SORT_STRING);
+        $this->bonus_salary_names = array_unique($this->bonus_salary_names, SORT_STRING);
+
 
         $labor = WageInsuranceColumn::select('keys', 'type')->where('company_id', $current_company->id)
             ->where('employee_id', $current_user->id)
@@ -303,7 +324,8 @@ class WagesLedgerEditor extends Component
                 'bonus_column_names' => $this->bonus_column_names,
                 'salary_names' => $this->salary_names,
                 'overtime_names' => $this->overtime_names,
-                'allowance_names' => $this->allowance_names
+                'allowance_names' => $this->allowance_names,
+                'bonus_salary_names' => $this->bonus_salary_names,
             ], $this->month_order);
 
 
@@ -374,6 +396,18 @@ class WagesLedgerEditor extends Component
         }
         return $sum;
     }
+    public function getControllableRowSumBonus($key, $name)
+    {
+        $month_list = $this->currentData('bonus_month');
+        $sum = 0;
+        foreach ($month_list as $month) {
+            foreach ($month[$key] as $k => $value) {
+                if ($k != $name) continue;
+                $sum += (int) $value ?? 0;
+            }
+        }
+        return $sum;
+    }
     public function getAddtionSumRow($is_bonus = false)
     {
         $sum = 0;
@@ -393,7 +427,6 @@ class WagesLedgerEditor extends Component
     {
         $query = $this->wage_column->where('calc', 1);
         if ($is_bonus) $query = $query->where('hide_bonus', 0);
-        $addition_keys = $query->pluck('key')->toArray();
 
         $target = 'month';
         if ($is_bonus) $target = 'bonus_month';
@@ -401,20 +434,10 @@ class WagesLedgerEditor extends Component
         $month_list = $this->currentData($target);
         $month_data = $month_list[$month];
         $addition = 0;
-        foreach ($addition_keys as $key_name) {
-            $addition += (int) $month_data[$key_name] ?? 0;
-        }
-        if (!$is_bonus) {
-            foreach ($month_data['salary_values'] as $amount) {
-                $addition += (int) $amount ?? 0;
-            }
-            foreach ($month_data['overtime_values'] as $amount) {
-                $addition += (int) $amount ?? 0;
-            }
-            foreach ($month_data['allowance_values'] as $amount) {
-                $addition += (int) $amount ?? 0;
-            }
-        }
+
+        $addition += (int) $month_data['taxable_paymment'] ?? 0;
+        $addition += (int) $month_data['non_taxable_paymment'] ?? 0;
+
         return $addition;
     }
 
@@ -524,6 +547,22 @@ class WagesLedgerEditor extends Component
             if (!is_bool($key)) {
                 unset($this->allowance_names[$key]);
                 $this->allowance_names = array_values($this->allowance_names);
+            }
+        }
+    }
+
+    public function removeAdditionBonus($name, $type)
+    {
+        foreach ($this->data as &$item) {
+            foreach ($this->bonus_month_order as $month) {
+                unset($item['bonus_month'][$month][$type][$name]);
+            }
+        }
+        if ($type == 'salary_values') {
+            $key = array_search($name, $this->bonus_salary_names);
+            if (!is_bool($key)) {
+                unset($this->bonus_salary_names[$key]);
+                $this->bonus_salary_names = array_values($this->bonus_salary_names);
             }
         }
     }

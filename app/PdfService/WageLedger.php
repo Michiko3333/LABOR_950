@@ -31,6 +31,7 @@ class WageLedger
     private $salary_names = [];
     private $overtime_names = [];
     private $allowance_names = [];
+    private $bonus_salary_names = [];
 
     public function __construct($data, $month_order)
     {
@@ -41,6 +42,7 @@ class WageLedger
         $this->salary_names = $data['salary_names'];
         $this->overtime_names = $data['overtime_names'];
         $this->allowance_names = $data['allowance_names'];
+        $this->bonus_salary_names = $data['bonus_salary_names'];
 
         $this->month_order = $month_order;
         $this->wage_column = WageColumns::select('id', 'key', 'name', 'calc', 'hide_bonus')
@@ -52,7 +54,7 @@ class WageLedger
         $this->attendance_column = AttendanceColumns::select('id', 'key', 'name')
             ->where('is_ledger', 1)
             ->where('delete_flg', 0)
-            ->orderBy('order')
+            ->orderBy('ledger_order')
             ->get();
 
         $template = Storage::path('wage-template/ledger-format.xlsx');
@@ -97,14 +99,14 @@ class WageLedger
             $sheet = $this->spreadsheet->getSheetByName($employee_name);
 
             $sheet->setCellValue('B5', $carbon_start->format('Y年m月') . '～' . $carbon_end->format('Y年m月'));
-            $sheet->setCellValue('F5', $current_company->name);
-            $sheet->setCellValue('I5', $branch_department);
-            $sheet->setCellValue('L5', $employee_managerial_position);
-            $sheet->setCellValue('O5', $employee_no);
-            $sheet->setCellValue('P5', $employee_data->last_name . ' ' . $employee_data->first_name);
-            $sheet->setCellValue('R5', $employee_sex);
-            $sheet->setCellValue('S5', $employee_birthday);
-            $sheet->setCellValue('U5', $employee_hired_date);
+            $sheet->setCellValue('G5', $current_company->name);
+            $sheet->setCellValue('J5', $branch_department);
+            $sheet->setCellValue('M5', $employee_managerial_position);
+            $sheet->setCellValue('P5', $employee_no);
+            $sheet->setCellValue('R5', $employee_data->last_name . ' ' . $employee_data->first_name);
+            $sheet->setCellValue('T5', $employee_sex);
+            $sheet->setCellValue('U5', $employee_birthday);
+            $sheet->setCellValue('W5', $employee_hired_date);
 
             $month_i = 0;
             $month_cols = ['D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
@@ -115,32 +117,93 @@ class WageLedger
             }
 
             $rowIndex = 11;
+            $base_amount = $this->wage_column->where('key', 'wage_base_amount')->first();
+            $sheet->setCellValue('C' . $rowIndex, $base_amount['name']);
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data[$base_amount['key']] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
 
-            $wage_addition = $this->wage_column->where('calc', 1)->toArray();
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            $sheet->setCellValue('R' . $rowIndex, $base_amount['name']);
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['wage_base_amount']);
+                $bonus_month_i++;
+            }
 
-            foreach ($wage_addition as $wage_col) {
-                $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('C' . $rowIndex, $wage_col['name']);
+            $rowIndex++;
 
+            foreach ($this->overtime_names as $key_name) {
+                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
+                $sheet->setCellValue('C' . $rowIndex, $key_name);
                 $month_i = 0;
                 foreach ($this->month_order as $month) {
                     $wage_data = $wage['month'][$month];
                     $col = $month_cols[$month_i];
-                    $sheet->setCellValue($col . $rowIndex, $wage_data[$wage_col['key']] ?? '');
+                    $overtime_values = $wage_data['overtime_values'];
+                    if (in_array($key_name, array_keys($overtime_values))) {
+                        $sheet->setCellValue($col . $rowIndex, $overtime_values[$key_name] ?? '');
+                    }
                     $month_i++;
                 }
+
                 $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-                $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
+                $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
                 $rowIndex++;
             }
 
-            // add empty
+
+            foreach ($this->allowance_names as $key_name) {
+                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
+                $sheet->setCellValue('C' . $rowIndex, $key_name);
+                $month_i = 0;
+                foreach ($this->month_order as $month) {
+                    $wage_data = $wage['month'][$month];
+                    $col = $month_cols[$month_i];
+                    $allowance_values = $wage_data['allowance_values'];
+                    if (in_array($key_name, array_keys($allowance_values))) {
+                        $sheet->setCellValue($col . $rowIndex, $allowance_values[$key_name] ?? '');
+                    }
+                    $month_i++;
+                }
+
+                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+                $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+                $rowIndex++;
+            }
+
+            foreach ($this->bonus_salary_names as $key_name) {
+                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
+                $sheet->setCellValue('R' . $rowIndex, $key_name);
+                $bonus_month_i = 0;
+                $bonus_cols = ['S', 'T', 'U', 'V'];
+                foreach ($wage['bonus_month'] as $key => $item) {
+                    if ($bonus_month_i > 3) break;
+                    $salaries = $item['salary_values'];
+                    $col = $bonus_cols[$bonus_month_i];
+                    $sheet->setCellValue($col . $rowIndex, $salaries[$key_name]);
+                    $bonus_month_i++;
+                }
+                $sheet->setCellValue('W' . $rowIndex, '=SUM(S' . $rowIndex . ':V' . $rowIndex . ')');
+                $sheet->setCellValue('X' . $rowIndex, '=W' . $rowIndex);
+                $rowIndex++;
+            }
+
             $sheet->insertNewRowBefore($rowIndex, 1);
             $rowIndex++;
 
-            // customs
             foreach ($this->salary_names as $key_name) {
-                $sheet->insertNewRowBefore($rowIndex, 1);
+
+                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
                 $sheet->setCellValue('C' . $rowIndex, $key_name);
 
                 $month_i = 0;
@@ -155,68 +218,44 @@ class WageLedger
                 }
 
                 $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-                $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
-                $rowIndex++;
-            }
-            foreach ($this->overtime_names as $key_name) {
-                $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('C' . $rowIndex, $key_name);
-
-                $month_i = 0;
-                foreach ($this->month_order as $month) {
-                    $wage_data = $wage['month'][$month];
-                    $col = $month_cols[$month_i];
-                    $overtime_values = $wage_data['overtime_values'];
-                    if (in_array($key_name, array_keys($overtime_values))) {
-                        $sheet->setCellValue($col . $rowIndex, $overtime_values[$key_name] ?? '');
-                    }
-                    $month_i++;
-                }
-
-                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-                $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
-                $rowIndex++;
-            }
-            foreach ($this->allowance_names as $key_name) {
-                $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('C' . $rowIndex, $key_name);
-
-                $month_i = 0;
-                foreach ($this->month_order as $month) {
-                    $wage_data = $wage['month'][$month];
-                    $col = $month_cols[$month_i];
-                    $allowance_values = $wage_data['allowance_values'];
-                    if (in_array($key_name, array_keys($allowance_values))) {
-                        $sheet->setCellValue($col . $rowIndex, $allowance_values[$key_name] ?? '');
-                    }
-                    $month_i++;
-                }
-
-                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-                $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
+                $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
                 $rowIndex++;
             }
 
-            $sheet->insertNewRowBefore($rowIndex, 1);
             $rowIndex++;
-
-            // 賞与
-            $bonus_month_i = 0;
-            $bonus_cols = ['Q', 'R', 'S', 'T'];
-            $sheet->setCellValue('C' . $rowIndex, '特別手当');
-            foreach ($wage['bonus_month'] as $key => $item) {
-                if ($bonus_month_i > 3) break;
-                $col = $bonus_cols[$bonus_month_i];
-                $sheet->setCellValue($col . '8', $key . '月分');
-                $sheet->setCellValue($col . $rowIndex, $item['wage_base_amount']);
-                $bonus_month_i++;
+            // 支給控除
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['absence_deduction'] ?? '');
+                $tax_month_i++;
             }
-            $sheet->setCellValue('U' . $rowIndex, '=SUM(Q' . $rowIndex . ':T' . $rowIndex . ')');
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
             $rowIndex++;
-            $sheet->insertNewRowBefore($rowIndex, 1);
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['late_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
             $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['other_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
 
-            // 課税非課税
+
+            $rowIndex += 2;
             $tax_month_i = 0;
             foreach ($this->month_order as $month) {
                 $wage_data = $wage['month'][$month];
@@ -225,7 +264,18 @@ class WageLedger
                 $tax_month_i++;
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['taxable_paymment']);
+                $bonus_month_i++;
+            }
+
             $rowIndex++;
             $tax_month_i = 0;
             foreach ($this->month_order as $month) {
@@ -235,77 +285,297 @@ class WageLedger
                 $tax_month_i++;
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['non_taxable_paymment']);
+                $bonus_month_i++;
+            }
+
+
             $rowIndex += 2;
-
-            // 保険対象賃金
-            $ins_month_i = 0;
+            $tax_month_i = 0;
             foreach ($this->month_order as $month) {
                 $wage_data = $wage['month'][$month];
-                $col = $month_cols[$ins_month_i];
-                $sheet->setCellValue($col . $rowIndex, $wage_data['labor_insurance_target'] ?? '');
-                $ins_month_i++;
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['labor_insurance_target'] ?? '-');
+                $tax_month_i++;
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex);
             $rowIndex++;
-            $ins_month_i = 0;
+            $tax_month_i = 0;
             foreach ($this->month_order as $month) {
                 $wage_data = $wage['month'][$month];
-                $col = $month_cols[$ins_month_i];
-                $sheet->setCellValue($col . $rowIndex, $wage_data['social_insurance_target'] ?? '');
-                $ins_month_i++;
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['social_insurance_target'] ?? '-');
+                $tax_month_i++;
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
-            $rowIndex += 4;
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex);
 
-            // 控除
-            $wage_deduction = $this->wage_column->where('calc', 2)->toArray();
-            foreach ($wage_deduction as $wage_col) {
-                $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('C' . $rowIndex, $wage_col['name']);
 
-                $month_i = 0;
-                foreach ($this->month_order as $month) {
-                    $wage_data = $wage['month'][$month];
-                    $col = $month_cols[$month_i];
-                    $sheet->setCellValue($col . $rowIndex, $wage_data[$wage_col['key']] ?? '');
-                    $month_i++;
-                }
-
-                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-                $sheet->setCellValue('V' . $rowIndex, '=P' . $rowIndex . '+U' . $rowIndex . '');
-
-                $rowIndex++;
-                if ($wage_col['key'] == 'other_insurance_deduction') {
-                    $rowIndex += 3;
-                }
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['health_insurance_deduction'] ?? '');
+                $tax_month_i++;
             }
-            $rowIndex += 4;
-
-            // 勤怠情報
-            $attendance_list = $this->attendance_column->toArray();
-            $count = 0;
-            foreach ($attendance_list as $atd_col) {
-                if ($count > 6) $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('C' . $rowIndex, $atd_col['name']);
-                $month_i = 0;
-                foreach ($this->month_order as $month) {
-                    $atd_data = $wage['atd_month'][$month];
-                    $col = $month_cols[$month_i];
-                    $sheet->setCellValue($col . $rowIndex, $atd_data[$atd_col['key']] ?? '');
-                    $month_i++;
-                }
-                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-
-                if ($count == 1) {
-                    $sheet->setCellValue('R' . $rowIndex, $wage['remarks']);
-                }
-
-                $rowIndex++;
-                $count++;
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['health_insurance_deduction']);
+                $bonus_month_i++;
             }
+
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['nursing_care_insurance_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['nursing_care_insurance_deduction']);
+                $bonus_month_i++;
+            }
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['welfare_pension_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['welfare_pension_deduction']);
+                $bonus_month_i++;
+            }
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['welfare_pension_insurance_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['welfare_pension_insurance_deduction']);
+                $bonus_month_i++;
+            }
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['employment_insurance_deduction'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['employment_insurance_deduction']);
+                $bonus_month_i++;
+            }
+
+
+            $rowIndex += 4;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['resident_tax'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['resident_tax']);
+                $bonus_month_i++;
+            }
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['withholding_tax'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $bonus_month_i = 0;
+            $bonus_cols = ['S', 'T', 'U', 'V'];
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $sheet->setCellValue($col . '8', $key . '月分');
+                $sheet->setCellValue($col . $rowIndex, $item['withholding_tax']);
+                $bonus_month_i++;
+            }
+
+
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['mutual_aid'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+            $rowIndex++;
+            $tax_month_i = 0;
+            foreach ($this->month_order as $month) {
+                $wage_data = $wage['month'][$month];
+                $col = $month_cols[$tax_month_i];
+                $sheet->setCellValue($col . $rowIndex, $wage_data['asset_saving'] ?? '');
+                $tax_month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+
+
+            $rowIndex += 5;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['actual_working_days'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['paid_leave'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['absent_days'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $sheet->setCellValue('R' . $rowIndex, $wage['remarks'] ?? '');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['late_days'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['working_time'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['working_off_time'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['overtime'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['overtime_late'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+
+            $rowIndex++;
+            $month_i = 0;
+            foreach ($this->month_order as $month) {
+                $atd_data = $wage['atd_month'][$month];
+                $col = $month_cols[$month_i];
+                $sheet->setCellValue($col . $rowIndex, $atd_data['late_time'] ?? '');
+                $month_i++;
+            }
+            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
         }
     }
 

@@ -17,12 +17,17 @@
         </div>
         <h1 class="mt-0">勤怠情報</h1>
 
+        <div style="padding: 1em 0;">
+            <a href="{{ route('attendances.upload') }}" class="ui button primary">インポート</a>
+        </div>
+
         <!-- Power Table List -->
         <div id="pt" class="ui card full card-shadow item-0">
             <div class="content">
                 <div class="pt-actions-top">
                     <button class="ui button small" id="pt-filter-button">絞り込み・表示設定</button>
                 </div>
+                <div id="pt-condition-message" class="ui tiny message"></div>
                 <div id="pt-list" class="power-table">
                     <table>
                         <thead>
@@ -33,6 +38,7 @@
                     </table>
                 </div>
                 <div class="pt-actions-bottom">
+                    <div style="float:left; padding: 1.1em 0.5em;"><span id="pt-result-num">0</span>件のデータが見つかりました</div>
                     <button class="ui button" id="pt-edit-button">編集</button>
                     <button class="ui button" id="pt-cancel-button">キャンセル</button>
                     <button class="ui button primary" id="pt-submit-button">保存</button>
@@ -52,7 +58,7 @@
                     <div class="ui bottom attached tab segment" data-tab="filter1">
                         <div class="fields">
                             <div class="four wide field">
-                                <label for="attendance_year_from">年</label>
+                                <label for="attendance_year_from">年（from）</label>
                                 <div class="ui calendar" id="attendance-year_calendar_from"
                                     class="attendance_year_calendar">
                                     <div class="ui input left icon">
@@ -63,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="four wide field">
-                                <label for="attendance_month_from">月</label>
+                                <label for="attendance_month_from">月（from）</label>
                                 <select class="ui fluid dropdown attendance" name="attendance_month_from">
                                     <option value="">指定なし</option>
                                     @for ($i = 1; $i < 13; $i++)
@@ -80,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="four wide field">
-                                <label for="attendance_year_to">年</label>
+                                <label for="attendance_year_to">年（To）</label>
                                 <div class="ui calendar" id="attendance-year_calendar_to"
                                     class="attendance_year_calendar">
                                     <div class="ui input left icon">
@@ -91,8 +97,8 @@
                                 </div>
                             </div>
                             <div class="four wide field">
-                                <label for="attendance_month_to">月</label>
-                                <select class="ui fluid dropdown attendance" name="attendance_month__to">
+                                <label for="attendance_month_to">月（To）</label>
+                                <select class="ui fluid dropdown attendance" name="attendance_month_to">
                                     <option value="">指定なし</option>
                                     @for ($i = 1; $i < 13; $i++)
                                         <option value="{{ $i }}">{{ $i }}月</option>
@@ -136,7 +142,7 @@
                                 </select>
                             </div>
                             <div class="four wide field">
-                                <label for="work_type">勤務形態</label>
+                                <label for="work_type">勤務区分</label>
                                 <select class="ui fluid dropdown attendance" name="work_type">
                                     <option value="">指定なし</option>
                                     @foreach ($work_type as $item)
@@ -207,6 +213,7 @@
                 $('#pt-filter')
                     .modal({
                         onApprove: () => {
+                            attendanceFilter.onApprove();
                             attendanceFilter.reload();
                         },
                         onHidden: () => {

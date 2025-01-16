@@ -111,9 +111,6 @@
                 width: 100%;
                 padding: 1em 1em;
                 gap: 1em;
-
-                max-height: 300px;
-                overflow-y: scroll;
                 margin-bottom: 1em;
             }
 
@@ -201,6 +198,14 @@
             .table-wage table #wage-list-header:not(.edit) th.desc::after {
                 border-top-color: #555;
             }
+
+            #wage-condition-message {
+                display: none;
+            }
+
+            #wage-condition-message.show {
+                display: block;
+            }
         </style>
     @endslot
     <section class="content">
@@ -211,12 +216,18 @@
         </div>
         <h1 class="mt-0">賃金情報</h1>
 
+        <div style="padding: 1em 0;">
+            <a href="{{ route('wages.upload') }}" class="ui button primary">インポート</a>
+        </div>
+
         <div id="wage" class="ui card full card-shadow item-0">
             <div class="content">
                 <div class="wage-actions-top">
                     <button class="ui button small" id="wage-filter-button">絞り込み・表示設定</button>
                     <button class="ui button small" id="wage-insurance-button">保険対象賃金設定</button>
+
                 </div>
+                <div id="wage-condition-message" class="ui tiny message"></div>
                 <div id="wage-list" class="table-wage">
                     <table>
                         <thead>
@@ -227,6 +238,8 @@
                     </table>
                 </div>
                 <div class="wage-actions-bottom">
+                    <div style="float:left; padding: 1.1em 0.5em;"><span id="wage-result-num">0</span>件のデータが見つかりました
+                    </div>
                     <button class="ui button" id="wage-edit-button">編集</button>
                     <button class="ui button hidden" id="wage-cancel-button">キャンセル</button>
                     <button class="ui button primary hidden" id="wage-submit-button">保存</button>
@@ -269,8 +282,8 @@
                                 <label for="wage_type">賃金区分</label>
                                 <select class="ui fluid dropdown wage" name="wage_type">
                                     <option value="">指定なし</option>
-                                    <option value="0">給与</option>
-                                    <option value="1">賞与</option>
+                                    <option value="給与">給与</option>
+                                    <option value="賞与">賞与</option>
                                 </select>
                             </div>
                             <div class="four wide field">

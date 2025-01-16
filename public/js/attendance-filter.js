@@ -31,7 +31,7 @@ class AttendanceFilter extends PowerTableFilter {
         this.onLoadedShowlist();
     }
 
-    setFilterConfig(j) {
+    setFilterConfig(j) {        
         this.filter = {
             attendance_full_name: '',
             attendance_branch: null,
@@ -94,6 +94,34 @@ class AttendanceFilter extends PowerTableFilter {
             if (input) input.checked = true;
         });
 
+        // 絞り込み条件を表示        
+        const condition_preview = [];
+        for (let i = 0; i < Object.keys(json).length; i++) {
+            const key = Object.keys(json)[i];
+            let name = key;            
+            const q = document.getElementById(this.PowerList.elementIds.filter).querySelector('label[for="' + key + '"]');
+            if (q) name = q.textContent;            
+            if (json[key] && typeof json[key] == 'string' && !/^show.*/.test(key)) {
+                condition_preview.push({
+                    name: name,
+                    text: json[key]
+                });
+            }
+        }
+        
+        const box = document.getElementById('pt-condition-message');
+            
+        box.innerText = '';
+        if (condition_preview.length > 0) {
+            let str = '';
+            condition_preview.forEach(el => {
+                str = str + el.name + '→' + el.text + ', ';
+            });
+            box.innerText = str.slice(0, -2);
+            box.classList.add('show');
+        } else {
+            box.classList.remove('show');
+        }
     }
 
     setShowList() {

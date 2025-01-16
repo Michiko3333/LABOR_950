@@ -49,6 +49,9 @@ use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
 use App\Http\Controllers\WagesEmployeeController;
 use App\Http\Controllers\AttendanceEmployeeController;
+use App\Http\Controllers\ImportAttendanceController;
+use App\Http\Controllers\ImportEmployeeController;
+use App\Http\Controllers\ImportWageController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
@@ -333,6 +336,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/employee/attendances/list/filter-remove', [AttendanceEmployeeController::class, 'attendance_filter_remove'])->name('attendances.filter.remove');
         Route::get('/employee/attendances/list/filter-showlist', [AttendanceEmployeeController::class, 'attendance_filter_showlist'])->name('attendances.filter.showlist');
 
+        Route::get('/employee/wages/upload', [ImportWageController::class, 'index'])->name('wages.upload');
+        Route::get('/employee/wages/upload/columns', [ImportWageController::class, 'column_data'])->name('wages.upload.colmuns');
+        Route::post('/employee/wages/upload', [ImportWageController::class, 'upload'])->name('wages.upload.post');
+        Route::get('/employee/attendance/upload', [ImportAttendanceController::class, 'index'])->name('attendances.upload');
+        Route::get('/employee/attendance/upload/columns', [ImportAttendanceController::class, 'column_data'])->name('attendances.upload.colmuns');
+        Route::post('/employee/attendance/upload', [ImportAttendanceController::class, 'upload'])->name('attendances.upload.post');
+        Route::get('/employee/upload', [ImportEmployeeController::class, 'index'])->name('employees.upload');
+        Route::get('/employee/upload/columns', [ImportEmployeeController::class, 'column_data'])->name('employees.upload.colmuns');
+        Route::post('/employee/upload', [ImportEmployeeController::class, 'upload'])->name('employees.upload.post');
 
 
         //最終試験用

@@ -87,6 +87,24 @@
                 width: 100%;
                 text-align: right;
             }
+
+            .ui.table>tbody>tr>td {
+                padding: 0;
+            }
+
+            .ui.table>tbody>tr.label>td {
+                padding: 0.78em;
+            }
+
+            .ui.table>tbody>tr>td input {
+                width: 100%;
+                height: 100%;
+            }
+
+            .ui.table>tbody>tr>td:first-child,
+            .ui.table>tbody>tr>td:last-child {
+                padding: 0.78em;
+            }
         </style>
     @endslot
     <section class="content">

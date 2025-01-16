@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('employee_id')->nullable()->comment('従業員ID');
             $table->string('employee_no')->comment('社員番号');
             $table->string('employee_name')->comment('所属部署');
-            $table->string('branch_name')->comment('部署');
+            $table->string('branch_name')->comment('所属事業所');
             $table->string('departments')->comment('部署');
             $table->string('employment_type')->comment('雇用区分');
             $table->string('work_type')->nullable()->comment('勤務区分');

@@ -86,6 +86,21 @@ class PowerTableFilter {
         }
     }
 
+    onApprove() {
+        const formData = new FormData(document.forms[this.elementIds.form]);
+        const data = {};
+        for (let d of formData.entries()) {
+            const key = d[0];
+            const val = d[1];
+            if (/.*\[\]$/.test(key)) continue;
+            data[key] = val;
+        }
+        
+        this.filter = {
+            ...data
+        }
+    }
+
     onHidden() {
         this.setFilterConfig(this.filter);
     }

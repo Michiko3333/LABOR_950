@@ -131,3 +131,11 @@
 .power-table table #pt-list-header:not(.edit) th.desc::after {
     border-top-color: #555;
 }
+
+#pt-condition-message {
+    display: none;
+}
+
+#pt-condition-message.show {
+    display: block;
+}
