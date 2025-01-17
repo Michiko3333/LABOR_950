@@ -187,14 +187,22 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0',
             ],
             [
-                'id' => '20', 
-                'procedure_id' => '4950013521030000', 
-                'procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届', 
+                'id' => '20',
+                'procedure_id' => '4950013521030000',
+                'procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届',
                 'formal_procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）／電子申請',
                 'abbreviation' => '健・厚：産休取得者申出書',
-                'procedure_type' => NULL, 
-                'delete_flg' => '0', 
-                
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '26',
+                'procedure_id' => '4950013521033000',
+                'procedure_name' => '厚生年金保険養育期間標準報酬月額特例申出書/終了届',
+                'formal_procedure_name' => '厚生年金保険養育期間標準報酬月額特例申出書/終了届',
+                'abbreviation' => '厚：特例申出書',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
             ]
         ]);
     }

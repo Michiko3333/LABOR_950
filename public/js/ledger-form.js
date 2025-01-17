@@ -66,7 +66,7 @@ $('#ledger-preview-btn').click(() => {
 
             if (formDataObject.hasOwnProperty(name)) {
                 if ($element.is('input[type="checkbox"]')) {
-                    if (formDataObject[name] == 1) {
+                    if (formDataObject[name] != '') {
                         $element.prop('disabled', false);
                         $element.prop('checked', true);
                     }
