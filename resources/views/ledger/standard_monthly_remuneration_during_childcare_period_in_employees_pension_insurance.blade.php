@@ -117,6 +117,9 @@
                     submissionYear.style.cursor = 'not-allowed';
                     submissionMonth.style.cursor = 'not-allowed';
                     submissionDay.style.cursor = 'not-allowed';
+                    submissionYear.style.pointerEvents = 'none';
+                    submissionMonth.style.pointerEvents = 'none';
+                    submissionDay.style.pointerEvents = 'none';
                     submissionYear.style.backgroundColor = '#ffffff';
                     submissionMonth.style.backgroundColor = '#ffffff';
                     submissionDay.style.backgroundColor = '#ffffff';
@@ -216,6 +219,7 @@
                     const updateTextAreas = () => {
                         if (branchConfirmYes.checked) {
                             textAreas.forEach(area => {
+                                area.value = "";
                                 area.disabled = true;
                                 area.style.backgroundColor = '#ffffff';
                             });
