@@ -164,29 +164,27 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($userPermission->isReadableFor(3))
-                                    <a href="{{ route('current_company_department_update') }}" class="item">
-
-                                        <div class="content">
-                                            <div class="header">組織・部署マスタ</div>
-                                        </div>
-                                    </a>
-                                @endif
-                                @if ($userPermission->isReadableFor(4))
-                                    <a href="{{ route('managerial_position') }}" class="item">
-
-                                        <div class="content">
-                                            <div class="header">役職マスタ</div>
-                                        </div>
-                                    </a>
-                                @endif
-                                <a class="item" style="pointer-events: none;">
+                                <a class="item mt-1" id="company-setting">
                                     <div class="content">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
+                                @if ($userPermission->isReadableFor(3))
+                                    <a href="{{ route('current_company_department_update') }}" class="item company-setting-list" style="display: none;">
+                                        <div class="content sub">
+                                            <div class="header">部署マスタ</div>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($userPermission->isReadableFor(4))
+                                    <a href="{{ route('managerial_position') }}" class="item company-setting-list" style="display: none;">
+                                        <div class="content sub">
+                                            <div class="header">役職マスタ</div>
+                                        </div>
+                                    </a>
+                                @endif
                                 @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
-                                    <a href="{{ route('qualifications') }}" class="item">
+                                    <a href="{{ route('qualifications') }}" class="item company-setting-list" style="display: none;">
                                         <div class="content sub">
                                             <div class="header">資格マスタ</div>
                                         </div>
@@ -211,7 +209,7 @@
                                 @if ($userPermission->isReadableFor(5))
                                     <a href="{{ route('employee') }}" class="item">
                                         <div class="content">
-                                            <div class="header">従業員一覧</div>
+                                            <div class="header">社員一覧</div>
                                         </div>
                                     </a>
                                 @endif
@@ -242,24 +240,24 @@
                                 @if ($userPermission->isReadableFor(7))
                                     <a href="{{ route('contract.index') }}" class="item">
                                         <div class="content">
-                                            <div class="header">労働契約書作成</div>
+                                            <div class="header">労働条件通知書兼契約書作成</div>
                                         </div>
                                     </a>
                                 @endif
-                                <a class="item" style="pointer-events: none;">
+                                <a class="item mt-1" id="employee-setting">
                                     <div class="content">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
                                 @if ($userPermission->isReadableFor(14))
-                                    <a href="{{ route('closure_information') }}" class="item">
+                                    <a href="{{ route('closure_information') }}" class="item employee-setting-list" style="display: none;">
                                         <div class="content sub">
                                             <div class="header">休業設定</div>
                                         </div>
                                     </a>
                                 @endif
                                 @if ($userPermission->isReadableFor(20))
-                                    <a href="{{ route('allowance') }}" class="item">
+                                    <a href="{{ route('allowance') }}" class="item employee-setting-list" style="display: none;">
                                         <div class="content sub">
                                             <div class="header">手当マスタ</div>
                                         </div>
@@ -301,11 +299,14 @@
                                         </div>
                                     </a>
                                 @endif
+                                <a class="item mt-1" id="procedure-setting">
+                                    <div class="content">
+                                        <div class="header">各種設定</div>
+                                    </div>
+                                </a>
                                 @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
-                                    <a href="{{ route('ledger.egov') }}" class="item">
-
-
-                                        <div class="content">
+                                    <a href="{{ route('ledger.egov') }}" class="item procedure-setting-list" style="display: none;">
+                                        <div class="content sub">
                                             <div class="header">e-Gov連携</div>
                                         </div>
                                     </a>
@@ -325,34 +326,39 @@
                     </div>
                     <div class="extra content">
                         <div class="ui middle aligned selection list">
-                            @if ($userPermission->isReadableFor(11))
-                                <a href="{{ route('calendar.index') }}" class="item">
+                            @if (
+                                $userPermission->isReadableFor(12) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('calendar.shift') }}" class="item">
                                     <div class="content">
-                                        <div class="header">カレンダー閲覧</div>
+                                        <div class="header">休日（出勤）カレンダー</div>
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(12))
-                                <a href="{{ route('calendar.shift') }}" class="item">
+                            @if ($userPermission->isReadableFor(11))
+                                <a href="{{ route('calendar.index') }}" class="item">
                                     <div class="content">
-                                        <div class="header">年間勤務予定表</div>
+                                        <div class="header">行事（業務）カレンダー</div>
+                                    </div>
+                                </a>
+                            @endif
+                            <a class="item mt-1" id="calendar-setting">
+                                <div class="content">
+                                    <div class="header">各種設定</div>
+                                </div>
+                            </a>
+                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('pickup.setting') }}" class="item calendar-setting-list" style="display: none;">
+                                    <div class="content sub">
+                                        <div class="header">Pick up設定</div>
                                     </div>
                                 </a>
                             @endif
                             @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
-                                <a href="{{ route('pickup.pickup') }}" class="item">
-                                    <div class="content">
+                                <a href="{{ route('pickup.pickup') }}" class="item calendar-setting-list" style="display: none;">
+                                    <div class="content sub">
                                         <div class="header">Pick upリスト</div>
-                                    </div>
-                                </a>
-                            @endif
-                            @if (
-                                $userPermission->isReadableFor(13) &&
-                                    $userPermission->isBasicDepartment() &&
-                                    $userPermission->getEmployeeStatus() !== 1)
-                                <a href="{{ route('pickup.setting') }}" class="item">
-                                    <div class="content">
-                                        <div class="header">Pick up設定</div>
                                     </div>
                                 </a>
                             @endif
@@ -369,6 +375,22 @@
         $('.control-panel-menu').each((index, val) => {
             const n = (index * 0.2) + 0.8;
             $(val).css('animation-delay', n + 's')
+        });
+    </script>
+    <script type="module">
+        $(document).ready(function () {
+            $("#company-setting").on("click", function () {
+                $(".company-setting-list").toggle();
+            });
+            $("#employee-setting").on("click", function () {
+                $(".employee-setting-list").toggle();
+            });
+            $("#procedure-setting").on("click", function () {
+                $(".procedure-setting-list").toggle();
+            });
+            $("#calendar-setting").on("click", function () {
+                $(".calendar-setting-list").toggle();
+            });
         });
     </script>
 </x-layout>
