@@ -487,7 +487,7 @@
                         font-size: 10px;
                         font-weight: 400px;
                         line-height: 24px;">
-                        個人番号
+                        ⑤個人番号
                     </p>
                 </SPAN>
                 <input class="person_number number_12" id="A6_2_1" name="mynumber_card_no"
@@ -507,7 +507,7 @@
                         font-size: 10px;
                         font-weight: 400px;
                         line-height: 24px;">
-                        基礎年金番号
+                        ⑤基礎年金番号
                     </p>
                 </SPAN>
                 <input class="person_number number_10" id="A6_2_2"  name="basic_pension_number"

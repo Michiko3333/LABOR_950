@@ -107,9 +107,9 @@
 
         <script type="module">
             $(document).ready(function() {
-                $('#A1_1').val('{{ old('submission_year') ?? $todaySet['year'] }}');
-                $('#A1_2').val('{{ old('submission_month') ?? $todaySet['month'] }}');
-                $('#A1_3').val('{{ old('submission_day') ?? $todaySet['day'] }}');
+                $('#A1_1').val('{{ old('submission_year') ?? $todaySet['year'] }}').css('background-color', '#ffffff').prop('readonly', true);
+                $('#A1_2').val('{{ old('submission_month') ?? $todaySet['month'] }}').css('background-color', '#ffffff').prop('readonly', true);
+                $('#A1_3').val('{{ old('submission_day') ?? $todaySet['day'] }}').css('background-color', '#ffffff').prop('readonly', true);
 
                 @if (isset($businessOwner))
                     $('#A4_3').val(
@@ -118,10 +118,11 @@
                 @endif
 
                 @if ($current_employee->role_id === 500)
-                    $('#A5_1').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}');
-                    $('#A5_2').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
+                    $('#A5_1').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}').css('background-color', '#ddeeff').prop('readonly', false);
+                    $('#A5_2').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}').prop('readonly', true);
                 @else
-                    $('#A5_1').prop('disabled', true);
+                    $('#A5_1').css('background-color', '#ffffff').prop('readonly', true);
+                    $('#A5_2').css('background-color', '#ffffff').prop('readonly', true);
                 @endif
             })
         </script>
