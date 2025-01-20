@@ -177,7 +177,6 @@ class LedgerSeeder extends Seeder
                 'procedure_type' => NULL,
                 'delete_flg' => '0',
             ],
-
             [
 
                 'id' => '19',
@@ -188,7 +187,6 @@ class LedgerSeeder extends Seeder
                 'procedure_type' => NULL,
                 'delete_flg' => '0',
             ],
-
             [
                 'id' => '20',
                 'procedure_id' => '4950013521030000',
@@ -213,6 +211,15 @@ class LedgerSeeder extends Seeder
                 'procedure_name' => '健康保険厚生年金保険産前産後休業終了時報酬月額変更届/厚生年金保険７０歳以上被用者産前産後休業終了時報酬月額相当額変更届',
                 'formal_procedure_name' => '健康保険厚生年金保険産前産後休業終了時報酬月額変更・厚生年金保険７０歳以上被用 者産前産後休業終了時報酬月額相当額変更届／電子申請 ',
                 'abbreviation' => '産前産後休業・７０歳以上被用：月額相当額変更届',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '25',
+                'procedure_id' => '4950013521035000',
+                'procedure_name' => '国民年金第3号被保険者関係届',
+                'formal_procedure_name' => '国民年金第３号被保険者関係届（２０２４年１２月以降手続き）／電子申請',
+                'abbreviation' => '国：第３号被保険者関係届',
                 'procedure_type' => NULL,
                 'delete_flg' => '0',
             ],

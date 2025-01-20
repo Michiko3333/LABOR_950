@@ -113,6 +113,7 @@ class LedgerEmployeeList extends BaseTable
             if ($spouse_country_id) {
                 $spouse_data['country_name'] = Country::where('id', $spouse_country_id)->value('country_name');
             }
+            $spouse_data['country_name'] = $spouse_prefecture_data['name'] ?? null;
         }
         if (!empty($spouse_data->birthday)) {
             $spouse_birthday = Carbon::parse($spouse_data->birthday);

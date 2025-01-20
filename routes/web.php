@@ -34,11 +34,15 @@ use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSepar
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 use App\Http\Controllers\Ledger\HealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\NationalPensionCategory3InsuredPersonNoticeController;
 use App\Http\Controllers\Ledger\ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController;
 use App\Http\Controllers\Ledger\MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController;
 use App\Http\Controllers\Ledger\StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController;
 use App\Http\Controllers\Ledger\MaternityLeaveApplicationOrChangeEndNoticeController;
 use App\Http\Controllers\Ledger\OldHealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController;
 use App\Http\Controllers\CompanyDepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
@@ -283,6 +287,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/ledger/4950013521019000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'post'])->name('ledger.4950013521019000_post');
         Route::get('/ledger/4950013521021000', [HealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013521021000');
         Route::post('/ledger/4950013521021000', [HealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013521021000_post');
+        Route::get('/ledger/4950013521035000', [NationalPensionCategory3InsuredPersonNoticeController::class, 'index'])->name('ledger.4950013521035000');
+        Route::post('/ledger/4950013521035000', [NationalPensionCategory3InsuredPersonNoticeController::class, 'post'])->name('ledger.4950013521035000_post');
         Route::get('/ledger/4950013521033000', [StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController::class, 'index'])->name('ledger.4950013521033000');
         Route::post('/ledger/4950013521033000', [StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController::class, 'post'])->name('ledger.4950013521033000_post');
         Route::get('/ledger/4950013521030000', [MaternityLeaveApplicationOrChangeEndNoticeController::class, 'index'])->name('ledger.4950013521030000');
