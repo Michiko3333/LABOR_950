@@ -14,6 +14,32 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['business_location'])) {
+            $data['business_location'] = mb_convert_kana($data['business_location'], 'AKS');
+            $data['business_location'] = str_replace(['-', '‐', '―'], '－', $data['business_location']);
+        }
+        if (isset($data['business_owner_name'])) {
+            $data['business_owner_name'] = mb_convert_kana($data['business_owner_name'], 'KS');
+        }
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
+        }
+        if (isset($data['insured_person_name_in_kana'])) {
+            $data['insured_person_name_in_kana'] = mb_convert_kana($data['insured_person_name_in_kana'], 'AKS');
+        }
+        if (isset($data['Insured_person_name_in_kanji'])) {
+            $data['Insured_person_name_in_kanji'] = mb_convert_kana($data['Insured_person_name_in_kanji'], 'AKS');
+        }
+
+        $this->merge($data);
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

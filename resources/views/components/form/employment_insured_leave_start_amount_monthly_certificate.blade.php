@@ -622,7 +622,7 @@
             tabindex="271"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:131px; max-width:131px; height:14px; ime-mode:active;"
             type="TEXT" id="J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6"
-            value="{{ old('employee_salary_notices1') }}" name="labor_consultant_submission_agency_name"
+            value="{{ old('labor_consultant_submission_agency_name') }}" name="labor_consultant_submission_agency_name"
             maxlength="12" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:253px; top:1282px; width:109px; line-height:36px; height:36px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT

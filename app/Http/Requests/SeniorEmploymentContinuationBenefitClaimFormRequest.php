@@ -19,29 +19,24 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
     {
         $data = $this->all();
 
-        if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
+        if (isset($data['fullname'])) {
+            $data['fullname'] = mb_convert_kana($data['fullname'], 'AKS');
         }
-        if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+        if (isset($data['fullname_kana'])) {
+            $data['fullname_kana'] = mb_convert_kana($data['fullname_kana'], 'KS');
         }
-        if (isset($data['new_name'])) {
-            $data['new_name'] = mb_convert_kana($data['new_name'], 'S');
-        }
-        if (isset($data['new_name_kana'])) {
-            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
-        }
-        if (isset($data['branch_name'])) {
-            $data['branch_name'] = mb_convert_kana($data['branch_name'], 'AS');
-            $data['branch_name'] = str_replace(['-', '‐', '―'], '－', $data['branch_name']);
+        if (isset($data['employer_name'])) {
+            $data['employer_name'] = mb_convert_kana($data['employer_name'], 'AKS');
         }
         if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AKS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
-        if (isset($data['agent_name'])) {
-            $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
+        if (isset($data['labor_consultant_name'])) {
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
+
+        $this->merge($data);
 
         return $data;
     }
@@ -93,6 +88,7 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
             'today_japan_era_month' => 'required|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'today_japan_era_day' => 'required|int|between:1,31|regex:/^[0-9]{1,2}$/u',
             'destination' => 'required|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'address_fullname' => ['string', 'max:32', new FullwidthAndMiscellaneousChars(true)],
             'employer_name' => ['nullable', 'string', 'max:64', new FullwidthAndMiscellaneousChars(true)],
             'headquarters_address' => ['nullable', 'string', 'max:63', new FullwidthAndMiscellaneousChars(true)],
             'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
@@ -273,6 +269,7 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
             'today_japan_era_month' => '証明・申請欄_年月日_月',
             'today_japan_era_day' => '証明・申請欄_年月日_日',
             'destination' => '公共職業安定所あて先',
+            'address_fullname' => '申請者氏名',
             'employer_name' => '事業主氏名',
             'headquarters_address' => '事業所名（所在地）',
             'labor_consultant_tel_area_code' => '社会保険労務士記載欄_電話番号_市外局番',

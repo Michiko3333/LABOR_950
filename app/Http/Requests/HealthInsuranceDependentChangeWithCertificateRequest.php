@@ -19,71 +19,73 @@ class HealthInsuranceDependentChangeWithCertificateRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['name'])) {
-            $data['name'] = mb_convert_kana($data['name'], 'S');
+            $data['name'] = mb_convert_kana($data['name'], 'AKS');
         }
         if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'KS');
         }
         if (isset($data['spouse_name'])) {
-            $data['spouse_name'] = mb_convert_kana($data['spouse_name'], 'S');
+            $data['spouse_name'] = mb_convert_kana($data['spouse_name'], 'AKS');
         }
         if (isset($data['spouse_name_kana'])) {
-            $data['spouse_name_kana'] = mb_convert_kana($data['spouse_name_kana'], 'S');
+            $data['spouse_name_kana'] = mb_convert_kana($data['spouse_name_kana'], 'AKS');
         }
         if (isset($data['spouse_alias_name'])) {
-            $data['spouse_alias_name'] = mb_convert_kana($data['spouse_alias_name'], 'S');
+            $data['spouse_alias_name'] = mb_convert_kana($data['spouse_alias_name'], 'AKS');
         }
         if (isset($data['spouse_alias_name_kana'])) {
-            $data['spouse_alias_name_kana'] = mb_convert_kana($data['spouse_alias_name_kana'], 'S');
+            $data['spouse_alias_name_kana'] = mb_convert_kana($data['spouse_alias_name_kana'], 'KS');
         }
         if (isset($data['other_dependent1_name'])) {
-            $data['other_dependent1_name'] = mb_convert_kana($data['other_dependent1_name'], 'S');
+            $data['other_dependent1_name'] = mb_convert_kana($data['other_dependent1_name'], 'AKS');
         }
         if (isset($data['other_dependent1_name_kana'])) {
-            $data['other_dependent1_name_kana'] = mb_convert_kana($data['other_dependent1_name_kana'], 'S');
+            $data['other_dependent1_name_kana'] = mb_convert_kana($data['other_dependent1_name_kana'], 'KS');
         }
         if (isset($data['other_dependent2_name'])) {
-            $data['other_dependent2_name'] = mb_convert_kana($data['other_dependent2_name'], 'S');
+            $data['other_dependent2_name'] = mb_convert_kana($data['other_dependent2_name'], 'AKS');
         }
         if (isset($data['other_dependent2_name_kana'])) {
-            $data['other_dependent2_name_kana'] = mb_convert_kana($data['other_dependent2_name_kana'], 'S');
+            $data['other_dependent2_name_kana'] = mb_convert_kana($data['other_dependent2_name_kana'], 'KS');
         }
         if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
+            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AKS');
             $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
         }
         if (isset($data['spouse_address'])) {
-            $data['spouse_address'] = mb_convert_kana($data['spouse_address'], 'AS');
+            $data['spouse_address'] = mb_convert_kana($data['spouse_address'], 'AKS');
             $data['spouse_address'] = str_replace(['-', '‐', '―'], '－', $data['spouse_address']);
         }
         if (isset($data['other_dependent1_address'])) {
-            $data['other_dependent1_address'] = mb_convert_kana($data['other_dependent1_address'], 'AS');
+            $data['other_dependent1_address'] = mb_convert_kana($data['other_dependent1_address'], 'AKS');
             $data['other_dependent1_address'] = str_replace(['-', '‐', '―'], '－', $data['other_dependent1_address']);
         }
         if (isset($data['other_dependent2_address'])) {
-            $data['other_dependent2_address'] = mb_convert_kana($data['other_dependent2_address'], 'AS');
+            $data['other_dependent2_address'] = mb_convert_kana($data['other_dependent2_address'], 'AKS');
             $data['other_dependent2_address'] = str_replace(['-', '‐', '―'], '－', $data['other_dependent2_address']);
         }
         if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AKS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
         if (isset($data['headquarters_representative'])) {
-            $data['headquarters_representative'] = mb_convert_kana($data['headquarters_representative'], 'S');
+            $data['headquarters_representative'] = mb_convert_kana($data['headquarters_representative'], 'AKS');
         }
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
         if (isset($data['medical_insurer_name'])) {
-            $data['medical_insurer_name'] = mb_convert_kana($data['medical_insurer_name'], 'S');
+            $data['medical_insurer_name'] = mb_convert_kana($data['medical_insurer_name'], 'AKS');
         }
         if (isset($data['medical_insurer_representative'])) {
-            $data['medical_insurer_representative'] = mb_convert_kana($data['medical_insurer_representative'], 'S');
+            $data['medical_insurer_representative'] = mb_convert_kana($data['medical_insurer_representative'], 'AKS');
         }
         if (isset($data['medical_insurer_address'])) {
-            $data['medical_insurer_address'] = mb_convert_kana($data['medical_insurer_address'], 'AS');
+            $data['medical_insurer_address'] = mb_convert_kana($data['medical_insurer_address'], 'AKS');
             $data['medical_insurer_address'] = str_replace(['-', '‐', '―'], '－', $data['medical_insurer_address']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

@@ -20,24 +20,26 @@ class EmploymentInsuranceChildcareLeaveApplicationRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['fullname'])) {
-            $data['fullname'] = mb_convert_kana($data['fullname'], 'S');
+            $data['fullname'] = mb_convert_kana($data['fullname'], 'AKS');
         }
         if (isset($data['fullname_kana'])) {
-            $data['fullname_kana'] = mb_convert_kana($data['fullname_kana'], 'S');
+            $data['fullname_kana'] = mb_convert_kana($data['fullname_kana'], 'KS');
         }
         if (isset($data['employer_company_managerial_position_name'])) {
-            $data['employer_company_managerial_position_name'] = mb_convert_kana($data['employer_company_managerial_position_name'], 'S');
+            $data['employer_company_managerial_position_name'] = mb_convert_kana($data['employer_company_managerial_position_name'], 'AKS');
         }
         if (isset($data['labor_consultant_acting_as_agent_name'])) {
-            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'S');
+            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'AKS');
         }
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
         if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AKS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

@@ -20,22 +20,27 @@ class NotificationOfObtainingInsuredQualificationRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['employee_name_kana'])) {
-            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'S');
+            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'KS');
         }
         if (isset($data['employee_name'])) {
-            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'S');
+            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'AKS');
         }
         if (isset($data['new_name_kana'])) {
-            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'S');
+            $data['new_name_kana'] = mb_convert_kana($data['new_name_kana'], 'KS');
         }
         if (isset($data['branch_address'])) {
-            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AKS');
             $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
         }
+        if (isset($data['company_representative'])) {
+            $data['company_representative'] = mb_convert_kana($data['company_representative'], 'AKS');
+        }
         if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
+            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AKS');
             $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

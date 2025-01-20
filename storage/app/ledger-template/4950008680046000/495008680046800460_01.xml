@@ -105,7 +105,7 @@
                         <日>today_japan_era_day</日>
                 </申請年月日>
                 <あて先>destination</あて先>
-                <申請者氏名>fullname_kana</申請者氏名>
+                <申請者氏名>address_fullname</申請者氏名>
         </申請欄>
         <社会保険労務士記載欄>
                 <作成年月日_提出代行者_事務代理者>labor_consultant_acting_as_agent</作成年月日_提出代行者_事務代理者>

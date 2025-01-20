@@ -20,37 +20,39 @@ class EmploymentInsuredTransferNotificationRequest extends BaseRequest
         $data = $this->all();
 
         if (isset($data['name_kanji'])) {
-            $data['name_kanji'] = mb_convert_kana($data['name_kanji'], 'S');
+            $data['name_kanji'] = mb_convert_kana($data['name_kanji'], 'AKS');
         }
         if (isset($data['name_kana'])) {
-            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'S');
+            $data['name_kana'] = mb_convert_kana($data['name_kana'], 'KS');
         }
         if (isset($data['name_alphabet'])) {
-            $data['name_alphabet'] = mb_convert_kana($data['name_alphabet'], 's');
+            $data['name_alphabet'] = mb_convert_kana($data['name_alphabet'], 'as');
         }
         if (isset($data['name_before_changed_kanji'])) {
-            $data['name_before_changed_kanji'] = mb_convert_kana($data['name_before_changed_kanji'], 'S');
+            $data['name_before_changed_kanji'] = mb_convert_kana($data['name_before_changed_kanji'], 'AKS');
         }
         if (isset($data['name_before_changed_kana'])) {
-            $data['name_before_changed_kana'] = mb_convert_kana($data['name_before_changed_kana'], 'S');
+            $data['name_before_changed_kana'] = mb_convert_kana($data['name_before_changed_kana'], 'KS');
         }
         if (isset($data['headquarter_name'])) {
-            $data['headquarter_name'] = mb_convert_kana($data['headquarter_name'], 'S');
+            $data['headquarter_name'] = mb_convert_kana($data['headquarter_name'], 'AKS');
         }
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
         if (isset($data['office_before_transfer'])) {
-            $data['office_before_transfer'] = mb_convert_kana($data['office_before_transfer'], 'AS');
+            $data['office_before_transfer'] = mb_convert_kana($data['office_before_transfer'], 'AKS');
             $data['office_before_transfer'] = str_replace(['-', '‐', '―'], '－', $data['office_before_transfer']);
         }
         if (isset($data['headquarter_address'])) {
-            $data['headquarter_address'] = mb_convert_kana($data['headquarter_address'], 'AS');
+            $data['headquarter_address'] = mb_convert_kana($data['headquarter_address'], 'AKS');
             $data['headquarter_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarter_address']);
         }
-        if (isset($data['agent_name'])) {
-            $data['agent_name'] = mb_convert_kana($data['agent_name'], 'S');
+        if (isset($data['agent'])) {
+            $data['agent'] = mb_convert_kana($data['agent'], 'AKS');
         }
+
+        $this->merge($data);
 
         return $data;
     }
