@@ -1,7 +1,7 @@
 <div id="{{ $uniqueId }}" class="bounty-form">
     <script>
-        const bountyForm = '.bounty-form';
-        const init_bounty = (n) => {
+        bountyForm = '.bounty-form';
+        init_bounty = (n) => {
             const key = '#' + n + bountyForm;
             setTimeout(() => {
                 $(key + ' .ui.dropdown').dropdown({});

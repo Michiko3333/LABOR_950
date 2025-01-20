@@ -9,39 +9,15 @@
     <table class="ui large table">
         <thead>
             <tr>
+                <th style="width: 150px;">氏名</th>
                 @foreach ($showColumns as $column)
                     @switch($column['value'])
-                        @case('full_name')
+                        @case('belong')
                             <th style="width: 150px;">{{ $column['name'] }}</th>
                         @break
 
-                        @case('icon')
-                            <th style="width: 64px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('departments')
-                            <th style="width: 150px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('managerial_position')
+                        @default
                             <th style="width: 100px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('full_address')
-                            <th style="width: 150px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('branch')
-                            <th style="width: 200px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('tel')
-                            <th style="width: 80px;">{{ $column['name'] }}</th>
-                        @break
-
-                        @case('email')
-                            <th style="width: 100px;">{{ $column['name'] }}</th>
-                        @break
                     @endswitch
                 @endforeach
                 <th></th>
@@ -50,54 +26,121 @@
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
                 <tr class="card">
+                    <td>
+                        <div class="base-data">
+                            <div class="employee-icon">
+                                <img src="{{ $item->icon }}">
+                            </div>
+                            <div class="employee-info">
+                                <div>名前：<b>{{ $item->last_name }} {{ $item->first_name }}</b></div>
+                                <div>雇用：{{ $item->employee_status_name }}</div>
+                                <div>番号：{{ $item->employee_no }}</div>
+                            </div>
+                        </div>
+                    </td>
+
                     @foreach ($showColumns as $column)
                         @switch($column['value'])
-                            @case('full_name')
-                                <td>{{ $item->last_name }} {{ $item->first_name }}</td>
-                            @break
-
-                            @case('icon')
+                            @case('belong')
                                 <td>
-                                    <div class="employee-icon">
-                                        <img src="{{ $item->icon }}">
-                                    </div>
-                                </td>
-                            @break
-
-                            @case('departments')
-                                <td>
+                                    <p>{{ $item->branch_name }}</p>
                                     @foreach ($item->departments as $dep)
                                         <span class="tag">{{ $dep }}</span>
                                     @endforeach
                                 </td>
                             @break
 
-                            @case('managerial_position')
-                                <td>{{ empty($item->position_name) ? '-' : $item->position_name }}</td>
+                            @case('qualification')
+                                <td>
+                                    @foreach ($item->qualifications as $n)
+                                        <span class="tag">{{ $n }}</span>
+                                    @endforeach
+                                </td>
+                            @break
+
+                            @case('hired_date')
+                                <td>{{ $this->formatDate($item->hired_date) }}</td>
+                            @break
+
+                            @case('birth_date')
+                                <td>{{ $this->formatDate($item->birthday) }}</td>
                             @break
 
                             @case('full_address')
-                                <td>{{ $item->address_prefecture_name }} {{ $item->address_city }}
-                                    {{ $item->address_ward }}<br>{{ $item->address_apartment }}</td>
-                            @break
-
-                            @case('branch')
-                                <td>{{ $item->branch_name }}</td>
-                            @break
-
-                            @case('tel')
-                                <td>{{ $item->tel_area_code }}-{{ $item->tel_city_code }}-{{ $item->tel_subscriber_code }}
+                                <td>
+                                    {{ $item->address_prefecture_name }} {{ $item->address_city }} {{ $item->address_ward }}
+                                    {{ $item->address_apartment }}
                                 </td>
                             @break
 
-                            @case('email')
+                            @case('employment_insured_date')
+                                <td>{{ $this->formatDate($item->employment_insured_date) }}</td>
+                            @break
+
+                            @case('employment_not_insured_date')
+                                <td>{{ $this->formatDate($item->employment_not_insured_date) }}</td>
+                            @break
+
+                            @case('insured_status')
+                                <td>{{ $this->format_insured_status($item->insured_status) }}</td>
+                            @break
+
+                            @case('health_insurance_acquisition_date')
+                                <td>{{ $this->formatDate($item->health_insurance_acquisition_date) }}</td>
+                            @break
+
+                            @case('health_insurance_loss_date')
+                                <td>{{ $this->formatDate($item->health_insurance_loss_date) }}</td>
+                            @break
+
+                            @case('overseas_special_exception_date')
+                                <td>{{ $this->formatDate($item->overseas_special_exception_date) }}</td>
+                            @break
+
+                            @case('overseas_special_not_exception_date')
+                                <td>{{ $this->formatDate($item->overseas_special_not_exception_date) }}</td>
+                            @break
+
+                            @case('acquisition_of_distinction')
+                                <td>{{ $this->format_acquisition_of_distinction($item->acquisition_of_distinction) }}</td>
+                            @break
+
+                            @case('overseas_special_exception')
+                                <td>{{ $this->format_overseas_special_exception($item->overseas_special_exception) }}</td>
+                            @break
+
+                            @case('welfare_pension')
+                                <td>{{ $this->format_welfare_pension($item->welfare_pension) }}</td>
+                            @break
+
+                            @case('stay_date_period')
+                                <td>{{ $this->formatDate($item->stay_date_period) }}</td>
+                            @break
+
+                            @case('unauthorized_activities_permission_flg')
+                                <td>{{ $item->unauthorized_activities_permission_flg ? '有' : '無' }}</td>
+                            @break
+
+                            @case('country_id')
+                                <td>{{ $this->format_country_id($item->country_id) }}</td>
+                            @break
+
+                            @case('residential_status_id')
+                                <td>{{ $this->format_residential_status_id($item->residential_status_id) }}</td>
+                            @break
+
+                            @case('dispatch_contract_completion')
+                                <td>{{ $this->format_dispatch_contract_completion($item->dispatch_contract_completion) }}</td>
+                            @break
+
+                            @default
                                 <td>
-                                    {{ $item->mail_address1 }}
-                                    @if (!empty($item->mail_address2))
-                                        <br>{{ $item->mail_address2 }}
+                                    @if (!empty($item[$column['value']]))
+                                        {{ $item[$column['value']] }}
+                                    @else
+                                        -
                                     @endif
                                 </td>
-                            @break
                         @endswitch
                     @endforeach
 

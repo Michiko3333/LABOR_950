@@ -33,15 +33,31 @@
                 border-radius: 0.2em;
             }
 
-            .employee-icon {
-                width: 48px;
-                height: 48px;
+            .base-data {
+                display: flex;
             }
 
-            .employee-icon img {
+            .base-data .employee-icon {
+                width: 86px;
+                height: 86px;
+                flex-shrink: 0;
+                flex-grow: 0;
+            }
+
+            .base-data .employee-icon img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+
+            .base-data .employee-info {
+                width: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 0 0.8em;
+                flex-shrink: 0;
+                flex-grow: 0;
             }
         </style>
     @endslot
@@ -52,7 +68,7 @@
             <div class="active section">社員一覧</div>
         </div>
         <h1 class="mt-0">社員一覧</h1>
-        <div id="FilterModal" class="ui modal small filter-employee-list-modal" style="max-width: 480px;">
+        <div id="FilterModal" class="ui modal small filter-employee-list-modal" style="max-width: 650px;">
             <i class="close icon"></i>
             <div class="header">
                 表示項目の切替
@@ -63,7 +79,7 @@
             ])
             <div class="actions">
                 <button class="ui button cancel" type="button">キャンセル</button>
-                <div class="ui approve primary button" onClick="javascript:$lw.onSave()">保存</div>
+                <button class="ui approve primary button">保存</button>
             </div>
         </div>
         <div class="ui card full card-shadow item-0">
@@ -77,7 +93,17 @@
             blurring: true
         });
         $('#openFilterColumn').click(_ => {
-            filterModal.modal('show');
+            filterModal.modal({
+                onShow: () => {
+                    window.$lw.onShow();
+                },
+                onHidden: () => {
+                    window.$lw.onHidden();
+                },
+                onApprove: () => {
+                    window.$lw.onSave();
+                }
+            }).modal('show');
         });
     </script>
 </x-layout>

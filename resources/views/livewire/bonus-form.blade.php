@@ -1,7 +1,7 @@
 <div id="{{ $uniqueId }}" class="bonus-form">
     <script>
-        const bonusForm = '.bonus-form';
-        const init_bonus = (n) => {
+        bonusForm = '.bonus-form';
+        init_bonus = (n) => {
             const key = '#' + n + bonusForm;
             setTimeout(() => {
                 $(key + ' .ui.dropdown').dropdown({});

@@ -1,7 +1,7 @@
 <div id="{{ $uniqueId }}" class="salary-form">
     <script>
-        const salaryForm = '.salary-form';
-        const init_salary = (n) => {
+        salaryForm = '.salary-form';
+        init_salary = (n) => {
             const key = '#' + n + salaryForm;
             setTimeout(() => {
                 $(key + ' .ui.dropdown.search').dropdown({});

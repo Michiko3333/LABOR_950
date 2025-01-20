@@ -15,6 +15,7 @@ class FilterEmployeeList extends Model
         'name',
         'value',
         'order',
+        'parent',
         'hidden_default',
         'hidden_normal',
         'hidden_basic_department',
