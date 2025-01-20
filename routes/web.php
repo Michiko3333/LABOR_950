@@ -34,9 +34,11 @@ use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSepar
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 use App\Http\Controllers\Ledger\HealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController;
 use App\Http\Controllers\Ledger\MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController;
 use App\Http\Controllers\Ledger\StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController;
 use App\Http\Controllers\Ledger\MaternityLeaveApplicationOrChangeEndNoticeController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceDependentChangeController;
 use App\Http\Controllers\CompanyDepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
@@ -262,6 +264,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'post'])->name('ledger.4950008680051000_post');
         Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
         Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
+
+        Route::get('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'index'])->name('ledger.4950013520602000');
+        Route::post('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'post'])->name('ledger.4950013520602000_post');
         Route::get('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
         Route::post('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
         Route::get('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'index'])->name('ledger.4950013520608000');

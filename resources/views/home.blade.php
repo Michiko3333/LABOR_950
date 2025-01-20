@@ -158,9 +158,8 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(2))
                                     <a href="{{ route('branch') }}" class="item">
-
                                         <div class="content">
-                                            <div class="header">支店・営業所情報</div>
+                                            <div class="header">事業所等情報</div>
                                         </div>
                                     </a>
                                 @endif
@@ -215,7 +214,6 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(17))
                                     <a href="{{ route('wages.index') }}" class="item">
-
                                         <div class="content">
                                             <div class="header">賃金情報</div>
                                         </div>
@@ -231,7 +229,6 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(18))
                                     <a href="{{ route('wages-ledger.index') }}" class="item">
-
                                         <div class="content">
                                             <div class="header">賃金台帳作成</div>
                                         </div>
@@ -249,6 +246,7 @@
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
+
                                 @if ($userPermission->isReadableFor(14))
                                     <a href="{{ route('closure_information') }}" class="item employee-setting-list" style="display: none;">
                                         <div class="content sub">
@@ -285,7 +283,6 @@
                             <div class="ui middle aligned selection list">
                                 @if ($userPermission->isReadableFor(8))
                                     <a href="{{ route('ledger.index') }}" class="item">
-
                                         <div class="content">
                                             <div class="header">帳票一覧</div>
                                         </div>
@@ -293,7 +290,6 @@
                                 @endif
                                 @if ($userPermission->isReadableFor(9))
                                     <a href="{{ route('ledger.issues') }}" class="item">
-
                                         <div class="content">
                                             <div class="header">申請案件一覧</div>
                                         </div>
