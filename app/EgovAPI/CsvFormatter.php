@@ -29,7 +29,7 @@ class CsvFormatter
         '4950013521025000', // 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
         '4950013521024000', // 健康保険・厚生年金保険被保険者報酬月額算定基礎届／７０歳以上被用者算定基礎届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
         '4950013521026000', // 健康保険・厚生年金保険被保険者賞与支払届／７０歳以上被用者賞与支払届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
-        '4950013521030000', // 健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届
+        '4950013521029000', // 健康保険厚生年金保険育児休業等取得者申出書(新規・延長）／終了届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
     ];
 
     public function __construct()
@@ -179,8 +179,8 @@ class CsvFormatter
                 $csv_submission_agent = $request->input('labor_consultant_submission_agent_name');
                 $csv_labor_and_social_security_attorney_registration_no = $request->input('labor_and_social_security_attorney_registration_no');
             break;
-            // 新様式(元4950013520995000)
-            case '4950013521030000':
+            // 旧様式(4950013520994000)
+            case '4950013521029000':
                 $business_serial_number_prefecture = $request->input('business_establishment_code_prefecture_code');
                 $business_serial_number_city = $request->input('office_arrangement_code_county_city_ward_code');
                 $business_serial_number_office = $request->input('office_reference_symbol_office_symbol');
@@ -188,7 +188,7 @@ class CsvFormatter
                 $csv_post_code_first = $request->input('post_code_former');
                 $csv_post_code_last = $request->input('post_code_latter');
                 $csv_business_address = $request->input('branch_address');
-                $csv_business_name = $request->input('branch_name');
+                $csv_business_name = $request->input('branch_office_name');
                 $csv_business_owner = $request->input('employer_company_managerial_position_name');
                 $csv_tel_area_code = $request->input('branch_tel_area_code');
                 $csv_tel_city_code = $request->input('branch_tel_city_code');
@@ -673,10 +673,18 @@ class CsvFormatter
                     '70歳以上被用者届のみ提出' => $over_70_check
                 ];
                 break;
-            // 健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届
-            case '4950013521030000':
+
+            // 健康保険厚生年金保険育児休業等取得者申出書(新規・延長）／終了届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）
+            case '4950013521029000':
+                $location_code = '';
+                $sequence_number = '';
+                if($request->input('basic_pension_number') !== null) {
+                    $location_code = substr($request->input('basic_pension_number'), 0, 4);
+                    $sequence_number = substr($request->input('basic_pension_number'), 4, 10);
+                }
+
                 $this->data = [
-                    '様式コード' => 2273700,
+                    '様式コード' => 2263700,
                     '都道府県コード' => $request->input('business_establishment_code_prefecture_code'),
                     '郡市区符号' => $request->input('office_arrangement_code_county_city_ward_code'),
                     '事業所記号' => mb_convert_kana($request->input('office_reference_symbol_office_symbol'), 'k'),
@@ -684,33 +692,57 @@ class CsvFormatter
                     '被保険者氏名（カナ）' => mb_convert_kana($request->input('fullname_kana'), 'ks'),
                     '被保険者氏名（漢字）' => $request->input('fullname'),
                     '被保険者の個人番号' => $request->input('mynumber_card_no'),
-                    '被保険者の基礎年金番号（課所符号）' => substr($request->input('basic_pension_number'),0,4),
-                    '被保険者の基礎年金番号（一連番号）' => substr($request->input('basic_pension_number'),4,10),
+                    '被保険者の基礎年金番号（課所符号）' =>  $location_code,
+                    '被保険者の基礎年金番号（一連番号）' => $sequence_number,
                     '被保険者の生年月日（元号）' => $request->input('year_of_birth_era'),
                     '被保険者の生年月日（年月日）' => str_pad($request->input('year_of_birth'), 2, '0', STR_PAD_LEFT).str_pad($request->input('month_of_birth'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth'), 2, '0', STR_PAD_LEFT),
-                    '出産予定年月日（元号）' => 9,
-                    '出産予定年月日（年月日）' => str_pad($request->input('due_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('due_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('due_date_day'), 2, '0', STR_PAD_LEFT),
-                    '出産種別' => $request->input('birth_type'),
-                    '産前産後休業開始年月日（元号）' => 9,
-                    '産前産後休業開始年月日（年月日）' => str_pad($request->input('maternity_leave_start_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_start_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_start_date_day'), 2, '0', STR_PAD_LEFT),
-                    '産前産後休業終了予定年月日（元号）' => 9,
-                    '産前産後休業終了予定年月日（年月日）' => str_pad($request->input('maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT),
-                    '予備１' => '',
-                    '予備２' => '',
-                    '出産年月日（元号）' => is_null($request->input('date_of_birth_year')) && is_null($request->input('date_of_birth_month')) && is_null($request->input('date_of_birth_day')) ? '' : 9,
-                    '出産年月日（年月日）' => str_pad($request->input('date_of_birth_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('date_of_birth_day'), 2, '0', STR_PAD_LEFT),
-                    '備考' => $request->input('remarks'),
-                    '変更後の出産予定年月日（元号）' => is_null($request->input('change_due_date_year')) && is_null($request->input('change_due_date_month')) && is_null($request->input('change_due_date_day')) ? '': 9,
-                    '変更後の出産予定年月日（年月日）' => str_pad($request->input('change_due_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_due_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_due_date_day'), 2, '0', STR_PAD_LEFT),
-                    '変更後の出産種別' => $request->input('change_birth_type'),
-                    '変更後の産前産後休業開始年月日（元号）' => is_null($request->input('change_maternity_leave_start_date_year')) && is_null($request->input('change_maternity_leave_start_date_month')) && is_null($request->input('change_maternity_leave_start_date_day')) ? '' : 9,
-                    '変更後の産前産後休業開始年月日（年月日）' => str_pad($request->input('change_maternity_leave_start_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_start_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_start_date_day'), 2, '0', STR_PAD_LEFT),
-                    '変更後の産前産後休業終了予定年月日（元号）' => is_null($request->input('change_maternity_leave_end_date_year')) && is_null($request->input('change_maternity_leave_end_date_month')) && is_null($request->input('change_maternity_leave_end_date_day')) ? '' : 9,
-                    '変更後の産前産後休業終了予定年月日（年月日）' => str_pad($request->input('change_maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('change_maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT),
-                    '産前産後休業終了年月日（元号）' => is_null($request->input('early_maternity_leave_end_date_year')) && is_null($request->input('early_maternity_leave_end_date_month')) && is_null($request->input('early_maternity_leave_end_date_day')) ? '' : 9,
-                    '産前産後休業終了年月日（年月日）' => str_pad($request->input('early_maternity_leave_end_date_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('early_maternity_leave_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('early_maternity_leave_end_date_day'), 2, '0', STR_PAD_LEFT)
+                    '被保険者の性別' => $request->input('sex'),
+                    '養育する子の氏名（カナ）' => mb_convert_kana($request->input('child_fullname_kana'), 'ks'),
+                    '養育する子の氏名（漢字）' => $request->input('child_fullname'),
+                    '元号(養育する子の生年月日)' => 9,
+                    '年月日(養育する子の生年月日)' => str_pad($request->input('child_year_of_birth_era'), 2, '0', STR_PAD_LEFT).str_pad($request->input('child_month_of_birth'), 2, '0', STR_PAD_LEFT).str_pad($request->input('child_date_of_birth'), 2, '0', STR_PAD_LEFT),
+                    '区分' => $request->input('classification'),
+                    '元号(養育開始年月日（実子以外）' => is_null($request->input('child_raising_start_dete_year')) && is_null($request->input('child_raising_start_dete_month')) && is_null($request->input('child_raising_start_dete_day')) ? '': 9,
+                    '年月日(養育開始年月日（実子以外）)' => str_pad($request->input('child_raising_start_dete_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('child_raising_start_dete_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('child_raising_start_dete_day'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等開始年月日)' => 9,
+                    '年月日(育児休業等開始年月日)' => str_pad($request->input('childcare_start_date_japane_era_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_day'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等終了（予定）年月日)' => 9,
+                    '年月日(育児休業等終了（予定）年月日）' => str_pad($request->input('childcare_end_date_japane_era_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_day'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数' => $request->input('parental_leave_count'),
+                    '就業予定日数' => $request->input('workday_count'),
+                    'パパママ育休プラス該当区分' => $request->input('papa_mama_plus_classification'),
+                    '備考' => $request->input('note'),
+                    '元号(育児休業等終了（予定）年月日（変更後）' => is_null($request->input('childcare_extension_scheduled_end_date_japane_era_year')) && is_null($request->input('childcare_extension_scheduled_end_date_month')) && is_null($request->input('childcare_extension_scheduled_end_date_day')) ? '': 9,
+                    '年月日(育児休業等終了（予定）年月日（変更後）)' => str_pad($request->input('childcare_extension_scheduled_end_date_japane_era_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_extension_scheduled_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_extension_scheduled_end_date_day'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数（変更後）①' => $request->input('after_parental_leave_count_20'),
+                    '元号(育児休業等終了年月日)' => is_null($request->input('childcare_extension_end_date_japane_era_year')) && is_null($request->input('childcare_extension_end_date_month')) && is_null($request->input('childcare_extension_end_date_day')) ? '': 9,
+                    '年月日(育児休業等終了年月日' => str_pad($request->input('childcare_extension_end_date_japane_era_year'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_extension_end_date_month'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_extension_end_date_day'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数（変更後）②' => $request->input('after_parental_leave_count_22'),
+                    '元号(育児休業等開始年月日①)' => is_null($request->input('childcare_start_date_japane_era_year1')) && is_null($request->input('childcare_start_date_month1')) && is_null($request->input('childcare_start_date_day1')) ? '': 9,
+                    '年月日(育児休業等開始年月日①)' => str_pad($request->input('childcare_start_date_japane_era_year1'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_month1'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_day1'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等終了（予定）年月日①)' => is_null($request->input('childcare_end_date_japane_era_year1')) && is_null($request->input('childcare_end_date_month1')) && is_null($request->input('childcare_end_date_day1')) ? '': 9,
+                    '年月日(育児休業等終了（予定）年月日①)' => str_pad($request->input('childcare_end_date_japane_era_year1'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_month1'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_day1'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数①' => $request->input('parental_leave_count1'),
+                    '就業予定日数①' => $request->input('workday_count1'),
+                    '元号(育児休業等開始年月日②)' => is_null($request->input('childcare_start_date_japane_era_year2')) && is_null($request->input('childcare_start_date_month2')) && is_null($request->input('childcare_start_date_day2')) ? '': 9,
+                    '年月日(育児休業等開始年月日②)' => str_pad($request->input('childcare_start_date_japane_era_year2'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_month2'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_day2'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等終了（予定）年月日②' => is_null($request->input('childcare_end_date_japane_era_year2')) && is_null($request->input('childcare_end_date_month2')) && is_null($request->input('childcare_end_date_day2')) ? '': 9,
+                    '年月日(育児休業等終了（予定）年月日②)' => str_pad($request->input('childcare_end_date_japane_era_year2'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_month2'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_day2'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数②' => $request->input('parental_leave_count2'),
+                    '就業予定日数②' => $request->input('workday_count2'),
+                    '元号(育児休業等開始年月日③)' => is_null($request->input('childcare_start_date_japane_era_year3')) && is_null($request->input('childcare_start_date_month3')) && is_null($request->input('childcare_start_date_day3')) ? '': 9,
+                    '年月日(育児休業等開始年月日③)' => str_pad($request->input('childcare_start_date_japane_era_year3'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_month3'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_day3'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等終了（予定）年月日③)' => is_null($request->input('childcare_end_date_japane_era_year3')) && is_null($request->input('childcare_end_date_month3')) && is_null($request->input('childcare_end_date_day3')) ? '': 9,
+                    '年月日(育児休業等終了（予定）年月日③)'  => str_pad($request->input('childcare_end_date_japane_era_year3'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_month3'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_day3'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数③' => $request->input('parental_leave_count3'),
+                    '元号(育児休業等開始年月日④)' => is_null($request->input('childcare_start_date_japane_era_year4')) && is_null($request->input('childcare_start_date_month4')) && is_null($request->input('childcare_start_date_day4')) ? '': 9,
+                    '年月日(育児休業等開始年月日④)' => str_pad($request->input('childcare_start_date_japane_era_year4'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_month4'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_start_date_day4'), 2, '0', STR_PAD_LEFT),
+                    '元号(育児休業等終了（予定）年月日④)' => is_null($request->input('childcare_end_date_japane_era_year4')) && is_null($request->input('childcare_end_date_month4')) && is_null($request->input('childcare_end_date_day4')) ? '': 9,
+                    '年月日(育児休業等終了（予定）年月日④)' => str_pad($request->input('childcare_end_date_japane_era_year4'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_month4'), 2, '0', STR_PAD_LEFT).str_pad($request->input('childcare_end_date_day4'), 2, '0', STR_PAD_LEFT),
+                    '育児休業等取得日数④' => $request->input('parental_leave_count4')
                 ];
                 break;
+
             default:
                 # nothing
                 break;
@@ -885,13 +917,13 @@ class CsvFormatter
                     $radio_file_wage_ledger_2 = 1;
                 }
             break;
-            // 新様式（元4950013520995000）
-            case '4950013521030000':
+             // 旧様式（4950013520994000）
+             case '4950013521029000':
                 $current_employee = CurrentUser::info();
                 $monthly_change_sheets = 0;
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 0;
-                $maternity_leave_sheets = 1;
+                $childcare_leave_sheets = 1;
                 $identification_information_1 = $request->input('business_establishment_code_prefecture_code').$request->input('office_arrangement_code_county_city_ward_code').$request->input('office_reference_symbol_office_symbol');
                 $business_serial_number_prefecture = $request->input('business_establishment_code_prefecture_code');
                 $business_serial_number_city = $request->input('office_arrangement_code_county_city_ward_code');
@@ -900,7 +932,7 @@ class CsvFormatter
                 $csv_post_code_first = $request->input('post_code_former');
                 $csv_post_code_last = $request->input('post_code_latter');
                 $csv_business_address = $request->input('branch_address');
-                $csv_business_name = $request->input('branch_name');
+                $csv_business_name = $request->input('branch_office_name');
                 $csv_business_owner = $request->input('employer_company_managerial_position_name');
                 $csv_tel_area_code = $request->input('branch_tel_area_code');
                 $csv_tel_city_code = $request->input('branch_tel_city_code');
@@ -914,7 +946,7 @@ class CsvFormatter
                 } else {
                     $radio_file_wage_ledger_2 = 1;
                 }
-            break;
+                break;
         }
 
         $today_year = self::convertToWareki(now()->format('Y'), 0);
@@ -935,8 +967,8 @@ class CsvFormatter
             'monthly_change_sheets' => $monthly_change_sheets,
             'basis_of_calculation_sheets' => $basis_of_calculation_sheets,
             'bonus_payment_sheets' => $bonus_payment_sheets,
-            'childcare_leave_sheets' => 0,
-            'maternity_leave_sheets' => $maternity_leave_sheets,
+            'childcare_leave_sheets' => $childcare_leave_sheets,
+            'maternity_leave_sheets' => 0,
             'csv_sheets_total' => 1,
             'national_pension_sheets' => 0,
             'sheets_total' => 0,

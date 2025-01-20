@@ -378,6 +378,39 @@ class LedgerEmployeeList extends BaseTable
             ];
         }
 
+        $closure_1_data_4950013521029000 = Closure_information::where('employee_id', $employee_id)
+            ->where('closure_type', '1')
+            ->where('delete_flg', '0')
+            ->get()
+            ->filter(function ($item) {
+                $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
+                return true; 
+            })
+            ->first();
+
+        if (!empty($closure_1_data_4950013521029000->start_date_of_closed)) {
+            $start_date_of_closed_4950013521029000 = Carbon::parse($closure_1_data_4950013521029000->start_date_of_closed);
+            $start_date_of_closed_4950013521029000 = Controller::convertWesternCalendarToJapaneseCalendar($start_date_of_closed_4950013521029000);
+            $start_date_of_closed_4950013521029000 = [
+                'era' => $start_date_of_closed_4950013521029000['japanese_calendar_era_string'],
+                'year' => $start_date_of_closed_4950013521029000['japanese_calendar_result']->year,
+                'month' => $start_date_of_closed_4950013521029000['japanese_calendar_result']->month,
+                'day' => $start_date_of_closed_4950013521029000['japanese_calendar_result']->day,
+            ];
+        }
+        if (!empty($closure_1_data_4950013521029000->end_date_of_losed)) {
+            $end_date_of_losed_4950013521029000 = Carbon::parse($closure_1_data_4950013521029000->end_date_of_losed);
+            $end_date_of_losed_4950013521029000 = Controller::convertWesternCalendarToJapaneseCalendar($end_date_of_losed_4950013521029000);
+            $end_date_of_losed_4950013521029000 = [
+                'era' => $end_date_of_losed_4950013521029000['japanese_calendar_era_string'],
+                'year' => $end_date_of_losed_4950013521029000['japanese_calendar_result']->year,
+                'month' => $end_date_of_losed_4950013521029000['japanese_calendar_result']->month,
+                'day' => $end_date_of_losed_4950013521029000['japanese_calendar_result']->day,
+            ];
+        }
+
+        
         $output = [
             'employee' => $employeeData,
             'branch' => $branchData,
@@ -425,6 +458,8 @@ class LedgerEmployeeList extends BaseTable
             'before_date_of_return_to_work_4950008680050000' => $before_date_of_return_to_work_4950008680050000 ?? '',
             'start_date_of_closed' => $start_date_of_closed ?? '',
             'end_date_of_losed' => $end_date_of_losed ?? '',
+            'start_date_of_closed_4950013521029000' => $start_date_of_closed_4950013521029000 ?? '',
+            'end_date_of_losed_4950013521029000' => $end_date_of_losed_4950013521029000 ?? '',
         ];
 
         $this->selected_id = $id;
