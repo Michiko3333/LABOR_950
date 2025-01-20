@@ -34,6 +34,7 @@ use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSepar
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 use App\Http\Controllers\Ledger\HealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController;
 use App\Http\Controllers\Ledger\StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController;
 use App\Http\Controllers\Ledger\MaternityLeaveApplicationOrChangeEndNoticeController;
 use App\Http\Controllers\CompanyDepartmentController;
@@ -263,6 +264,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
         Route::get('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
         Route::post('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
+        Route::get('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'index'])->name('ledger.4950013520608000');
+        Route::post('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'post'])->name('ledger.4950013520608000_post');
         // 2024/12/02新様式帳票
         Route::get('/ledger/4950013521025000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'index'])->name('ledger.4950013521025000');
         Route::post('/ledger/4950013521025000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'post'])->name('ledger.4950013521025000_post');

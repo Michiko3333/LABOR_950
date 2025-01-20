@@ -19,4 +19,3 @@ class Ledger extends Model
         return $this->belongsTo(LedgerCategory::class,'id', 'ledger_id');
     }
 }
-

@@ -231,6 +231,7 @@
                 } else {
                     $('#N34_P1_1').prop("checked", true);
                 }
+                
                 $('#N35_P1').val(employee.mynumber_card_no ?? '');
                 if (employee.post_code != null) {
                     $('#N42_P1').val(employee.post_code.substring(0, 3));

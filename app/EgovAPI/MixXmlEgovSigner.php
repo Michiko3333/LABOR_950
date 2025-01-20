@@ -498,7 +498,7 @@ class MixXmlEgovSigner
         $afterSignerFolder = $this->workingDirectory . '/afterSigner/zip';
         if ($separater) {
             $serchDirectory = $this->workingDirectory . '/afterSigner/zip/';
-            $filenamePattern = 'kousei' . date("Y") . '*.xml';
+            $filenamePattern =  'kousei20' . '*.xml';
             $files = glob($serchDirectory . $filenamePattern);
             foreach ($files as $file) {
                 $signerBool = $this->signer->run($afterSignerFolder, $this->pfxFilepath, $this->password, basename($file), basename($file));

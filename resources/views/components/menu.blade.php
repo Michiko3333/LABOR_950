@@ -185,7 +185,10 @@
                             カレンダー</a>
                     </li>
                 @endif
-                @if ($userPermission->isReadableFor(12))
+                @if (
+                    $userPermission->isReadableFor(12) &&
+                        $userPermission->isBasicDepartment() &&
+                        $userPermission->getEmployeeStatus() !== 1)
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
 

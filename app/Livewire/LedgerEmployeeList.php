@@ -23,10 +23,8 @@ use App\Models\Hello_work;
 use App\Models\Prefecture;
 use Carbon\Carbon;
 use App\Models\Values_employee_insured_age_type;
-
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 
 class LedgerEmployeeList extends BaseTable
 {
@@ -77,7 +75,6 @@ class LedgerEmployeeList extends BaseTable
 
         $employeeData = $employee->toArray();
         $branchData = $employee->branch->toArray();
-
         $companyId = $branchData['company_id'];
         $headquarters  = Branch::select('post_code', 'address_prefecture', 'address_city', 'address_ward', 'address_apartment', 'name', 'tel_area_code', 'tel_city_code', 'tel_subscriber_code', 'pension_office_no', 'pension_office_reference_prefecture', 'pension_office_reference_no_cities', 'pension_office_reference_no_office')
             ->where('company_id', $companyId)
@@ -86,7 +83,7 @@ class LedgerEmployeeList extends BaseTable
         $company = Company::where('id', $companyId)->first();
         $headquartersData = $headquarters->toArray();
         $companyData = $company->toArray();
-
+        $branchId = $branchData['id'];
         $employee_id = $employeeData['id'];
         $employee_prefecture_id = $employeeData['address_prefecture'];
         $employee_insured_age_type = $employeeData['insured_age_type'];
