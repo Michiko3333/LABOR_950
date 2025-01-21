@@ -5,38 +5,38 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ValuesEmployeeEmployeeStatusSeeder extends Seeder
+class ValuesEmployeeEnrollmentCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('m_values_employee_employee_status')->truncate();
-        DB::table('m_values_employee_employee_status')->insert([
+        DB::table('m_values_employee_enrollment_category')->truncate();
+        DB::table('m_values_employee_enrollment_category')->insert([
             [
                 'id' => '1',
-                'name' => '内定',
+                'name' => '在籍（通常勤務）',
             ],
             [
                 'id' => '2',
-                'name' => '契約社員',
+                'name' => '休職',
             ],
             [
                 'id' => '3',
-                'name' => '正社員',
+                'name' => '休業',
             ],
             [
                 'id' => '4',
-                'name' => 'パート・アルバイト',
+                'name' => '出向',
             ],
             [
                 'id' => '5',
-                'name' => '嘱託社員',
+                'name' => '派遣',
             ],
             [
                 'id' => '6',
-                'name' => 'その他',
+                'name' => '退職',
             ],
         ]);
     }

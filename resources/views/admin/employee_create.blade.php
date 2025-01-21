@@ -164,6 +164,14 @@
                 flex-direction: column-reverse;
                 align-items: flex-end;
             }
+
+            .bank_account_no.hidden {
+                display: none;
+            }
+
+            .japan_post_bank_code_no.hidden {
+                display: none;
+            }
         </style>
     @endslot
     <section class="content">
@@ -308,17 +316,27 @@
                     'residential_status_id',
                     'dispatch_contract_completion',
                 ]);
+                $field4 = $errors->hasAny([
+                    'bank_name',
+                    'bank_name_kana',
+                    'head_office_or_branch_office',
+                    'financial_institution_code',
+                    'store_code',
+                    'japan_bank_flg',
+                    'bank_account_no',
+                ]);
             @endphp
             <div class="ui top attached tabular menu">
                 <a class="item active {{ $field1 ? 'tab-error' : '' }}" data-tab="sample">従業員情報</a>
                 <a class="item {{ $field2 ? 'tab-error' : '' }}" data-tab="sample2">扶養者情報</a>
                 <a class="item {{ $field3 ? 'tab-error' : '' }}" data-tab="sample3">保険情報</a>
+                <a class="item {{ $field4 ? 'tab-error' : '' }}" data-tab="sample4">銀行情報</a>
             </div>
             <div class="ui bottom attached segment" data-tab="sample">
                 <div class="labor-data-area">
                     <div class="ui horizontal card card-shadow item-0">
                         <div class="content">
-                            <h2>基本情報</h2>
+                            <h2>本人情報</h2>
                             <div class="two fields">
                                 <div class="field">
                                     <div class="user-icon">
@@ -364,7 +382,7 @@
                                     </select>
                                 </div>
                                 <div class="required field {{ err($errors, 'employee_status') }}">
-                                    <label>社員ステータス</label>
+                                    <label>雇用区分</label>
                                     <select class="ui fluid dropdown" name="employee_status">
                                         <option value="">未選択</option>
                                         @foreach ($employee_status_type as $k => $item)
@@ -376,6 +394,13 @@
                                                 {{ $item }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field {{ err($errors, 'grade') }}">
+                                    <label for="">等級</label>
+                                    <input type="text" id="grade" name="grade"
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -583,6 +608,52 @@
                                 <select class="ui fluid dropdown" name="managerial_position_id">
                                     <option value="">未選択</option>
                                 </select>
+                            </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'work_category') }}">
+                                    <label for="work_category">勤務区分</label>
+                                    <select class="ui fluid dropdown" name="work_category">
+                                        <option value="">未選択</option>
+                                        @foreach($work_category as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('work_category') == "$key" ||
+                                                (isset($employee) && old('work_category', $employee->work_category) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="required field {{ err($errors, 'enrollment_category') }}">
+                                    <label for="enrollment_category">在籍区分</label>
+                                    <select class="ui fluid dropdown" name="enrollment_category">
+                                        <option value="">未選択</option>
+                                        @foreach($enrollment_category as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('enrollment_category') == "$key" ||
+                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field ">
+                                    <label>転勤・出向　年月日</label>
+                                    <div class="ui calendar" id="transfer_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="transfer_date"
+                                                value="{{ old('formatted_transfer_date', isset($employee_id) ? $employee->transfer_date : '') }}" autocomplete="off">
+                                            <input type="hidden" name="formatted_transfer_date"
+                                                id="formatted_transfer_date" value="{{ old('transfer_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -887,6 +958,97 @@
                                 </div>
                             </div>
                             <div class="two fields">
+                                <div class="required field {{ err($errors, 'employment_route') }}">
+                                    <label for="employment_route">就職経路</label>
+                                    <select class="ui fluid dropdown employment_route" name="employment_route">
+                                        <option value="">未選択</option>
+                                        @foreach($employment_route as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_route') == "$key" ||
+                                                (isset($employee) && old('employment_route', $employee->employment_route) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field {{ err($errors, 'private_introduction') }}">
+                                    <label for="private_introduction">会社名</label>
+                                    <input type="text" name="private_introduction" class="private_introduction"
+                                        value="{{ old('private_introduction', isset($employee_id) ? $employee->private_introduction : '') }}"
+                                        placeholder="就職経路が「民間紹介」の場合のみ記載" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'recruitment_category') }}">
+                                    <label for="recruitment_category">採用区分</label>
+                                    <div class="mt-1">
+                                        <div class="ui radio checkbox field mr-2 mt-0">
+                                            <input type="radio" name="recruitment_category"
+                                            checked="" value="0"
+                                                {{ (isset($employee_id) && $employee->recruitment_category == 0) || old('recruitment_category') == '0' ? 'checked' : '' }}>
+                                            <label>新卒（第二新卒含む）</label>
+                                        </div>
+                                        <div class="ui radio checkbox field mt-0">
+                                            <input type="radio" name="recruitment_category"
+                                            value="1"
+                                                {{ (isset($employee_id) && $employee->recruitment_category == 1) || old('recruitment_category') == '1' ? 'checked' : '' }}>
+                                            <label>中途採用</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'recruitment_category_detail') }}">
+                                    <label for=""></label>
+                                    <select class="ui fluid dropdown recruitment_category_detail" name="recruitment_category_detail"
+                                        value="{{ old('recruitment_category_detail', isset($employee_id) ? $employee->recruitment_category_detail : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach($recruitment_category_detail as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('recruitment_category_detail') == "$key" ||
+                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'employment_status') }}">
+                                    <label for="">雇用形態</label>
+                                    <select class="ui fluid dropdown employment_status" name="employment_status"
+                                        value="{{ old('employment_status', isset($employee_id) ? $employee->employment_status : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach($employment_status as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_status') == "$key" ||
+                                                (isset($employee) && old('employment_status', $employee->employment_status) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="required field {{ err($errors, 'pay_type') }}">
+                                    <label for="">給与区分</label>
+                                    <select class="ui fluid dropdown pay_type" name="pay_type">
+                                        <option value="">未選択</option>
+                                        @foreach($pay_type as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('pay_type') == "$key" ||
+                                                (isset($employee) && old('pay_type', $employee->pay_type) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
                                     <label>雇用契約開始日</label>
                                     <div class="ui calendar" id="contract_start_date_calendar">
@@ -914,10 +1076,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="three fields">
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_hired_date') }}">
                                     <label>入社日</label>
-                                    <div class="ui calendar" id="hired_date_calendar">
+                                    <div class="ui calendar tenure" id="hired_date_calendar">
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="hired_date"
@@ -927,6 +1089,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="field">
+                                    <label>勤続年数</label>
+                                    <input type="text" class="tenure" style="border: none;" readonly>
+                                </div>
+                            </div>
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_retirement_date') }}">
                                     <label>離職日</label>
                                     <div class="ui calendar" id="retirement_date_calendar">
@@ -1441,6 +1609,76 @@
                     </div>
                 </div>
             </div>
+            <div class="ui bottom attached segment" data-tab="sample4" style="display: none;">
+                <div class="ui horizontal card card-shadow" style="width: 100%;">
+                    <div class="content">
+                        <h2>口座情報</h2>
+                        <div class="three fields">
+                            <div class="field {{ err($errors, 'bank_name') }}">
+                                <label for="bank_name">名称</label>
+                                <input type="text" id="bank_name" name="bank_name"
+                                    value="{{ old('bank_name', isset($employee_id) ? $employee->bank_name : '') }}"
+                                    placeholder="" maxlength='' autocomplete="off">
+                            </div>
+                            <div class="field {{ err($errors, 'bank_name_kana') }}">
+                                <label for="bank_name_kana">名称（カナ）</label>
+                                <input type="text" id="bank_name_kana" name="bank_name_kana"
+                                    value="{{ old('bank_name_kana', isset($employee_id) ? $employee->bank_name_kana : '') }}"
+                                    placeholder="" maxlength='' autocomplete="off">
+                            </div>
+                            <div class="field {{ err($errors, 'head_office_or_branch_office') }}">
+                                <label></label>
+                                <div class="mt-1">
+                                    <div class="ui radio checkbox field mr-2 mt-0">
+                                        <input type="radio" name="head_office_or_branch_office" checked="checked"
+                                            value="0"
+                                            {{ (isset($employee_id) && $employee->head_office_or_branch_office == 0) || old('head_office_or_branch_office') == '0' ? 'checked' : '' }}>
+                                        <label>本店</label>
+                                    </div>
+                                    <div class="ui radio checkbox field mt-0">
+                                        <input type="radio" name="head_office_or_branch_office" value="1"
+                                            {{ (isset($employee_id) && $employee->head_office_or_branch_office == 1) || old('head_office_or_branch_office') == '1' ? 'checked' : '' }}>
+                                        <label>支店</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="two wide field {{ err($errors, 'financial_institution_code') }}">
+                                <label for="financial_institution_code">金融機関コード</label>
+                                <input type="text" id="financial_institution_code" name="financial_institution_code"
+                                    value="{{ old('financial_institution_code', isset($employee_id) ? $employee->financial_institution_code : '') }}"
+                                    placeholder="" maxlength='4' autocomplete="off">
+                            </div>
+                            <div class="two wide field {{ err($errors, 'store_code') }}">
+                                <label for="store_code">店舗コード</label>
+                                <input type="text" id="store_code" name="store_code"
+                                    value="{{ old('store_code', isset($employee_id) ? $employee->store_code : '') }}"
+                                    placeholder="" maxlength='3' autocomplete="off">
+                            </div>
+                            <div class="two wide field {{ err($errors, 'japan_bank_flg') }}" style="width: 200px;">
+                                <div class="ui checkbox field mt-3">
+                                    <input type="checkbox" name="japan_bank_flg" id="japan_bank_flg" value='1'
+                                        {{ (isset($employee_id) && $employee->japan_bank_flg == 1) || old('japan_bank_flg') == '1' ? 'checked' : '' }}>
+                                    <label>ゆうちょ銀行</label>
+                                </div>
+                            </div>
+                            <div class="eight wide field bank_account_no {{ err($errors, 'bank_account_no') }}">
+                                <label for="bank_account_no">口座番号</label>
+                                <input type="text" id="bank_account_no" name="bank_account_no"
+                                    value="{{ old('bank_account_no', isset($employee_id) ? $employee->bank_account_no : '') }}"
+                                    placeholder="" maxlength='8' autocomplete="off">
+                            </div>
+                            <div class="eight wide field japan_post_bank_code_no hidden {{ err($errors, 'japan_post_bank_code_no') }}">
+                                <label for="japan_post_bank_code_no">記号番号</label>
+                                <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
+                                    value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
+                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='8' autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="my-4" style="text-align: right; margin-right: 1em;">
                 <a class="ui button negative basic" href="{{ route('admin.labor') }}"
                     style="width: 200px;">キャンセル</a>
@@ -1537,6 +1775,56 @@
                 let ageMonths = monthDiff;
                 const ageString = `${age}歳${ageMonths}ヵ月`;
                 $(".age").val(ageString);
+            }
+            $('.ui.calendar.tenure').calendar({
+                type: 'date',
+                formatter: {
+                    date: 'Y"年"M"月"D"日"'
+                },
+                text: {
+                    days: ['日', '月', '火', '水', '木', '金', '土'],
+                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                },
+                initialDate: "",
+                onChange: (date, text, mode) => {
+                    const match = text.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                    if (match) {
+                        const year = parseInt(match[1], 10);
+                        const month = parseInt(match[2], 10) - 1;
+                        const day = parseInt(match[3], 10);
+                        const tenureDate = new Date(year, month, day);
+                        const today = new Date();
+
+                        let tenure = today.getFullYear() - tenureDate.getFullYear();
+                        let monthDiff = today.getMonth() - tenureDate.getMonth();
+                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
+                            tenure -= 1;
+                            monthDiff += 12;
+                        }
+
+                        let tenureMonths = monthDiff;
+                        const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                        $(".tenure").val(tenureString);
+                    }
+                }
+            });
+            const tenure_date = $('#formatted_hired_date').val();
+            if(tenure_date){
+                const match = tenure_date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                const year = parseInt(match[1], 10);
+                const month = parseInt(match[2], 10) - 1;
+                const day = parseInt(match[3], 10);
+                const tenureDate = new Date(year, month, day);
+                const today = new Date();
+                let tenure = today.getFullYear() - tenureDate.getFullYear();
+                let monthDiff = today.getMonth() - tenureDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
+                    tenure -= 1;
+                    monthDiff += 12;
+                }
+                let tenureMonths = monthDiff;
+                const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                $(".tenure").val(tenureString);
             }
             $('.ui.dropdown.dropdown.multiple').dropdown({});
 
@@ -1655,6 +1943,9 @@
                     contents[index].style.display = 'block';
                 });
             });
+
+            changeEmploymentPathway();
+            changeYutyoFlg();
         });
 
         $('#iconChangeInput').on('change', function() {
@@ -1683,6 +1974,34 @@
 
         $('.ui.dropdown.edit-select').dropdown();
 
+        $('.employment_route').on('click', function() {
+            changeEmploymentPathway()
+        });
+
+        function changeEmploymentPathway() {
+            if($('.employment_route').val() == 3) {
+                $('.private_introduction').prop('disabled', false);
+            } else {
+                $('.private_introduction').prop('disabled', true);
+                $('.private_introduction').val('');
+            }
+        }
+
+        $('#japan_bank_flg').on('click', function() {
+            changeYutyoFlg();
+        });
+
+        function changeYutyoFlg() {
+            if($('#japan_bank_flg').is(':checked')) {
+                $('.bank_account_no').addClass('hidden');
+                $('.japan_post_bank_code_no').removeClass('hidden');
+                $('#bank_account_no').val('');
+            } else {
+                $('.japan_post_bank_code_no').addClass('hidden');
+                $('.bank_account_no').removeClass('hidden');
+                $('#japan_post_bank_code_no').val('');
+            }
+        }
         $('.ui.modal').modal({
             allowMultiple: true
         });

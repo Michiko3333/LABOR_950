@@ -64,6 +64,13 @@ use App\Models\Salary;
 use App\Models\Salary_history;
 use App\Models\Qualifications;
 use App\Models\Employee_qualifications;
+use App\Models\Values_employee_work_category;
+use App\Models\Values_employee_enrollment_category;
+use App\Models\Values_employee_employment_route;
+use App\Models\Values_employee_recruitment_category_detail;
+use App\Models\Values_employee_employment_status;
+use App\Models\Values_employee_pay_type;
+
 use Illuminate\Support\Facades\Log;
 
 
@@ -1148,6 +1155,14 @@ class AdminController extends Controller
         $occupation_type = Values_employee_occupation_type::pluck('name', 'option_no');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
+
+        $work_category = Values_employee_work_category::pluck('name', 'id');
+        $enrollment_category = Values_employee_enrollment_category::pluck('name', 'id');
+        $employment_route = Values_employee_employment_route::pluck('name', 'id');
+        $recruitment_category_detail = Values_employee_recruitment_category_detail::pluck('name', 'id');
+        $employment_status = Values_employee_employment_status::pluck('name', 'id');
+        $pay_type = Values_employee_pay_type::pluck('name', 'id');
+
         $faxParts = ['', '', ''];
         $filePath = '/img/image.png';
 
@@ -1172,6 +1187,12 @@ class AdminController extends Controller
             'employee_insured_age_type' => $employee_insured_age_type,
             'qualifications' => [],
             'employee_qualifications' => [],
+            'work_category' => $work_category,
+            'enrollment_category' => $enrollment_category,
+            'employment_route' => $employment_route,
+            'recruitment_category_detail' => $recruitment_category_detail,
+            'employment_status' => $employment_status,
+            'pay_type' => $pay_type,
         ]);
     }
 
@@ -1238,6 +1259,10 @@ class AdminController extends Controller
                 'employee_no' => $request->input('employee_no'),
                 'branch_id' => $request->input('branch_id'),
                 'managerial_position_id' => $request->input('managerial_position_id'),
+                'grade' => $request->input('grade'),
+                'work_category' => $request->input('work_category'),
+                'enrollment_category' => $request->input('enrollment_category'),
+                'transfer_date' => $this->formatDate($request->input('transfer_date')),
                 'division_name' => $request->input('division_name'),
                 'division_name_kana' => $request->input('division_name_kana'),
                 'last_name' => $request->input('last_name'),
@@ -1318,6 +1343,11 @@ class AdminController extends Controller
                 'retirement_date' => $this->formatDate($request->input('retirement_date')),
                 'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                 'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
+                'private_introduction' => $request->input('private_introduction'),
+                'recruitment_category' => $request->input('recruitment_category'),
+                'recruitment_category_detail' => $request->input('recruitment_category_detail'),
+                'employment_status' => $request->input('employment_status'),
+                'pay_type' => $request->input('pay_type'),
                 'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                 'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                 // 'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
@@ -1326,17 +1356,16 @@ class AdminController extends Controller
                 //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
                 'external_advisor_flg' => $request->input('external_advisor_flg'),
                 'occupation_type' => $request->input('occupation_type'),
-                //'employment_route' => $request->input('employment_route'),
+                'employment_route' => $request->input('employment_route'),
                 //'insured_reason' => $request->input('insured_reason'),
                 //'insured_reason_details' => $request->input('insured_reason_details'),
                 //'currency_id' => $request->input('currency_id'),
                 //'salary_payment_system' => $request->input('salary_payment_system'),
                 // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-                // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
                 // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
                 // 'bank_account_no' => $request->input('bank_account_no'),// developにない
                 'employment_type' => $request->input('employment_type'),
-                'employment_status' => $request->input('employment_status'),
                 'employer_type' => $request->input('employer_type'),
                 'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
@@ -1353,6 +1382,14 @@ class AdminController extends Controller
                 'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
                 'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
                 'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
+                'bank_name' => $request->input('bank_name'),
+                'bank_name_kana' => $request->input('bank_name_kana'),
+                'head_office_or_branch_office' => $request->input('head_office_or_branch_office'),
+                'financial_institution_code' => $request->input('financial_institution_code'),
+                'store_code' => $request->input('store_code'),
+                'japan_bank_flg' => $request->input('japan_bank_flg'),
+                'bank_account_no' => $request->input('bank_account_no'),
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
             ])->id;
 
             $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
@@ -1674,6 +1711,13 @@ class AdminController extends Controller
             ->where('m_employee_qualifications.delete_flg', 0)
             ->pluck('m_qualifications.id');
 
+        $work_category = Values_employee_work_category::pluck('name', 'id');
+        $enrollment_category = Values_employee_enrollment_category::pluck('name', 'id');
+        $employment_route = Values_employee_employment_route::pluck('name', 'id');
+        $recruitment_category_detail = Values_employee_recruitment_category_detail::pluck('name', 'id');
+        $employment_status = Values_employee_employment_status::pluck('name', 'id');
+        $pay_type = Values_employee_pay_type::pluck('name', 'id');
+
         return view('admin.employee_create', [
             'employee' => $employee,
             'filePath' => $filePath,
@@ -1697,6 +1741,12 @@ class AdminController extends Controller
             'dependent' => $dependent,
             'qualifications' => $qualifications,
             'employee_qualifications' => $employee_qualifications,
+            'work_category' => $work_category,
+            'enrollment_category' => $enrollment_category,
+            'employment_route' => $employment_route,
+            'recruitment_category_detail' => $recruitment_category_detail,
+            'employment_status' => $employment_status,
+            'pay_type' => $pay_type,
         ]);
     }
 
@@ -1774,6 +1824,10 @@ class AdminController extends Controller
                     'employee_no' => $request->input('employee_no'),
                     'branch_id' => $request->input('branch_id'),
                     'managerial_position_id' => $request->input('managerial_position_id'),
+                    'grade' => $request->input('grade'),
+                    'work_category' => $request->input('work_category'),
+                    'enrollment_category' => $request->input('enrollment_category'),
+                    'transfer_date' => $this->formatDate($request->input('transfer_date')),
                     'division_name' => $request->input('division_name'),
                     'division_name_kana' => $request->input('division_name_kana'),
                     'last_name' => $request->input('last_name'),
@@ -1850,6 +1904,11 @@ class AdminController extends Controller
                     'retirement_date' => $this->formatDate($request->input('retirement_date')),
                     'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                     'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
+                    'private_introduction' => $request->input('private_introduction'),
+                    'recruitment_category' => $request->input('recruitment_category'),
+                    'recruitment_category_detail' => $request->input('recruitment_category_detail'),
+                    'employment_status' => $request->input('employment_status'),
+                    'pay_type' => $request->input('pay_type'),
                     'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                     'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                     //'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
@@ -1858,17 +1917,15 @@ class AdminController extends Controller
                     //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
                     'external_advisor_flg' => $request->input('external_advisor_flg'),
                     'occupation_type' => $request->input('occupation_type'),
-                    //'employment_route' => $request->input('employment_route'),
+                    'employment_route' => $request->input('employment_route'),
                     //'insured_reason' => $request->input('insured_reason'),
                     //'insured_reason_details' => $request->input('insured_reason_details'),
                     //'currency_id' => $request->input('currency_id'),
                     //'salary_payment_system' => $request->input('salary_payment_system'),
                     // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-                    // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
                     // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
                     // 'bank_account_no' => $request->input('bank_account_no'),// developにない
                     'employment_type' => $request->input('employment_type'),
-                    'employment_status' => $request->input('employment_status'),
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
@@ -1884,10 +1941,20 @@ class AdminController extends Controller
                     'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
                     'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
                     'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
+                    'bank_name' => $request->input('bank_name'),
+                    'bank_name_kana' => $request->input('bank_name_kana'),
+                    'head_office_or_branch_office' => $request->input('head_office_or_branch_office'),
+                    'financial_institution_code' => $request->input('financial_institution_code'),
+                    'store_code' => $request->input('store_code'),
+                    'japan_bank_flg' => $request->input('japan_bank_flg'),
                 ]);
 
             $employee = Employee::find($request->input('employee_id'));
-            $employee->update(['mynumber_card_no' => $request->input('mynumber_card_no')]);
+            $employee->update([
+                'mynumber_card_no' => $request->input('mynumber_card_no'),
+                'bank_account_no' => $request->input('bank_account_no'),
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
+            ]);
 
             $deids = $request->input('de-id', []);
             $excepts = [];
