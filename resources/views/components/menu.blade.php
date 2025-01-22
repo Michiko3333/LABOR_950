@@ -75,22 +75,28 @@
                             支店・営業所情報</a>
                     </li>
                 @endif
+                <div class="ui divider mx-1 my-0"></div>
+                <li class="item" id="menu-company-setting">
+                    <a class="content">
+                        各種設定
+                    </a>
+                </li>
                 @if ($userPermission->isReadableFor(3))
-                    <li class="item">
+                    <li class="item sub menu-company-setting-list" style="display: none;">
                         <a href="{{ route('current_company_department_update') }}">
 
                             組織・部署マスタ</a>
                     </li>
                 @endif
                 @if ($userPermission->isReadableFor(4))
-                    <li class="item">
+                    <li class="item sub menu-company-setting-list" style="display: none;">
                         <a href="{{ route('managerial_position') }}">
 
                             役職マスタ</a>
                     </li>
                 @endif
                 @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
-                    <li class="item">
+                    <li class="item sub menu-company-setting-list" style="display: none;">
                         <a href="{{ route('qualifications') }}">
 
                             資格マスタ</a>
@@ -130,18 +136,24 @@
                         <li class="item">
                             <a href="{{ route('contract.index') }}">
 
-                                労働契約書作成</a>
+                                労働条件通知書兼契約書作成</a>
                         </li>
                     @endif
+                    <div class="ui divider mx-1 my-0"></div>
+                    <li class="item" id="menu-employee-setting">
+                        <a class="content">
+                            各種設定
+                        </a>
+                    </li>
                     @if ($userPermission->isReadableFor(14) && $userPermission->isBasicDepartment())
-                        <li class="item">
+                        <li class="item sub menu-employee-setting-list" style="display: none;">
                             <a href="{{ route('closure_information') }}">
 
                                 休業情報</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(20))
-                        <li class="item">
+                        <li class="item sub menu-employee-setting-list" style="display: none;">
                             <a href="{{ route('allowance') }}">
 
                                 手当マスタ</a>
@@ -168,8 +180,14 @@
                                 申請案件一覧</a>
                         </li>
                     @endif
+                    <div class="ui divider mx-1 my-0"></div>
+                    <li class="item" id="menu-procedure-setting">
+                        <a class="content">
+                            各種設定
+                        </a>
+                    </li>
                     @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
-                        <li class="item">
+                        <li class="item sub menu-procedure-setting-list" style="display: none;">
                             <a href="{{ route('ledger.egov') }}">
 
                                 e-Gov連携</a>
@@ -182,7 +200,7 @@
                 @if ($userPermission->isReadableFor(11))
                     <li class="item">
                         <a href="{{ route('calendar.index') }}">
-                            カレンダー</a>
+                            休日（出勤）カレンダー</a>
                     </li>
                 @endif
                 @if (
@@ -192,26 +210,32 @@
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
 
-                            年間勤務予定表</a>
+                            行事（業務）カレンダー</a>
                     </li>
                 @endif
-                @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
-                    <li class="item">
-                        <a href="{{ route('pickup.pickup') }}">
-
-                            Pick upリスト</a>
+                <div class="ui divider mx-1 my-0"></div>
+                    <li class="item" id="menu-schedule-setting">
+                        <a class="content">
+                            各種設定
+                        </a>
                     </li>
-                @endif
-                @if (
-                    $userPermission->isReadableFor(13) &&
+                    @if (
+                        $userPermission->isReadableFor(13) &&
                         $userPermission->isBasicDepartment() &&
                         $userPermission->getEmployeeStatus() !== 1)
-                    <li class="item">
+                        <li class="item sub menu-schedule-setting-list" style="display: none;">
                         <a href="{{ route('pickup.setting') }}">
-
+                            
                             Pick up設定</a>
-                    </li>
-                @endif
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
+                        <li class="item sub menu-schedule-setting-list" style="display: none;">
+                            <a href="{{ route('pickup.pickup') }}">
+    
+                                Pick upリスト</a>
+                        </li>
+                    @endif
             @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"
@@ -275,6 +299,19 @@
             $('#menu-shadow').removeClass('show');
         }
     }
+
+    $("#menu-company-setting").on("click", function () {
+        $(".menu-company-setting-list").toggle();
+    });
+    $("#menu-employee-setting").on("click", function () {
+        $(".menu-employee-setting-list").toggle();
+    });
+    $("#menu-procedure-setting").on("click", function () {
+        $(".menu-procedure-setting-list").toggle();
+    });
+    $("#menu-schedule-setting").on("click", function () {
+        $(".menu-schedule-setting-list").toggle();
+    });
 
     Livewire.on('changeIconImage', (iconPath) => {
         $('#iconImage').attr('src', iconPath);
@@ -448,7 +485,17 @@
         color: var(--color-black);
     }
 
-    #sidebar menu li.item:not(.icon) a::before {
+    #sidebar menu li.item.sub a {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 1em;
+        padding-left: 4em;
+        color: var(--color-black);
+    }
+
+    #sidebar menu li.item:not(.sub) a::before {
         position: absolute;
         content: "";
         top: calc(50% - 4px);
@@ -456,6 +503,19 @@
         width: 8px;
         height: 8px;
         background-color: var(--color-red);
+    }
+
+    #sidebar menu li.item.sub a::before {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        content: "-";
+        top: 20px;
+        left: 3em;
+        width: 16px;
+        height: 10px;
+        color: var(--color-black);
     }
 
     #sidebar menu li.item a:hover {
