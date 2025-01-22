@@ -134,7 +134,12 @@
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const company = data['company'];
                 const employee = data['employee'];
-                
+                const due_date_ConvertJapan = data['due_date_4950013521030000'];
+                const start_date_of_closed_ConvertJapan = data['start_date_of_closed_4950013521030000'];
+                const planned_end_date_of_closure_ConvertJapan = data['planned_end_date_of_closure_4950013521030000'];
+                const date_of_birth_ConvertJapan = data['date_of_birth_4950013521030000'];
+                const end_date_of_losed_ConvertJapan = data['end_date_of_losed_4950013521030000'];
+
                 $('#A2_1').val(branch.pension_office_reference_prefecture || '');
                 $('#A2_2').val(branch.pension_office_reference_no_cities || '');
                 $('#A2_3').val(branch.pension_office_reference_no_office || '');
@@ -157,10 +162,10 @@
                 $('#A6_1').val(employee.insurer_reference_no || '');
                 $('#A6_2_1').val(employee.mynumber_card_no || '');
                 $('#A6_2_2').val(employee.pension_no || '');
-                
+
                 $('#A6_3').val((employee.last_name_kana ?? '') + '　' + (employee.first_name_kana ?? ''));
                 $('#A6_4').val((employee.last_name ?? '') + '　' + (employee.first_name ?? ''));
-                
+
                 var eraMapping = {'昭和': '5', '平成': '7', '令和': '9',};
                 var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
@@ -168,6 +173,26 @@
                 $('#A6_5_2').val(birthdayConvertJapan['year'] ?? "");
                 $('#A6_5_3').val(birthdayConvertJapan['month'] ?? "");
                 $('#A6_5_4').val(birthdayConvertJapan['day'] ?? "");
+
+                $('#A7_1').val(due_date_ConvertJapan['year'] ?? "");
+                $('#A7_2').val(due_date_ConvertJapan['month'] ?? "");
+                $('#A7_3').val(due_date_ConvertJapan['day'] ?? "");
+
+                $('#A9_1').val(start_date_of_closed_ConvertJapan['year'] ?? "");
+                $('#A9_2').val(start_date_of_closed_ConvertJapan['month'] ?? "");
+                $('#A9_3').val(start_date_of_closed_ConvertJapan['day'] ?? "");
+
+                $('#A10_1').val(planned_end_date_of_closure_ConvertJapan['year'] ?? "");
+                $('#A10_2').val(planned_end_date_of_closure_ConvertJapan['month'] ?? "");
+                $('#A10_3').val(planned_end_date_of_closure_ConvertJapan['day'] ?? "");
+
+                $('#A11_1').val(date_of_birth_ConvertJapan['year'] ?? "");
+                $('#A11_2').val(date_of_birth_ConvertJapan['month'] ?? "");
+                $('#A11_3').val(date_of_birth_ConvertJapan['day'] ?? "");
+
+                $('#A17_1').val(end_date_of_losed_ConvertJapan['year'] ?? "");
+                $('#A17_2').val(end_date_of_losed_ConvertJapan['month'] ?? "");
+                $('#A17_3').val(end_date_of_losed_ConvertJapan['day'] ?? "");
 
             }
             Livewire.on('onSelectEmployee', ({
@@ -180,6 +205,5 @@
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
         @endslot
-        </script>
     </section>
 </x-layout>
