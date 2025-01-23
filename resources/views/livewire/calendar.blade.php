@@ -105,31 +105,31 @@ wire:click='new'>予定を追加</button>
 <div class="calendar-small-next"><livewire:calendar-small :year="$this->todayNextYear" :month="$this->todayNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="$this->clickable" :values="$this->nextMonthEvent" wire:key="sc-component:{{ $this->todayNextYear }}-{{ $this->todayNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}:{{ $this->clickable }}" /></div><div class="calendar-small-next"><livewire:calendar-small :year="$this->todayAfterNextYear" :month="$this->todayAfterNextMonth" :showHeader="true" :firstDayWeek="$this->start_day" :firstDate="1" :clickable="$this->clickable" :values="$this->afterNextMonthEvent" wire:key="sc-component:{{ $this->todayAfterNextYear }}-{{ $this->todayAfterNextMonth }}:{{ $this->active_year }}-{{ $this->active_month }}:{{ $this->clickable }}" /></div>
 <div class="checkbox-area">
 <div class="event-checkbox company-events">
-<input type="checkbox" id="company-events" name="company-events" wire:click="filterEvents('company-events')" checked>
+<input type="checkbox" id="company-events" name="company-events" value="1" wire:model.live="company_events" checked>
 <label for="company-events">会社行事</label>
 </div>
 <div class="event-checkbox personnel-affairs">
-<input type="checkbox" id="personnel-affairs" name="personnel-affairs" wire:click="filterEvents('personnel-affairs')" checked>
+<input type="checkbox" id="personnel-affairs" name="personnel-affairs" value="1" wire:model.live.live="personnel_affairs" checked>
 <label for="personnel-affairs">人事業務</label>
 </div>
 <div class="event-checkbox general-affairs">
-<input type="checkbox" id="general-affairs" name="general-affairs" wire:click="filterEvents('general-affairs')" checked>
+<input type="checkbox" id="general-affairs" name="general-affairs" value="1" wire:model.live="general_affairs" checked>
 <label for="general-affairs">総務業務</label>
 </div>
 <div class="event-checkbox administrative-procedures">
-<input type="checkbox" id="administrative-procedures" name="administrative-procedures" wire:click="filterEvents('administrative-procedures')" checked>
+<input type="checkbox" id="administrative-procedures" name="administrative-procedures" value="1" wire:model.live="administrative_procedures" checked>
 <label for="administrative-procedures">行政手続</label>
 </div>
 <div class="event-checkbox taxation-services">
-<input type="checkbox" id="taxation-services" name="taxation-services" wire:click="filterEvents('taxation-services')" checked>
+<input type="checkbox" id="taxation-services" name="taxation-services" value="1" wire:model.live="taxation_services" checked>
 <label for="taxation-services">税務業務</label>
 </div>
 <div class="event-checkbox others">
-<input type="checkbox" id="others" name="others" wire:click="filterEvents('others')" checked>
+<input type="checkbox" id="others" name="others" value="1" wire:model.live="others" checked>
 <label for="others">その他</label>
 </div>
 <div class="event-checkbox grants-and-subsidies">
-<input type="checkbox" id="grants-and-subsidies" name="grants-and-subsidies" wire:click="filterEvents('grants-and-subsidies')" checked>
+<input type="checkbox" id="grants-and-subsidies" name="grants-and-subsidies" value="1" wire:model.live="grants_and_subsidies" checked>
 <label for="grants-and-subsidies">助成金・補助金</label>
 </div>
 </div>
@@ -260,14 +260,14 @@ class="edit-calendar-to" wire:ignore>
 </div>
 <div class="field">
 <label for="event-title">内容・詳細</label>
-<textarea name="event-contents" cols="30" rows="6" maxlength="255" class='edit-calendar-inputs_contents'></textarea>
+<textarea name="event-contents" cols="30" rows="6" wrap="off" maxlength="255" class='edit-calendar-inputs_contents'></textarea>
 </div>
 </div>
 </form>
 @if ($this->editPermission && $this->userPermission)
 <div class="remove-area mt-2">
 <div class="open-remove-select ui hidden">
-<button type="button">この予定を削除する</button>
+<button type="button" class="open-remove-select-btn">この予定を削除する</button>
 </div>
 <div class="select-remove-type-area">
 <div class="select-remove-type-style">
@@ -342,7 +342,7 @@ onClick="javascript:$calendar_modal.onCancel()">キャンセル</button>
 </div>
 <div class="field">
 <label for="event-title">内容・詳細</label>
-<textarea class="contents" cols="30" rows="6" readonly></textarea>
+<textarea class="contents" cols="30" rows="6" wrap="off" readonly></textarea>
 </div>
 </div>
 </div>

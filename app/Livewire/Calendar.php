@@ -57,8 +57,15 @@ class Calendar extends Component
     );
 
     public $category_types = [];
+    public $company_events = 1;
+    public $personnel_affairs = 1;
+    public $general_affairs = 1;
+    public $administrative_procedures = 1;
+    public $taxation_services = 1;
+    public $others = 1;
+    public $grants_and_subsidies = 1;
 
-    public $repetition_types = ['繰り返さない', '毎日', '毎週', '毎月（曜日）', '毎月（日付）', '毎年'];
+    public $repetition_types = ['繰り返さない', '毎週', '毎月（曜日）', '毎月（日付）', '毎年'];
 
     public $select_year, $select_month;
     public $current_edit_id = 0;
@@ -151,6 +158,30 @@ class Calendar extends Component
 
         $this->nextMonthEvent = $this->getCalenderSmallDotValues(1);
         $this->afterNextMonthEvent = $this->getCalenderSmallDotValues(2);
+
+        foreach ($this->events as &$event) {
+            if (isset($event[4]) && $event[4] == 'company-events') {
+                $event[7] = $this->company_events ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'personnel-affairs') {
+                $event[7] = $this->personnel_affairs ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'general-affairs') {
+                $event[7] = $this->general_affairs ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'administrative-procedures') {
+                $event[7] = $this->administrative_procedures ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'taxation-services') {
+                $event[7] = $this->taxation_services ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'others') {
+                $event[7] = $this->others ? 'open' : 'hide';
+            }
+            if (isset($event[4]) && $event[4] == 'grants-and-subsidies') {
+                $event[7] = $this->grants_and_subsidies ? 'open' : 'hide';
+            }
+        }
 
         return view('livewire.calendar');
     }
@@ -491,8 +522,6 @@ class Calendar extends Component
                 $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
             }
         }
-
-        $this->getEvents();
     }
 
     public function isToday($i)
@@ -515,8 +544,6 @@ class Calendar extends Component
         $next_after_d = date('Y-m-d', $after_next_m);
         $this->todayAfterNextYear = date('Y', strtotime($next_after_d));
         $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
-
-        $this->getEvents();
     }
 
     public function updatedSelectYear($value)
@@ -529,8 +556,6 @@ class Calendar extends Component
         $after_next_d = date('Y-m-d', $after_next_m);
         $this->todayNextYear = date('Y', strtotime($next_d));
         $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
-
-        $this->getEvents();
     }
 
     public function updatedSelectMonth($value)
@@ -545,8 +570,6 @@ class Calendar extends Component
         $this->todayAfterNextYear = date('Y', strtotime($after_next_d));
         $this->todayNextMonth = date('m', strtotime($next_d));
         $this->todayAfterNextMonth = date('m', strtotime($after_next_d));
-
-        $this->getEvents();
     }
 
     #[On('calendar-small-clicked')]
@@ -908,7 +931,6 @@ class Calendar extends Component
             $exitingFirstsEvents = null;
             $existingEvents = [];
             $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)
-                ->select('id', 'category_type', 'identifier')
                 ->first();
 
             if($existingEvent->identifier === null) {
@@ -976,6 +998,20 @@ class Calendar extends Component
                     ->toArray();
             // これ以降の予定
             } elseif($select_event_type === '1' && $existingEvent) {
+                Calendar_event::where('identifier', $eventIdentifier)
+                    ->where('id', '>', $this->inputs_edit_id)
+                    ->update([
+                        'delete_flg' => 1,
+                    ]);
+
+                $existingEvents = Calendar_event::where('identifier',  $eventIdentifier)
+                    ->where('id', '>', $this->inputs_edit_id)
+                    ->select('id')
+                    ->get()
+                    ->toArray();
+
+                $eventIdentifier = $identifier;
+
                 Calendar_event::where('id', $this->inputs_edit_id)
                     ->update([
                         'employee_id' => $current_user->id,
@@ -989,25 +1025,32 @@ class Calendar extends Component
                         'repetition_type' => $data['inputs_repetition'],
                         'identifier' => $eventIdentifier,
                     ]);
-                Calendar_event::where('identifier', $eventIdentifier)
-                    ->where('id', '>', $this->inputs_edit_id)
-                    ->update([
-                        'delete_flg' => 1,
-                    ]);
-
-                $existingEvents = Calendar_event::where('identifier',  $eventIdentifier)
-                    ->where('id', '>', $this->inputs_edit_id)
-                    ->select('id')
-                    ->get()
-                    ->toArray();
             // 全ての予定
             } elseif($select_event_type === '2' && $existingEvent) {
+                $exiting_from_date = Carbon::parse($existingEvent->from);
+                $from_time = $from_date->format('H:i:s');
+                $to_time = $to_date ? $to_date->format('H:i:s') : null;
+
                 $exitingFirstsEvents = Calendar_event::where('identifier',  $eventIdentifier)
                     ->where('delete_flg', 0)
                     ->first();
+                $exiting_first_from_date = $exitingFirstsEvents->from ? Carbon::parse($exitingFirstsEvents->from) : $from_date;
 
-                $from_date = $exitingFirstsEvents->from ? Carbon::parse($exitingFirstsEvents->from) : $from_date;
-                $to_date = $exitingFirstsEvents->to ? Carbon::parse($exitingFirstsEvents->to) : null;
+                $from_difference = $exiting_from_date->diffInDays($from_date, false);
+                $from_date = $from_difference >= 0
+                    ? $exiting_first_from_date->copy()->addDays($from_difference)
+                    : $exiting_first_from_date->copy()->subDays(abs($from_difference));
+                list($hour, $minute, $second) = explode(':', $from_time);
+                $from_date->setTime($hour, $minute, $second);
+
+                if($to_date) {
+                    $to_difference = $exiting_from_date->diffInDays($to_date, false);
+                    $to_date = $from_difference >= 0
+                        ? $exiting_first_from_date->copy()->addDays($to_difference)
+                        : $exiting_first_from_date->copy()->subDays(abs($to_difference));
+                    list($hour, $minute, $second) = explode(':', $to_time);
+                    $to_date->setTime($hour, $minute, $second);
+                }
 
                 Calendar_event::where('id', $exitingFirstsEvents->id)
                     ->update([
@@ -1054,6 +1097,7 @@ class Calendar extends Component
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
                                     'repetition_type' => $data['inputs_repetition'],
+                                    'identifier' => $eventIdentifier,
                                     'delete_flg' => 0,
                                 ]);
                             $index++;
@@ -1120,6 +1164,7 @@ class Calendar extends Component
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
                                     'repetition_type' => $data['inputs_repetition'],
+                                    'identifier' => $eventIdentifier,
                                     'delete_flg' => 0,
                                 ]);
                             $index++;
@@ -1169,6 +1214,7 @@ class Calendar extends Component
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
                                     'repetition_type' => $data['inputs_repetition'],
+                                    'identifier' => $eventIdentifier,
                                     'delete_flg' => 0,
                                 ]);
                             $index++;
@@ -1211,6 +1257,7 @@ class Calendar extends Component
                                     'to' => $new_to_date ? $new_to_date->toDateTimeString() : null,
                                     'contents' => $data['inputs_contents'],
                                     'repetition_type' => $data['inputs_repetition'],
+                                    'identifier' => $eventIdentifier,
                                     'delete_flg' => 0,
                                 ]);
                             $index++;
@@ -1304,14 +1351,5 @@ class Calendar extends Component
         $d = str_replace('年', '-', $d); // "年"を"-"に置換する
         $d = str_replace('月', '-', $d);
         return $d;
-    }
-
-    public function filterEvents($category)
-    {
-        foreach ($this->events as &$event) {
-            if (isset($event[4]) && $event[4] == $category) {
-                $event[7] = ($event[7] === 'hide') ? 'open' : 'hide';
-            }
-        }
     }
 }

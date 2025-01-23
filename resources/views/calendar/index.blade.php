@@ -294,8 +294,8 @@
             subsidiesSwitching();
         });
 
-        $(document).on('click', '.open-remove-select', function() {
-            $(this).addClass('hidden');
+        $(document).on('click', '.open-remove-select-btn', function() {
+            $('.open-remove-select').addClass('hidden');
             $('.select-remove-type-style').removeClass('hidden');
         });
 
