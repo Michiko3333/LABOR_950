@@ -2199,7 +2199,6 @@ class AdminController extends Controller
                         $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                         $content = str_replace($search, $replace, $pickupMessage->content);
 
-                        dd(!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type']));
                         if(!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type'])) {
                             if($dedata['date_of_expiry'] && ($old_date_of_expiry === null || !Carbon::parse($dedata['date_of_expiry'])->isSameDay($old_date_of_expiry))) {
                                 $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);

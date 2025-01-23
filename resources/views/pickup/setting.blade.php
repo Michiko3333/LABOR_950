@@ -380,7 +380,7 @@
                 </div>
             </div>
 
-            @if(!$userPermission->isAdmin() && ($userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13)) && $userPermission->getEmployeeStatus() !== 1)
+            @if(!$userPermission->isAdmin() && $userPermission->isGeneralAffair() && $userPermission->isWritableFor(13) && $userPermission->getEmployeeStatus() !== 1)
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('home.index') }}"
                         style="width: 200px;">キャンセル</a>
@@ -395,8 +395,8 @@
             const readonly = @json($userPermission->isAdmin() || !$userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13) || $userPermission->getEmployeeStatus() === 1);
             if (readonly) {
                 $sectionReadonly();
-                const def = @json($officers);
-                $('label[for="officers"]').next('input[type="text"]').val(def.join(', '));
+                const def = @json($officers_names);
+                $('label[for="officers[]"]').next('div').find('.default').text(def.join(',　')).css('color', '#13265F');
             } else {
                 getIndustryType(true);
             }

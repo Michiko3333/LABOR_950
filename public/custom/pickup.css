@@ -45,6 +45,13 @@ div.pagination {
     font-weight: 500;
 }
 
+.readonly-style {
+    pointer-events: none;
+    border: none !important;
+}
+
+
+
 .fade-highlight {
     animation: fadeHighlight 0.5s ease-out forwards;
 }

@@ -19,7 +19,7 @@ class PickUpController extends Controller
     public function index()
     {
         $userPermission = new Permission();
-        if (!$userPermission->isReadableFor(15)) {
+        if (!$userPermission->isReadableFor(15) || !$userPermission->isBasicDepartment() || $userPermission->getEmployeeStatus() == 1) {
             return redirect()->route('home.index');
         }
 
@@ -29,17 +29,26 @@ class PickUpController extends Controller
     public function setting()
     {
         $userPermission = new Permission();
-        if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() == 1) {
+        if (!$userPermission->isReadableFor(13) || !$userPermission->isBasicDepartment() || $userPermission->getEmployeeStatus() == 1) {
             return redirect()->route('home.index');
         }
 
-        $current_user = CurrentUser::info();
         $current_company = CurrentUser::currentCompany();
         $pickupSetting = Pickup_setting::where('company_id', $current_company->id)->first();
 
+        $officers_names = [];
         if($pickupSetting) {
             $officers_ids = $pickupSetting->officers_ids;
-            $officers = explode(',', $officers_ids);    
+            $officers = explode(',', $officers_ids);
+
+            if($officers) {
+                $officers_names = Employee::whereIn('id', $officers)
+                    ->where('delete_flg', 0)
+                    ->get(['last_name', 'first_name'])
+                    ->map(fn($employee) => $employee->last_name . ' ' . $employee->first_name)
+                    ->values()
+                    ->toArray();
+            }
         }
 
         $labor_insurance_annual_renewal_start = $pickupSetting->labor_insurance_annual_renewal_start ?? '';
@@ -77,9 +86,9 @@ class PickUpController extends Controller
             $report_on_the_status_of_elderly_and_disabled_people_day = ltrim($report_on_the_status_of_elderly_and_disabled_people_day, '0');
         }
 
-
         return view('pickup.setting', [
             'officers' => $officers ?? [],
+            'officers_names' => $officers_names ?? [],
             'pickupSetting' => $pickupSetting,
             'labor_insurance_annual_renewal_start_month' => $labor_insurance_annual_renewal_start_month ?? '',
             'labor_insurance_annual_renewal_start_day' => $labor_insurance_annual_renewal_start_day ?? '',

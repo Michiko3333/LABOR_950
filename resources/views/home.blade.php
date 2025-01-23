@@ -351,7 +351,7 @@
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
+                            @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
                                 <a href="{{ route('pickup.pickup') }}" class="item calendar-setting-list" style="display: none;">
                                     <div class="content sub">
                                         <div class="header">Pick upリスト</div>

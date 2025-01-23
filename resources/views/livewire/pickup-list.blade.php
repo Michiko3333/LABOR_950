@@ -84,7 +84,7 @@
                     <div class="two fields">
                         <div class="field">
                             <label>状態</label>
-                            <select class="ui fluid dropdown situation">
+                            <select class="ui fluid dropdown situation {{ $this->editPermission ? '' : 'readonly-style' }}">
                                 <option value="1" class="select_no_supported">未対応</option>
                                 <option value="2" class="select_in_progress">対応中</option>
                                 <option value="3" class="select_completion">完了</option>
