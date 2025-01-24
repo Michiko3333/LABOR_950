@@ -87,9 +87,9 @@
     @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button bounty-history-{{ $childKey }}">履歴</button>
-        <div class="ui modal bounty-modal-{{ $childKey }}" wire:ignore>
+        <div class="ui modal bounty-modal-{{ $childKey }}" wire:ignore wire:key="bounty-modal-{{ $childKey }}">
             <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">履歴</div>
-            <div class="content">
+            <div class="scrolling content">
                 @if (!$bountyHistory->isEmpty())
                     <table class="ui celled table center aligned">
                         <thead>
@@ -102,7 +102,10 @@
                         </thead>
                         <tbody>
                             @foreach ($bountyHistory as $historyItem)
-                                <tr>
+                                <tr
+                                @if($historyItem->delete_flg == 1)
+                                class="deleted"
+                                @endif>
                                     <td>{{ $historyItem->department_names }}</td>
                                     <td>{{ $historyItem->bonus_payment_month }}</td>
                                     <td>{{ substr($historyItem->applied_date, 0, 7) }}</td>
@@ -125,7 +128,7 @@
             wire:key="{{ 'bounty-item-' . $childKey . '-' . $bountyKey . '-' . $bountyItem['bou-key'] }}"
             x-init="init_bounty('{{ $uniqueId }}')">
             <input type="hidden" name="bou-id[{{ $childKey }}][]" value="{{ $bountyItem['bou-id'] }}" />
-            <div class="six wide field {{ err_sub($bouErrs, 'bou-departments', $childKey, $bountyKey) }}" wire:ignore>
+            <div class="required six wide field {{ err_sub($bouErrs, 'bou-departments', $childKey, $bountyKey) }}" wire:ignore>
                 <label for="bou-departments[]">該当部署</label>
                 <select class="ui fluid search dropdown multiple department_select bounty-dropdown-{{ $childKey }}"
                     wire:model.live="bountyData.{{ $bountyKey }}.bou-departments" multiple=""
@@ -135,7 +138,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="six wide field {{ err_sub($bouErrs, 'bou-bonus_payment_month', $childKey, $bountyKey) }}"
+            <div class="required six wide field {{ err_sub($bouErrs, 'bou-bonus_payment_month', $childKey, $bountyKey) }}"
                 wire:ignore>
                 <label for="bou-bonus_payment_month">支払月</label>
                 <select class="ui fluid multiple dropdown limit-select bounty-dropdown-{{ $childKey }}"
@@ -155,7 +158,7 @@
                     <option value="12月">12月</option>
                 </select>
             </div>
-            <div class="three wide field {{ err_sub($bouErrs, 'bou-applied_date', $childKey, $bountyKey) }}">
+            <div class="required three wide field {{ err_sub($bouErrs, 'bou-applied_date', $childKey, $bountyKey) }}">
                 <label for="bou-applied_date">適用年月</label>
                 <div class="ui calendar month-calendar bounty-month-{{ $childKey }}" wire:ignore>
                     <div class="ui fluid input left icon">
@@ -207,6 +210,10 @@
         button.append-bounty:active {
             color: #6b6b6b;
             border: solid 2px #adadad;
+        }
+
+        .deleted {
+        background: lightgray;
         }
     </style>
 </div>

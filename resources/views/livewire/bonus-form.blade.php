@@ -87,9 +87,9 @@
     @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button bonus-history-{{ $childKey }}">履歴</button>
-        <div class="ui modal bonus-modal-{{ $childKey }}" wire:ignore>
+        <div class="ui modal bonus-modal-{{ $childKey }}" wire:ignore wire:key="bonus-modal-{{ $childKey }}">
             <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">履歴</div>
-            <div class="content">
+            <div class="scrolling content">
                 @if (!$bonusHistory->isEmpty())
                     <table class="ui celled table center aligned">
                         <thead>
@@ -102,7 +102,10 @@
                         </thead>
                         <tbody>
                             @foreach ($bonusHistory as $historyItem)
-                                <tr>
+                                <tr
+                                @if($historyItem->delete_flg == 1)
+                                class="deleted"
+                                @endif>
                                     <td>{{ $historyItem->department_names }}</td>
                                     <td>{{ $historyItem->bonus_payment_month }}</td>
                                     <td>{{ substr($historyItem->applied_date, 0, 7) }}</td>
@@ -125,7 +128,7 @@
             wire:key="{{ 'bonus-item-' . $childKey . '-' . $bonusKey . '-' . $bonusItem['bo-key'] }}"
             x-init="init_bonus('{{ $uniqueId }}')">
             <input type="hidden" name="bo-id[{{ $childKey }}][]" value="{{ $bonusItem['bo-id'] }}" />
-            <div class="six wide field {{ err_sub($boErrs, 'bo-departments', $childKey, $bonusKey) }}" wire:ignore>
+            <div class="required six wide field {{ err_sub($boErrs, 'bo-departments', $childKey, $bonusKey) }}" wire:ignore>
                 <label for="bo-departments[]">該当部署</label>
                 <select class="ui fluid search dropdown multiple department_select bonus-dropdown-{{ $childKey }}"
                     wire:model.live="bonusData.{{ $bonusKey }}.bo-departments" multiple=""
@@ -135,7 +138,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="six wide field {{ err_sub($boErrs, 'bo-bonus_payment_month', $childKey, $bonusKey) }}"
+            <div class="required six wide field {{ err_sub($boErrs, 'bo-bonus_payment_month', $childKey, $bonusKey) }}"
                 wire:ignore>
                 <label for="bo-bonus_payment_month">支払月</label>
                 <select class="ui fluid multiple dropdown limit-select bonus-dropdown-{{ $childKey }}"
@@ -155,7 +158,7 @@
                     <option value="12月">12月</option>
                 </select>
             </div>
-            <div class="three wide field {{ err_sub($boErrs, 'bo-applied_date', $childKey, $bonusKey) }}">
+            <div class="required three wide field {{ err_sub($boErrs, 'bo-applied_date', $childKey, $bonusKey) }}">
                 <label for="bo-applied_date">適用年月</label>
                 <div class="ui calendar month-calendar" wire:ignore>
                     <div class="ui fluid input left icon">
@@ -208,6 +211,10 @@
         button.append-bonus:active {
             color: #6b6b6b;
             border: solid 2px #adadad;
+        }
+
+        .deleted {
+        background: lightgray;
         }
     </style>
 </div>

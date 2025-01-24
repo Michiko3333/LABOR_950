@@ -119,6 +119,10 @@
                 closureId: closureId,
                 receptionistId: null,
                 managerialPositionId: null,
+                dependentId: null,
+                allowanceId: null,
+                name: null,
+                allowanceHistoryId: null,
             });
             setTimeout(() => {
                 $('.cancel-modal').modal({

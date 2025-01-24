@@ -33,7 +33,7 @@ class BonusForm extends Component
         $this->bonusHistory = $bonusHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
-        $departments = Department::where('company_id', $companyId)->get();
+        $departments = Department::where('company_id',$companyId)->where('delete_flg', 0)->get();
         $this->departments = $departments;
         foreach ($this->bonusHistory as $historyItem) {
             $departmentIds = explode(',', $historyItem->department_id);

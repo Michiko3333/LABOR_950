@@ -2015,6 +2015,10 @@
                 dependentId: dependentId,
                 receptionistId: null,
                 managerialPositionId: null,
+                closureId: closureId,
+                allowanceId: null,
+                name: null,
+                allowanceHistoryId: null,
             });
             setTimeout(() => {
                 $('.cancel-modal').modal('show');

@@ -89,6 +89,7 @@
                     managerialPositionId: null,
                     closureId: null,
                     name: name,
+                    dependentId: null,
                 });
                 setTimeout(() => {
                     $('.cancel-modal').modal({
@@ -107,6 +108,7 @@
                     managerialPositionId: null,
                     closureId: null,
                     name: name,
+                    dependentId: null,
                 });
                 setTimeout(() => {
                     $('.cancel-modal').modal({

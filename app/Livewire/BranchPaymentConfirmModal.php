@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Allowance;
 use App\Models\Employee;
 use App\Models\Receptionist;
 use App\Models\Managerial_position;
@@ -10,7 +11,7 @@ use App\Models\Department;
 use App\Models\Salary;
 use App\Models\Bonus;
 use App\Models\Bounty;
-
+use App\Models\Branch_allowance;
 use Livewire\Attributes\On;
 
 class BranchPaymentConfirmModal extends BaseTable
@@ -21,14 +22,21 @@ class BranchPaymentConfirmModal extends BaseTable
     public $mergedBonus;
     public $bountyByBranch;
     public $mergedBounty;
+    public $allowanceByBranch;
     public $index;
+    public $salariesID;
+    public $bonusID;
+    public $bountyID;
+    public $allowanceID;
 
     protected $listeners = ['confirmModalOpened'];
 
     public function confirmModalOpened($branchID, $index)
     {
         $this->salariesByBranch = Salary::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if ($this->salariesByBranch->isNotEmpty()) {
+        $this->salariesID = Salary::where('branch_id', $branchID)->where('delete_flg', 0)->pluck('salary_id')->toArray();
+        $this->salariesID = array_map('strval', $this->salariesID);
+        if($this->salariesByBranch->isNotEmpty()){
             foreach ($this->salariesByBranch as $salary) {
                 $salaryId = $salary->salary_id;
                 if (isset($mergedSalaries[$salaryId])) {
@@ -61,7 +69,9 @@ class BranchPaymentConfirmModal extends BaseTable
             $this->mergedSalaries = null;
         }
         $this->bonusByBranch = Bonus::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if ($this->bonusByBranch->isNotEmpty()) {
+        $this->bonusID = Bonus::where('branch_id', $branchID)->where('delete_flg', 0)->pluck('bonus_id')->toArray();
+        $this->bonusID = array_map('strval', $this->bonusID);
+        if($this->bonusByBranch->isNotEmpty()){
             foreach ($this->bonusByBranch as $bonus) {
                 $bonusId = $bonus->bonus_id;
                 if (isset($mergedBonus[$bonusId])) {
@@ -92,7 +102,9 @@ class BranchPaymentConfirmModal extends BaseTable
             $this->mergedBonus = null;
         }
         $this->bountyByBranch = Bounty::where('branch_id', $branchID)->where('delete_flg', 0)->get();
-        if ($this->bountyByBranch->isNotEmpty()) {
+        $this->bountyID = Bounty::where('branch_id', $branchID)->where('delete_flg', 0)->pluck('bounty_id')->toArray();
+        $this->bountyID = array_map('strval', $this->bountyID);
+        if($this->bountyByBranch->isNotEmpty()){
             foreach ($this->bountyByBranch as $bounty) {
                 $bountyId = $bounty->bounty_id;
                 if (isset($mergedBounty[$bountyId])) {
@@ -122,12 +134,26 @@ class BranchPaymentConfirmModal extends BaseTable
         } else {
             $this->mergedBounty = null;
         }
-        $this->index = $index;
+        $this->allowanceByBranch = Branch_allowance::where('branch_id', $branchID)
+        ->where('delete_flg', 0)
+        ->get()
+        ->map(function ($item) {
+            $item->allowance = Allowance::where('id', $item->allowance)->value('name');
+            return $item;
+        });
+        $this->allowanceID = Branch_allowance::where('branch_id', $branchID)->where('delete_flg', 0)->pluck('id')->toArray();
+        $this->allowanceID = array_map('strval', $this->allowanceID);
+        $this->index =$index;
         $this->dispatch('salariesDataUpdated', [
-            'salariesByBranch' => $this->mergedSalaries,
-            'bonusByBranch' => $this->mergedBonus,
-            'bountyByBranch' => $this->mergedBounty,
-            'index' => $this->index,
+            'salariesByBranch' =>$this->mergedSalaries,
+            'bonusByBranch' =>$this->mergedBonus,
+            'bountyByBranch' =>$this->mergedBounty,
+            'allowanceByBranch' =>$this->allowanceByBranch,
+            'index' =>$this->index,
+            'salariesID' =>$this->salariesID,
+            'bonusID' =>$this->bonusID,
+            'bountyID' =>$this->bountyID,
+            'allowanceID' =>$this->allowanceID,
         ]);
     }
 

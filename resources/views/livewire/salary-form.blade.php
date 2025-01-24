@@ -68,9 +68,9 @@
     @endscript
     <div class="mb-2 flex-container">
         <button type="button" class="ui small grey basic button salary-history-{{ $childKey }}">履歴</button>
-        <div class="ui modal salary-modal-{{ $childKey }}" wire:ignore>
+        <div class="ui modal salary-modal-{{ $childKey }}" wire:ignore wire:key="salary-modal-{{ $childKey }}">
             <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">履歴</div>
-            <div class="content">
+            <div class="scrolling content">
                 @if (!$salaryHistory->isEmpty())
                     <script>
                         var deallineMapping = {
@@ -110,7 +110,10 @@
                         </thead>
                         <tbody>
                             @foreach ($salaryHistory as $historyItem)
-                                <tr>
+                                <tr
+                                @if($historyItem->delete_flg == 1)
+                                class="deleted"
+                                @endif>
                                     <td>{{ $historyItem->department_names }}</td>
                                     <td>
                                         <script>
@@ -147,7 +150,7 @@
             wire:key="{{ 'salary-item-' . $childKey . '-' . $salaryKey . '-' . $salaryItem['sa-key'] }}"
             x-init="init_salary('{{ $uniqueId }}')">
             <input type="hidden" name="sa-id[{{ $childKey }}][]" value="{{ $salaryItem['sa-id'] }}" />
-            <div class="six wide field {{ err_sub($saErrs, 'sa-departments', $childKey, $salaryKey) }}" wire:ignore>
+            <div class="required six wide field {{ err_sub($saErrs, 'sa-departments', $childKey, $salaryKey) }}" wire:ignore>
                 <label for="sa-departments[]">該当部署</label>
                 <select class="ui fluid search dropdown multiple department_select salary-dropdown-{{ $childKey }}"
                     wire:model.live="salaryData.{{ $salaryKey }}.sa-departments" multiple=""
@@ -157,7 +160,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="field {{ err_sub($saErrs, 'sa-payroll_deadline', $childKey, $salaryKey) }}"
+            <div class="required field {{ err_sub($saErrs, 'sa-payroll_deadline', $childKey, $salaryKey) }}"
                 style="width: 112.4px;">
                 <label for="sa-payroll_deadline">締め日</label>
                 <select class="ui fluid dropdown" name="sa-payroll_deadline[{{ $childKey }}][]"
@@ -169,7 +172,7 @@
                     <option value="4">末締め</option>
                 </select>
             </div>
-            <div class="field {{ err_sub($saErrs, 'sa-payroll_month', $childKey, $salaryKey) }}">
+            <div class="required field {{ err_sub($saErrs, 'sa-payroll_month', $childKey, $salaryKey) }}">
                 <label for="sa-payroll_month">支払月</label>
                 <select class="ui fluid dropdown" name="sa-payroll_month[{{ $childKey }}][]"
                     wire:model.live="salaryData.{{ $salaryKey }}.sa-payroll_month">
@@ -178,7 +181,7 @@
                     <option value="2">翌月</option>
                 </select>
             </div>
-            <div class="field {{ err_sub($saErrs, 'sa-payroll_day', $childKey, $salaryKey) }}">
+            <div class="required field {{ err_sub($saErrs, 'sa-payroll_day', $childKey, $salaryKey) }}">
                 <label for="sa-payroll_day">支払日</label>
                 <select class="ui fluid dropdown" name="sa-payroll_day[{{ $childKey }}][]"
                     wire:model.live="salaryData.{{ $salaryKey }}.sa-payroll_day">
@@ -196,7 +199,7 @@
                     <option value="11">第5営業日</option>
                 </select>
             </div>
-            <div class="three wide field {{ err_sub($saErrs, 'sa-applied_date', $childKey, $salaryKey) }}" wire:ignore>
+            <div class="required three wide field {{ err_sub($saErrs, 'sa-applied_date', $childKey, $salaryKey) }}" wire:ignore>
                 <label for="sa-applied_date">適用年月</label>
                 <div class="ui calendar month-calendar" wire:ignore>
                     <div class="ui fluid input left icon">
@@ -249,6 +252,10 @@
         button.append-salary:active {
             color: #6b6b6b;
             border: solid 2px #adadad;
+        }
+
+        .deleted {
+        background: lightgray;
         }
     </style>
 </div>

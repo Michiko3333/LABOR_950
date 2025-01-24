@@ -111,10 +111,8 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
-        $currentUser = CurrentUser::info();
         $currentCompany = CurrentUser::CurrentCompany();
         $company_id = $currentCompany->id;
-        $division = $currentCompany->company_division;
 
         $paginate = [
             'page' => $request->input('page', 1),
@@ -122,30 +120,7 @@ class EmployeeController extends Controller
             'search' => $request->input('search'),
         ];
 
-        $columnList = FilterEmployeeList::select('name', 'value', 'parent');
-
-        if ($userPermission->isBasicDepartment()) {
-            $columnList = $columnList->where('hidden_basic_department', 0);
-        }
-
-        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
-        $userDefaultList = [];
-        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
-        if (count($userList) > 0) {
-            foreach ($userList as $key => $value) {
-                $key = array_search($value, array_column($masterColumnList, 'value'));
-                $userDefaultList[] = $masterColumnList[$key];
-            }
-        } else {
-            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
-            $userDefaultList = $defaultList;
-        }
-
-
         return view('employee.closure_information', [
-            'division' => $division,
-            'columnList' => $masterColumnList,
-            'defaultList' => $userDefaultList,
             'company_id' => $company_id,
         ]);
     }
@@ -157,11 +132,9 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
-        $currentUser = CurrentUser::info();
         $currentCompany = CurrentUser::CurrentCompany();
         $company_id = $currentCompany->id;
         $branch = Branch::where('company_id', $company_id)->get()->pluck('name', 'id')->toArray();
-        $division = $currentCompany->company_division;
 
         $paginate = [
             'page' => $request->input('page', 1),
@@ -169,30 +142,7 @@ class EmployeeController extends Controller
             'search' => $request->input('search'),
         ];
 
-        $columnList = FilterEmployeeList::select('name', 'value');
-
-        if ($userPermission->isBasicDepartment()) {
-            $columnList = $columnList->where('hidden_basic_department', 0);
-        }
-
-        $masterColumnList = $columnList->orderBy('order')->get()->toArray();
-        $userDefaultList = [];
-        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
-        if (count($userList) > 0) {
-            foreach ($userList as $key => $value) {
-                $key = array_search($value, array_column($masterColumnList, 'value'));
-                $userDefaultList[] = $masterColumnList[$key];
-            }
-        } else {
-            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
-            $userDefaultList = $defaultList;
-        }
-
-
         return view('employee.allowance', [
-            'division' => $division,
-            'columnList' => $masterColumnList,
-            'defaultList' => $userDefaultList,
             'company_id' => $company_id,
             'branch' => $branch,
         ]);

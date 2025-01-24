@@ -89,6 +89,10 @@
                 receptionistId: receptionistId,
                 managerialPositionId: null,
                 closureId: null,
+                dependentId: null,
+                allowanceHistoryId: null,
+                allowanceId: allowanceId,
+                name: name,
             });
             setTimeout(() => {
                 $('.cancel-modal').modal({

@@ -2048,6 +2048,9 @@
                 closureId: null,
                 receptionistId: null,
                 managerialPositionId: null,
+                allowanceHistoryId: null,
+                allowanceId: allowanceId,
+                name: name,
             });
             setTimeout(() => {
                 $('.cancel-modal').modal('show');
