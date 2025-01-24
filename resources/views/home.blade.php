@@ -322,10 +322,7 @@
                     </div>
                     <div class="extra content">
                         <div class="ui middle aligned selection list">
-                            @if (
-                                $userPermission->isReadableFor(12) &&
-                                    $userPermission->isBasicDepartment() &&
-                                    $userPermission->getEmployeeStatus() !== 1)
+                            @if ($userPermission->isReadableFor(12))
                                 <a href="{{ route('calendar.shift') }}" class="item">
                                     <div class="content">
                                         <div class="header">休日（出勤）カレンダー</div>
