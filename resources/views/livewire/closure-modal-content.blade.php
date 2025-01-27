@@ -352,7 +352,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="small-pagination">
+                    <div class="small-pagination" style="display: flex; justify-content: center;">
                         <div class="ui pagination borderless mini menu">
                             <button type="button"
                                 class="ui button item pagination-disable @if ($disablePrev) disabled @endif"

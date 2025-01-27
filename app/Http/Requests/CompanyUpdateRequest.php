@@ -54,7 +54,7 @@ class CompanyUpdateRequest extends BaseRequest
             'industry_type' => 'array',
             'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'capital' => 'nullable|integer',
+            'capital' => 'nullable|integer|max_digits:9',
             'annual_sales' => 'nullable|integer|max_digits:18',
             'employee_sum' => 'nullable|integer|max_digits:9',
             'qualification' => 'nullable|string',

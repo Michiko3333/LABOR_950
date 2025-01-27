@@ -48,98 +48,86 @@
             @endif
         </div>
     </div>
-    @if ($this->history_flg == 0)
-        <div class="ui card full card-shadow item-0">
-            <div class="content">
-                <table class="ui large table">
-                    <thead>
-                        <tr>
-                            <th style="width: 200px;">名称</th>
-                            <th style="width: 200px;">適用日</th>
-                            <th style="width: 200px;"></th>
-                        </tr>
-                    </thead>
-                    @if ($this->nonHistoryItems)
-                        <tbody id="tbody">
-                            @foreach ($this->nonHistoryItems as $item)
-                                <tr class="card">
-                                    <td>{{ $item['name'] }}</td>
-                                    <td>
-                                        @if ($item['applied_date'])
-                                            {{ $item['applied_date'] }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
 
-                                    <td class="right aligned collapsing">
-                                        @if ($userPermission->isReadableFor(14))
-                                            <a class="ui basic primary button button-disable" type="button"
-                                                onClick="javascript:openModal({{ $item['id'] }},'{{ $item['name'] }}')">
-                                                履歴に追加
-                                            </a>
-                                            <a class="ui basic primary button button-disable" type="button"
-                                                onClick="javascript:remove('{{ $item['name'] }}',{{ $item['id'] }})">
-                                                削除
-                                            </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    @endif
-                </table>
-            </div>
-        </div>
-    @else
-        <div class="ui card full card-shadow item-0">
-            <div class="content">
-                <table class="ui large table">
-                    <thead>
-                        <tr>
-                            <th style="width: 200px;">名称</th>
-                            <th style="width: 200px;">適用日</th>
+    <div class="ui card full card-shadow item-0">
+        <div class="content">
+            <table class="ui large table">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">名称</th>
+                        <th style="width: 200px;">適用日</th>
+                        @if ($this->history_flg == 0)
+                            <th style="width: 200px;"></th>
+                        @else
                             <th style="width: 200px;">適用終了日</th>
                             <th style="width: 200px;"></th>
-                        </tr>
-                    </thead>
-                    @if ($this->historyItems)
-                        <tbody id="tbody">
-                            @foreach ($this->historyItems as $item)
-                                <tr class="card">
-                                    <td>{{ $item['name'] }}</td>
-                                    <td>
-                                        @if ($item['applied_date'])
-                                            {{ $item['applied_date'] }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
+                        @endif
+                    </tr>
+                </thead>
+                @if ($this->history_flg == 0)
+                    <tbody id="tbody">
+                        @foreach ($this->items as $item)
+                            <tr class="card">
+                                <td>{{ $item['name'] }}</td>
 
-                                    <td>
-                                        {{ $item['end_date_of_application'] }}
-                                    </td>
+                                <td>
+                                    @if ($item['applied_date'])
+                                        {{ $item['applied_date'] }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
 
-                                    <td class="right aligned collapsing">
-                                        @if ($userPermission->isReadableFor(14))
-                                            <a class="ui basic primary button button-disable" type="button"
-                                                onClick="javascript:removeHistory('{{ $item['name'] }}',{{ $item['id'] }})">
-                                                削除
-                                            </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    @endif
-                </table>
-            </div>
+                                <td class="right aligned collapsing">
+                                    @if ($userPermission->isReadableFor(14))
+                                        <a class="ui basic primary button button-disable" type="button"
+                                            onClick="javascript:openModal({{ $item['id'] }},'{{ $item['name'] }}')">
+                                            履歴に追加
+                                        </a>
+                                        <a class="ui basic primary button button-disable" type="button"
+                                            onClick="javascript:remove('{{ $item['name'] }}',{{ $item['id'] }})">
+                                            削除
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                @else
+                    <tbody id="tbody">
+                        @foreach ($this->items as $item)
+                            <tr class="card">
+                                <td>{{ $item['name'] }}</td>
+
+                                <td>
+                                    @if ($item['applied_date'])
+                                        {{ $item['applied_date'] }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+
+                                <td>
+                                    {{ $item['end_date_of_application'] }}
+                                </td>
+
+                                <td class="right aligned collapsing">
+                                    @if ($userPermission->isReadableFor(14))
+                                        <a class="ui basic primary button button-disable" type="button"
+                                            onClick="javascript:removeHistory('{{ $item['name'] }}',{{ $item['id'] }})">
+                                            削除
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                @endif
+            </table>
+
+            <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
         </div>
-    @endif
-
-    @if ($this->data)
-        <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
-    @endif
+    </div>
 </div>
 @script
     <script type="module">

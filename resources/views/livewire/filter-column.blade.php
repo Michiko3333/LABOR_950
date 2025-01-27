@@ -94,9 +94,9 @@
                     </div>
                 </td>
                 <td class="buttons" style="text-alig: center;">
-                    <button type="button" class="ui button icon" wire:click="moveToShow"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToShow"><i
                             class="angle right icon"></i></button>
-                    <button type="button" class="ui button icon" wire:click="moveToAll"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToAll"><i
                             class="angle left icon"></i></button>
                 </td>
                 <td>
@@ -111,9 +111,9 @@
                     </div>
                 </td>
                 <td class="buttons" style="text-alig: center;">
-                    <button type="button" class="ui button icon" wire:click="moveToUp"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToUp"><i
                             class="angle up icon"></i></button>
-                    <button type="button" class="ui button icon" wire:click="moveToDown"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToDown"><i
                             class="angle down icon"></i></button>
                 </td>
             </tr>

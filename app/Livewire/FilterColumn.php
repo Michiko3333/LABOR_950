@@ -114,7 +114,7 @@ class FilterColumn extends Component
     public function moveToDown()
     {
         $key = $this->select_show;
-        if ($key >= count($this->list_show) - 1) return;
+        if ($key >= count($this->list_show) - 1 || $key == '') return;
 
         $temp = $this->list_show[$key];
         $this->list_show[$key] = $this->list_show[$key + 1];
