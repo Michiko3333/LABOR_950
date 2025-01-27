@@ -234,6 +234,24 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             if ($totalSize > 99 * 1024 * 1024) {
                 $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
             }
+
+
+            $salary_payment_month1 = $data['salary_payment_month1'] ?? "";
+            $salary_payment_month2 = $data['salary_payment_month2'] ?? "";
+            $salary_payment_month3 = $data['salary_payment_month3'] ?? "";
+
+            if (!empty($salary_payment_month1) && !empty($salary_payment_month2) && !empty($salary_payment_month3)) {
+
+                if ($salary_payment_month1== $salary_payment_month2) {
+                    $validator->errors()->add('salary_payment_month2', '給与支給月は重複しないように入力してください。');
+                }
+                if ($salary_payment_month1== $salary_payment_month3) {
+                    $validator->errors()->add('salary_payment_month3', '給与支給月は重複しないように入力してください。');
+                }
+                if ($salary_payment_month2== $salary_payment_month3) {
+                    $validator->errors()->add('salary_payment_month3', '給与支給月は重複しないように入力してください。');
+                }
+            }
         });
 
         $validator->sometimes(['mynumber_no_or_pension_no', 'basic_pension_number'], 'required_without_all:mynumber_no_or_pension_no,basic_pension_number', function ($input) {

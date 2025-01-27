@@ -231,8 +231,8 @@
                 });
             });
             $(function() {
-                var cb1 = $('#over_70_check');
-                var cb2 = $('#N50_005F_8E73_8A4F_8BC9');
+                let cb1 = $('#over_70_check');
+                let cb2 = $('#N50_005F_8E73_8A4F_8BC9');
                 cb1.change(function() {
                     if (cb1.prop('checked')) {
                         cb2.prop('checked', true);
@@ -258,15 +258,15 @@
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
-                var eraMapping = {
+                let eraMapping = {
                     '明治': '1',
                     '大正': '3',
                     '昭和': '5',
                     '平成': '7',
                     '令和': '9',
                 };
-                var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
-                var birthdayEra = eraMapping[birthdayEraValue] ?? "";
+                let birthdayEraValue = birthdayConvertJapan['era'] ?? "";
+                let birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 $('#N6_005F_93FA').val(branch.pension_office_reference_prefecture ?? '');
                 $('#N7_005F_944E_8D86').val(branch.pension_office_reference_no_cities ?? '');
                 $('#N8_005F_944E').val(branch.pension_office_reference_no_office ?? '');
@@ -303,13 +303,13 @@
         <script type="module">
             $(document).ready(function() {
             function cal1() {
-                var nullFlg = true;
+                let nullFlg = true;
 
-                var valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
-                var valueB = parseFloat($('#N45__005F_8E73_8A4F_8BC7_94D4').val()) || 0;
+                let valueA = parseFloat($('#N42_005F_8F8A_8DDD_926E').val()) || 0;
+                let valueB = parseFloat($('#N45__005F_8E73_8A4F_8BC7_94D4').val()) || 0;
 
-                var val = valueA + valueB;
-
+                let val = valueA + valueB;
+                
                 if ($('#N42_005F_8F8A_8DDD_926E').val() == "" && $('#N45__005F_8E73_8A4F_8BC7_94D4').val() == "") {
                     nullFlg = false;
                 }
@@ -321,12 +321,12 @@
                 }
             }
             function cal2() {
-                var nullFlg = true;
+                let nullFlg = true;
 
-                var valueA = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
-                var valueB = parseFloat($('#N46__005F_8E73_93E0_8BC7_94D4').val()) || 0;
-
-                var val = valueA + valueB;
+                let valueA = parseFloat($('#N43_947A_9242_8BC7_94D4').val()) || 0;
+                let valueB = parseFloat($('#N46__005F_8E73_93E0_8BC7_94D4').val()) || 0;
+                
+                let val = valueA + valueB;
 
                 if ($('#N43_947A_9242_8BC7_94D4').val() == "" && $('#N46__005F_8E73_93E0_8BC7_94D4').val() == "") {
                     nullFlg = false;
@@ -339,12 +339,12 @@
                 }
             }
             function cal3() {
-                var nullFlg = true;
+                let nullFlg = true;
 
-                var valueA = parseFloat($('#N44_005F_92AC_88E6').val()) || 0;
-                var valueB = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
+                let valueA = parseFloat($('#N44_005F_92AC_88E6').val()) || 0;
+                let valueB = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
 
-                var val = valueA + valueB;
+                let val = valueA + valueB;
 
                 if ($('#N44_005F_92AC_88E6').val() == "" && $('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val() == "") {
                     nullFlg = false;
@@ -356,15 +356,22 @@
                     $('#N50_005F_8E73_8A4F_8BC9').val("");
                 }
             }
+
             function cal4() {
-                var nullFlg = true;
+                let nullFlg = true;
 
-                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;
-                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;
-                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;
+                let valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;//4月の合計
+                let valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;//5月の合計
+                let valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;//6月の合計
+                let valueD = parseFloat($('#N39_005F_905C_90BF').val()) || 0;
+                let valueE = parseFloat($('#N40_905C_90BF_8ED2').val()) || 0;
+                let valueF = parseFloat($('#N41_005F_96BC_8FCC').val()) || 0;
 
-                var val = valueA + valueB + valueC;
-
+                valueA = (valueD >= 17) ? valueA : 0;
+                valueB = (valueE >= 17) ? valueB : 0;
+                valueC = (valueF >= 17) ? valueC : 0;
+                let val = valueA + valueB + valueC;
+                
                 if ($('#N48_005F_8E73_8A4F_8BC7').val() == "" && $('#N49_005F_8E73_8A4F_8BC8').val() == "" && $('#N50_005F_8E73_8A4F_8BC9').val() == "") {
                     nullFlg = false;
                 }
@@ -376,38 +383,46 @@
                 }
             }
             function cal5() {
-                var sum = 0;
-                var count = 0;
+                let sum = 0;
+                let count = 0;
 
-                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
-                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
-                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
+                let valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());//4月の合計
+                let valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());//5月の合計
+                let valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());//6月の合計
+                let valueD = parseFloat($('#N39_005F_905C_90BF').val()) || 0;
+                let valueE = parseFloat($('#N40_905C_90BF_8ED2').val()) || 0;
+                let valueF = parseFloat($('#N41_005F_96BC_8FCC').val()) || 0;
 
-                if (valueA !== "") {
-                    var parsedA = parseFloat(valueA);
+                valueA = (valueD >= 17) ? valueA : 0;
+                valueB = (valueE >= 17) ? valueB : 0;
+                valueC = (valueF >= 17) ? valueC : 0;
+
+
+                if (valueA !== 0) {
+                    let parsedA = parseFloat(valueA);
                     if (!isNaN(parsedA)) {
                         sum += parsedA;
                         count++;
                     }
                 }
 
-                if (valueB !== "") {
-                    var parsedB = parseFloat(valueB);
+                if (valueB !== 0) {
+                    let parsedB = parseFloat(valueB);
                     if (!isNaN(parsedB)) {
                         sum += parsedB;
                         count++;
                     }
                 }
 
-                if (valueC !== "") {
-                    var parsedC = parseFloat(valueC);
+                if (valueC !== 0) {
+                    let parsedC = parseFloat(valueC);
                     if (!isNaN(parsedC)) {
                         sum += parsedC;
                         count++;
                     }
                 }
 
-                var val = (count > 0) ? Math.floor(sum / count) : null;
+                let val = (count > 0) ? Math.floor(sum / count) : null;
 
                 if (val !== null && !isNaN(val)) {
                     $('#N52_005F_8E73_8A4F').val(val);
@@ -416,62 +431,35 @@
                 }
             }
             function cal6() {
-                var sum = 0;
-                var count = 0;
+                let sum = 0;
+                let count = 0;
 
-                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val());
-                var valueB = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val());
-                var valueC = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val());
-                var valueD = parseFloat($('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val());
+                let valueA = parseFloat($('#N51_005F_8E73_8A4F_8BC7').val());
+                let valueB = parseFloat($('#N38_8F8A_96BC_005F_8F8A_8DDD_926E').val());
 
-                if (valueA !== "") {
-                    var parsedA = parseFloat(valueA);
-                    if (!isNaN(parsedA)) {
-                        sum += parsedA;
-                        count++;
-                    }
+                if (!valueA || isNaN(parseFloat(valueA)) || !valueB || isNaN(parseFloat(valueB))) {
+                    $('#N53_005F_8E73_93E0').val("");
+                    return;
                 }
 
-                if (valueB !== "") {
-                    var parsedB = parseFloat(valueB);
-                    if (!isNaN(parsedB)) {
-                        sum += parsedB;
-                        count++;
-                    }
-                }
+                valueA = parseFloat(valueA);
+                valueB = parseFloat(valueB);
+                let valueC = (valueA - valueB) / 3;
+                valueC = valueC < 0 ? 0 : valueC;
 
-                if (valueC !== "") {
-                    var parsedC = parseFloat(valueC);
-                    if (!isNaN(parsedC)) {
-                        sum += parsedC;
-                        count++;
-                    }
-                }
-
-                if (valueD !== "") {
-                    var parsedD = parseFloat(valueD);
-                    if (!isNaN(parsedD)) {
-                        sum = sum-parsedD;
-                    }
-                }
-
-                var val = (count > 0) ? Math.floor(sum / count) : null;
-
-                if(valueD !== null && !isNaN(valueD)){
-                    if (val !== null && !isNaN(val)) {
-                        $('#N53_005F_8E73_93E0').val(val);
-                    } else {
-                        $('#N53_005F_8E73_93E0').val("");
-                    }
+                if (!isNaN(valueC)) {
+                    $('#N53_005F_8E73_93E0').val(Math.floor(valueC));
+                } else {
+                    $('#N53_005F_8E73_93E0').val("");
                 }
             }
 
             $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4').on('input', cal1);
             $('#N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4').on('input', cal2);
             $('#N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal3);
-            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal4);
-            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal5);
-            $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E, #N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86').on('input', cal6);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86,#N39_005F_905C_90BF,#N40_905C_90BF_8ED2,#N41_005F_96BC_8FCC').on('input', cal4);
+            $('#N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86,#N39_005F_905C_90BF,#N40_905C_90BF_8ED2,#N41_005F_96BC_8FCC').on('input', cal5);
+            $('#N38_8F8A_96BC_005F_8F8A_8DDD_926E, #N42_005F_8F8A_8DDD_926E, #N45__005F_8E73_8A4F_8BC7_94D4, #N43_947A_9242_8BC7_94D4, #N46__005F_8E73_93E0_8BC7_94D4, #N44_005F_92AC_88E6, #N47_005F_89C1_93FC_8ED2_94D4_8D86,#N39_005F_905C_90BF,#N40_905C_90BF_8ED2,#N41_005F_96BC_8FCC').on('input', cal6);
         });
         </script>
         @slot('footer')
