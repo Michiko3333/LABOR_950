@@ -65,17 +65,18 @@ class PowerTableList {
         const currentYear = currentDate.getFullYear();
         this.currentYear = currentYear;
 
-        this.wrapper = document.getElementById(this.elementIds.wrapper);        
-
-        this.wrapper.addEventListener('scroll', (e) => {
+        this.wrapper = document.getElementById(this.elementIds.wrapper);
+        const list = document.getElementById(this.elementIds.list);  
+        list.addEventListener('scroll', (e) => {
             if (!this.ticking) {
                 window.requestAnimationFrame(() => {
-                    const scrollTop = this.wrapper.scrollTop;
+                    const scrollTop = list.scrollTop;
                     const newIndex = Math.floor(scrollTop / this.rowHeight);
                     if (newIndex !== this.startIndex) {
                         this.startIndex = newIndex;
                         this.rows();
                     }
+                    
                     this.ticking = false;
                 });
                 this.ticking = true;
@@ -83,7 +84,8 @@ class PowerTableList {
         });
 
         this.resize = window.addEventListener('resize', () => {
-            this.visibleRows = Math.floor(this.wrapper.offsetHeight / 32);            
+            const list = document.getElementById(this.elementIds.list);
+            this.visibleRows = Math.floor(list.offsetHeight / 32);            
         });
 
         if (this.useEdit) {
@@ -141,6 +143,7 @@ class PowerTableList {
                     this.isEdit = false;
                     document.getElementById(this.elementIds.editbtn).style.display ='inline';
                     document.getElementById(this.elementIds.submitbtn).style.display ='none';
+                    document.getElementById(this.elementIds.cancelbtn).style.display ='none';
                     this.dirtyVal = [];
                     this.dirtyName = [];
                     this.dirtyRemove = [];
@@ -189,7 +192,7 @@ class PowerTableList {
         const th = this.createHeaderElement(item);
         parent.appendChild(th);
     }
-    onCreateCell(parent, key, item) {
+    onCreateCell(parent, key, item) {        
         const td = document.createElement('td');
         const label = document.createElement('div');
         label.classList.add('label');
@@ -198,7 +201,7 @@ class PowerTableList {
         label.textContent = item[key];
         td.dataset.id = item['id'];
         td.dataset.key = key;
-        td.dataset.amount = label.textContent;
+        td.dataset.amount = label.textContent;        
         td.appendChild(label);
         parent.appendChild(td);
         return [td, label];
@@ -303,54 +306,64 @@ class PowerTableList {
         const ListHeader = document.getElementById(this.elementIds.header);
         ListBody.innerHTML = "";
         const endIndex = Math.min(this.startIndex + this.visibleRows, this.totalRows);
+        
         this.spacerTop.style.height = `${this.startIndex * this.rowHeight}px`;
         this.spacerBottom.style.height =
-            `${(this.totalRows - endIndex) * this.rowHeight}px` - ListHeader.height;            
+            `${(this.totalRows - endIndex) * this.rowHeight}px`;
+            
+        ListBody.appendChild(this.spacerTop);
         if (this.item_nodes.length > 0) {            
             for (let i = 0; i < this.visibleRows; i++) {
                 const currentIndex = this.startIndex + i;
                 if (currentIndex < this.totalRows) {                    
                     const row = this.item_nodes.slice(currentIndex) ?? [];
                     if (row.length > 0) ListBody.appendChild(...row);
-                    const viewElements = ListBody.querySelectorAll('.view');
-                    const InputElements = ListBody.querySelectorAll('.edit-input');
-                    if (this.isEdit) {
-                        viewElements.forEach(element => {
-                            element.classList.add('hidden');
-                        });
-                        InputElements.forEach(element => {
-                            element.classList.remove('hidden');
-                        });
-                    } else {
-                        viewElements.forEach(element => {
-                            element.classList.remove('hidden');
-                        });
-                        InputElements.forEach(element => {
-                            element.classList.add('hidden');
-                        });
-                    }
                     this.onRefreshRow(row)
                 }
             }
-        }        
+        }
+        ListBody.appendChild(this.spacerBottom);
+
+        const viewElements = ListBody.querySelectorAll('.view');
+        const InputElements = ListBody.querySelectorAll('.edit-input');
+        if (this.isEdit) {
+            viewElements.forEach(element => {
+                element.classList.add('hidden');
+            });
+            InputElements.forEach(element => {
+                element.classList.remove('hidden');
+            });
+            ListHeader.classList.add('edit');
+        } else {
+            viewElements.forEach(element => {
+                element.classList.remove('hidden');
+            });
+            InputElements.forEach(element => {
+                element.classList.add('hidden');
+            });
+            ListHeader.classList.remove('edit');
+        }
         this.onRefreshed();
+
     }
 
 
     ready() {
+        const list = document.getElementById(this.elementIds.list);
+
         this.totalRows = this.item_nodes.length;
-        this.visibleRows = Math.floor(this.wrapper.offsetHeight / 32);
+        this.visibleRows = Math.floor(list.offsetHeight / 32);
         this.startIndex = 0;
-        this.spacerTop = document.createElement("div");
-        this.spacerBottom = document.createElement("div");
+        
+
+        this.spacerTop = document.createElement("tr");
+        this.spacerBottom = document.createElement("tr");
         this.spacerTop.style.height = "0px";
         this.spacerBottom.style.height = `${(this.totalRows - this.visibleRows) * this.rowHeight}px`;
         this.spacerTop.style.visibility = this.spacerBottom.style.visibility = "hidden";
         this.spacerTop.style.pointerEvents = "none";
         this.spacerBottom.style.pointerEvents = "none";
-        this.wrapper.prepend(this.spacerTop);
-        this.wrapper.appendChild(this.spacerBottom);
-
+        
         this.onReady();
     }
 
@@ -489,6 +502,7 @@ class PowerTableList {
         input.dataset.id = item['id'];
         input.dataset.section = 'column';
         input.dataset.key = key;
+        input.autocomplete = 'off';
         input.addEventListener('change', e => { this.onChangeInput(e) });
         td.appendChild(input);
         const label = document.createElement('div');

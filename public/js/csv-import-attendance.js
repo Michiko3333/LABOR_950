@@ -17,6 +17,8 @@ class CsvImportAttendance extends PowerTableList {
         this.successed_data = [];
         this.faild_data = [];
 
+        this.rules = {};
+
         this.onImported = () => {};
 
         this.get(this.data_uri).then(r => {
@@ -43,6 +45,51 @@ class CsvImportAttendance extends PowerTableList {
                 this.upload();
             });
         });
+    }
+
+    validationRow(row) {    
+        // ルール定義
+        const rules = this.rules;
+    
+        // ルールを検証するためのヘルパー関数
+        const validators = {
+            required: (value) => value !== undefined && value !== null && value !== '',
+            numeric: (value) => !isNaN(value),
+            date: (value) => !isNaN(Date.parse(value)),
+            regex: (value, pattern) => new RegExp(pattern).test(value)
+        };
+    
+        // 全てのルールをチェック
+        for (const key in rules) {
+            if (rules.hasOwnProperty(key)) {
+                const fieldRules = rules[key];
+    
+                // rowに該当キーが存在しない場合は無効
+                if (!row.hasOwnProperty(key)) {
+                    return false;
+                }
+    
+                // 各ルールを適用
+                for (const rule of fieldRules) {
+                    if (rule.startsWith('regex:')) {
+                        // 正規表現ルール
+                        const pattern = rule.split(':')[1];
+                        if (!validators.regex(row[key], pattern)) {
+                            return false;
+                        }
+                    } else if (validators[rule]) {
+                        // その他のルール
+                        if (!validators[rule](row[key])) {
+                            return false;
+                        }
+                    } else {
+                        console.error(`Unknown validation rule: ${rule}`);
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     onChangeFile(event) {

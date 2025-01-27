@@ -59,6 +59,7 @@
                     // custom data below
                     data: "{{ route('wages.upload.colmuns') }}",
                     upload: "{{ route('wages.upload.post') }}",
+                    insurance_get: "{{ route('wages.insurance.get') }}",
                 }
             });
             csvImportWage.onImported = () => {

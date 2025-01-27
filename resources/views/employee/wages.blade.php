@@ -1,111 +1,25 @@
 <x-layout title="賃金情報" useRightContent="{{ true }}">
     @slot('header')
+        <link rel="stylesheet" href="{{ asset('/css/power-table.css') }}">
         <style type="text/css">
-            .table-wage {
-                position: relative;
-                overflow: auto;
-                height: 52vh;
-                max-height: 52vh;
+            #pt-showlist-wrapper {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
             }
 
-            .table-wage table {
+            #add-condition {
                 width: 100%;
-                border-collapse: collapse;
+                padding: 1em;
+                color: gray;
+                font-weight: bold;
+                border: solid 2px silver;
+                border-radius: 4px;
+                background: transparent;
+                cursor: pointer;
             }
 
-            .table-wage th {
-                padding: 0.5em;
-                min-width: 100px;
-                width: auto;
-            }
-
-            .table-wage th,
-            .table-wage td {
-                vertical-align: middle;
-                border: 1px solid rgba(34, 36, 38, .1);
-                border-collapse: collapse;
-                font-size: 14px;
-                overflow: hidden;
-            }
-
-            .table-wage td {
-                height: 32px;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                background-color: white;
-            }
-
-            .table-wage table {
-                position: sticky;
-                top: 0;
-                left: 0;
-                background: #f9fafb;
-            }
-
-            .table-wage .edit-input {
-                width: 100%;
-                height: 100%;
-                border: none;
-                padding: 0.4em;
-                font-size: 14px;
-                background-color: #ddeeff;
-            }
-
-            .table-wage .edit-input:focus {
-                outline: solid 1px #4183C0;
-            }
-
-            .table-wage table th.hidden,
-            .table-wage table td.hidden {
-                display: none;
-            }
-
-            .table-wage table th button.ui.icon.button {
-                padding: 4.5px !important;
-                height: 17px;
-                margin: 0 4px;
-            }
-
-            .table-wage .label,
-            .table-wage .view {
-                width: 100%;
-                height: 100%;
-                border: none;
-                padding: 0.4em;
-                font-size: 14px;
-            }
-
-            .table-wage .view.hidden,
-            .table-wage .edit-input.hidden {
-                display: none;
-            }
-
-            .table-wage .plus-btn.hidden {
-                display: none;
-            }
-
-            .wage-actions-top,
-            .wage-actions-bottom {
-                padding: 0.5em 0;
-            }
-
-            .wage-actions-bottom {
-                text-align: end;
-            }
-
-            #wage-year_calendar input {
-                width: 100%;
-            }
-
-            #wage .wage-actions-bottom .hidden {
-                display: none;
-            }
-
-            #wage-filter h3 {
-                font-size: 16px;
-            }
-
-            #wage-filter #wage-filter-conditions {
+            #wage-filter-conditions {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
@@ -114,7 +28,7 @@
                 margin-bottom: 1em;
             }
 
-            #wage-filter #wage-filter-conditions-action {
+            #wage-filter-conditions-action {
                 padding: 0 1em;
             }
 
@@ -135,77 +49,9 @@
             .filter-condition-row .label {
                 font-weight: bold;
             }
+        </style>
+        <style type="text/css">
 
-            #add-condition {
-                width: 100%;
-                padding: 1em;
-                color: gray;
-                font-weight: bold;
-                border: solid 2px silver;
-                border-radius: 4px;
-                background: transparent;
-                cursor: pointer;
-            }
-
-            #add-condition:hover {
-                opacity: 0.8;
-            }
-
-            #wage-filter .remove-ordinary-btn.hidden {
-                display: none;
-            }
-
-            #wage-filter #filter-showlist-wrapper {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-
-            .table-wage table th::before,
-            .table-wage table th::after {
-                content: "";
-                height: 0;
-                width: 0;
-                position: absolute;
-                border: 5px solid transparent;
-                right: 10px;
-                top: 50%;
-            }
-
-            .table-wage table th {
-                position: relative;
-            }
-
-            .table-wage table #wage-list-header:not(.edit) th {
-                padding-right: 30px;
-                cursor: pointer;
-            }
-
-            .table-wage table #wage-list-header:not(.edit) th::before {
-                border-bottom-color: #aaa;
-                margin-top: -10px;
-            }
-
-            .table-wage table #wage-list-header:not(.edit) th::after {
-                border-top-color: #aaa;
-                margin-top: 2px;
-            }
-
-            .table-wage table #wage-list-header:not(.edit) th.asc::before {
-                border-bottom-color: #555;
-            }
-
-            .table-wage table #wage-list-header:not(.edit) th.desc::after {
-                border-top-color: #555;
-            }
-
-            #wage-condition-message {
-                display: none;
-            }
-
-            #wage-condition-message.show {
-                display: block;
-            }
         </style>
     @endslot
     <section class="content">
@@ -220,37 +66,38 @@
             <a href="{{ route('wages.upload') }}" class="ui button primary">インポート</a>
         </div>
 
-        <div id="wage" class="ui card full card-shadow item-0">
+        <!-- Power Table List -->
+        <div id="pt" class="ui card full card-shadow item-0">
             <div class="content">
-                <div class="wage-actions-top">
-                    <button class="ui button small" id="wage-filter-button">絞り込み・表示設定</button>
+                <div class="pt-actions-top">
+                    <button class="ui button small" id="pt-filter-button">絞り込み・表示設定</button>
                     <button class="ui button small" id="wage-insurance-button">保険対象賃金設定</button>
-
                 </div>
-                <div id="wage-condition-message" class="ui tiny message"></div>
-                <div id="wage-list" class="table-wage">
+                <div id="pt-condition-message" class="ui tiny message"></div>
+                <div id="pt-list" class="power-table">
                     <table>
                         <thead>
-                            <tr id="wage-list-header">
+                            <tr id="pt-list-header">
                             </tr>
                         </thead>
-                        <tbody id="wage-list-body"></tbody>
+                        <tbody id="pt-list-body">
+                        </tbody>
                     </table>
                 </div>
-                <div class="wage-actions-bottom">
-                    <div style="float:left; padding: 1.1em 0.5em;"><span id="wage-result-num">0</span>件のデータが見つかりました
-                    </div>
-                    <button class="ui button" id="wage-edit-button">編集</button>
-                    <button class="ui button hidden" id="wage-cancel-button">キャンセル</button>
-                    <button class="ui button primary hidden" id="wage-submit-button">保存</button>
+                <div class="pt-actions-bottom">
+                    <div style="float:left; padding: 1.1em 0.5em;"><span id="pt-result-num">0</span>件のデータが見つかりました</div>
+                    <button class="ui button" id="pt-edit-button">編集</button>
+                    <button class="ui button" id="pt-cancel-button">キャンセル</button>
+                    <button class="ui button primary" id="pt-submit-button">保存</button>
                 </div>
             </div>
         </div>
-        <div id="wage-filter" class="ui modal wage-filter-coupled">
+
+        <div id="pt-filter" class="ui modal wage-filter-coupled">
             <div class="header">絞り込み・表示設定</div>
             <div class="content">
-                <form id="wage_filter" class="ui form wage-filter-wrapper">
-                    <div class="ui top attached tabular menu wage-menu">
+                <form id="pt-filter-form" class="ui form pt-filter-wrapper" onsubmit="return false;">
+                    <div class="ui top attached tabular menu pt-filter-menu">
                         <div class="item active" data-tab="filter1" style="cursor: pointer;">絞り込み</div>
                         <div class="item" data-tab="filter2" style="cursor: pointer;">詳細条件</div>
                         <div class="item" data-tab="filter3" style="cursor: pointer;">表示・非表示</div>
@@ -358,26 +205,26 @@
                     <div class="ui bottom attached tab segment" data-tab="filter2">
                         <div id="wage-filter-conditions"></div>
                         <div id="wage-filter-conditions-action">
-                            <button id="add-condition" type="button">条件を追加</button>
+                            <button type="button" id="add-condition" type="button">条件を追加</button>
                         </div>
                     </div>
                     <div class="ui bottom attached tab segment active" data-tab="filter3">
-                        <div id="filter-showlist-wrapper">
+                        <div id="pt-showlist-wrapper">
 
                         </div>
                     </div>
                 </form>
             </div>
             <div class="actions">
-                <div class="ui button basic red remove-ordinary-btn hidden" id="remove-ordinary-btn"
+                <div class="ui button basic red remove-ordinary-btn hidden" id="pt-filter-remove"
                     style="float: left;">常時設定を削除</div>
                 <div class="ui cancel button">キャンセル</div>
                 <div class="ui primary buttons">
-                    <div class="ui button approve">絞り込む</div>
+                    <button class="ui button approve">絞り込む</button>
                     <div class="ui floating dropdown icon button">
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <button type="button" id="open-filter-save" class="item approve">常時設定として保存する</button>
+                            <button type="button" id="pt-filter-save" class="item approve">常時設定として保存する</button>
                         </div>
                     </div>
                 </div>
@@ -431,60 +278,33 @@
             </div>
         </div>
     </section>
-    <script src="{{ asset('/js/wage-list.js') }}" defer></script>
-    <script src="{{ asset('/js/wage-filter.js') }}" defer></script>
+    <script src="{{ asset('/js/power-table-list.js') }}" defer></script>
+    <script src="{{ asset('/js/power-table-filter.js') }}" defer></script>
+    <script src="{{ asset('/js/wage-list2.js') }}" defer></script>
+    <script src="{{ asset('/js/wage-filter2.js') }}" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
-            // インスタンス作成
-            const wageList = new WageList(
-                "{{ route('wages.list') }}",
-                "{{ route('wages.post') }}",
-                "{{ route('wages.filter.showlist') }}",
-                "{{ route('wages.filter.load') }}",
-                "{{ route('wages.filter.save') }}",
-                "{{ route('wages.filter.remove') }}",
-                "{{ route('wages.insurance.get') }}",
-                "{{ route('wages.insurance.save') }}",
-                'wage-list');
-            const wageFilter = new WageFilter(wageList);
-            wageList.showFilter = () => {
-                $('#wage-filter')
-                    .modal({
-                        onApprove: () => {
-                            wageFilter.onApprove();
-                            wageList.load();
-                        },
-                        onHidden: () => {
-                            wageFilter.onHidden();
-                        }
-                    })
-                    .modal('show');
-            };
-            wageList.successEvent = () => {
-                $.toast({
-                    position: 'bottom right',
-                    class: 'success',
-                    message: '正常に保存されました'
-                })
-            }
-            wageList.onAddColumn = (target, pos) => {
-                $('#add-column-modal')
-                    .modal({
-                        onApprove: (e) => {
-                            const val = $('#add-column-name').val();
-                            if (val == '') {
-                                return false;
-                            }
-                            wageList.addColumn(val, target, pos);
+            const wageList = new WageList({
+                mode: 'api',
+                api: {
+                    list: "{{ route('wages.list') }}",
+                    post: "{{ route('wages.post') }}",
+                    insurance_get: "{{ route('wages.insurance.get') }}",
+                    insurance_save: "{{ route('wages.insurance.save') }}",
+                },
+                useEdit: true
+            });
+            const wageFilter = new WageFilter(
+                wageList, {
+                    api: {
+                        load: "{{ route('wages.filter.load') }}",
+                        save: "{{ route('wages.filter.save') }}",
+                        remove: "{{ route('wages.filter.remove') }}",
+                        showlist: "{{ route('wages.filter.showlist') }}"
+                    },
+                },
+            )
 
-                            return true;
-                        },
-                        onHidden: () => {
-                            $('#add-column-name').val('');
-                        }
-                    })
-                    .modal('show');
-            }
             wageList.onEditColumn = (key, original = '') => {
                 $('#edit-column-name').val(original);
                 $('#edit-column-modal')
@@ -508,15 +328,48 @@
                     })
                     .modal('show');
             }
+
+            wageList.onAddColumn = (target, pos) => {
+                $('#add-column-modal')
+                    .modal({
+                        onApprove: (e) => {
+                            const val = $('#add-column-name').val();
+                            if (val == '') {
+                                return false;
+                            }
+                            wageList.addColumn(val, target, pos);
+                            return true;
+                        },
+                        onHidden: () => {
+                            $('#add-column-name').val('');
+                        }
+                    })
+                    .modal('show');
+            }
+
             wageFilter.onRender = () => {
                 $('.ui.dropdown.wage-filter').dropdown({});
             }
             wageFilter.onLoadedShowlist = () => {
-                $('#filter-showlist-wrapper .ui.checkbox')
-                    .checkbox()
+                $('#pt-showlist-wrapper .ui.checkbox').checkbox()
             }
-            // Wageをロード
-            wageFilter.init();
+
+            wageList.successSubmit = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: '正常に保存されました'
+                })
+            };
+            wageList.errorSubmit = (err) => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: 'エラーが発生しました'
+                })
+            };
+
+            wageFilter.run();
 
             $('#wage-insurance-button').click(e => {
                 const list = wageList.getCalcableColumns();
@@ -596,7 +449,23 @@
                     .modal('show');
             })
 
-            // Fomantic
+            const filterBtn = document.getElementById('pt-filter-button');
+            filterBtn.addEventListener('click', () => {
+                $('#pt-filter')
+                    .modal({
+                        onApprove: () => {
+                            wageFilter.onApprove();
+                            wageFilter.reload();
+                        },
+                        onHidden: () => {
+                            wageFilter.onHidden();
+                        }
+                    })
+                    .modal('show');
+            })
+            $('.pt-filter-menu .item')
+                .tab();
+
             $('.wage-menu .item')
                 .tab();
             $('.ui.dropdown.wage')
@@ -613,7 +482,6 @@
             $('.wage-filter-coupled').modal({
                 allowMultiple: true
             });
-
         });
     </script>
 </x-layout>

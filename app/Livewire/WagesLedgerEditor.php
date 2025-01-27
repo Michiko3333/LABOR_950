@@ -58,6 +58,9 @@ class WagesLedgerEditor extends Component
 
     public $errorMessage = '';
 
+    public $wage_name = ['給与', '役員報酬'];
+    public $bonus_name = ['賞与', '役員賞与'];
+
     public function mount($employee_ids, $year)
     {
         $current_company = CurrentUser::currentCompany();
@@ -144,7 +147,7 @@ class WagesLedgerEditor extends Component
                         $carbon_month_start->format('Y-m-d'),
                         $carbon_month_start->clone()->addMonth()->subday()->format('Y-m-d')
                     ])
-                    ->where('wage_type', 1)
+                    ->whereIn('wage_type', $this->wage_name)
                     ->first();
                 if (empty($wage_data)) $wage_data = [];
                 else {
@@ -183,7 +186,7 @@ class WagesLedgerEditor extends Component
                 $carbon_month_start->addMonth();
             }
 
-            $bonus_month_tmp = $wage->where('employee_id', $employee_id)->where('wage_type', 2)->where('hide_bonus', 0)->pluck('month')->toArray();
+            $bonus_month_tmp = $wage->where('employee_id', $employee_id)->whereIn('wage_type', $this->bonus_name)->where('hide_bonus', 0)->pluck('month')->toArray();
             $this->bonus_month_order = [];
             foreach ($bonus_month_tmp as $date) {
                 $date = Carbon::createFromFormat('Y-m-d', $date);
@@ -194,7 +197,7 @@ class WagesLedgerEditor extends Component
                         $carbon_month_start->format('Y-m-d'),
                         $carbon_month_start->clone()->addMonth()->subday()->format('Y-m-d')
                     ])
-                    ->where('wage_type', 2)
+                    ->whereIn('wage_type', $this->bonus_name)
                     ->first();
 
                 $this->bonus_month_order[] = $bonus_month;
@@ -307,6 +310,7 @@ class WagesLedgerEditor extends Component
         if (!empty($mp)) $this->profiles['managerial_position'] = $mp['name'];
         else $this->profiles['managerial_position'] = '-';
 
+        $this->dispatch('wages-ledger-editor-render');
         return view('livewire.wages-ledger-editor');
     }
 
@@ -343,7 +347,6 @@ class WagesLedgerEditor extends Component
 
             $wageLedger->outputToFile($xlsx);
             $res = $wageLedger->export($xlsx, Storage::path($path));
-            \Log::info($res); // 出力結果をログ出力
 
             if (!Storage::exists($pdf)) {
                 throw new \Exception('faild to create pdffile at ' . $file . '.pdf');
@@ -432,6 +435,7 @@ class WagesLedgerEditor extends Component
         if ($is_bonus) $target = 'bonus_month';
 
         $month_list = $this->currentData($target);
+        if (empty($month_list[$month])) return 0;
         $month_data = $month_list[$month];
         $addition = 0;
 
@@ -467,6 +471,7 @@ class WagesLedgerEditor extends Component
         if ($is_bonus) $target = 'bonus_month';
 
         $month_list = $this->currentData($target);
+        if (empty($month_list[$month])) return 0;
         $month_data = $month_list[$month];
         $deduction = 0;
         foreach ($deduction_keys as $key_name) {

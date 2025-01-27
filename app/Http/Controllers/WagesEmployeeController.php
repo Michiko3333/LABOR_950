@@ -299,7 +299,6 @@ class WagesEmployeeController extends Controller
         $removes = $request->input('remove_name');
         $condition_data = $request->input('conditions');
 
-        $success = 1;
         DB::beginTransaction();
         try {
             foreach ($columns as $id => $values) {
@@ -333,14 +332,14 @@ class WagesEmployeeController extends Controller
 
             foreach ($salaries as $wage_id => $values) {
                 foreach ($values as $key => $v) {
-                    $q = WageSalary::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
+                    $q = WageSalary::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', strval($key));
                     if ($q->exists()) {
                         $q->update(['amount' => $v]);
                     } else {
                         WageSalary::create([
                             'company_id' => $current_company->id,
                             'wage_id' => $wage_id,
-                            'name' => $key,
+                            'name' => strval($key),
                             'amount' => $v
                         ]);
                     }
@@ -349,14 +348,14 @@ class WagesEmployeeController extends Controller
 
             foreach ($overtimes as $wage_id => $values) {
                 foreach ($values as $key => $v) {
-                    $q = WageOvertime::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
+                    $q = WageOvertime::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', strval($key));
                     if ($q->exists()) {
                         $q->update(['amount' => $v]);
                     } else {
                         WageOvertime::create([
                             'company_id' => $current_company->id,
                             'wage_id' => $wage_id,
-                            'name' => $key,
+                            'name' => strval($key),
                             'amount' => $v
                         ]);
                     }
@@ -365,14 +364,14 @@ class WagesEmployeeController extends Controller
 
             foreach ($allowances as $wage_id => $values) {
                 foreach ($values as $key => $v) {
-                    $q = WageAllowance::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', $key);
+                    $q = WageAllowance::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', strval($key));
                     if ($q->exists()) {
                         $q->update(['amount' => $v]);
                     } else {
                         WageAllowance::create([
                             'company_id' => $current_company->id,
                             'wage_id' => $wage_id,
-                            'name' => $key,
+                            'name' => strval($key),
                             'amount' => $v
                         ]);
                     }
@@ -451,10 +450,10 @@ class WagesEmployeeController extends Controller
         } catch (\Exception $err) {
             DB::rollback();
             \Log::error($err->getMessage());
-            $success = 0;
+            return response()->json(['result' => 0], 500);
         }
 
-        return response()->json(['result' => $success]);
+        return response()->json(['result' => 1]);
     }
 
     public function wage_filter_showlist(Request $request)
@@ -667,7 +666,7 @@ class WagesEmployeeController extends Controller
             $start_date = Carbon::create($start_year, $start_month, $start_day, 0, 0, 0);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
-                $start_date->clone()->addYear()->subday()->format('Y/m/d')
+                $start_date->clone()->addMonth()->subday()->format('Y/m/d')
             ]);
         } else {
             $start_date = Carbon::create($start_year, 1, $start_day, 0, 0, 0);

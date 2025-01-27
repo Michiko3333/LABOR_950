@@ -12,7 +12,7 @@
                     <h2>{{ $this->employee_data->last_name . ' ' . $this->employee_data->first_name }}</h2>
                     <p>社員番号：{{ $profiles['employee_no'] }}</p>
                     <p>配属：{{ $profiles['branch_name'] }}</p>
-                    <p>部署：{{ implode(', ', $profiles['departments']) }}</p>
+                    <p>部署：{{ count($profiles['departments']) ? implode(', ', $profiles['departments']) : '-' }}</p>
                     <p>役職：{{ $profiles['managerial_position'] }}
                     </p>
                 </div>
@@ -85,6 +85,7 @@
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
                                                                     max="99999999"
+                                                                    wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
                                                         </td>
@@ -106,6 +107,7 @@
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
                                                                     max="99999999"
+                                                                    wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
                                                         </td>
@@ -127,6 +129,7 @@
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
                                                                     max="99999999"
+                                                                    wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
                                                         </td>
@@ -212,7 +215,9 @@
                                     <tr>
                                         <th style="min-width: 140px;">項目／計算期間</th>
                                         @foreach ($bonus_month_order as $month)
-                                            <th>{{ $month }}月</th>
+                                            @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                <th>{{ $month }}月</th>
+                                            @endif
                                         @endforeach
                                         <th style="max-width: 90px;">賞与計</th>
                                     </tr>
@@ -228,14 +233,16 @@
                                                                 class="trash alternate outline icon"></i></button>{{ $salary_name }}
                                                     </td>
                                                     @foreach ($bonus_month_order as $month)
-                                                        <td>
-                                                            <div class="ui input month">
-                                                                <input class="hide-spin" type="number"
-                                                                    name="{{ $key }}[]" placeholder=""
-                                                                    min="0" max="99999999"
-                                                                    wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}">
-                                                            </div>
-                                                        </td>
+                                                        @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                            <td>
+                                                                <div class="ui input month">
+                                                                    <input class="hide-spin" type="number"
+                                                                        name="{{ $key }}[]" placeholder=""
+                                                                        min="0" max="99999999"
+                                                                        wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}">
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     @endforeach
                                                     <td>{{ $this->getControllableRowSumBonus($key, $salary_name) }}</td>
                                                 </tr>
@@ -244,7 +251,9 @@
                                             <tr class="label">
                                                 <td>{{ $name }}</td>
                                                 @foreach ($this->bonus_month_order as $month)
-                                                    <td>{{ $this->getDeductionSumCol($month, true) }}</td>
+                                                    @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                        <td>{{ $this->getDeductionSumCol($month, true) }}</td>
+                                                    @endif
                                                 @endforeach
                                                 <td>{{ $this->getDeductionSumRow(true) }}</td>
                                             </tr>
@@ -252,15 +261,17 @@
                                             <tr>
                                                 <td>{{ $name }}</td>
                                                 @foreach ($bonus_month_order as $month)
-                                                    <td>
-                                                        <div class="ui input month">
-                                                            <input class="hide-spin" type="number"
-                                                                name="bonus_{{ $key }}[]" placeholder=""
-                                                                min="0" max="99999999"
-                                                                wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}"
-                                                                wire:key="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}">
-                                                        </div>
-                                                    </td>
+                                                    @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                        <td>
+                                                            <div class="ui input month">
+                                                                <input class="hide-spin" type="number"
+                                                                    name="bonus_{{ $key }}[]" placeholder=""
+                                                                    min="0" max="99999999"
+                                                                    wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}"
+                                                                    wire:key="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}">
+                                                            </div>
+                                                        </td>
+                                                    @endif
                                                 @endforeach
                                                 <td>{{ $this->getRowSum($key, true) }}</td>
                                             </tr>
@@ -269,7 +280,9 @@
                                             <tr class="empty-line">
                                                 <td></td>
                                                 @foreach ($bonus_month_order as $month)
-                                                    <td style="border-left: none;"></td>
+                                                    @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                        <td style="border-left: none;"></td>
+                                                    @endif
                                                 @endforeach
                                                 <td></td>
                                             </tr>
@@ -280,7 +293,9 @@
                                     <tr class="label">
                                         <td>差引支給額</td>
                                         @foreach ($this->bonus_month_order as $month)
-                                            <td>{{ $this->getTotalAmountCol($month, true) }}</td>
+                                            @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                <td>{{ $this->getTotalAmountCol($month, true) }}</td>
+                                            @endif
                                         @endforeach
                                         <td>{{ $this->getTotalAmountRow(true) }}</td>
                                     </tr>

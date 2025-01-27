@@ -10,7 +10,8 @@
             <tr>
                 <th style="position:relative; width: 50px; text-align: center;">
                     <div class="ui checkbox">
-                        <input type="checkbox" name="example">
+                        <input type="checkbox" name="all_select" value="1" wire:model="all_select"
+                            wire:change="checkAll">
                         <label></label>
                     </div>
                 </th>
@@ -41,8 +42,8 @@
                 <tr class="card">
                     <td style="position:relative; text-align: center;">
                         <div class="ui checkbox">
-                            <input type="checkbox" name="example" wire:model.live="selected.{{ $item->id }}"
-                                {{ $this->checkState($item->id) ? 'checked' : '' }}>
+                            <input type="checkbox" name="selected_col" value="{{ $item->id }}" wire:model="selected"
+                                wire:key="selected.{{ $item->id }}" wire:change="checkCol">
                             <label></label>
                         </div>
                     </td>
@@ -88,10 +89,8 @@
     <form id="wages-form" action="{{ route('wages-ledger.edit') }}" method="post">
         <input type="hidden" id="wage-year" name="year">
         @csrf
-        @foreach ($selected as $key => $item)
-            @if ($item == 1)
-                <input type="hidden" name="selected[]" value="{{ $key }}">
-            @endif
+        @foreach ($selected as $v)
+            <input type="hidden" name="selected[]" wire:key="val-{{ $v }}" value="{{ $v }}">
         @endforeach
     </form>
 </div>

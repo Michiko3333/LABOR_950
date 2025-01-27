@@ -50,7 +50,7 @@
         <div id="pt-filter" class="ui modal attendance-filter-coupled">
             <div class="header">絞り込み・表示設定</div>
             <div class="content">
-                <form id="pt-filter-form" class="ui form pt-filter-wrapper">
+                <form id="pt-filter-form" class="ui form pt-filter-wrapper" onsubmit="return false;">
                     <div class="ui top attached tabular menu pt-filter-menu">
                         <div class="item active" data-tab="filter1" style="cursor: pointer;">絞り込み</div>
                         <div class="item" data-tab="filter3" style="cursor: pointer;">表示・非表示</div>
@@ -205,6 +205,21 @@
                 $('#pt-showlist-wrapper .ui.checkbox')
                     .checkbox()
             }
+
+            attendanceList.successSubmit = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: '正常に保存されました'
+                })
+            };
+            attendanceList.errorSubmit = (err) => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: 'エラーが発生しました'
+                })
+            };
 
             attendanceFilter.run();
 

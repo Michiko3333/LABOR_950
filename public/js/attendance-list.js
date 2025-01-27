@@ -20,6 +20,18 @@ class AttendanceList extends PowerTableList {
             'holidays_transfered'
         ];
         this.setShowList = () => {};
+
+        this.successSubmit = () => {};
+        this.errorSubmit = () => {};
+    }
+
+    // override
+    afterSubmit(bool, err = null) {
+        if (bool) {
+            this.successSubmit();
+        } else {
+            this.errorSubmit(err);
+        }
     }
 
     onCreateCell(parent, key, item) {
@@ -99,6 +111,16 @@ class AttendanceList extends PowerTableList {
 
     onRefreshed() {
         this.setShowList();
+    }
+
+    // override
+    onRefreshRow() {
+        const filterBtn = document.getElementById('pt-filter-button');
+        if (this.isEdit) {
+            filterBtn.disabled = true;
+        } else {
+            filterBtn.disabled = false;
+        }
     }
 
     sumCells(id, label_key, array) {

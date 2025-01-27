@@ -111,7 +111,7 @@
         <div class="ui huge breadcrumb">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">賃金台帳（社員選択）</div>
+            <a class="section" href="{{ route('wages-ledger.index') }}">賃金台帳（社員選択）</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">賃金台帳（入力）</div>
         </div>
@@ -163,6 +163,16 @@
                 $('#additionType').val('salary_values');
                 return true;
             }
+        });
+
+        Livewire.on('wages-ledger-editor-render', (d) => {
+            setTimeout(() => {
+                $('#openNewAddition').click(_ => {
+                    AdditionModal.modal('show');
+                });
+            }, 0);
+
+
         });
 
         $('#openNewAddition').click(_ => {

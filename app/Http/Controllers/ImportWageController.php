@@ -114,8 +114,6 @@ class ImportWageController extends Controller
                 unset($item['social_insurance_target']);
                 unset($item['id']);
 
-                $item['wage_type'] = $item['wage_type'] == '給与' ? 1 : 2;
-
                 $target_month = Carbon::create($item['month']);
                 $target_from = $target_month->clone()->startOfMonth();
                 $target_to = $target_month->clone()->endOfMonth();

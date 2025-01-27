@@ -18,8 +18,41 @@ class CsvImportWage extends PowerTableList {
         this.successed_data = [];
         this.faild_data = [];
 
+        this.labor_insurances = [];
+        this.social_insurances = [];
+
+        this.insurance_get = this.option_data.api.insurance_get;
+
         this.onImported = () => {};
         this.onChangedCustomColumns = () => {};
+
+        this.rules = {
+            employee_no: ['required'],
+            branch_name: ['required'],
+            month: ['required', 'date'],
+            employment_type: ['required'],
+            wage_type: ['required', 'regex:^(給与|賞与|役員報酬|役員賞与)$']
+        };
+
+        this.get(this.insurance_get).then(r => {
+            const res = JSON.parse(r);
+            const insurances = {labor: [], social: []};
+            if (!Object.keys(res).length < 1) {
+                for (let i = 0; i < res.length; i++) {
+                    const ins = res[i];
+                    if (ins.type) {
+                        insurances.social = ins.keys.split(',');
+                        if (!insurances.social) insurances.social = [];
+                    } else {
+                        insurances.labor = ins.keys.split(',');
+                        if (!insurances.labor) insurances.labor = [];
+                    }
+                }
+                this.setInsurances(insurances);
+            } else {
+                this.setInsurances(insurances);
+            }
+        });
 
         this.get(this.data_uri).then(r => {
             const res = JSON.parse(r);
@@ -46,6 +79,52 @@ class CsvImportWage extends PowerTableList {
             });
         });
     }
+
+    validationRow(row) {    
+        // ルール定義
+        const rules = this.rules;
+    
+        // ルールを検証するためのヘルパー関数
+        const validators = {
+            required: (value) => value !== undefined && value !== null && value !== '',
+            numeric: (value) => !isNaN(value),
+            date: (value) => !isNaN(Date.parse(value)),
+            regex: (value, pattern) => new RegExp(pattern).test(value)
+        };
+    
+        // 全てのルールをチェック
+        for (const key in rules) {
+            if (rules.hasOwnProperty(key)) {
+                const fieldRules = rules[key];
+    
+                // rowに該当キーが存在しない場合は無効
+                if (!row.hasOwnProperty(key)) {
+                    return false;
+                }
+    
+                // 各ルールを適用
+                for (const rule of fieldRules) {
+                    if (rule.startsWith('regex:')) {
+                        // 正規表現ルール
+                        const pattern = rule.split(':')[1];
+                        if (!validators.regex(row[key], pattern)) {
+                            return false;
+                        }
+                    } else if (validators[rule]) {
+                        // その他のルール
+                        if (!validators[rule](row[key])) {
+                            return false;
+                        }
+                    } else {
+                        console.error(`Unknown validation rule: ${rule}`);
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
 
     onChangeFile(event) {
         const file = event.target.files[0];
@@ -149,19 +228,15 @@ class CsvImportWage extends PowerTableList {
 
             newRow['id'] = r;
 
-            let is_success = true;
-            if (!newRow.employee_no || !newRow.month || !newRow.employment_type) {
-                is_success = false;
-            } else {
-                const employees = this.employee_list.filter(e => {
-                    return e.employee_no == newRow.employee_no;
-                });
-                if (employees.length < 1) is_success = false;
-                else {
-                    if (!newRow.employee_name) newRow.employee_name =
-                        `${employees[0].last_name} ${employees[0].first_name}`;
-                    if (!newRow.branch_name) newRow.branch_name = employees[0].branch_name;
-                }
+            let is_success = this.validationRow(newRow);
+            const employees = this.employee_list.filter(e => {
+                return e.employee_no == newRow.employee_no;
+            });
+            if (employees.length < 1) is_success = false;
+            else {
+                if (!newRow.employee_name) newRow.employee_name =
+                    `${employees[0].last_name} ${employees[0].first_name}`;
+                if (!newRow.branch_name) newRow.branch_name = employees[0].branch_name;
             }
             if (is_success) this.successed_data.push(newRow);
             else this.faild_data.push(newRow);
@@ -248,10 +323,7 @@ class CsvImportWage extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = this.comma(
                 this.replaceInt(item.wage_base_amount) +
-                this.replaceInt(item.salary_in_kind) +
-                this.getSumArrType(item['salary_values']) +
-                this.getSumArrType(item['overtime_values']) +
-                this.getSumArrType(item['allowance_values'])
+                this.getSumArrType(item['salary_values'])
             );
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
@@ -268,52 +340,128 @@ class CsvImportWage extends PowerTableList {
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
-        } else if (key == 'deduction_sum') {
-            const columnKeys = Object.keys(this.columns_map);
+        } else if (key == 'salary_amount') {
             const [td, label] = super.onCreateCell(parent, key, item);
+            const val = this.replaceInt(item['taxable_paymment']) + this.replaceInt(item['non_taxable_paymment']);
+            label.textContent = this.comma(val);
+            label.style.fontWeight = 'bold';
+            td.dataset.amount = label.textContent;
+            item[key] = this.replaceInt(label.textContent);
+        } else if (key == 'social_insurance_amount') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            const social_insurances = [
+                'health_insurance_deduction',
+                'nursing_care_insurance_deduction',
+                'welfare_pension_deduction',
+                'welfare_pension_insurance_deduction',
+                'employment_insurance_deduction'
+            ];
+            let social_insurance_sum = 0;
+            social_insurances.forEach(k => {
+                social_insurance_sum += this.replaceInt(item[k]);
+            });
+
+            label.textContent = this.comma(social_insurance_sum);
+            label.style.fontWeight = 'bold';
+            td.dataset.amount = label.textContent;
+            item[key] = this.replaceInt(label.textContent);
+        } else if (key == 'deduction_sum') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            const deductions = [
+                'withholding_tax',
+                'resident_tax',
+                'mutual_aid',
+                'asset_saving',
+                'other_deduction2'
+            ];
             let deduction_sum = 0;
-            for (let d = 0; d < columnKeys.length; d++) {
-                const c = this.columns_map[columnKeys[d]];
-                if (c.calc !== 2) continue;
-                let amount = item[columnKeys[d]];
-                amount = this.replaceInt(amount);
-                deduction_sum += amount;
-            }
+            deductions.forEach(k => {
+                deduction_sum +=  this.replaceInt(item[k]);
+            });
+
             label.textContent = this.comma(deduction_sum);
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
         } else if (key == 'salary_amount') {
-            const columnKeys = Object.keys(this.columns_map);
             const [td, label] = super.onCreateCell(parent, key, item);
-
             label.textContent = this.comma(this.replaceInt(item.taxable_paymment) + this.replaceInt(item.non_taxable_paymment));
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
-
         } else if (key == 'wage_amount') {
-            const columnKeys = Object.keys(this.columns_map);
             const [td, label] = super.onCreateCell(parent, key, item);
-            let deductions = 0;
-            for (let d = 0; d < columnKeys.length; d++) {
-                const c = this.columns_map[columnKeys[d]];
-                if (c.calc !== 2) continue;
-                let amount = item[columnKeys[d]];
-                amount = this.replaceInt(amount);
-                deductions += amount;
-            }
+            const social_insurances = [
+                'health_insurance_deduction',
+                'nursing_care_insurance_deduction',
+                'welfare_pension_deduction',
+                'welfare_pension_insurance_deduction',
+                'employment_insurance_deduction'
+            ];
+            let social_insurance_sum = 0;
+            social_insurances.forEach(k => {            
+                social_insurance_sum += this.replaceInt(item[k]);
+            });
+
+            const deductions = [
+                'withholding_tax',
+                'resident_tax',
+                'mutual_aid',
+                'asset_saving',
+                'other_deduction2'
+            ];
+            let deduction_sum = 0;
+            deductions.forEach(k => {
+                deduction_sum +=  this.replaceInt(item[k]);
+            });
+
             let wage_amount = 0;
             wage_amount += this.replaceInt(item.wage_base_amount);
-            wage_amount += this.replaceInt(item.salary_in_kind);
             wage_amount += this.getSumArrType(item.salary_values);
             wage_amount += this.getSumArrType(item.allowance_values);
             wage_amount += this.getSumArrType(item.overtime_values);
-            wage_amount -= deductions;
+            wage_amount -= social_insurance_sum;
+            wage_amount -= deduction_sum;
             label.textContent = this.comma(wage_amount);
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
+        } else if (key == 'labor_insurance_target') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            let labor_insurance_sum = 0;
+            this.labor_insurances.forEach(e => {
+                if (Object.keys(this.columns_map).includes(e)) {                                            
+                    labor_insurance_sum += item[e];
+                }
+                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                    labor_insurance_sum += item['salary_values'][e].amount;
+                }
+                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                    labor_insurance_sum += item['overtime_values'][e].amount;
+                }
+                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                    labor_insurance_sum += item['allowance_values'][e].amount;
+                }
+            });
+            label.textContent = this.comma(labor_insurance_sum);
+        } else if (key == 'social_insurance_target') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            let social_insurance_sum = 0;
+            this.social_insurances.forEach(e => {
+                if (Object.keys(this.columns_map).includes(e)) {                                            
+                    social_insurance_sum += item[e];
+                }
+                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                    social_insurance_sum += item['salary_values'][e].amount;
+                }
+                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                    social_insurance_sum += item['overtime_values'][e].amount;
+                }
+                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                    social_insurance_sum += item['allowance_values'][e].amount;
+                }
+            });
+            label.textContent = this.comma(social_insurance_sum);
         } else {
             super.onCreateCell(parent, key, item);
         }
@@ -324,7 +472,6 @@ class CsvImportWage extends PowerTableList {
         inputs.textContent = this.lengthInputs;
         const loadable = document.getElementById('preview-loadable');
         loadable.textContent = this.lengthLoadable;
-
         const uploadButton = document.getElementById('upload-btn');
         if (this.lengthLoadable > 0) uploadButton.disabled = false;
         else uploadButton.disabled = true;
@@ -351,6 +498,7 @@ class CsvImportWage extends PowerTableList {
                 { value: 'overtime', name: name, label: '残業手当', checked: this.overtime_columns.includes(name) },
                 { value: 'allowance', name: name, label: '諸手当', checked: this.allowance_columns.includes(name) },
             ];
+
             options.forEach(option => {
                 const fieldDiv = document.createElement('div');
                 fieldDiv.className = 'field';
@@ -452,14 +600,18 @@ class CsvImportWage extends PowerTableList {
         });
     }
 
+    setInsurances(insurances) {
+        this.labor_insurances = insurances.labor;
+        this.social_insurances = insurances.social;
+    }
+
     valueClearing(str) {
         str = str.replace(/\r?\n/g, '');
         str = str.replace(/\r/g, '');
         return str;
     }
 
-    valueFormat(key, d) {
-        
+    valueFormat(key, d) {        
         return d;
     }
 

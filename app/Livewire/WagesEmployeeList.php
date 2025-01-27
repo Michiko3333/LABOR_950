@@ -26,6 +26,8 @@ class WagesEmployeeList extends BaseTable
     ];
 
     public $selected = [];
+    public $all_select = 0;
+    public $all_ids = [];
 
     public function render()
     {
@@ -64,6 +66,7 @@ class WagesEmployeeList extends BaseTable
         }
 
         $this->data = $this->getData($condition);
+        $this->all_ids = $condition->get()->select('id')->pluck('id')->toArray();
         $items = $this->data['items'];
         foreach ($items as &$item) {
             $item->departments = Employee_department::select('name')
@@ -88,7 +91,6 @@ class WagesEmployeeList extends BaseTable
 
             $item->address_prefecture_name = $prefectures[$item->address_prefecture];
         }
-
         return view('livewire.wages-employee-list');
     }
 
@@ -113,5 +115,19 @@ class WagesEmployeeList extends BaseTable
     public function toPermission($id)
     {
         redirect()->route('employee_permission', ['id' => $id]);
+    }
+
+    public function checkAll()
+    {
+        if (!empty($this->all_select)) {
+            $this->selected = $this->all_ids;
+        } else {
+            $this->selected = [];
+        }
+    }
+
+    public function checkCol()
+    {
+        $this->all_select = false;
     }
 }

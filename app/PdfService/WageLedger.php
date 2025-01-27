@@ -4,9 +4,11 @@ namespace App\PdfService;
 
 use App\Models\AttendanceColumns;
 use App\Models\CurrentUser;
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Employee_department;
 use App\Models\Managerial_position;
+use App\Models\Salary;
 use App\Models\WageColumns;
 use Illuminate\Support\Facades\Storage;
 
@@ -113,6 +115,18 @@ class WageLedger
             foreach ($this->month_order as $month) {
                 $col = $month_cols[$month_i];
                 $sheet->setCellValue($col . '8', $month . '月分');
+                $month_i++;
+            }
+
+            $month_i = 0;
+            $department_ids = Department::select('id')->whereIn('name', $employee_department)->where('company_id', $current_company->id)->where('delete_flg', 0)->get()->pluck('id')->toArray();
+            $start_salary_date = Carbon::create($this->year, $start_month, 1, 0, 0, 0);
+            foreach ($this->month_order as $month) {
+                \Log::info(print_r($start_salary_date->format('Y-m-d 23:59:59'), true));
+                $salary_info = Salary::select('payroll_day')->where('branch_id', $employee_data->branch_id)->whereIn('department_id', $department_ids)->where('applied_date', '<=', $start_salary_date->format('Y-m-d 23:59:59'))->orderBy('applied_date')->first();
+                if (!empty($salary_info)) {
+                }
+                $start_salary_date->addMonth();
                 $month_i++;
             }
 
