@@ -47,7 +47,7 @@ class MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentRequest e
             "today_month" => 'required|int|between:1,12|regex:/^[0-9]+$/',
             "today_date" => 'required|int|between:1,31|regex:/^[0-9]+$/',
             "office_arrangement_code_county_city_ward_code" => 'required|string|max:4|regex:/^[0-9]+$/',
-            "office_reference_symbol_office_symbol" => 'required|string|max:4|regex:/^[0-9ァ-ヴー]+$/',
+            "office_reference_symbol_office_symbol" => 'required|string|max:4|regex:/^[0-9ァ-ヴー]+$/u',
             "post_code_former" =>'required|string|regex:/^[0-9]{3}$/u',
             "post_code_latter" => 'required|string|regex:/^[0-9]{4}$/u',
             "branch_address" =>['required','string','max:75',new FullwidthAndMiscellaneousChars(true)],
