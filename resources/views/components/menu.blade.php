@@ -338,7 +338,7 @@
         flex-direction: row-reverse;
         flex-grow: 1;
         flex-shrink: 0;
-        padding: 0.5em 1em;
+        padding: 0.5em 2em 0.5em 1em;
         background-color: transparent;
     }
 
@@ -407,14 +407,19 @@
         margin-left: 1em;
         color: #fff;
         text-shadow: #000 1px 0 10px;
-
+    }
+    header .right .menu-user .name.close {
+        color: var(--color-black);
+        text-shadow: none;
     }
 
     header .right .menu-user i {
         color: #fff;
         text-shadow: #000 1px 0 10px;
     }
-
+    header .right .ui.menu .item>i.dropdown.icon.close {
+        color: black;
+    }
 
     #menu-link-logout {
         color: var(--color-red) !important;

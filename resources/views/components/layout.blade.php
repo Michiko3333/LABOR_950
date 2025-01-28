@@ -26,6 +26,8 @@
             background-position: center;
             background-attachment: fixed;
             color: var(--color-black);
+            position: relative;
+            overflow-x: hidden;
         }
 
         .full-screen {
@@ -83,9 +85,14 @@
 
         .right-container {
             width: 100%;
-            max-width: 375px;
+            max-width: 275px;
             padding-top: 80px;
             flex-grow: 1;
+            overflow-x: hidden;
+            opacity: 1;
+        }
+
+        .right_anime {
             transition: 1s;
             transition-delay: 0.25s;
         }
@@ -98,7 +105,7 @@
 
         section.content {
             margin: 0 auto;
-            max-width: 1400px;
+            max-width: 1500px;
         }
 
         .ui.card.full {
@@ -228,6 +235,10 @@
             .right-container {
                 display: none;
             }
+
+            #arrow {
+                display: none;
+            }
         }
 
         @media screen and (max-width: 768px) {
@@ -235,9 +246,34 @@
                 width: 100%;
                 max-width: unset;
             }
+        }
 
+        .right_close {    
+            width: 1%;
+            opacity: 0;
+        }
+
+        #arrow {
+            position: absolute;
+            top: 50vh;
+            right: 250px;
+            font-size: 32px;
+            color: #fff;
+            cursor: pointer;
+            text-shadow: #000 1px 0 10px;
+        }
+        #arrow.arrow_anime {
+            transition: 0.6s;
+            transition-delay: 0.15s;
+        }
+
+        #arrow.arrow_close {
+            position: absolute;
+            top: 50vh; 
+            right: 1px;
         }
     </style>
+
     @if ($useRightContent == false)
         <style>
             header {
@@ -297,7 +333,8 @@
     @if ($useMenu == true)
         <x-menu></x-menu>
     @endif
-    <div class="full-screen {{ $mode ?? '' }}">
+
+    <div class="full-screen {{ $mode ?? '' }}" id="full_screen">
         <div class="left-container">
             @if ($laborAlert == true)
                 <section class="content">
@@ -306,12 +343,72 @@
             @endif
             {{ $slot }}
         </div>
+        
         @if ($useRightContent)
-            <div class="right-container">
-                <section class="schedule">
-                    @livewire('side-schedule')
-                </section>
-            </div>
+            @if ($title == "ログイン" || $title == "会社選択")
+                <div class="right-container" id="right_schedule" style="opacity: 1;">
+                    <section class="schedule">
+                        @livewire('side-schedule')
+                    </section>
+                </div>
+            @else
+                @if ($title == "ホーム")
+                    <i class="angle double right icon arrow_anime" id="arrow"></i>
+                    <div class="right-container right_anime" id="right_schedule">
+                        <section class="schedule">
+                            @livewire('side-schedule')
+                        </section>
+                    </div>
+                @else
+                <i class="angle double right icon arrow_close" id="arrow"></i>
+                    <div class="right-container right_close" id="right_schedule">
+                        <section class="schedule">
+                            @livewire('side-schedule')
+                        </section>
+                    </div>
+                @endif
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const right_schedule = $('#right_schedule');
+                        const arrow = $('#arrow');
+
+                        const toggleRightContent = () => {
+                            const isOpen = sessionStorage.getItem('right_content');
+                            if (isOpen) {
+                                $('#right_schedule').addClass('right_close');
+                                $('#arrow').removeClass('angle double right icon').addClass('angle double left icon arrow_close');
+                                $('header .right .menu-user .name').addClass('close');
+                                $('header .right .ui.menu .item>i.dropdown.icon').addClass('close');
+                            } else {
+                                $('#right_schedule').removeClass('right_close');
+                                $('#arrow').removeClass('angle double left icon arrow_close').addClass('angle double right icon');
+                                $('header .right .menu-user .name').removeClass('close');
+                                $('header .right .ui.menu .item>i.dropdown.icon').removeClass('close');
+                            }
+                        };
+
+                        toggleRightContent();
+
+                        right_schedule.on('click', () => {
+                            if (sessionStorage.getItem('right_content')) {
+                                sessionStorage.removeItem('right_content');
+                            } else {
+                                sessionStorage.setItem('right_content', true);
+                            }
+                            toggleRightContent();
+                        });
+                        arrow.on('click', () => {
+                            if (sessionStorage.getItem('right_content')) {
+                                sessionStorage.removeItem('right_content');
+                            } else {
+                                sessionStorage.setItem('right_content', true);
+                            }
+                            toggleRightContent();
+                        });
+                    });
+                </script>
+            @endif
         @endif
     </div>
 
