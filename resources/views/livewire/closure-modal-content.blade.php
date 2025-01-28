@@ -369,7 +369,7 @@
     </div>
     @endif
     <div style="display: flex; justify-content: flex-end;" class="mt-2">
-        <a class="ui basic button" href="javascript:closeClosureModal()" style="width: 150px;">キャンセル</a>
+        <a class="ui negative button" href="javascript:closeClosureModal()" style="width: 150px;">キャンセル</a>
         @if($this->id)
         <button class="ui button primary button-disable" type="button" style="width: 150px;"
         wire:click.debounce.150ms="updateClosure({{ $current_closure->id }})">更新</button>

@@ -62,9 +62,11 @@
         </div>
         <h1 class="mt-0">賃金情報</h1>
 
-        <div style="padding: 1em 0;">
-            <a href="{{ route('wages.upload') }}" class="ui button primary">インポート</a>
-        </div>
+        @if($userPermission->isWritableFor(17))
+            <div style="padding: 1em 0;">
+                <a href="{{ route('wages.upload') }}" class="ui button primary">インポート</a>
+            </div>
+        @endif
 
         <!-- Power Table List -->
         <div id="pt" class="ui card full card-shadow item-0">
@@ -86,7 +88,7 @@
                 </div>
                 <div class="pt-actions-bottom">
                     <div style="float:left; padding: 1.1em 0.5em;"><span id="pt-result-num">0</span>件のデータが見つかりました</div>
-                    <button class="ui button" id="pt-edit-button">編集</button>
+                    <button class="ui button" id="pt-edit-button" style="{{ $userPermission->isWritableFor(17) ? '' : 'display: none;' }}">編集</button>
                     <button class="ui button" id="pt-cancel-button">キャンセル</button>
                     <button class="ui button primary" id="pt-submit-button">保存</button>
                 </div>

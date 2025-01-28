@@ -227,7 +227,7 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($userPermission->isReadableFor(18))
+                                @if ($userPermission->isReadableFor(18) && $userPermission->isWritableFor(18))
                                     <a href="{{ route('wages-ledger.index') }}" class="item">
                                         <div class="content">
                                             <div class="header">賃金台帳作成</div>

@@ -58,19 +58,21 @@
             <div class="active section">休業情報一覧</div>
         </div>
         <h1 class="mt-0">休業情報一覧</h1>
-        <div id="new" class="ui floating dropdown button primary my-1">
-            <div class="text" style="text-align: center; width: 103px;">追加</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-                <a class="item" href="javascript:openModal('1','雇用保険：育児休業')">雇用保険：育児休業</a>
-                <a class="item" href="javascript:openModal('2','雇用保険：介護休業')">雇用保険：介護休業</a>
-                <a class="item" href="javascript:openModal('3','労災保険：傷病休業')">労災保険：傷病休業</a>
-                <a class="item" href="javascript:openModal('4','健康保険：産前・産後休業')">健康保険：産前・産後休業</a>
-                <a class="item" href="javascript:openModal('5','健康保険：養育特例休業')">健康保険：養育特例休業</a>
-                <a class="item" href="javascript:openModal('6','健康保険：傷病休業')">健康保険：傷病休業</a>
-                <a class="item" href="javascript:openModal('7','介護保険：介護休業')">介護保険：介護休業</a>
+        @if($userPermission->isWritableFor(14))
+            <div id="new" class="ui floating dropdown button primary my-1">
+                <div class="text" style="text-align: center; width: 103px;">追加</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="javascript:openModal('1','雇用保険：育児休業')">雇用保険：育児休業</a>
+                    <a class="item" href="javascript:openModal('2','雇用保険：介護休業')">雇用保険：介護休業</a>
+                    <a class="item" href="javascript:openModal('3','労災保険：傷病休業')">労災保険：傷病休業</a>
+                    <a class="item" href="javascript:openModal('4','健康保険：産前・産後休業')">健康保険：産前・産後休業</a>
+                    <a class="item" href="javascript:openModal('5','健康保険：養育特例休業')">健康保険：養育特例休業</a>
+                    <a class="item" href="javascript:openModal('6','健康保険：傷病休業')">健康保険：傷病休業</a>
+                    <a class="item" href="javascript:openModal('7','介護保険：介護休業')">介護保険：介護休業</a>
+                </div>
             </div>
-        </div>
+        @endif
         <div class="ui card full card-shadow item-0">
             <div class="content">
             <livewire:closure-list :company_id="$company_id"/>
@@ -101,7 +103,6 @@
             setTimeout(() => {
                 $('.closure-modal').modal({
                         blurring: true,
-                        closable: false
                     }).modal('show');
                 $('.closure-modal-header').text(closure_name);
             }, 500);

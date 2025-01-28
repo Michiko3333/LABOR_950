@@ -125,8 +125,8 @@ class Calendar extends Component
         $this->current_company = CurrentUser::currentCompany();
 
         $permission = new Permission();
-        $this->userPermission = $permission->isWritableFor(13);
-        $this->editPermission = ($permission->isGeneralAffair() && !$permission->isAdmin()) && $current_user->employee_status !== 1;
+        $this->userPermission = $permission->isWritableFor(11);
+        $this->editPermission = $this->userPermission && ($permission->isGeneralAffair() && !$permission->isAdmin()) && $current_user->employee_status !== 1;
 
         if (!empty($this->current_company->start_day_of_week)) {
             $this->start_day = $this->current_company->start_day_of_week;

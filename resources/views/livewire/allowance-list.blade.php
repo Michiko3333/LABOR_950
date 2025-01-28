@@ -29,21 +29,27 @@
         <div>
             @if ($this->branch_id)
                 @if ($this->history_flg == 0)
-                    <a class="ui button primary mt-1 button-disable" type="button"
-                        style="width: 125px;font-size:14px !important;border-radius: 5px !important;"
-                        href="javascript:openModal()">追加</a>
-                    <button type="button" class="ui small grey basic button history-button"
+                    @if($userPermission->isWritableFor(20))
+                        <a class="ui button primary mt-1 button-disable" type="button"
+                            style="width: 125px;font-size:14px !important;border-radius: 5px !important;"
+                            href="javascript:openModal()">追加</a>
+                    @endif
+                    <button type="button" class="ui small grey basic button mt-1 history-button"
                         style="width: 125px;font-size:14px !important;border-radius: 5px !important;">履歴</button>
                 @else
-                    <button class="ui button primary mt-1" type="button" disabled
-                        style="width: 125px;font-size:14px !important;border-radius: 5px !important;">追加</button>
-                    <button type="button" class="ui small grey basic button now-button"
+                    @if($userPermission->isWritableFor(20))
+                        <button class="ui button primary mt-1" type="button" disabled
+                            style="width: 125px;font-size:14px !important;border-radius: 5px !important;">追加</button>
+                    @endif
+                    <button type="button" class="ui small grey basic button mt-1 now-button"
                         style="width: 150px;font-size:14px !important;border-radius: 5px !important;">現行データ</button>
                 @endif
             @else
-                <button class="ui button primary mt-1" type="button" disabled
-                    style="width: 125px;font-size:14px !important;border-radius: 5px !important;">追加</button>
-                <button type="button" class="ui small grey basic button" disabled
+                @if($userPermission->isWritableFor(20))
+                    <button class="ui button primary mt-1" type="button" disabled
+                        style="width: 125px;font-size:14px !important;border-radius: 5px !important;">追加</button>
+                @endif
+                <button type="button" class="ui small grey basic button mt-1" disabled
                     style="width: 125px;font-size:14px !important;border-radius: 5px !important;">履歴</button>
             @endif
         </div>
@@ -79,7 +85,7 @@
                                 </td>
 
                                 <td class="right aligned collapsing">
-                                    @if ($userPermission->isReadableFor(14))
+                                    @if ($userPermission->isReadableFor(20))
                                         <a class="ui basic primary button button-disable" type="button"
                                             onClick="javascript:openModal({{ $item['id'] }},'{{ $item['name'] }}')">
                                             履歴に追加
@@ -112,7 +118,7 @@
                                 </td>
 
                                 <td class="right aligned collapsing">
-                                    @if ($userPermission->isReadableFor(14))
+                                    @if ($userPermission->isReadableFor(20))
                                         <a class="ui basic primary button button-disable" type="button"
                                             onClick="javascript:removeHistory('{{ $item['name'] }}',{{ $item['id'] }})">
                                             削除

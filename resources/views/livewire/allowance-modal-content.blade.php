@@ -42,7 +42,7 @@
         @endif
     </div>
     <div style="display: flex; justify-content: flex-end;" class="mt-2">
-        <a class="ui basic primary button" href="javascript:closeAllowanceModal()">キャンセル</a>
+        <a class="ui button negative basic" href="javascript:closeAllowanceModal()">キャンセル</a>
         @if($this->id)
         <button class="ui button primary button-disable" type="button"
         wire:click.debounce.150ms="makeAllowanceHistory({{ $this->id }})">履歴に追加</button>

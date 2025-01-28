@@ -24,21 +24,21 @@
     @endif
     <div class="ui divider mt-1"></div>
     <div class="content" style="display: flex; justify-content: flex-end;">
-        <a class="ui basic button" href="javascript:closeCancelModal()" style="width: 130px;">キャンセル</a>
+        <a class="ui button" href="javascript:closeCancelModal()" style="width: 130px;">キャンセル</a>
         @if ($this->receptionistId !== null)
-            <button type="button" class="ui negative basic button button-disable" wire:click="cancelReception"
+            <button type="button" class="ui negative button button-disable" wire:click="cancelReception"
                 style="width: 100px;">削除</button>
         @elseif($this->managerialPositionId !== null)
-            <button type="button" class="ui negative basic button button-disable" wire:click="cancelManagerialPosition"
+            <button type="button" class="ui negative button button-disable" wire:click="cancelManagerialPosition"
                 style="width: 150px;">削除</button>
         @elseif($this->dependentId !== null)
-            <button type="button" class="ui negative basic button button-disable" wire:click="cancelDependent"
+            <button type="button" class="ui negative button button-disable" wire:click="cancelDependent"
                 style="width: 150px;">削除</button>
         @elseif($this->allowanceId !== null || $this->allowanceHistoryId !== null)
-            <button type="button" class="ui negative basic button button-disable" wire:click="cancelAllowance"
+            <button type="button" class="ui negative button button-disable" wire:click="cancelAllowance"
                 style="width: 100px;">削除</button>
         @elseif($this->closureId !== null)
-            <button type="button" class="ui negative basic button button-disable" wire:click="cancelClosure"
+            <button type="button" class="ui negative button button-disable" wire:click="cancelClosure"
                 style="width: 150px;">削除</button>
         @endif
     </div>

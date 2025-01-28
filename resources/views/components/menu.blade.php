@@ -125,7 +125,7 @@
                                 勤怠情報</a>
                         </li>
                     @endif
-                    @if ($userPermission->isReadableFor(18))
+                    @if ($userPermission->isReadableFor(18) && $userPermission->isWritableFor(18))
                         <li class="item">
                             <a href="{{ route('wages-ledger.index') }}">
 

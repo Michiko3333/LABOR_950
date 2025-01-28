@@ -95,7 +95,7 @@ document.addEventListener('livewire:init', () => {
 });
 </script>
 <div class="mb-1">
-@if ($this->editPermission)
+@if ($this->editPermission && $this->userPermission)
 <button class="ui button primary small" type="button" onclick="openEditCalendarModal()"
 wire:click='new'>予定を追加</button>
 @endif
