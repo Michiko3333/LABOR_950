@@ -1289,9 +1289,6 @@
                 </div>
             </div>
             <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
-<<<<<<< HEAD
-                <livewire:dependent-form :dependent="$dependent" :errors="$errors" :id="$employee_id" />
-=======
                 <button type="button" class="ui small grey basic button mb-1 dependent-button">履歴</button>
                 <div class="ui large modal dependent-history" wire:ignore>
                     <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">扶養者履歴</div>
@@ -1315,7 +1312,6 @@
                     'dependent' => $dependent,
                     'errors' => $errors,
                 ])
->>>>>>> 2f771620fc5bfdc4e7297fe046ba3534e93ada6e
             </div>
             <div class="ui bottom attached segment" data-tab="sample3" style="display: none;">
                 <div class="ui horizontal card card-shadow" style="width: 100%;">

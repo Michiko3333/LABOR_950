@@ -48,12 +48,12 @@
         @endif
         @if($this->closure_type == "1")
         <div class="two fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="ui calendar closure-calendar date-of-return-to-work">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 <div class="ui calendar closure-calendar due-date">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="due_date" wire:model.live="dueDate" placeholder="YYYY年M月D日">
+                        <input type="text" id="due_date" wire:model.live="dueDate" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                 <div class="ui calendar closure-calendar date-of-birth">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_birth" wire:model.live="dateOfBirth" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_birth" wire:model.live="dateOfBirth" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -99,12 +99,12 @@
         @endif
         @if($this->closure_type == "2")
         <div class="three fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                 <div class="ui calendar closure-calendar date-of-return-to-work">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -130,12 +130,12 @@
         @endif
         @if($this->closure_type == "3")
         <div class="three fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                 <div class="ui calendar closure-calendar date-of-return-to-work">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -161,12 +161,12 @@
         @endif
         @if($this->closure_type == "4")
         <div class="three fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                 <div class="ui calendar closure-calendar planned-end-date-of-closure">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="planned_end_date_of_closure" wire:model.live="plannedEndDateOfClosure" placeholder="YYYY年M月D日">
+                        <input type="text" id="planned_end_date_of_closure" wire:model.live="plannedEndDateOfClosure" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@
                 <div class="ui calendar closure-calendar due-date">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="due_date" wire:model.live="dueDate" placeholder="YYYY年M月D日">
+                        <input type="text" id="due_date" wire:model.live="dueDate" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -204,7 +204,7 @@
                 <div class="ui calendar closure-calendar date-of-birth">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_birth" wire:model.live="dateOfBirth" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_birth" wire:model.live="dateOfBirth" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -212,12 +212,12 @@
         @endif
         @if($this->closure_type == "5")
         <div class="two fields">
-            <div class="field">
+            <div class="required field">
                 <label>養育開始日</label>
                 <div class="ui calendar closure-calendar date-of-start-of-foster-care">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_start_of_foster_care" wire:model.live="dateOfStartOfFosterCare" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_start_of_foster_care" wire:model.live="dateOfStartOfFosterCare" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                 <div class="ui calendar closure-calendar planned-end-date-of-child-support">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="planned_end_date_of_child_support" wire:model.live="plannedEndDateOfChildSupport" placeholder="YYYY年M月D日">
+                        <input type="text" id="planned_end_date_of_child_support" wire:model.live="plannedEndDateOfChildSupport" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -237,16 +237,16 @@
                 <div class="ui calendar closure-calendar end-date-of-foster-care">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_foster_care" wire:model.live="endDateOfFosterCare" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_foster_care" wire:model.live="endDateOfFosterCare" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>養育特例開始日</label>
                 <div class="ui calendar closure-calendar date-of-commencement-of-special-childcare-provision">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_commencement_of_special_childcare_provision" wire:model.live="dateOfCommencementOfSpecialChildcareProvision" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_commencement_of_special_childcare_provision" wire:model.live="dateOfCommencementOfSpecialChildcareProvision" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -254,12 +254,12 @@
         @endif
         @if($this->closure_type == "6")
         <div class="three fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -268,7 +268,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -277,7 +277,7 @@
                 <div class="ui calendar closure-calendar date-of-return-to-work">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -285,12 +285,12 @@
         @endif
         @if($this->closure_type == "7")
         <div class="three fields">
-            <div class="field">
+            <div class="required field">
                 <label>休業開始日</label>
                 <div class="ui calendar closure-calendar start-date-of-closed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="start_date_of_closed" wire:model.live="startDateOfClosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -299,7 +299,7 @@
                 <div class="ui calendar closure-calendar end-date-of-losed">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日">
+                        <input type="text" id="end_date_of_losed" wire:model.live="endDateOfLosed" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                 <div class="ui calendar closure-calendar date-of-return-to-work">
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日">
+                        <input type="text" id="date_of_return_to_work" wire:model.live="dateOfReturnToWork" placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>

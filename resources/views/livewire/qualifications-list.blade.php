@@ -72,16 +72,6 @@
                         <input class="edit-qualifications-form_qualification_name" name="edit-qualifications-form_qualification_name"
                             type="text" placeholder="資格名" maxlength="50" autocomplete="off">
                     </div>
-                    <div class="field required mb-2">
-                        <label>資格手当</label>
-                        <input class="edit-qualifications-form_qualification_allowance"
-                            name="edit-qualifications-form_qualification_allowance" type="number" placeholder="5000"
-                            min="0" max="10000000" autocomplete="off">
-                    </div>
-                    <div class="field mb-2">
-                        <label>該当等級</label>
-                        <input type="number" class="edit-qualifications-form_applicable_grade"
-                            name="edit-qualifications-form_applicable_grade" placeholder="該当等級" min="0" max="" autocomplete="off">
                     <div class="two fields">
                         <div class="field required">
                             <label>資格手当</label>

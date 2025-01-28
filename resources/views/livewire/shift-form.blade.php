@@ -22,7 +22,7 @@
                         <input type="text" id="title_value" name="title_value" wire:model="title_value" autocomplete="off">
                     </div>
                     <div class="field required">
-                        <label for="br-start_days_of_week">事業所</label>
+                        <label for="branch">事業所</label>
                         <select class="ui fluid dropdown" name="branch_value" wire:model.live="branch_value">
                             @foreach ($branch_list as $k => $value)
                                 <option value="{{ $k }}">{{ $value }}</option>
@@ -32,7 +32,7 @@
                     <div class="three fields">
 
                         <div class="field required">
-                            <label for="start_month_of_year">起算日</label>
+                            <label for="start_day_of_year">起算日</label>
                             <div class="ui right labeled input">
                                 <select class="ui fluid dropdown" name="start_year" wire:model.live="start_year">
                                     @foreach ($year_list as $value)
@@ -47,7 +47,7 @@
                         <div class="field ">
                             <label for="start_day_of_month"></label>
                             <div class="ui right labeled input">
-                                <select class="ui fluid dropdown" name="start_date" wire:model.live="start_month">
+                                <select class="ui fluid dropdown" name="start_month" wire:model.live="start_month">
                                     @for ($i = 1; $i < 13; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="field ">
-                            <label for="start_day_of_week"></label>
+                            <label for="start_day_of_day"></label>
                             <div class="ui right labeled input">
                                 <select class="ui fluid dropdown" name="start_date" wire:model.live="start_date">
                                     @foreach ($day_list as $value)
@@ -73,7 +73,7 @@
                     </div>
                     <div class="three fields">
                         <div class="field required">
-                            <label for="br-start_days_of_week">曜日の始まり</label>
+                            <label for="start_days_of_week">曜日の始まり</label>
                             <select class="ui fluid dropdown" name="start_weekday" wire:model.live="start_weekday">
                                 @foreach ($weeks as $k => $value)
                                     <option value="{{ $k }}">{{ $value }}</option>

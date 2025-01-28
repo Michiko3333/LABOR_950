@@ -94,7 +94,9 @@ class EmployeeController extends Controller
         if (count($userList) > 0) {
             foreach ($userList as $key => $value) {
                 $key = array_search($value, array_column($masterColumnList, 'value'));
-                $userDefaultList[] = $masterColumnList[$key];
+                if ($key !== false) {
+                    $userDefaultList[] = $masterColumnList[$key];
+                }
             }
         } else {
             $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
@@ -990,7 +992,6 @@ class EmployeeController extends Controller
             'annual_income' => $requestData['de-annual_income'][$index],
             'contact' => $requestData['de-contact'][$index],
             'post_code' => $requestData['de-post_code'][$index],
-            'address' => $requestData['de-address'][$index],
             'living_type' => $requestData['de-living_type'][$index] ?? null,
             'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
             'pension_no' => $requestData['de-pension_no'][$index],

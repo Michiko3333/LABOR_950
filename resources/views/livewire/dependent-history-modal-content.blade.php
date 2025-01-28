@@ -183,7 +183,7 @@ label {
                             <div class="four wide field ">
                                 <label for="address_prefecture">住所（都道府県）</label>
                                 <select class="ui fluid dropdown" name="address_prefecture[]"
-                                wire:model.live="data.{{ $key }}.address_prefecture" style="border: none;" readonly>
+                                wire:model.live="data.{{ $key }}.address_prefecture" style="pointer-events: none;border: none;" readonly>
                                     <option value="">未選択</option>
                                     @foreach ($prefectures as $k => $value)
                                         <option value="{{ $k }}">{{ $value }}</option>

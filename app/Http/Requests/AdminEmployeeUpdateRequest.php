@@ -245,10 +245,8 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             "de-contact.*" => ['nullable', 'string', new NumberOnly(13)],
             "de-post_code" => 'array',
             "de-post_code.*" => ['nullable', 'string', new NumberOnly(7)],
-            "de-address" => 'array',
-            "de-address.*" => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "de-living_type" => 'array',
-            "de-living_type.*" => 'nullable|int|in:1',
+            "de-living_type.*" => 'nullable|int|in:0,1',
             "de-occupation" => 'array',
             "de-occupation.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             "de-annual_income" => 'array',
@@ -470,9 +468,6 @@ class AdminEmployeeUpdateRequest extends BaseRequest
         }
         foreach ($this->input('de-post_code', []) as $index => $value) {
             $Attributes["de-post_code.{$index}"] = ($index + 1) . "扶養者_居住（郵便番号・ハイフンなし）";
-        }
-        foreach ($this->input('de-address', []) as $index => $value) {
-            $Attributes["de-address.{$index}"] = ($index + 1) . "扶養者_居住（住所）";
         }
         foreach ($this->input('de-living_type', []) as $index => $value) {
             $Attributes["de-living_type.{$index}"] = ($index + 1) . "扶養者_居住（住所）同居";
