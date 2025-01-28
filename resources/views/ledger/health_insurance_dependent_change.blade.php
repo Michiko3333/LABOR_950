@@ -318,7 +318,7 @@
                     $('#N90_P1').val(spouse.annual_income ?? '');
                     if (spouse.special_requirements_applicable_flg === 0) {
                         $('#N91_P1').val('2');
-                    } else {
+                    } else if (spouse.special_requirements_applicable_flg === 1){
                         $('#N91_P1').val('1');
                     }
                     if (spouse.special_requirements_applicable_reason_type === 1) {
@@ -335,7 +335,7 @@
                     $('#N98_P1').val(spouse.special_requirements_applicable_reason ?? '');
                     if (spouse.special_requirements_non_applicable_reason_type === 1) {
                         $('#N104_P1').val('1');
-                    } else {
+                    } else if(spouse.special_requirements_non_applicable_reason_type === 2) {
                         $('#N104_P1').val('2');
                     }
                     $('#N109_P1').val(spouse.special_requirements_non_applicable_reason ?? '');
