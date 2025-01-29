@@ -227,10 +227,12 @@
             color: var(--color-blue) !important;
             padding: 0.8em 0 !important;
         }
+
         .dropdown-readonly {
             border: none !important;
             pointer-events: none !important;
         }
+
         @media screen and (max-width: 1250px) {
             .right-container {
                 display: none;
@@ -248,20 +250,46 @@
             }
         }
 
-        .right_close {    
-            width: 1%;
+        #right_schedule {
+            position: relative;
+            white-space: nowrap;
+            transition: 0.5s;
+        }
+
+        #right_schedule.right_close {
+            width: 20px;
+            overflow: hidden;
+            transition: 0.5s;
+
+        }
+
+        #right_schedule.right_close .schedule {
+            pointer-events: none;
             opacity: 0;
+            transition: 0.5s;
         }
 
         #arrow {
             position: absolute;
-            top: 50vh;
-            right: 250px;
-            font-size: 32px;
+            display: block;
+            width: 20px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            font-size: 26px;
+            background-color: transparent;
+            border: none;
             color: #fff;
+            z-index: 5;
+            transition: 0.25s;
             cursor: pointer;
-            text-shadow: #000 1px 0 10px;
         }
+
+        #arrow:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: 0.25s;
+        }
+
         #arrow.arrow_anime {
             transition: 0.6s;
             transition-delay: 0.15s;
@@ -269,8 +297,17 @@
 
         #arrow.arrow_close {
             position: absolute;
-            top: 50vh; 
+            top: 50%;
             right: 1px;
+        }
+
+        #arrow-icon {
+            position: fixed;
+            top: 50vh;
+            color: #fff;
+            z-index: 8;
+            font-size: 16px;
+            pointer-events: none;
         }
     </style>
 
@@ -343,32 +380,33 @@
             @endif
             {{ $slot }}
         </div>
-        
+
         @if ($useRightContent)
-            @if ($title == "ログイン" || $title == "会社選択")
+            @if ($title == 'ログイン' || $title == '会社選択')
                 <div class="right-container" id="right_schedule" style="opacity: 1;">
                     <section class="schedule">
                         @livewire('side-schedule')
                     </section>
                 </div>
             @else
-                @if ($title == "ホーム")
-                    <i class="angle double right icon arrow_anime" id="arrow"></i>
+                @if ($title == 'ホーム')
                     <div class="right-container right_anime" id="right_schedule">
+                        <button type="button" id="arrow"></button>
+                        <i class="angle left icon" id="arrow-icon"></i>
                         <section class="schedule">
                             @livewire('side-schedule')
                         </section>
                     </div>
                 @else
-                <i class="angle double right icon arrow_close" id="arrow"></i>
                     <div class="right-container right_close" id="right_schedule">
+                        <button type="button" id="arrow"></button>
+                        <i class="angle left icon" id="arrow-icon"></i>
                         <section class="schedule">
                             @livewire('side-schedule')
                         </section>
                     </div>
                 @endif
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <script>
+                <script type="module">
                     $(document).ready(() => {
                         const right_schedule = $('#right_schedule');
                         const arrow = $('#arrow');
@@ -377,19 +415,31 @@
                             const isOpen = sessionStorage.getItem('right_content');
                             if (isOpen) {
                                 $('#right_schedule').addClass('right_close');
-                                $('#arrow').removeClass('angle double right icon').addClass('angle double left icon arrow_close');
+                                $('#arrow-icon').removeClass('right').addClass('left');
+
                                 $('header .right .menu-user .name').addClass('close');
                                 $('header .right .ui.menu .item>i.dropdown.icon').addClass('close');
+                                /*
+                                $('#arrow').removeClass('angle double right icon').addClass(
+                                    'angle double left icon arrow_close');
+                                $('header .right .menu-user .name').addClass('close');
+                                $('header .right .ui.menu .item>i.dropdown.icon').addClass('close');*/
                             } else {
                                 $('#right_schedule').removeClass('right_close');
-                                $('#arrow').removeClass('angle double left icon arrow_close').addClass('angle double right icon');
+                                $('#arrow-icon').removeClass('left').addClass('right');
+
                                 $('header .right .menu-user .name').removeClass('close');
                                 $('header .right .ui.menu .item>i.dropdown.icon').removeClass('close');
+                                /*
+                                $('#arrow').removeClass('angle double left icon arrow_close').addClass(
+                                    'angle double right icon');
+                                $('header .right .menu-user .name').removeClass('close');
+                                $('header .right .ui.menu .item>i.dropdown.icon').removeClass('close');*/
                             }
                         };
 
                         toggleRightContent();
-
+                        /*
                         right_schedule.on('click', () => {
                             if (sessionStorage.getItem('right_content')) {
                                 sessionStorage.removeItem('right_content');
@@ -397,7 +447,7 @@
                                 sessionStorage.setItem('right_content', true);
                             }
                             toggleRightContent();
-                        });
+                        });*/
                         arrow.on('click', () => {
                             if (sessionStorage.getItem('right_content')) {
                                 sessionStorage.removeItem('right_content');

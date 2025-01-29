@@ -87,5 +87,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BatchManagementSeeder::class);
         $this->call(wageColumnSeeder::class);
         $this->call(AttendanceColumnsSeeder::class);
+        $this->call(EmployeeColumnsSeeder::class);
     }
 }

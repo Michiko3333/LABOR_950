@@ -39,15 +39,15 @@ class FilterEmployeeListSeeder extends Seeder
             'hidden_default' => 0,
             'hidden_basic_department' => 0
         ]);
-        /*
+
         FilterEmployeeList::create([
             'name' => '等級',
             'value' => 'grade',
             'order' => 4,
-            'parent' =>'basic_info',
-            'hidden_default' => 0,
+            'parent' => 'basic_info',
+            'hidden_default' => 1,
             'hidden_basic_department' => 0
-        ]);*/
+        ]);
         FilterEmployeeList::create([
             'name' => '資格',
             'value' => 'qualification',

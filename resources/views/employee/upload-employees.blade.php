@@ -1,4 +1,4 @@
-<x-layout title="賃金情報のインポート" useRightContent="{{ true }}">
+<x-layout title="社員情報のインポート" useRightContent="{{ true }}">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('/css/power-table.css') }}">
         <style type="text/css">
@@ -43,6 +43,7 @@
     </section>
     <script src="{{ asset('/js/power-table-list.js') }}" defer></script>
     <script src="{{ asset('/js/power-table-filter.js') }}" defer></script>
+    <script src="{{ asset('/js/valid.js') }}" defer></script>
     <script src="{{ asset('/js/csv-import-employee.js') }}" defer></script>
 
     <script>
@@ -64,6 +65,13 @@
                     position: 'bottom right',
                     class: 'success',
                     message: '正常にインポートが完了しました'
+                })
+            };
+            csvImportEmployee.onFaildImport = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: 'インポートに失敗しました'
                 })
             };
         })

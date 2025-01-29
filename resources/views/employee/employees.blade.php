@@ -68,6 +68,9 @@
             <div class="active section">社員一覧</div>
         </div>
         <h1 class="mt-0">社員一覧</h1>
+        <div style="padding: 1em 0;">
+            <a href="{{ route('employees.upload') }}" class="ui button primary">インポート</a>
+        </div>
         <div id="FilterModal" class="ui modal small filter-employee-list-modal" style="max-width: 650px;">
             <i class="close icon"></i>
             <div class="header">

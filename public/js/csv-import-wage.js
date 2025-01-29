@@ -24,6 +24,7 @@ class CsvImportWage extends PowerTableList {
         this.insurance_get = this.option_data.api.insurance_get;
 
         this.onImported = () => {};
+        this.onFaildImport = () => {};
         this.onChangedCustomColumns = () => {};
 
         this.rules = {
@@ -157,6 +158,7 @@ class CsvImportWage extends PowerTableList {
     }
 
     loadCsv(columns, rows) {
+        rows = rows.filter(e => e.length > 1);
         this.lengthInputs = rows.length;
         const column_default_names = [];
         for (const key in this.columns_map_tmp) {
@@ -592,8 +594,8 @@ class CsvImportWage extends PowerTableList {
         this.submit(this.upload_uri, JSON.stringify({data: data})).then(r => {
             this.onImported();
         })
-        .catch(err => {
-            alert('アップロード中に予期せぬエラーが発生しました');
+        .catch(() => {
+            this.onFaildImport();
         })
         .finally(() => {
             uploadButton.disabled = false;

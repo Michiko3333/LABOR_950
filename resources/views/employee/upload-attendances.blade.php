@@ -66,6 +66,13 @@
                     message: '正常にインポートが完了しました'
                 })
             };
+            csvImportAttendance.onFaildImport = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: 'インポートに失敗しました'
+                })
+            };
         })
     </script>
 </x-layout>
