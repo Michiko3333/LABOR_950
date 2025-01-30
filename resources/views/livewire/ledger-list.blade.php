@@ -1,8 +1,44 @@
 <div>
-    <div class="filter">
-        <div class="ui left icon input" style="width: 100%; max-width: 300px; margin-right: 3em;">
-            <input type="text" placeholder="手続名称" wire:model.live="search">
-            <i class="search icon"></i>
+    <style>
+        label{
+            display: block;
+            margin: 0 0 .28571429rem;
+            font-size: .8em;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    </style>
+    <div class="filter" style="display: flex; align-items: center;">
+        <div style="margin-right: 1.5em;">
+            <label style="font-size:14px">業務別カテゴリー</label>
+            <select class="ui fluid selection clearable dropdown big_category" style="width: 300px !important; height:45px;font-size:14px !important;"
+            name="big_category_name" wire:model.live="big_category_id">
+                <option value="">未選択</option>
+                @foreach ($big_categories as $id => $big_category_name)
+                    <option value="{{ $id }}">
+                        {{ $big_category_name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div style="margin-right: 1.5em;">
+            <label style="font-size:14px">業務詳細カテゴリー</label>
+            <select class="ui fluid selection clearable dropdown medium_category" style="width: 250px !important; height:45px;font-size:14px !important;"
+            name="medium_category_name" wire:model.live="medium_category_id">
+                <option value="">未選択</option>
+                @foreach ($medium_categories as $id => $medium_category_name)
+                    <option value="{{ $id }}">
+                        {{ $medium_category_name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div style="margin-left: auto;">
+            <label style="color:transparent">手続名称</label>
+            <div class="ui left icon input" style="width: 100%; max-width: 300px; height:45px; margin-right: 1.5em;">
+                <input type="text" placeholder="手続名称" wire:model.live="search">
+                <i class="search icon"></i>
+            </div>
         </div>
     </div>
 

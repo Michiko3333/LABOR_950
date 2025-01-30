@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Dependent;
+use App\Models\Allowance;
+use App\Models\Employee;
 use App\Models\Closure_information;
 use App\Models\Receptionist;
 use App\Models\Managerial_position;
@@ -13,17 +16,38 @@ class CancelModalContent extends BaseTable
 {
     public $receptionistId;
     public $managerialPositionId;
+    public $dependentId;
+    public $allowanceId;
+    public $name;
     public $closureId;
+    public $allowanceHistoryId;
 
     #[On('cancelModalOpened')]
-    public function cancelModalOpened($receptionistId, $managerialPositionId, $closureId)
-    {
+    public function cancelModalOpened(
+        $receptionistId,
+        $managerialPositionId,
+        $closureId,
+        $dependentId,
+        $allowanceId,
+        $name,
+        $allowanceHistoryId
+    ) {
         if ($receptionistId) {
             $this->receptionistId = $receptionistId;
         } elseif ($managerialPositionId) {
             $this->managerialPositionId = $managerialPositionId;
+        } elseif ($dependentId) {
+            $this->dependentId = $dependentId;
+        } elseif ($allowanceId) {
+            $this->allowanceId = $allowanceId;
+        } elseif ($allowanceHistoryId) {
+            $this->allowanceHistoryId = $allowanceHistoryId;
         } elseif ($closureId) {
             $this->closureId = $closureId;
+        }
+
+        if ($name) {
+            $this->name = $name;
         }
     }
 
@@ -47,7 +71,8 @@ class CancelModalContent extends BaseTable
         $this->dispatch('closeCancelModal');
     }
 
-    public function cancelManagerialPosition() {
+    public function cancelManagerialPosition()
+    {
         Managerial_position::where('id', $this->managerialPositionId)->update([
             'delete_flg' => 1
         ]);
@@ -55,8 +80,24 @@ class CancelModalContent extends BaseTable
         $this->dispatch('closeCancelModal');
     }
 
-    public function cancelClosure() {
+    public function cancelAllowance()
+    {
+        Allowance::whereIn('id', array_filter([$this->allowanceId, $this->allowanceHistoryId]))
+            ->update(['delete_flg' => 1]);
+        $this->dispatch('closeCancelModal');
+    }
+
+    public function cancelClosure()
+    {
         Closure_information::where('id', $this->closureId)->update([
+            'delete_flg' => 1
+        ]);
+        $this->dispatch('closeCancelModal');
+    }
+
+    public function cancelDependent()
+    {
+        Dependent::where('id', $this->dependentId)->update([
             'delete_flg' => 1
         ]);
         $this->dispatch('closeCancelModal');

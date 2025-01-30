@@ -87,6 +87,8 @@
                             style="width: 200px;">確認</button>
                     @endif
                 </div>
+
+                <input type="hidden" name="query_parameter" id="queryParameter">
             </form>
         </div>
 

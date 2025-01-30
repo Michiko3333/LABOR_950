@@ -20,32 +20,34 @@ class EmploymentInsuredLeaveStartAmountMonthlyCertificateRequest extends BaseReq
         $data = $this->all();
 
         if (isset($data['employee_name_kana'])) {
-            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'S');
+            $data['employee_name_kana'] = mb_convert_kana($data['employee_name_kana'], 'KS');
         }
         if (isset($data['employee_name'])) {
-            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'S');
+            $data['employee_name'] = mb_convert_kana($data['employee_name'], 'AKS');
         }
         if (isset($data['headquarters_employee_name'])) {
-            $data['headquarters_employee_name'] = mb_convert_kana($data['headquarters_employee_name'], 'S');
+            $data['headquarters_employee_name'] = mb_convert_kana($data['headquarters_employee_name'], 'AKS');
         }
         if (isset($data['labor_consultant_submission_agency_name'])) {
-            $data['labor_consultant_submission_agency_name'] = mb_convert_kana($data['labor_consultant_submission_agency_name'], 'S');
+            $data['labor_consultant_submission_agency_name'] = mb_convert_kana($data['labor_consultant_submission_agency_name'], 'AKS');
         }
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
         if (isset($data['branch_address'])) {
-            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AKS');
             $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
         }
         if (isset($data['employee_address'])) {
-            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AS');
+            $data['employee_address'] = mb_convert_kana($data['employee_address'], 'AKS');
             $data['employee_address'] = str_replace(['-', '‐', '―'], '－', $data['employee_address']);
         }
         if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AKS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

@@ -1,0 +1,71 @@
+.ui.table {
+    border: none;
+    border-radius: 8px;
+    margin-top: 0;
+    border-collapse: collapse;
+}
+
+.ui.table>tbody>tr>td {
+    padding: 1.6em .7em;
+}
+
+div.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.no_supported {
+    font-weight: 900;
+    color: var(--color-red);
+}
+
+.in_progress {
+    font-weight: 900;
+    color: var(--color-yellow);
+}
+
+.completion {
+    font-weight: 900;
+    color: green;
+}
+
+.invalid {
+    font-weight: 900;
+    color: gray;
+}
+
+/* モーダル内 */
+#detailModal input {
+    border: none;
+}
+
+#detailModal .pickup_text {
+    padding: 14px 16.8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.readonly-style {
+    pointer-events: none;
+    border: none !important;
+}
+
+
+
+.fade-highlight {
+    animation: fadeHighlight 0.5s ease-out forwards;
+}
+
+@keyframes fadeHighlight {
+    0% {
+        border: none;
+    }
+
+    50% {
+        border: 2px solid rgba(153, 153, 153, 0.5);
+    }
+
+    100% {
+        border: 2px solid #999999;
+    }
+}

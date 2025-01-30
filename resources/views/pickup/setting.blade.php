@@ -68,7 +68,7 @@
             <div class="setting-data-area">
                 <div class="ui card full card-shadow">
                     <div class="content">
-                        <div class="field  {{ err($errors, 'nursing_care_insurance_premium_deduction_begins') }}">
+                        <div class="field {{ err($errors, 'nursing_care_insurance_premium_deduction_begins') }}">
                             <h4 style="margin: 1.5rem 0 0.5rem 0;">40歳 介護保険料の控除開始</h4>
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
@@ -83,7 +83,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'application_for_attainment_wage_certificate') }}">
+                        <div class="field {{ err($errors, 'application_for_attainment_wage_certificate') }}">
                             <h4 class="item-heading">60歳 到達時賃金証明書の申請</h4>
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
@@ -98,7 +98,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'end_of_nursing_care_insurance_premium_deduction') }}">
+                        <div class="field {{ err($errors, 'end_of_nursing_care_insurance_premium_deduction') }}">
                             <h4 class="item-heading">65歳 介護保険料の控除終了</h4>
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
@@ -113,7 +113,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'loss_of_eligibility_for_employees_pension_insurance') }}">
+                        <div class="field {{ err($errors, 'loss_of_eligibility_for_employees_pension_insurance') }}">
                             <h4 class="item-heading">70歳 厚生年金保険被保険者の資格喪失</h4>
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
@@ -128,7 +128,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'loss_of_health_insurance_status') }}">
+                        <div class="field {{ err($errors, 'loss_of_health_insurance_status') }}">
                             <h4 class="item-heading">75歳 健康保険被保険者の資格喪失</h4>
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
@@ -164,29 +164,8 @@
                                         value="{{ old('labor_insurance_annual_renewal_start_day') ?? 1 }}" min="1" max="31"><span>日</span>
                                 </div>
                             @endif
-                            <span>から</span>
-                            @if(isset($pickupSetting))
-                                <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_month') }}">
-                                    <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_month"
-                                        value="{{ old('labor_insurance_annual_renewal_end_month', $labor_insurance_annual_renewal_end_month) }}" min="1" max="12"><span>月</span>
-                                </div>
-                                <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_day') }}">
-                                    <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_day"
-                                        value="{{ old('labor_insurance_annual_renewal_end_day', $labor_insurance_annual_renewal_end_day) }}" min="1" max="31"><span>日</span>
-                                </div>
-                            @else
-                                <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_month') }}">
-                                    <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_month"
-                                        value="{{ old('labor_insurance_annual_renewal_end_month') ?? 7 }}" min="1" max="12"><span>月</span>
-                                </div>
-                                <div class="field {{ err($errors, 'labor_insurance_annual_renewal_end_day') }}">
-                                    <input type="number" class="setting-input" name="labor_insurance_annual_renewal_end_day"
-                                        value="{{ old('labor_insurance_annual_renewal_end_day') ?? 10 }}" min="1" max="31"><span>日</span>
-                                </div>
-                            @endif
-                            <span>の間通知</span>
+                            <span>から7月10日の間通知</span>
                         </div>
-                        <p>※年をまたいで期間を設定できません</p>
                         <div class="ui divider under-line"></div>
 
                         <h4 class="item-heading">年末調整</h4>
@@ -223,7 +202,7 @@
                             @else
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_end_month') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_end_month"
-                                        value="{{ old('year_end_tax_adjustment_end_month') ?? 1 }}" min="1" max="12"><span>月</span>
+                                        value="{{ old('year_end_tax_adjustment_end_month') ?? 12 }}" min="1" max="12"><span>月</span>
                                 </div>
                                 <div class="field {{ err($errors, 'year_end_tax_adjustment_end_day') }}">
                                     <input type="number" class="setting-input" name="year_end_tax_adjustment_end_day"
@@ -232,10 +211,9 @@
                             @endif
                             <span>の間通知</span>
                             </div>
-                        <p>※年をまたいで期間を設定できません</p>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'retirement_age') }}">
+                        <div class="field {{ err($errors, 'retirement_age') }}">
                             <h4 class="item-heading">定年退職</h4>
                             <p>定年退職
                                 @if(isset($pickupSetting))
@@ -247,7 +225,7 @@
                                 @endif
                             </p>
                         </div>
-                        <div class="field  {{ err($errors, 'retirement') }}">
+                        <div class="field {{ err($errors, 'retirement') }}">
                             <p>該当者の誕生日の
                                 @if(isset($pickupSetting))
                                     <input type="number" class="setting-input" name="retirement"
@@ -269,7 +247,7 @@
                                     <option value="">未選択</option>
                                 </select>
                             </div>
-                            <div class="field  {{ err($errors, 'officers_birthday') }}">
+                            <div class="field {{ err($errors, 'officers_birthday') }}">
                                 <p>該当者の誕生日の
                                     @if(isset($pickupSetting))
                                         <input type="number" class="setting-input" name="officers_birthday"
@@ -284,7 +262,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'settlement_date') }}">
+                        <div class="field {{ err($errors, 'settlement_date') }}">
                             <h4 class="item-heading">決算日</h4>
                             <p>該当企業の決算日の
                                 @if(isset($pickupSetting))
@@ -299,7 +277,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'start_of_closure') }}">
+                        <div class="field {{ err($errors, 'start_of_closure') }}">
                             <h4 class="item-heading">休業開始</h4>
                             <p>対象者の休業開始日の
                                 @if(isset($pickupSetting))
@@ -314,7 +292,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'end_of_closure') }}">
+                        <div class="field {{ err($errors, 'end_of_closure') }}">
                             <h4 class="item-heading">休業終了</h4>
                             <p>対象者の休業終了日の
                                 @if(isset($pickupSetting))
@@ -329,7 +307,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'change_in_dependent_status') }}">
+                        <div class="field {{ err($errors, 'change_in_dependent_status') }}">
                             <h4 class="item-heading">扶養変更</h4>
                             <p>扶養開始後
                                 @if(isset($pickupSetting))
@@ -344,7 +322,7 @@
                         </div>
                         <div class="ui divider under-line"></div>
 
-                        <div class="field  {{ err($errors, 'subsidies_and_grants') }}">
+                        <div class="field {{ err($errors, 'subsidies_and_grants') }}">
                             <h4 class="item-heading">助成金・補助金等</h4>
                             <p>申請開始日の
                                 @if(isset($pickupSetting))
@@ -383,11 +361,26 @@
                             <span>から7月15日までの間通知</span>
                         </div>
                         <p>※年をまたいで期間を設定できません</p>
-                    </div>                    
+                        <div class="ui divider under-line"></div>                 
+
+                        <div class="field {{ err($errors, 'bonus_payment_notice') }}" style="margin-bottom: 1.5rem;">
+                            <h4 class="item-heading">健康保険・厚生年金保険被保険者賞与支払届</h4>
+                            <p>賞与支払予定月の
+                                @if(isset($pickupSetting))
+                                    <input type="number" class="setting-input" name="bonus_payment_notice"
+                                        value="{{ old('bonus_payment_notice', $pickupSetting->bonus_payment_notice) }}" min="1" max="365">
+                                @else
+                                    <input type="number" class="setting-input" name="bonus_payment_notice"
+                                        value="{{ old('bonus_payment_notice') ?? 30 }}" min="1" max="365">
+                                @endif
+                                日前から通知開始
+                            </p>
+                        </div>
+                    </div> 
                 </div>
             </div>
 
-            @if(!$userPermission->isAdmin() && ($userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13)) && $userPermission->getEmployeeStatus() !== 1)
+            @if(!$userPermission->isAdmin() && $userPermission->isGeneralAffair() && $userPermission->isWritableFor(13) && $userPermission->getEmployeeStatus() !== 1)
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('home.index') }}"
                         style="width: 200px;">キャンセル</a>
@@ -399,11 +392,11 @@
 
     <script type="module">
         $(document).ready(function() {
-            const readonly = @json($userPermission->isAdmin() || !$userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13) || $userPermission->getEmployeeStatus() !== 1);
+            const readonly = @json($userPermission->isAdmin() || !$userPermission->isGeneralAffair() || !$userPermission->isWritableFor(13) || $userPermission->getEmployeeStatus() === 1);
             if (readonly) {
                 $sectionReadonly();
-                const def = @json($officers);
-                $('label[for="officers"]').next('input[type="text"]').val(def.join(', '));
+                const def = @json($officers_names);
+                $('label[for="officers[]"]').next('div').find('.default').text(def.join(',　')).css('color', '#13265F');
             } else {
                 getIndustryType(true);
             }

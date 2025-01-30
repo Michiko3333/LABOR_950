@@ -87,6 +87,25 @@ class Employee extends Model
         'employment_insured_date',
         'employee_type',
         'employee_status',
+
+
+
+
+
+        'grade',
+        'work_category',
+        'enrollment_category',
+        'transfer_date',
+        'private_introduction',
+        'recruitment_category',
+        'recruitment_category_detail',
+        'pay_type',
+
+
+
+
+
+
         'labor_and_social_security_attorney_registration_no',
         'contract_period_flg',
         'contract_start_date',
@@ -110,6 +129,13 @@ class Employee extends Model
         'currency_id',
         'salary_payment_system',
         'caregiver_leave_benefit_receive_bank_id',
+
+        'bank_name',
+        'bank_name_kana',
+        'head_office_or_branch_office',
+        'financial_institution_code',
+        'store_code',
+        'japan_bank_flg',
         'japan_post_bank_code_no',
         'japan_post_bank_account_no',
         'bank_account_no',
@@ -138,6 +164,8 @@ class Employee extends Model
 
     protected $casts = [
         'mynumber_card_no' => 'encrypted',
+        'bank_account_no' => 'encrypted',
+        'japan_post_bank_code_no' => 'encrypted',
     ];
 
     public function user()
@@ -350,6 +378,11 @@ class Employee extends Model
         return $this->hasOne(Csv_count::class);
     }
 
+    public function pickup()
+    {
+        return $this->hasMany(Pickup::class);
+    }
+
     public function employee_qualifications()
     {
         return $this->hasMany(Employee_qualifications::class);
@@ -358,5 +391,25 @@ class Employee extends Model
     public function closure_information()
     {
         return $this->hasMany(Closure_information::class);
+    }
+
+    public function Values_employee_work_category()
+    {
+        return $this->belongsTo(Values_employee_work_category::class, 'work_category', 'id');
+    }
+
+    public function Values_employee_enrollment_category()
+    {
+        return $this->belongsTo(Values_employee_enrollment_category::class, 'enrollment_category', 'id');
+    }
+
+    public function Values_employee_recruitment_category_detail()
+    {
+        return $this->belongsTo(Values_employee_recruitment_category_detail::class, 'recruitment_category_detail', 'id');
+    }
+
+    public function Values_employee_pay_type()
+    {
+        return $this->belongsTo(Values_employee_pay_type::class, 'pay_type', 'id');
     }
 }

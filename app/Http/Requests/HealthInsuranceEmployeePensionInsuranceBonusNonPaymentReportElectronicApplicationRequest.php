@@ -20,18 +20,20 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
         $data = $this->all();
 
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
         }
         if (isset($data['business_owner_name_representative_name'])) {
-            $data['business_owner_name_representative_name'] = mb_convert_kana($data['business_owner_name_representative_name'], 'S');
+            $data['business_owner_name_representative_name'] = mb_convert_kana($data['business_owner_name_representative_name'], 'AKS');
         }
         if (isset($data['bonus_name'])) {
-            $data['bonus_name'] = mb_convert_kana($data['bonus_name'], 'S');
+            $data['bonus_name'] = mb_convert_kana($data['bonus_name'], 'AKS');
         }
         if (isset($data['business_location_ship_owner_address'])) {
-            $data['business_location_ship_owner_address'] = mb_convert_kana($data['business_location_ship_owner_address'], 'AS');
+            $data['business_location_ship_owner_address'] = mb_convert_kana($data['business_location_ship_owner_address'], 'AKS');
             $data['business_location_ship_owner_address'] = str_replace(['-', '‐', '―'], '－', $data['business_location_ship_owner_address']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

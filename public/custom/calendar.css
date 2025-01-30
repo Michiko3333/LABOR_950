@@ -1,3 +1,8 @@
+.pickup_item:hover {
+    background-color: #F7F7F7 !important;
+    cursor: pointer !important;
+}
+
 /* .calendar {
     display: flex;
     flex-flow: column;
@@ -519,6 +524,10 @@
 }
 
 #detailCalendar .field.subsidies_name.hidden {
+    display: none;
+}
+
+#detailCalendar .field.repetition.hidden {
     display: none;
 }
 

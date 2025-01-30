@@ -27,6 +27,8 @@ use App\Models\CurrentUser;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\Branch;
+use App\Models\Branch_allowance;
+use App\Models\Branch_allowance_history;
 use App\Models\Values_company_listed_type;
 use App\Models\Values_company_business_type;
 use App\Models\Company_type;
@@ -57,10 +59,20 @@ use App\Models\Values_employee_insured_age_type;
 use App\Models\Industry_type;
 use App\Models\Company_industry_type;
 use App\Models\Company_files;
+use App\Models\Pickup_setting;
+use App\Models\Pickup;
+use App\Models\Pickup_message;
 use App\Models\Salary;
 use App\Models\Salary_history;
 use App\Models\Qualifications;
 use App\Models\Employee_qualifications;
+use App\Models\Values_employee_work_category;
+use App\Models\Values_employee_enrollment_category;
+use App\Models\Values_employee_employment_route;
+use App\Models\Values_employee_recruitment_category_detail;
+use App\Models\Values_employee_employment_status;
+use App\Models\Values_employee_pay_type;
+
 use Illuminate\Support\Facades\Log;
 
 
@@ -249,12 +261,18 @@ class AdminController extends Controller
             $saids = $request->input('sa-id');
             $boids = $request->input('bo-id');
             $bouids = $request->input('bou-id');
+            $alids = $request->input('al-id');
             $exceptBranches = [];
             foreach ($brids as $branchIndex => $brid) {
                 $brdata = $this->data_branch($data, $branchIndex, $id);
                 $currentSaids = $saids[$branchIndex] ?? [];
                 $currentboids = $boids[$branchIndex] ?? [];
                 $currentbouids = $bouids[$branchIndex] ?? [];
+                $currentalids = $alids[$branchIndex] ?? [];
+                $exceptSalary = [];
+                $exceptBonus = [];
+                $exceptBounty = [];
+                $exceptAllowance = [];
                 if ($brid > 0) {
                     Branch::where('id', $brid)->update($brdata);
                     $exceptBranches[] = $brid;
@@ -289,13 +307,15 @@ class AdminController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptSalary[] = $said;
                                 Salary::where('salary_id', $said)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingSalaryHistory = Salary_history::where('branch_id', $brid)->where('salary_id', $said)->orderBy('created_at', 'desc')->first();
                                 $salaryHistoryData = [
-                                    'salary_id' => $newSalaryId,
+                                    'salary_id' => $said,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'payroll_deadline' => $data['sa-payroll_deadline'][$branchIndex][$saIndex],
@@ -303,7 +323,11 @@ class AdminController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$branchIndex][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Salary_history::create($salaryHistoryData);
+                                $existingData = array_map('strval', $existingSalaryHistory->only(array_keys($salaryHistoryData)));
+                                $newData = array_map('strval', $salaryHistoryData);
+                                if ($existingData != $newData){
+                                    Salary_history::create($salaryHistoryData);
+                                }
                             };
                         } else {
                             if (!is_null($departments)) {
@@ -319,6 +343,7 @@ class AdminController extends Controller
                                     ];
                                     Salary::create($salaryData);
                                 }
+                                $exceptSalary[] = $newSalaryId;
                                 $departmentsAll = implode(',', $departments);
                                 $salaryHistoryData = [
                                     'salary_id' => $newSalaryId,
@@ -334,6 +359,8 @@ class AdminController extends Controller
                         }
                         $newSalaryId++;
                     }
+                    Salary::where('branch_id', $brid)->whereNotIn('salary_id', $exceptSalary)->update(['delete_flg' => 1]);
+                    Salary_history::where('branch_id', $brid)->whereNotIn('salary_id', $exceptSalary)->update(['delete_flg' => 1]);
                     foreach ($currentboids as $boIndex => $boid) {
                         $applied_date = $data['bo-applied_date'][$branchIndex][$boIndex];
                         if (!is_null($applied_date) && strtotime($applied_date) === false) {
@@ -363,19 +390,25 @@ class AdminController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptBonus[] = $boid;
                                 Bonus::where('bonus_id', $boid)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingBonusHistory = Bonus_history::where('branch_id', $brid)->where('bonus_id', $boid)->orderBy('created_at', 'desc')->first();
                                 $bonusHistoryData = [
-                                    'bonus_id' => $newBonusId,
+                                    'bonus_id' => $boid,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'bonus_payment_month' => $bonus_payment_month_processed,
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Bonus_history::create($bonusHistoryData);
+                                $existingData = array_map('strval', $existingBonusHistory->only(array_keys($bonusHistoryData)));
+                                $newData = array_map('strval', $bonusHistoryData);
+                                if ($existingData != $newData){
+                                    Bonus_history::create($bonusHistoryData);
+                                }
                             };
                         } else {
                             if (!is_null($departments)) {
@@ -389,6 +422,7 @@ class AdminController extends Controller
                                     ];
                                     Bonus::create($bonusData);
                                 }
+                                $exceptBonus[] = $newBonusId;
                                 $departmentsAll = implode(',', $departments);
                                 $bonusHistoryData = [
                                     'bonus_id' => $newBonusId,
@@ -402,6 +436,8 @@ class AdminController extends Controller
                         }
                         $newBonusId++;
                     }
+                    Bonus::where('branch_id', $brid)->whereNotIn('bonus_id', $exceptBonus)->update(['delete_flg' => 1]);
+                    Bonus_history::where('branch_id', $brid)->whereNotIn('bonus_id', $exceptBonus)->update(['delete_flg' => 1]);
                     foreach ($currentbouids as $bouIndex => $bouid) {
                         $applied_date = $data['bou-applied_date'][$branchIndex][$bouIndex];
                         if (!is_null($applied_date) && strtotime($applied_date) === false) {
@@ -431,19 +467,25 @@ class AdminController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptBounty[] = $bouid;
                                 Bounty::where('bounty_id', $bouid)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingBountyHistory = Bounty_history::where('branch_id', $brid)->where('bounty_id', $bouid)->orderBy('created_at', 'desc')->first();
                                 $bountyHistoryData = [
-                                    'bounty_id' => $newBountyId,
+                                    'bounty_id' => $bouid,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'bonus_payment_month' => $bonus_payment_month_processed,
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Bounty_history::create($bountyHistoryData);
+                                $existingData = array_map('strval', $existingBountyHistory->only(array_keys($bountyHistoryData)));
+                                $newData = array_map('strval', $bountyHistoryData);
+                                if ($existingData != $newData){
+                                    Bounty_history::create($bountyHistoryData);
+                                }
                             };
                         } else {
                             if (!is_null($departments)) {
@@ -457,6 +499,7 @@ class AdminController extends Controller
                                     ];
                                     Bounty::create($bountyData);
                                 }
+                                $exceptBounty[] = $newBountyId;
                                 $departmentsAll = implode(',', $departments);
                                 $bountyHistoryData = [
                                     'bounty_id' => $newBountyId,
@@ -470,6 +513,58 @@ class AdminController extends Controller
                         }
                         $newBountyId++;
                     }
+                    Bounty::where('branch_id', $brid)->whereNotIn('bounty_id', $exceptBounty)->update(['delete_flg' => 1]);
+                    Bounty_history::where('branch_id', $brid)->whereNotIn('bounty_id', $exceptBounty)->update(['delete_flg' => 1]);
+                    foreach ($currentalids as $alIndex => $alid) {
+                        $applied_date = $data['al-applied_date'][$branchIndex][$alIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $allowanceHistoryData = [
+                            'branch_id' => $brid,
+                            'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
+                            'amount' => $data['al-amount'][$branchIndex][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
+                            'target' => $data['al-target'][$branchIndex][$alIndex],
+                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                        ];
+                        if ($alid > 0) {
+                            $exceptAllowance[] = $alid;
+                            Branch_allowance::where('id', $alid)->update([
+                                'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
+                                'amount' => $data['al-amount'][$branchIndex][$alIndex],
+                                'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
+                                'target' => $data['al-target'][$branchIndex][$alIndex],
+                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
+                                'applied_date' => $formatted_applied_date,
+                            ]);
+                            $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
+                            $existingData = array_map('strval', $existingAllowanceHistory->only(array_keys($allowanceHistoryData)));
+                            $newData = array_map('strval', $allowanceHistoryData);
+                            if ($existingData != $newData){
+                                $allowanceHistoryData['allowance_id'] = $alid;
+                                Branch_allowance_history::create($allowanceHistoryData);
+                            }
+                        }else{
+                            $created_id = Branch_allowance::create([
+                                'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
+                                'amount' => $data['al-amount'][$branchIndex][$alIndex],
+                                'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
+                                'target' => $data['al-target'][$branchIndex][$alIndex],
+                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
+                                'applied_date' => $formatted_applied_date,
+                                'branch_id' => $brid,
+                            ])->id;
+                            $exceptAllowance[] = $created_id;
+                            $allowanceHistoryData['allowance_id'] = $created_id;
+                            Branch_allowance_history::create($allowanceHistoryData);
+                        }
+                    }
+                    Branch_allowance::where('branch_id', $brid)->whereNotIn('id', $exceptAllowance)->update(['delete_flg' => 1]);
+                    Branch_allowance_history::where('branch_id', $brid)->whereNotIn('allowance_id', $exceptAllowance)->update(['delete_flg' => 1]);
                 } else {
                     $created_id = Branch::create($brdata)->id;
                     $exceptBranches[] = $created_id;
@@ -584,6 +679,34 @@ class AdminController extends Controller
                             Salary_history::create($salaryHistoryData);
                         };
                         $SalaryId++;
+                    }
+                    foreach ($currentalids as $alIndex => $alid) {
+                        $applied_date = $data['al-applied_date'][$branchIndex][$alIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $created_id = Branch_allowance::create([
+                            'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
+                            'amount' => $data['al-amount'][$branchIndex][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
+                            'target' => $data['al-target'][$branchIndex][$alIndex],
+                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                            'branch_id' => $brid,
+                        ])->id;
+                        $allowanceHistoryData = [
+                            'allowance_id' => $created_id,
+                            'branch_id' => $brid,
+                            'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
+                            'amount' => $data['al-amount'][$branchIndex][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
+                            'target' => $data['al-target'][$branchIndex][$alIndex],
+                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                        ];
+                        Branch_allowance_history::create($allowanceHistoryData);
                     }
                 }
             }
@@ -1145,6 +1268,14 @@ class AdminController extends Controller
         $occupation_type = Values_employee_occupation_type::pluck('name', 'option_no');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
+
+        $work_category = Values_employee_work_category::pluck('name', 'id');
+        $enrollment_category = Values_employee_enrollment_category::pluck('name', 'id');
+        $employment_route = Values_employee_employment_route::pluck('name', 'id');
+        $recruitment_category_detail = Values_employee_recruitment_category_detail::pluck('name', 'id');
+        $employment_status = Values_employee_employment_status::pluck('name', 'id');
+        $pay_type = Values_employee_pay_type::pluck('name', 'id');
+
         $faxParts = ['', '', ''];
         $filePath = '/img/image.png';
 
@@ -1169,6 +1300,12 @@ class AdminController extends Controller
             'employee_insured_age_type' => $employee_insured_age_type,
             'qualifications' => [],
             'employee_qualifications' => [],
+            'work_category' => $work_category,
+            'enrollment_category' => $enrollment_category,
+            'employment_route' => $employment_route,
+            'recruitment_category_detail' => $recruitment_category_detail,
+            'employment_status' => $employment_status,
+            'pay_type' => $pay_type,
         ]);
     }
 
@@ -1235,6 +1372,10 @@ class AdminController extends Controller
                 'employee_no' => $request->input('employee_no'),
                 'branch_id' => $request->input('branch_id'),
                 'managerial_position_id' => $request->input('managerial_position_id'),
+                'grade' => $request->input('grade'),
+                'work_category' => $request->input('work_category'),
+                'enrollment_category' => $request->input('enrollment_category'),
+                'transfer_date' => $this->formatDate($request->input('transfer_date')),
                 'division_name' => $request->input('division_name'),
                 'division_name_kana' => $request->input('division_name_kana'),
                 'last_name' => $request->input('last_name'),
@@ -1315,6 +1456,11 @@ class AdminController extends Controller
                 'retirement_date' => $this->formatDate($request->input('retirement_date')),
                 'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                 'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
+                'private_introduction' => $request->input('private_introduction'),
+                'recruitment_category' => $request->input('recruitment_category'),
+                'recruitment_category_detail' => $request->input('recruitment_category_detail'),
+                'employment_status' => $request->input('employment_status'),
+                'pay_type' => $request->input('pay_type'),
                 'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                 'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                 // 'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
@@ -1323,17 +1469,16 @@ class AdminController extends Controller
                 //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
                 'external_advisor_flg' => $request->input('external_advisor_flg'),
                 'occupation_type' => $request->input('occupation_type'),
-                //'employment_route' => $request->input('employment_route'),
+                'employment_route' => $request->input('employment_route'),
                 //'insured_reason' => $request->input('insured_reason'),
                 //'insured_reason_details' => $request->input('insured_reason_details'),
                 //'currency_id' => $request->input('currency_id'),
                 //'salary_payment_system' => $request->input('salary_payment_system'),
                 // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-                // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
                 // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
                 // 'bank_account_no' => $request->input('bank_account_no'),// developにない
                 'employment_type' => $request->input('employment_type'),
-                'employment_status' => $request->input('employment_status'),
                 'employer_type' => $request->input('employer_type'),
                 'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                 'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
@@ -1350,15 +1495,235 @@ class AdminController extends Controller
                 'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
                 'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
                 'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
+                'bank_name' => $request->input('bank_name'),
+                'bank_name_kana' => $request->input('bank_name_kana'),
+                'head_office_or_branch_office' => $request->input('head_office_or_branch_office'),
+                'financial_institution_code' => $request->input('financial_institution_code'),
+                'store_code' => $request->input('store_code'),
+                'japan_bank_flg' => $request->input('japan_bank_flg'),
+                'bank_account_no' => $request->input('bank_account_no'),
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
             ])->id;
+
+            $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
+                ->where('m_branch.id', $request->input('branch_id'))
+                ->select('company.id')
+                ->first();
+
+            $pickup_setting = Pickup_setting::where('company_id', $company_id->id)
+                ->select('change_in_dependent_status')
+                ->first();
+            if (empty($companyPickupSetting)) {
+                $companyPickupSetting = new Pickup_setting([
+                    'company_id' => $company_id->id,
+                    'nursing_care_insurance_premium_deduction_begins' => 60,
+                    'application_for_attainment_wage_certificate' => 30,
+                    'end_of_nursing_care_insurance_premium_deduction' => 30,
+                    'loss_of_eligibility_for_employees_pension_insurance' => 30,
+                    'loss_of_health_insurance_status' => 30,
+                    'labor_insurance_annual_renewal_start' => '05-01',
+                    'year_end_tax_adjustment_start' => '12-01',
+                    'year_end_tax_adjustment_end' => '12-31',
+                    'retirement_age' => 65,
+                    'retirement' => 365,
+                    'officers_ids' => null,
+                    'officers_birthday' => 1,
+                    'settlement_date' => 30,
+                    'start_of_closure' => 30,
+                    'end_of_closure' => 30,
+                    'change_in_dependent_status' => 5,
+                    'subsidies_and_grants' => 30,
+                    'report_on_the_status_of_elderly_and_disabled_people' => '06-01',
+                    'bonus_payment_notice' => 30,
+                    'basis_of_calculation' => '06-15',
+                ]);
+            }
+
+            $insertData = [];
+
+            $hired_date = $this->formatDate($request->input('hired_date'));
+            if($hired_date) {
+                $hired_date = Carbon::parse($hired_date);
+                $due_date = $hired_date->copy()->addMonth()->day(10);
+
+                $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                    ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                    ->where('m_pickup_type.id', 21)
+                    ->first();
+
+                $search = ['pickup_type', 'employee', 'starting_date', 'due_date'];
+                $replace = [
+                    '資格取得届',
+                    $request->input('last_name') . ' ' . $request->input('first_name'),
+                    $hired_date->copy()->format('Y年n月j日'),
+                    $due_date->copy()->format('Y年n月j日'),
+                ];
+
+                $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                $content = str_replace($search, $replace, $pickupMessage->content);
+
+                if($due_date->gte(Carbon::today())) {
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 21,
+                        'employee_id' => $employee_id,
+                        'dependent_id' => null,
+                        'starting_date' => $hired_date,
+                        'due_date' => $due_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
+            $retirement_date = $this->formatDate($request->input('retirement_date')) ? $this->formatDate($request->input('retirement_date'))
+                : ($this->formatDate($request->input('intended_retirement_date')) ? $this->formatDate($request->input('intended_retirement_date'))
+                : null);
+            if($retirement_date) {
+                $retirement_date = Carbon::parse($retirement_date);
+
+                $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                    ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                    ->where('m_pickup_type.id', 24)
+                    ->first();
+
+                $search = ['pickup_type', 'employee', 'due_date'];
+                $replace = [
+                    '資格喪失届',
+                    $request->input('last_name') . ' ' . $request->input('first_name'),
+                    $retirement_date->copy()->format('Y年n月j日'),
+                ];
+
+                $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                $content = str_replace($search, $replace, $pickupMessage->content);
+
+                if(!empty($retirement_date) && $retirement_date->gte(Carbon::today())) {
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 24,
+                        'employee_id' => $employee_id,
+                        'dependent_id' => null,
+                        'starting_date' => null,
+                        'due_date' => $retirement_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
 
             $dename = $request->input('de-last_name');
             if (!is_null($dename)) {
                 foreach ($dename as $index => $name) {
                     $dedata = $this->data_dependent($validationData, $index, $employee_id);
-                    Dependent::create($dedata);
+                    $dependent_id = Dependent::create($dedata)->id;
+
+                    if(!empty($pickup_setting)) {
+                        $relationship_spouses = [
+                            '未選択',
+                            '夫',
+                            '妻',
+                            '夫(未届)',
+                            '妻(未届)',
+                        ];
+                        $relationship_dependents = [
+                            '未選択',
+                            '配偶者',
+                            '子供',
+                            '養子',
+                            '孫',
+                            '兄弟姉妹',
+                            '父母',
+                            '祖父母',
+                            '義父母',
+                            '義兄弟姉妹',
+                            '従兄弟姉妹',
+                            '甥・姪',
+                            'おじ・おば',
+                            '継父母',
+                            '継子',
+                            'その他の親族',
+                        ];
+                        $relationship_spouse = $dedata['relationship_spouse'] ?? null;
+                        $relationship_dependent = $dedata['relationship_dependent'] ?? null;
+                        $relation = '';
+                        if(!empty($relationship_spouse)) {
+                            $relation = $relationship_spouses[$relationship_spouse];
+                        } elseif(!empty($relationship_dependent)) {
+                            $relation = $relationship_dependents[$relationship_dependent];
+                        }
+
+                        $dependent_name = $dedata['last_name'] . ' ' . $dedata['first_name'];
+
+                        $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                            ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                            ->where('m_pickup_type.id', 15)
+                            ->first();
+
+                        $search = ['pickup_type', 'employee', 'relation', 'dependent'];
+                        $replace = [
+                            '扶養変更',
+                            $request->input('last_name') . ' ' . $request->input('first_name'),
+                            $relation,
+                            $dependent_name,
+                        ];
+
+                        $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                        $content = str_replace($search, $replace, $pickupMessage->content);
+
+                        if(!empty($dedata['date_of_expiry'])) {
+                            $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $employee_id,
+                                    'dependent_id' => $dependent_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['date_of_authorisation'])) {
+                            $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $employee_id,
+                                    'dependent_id' => $dependent_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['dependent_type'])) {
+                            $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
+
+                            $insertData[] = [
+                                'company_id' => $company_id->id,
+                                'pickup_type_id' => 15,
+                                'employee_id' => $employee_id,
+                                'dependent_id' => $dependent_id,
+                                'starting_date' => null,
+                                'due_date' => $due_date,
+                                'business_name' => $business_name,
+                                'content' => $content,
+                                'created_at' => now(),
+                            ];
+                        }
+                    }
                 }
             }
+
+            Pickup::insert($insertData);
 
             $departments = $request->input('departments', []);
             foreach ($departments as $dep) {
@@ -1451,13 +1816,20 @@ class AdminController extends Controller
         $managerial_position_list = Managerial_position::where('company_id', $employee->company_id)->where('delete_flg', 0)->pluck('name', 'id');
         $residential_status = Residential_status::pluck('content', 'id');
         $employee_insured_age_type = Values_employee_insured_age_type::pluck('name', 'id');
-        $dependent = $employee->dependent()->where('delete_flg', 0)->orderBy('history_flg', 'desc')->get();
+        $dependent = $employee->dependent()->where('delete_flg', 0)->orderByRaw('spouse_flag DESC')->orderBy('history_flg', 'desc')->get();
         $qualifications = Qualifications::select('id', 'qualification_name')->where('company_id', $company->id)->where('delete_flg', 0)->get();
         $employee_qualifications = Employee_qualifications::join('m_qualifications', 'm_employee_qualifications.qualifications_id', '=', 'm_qualifications.id')
             ->where('m_employee_qualifications.employee_id', $employee->id)
             ->where('m_qualifications.delete_flg', 0)
             ->where('m_employee_qualifications.delete_flg', 0)
             ->pluck('m_qualifications.id');
+
+        $work_category = Values_employee_work_category::pluck('name', 'id');
+        $enrollment_category = Values_employee_enrollment_category::pluck('name', 'id');
+        $employment_route = Values_employee_employment_route::pluck('name', 'id');
+        $recruitment_category_detail = Values_employee_recruitment_category_detail::pluck('name', 'id');
+        $employment_status = Values_employee_employment_status::pluck('name', 'id');
+        $pay_type = Values_employee_pay_type::pluck('name', 'id');
 
         return view('admin.employee_create', [
             'employee' => $employee,
@@ -1482,6 +1854,12 @@ class AdminController extends Controller
             'dependent' => $dependent,
             'qualifications' => $qualifications,
             'employee_qualifications' => $employee_qualifications,
+            'work_category' => $work_category,
+            'enrollment_category' => $enrollment_category,
+            'employment_route' => $employment_route,
+            'recruitment_category_detail' => $recruitment_category_detail,
+            'employment_status' => $employment_status,
+            'pay_type' => $pay_type,
         ]);
     }
 
@@ -1536,6 +1914,16 @@ class AdminController extends Controller
         };
         DB::beginTransaction();
         try {
+            $old_employee_data = Employee::where('id', $request->input('employee_id'))
+                ->select('hired_date', 'retirement_date', 'intended_retirement_date')
+                ->first();
+            $old_hired_date = $old_employee_data->hired_date;
+            $old_hired_date = $old_hired_date ? Carbon::parse($old_hired_date)->startOfDay() : null;
+            $old_retirement_date = $old_employee_data->retirement_date;
+            $old_retirement_date = $old_retirement_date ? Carbon::parse($old_retirement_date)->startOfDay() : null;
+            $old_intended_retirement_date = $old_employee_data->intended_retirement_date;
+            $old_intended_retirement_date = $old_intended_retirement_date ? Carbon::parse($old_intended_retirement_date)->startOfDay() : null;
+
             $data = $request->validationData($request);
             $address_city = $data['address_city'];
             $address_ward = $data['address_ward'];
@@ -1549,6 +1937,10 @@ class AdminController extends Controller
                     'employee_no' => $request->input('employee_no'),
                     'branch_id' => $request->input('branch_id'),
                     'managerial_position_id' => $request->input('managerial_position_id'),
+                    'grade' => $request->input('grade'),
+                    'work_category' => $request->input('work_category'),
+                    'enrollment_category' => $request->input('enrollment_category'),
+                    'transfer_date' => $this->formatDate($request->input('transfer_date')),
                     'division_name' => $request->input('division_name'),
                     'division_name_kana' => $request->input('division_name_kana'),
                     'last_name' => $request->input('last_name'),
@@ -1625,6 +2017,11 @@ class AdminController extends Controller
                     'retirement_date' => $this->formatDate($request->input('retirement_date')),
                     'intended_retirement_date' => $this->formatDate($request->input('intended_retirement_date')),
                     'resignation_letter_request_flg' => $request->input('resignation_letter_request_flg'),
+                    'private_introduction' => $request->input('private_introduction'),
+                    'recruitment_category' => $request->input('recruitment_category'),
+                    'recruitment_category_detail' => $request->input('recruitment_category_detail'),
+                    'employment_status' => $request->input('employment_status'),
+                    'pay_type' => $request->input('pay_type'),
                     'insurance_loss_reason' => $request->input('insurance_loss_reason'),
                     'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
                     //'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
@@ -1633,17 +2030,15 @@ class AdminController extends Controller
                     //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
                     'external_advisor_flg' => $request->input('external_advisor_flg'),
                     'occupation_type' => $request->input('occupation_type'),
-                    //'employment_route' => $request->input('employment_route'),
+                    'employment_route' => $request->input('employment_route'),
                     //'insured_reason' => $request->input('insured_reason'),
                     //'insured_reason_details' => $request->input('insured_reason_details'),
                     //'currency_id' => $request->input('currency_id'),
                     //'salary_payment_system' => $request->input('salary_payment_system'),
                     // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-                    // 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),// developにない
                     // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
                     // 'bank_account_no' => $request->input('bank_account_no'),// developにない
                     'employment_type' => $request->input('employment_type'),
-                    'employment_status' => $request->input('employment_status'),
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
@@ -1659,28 +2054,420 @@ class AdminController extends Controller
                     'overseas_special_not_exception_date' => $this->formatDate($request->input('overseas_special_not_exception_date')),
                     'dispatch_contract_completion' => $request->input('dispatch_contract_completion'),
                     'employment_not_insured_date' => $this->formatDate($request->input('employment_not_insured_date')),
+                    'bank_name' => $request->input('bank_name'),
+                    'bank_name_kana' => $request->input('bank_name_kana'),
+                    'head_office_or_branch_office' => $request->input('head_office_or_branch_office'),
+                    'financial_institution_code' => $request->input('financial_institution_code'),
+                    'store_code' => $request->input('store_code'),
+                    'japan_bank_flg' => $request->input('japan_bank_flg'),
                 ]);
 
             $employee = Employee::find($request->input('employee_id'));
-            $employee->update(['mynumber_card_no' => $request->input('mynumber_card_no')]);
+            $employee->update([
+                'mynumber_card_no' => $request->input('mynumber_card_no'),
+                'bank_account_no' => $request->input('bank_account_no'),
+                'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
+            ]);
 
             $deids = $request->input('de-id', []);
             $excepts = [];
+
+            $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
+                    ->where('m_branch.id', $request->input('branch_id'))
+                    ->select('company.id')
+                    ->first();
+
+            $pickup_setting = Pickup_setting::where('company_id', $company_id->id)
+                ->select('change_in_dependent_status')
+                ->first();
+            if (empty($companyPickupSetting)) {
+                $companyPickupSetting = new Pickup_setting([
+                    'company_id' => $company_id->id,
+                    'nursing_care_insurance_premium_deduction_begins' => 60,
+                    'application_for_attainment_wage_certificate' => 30,
+                    'end_of_nursing_care_insurance_premium_deduction' => 30,
+                    'loss_of_eligibility_for_employees_pension_insurance' => 30,
+                    'loss_of_health_insurance_status' => 30,
+                    'labor_insurance_annual_renewal_start' => '05-01',
+                    'year_end_tax_adjustment_start' => '12-01',
+                    'year_end_tax_adjustment_end' => '12-31',
+                    'retirement_age' => 65,
+                    'retirement' => 365,
+                    'officers_ids' => null,
+                    'officers_birthday' => 1,
+                    'settlement_date' => 30,
+                    'start_of_closure' => 30,
+                    'end_of_closure' => 30,
+                    'change_in_dependent_status' => 5,
+                    'subsidies_and_grants' => 30,
+                    'report_on_the_status_of_elderly_and_disabled_people' => '06-01',
+                    'bonus_payment_notice' => 30,
+                    'basis_of_calculation' => '06-15',
+                ]);
+            }
+
+            $insertData = [];
+
+            $hired_date = $this->formatDate($request->input('hired_date'));
+            if($hired_date) {
+                $hired_date = Carbon::parse($hired_date);
+                $due_date = $hired_date->copy()->addMonth()->day(10);
+
+                if(!$hired_date->isSameDay($old_hired_date) && $due_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 21)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'starting_date', 'due_date'];
+                    $replace = [
+                        '資格取得届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $hired_date->copy()->format('Y年n月j日'),
+                        $due_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 21)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 21,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => $hired_date,
+                        'due_date' => $due_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
+            $retirement_date = $this->formatDate($request->input('retirement_date')) ?? null;
+            $intended_retirement_date = $this->formatDate($request->input('intended_retirement_date')) ?? null;
+            if($retirement_date) {
+                $retirement_date = Carbon::parse($retirement_date);
+
+                if(!empty($retirement_date) && ($old_retirement_date === null || !$retirement_date->isSameDay($old_retirement_date)) && $retirement_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 24)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'due_date'];
+                    $replace = [
+                        '資格喪失届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $retirement_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 24,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => null,
+                        'due_date' => $retirement_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            } elseif($intended_retirement_date) {
+                $intended_retirement_date = Carbon::parse($intended_retirement_date);
+
+                if(!empty($intended_retirement_date) && !$intended_retirement_date->isSameDay($old_intended_retirement_date) && $intended_retirement_date->gte(Carbon::today())) {
+                    $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                        ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                        ->where('m_pickup_type.id', 24)
+                        ->first();
+
+                    $search = ['pickup_type', 'employee', 'due_date'];
+                    $replace = [
+                        '資格喪失届',
+                        $request->input('last_name') . ' ' . $request->input('first_name'),
+                        $intended_retirement_date->copy()->format('Y年n月j日'),
+                    ];
+
+                    $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                    $content = str_replace($search, $replace, $pickupMessage->content);
+
+                    $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
+                    if(!empty($pickups)) {
+                        foreach($pickups as $pickup) {
+                            $pickup->update([
+                                'pickup_situation_id' => 4,
+                                'anonymous_flg' => 1,
+                            ]); 
+                        }
+                    }
+
+                    $insertData[] = [
+                        'company_id' => $company_id->id,
+                        'pickup_type_id' => 24,
+                        'employee_id' => $request->input('employee_id'),
+                        'dependent_id' => null,
+                        'starting_date' => null,
+                        'due_date' => $intended_retirement_date,
+                        'business_name' => $business_name,
+                        'content' => $content,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
             foreach ($deids as $index => $deid) {
                 $dedata = $this->data_dependent($data, $index, $request->input('employee_id'));
                 if ($deid > 0) {
                     $dependent = Dependent::find($deid);
+                    $old_date_of_expiry = null;
+                    $old_date_of_authorisation = null;
+                    $old_dependent_type = null;
                     if ($dependent) {
+                        $old_date_of_expiry = $dependent->date_of_expiry;
+                        $old_date_of_expiry = $old_date_of_expiry ? Carbon::parse($old_date_of_expiry)->startOfDay() : null;
+                        $old_date_of_authorisation = $dependent->date_of_authorisation;
+                        $old_date_of_authorisation = $old_date_of_authorisation ? Carbon::parse($old_date_of_authorisation)->startOfDay() : null;
+                        $old_dependent_type = $dependent->dependent_type;
+
                         $dependent->fill($dedata);
                         $dependent->save();
                     }
                     $excepts[] = $deid;
+
+                    if(!empty($pickup_setting)) {
+                        $relationship_spouses = [
+                            '未選択',
+                            '夫',
+                            '妻',
+                            '夫(未届)',
+                            '妻(未届)',
+                        ];
+                        $relationship_dependents = [
+                            '未選択',
+                            '配偶者',
+                            '子供',
+                            '養子',
+                            '孫',
+                            '兄弟姉妹',
+                            '父母',
+                            '祖父母',
+                            '義父母',
+                            '義兄弟姉妹',
+                            '従兄弟姉妹',
+                            '甥・姪',
+                            'おじ・おば',
+                            '継父母',
+                            '継子',
+                            'その他の親族',
+                        ];
+                        $relationship_spouse = $dedata['relationship_spouse'] ?? null;
+                        $relationship_dependent = $dedata['relationship_dependent'] ?? null;
+                        $relation = '';
+                        if(!empty($relationship_spouse)) {
+                            $relation = $relationship_spouses[$relationship_spouse];
+                        } elseif(!empty($relationship_dependent)) {
+                            $relation = $relationship_dependents[$relationship_dependent];
+                        }
+
+                        $dependent_name = $dedata['last_name'] . ' ' . $dedata['first_name'];
+
+                        $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                            ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                            ->where('m_pickup_type.id', 15)
+                            ->first();
+
+                        $search = ['pickup_type', 'employee', 'relation', 'dependent'];
+                        $replace = [
+                            '扶養変更',
+                            $request->input('last_name') . ' ' . $request->input('first_name'),
+                            $relation,
+                            $dependent_name,
+                        ];
+
+                        $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                        $content = str_replace($search, $replace, $pickupMessage->content);
+
+                        if(!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type'])) {
+                            if($dedata['date_of_expiry'] && ($old_date_of_expiry === null || !Carbon::parse($dedata['date_of_expiry'])->isSameDay($old_date_of_expiry))) {
+                                $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
+                                if($due_date->gte(Carbon::today())) {
+                                    $insertData[] = [
+                                        'company_id' => $company_id->id,
+                                        'pickup_type_id' => 15,
+                                        'employee_id' => $request->input('employee_id'),
+                                        'dependent_id' => $deid,
+                                        'starting_date' => null,
+                                        'due_date' => $due_date,
+                                        'business_name' => $business_name,
+                                        'content' => $content,
+                                        'created_at' => now(),
+                                    ];
+                                }
+                            } elseif(($dedata['date_of_authorisation'] && $old_date_of_authorisation === null || !Carbon::parse($dedata['date_of_authorisation'])->isSameDay($old_date_of_authorisation))) {
+                                $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
+                                if($due_date->gte(Carbon::today())) {
+                                    $insertData[] = [
+                                        'company_id' => $company_id->id,
+                                        'pickup_type_id' => 15,
+                                        'employee_id' => $request->input('employee_id'),
+                                        'dependent_id' => $deid,
+                                        'starting_date' => null,
+                                        'due_date' => $due_date,
+                                        'business_name' => $business_name,
+                                        'content' => $content,
+                                        'created_at' => now(),
+                                    ];
+                                }
+                            } elseif($dedata['dependent_type'] && $old_dependent_type === null || $old_dependent_type !== (int)$dedata['dependent_type']) {
+                                $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $deid,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        }
+                    }
                 } else {
                     $created_id = Dependent::create($dedata)->id;
                     $excepts[] = $created_id;
+
+                    if(!empty($pickup_setting)) {
+                        $relationship_spouses = [
+                            '未選択',
+                            '夫',
+                            '妻',
+                            '夫(未届)',
+                            '妻(未届)',
+                        ];
+                        $relationship_dependents = [
+                            '未選択',
+                            '配偶者',
+                            '子供',
+                            '養子',
+                            '孫',
+                            '兄弟姉妹',
+                            '父母',
+                            '祖父母',
+                            '義父母',
+                            '義兄弟姉妹',
+                            '従兄弟姉妹',
+                            '甥・姪',
+                            'おじ・おば',
+                            '継父母',
+                            '継子',
+                            'その他の親族',
+                        ];
+                        $relationship_spouse = $dedata['relationship_spouse'] ?? null;
+                        $relationship_dependent = $dedata['relationship_dependent'] ?? null;
+                        $relation = '';
+                        if(!empty($relationship_spouse)) {
+                            $relation = $relationship_spouses[$relationship_spouse];
+                        } elseif(!empty($relationship_dependent)) {
+                            $relation = $relationship_dependents[$relationship_dependent];
+                        }
+
+                        $dependent_name = $dedata['last_name'] . ' ' . $dedata['first_name'];
+
+                        $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
+                            ->select('m_pickup_message.business_name', 'm_pickup_message.content')
+                            ->where('m_pickup_type.id', 15)
+                            ->first();
+
+                        $search = ['pickup_type', 'employee', 'relation', 'dependent'];
+                        $replace = [
+                            '扶養変更',
+                            $request->input('last_name') . ' ' . $request->input('first_name'),
+                            $relation,
+                            $dependent_name,
+                        ];
+
+                        $business_name = str_replace($search, $replace, $pickupMessage->business_name);
+                        $content = str_replace($search, $replace, $pickupMessage->content);
+
+                        if(!empty($dedata['date_of_expiry'])) {
+                            $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $created_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['date_of_authorisation'])) {
+                            $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
+
+                            if($due_date->gte(Carbon::today())) {
+                                $insertData[] = [
+                                    'company_id' => $company_id->id,
+                                    'pickup_type_id' => 15,
+                                    'employee_id' => $request->input('employee_id'),
+                                    'dependent_id' => $created_id,
+                                    'starting_date' => null,
+                                    'due_date' => $due_date,
+                                    'business_name' => $business_name,
+                                    'content' => $content,
+                                    'created_at' => now(),
+                                ];
+                            }
+                        } elseif(!empty($dedata['dependent_type'])) {
+                            $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
+
+                            $insertData[] = [
+                                'company_id' => $company_id->id,
+                                'pickup_type_id' => 15,
+                                'employee_id' => $request->input('employee_id'),
+                                'dependent_id' => $created_id,
+                                'starting_date' => null,
+                                'due_date' => $due_date,
+                                'business_name' => $business_name,
+                                'content' => $content,
+                                'created_at' => now(),
+                            ];
+                        }
+                    }
                 }
             }
-            Dependent::where('employee_id', $request->input('employee_id'))->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+            Pickup::insert($insertData);
+            Dependent::where('employee_id', $request->input('employee_id'))->where('history_flg',0)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $qualifications = $request->input('qualifications', []);
             Employee_qualifications::whereNotIn('qualifications_id', $qualifications)
@@ -1804,12 +2591,19 @@ class AdminController extends Controller
             'contact' => $requestData['de-contact'][$index],
             'mynumber_card_no' => $requestData['de-mynumber_card_no'][$index],
             'pension_no' => $requestData['de-pension_no'][$index],
-            'other_1' => $requestData['de-other_1'][$index],
-            'other_2' => $requestData['de-other_2'][$index],
-            'history_flg' => $requestData['de-history'][$index] ?? 0,
+            'history_flg' => $requestData['de-history_flg'][$index] ?? 0,
             'birthday' => $formatted_de_birthday,
             'date_of_authorisation' => $formatted_de_date_of_authorisation,
             'date_of_expiry' => $formatted_de_date_of_expiry ?? null,
+            'insurer_no' => $requestData['de-insurer_no'][$index],
+            'remarks' => $requestData['de-remarks'][$index],
+            'living_type' => $requestData['de-living_type'][$index] ?? 0,
+            'post_code' => $requestData['de-post_code'][$index],
+            'address_prefecture' => $requestData['de-address_prefecture'][$index],
+            'address_city' => $requestData['de-address_city'][$index],
+            'address_ward' => $requestData['de-address_ward'][$index],
+            'address_apartment' => $requestData['de-address_apartment'][$index],
+            'insurance_office_no' => $requestData['de-insurance_office_no'][$index],
         ];
     }
 

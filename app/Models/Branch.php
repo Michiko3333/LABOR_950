@@ -122,4 +122,9 @@ class Branch extends Model
     {
         return $this->hasMany(Bounty::class);
     }
+
+    public function branch_allowance()
+    {
+        return $this->hasMany(Branch_allowance::class);
+    }
 }

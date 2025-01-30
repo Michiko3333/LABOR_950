@@ -33,7 +33,7 @@ class SalaryForm extends Component
         $this->salaryHistory = $salaryHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
-        $departments = Department::where('company_id', $companyId)->get();
+        $departments = Department::where('company_id',$companyId)->where('delete_flg', 0)->get();
         $this->departments = $departments;
         foreach ($this->salaryHistory as $historyItem) {
             $departmentIds = explode(',', $historyItem->department_id);

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Permission;
 use App\Models\Branch;
 use App\Models\CurrentUser;
 use App\Models\ShiftCalendar;
@@ -45,10 +46,17 @@ class ShiftForm extends Component
 
     public $is_saving = false;
 
+    public $agreed_hours_day_h = 0;
+    public $agreed_hours_day_m = 0;
     public $work_time = 0;
+
+    public $editPermission = false;
 
     public function mount($editable = true)
     {
+        $userPermission = new Permission();
+        $this->editPermission = $userPermission->isBasicDepartment();
+
         $current_user = new CurrentUser();
         $current_company = $current_user->currentCompany();
 
@@ -58,9 +66,9 @@ class ShiftForm extends Component
 
         $current_main_branch = $current_company->branch()->where('branch_type', 1)->where('delete_flg', 0)->first();
         if (!empty($current_main_branch)) {
-            $h = $current_main_branch->agreed_hours_day_h;
-            $m = $current_main_branch->agreed_hours_day_m;
-            $this->work_time = $h + floor($m / 60 * 100) / 100;
+            $this->agreed_hours_day_h = $current_main_branch->agreed_hours_day_h;
+            $this->agreed_hours_day_m = $current_main_branch->agreed_hours_day_m;
+            $this->work_time = $this->agreed_hours_day_h + floor($this->agreed_hours_day_m / 60 * 100) / 100;
         }
 
         $shiftCalendar = ShiftCalendar::where('company_id', $current_company->id)->where('delete_flg', 0)->orderBy('is_default', 'desc');
@@ -176,13 +184,10 @@ class ShiftForm extends Component
     {
         if ($this->is_saving) return;
 
-        $r = $this->validate([
-            'title_value' => 'required|string|max:100',
-            'start_year' => 'numeric|between:1000,9999|max_digits:4',
-            'start_month' => 'numeric|between:1,12|max_digits:2',
-            'start_date' => 'numeric|between:1,31|max_digits:2',
-            'start_weekday' => 'numeric|between:1,7',
-        ]);
+        if (empty($this->title_value) || empty($this->start_year) || empty($this->start_month) || empty($this->start_date) || empty($this->start_weekday)) {
+            $this->dispatch('onSubmitError');
+            return false;
+        }
 
         $this->is_saving = true;
 
@@ -343,6 +348,8 @@ class ShiftForm extends Component
             'render_months' => $this->render_months,
             'values' => $this->values,
             'company_name' => $currentCompany->name,
+            'agreed_hours_day_h' => $this->agreed_hours_day_h,
+            'agreed_hours_day_m' => $this->agreed_hours_day_m,
             'work_time' => $this->work_time
         ];
         return redirect('/calendar/shift/download')->with('shift-pdf-data', $data);

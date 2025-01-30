@@ -102,6 +102,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="query_parameter" id="queryParameter">
                 </div>
 
                 <div class="prevew-btn">
@@ -229,6 +231,7 @@
                 } else {
                     $('#N34_P1_1').prop("checked", true);
                 }
+                
                 $('#N35_P1').val(employee.mynumber_card_no ?? '');
                 if (employee.post_code != null) {
                     $('#N42_P1').val(employee.post_code.substring(0, 3));
@@ -260,9 +263,9 @@
                             ''));
                         $('#N61_P1').val((spouse.last_name ? spouse.last_name + '　' : '') + (spouse.first_name ?? ''));
                     }
-                    if (spouse.living_type === 1) {
+                    if (spouse.living_type == 1) {
                         $('#N62_P1').val('同居');
-                    } else if (spouse.living_type === 2) {
+                    } else if (spouse.living_type == 0) {
                         $('#N62_P1').val('別居');
                     }
                     if (spouse.post_code != null) {
@@ -315,7 +318,7 @@
                     $('#N90_P1').val(spouse.annual_income ?? '');
                     if (spouse.special_requirements_applicable_flg === 0) {
                         $('#N91_P1').val('2');
-                    } else {
+                    } else if (spouse.special_requirements_applicable_flg === 1){
                         $('#N91_P1').val('1');
                     }
                     if (spouse.special_requirements_applicable_reason_type === 1) {
@@ -332,7 +335,7 @@
                     $('#N98_P1').val(spouse.special_requirements_applicable_reason ?? '');
                     if (spouse.special_requirements_non_applicable_reason_type === 1) {
                         $('#N104_P1').val('1');
-                    } else {
+                    } else if(spouse.special_requirements_non_applicable_reason_type === 2) {
                         $('#N104_P1').val('2');
                     }
                     $('#N109_P1').val(spouse.special_requirements_non_applicable_reason ?? '');

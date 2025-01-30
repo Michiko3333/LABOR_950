@@ -178,6 +178,7 @@ class LedgerSeeder extends Seeder
                 'delete_flg' => '0',
             ],
             [
+
                 'id' => '19',
                 'procedure_id' => '4950013520873000',
                 'procedure_name' => '健康保険・厚生年金保険賞与不支給報告書',
@@ -185,7 +186,61 @@ class LedgerSeeder extends Seeder
                 'abbreviation' => '健・厚：賞与不支給報告書',
                 'procedure_type' => NULL,
                 'delete_flg' => '0',
-            ]
+            ],
+            [
+                'id' => '20',
+                'procedure_id' => '4950013521030000',
+                'procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届',
+                'formal_procedure_name' => '健康保険厚生年金保険産前産後休業取得者申出書／変更（終了）届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）／電子申請',
+                'abbreviation' => '健・厚：産休取得者申出書',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '21',
+                'procedure_id' => '4950013520602000', //495013520602030244
+                'procedure_name' => '健康保険厚生年金保険育児休業等終了時報酬月額変更届/厚生年金保険７０歳以上被用者育児休業等終了時報酬月額相当額変更届',
+                'formal_procedure_name' => '健康保険厚生年金保険育児休業等終了時報酬月額変更・厚生年金保険７０歳以上被用者育児休業等終了時報酬月額相当額変更届／電子申請',
+                'abbreviation' => '健・厚：育児休業給付・月額変更届',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '22',
+                'procedure_id' => '4950013521029000',
+                'procedure_name' => '健康保険厚生年金保険育児休業等取得者申出書(新規・延長）／終了届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）',
+                'formal_procedure_name' => '健康保険厚生年金保険育児休業等取得者申出書(新規・延長）／終了届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き）／電子申請',
+                'abbreviation' => '健・厚：育児休業申出書',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '23',
+                'procedure_id' => '4950013520608000',
+                'procedure_name' => '健康保険厚生年金保険産前産後休業終了時報酬月額変更届/厚生年金保険７０歳以上被用者産前産後休業終了時報酬月額相当額変更届',
+                'formal_procedure_name' => '健康保険厚生年金保険産前産後休業終了時報酬月額変更・厚生年金保険７０歳以上被用 者産前産後休業終了時報酬月額相当額変更届／電子申請 ',
+                'abbreviation' => '産前産後休業・７０歳以上被用：月額相当額変更届',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '24',
+                'procedure_id' => '4950013521035000',
+                'procedure_name' => '国民年金第3号被保険者関係届',
+                'formal_procedure_name' => '国民年金第３号被保険者関係届（２０２４年１２月以降手続き）／電子申請',
+                'abbreviation' => '国：第３号被保険者関係届',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
+            [
+                'id' => '25',
+                'procedure_id' => '4950013521033000',
+                'procedure_name' => '厚生年金保険養育期間標準報酬月額特例申出書/終了届',
+                'formal_procedure_name' => '厚生年金保険養育期間標準報酬月額特例申出書/終了届',
+                'abbreviation' => '厚：特例申出書',
+                'procedure_type' => NULL,
+                'delete_flg' => '0',
+            ],
         ]);
     }
 }

@@ -17,6 +17,8 @@ use App\Models\Values_branch_place_type;
 use App\Models\Values_branch_start_days_of_week;
 use App\Models\Values_branch_work_style_type;
 use App\Models\Branch;
+use App\Models\Branch_allowance;
+use App\Models\Branch_allowance_history;
 use App\Models\Salary;
 use App\Models\Salary_history;
 use Carbon\Carbon;
@@ -86,12 +88,18 @@ class BranchController extends Controller
             $saids = $request->input('sa-id');
             $boids = $request->input('bo-id');
             $bouids = $request->input('bou-id');
+            $alids = $request->input('al-id');
             $excepts = [];
             foreach ($brids as $index => $brid) {
                 $brdata = $this->data_branch($data, $index);
                 $currentSaids = $saids[$index] ?? [];
                 $currentboids = $boids[$index] ?? [];
                 $currentbouids = $bouids[$index] ?? [];
+                $currentalids = $alids[$index] ?? [];
+                $exceptSalary = [];
+                $exceptBonus = [];
+                $exceptBounty = [];
+                $exceptAllowance = [];
                 if ($brid > 0) {
                     Branch::where('id', $brid)->update($brdata);
                     $excepts[] = $brid;
@@ -126,13 +134,15 @@ class BranchController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptSalary[] = $said;
                                 Salary::where('salary_id', $said)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingSalaryHistory = Salary_history::where('branch_id', $brid)->where('salary_id', $said)->orderBy('created_at', 'desc')->first();
                                 $salaryHistoryData = [
-                                    'salary_id' => $newSalaryId,
+                                    'salary_id' => $said,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
@@ -140,7 +150,11 @@ class BranchController extends Controller
                                     'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Salary_history::create($salaryHistoryData);
+                                $existingData = array_map('strval', $existingSalaryHistory->only(array_keys($salaryHistoryData)));
+                                $newData = array_map('strval', $salaryHistoryData);
+                                if ($existingData != $newData){
+                                    Salary_history::create($salaryHistoryData);
+                                }
                             };
                         } else {
                             $departments = $data['sa-departments'][$index][$saIndex] ?? null;
@@ -157,6 +171,7 @@ class BranchController extends Controller
                                     ];
                                     Salary::create($salaryData);
                                 }
+                                $exceptSalary[] = $newSalaryId;
                                 $departmentsAll = implode(',', $departments);
                                 $salaryHistoryData = [
                                     'salary_id' => $newSalaryId,
@@ -172,6 +187,8 @@ class BranchController extends Controller
                         }
                         $newSalaryId++;
                     }
+                    Salary::where('branch_id', $brid)->whereNotIn('salary_id', $exceptSalary)->update(['delete_flg' => 1]);
+                    Salary_history::where('branch_id', $brid)->whereNotIn('salary_id', $exceptSalary)->update(['delete_flg' => 1]);
                     foreach ($currentboids as $boIndex => $boid) {
                         $applied_date = $data['bo-applied_date'][$index][$boIndex];
                         if (!is_null($applied_date) && strtotime($applied_date) === false) {
@@ -201,19 +218,25 @@ class BranchController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptBonus[] = $boid;
                                 Bonus::where('bonus_id', $boid)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingBonusHistory = Bonus_history::where('branch_id', $brid)->where('bonus_id', $boid)->orderBy('created_at', 'desc')->first();
                                 $bonusHistoryData = [
-                                    'bonus_id' => $newBonusId,
+                                    'bonus_id' => $boid,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'bonus_payment_month' => $bonus_payment_month_processed,
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Bonus_history::create($bonusHistoryData);
+                                $existingData = array_map('strval', $existingBonusHistory->only(array_keys($bonusHistoryData)));
+                                $newData = array_map('strval', $bonusHistoryData);
+                                if ($existingData != $newData){
+                                    Bonus_history::create($bonusHistoryData);
+                                }
                             };
                         } else {
                             if (!is_null($departments)) {
@@ -227,6 +250,7 @@ class BranchController extends Controller
                                     ];
                                     Bonus::create($bonusData);
                                 }
+                                $exceptBonus[] = $newBonusId;
                                 $departmentsAll = implode(',', $departments);
                                 $bonusHistoryData = [
                                     'bonus_id' => $newBonusId,
@@ -240,6 +264,8 @@ class BranchController extends Controller
                         }
                         $newBonusId++;
                     }
+                    Bonus::where('branch_id', $brid)->whereNotIn('bonus_id', $exceptBonus)->update(['delete_flg' => 1]);
+                    Bonus_history::where('branch_id', $brid)->whereNotIn('bonus_id', $exceptBonus)->update(['delete_flg' => 1]);
                     foreach ($currentbouids as $bouIndex => $bouid) {
                         $applied_date = $data['bou-applied_date'][$index][$bouIndex];
                         if (!is_null($applied_date) && strtotime($applied_date) === false) {
@@ -269,19 +295,25 @@ class BranchController extends Controller
                                         ],
                                     );
                                 }
+                                $exceptBounty[] = $bouid;
                                 Bounty::where('bounty_id', $bouid)
                                     ->where('branch_id', $brid)
                                     ->whereNotIn('department_id', $departments)
                                     ->update(['delete_flg' => 1]);
                                 $departmentsAll = implode(',', $departments);
+                                $existingBountyHistory = Bounty_history::where('branch_id', $brid)->where('bounty_id', $bouid)->orderBy('created_at', 'desc')->first();
                                 $bountyHistoryData = [
-                                    'bounty_id' => $newBountyId,
+                                    'bounty_id' => $bouid,
                                     'department_id' => $departmentsAll,
                                     'branch_id' => $brid,
                                     'bonus_payment_month' => $bonus_payment_month_processed,
                                     'applied_date' => $formatted_applied_date,
                                 ];
-                                Bounty_history::create($bountyHistoryData);
+                                $existingData = array_map('strval', $existingBountyHistory->only(array_keys($bountyHistoryData)));
+                                $newData = array_map('strval', $bountyHistoryData);
+                                if ($existingData != $newData){
+                                    Bounty_history::create($bountyHistoryData);
+                                }
                             };
                         } else {
                             if (!is_null($departments)) {
@@ -295,6 +327,7 @@ class BranchController extends Controller
                                     ];
                                     Bounty::create($bountyData);
                                 }
+                                $exceptBounty[] = $newBountyId;
                                 $departmentsAll = implode(',', $departments);
                                 $bountyHistoryData = [
                                     'bounty_id' => $newBountyId,
@@ -308,6 +341,58 @@ class BranchController extends Controller
                         }
                         $newBountyId++;
                     }
+                    Bounty::where('branch_id', $brid)->whereNotIn('bounty_id', $exceptBounty)->update(['delete_flg' => 1]);
+                    Bounty_history::where('branch_id', $brid)->whereNotIn('bounty_id', $exceptBounty)->update(['delete_flg' => 1]);
+                    foreach ($currentalids as $alIndex => $alid) {
+                        $applied_date = $data['al-applied_date'][$index][$alIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $allowanceHistoryData = [
+                            'branch_id' => $brid,
+                            'allowance' => $data['al-allowance'][$index][$alIndex],
+                            'amount' => $data['al-amount'][$index][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$index][$alIndex],
+                            'target' => $data['al-target'][$index][$alIndex],
+                            'remarks' => $data['al-remarks'][$index][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                        ];
+                        if ($alid > 0) {
+                            $exceptAllowance[] = $alid;
+                            Branch_allowance::where('id', $alid)->update([
+                                'allowance' => $data['al-allowance'][$index][$alIndex],
+                                'amount' => $data['al-amount'][$index][$alIndex],
+                                'pay_month' => $data['al-pay_month'][$index][$alIndex],
+                                'target' => $data['al-target'][$index][$alIndex],
+                                'remarks' => $data['al-remarks'][$index][$alIndex],
+                                'applied_date' => $formatted_applied_date,
+                            ]);
+                            $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
+                            $existingData = array_map('strval', $existingAllowanceHistory->only(array_keys($allowanceHistoryData)));
+                            $newData = array_map('strval', $allowanceHistoryData);
+                            if ($existingData != $newData){
+                                $allowanceHistoryData['allowance_id'] = $alid;
+                                Branch_allowance_history::create($allowanceHistoryData);
+                            }
+                        }else{
+                            $created_id = Branch_allowance::create([
+                                'allowance' => $data['al-allowance'][$index][$alIndex],
+                                'amount' => $data['al-amount'][$index][$alIndex],
+                                'pay_month' => $data['al-pay_month'][$index][$alIndex],
+                                'target' => $data['al-target'][$index][$alIndex],
+                                'remarks' => $data['al-remarks'][$index][$alIndex],
+                                'applied_date' => $formatted_applied_date,
+                                'branch_id' => $brid,
+                            ])->id;
+                            $exceptAllowance[] = $created_id;
+                            $allowanceHistoryData['allowance_id'] = $created_id;
+                            Branch_allowance_history::create($allowanceHistoryData);
+                        }
+                    }
+                    Branch_allowance::where('branch_id', $brid)->whereNotIn('id', $exceptAllowance)->update(['delete_flg' => 1]);
+                    Branch_allowance_history::where('branch_id', $brid)->whereNotIn('allowance_id', $exceptAllowance)->update(['delete_flg' => 1]);
                 } else {
                     $created_id = Branch::create($brdata)->id;
                     $excepts[] = $created_id;
@@ -422,6 +507,34 @@ class BranchController extends Controller
                             Salary_history::create($salaryHistoryData);
                         };
                         $SalaryId++;
+                    }
+                    foreach ($currentalids as $alIndex => $alid) {
+                        $applied_date = $data['al-applied_date'][$index][$alIndex];
+                        if (!is_null($applied_date) && strtotime($applied_date) === false) {
+                            $formatted_applied_date = Carbon::createFromFormat('Y年 m月', $applied_date)->format('Y-m-01');
+                        } else {
+                            $formatted_applied_date = $applied_date;
+                        }
+                        $created_id = Branch_allowance::create([
+                            'allowance' => $data['al-allowance'][$index][$alIndex],
+                            'amount' => $data['al-amount'][$index][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$index][$alIndex],
+                            'target' => $data['al-target'][$index][$alIndex],
+                            'remarks' => $data['al-remarks'][$index][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                            'branch_id' => $brid,
+                        ])->id;
+                        $allowanceHistoryData = [
+                            'allowance_id' => $created_id,
+                            'branch_id' => $brid,
+                            'allowance' => $data['al-allowance'][$index][$alIndex],
+                            'amount' => $data['al-amount'][$index][$alIndex],
+                            'pay_month' => $data['al-pay_month'][$index][$alIndex],
+                            'target' => $data['al-target'][$index][$alIndex],
+                            'remarks' => $data['al-remarks'][$index][$alIndex],
+                            'applied_date' => $formatted_applied_date,
+                        ];
+                        Branch_allowance_history::create($allowanceHistoryData);
                     }
                 }
             }

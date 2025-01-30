@@ -65,6 +65,24 @@ class AdminEmployeeCreateRequest extends BaseRequest
             $data['emergency_address_apartment2'] = mb_convert_kana($data['emergency_address_apartment2'], 'RANKS');
             $data['emergency_address_apartment2'] = str_replace(['-', '‐'], '－', $data['emergency_address_apartment2']);
         }
+        if (isset($data['de-address_city'])) {
+            foreach ($data['de-address_city'] as &$city) {
+                $city = mb_convert_kana($city, 'RANKS');
+                $city = str_replace(['-', '‐'], '－', $city);
+            }
+        }
+        if (isset($data['de-address_ward'])) {
+            foreach ($data['de-address_ward'] as &$ward) {
+                $ward = mb_convert_kana($ward, 'RANKS');
+                $ward = str_replace(['-', '‐'], '－', $ward);
+            }
+        }
+        if (isset($data['de-address_apartment'])) {
+            foreach ($data['de-address_apartment'] as &$apartment) {
+                $apartment = mb_convert_kana($apartment, 'RANKS');
+                $apartment = str_replace(['-', '‐'], '－', $apartment);
+            }
+        }
         if (isset($data['birthday_date'])) {
             $data['birthday_date'] = Carbon::createFromFormat('Y年n月j日', $data['birthday_date'])->format('Y-m-d');
         }
@@ -111,6 +129,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'company_name' => 'required',
             'branch_id' => 'integer',
             'managerial_position_id' => 'nullable|integer',
+            'grade' => 'nullable|string',
+            'work_category' => 'required|int|between:1,14',
+            'enrollment_category' => 'required|int|between:1,6',
+            'transfer_date' => 'nullable',
             'division_name' => 'nullable|string|max:255',
             'division_name_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
             'last_name' => 'string|max:255',
@@ -184,22 +206,26 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'contract_period_flg' => 'nullable|integer',
             'contract_renewal_flg' => 'nullable|integer',
             'resignation_letter_request_flg' => 'nullable|integer',
+            'employment_route' => 'required|int|in:1,2,3,4',
+            'private_introduction' => 'nullable|string|required_if:employment_route,3',
+            'recruitment_category' => 'required|int',
+            'recruitment_category_detail' => 'required|int|between:1,10',
+            'pay_type' => 'required|int|between:1,7',
+            'employment_status' => 'required|int|between:1,7',
             'insurance_loss_reason' => 'nullable|integer',
             'over_retired_insurance_loss_reason' => 'nullable|integer',
             //'over_70_non_applicable_flg' => 'nullable|integer',
             'external_advisor_flg' => 'nullable|integer',
             'occupation_type' => 'nullable|string|max:10',
-            //'employment_route' => 'nullable|integer',
             //'insured_reason' => 'nullable|integer',
             //'insured_reason_details' => 'nullable|string|max:255',
             //'currency_id' => 'nullable|integer',
             //'salary_payment_system' => 'nullable|integer',
             //'caregiver_leave_benefit_receive_bank_id' => 'nullable|integer',
-            //'japan_post_bank_code_no' => 'nullable|string|max:5|regex:/\A[0-9]+\z/u',
+            'japan_post_bank_code_no' => 'nullable|string|max:8|regex:/\A[0-9]+\z/u',
             //'japan_post_bank_account_no' => 'nullable|string|max:7|regex:/\A[0-9]+\z/u',
             //'bank_account_no' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
             'employment_type' => 'nullable|integer',
-            'employment_status' => 'nullable|integer',
             'employer_type' => 'integer',
             'user_email' => 'required|email:rfc|max:255',
             'user_pass' => 'required|min:6|max:20|regex:/^[!-~]+$/',
@@ -223,6 +249,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-spouse_flag.*" => 'nullable|integer|in:1',
             "de-contact" => 'array',
             "de-contact.*" => ['nullable', 'string', new NumberOnly(13)],
+            "de-post_code" => 'array',
+            "de-post_code.*" => ['required', 'string', new NumberOnly(7)],
+            "de-living_type" => 'array',
+            "de-living_type.*" => 'nullable|int|in:0,1',
             "de-occupation" => 'array',
             "de-occupation.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             "de-annual_income" => 'array',
@@ -231,18 +261,44 @@ class AdminEmployeeCreateRequest extends BaseRequest
             "de-mynumber_card_no.*" => ['nullable', 'string', new NumberOnly(12)],
             "de-pension_no" => 'array',
             "de-pension_no.*" => ['nullable', 'string', new NumberOnly(10)],
+            "de-insurer_no" => 'array',
+            "de-insurer_no.*" => ['required', 'string', new NumberOnly(8)],
             "de-dependent_type" => 'array',
             "de-dependent_type.*" => 'nullable|integer|in:1,2,3,4',
-            "de-other_1" => 'array',
-            "de-other_1.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
-            "de-other_2" => 'array',
-            "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            "de-remarks" => 'array',
+            "de-remarks.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            // "de-other_2" => 'array',
+            // "de-other_2.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
             'insured_status' => 'nullable|string|max:21',
             'health_insurance_association_number' => ['nullable', 'string', new NumberOnly(8)],
             'acquisition_of_distinction' => 'nullable|integer',
             'welfare_pension' => 'nullable|integer',
             'overseas_special_exception' => 'nullable|integer',
             'dispatch_contract_completion' => 'nullable|integer',
+            'bank_name' => 'nullable|string',
+            'bank_name_kana' => ['nullable', 'string', 'max:255', new katakanaOnly(false)],
+            'head_office_or_branch_office' => 'nullable|int',
+            'financial_institution_code' => 'nullable|string|regex:/\A[0-9]{4}+\z/u',
+            'store_code' => 'nullable|string|regex:/\A[0-9]{3}+\z/u',
+            'japan_bank_flg' => 'nullable|int',
+            'bank_account_no' => 'nullable|string|max:8|regex:/\A[0-9]+\z/u',
+            'japan_post_bank_code_no' => 'nullable|string|max:8|regex:/\A[0-9]+\z/u',
+            "de-insurer_no" => 'array',
+            "de-insurer_no.*" => ['nullable', 'string', new NumberOnly(8)],
+            "de-insurance_office_no" => 'array',
+            "de-insurance_office_no.*" => ['nullable', 'string', new NumberOnly(11)],
+            "de-remarks" => 'array',
+            "de-remarks.*" => ['nullable', 'string', 'max:255', new noSymbol(false)],
+            "de-post_code" => 'array',
+            'de-post_code.*' => 'nullable|string|max:20|regex:/\A[0-9]+\z/u',
+            "de-address_prefecture" => 'array',
+            'de-address_prefecture.*' => 'nullable|integer',
+            "de-address_city" => 'array',
+            'de-address_city.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "de-address_ward" => 'array',
+            'de-address_ward.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
+            "de-address_apartment" => 'array',
+            'de-address_apartment.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
         ];
     }
 
@@ -255,6 +311,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'fax2.required_with' => 'FAX番号_2を入力してください。',
             'fax3.required_with' => 'FAX番号_3を入力してください。',
             'icon_file.mimetypes' => 'アイコン画像はjpeg,jpg,pngのいずれかである必要があります。',
+            'private_introduction.required_if' => '会社名（就職経路）は就職経路が「民間紹介」を選択されているとき必須です。',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {
@@ -286,6 +343,10 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'employee_no' => '社員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',
+            'grade' => '等級',
+            'work_category' => '勤務区分',
+            'enrollment_category' => '在籍区分',
+            'transfer_date' => '転勤・出向　年月日',
             'last_name' => '氏',
             'last_name_kana' => '氏（カナ）',
             'last_name_alphabet' => '氏（アルファベット）',
@@ -347,17 +408,23 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'mynumber_card_no' => 'マイナンバーカード番号',
             'social_insurance_no' => '社会保険番号',
             'pension_no' => '基礎年金番号',
-            'insurer_no' => '被保険者番号',
+            'insurer_no' => '被保険者番号（健保）',
             'insured_age_type' => '取得時被保険者種類',
             'insurer_reference_no' => '被保険者整理番号',
-            'employment_insured_no' => '雇用保険番号',
+            'employment_insured_no' => '被保険者番号（雇用）',
             'employment_insurance_applied_date' => '雇用保険届出日',
             'employment_insured_date' => '雇用保険取得日',
             'employee_type' => '社員区分',
-            'employee_status' => '社員ステータス',
+            'employee_status' => '雇用区分',
             'contract_period_flg' => '雇用契約期間の有無',
             'contract_renewal_flg' => '契約更新条項の有無',
             'resignation_letter_request_flg' => '離職票の交付希望の有無',
+            'employment_route' => '就職経路',
+            'private_introduction' => '会社名（就職経路）',
+            'recruitment_category' => '採用区分',
+            'recruitment_category_detail' => '採用区分選択',
+            'employment_status' => '雇用形態',
+            'pay_type' => '給与区分',
             'contract_start_date' => '雇用契約開始日',
             'contract_end_date' => '雇用契約終了日',
             'hired_date' => '入社日',
@@ -378,6 +445,14 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'welfare_pension' => '厚生年金基金',
             'overseas_special_exception' => '海外特例',
             'dispatch_contract_completion' => '派遣請負就労区分',
+            'bank_name' => '名称',
+            'bank_name_kana' => '名称（カナ）',
+            'head_office_or_branch_office' => '本店・支店',
+            'financial_institution_code' => '金融機関コード',
+            'store_code' => '店舗コード',
+            'japan_bank_flg' => 'ゆうちょ銀行',
+            'bank_account_no' => '口座番号',
+            'japan_post_bank_code_no' => '記号番号',
         ];
 
         foreach ($this->input('de-last_name', []) as $index => $value) {
@@ -404,11 +479,14 @@ class AdminEmployeeCreateRequest extends BaseRequest
         foreach ($this->input('de-relationship_dependent', []) as $index => $value) {
             $Attributes["de-relationship_dependent.{$index}"] = ($index + 1) . "扶養者_続柄（扶養者）";
         }
-        foreach ($this->input('de-spouse_flag', []) as $index => $value) {
-            $Attributes["de-spouse_flag.{$index}"] = ($index + 1) . "扶養者_配偶者フラグ";
-        }
         foreach ($this->input('de-contact', []) as $index => $value) {
             $Attributes["de-contact.{$index}"] = ($index + 1) . "扶養者_連絡先";
+        }
+        foreach ($this->input('de-post_code', []) as $index => $value) {
+            $Attributes["de-post_code.{$index}"] = ($index + 1) . "扶養者_居住（郵便番号・ハイフンなし）";
+        }
+        foreach ($this->input('de-living_type', []) as $index => $value) {
+            $Attributes["de-living_type.{$index}"] = ($index + 1) . "扶養者_居住（住所）同居";
         }
         foreach ($this->input('de-occupation', []) as $index => $value) {
             $Attributes["de-occupation.{$index}"] = ($index + 1) . "扶養者_職業";
@@ -422,14 +500,35 @@ class AdminEmployeeCreateRequest extends BaseRequest
         foreach ($this->input('de-pension_no', []) as $index => $value) {
             $Attributes["de-pension_no.{$index}"] = ($index + 1) . "扶養者_基礎年金番号";
         }
+        foreach ($this->input('de-insurer_no', []) as $index => $value) {
+            $Attributes["de-insurer_no.{$index}"] = ($index + 1) . "扶養者_被保険者番号（健保）";
+        }
         foreach ($this->input('de-dependent_type', []) as $index => $value) {
             $Attributes["de-dependent_type.{$index}"] = ($index + 1) . "扶養者_扶養区分";
         }
-        foreach ($this->input('de-other_1', []) as $index => $value) {
-            $Attributes["de-other_1.{$index}"] = ($index + 1) . "扶養者_その他①";
+        foreach ($this->input('de-insurer_no', []) as $index => $value) {
+            $Attributes["de-insurer_no.{$index}"] = ($index + 1) . "扶養者_被保険者番号（健保）";
         }
-        foreach ($this->input('de-other_2', []) as $index => $value) {
-            $Attributes["de-other_2.{$index}"] = ($index + 1) . "扶養者_その他②";
+        foreach ($this->input('de-insurance_office_no', []) as $index => $value) {
+            $Attributes["de-insurance_office_no.{$index}"] = ($index + 1) . "扶養者_被保険者番号（雇用）";
+        }
+        foreach ($this->input('de-remarks', []) as $index => $value) {
+            $Attributes["de-remarks.{$index}"] = ($index + 1) . "扶養者_備考";
+        }
+        foreach ($this->input('de-post_code', []) as $index => $value) {
+            $Attributes["de-post_code.{$index}"] = ($index + 1) . "扶養者_郵便番号（ハイフン無し）";
+        }
+        foreach ($this->input('de-address_prefecture', []) as $index => $value) {
+            $Attributes["de-address_prefecture.{$index}"] = ($index + 1) . "扶養者_住所（都道府県）";
+        }
+        foreach ($this->input('de-address_city', []) as $index => $value) {
+            $Attributes["de-address_city.{$index}"] = ($index + 1) . "扶養者_住所（市区町村）";
+        }
+        foreach ($this->input('de-address_ward', []) as $index => $value) {
+            $Attributes["de-address_ward.{$index}"] = ($index + 1) . "扶養者_住所（丁目・番地）";
+        }
+        foreach ($this->input('de-address_apartment', []) as $index => $value) {
+            $Attributes["de-address_apartment.{$index}"] = ($index + 1) . "扶養者_住所（アパート・マンション名等）";
         }
 
         return $Attributes;

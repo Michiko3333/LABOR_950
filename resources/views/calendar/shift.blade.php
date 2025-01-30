@@ -17,6 +17,10 @@
             .shift-calendar-inputs label {
                 font-size: 1em !important;
             }
+
+            .ui.error.message.hidden {
+                display: none;
+            }
         </style>
     @endslot
 
@@ -26,7 +30,7 @@
             <i class="right chevron icon divider"></i>
             <div class="active section">年間勤務予定表</div>
         </div>
-        @livewire('shift-form', ['editable' => $userPermission->isWritableFor(12)])
+        @livewire('shift-form', ['editable' => $userPermission->isWritableFor(12) && $userPermission->isBasicDepartment()])
     </section>
     <div id="HolidayModal" class="ui modal mini holiday-modal">
         <i class="close icon"></i>
@@ -57,6 +61,12 @@
             });
         </script>
         <script type="module">
+            Livewire.on('onSubmitError', () => {
+                setTimeout(() => {
+                    $('.ui.error.message').removeClass('hidden');
+                }, 0);
+            });
+
             Livewire.on('onSavedShiftCalendar', () => {
                 $.toast({
                     position: 'bottom right',

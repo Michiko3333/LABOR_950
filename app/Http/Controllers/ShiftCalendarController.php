@@ -11,7 +11,7 @@ class ShiftCalendarController extends Controller
     public function index()
     {
         $userPermission = new Permission();
-        if (!$userPermission->isReadableFor(12) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() == 1) {
+        if (!$userPermission->isReadableFor(12)) {
             return redirect()->route('home.index');
         }
         return view('calendar.shift', ['userPermission' => $userPermission]);

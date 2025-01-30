@@ -20,12 +20,53 @@
             min-width: 160px;
             height: 170px;
         }
+
+        .filter-column-wrapper div {
+            display: block;
+            width: 250px;
+            height: 320px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            list-style-type: none;
+            padding: 0.2em;
+            border: 1px solid rgba(34, 36, 38, .15);
+        }
+
+        .filter-column-wrapper div button {
+            display: inline-block;
+            width: 100%;
+            border: none;
+            padding-left: 1em;
+            user-select: none;
+            background-color: transparent;
+            text-align: left;
+        }
+
+        .filter-column-wrapper div button:hover {
+            background-color: #f7f7f7;
+        }
+
+        .filter-column-wrapper div button.label {
+            padding-left: 0;
+            font-weight: bold;
+        }
+
+        .filter-column-wrapper div button.active {
+            background-color: #4183c4 !important;
+            color: white;
+        }
     </style>
     @script
         <script>
             window.$lw = {
+                onShow: () => {
+                    $wire.dispatch("{{ $filterShowTarget }}");
+                },
                 onSave: () => {
                     $wire.dispatch("{{ $filterSaveTarget }}");
+                },
+                onHidden: () => {
+                    $wire.dispatch("{{ $filterHiddenTarget }}");
                 }
             }
         </script>
@@ -42,31 +83,37 @@
         <tbody>
             <tr>
                 <td>
-                    <select name="" id="" size="10" wire:key="list_all_select"
-                        wire:model.live="value_all">
-                        @foreach ($list_all as $item)
-                            <option value="{{ $item['value'] }}">{{ $item['name'] }}</option>
+                    <div>
+                        @foreach ($list_all as $k => $item)
+                            <button
+                                class="{{ $item['parent'] ? '' : 'label' }} {{ $k === $select_all && $item['parent'] ? 'active' : '' }}"
+                                wire:click="selectAll({{ $k }})">
+                                {{ $item['name'] }}
+                            </button>
                         @endforeach
-                    </select>
+                    </div>
                 </td>
-                <td class="buttons">
-                    <button type="button" class="ui button icon" wire:click="moveToShow"><i
+                <td class="buttons" style="text-alig: center;">
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToShow"><i
                             class="angle right icon"></i></button>
-                    <button type="button" class="ui button icon" wire:click="moveToAll"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToAll"><i
                             class="angle left icon"></i></button>
                 </td>
                 <td>
-                    <select name="" id="" size="10" wire:key="list_show_select"
-                        wire:model.live="value_show">
-                        @foreach ($list_show as $item)
-                            <option value="{{ $item['value'] }}">{{ $item['name'] }}</option>
+                    <div>
+                        @foreach ($list_show as $k => $item)
+                            <button
+                                class="{{ $item['parent'] ? '' : 'label' }} {{ $k === $select_show ? 'active' : '' }}"
+                                wire:click="selectShow({{ $k }})">
+                                {{ $item['name'] }}
+                            </button>
                         @endforeach
-                    </select>
+                    </div>
                 </td>
-                <td class="buttons">
-                    <button type="button" class="ui button icon" wire:click="moveToUp"><i
+                <td class="buttons" style="text-alig: center;">
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToUp"><i
                             class="angle up icon"></i></button>
-                    <button type="button" class="ui button icon" wire:click="moveToDown"><i
+                    <button type="button" class="ui button icon" wire:click.debounce.180ms="moveToDown"><i
                             class="angle down icon"></i></button>
                 </td>
             </tr>

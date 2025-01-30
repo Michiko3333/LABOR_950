@@ -164,6 +164,14 @@
                 flex-direction: column-reverse;
                 align-items: flex-end;
             }
+
+            .bank_account_no.hidden {
+                display: none;
+            }
+
+            .japan_post_bank_code_no.hidden {
+                display: none;
+            }
         </style>
     @endslot
     <section class="content">
@@ -278,8 +286,13 @@
                     'de-mynumber_card_no.*',
                     'de-pension_no.*',
                     'de-dependent_type.*',
-                    'de-other_1.*',
-                    'de-other_2.*',
+                    'de-insurer_no.*',
+                    'de-remarks.*',
+                    'de-post_code.*',
+                    'de-address_prefecture.*',
+                    'de-address_city.*',
+                    'de-address_ward.*',
+                    'de-address_apartment.*',
                 ]);
                 $field3 = $errors->hasAny([
                     'mynumber_card_no',
@@ -303,17 +316,27 @@
                     'residential_status_id',
                     'dispatch_contract_completion',
                 ]);
+                $field4 = $errors->hasAny([
+                    'bank_name',
+                    'bank_name_kana',
+                    'head_office_or_branch_office',
+                    'financial_institution_code',
+                    'store_code',
+                    'japan_bank_flg',
+                    'bank_account_no',
+                ]);
             @endphp
             <div class="ui top attached tabular menu">
                 <a class="item active {{ $field1 ? 'tab-error' : '' }}" data-tab="sample">従業員情報</a>
                 <a class="item {{ $field2 ? 'tab-error' : '' }}" data-tab="sample2">扶養者情報</a>
                 <a class="item {{ $field3 ? 'tab-error' : '' }}" data-tab="sample3">保険情報</a>
+                <a class="item {{ $field4 ? 'tab-error' : '' }}" data-tab="sample4">銀行情報</a>
             </div>
             <div class="ui bottom attached segment" data-tab="sample">
                 <div class="labor-data-area">
                     <div class="ui horizontal card card-shadow item-0">
                         <div class="content">
-                            <h2>基本情報</h2>
+                            <h2>本人情報</h2>
                             <div class="two fields">
                                 <div class="field">
                                     <div class="user-icon">
@@ -343,7 +366,7 @@
                                     <label for="employee_no">社員番号</label>
                                     <input type="text" id="employee_no" name="employee_no"
                                         value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
-                                        placeholder="E9999999">
+                                        placeholder="E9999999" autocomplete="off">
                                 </div>
                                 <div class="required field {{ err($errors, 'employee_type') }}">
                                     <label>社員区分</label>
@@ -359,7 +382,7 @@
                                     </select>
                                 </div>
                                 <div class="required field {{ err($errors, 'employee_status') }}">
-                                    <label>社員ステータス</label>
+                                    <label>雇用区分</label>
                                     <select class="ui fluid dropdown" name="employee_status">
                                         <option value="">未選択</option>
                                         @foreach ($employee_status_type as $k => $item)
@@ -374,18 +397,25 @@
                                 </div>
                             </div>
                             <div class="two fields">
+                                <div class="field {{ err($errors, 'grade') }}">
+                                    <label for="">等級</label>
+                                    <input type="text" id="grade" name="grade"
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}">
+                                </div>
+                            </div>
+                            <div class="two fields">
                                 <div class="two fields m-0">
                                     <div class="required field {{ err($errors, 'last_name') }}">
                                         <label for="last_name">氏</label>
                                         <input type="text" id="last_name" name="last_name"
                                             value="{{ old('last_name', isset($employee_id) ? $employee->last_name : '') }}"
-                                            placeholder="田中">
+                                            placeholder="田中" autocomplete="off">
                                     </div>
                                     <div class="required field {{ err($errors, 'first_name') }}">
                                         <label for="first_name">名</label>
                                         <input type="text" id="first_name" name="first_name"
                                             value="{{ old('first_name', isset($employee_id) ? $employee->first_name : '') }}"
-                                            placeholder="太郎">
+                                            placeholder="太郎" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -393,13 +423,13 @@
                                         <label for="last_name_kana">氏（カナ）</label>
                                         <input type="text" id="last_name_kana" name="last_name_kana"
                                             value="{{ old('last_name_kana', isset($employee_id) ? $employee->last_name_kana : '') }}"
-                                            placeholder="タナカ">
+                                            placeholder="タナカ" autocomplete="off">
                                     </div>
                                     <div class="required field {{ err($errors, 'first_name_kana') }}">
                                         <label for="first_name_kana">名（カナ）</label>
                                         <input type="text" id="first_name_kana" name="first_name_kana"
                                             value="{{ old('first_name_kana', isset($employee_id) ? $employee->first_name_kana : '') }}"
-                                            placeholder="タロウ">
+                                            placeholder="タロウ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +452,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="birthday_date"
-                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}">
+                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_birthday_date"
                                                 id="formatted_birthday_date" value="{{ old('birthday_date') }}">
                                         </div>
@@ -469,13 +499,13 @@
                                         <label for="last_name_alphabet">氏（アルファベット）</label>
                                         <input type="text" id="last_name_alphabet" name="last_name_alphabet"
                                             value="{{ old('last_name_alphabet', isset($employee_id) ? $employee->last_name_alphabet : '') }}"
-                                            placeholder="TANAKA">
+                                            placeholder="TANAKA" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'first_name_alphabet') }}">
                                         <label for="first_name_alphabet">名（アルファベット）</label>
                                         <input type="text" id="first_name_alphabet" name="first_name_alphabet"
                                             value="{{ old('first_name_alphabet', isset($employee_id) ? $employee->first_name_alphabet : '') }}"
-                                            placeholder="TARO">
+                                            placeholder="TARO" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -485,13 +515,13 @@
                                         <label for="old_last_name">旧氏</label>
                                         <input type="text" id="old_last_name" name="old_last_name"
                                             value="{{ old('old_last_name', isset($employee_id) ? $employee->old_last_name : '') }}"
-                                            placeholder="鈴木">
+                                            placeholder="鈴木" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name') }}">
                                         <label for="old_first_name">旧名</label>
                                         <input type="text" id="old_first_name" name="old_first_name"
                                             value="{{ old('old_first_name', isset($employee_id) ? $employee->old_first_name : '') }}"
-                                            placeholder="太郎">
+                                            placeholder="太郎" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -499,13 +529,13 @@
                                         <label for="old_last_name_kana">旧氏（カナ）</label>
                                         <input type="text" id="old_last_name_kana" name="old_last_name_kana"
                                             value="{{ old('old_last_name_kana', isset($employee_id) ? $employee->old_last_name_kana : '') }}"
-                                            placeholder="スズキ">
+                                            placeholder="スズキ" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name_kana') }}">
                                         <label for="old_first_name_kana">旧名（カナ）</label>
                                         <input type="text" id="old_first_name_kana" name="old_first_name_kana"
                                             value="{{ old('old_first_name_kana', isset($employee_id) ? $employee->old_first_name_kana : '') }}"
-                                            placeholder="タロウ">
+                                            placeholder="タロウ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -516,14 +546,14 @@
                                         <input type="text" id="old_last_name_alphabet"
                                             name="old_last_name_alphabet"
                                             value="{{ old('old_last_name_alphabet', isset($employee_id) ? $employee->old_last_name_alphabet : '') }}"
-                                            placeholder="TANAKA">
+                                            placeholder="TANAKA" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'old_first_name_alphabet') }}">
                                         <label for="old_first_name_alphabet">旧名（アルファベット）</label>
                                         <input type="text" id="old_first_name_alphabet"
                                             name="old_first_name_alphabet"
                                             value="{{ old('old_first_name_alphabet', isset($employee_id) ? $employee->old_first_name_alphabet : '') }}"
-                                            placeholder="TARO">
+                                            placeholder="TARO" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="two fields m-0">
@@ -531,13 +561,13 @@
                                         <label for="name_common">通称名</label>
                                         <input type="text" id="name_common" name="name_common"
                                             value="{{ old('name_common', isset($employee_id) ? $employee->name_common : '') }}"
-                                            placeholder="田中">
+                                            placeholder="田中" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'name_common_kana') }}">
                                         <label for="name_common_kana">通称名（カナ）</label>
                                         <input type="text" id="name_common_kana" name="name_common_kana"
                                             value="{{ old('name_common_kana', isset($employee_id) ? $employee->name_common_kana : '') }}"
-                                            placeholder="タナカ">
+                                            placeholder="タナカ" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -579,6 +609,52 @@
                                     <option value="">未選択</option>
                                 </select>
                             </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'work_category') }}">
+                                    <label for="work_category">勤務区分</label>
+                                    <select class="ui fluid dropdown" name="work_category">
+                                        <option value="">未選択</option>
+                                        @foreach($work_category as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('work_category') == "$key" ||
+                                                (isset($employee) && old('work_category', $employee->work_category) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="required field {{ err($errors, 'enrollment_category') }}">
+                                    <label for="enrollment_category">在籍区分</label>
+                                    <select class="ui fluid dropdown" name="enrollment_category">
+                                        <option value="">未選択</option>
+                                        @foreach($enrollment_category as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('enrollment_category') == "$key" ||
+                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="field ">
+                                    <label>転勤・出向　年月日</label>
+                                    <div class="ui calendar" id="transfer_date_calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input type="text" placeholder="Date" name="transfer_date"
+                                                value="{{ old('formatted_transfer_date', isset($employee_id) ? $employee->transfer_date : '') }}" autocomplete="off">
+                                            <input type="hidden" name="formatted_transfer_date"
+                                                id="formatted_transfer_date" value="{{ old('transfer_date') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="ui horizontal card card-shadow item-2">
@@ -592,7 +668,7 @@
                                         <input type="tel" pattern="[0-9]{1,5}" id="tel_area_code"
                                             name="tel_area_code"
                                             value="{{ old('tel_area_code', isset($employee_id) ? $employee->tel_area_code : '') }}"
-                                            placeholder="市外局番" maxlength="4">
+                                            placeholder="市外局番" maxlength="4" autocomplete="off">
                                     </div>
 
                                     <div class="field tel-hyphen {{ err($errors, 'tel_city_code') }}">
@@ -600,7 +676,7 @@
                                         <input type="tel" pattern="[0-9]{1,4}" id="tel_city_code"
                                             name="tel_city_code"
                                             value="{{ old('tel_city_code', isset($employee_id) ? $employee->tel_city_code : '') }}"
-                                            placeholder="市内局番" maxlength="4">
+                                            placeholder="市内局番" maxlength="4" autocomplete="off">
                                     </div>
 
                                     <div class="field {{ err($errors, 'tel_subscriber_code') }}"
@@ -609,7 +685,7 @@
                                         <input type="tel" pattern="[0-9]{4,7}" id="tel_subscriber_code"
                                             name="tel_subscriber_code"
                                             value="{{ old('tel_subscriber_code', isset($employee_id) ? $employee->tel_subscriber_code : '') }}"
-                                            placeholder="加入者番号" maxlength="4">
+                                            placeholder="加入者番号" maxlength="4" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="ui unstackable three fields field" style="padding: 0;">
@@ -617,31 +693,31 @@
                                         style="padding-right: 0.8em;">
                                         <label for="fax1">FAX</label>
                                         <input type="text" name="fax1"
-                                            value="{{ old('fax1', $faxParts[0] ?? '') }}">
+                                            value="{{ old('fax1', $faxParts[0] ?? '') }}" autocomplete="off">
                                     </div>
                                     <div class="field tel-hyphen {{ err($errors, 'fax2') }}"
                                         style="padding-right: 0.8em;">
                                         <label for="fax2"></label>
                                         <input type="text" name="fax2"
-                                            value="{{ old('fax2', $faxParts[1] ?? '') }}">
+                                            value="{{ old('fax2', $faxParts[1] ?? '') }}" autocomplete="off">
                                     </div>
                                     <div class="field {{ err($errors, 'fax3') }}" style="padding-left: 0.8em;">
                                         <label for="fax3"></label>
                                         <input type="text" name="fax3"
-                                            value="{{ old('fax3', $faxParts[2] ?? '') }}">
+                                            value="{{ old('fax3', $faxParts[2] ?? '') }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
                             <div class="fields">
                                 <div class="four wide field required {{ err($errors, 'post_code') }}">
                                     <label for="post_code">郵便番号</label>
-                                    <input type="text" name="post_code"
+                                    <input type="text" name="post_code" id="post_code"
                                         value="{{ old('post_code', isset($employee_id) ? $employee->post_code : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
                                     <label for="address_prefecture">住所（都道府県）</label>
-                                    <select class="ui fluid dropdown" name="address_prefecture">
+                                    <select class="ui fluid dropdown" name="address_prefecture" id="address_prefecture">
                                         <option value="">未選択</option>
                                         @foreach ($prefectures as $k => $value)
                                             <option value="{{ $k }}"
@@ -656,23 +732,23 @@
                                 </div>
                                 <div class="eight wide field required {{ err($errors, 'address_city') }}">
                                     <label for="address_city">住所（市区町村）</label>
-                                    <input type="text" name="address_city"
+                                    <input type="text" name="address_city" id="address_city"
                                         value="{{ old('address_city', isset($employee_id) ? $employee->address_city : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
                                 <div class="field required {{ err($errors, 'address_ward') }}">
                                     <label for="address_ward">住所（丁目・番地）</label>
-                                    <input type="text" name="address_ward"
+                                    <input type="text" name="address_ward" id="address_ward"
                                         value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'address_apartment') }}">
                                     <label for="address_apartment">住所（アパート・マンション名等）</label>
-                                    <input type="text" name="address_apartment"
+                                    <input type="text" name="address_apartment" id="address_apartment"
                                         value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -680,13 +756,13 @@
                                     <label for="mail_address1">メールアドレス１</label>
                                     <input type="email" id="mail_address1" name="mail_address1"
                                         value="{{ old('mail_address1', isset($employee_id) ? $employee->mail_address1 : '') }}"
-                                        placeholder="karte_xxxx@xxx.com">
+                                        placeholder="karte_xxxx@xxx.com" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'mail_address2') }}">
                                     <label for="mail_address2">メールアドレス２</label>
                                     <input type="email" id="mail_address2" name="mail_address2"
                                         value="{{ old('mail_address2', isset($employee_id) ? $employee->mail_address2 : '') }}"
-                                        placeholder="karte_xxxx@xxx.com">
+                                        placeholder="karte_xxxx@xxx.com" autocomplete="off">
                                 </div>
                             </div>
                             <div class="ui divider my-2"></div>
@@ -696,14 +772,14 @@
                                     <label for="emergency_contact1">氏名</label>
                                     <input type="text" id="emergency_contact1" name="emergency_contact1"
                                         value="{{ old('emergency_contact1', isset($employee_id) ? $employee->emergency_contact1 : '') }}"
-                                        placeholder="田中 太郎">
+                                        placeholder="田中 太郎" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_tel1') }}" style="padding: 0;">
                                     <div class="field" style="padding-right: 0.8em;">
                                         <label for="emergency_tel1">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
                                             name="emergency_tel1"
-                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}">
+                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -712,13 +788,13 @@
                                     <label for="emergency_relationship1">続柄</label>
                                     <input type="text" id="emergency_relationship1" name="emergency_relationship1"
                                         value="{{ old('emergency_relationship1', isset($employee_id) ? $employee->emergency_relationship1 : '') }}"
-                                        placeholder="父">
+                                        placeholder="父" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_post_code1') }}">
                                     <label for="emergency_post_code1">郵便番号</label>
                                     <input type="text" name="emergency_post_code1"
                                         value="{{ old('emergency_post_code1', isset($employee_id) ? $employee->emergency_post_code1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_address_prefecture1') }}">
                                     <label for="emergency_address_prefecture1">住所（都道府県）</label>
@@ -740,7 +816,7 @@
                                     <label for="emergency_address_city1">住所（市区町村）</label>
                                     <input type="text" name="emergency_address_city1"
                                         value="{{ old('emergency_address_city1', isset($employee_id) ? $employee->emergency_address_city1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -748,13 +824,13 @@
                                     <label for="emergency_address_ward1">住所（丁目・番地）</label>
                                     <input type="text" name="emergency_address_ward1"
                                         value="{{ old('emergency_address_ward1', isset($employee_id) ? $employee->emergency_address_ward1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_address_apartment1') }}">
                                     <label for="emergency_address_apartment1">住所（アパート・マンション名等）</label>
                                     <input type="text" name="emergency_address_apartment1"
                                         value="{{ old('emergency_address_apartment1', isset($employee_id) ? $employee->emergency_address_apartment1 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
 
@@ -764,14 +840,14 @@
                                     <label for="emergency_contact2">氏名</label>
                                     <input type="text" id="emergency_contact2" name="emergency_contact2"
                                         value="{{ old('emergency_contact2', isset($employee_id) ? $employee->emergency_contact2 : '') }}"
-                                        placeholder="田中 太郎">
+                                        placeholder="田中 太郎" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_tel2') }}" style="padding: 0;">
                                     <div class="field" style="padding-right: 0.8em;">
                                         <label for="emergency_tel2">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
                                             name="emergency_tel2"
-                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}">
+                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -780,13 +856,13 @@
                                     <label for="emergency_relationship2">続柄</label>
                                     <input type="text" id="emergency_relationship2" name="emergency_relationship2"
                                         value="{{ old('emergency_relationship2', isset($employee_id) ? $employee->emergency_relationship2 : '') }}"
-                                        placeholder="父">
+                                        placeholder="父" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_post_code2') }}">
                                     <label for="emergency_post_code2">郵便番号</label>
                                     <input type="text" name="emergency_post_code2"
                                         value="{{ old('emergency_post_code2', isset($employee_id) ? $employee->emergency_post_code2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="four wide field {{ err($errors, 'emergency_address_prefecture2') }}">
                                     <label for="emergency_address_prefecture2">住所（都道府県）</label>
@@ -808,7 +884,7 @@
                                     <label for="emergency_address_city2">住所（市区町村）</label>
                                     <input type="text" name="emergency_address_city2"
                                         value="{{ old('emergency_address_city2', isset($employee_id) ? $employee->emergency_address_city2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -816,13 +892,13 @@
                                     <label for="emergency_address_ward2">住所（丁目・番地）</label>
                                     <input type="text" name="emergency_address_ward2"
                                         value="{{ old('emergency_address_ward2', isset($employee_id) ? $employee->emergency_address_ward2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'emergency_address_apartment2') }}">
                                     <label for="emergency_address_apartment2">住所（アパート・マンション名等）</label>
                                     <input type="text" name="emergency_address_apartment2"
                                         value="{{ old('emergency_address_apartment2', isset($employee_id) ? $employee->emergency_address_apartment2 : '') }}"
-                                        placeholder="">
+                                        placeholder="" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -882,13 +958,104 @@
                                 </div>
                             </div>
                             <div class="two fields">
+                                <div class="required field {{ err($errors, 'employment_route') }}">
+                                    <label for="employment_route">就職経路</label>
+                                    <select class="ui fluid dropdown employment_route" name="employment_route">
+                                        <option value="">未選択</option>
+                                        @foreach($employment_route as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_route') == "$key" ||
+                                                (isset($employee) && old('employment_route', $employee->employment_route) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="field {{ err($errors, 'private_introduction') }}">
+                                    <label for="private_introduction">会社名</label>
+                                    <input type="text" name="private_introduction" class="private_introduction"
+                                        value="{{ old('private_introduction', isset($employee_id) ? $employee->private_introduction : '') }}"
+                                        placeholder="就職経路が「民間紹介」の場合のみ記載" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'recruitment_category') }}">
+                                    <label for="recruitment_category">採用区分</label>
+                                    <div class="mt-1">
+                                        <div class="ui radio checkbox field mr-2 mt-0">
+                                            <input type="radio" name="recruitment_category"
+                                            checked="" value="0"
+                                                {{ (isset($employee_id) && $employee->recruitment_category == 0) || old('recruitment_category') == '0' ? 'checked' : '' }}>
+                                            <label>新卒（第二新卒含む）</label>
+                                        </div>
+                                        <div class="ui radio checkbox field mt-0">
+                                            <input type="radio" name="recruitment_category"
+                                            value="1"
+                                                {{ (isset($employee_id) && $employee->recruitment_category == 1) || old('recruitment_category') == '1' ? 'checked' : '' }}>
+                                            <label>中途採用</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field {{ err($errors, 'recruitment_category_detail') }}">
+                                    <label for=""></label>
+                                    <select class="ui fluid dropdown recruitment_category_detail" name="recruitment_category_detail"
+                                        value="{{ old('recruitment_category_detail', isset($employee_id) ? $employee->recruitment_category_detail : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach($recruitment_category_detail as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('recruitment_category_detail') == "$key" ||
+                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="required field {{ err($errors, 'employment_status') }}">
+                                    <label for="">雇用形態</label>
+                                    <select class="ui fluid dropdown employment_status" name="employment_status"
+                                        value="{{ old('employment_status', isset($employee_id) ? $employee->employment_status : '') }}">
+                                        <option value="">未選択</option>
+                                        @foreach($employment_status as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_status') == "$key" ||
+                                                (isset($employee) && old('employment_status', $employee->employment_status) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="required field {{ err($errors, 'pay_type') }}">
+                                    <label for="">給与区分</label>
+                                    <select class="ui fluid dropdown pay_type" name="pay_type">
+                                        <option value="">未選択</option>
+                                        @foreach($pay_type as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('pay_type') == "$key" ||
+                                                (isset($employee) && old('pay_type', $employee->pay_type) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_contract_start_date') }}">
                                     <label>雇用契約開始日</label>
                                     <div class="ui calendar" id="contract_start_date_calendar">
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_start_date"
-                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}">
+                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_contract_start_date"
                                                 id="formatted_contract_start_date"
                                                 value="{{ old('contract_start_date') }}">
@@ -901,7 +1068,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_end_date"
-                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}">
+                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_contract_end_date"
                                                 id="formatted_contract_end_date"
                                                 value="{{ old('contract_end_date') }}">
@@ -909,26 +1076,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="three fields">
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_hired_date') }}">
                                     <label>入社日</label>
-                                    <div class="ui calendar" id="hired_date_calendar">
+                                    <div class="ui calendar tenure" id="hired_date_calendar">
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="hired_date"
-                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}">
+                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_hired_date"
                                                 id="formatted_hired_date" value="{{ old('hired_date') }}">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="field">
+                                    <label>勤続年数</label>
+                                    <input type="text" class="tenure" style="border: none;" readonly>
+                                </div>
+                            </div>
+                            <div class="two fields">
                                 <div class="field {{ err($errors, 'formatted_retirement_date') }}">
                                     <label>離職日</label>
                                     <div class="ui calendar" id="retirement_date_calendar">
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="retirement_date"
-                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}">
+                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_retirement_date"
                                                 id="formatted_retirement_date" value="{{ old('retirement_date') }}">
                                         </div>
@@ -940,7 +1113,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="intended_retirement_date"
-                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}">
+                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_intended_retirement_date"
                                                 id="formatted_intended_retirement_date"
                                                 value="{{ old('intended_retirement_date') }}">
@@ -987,7 +1160,7 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="passed_away_date"
-                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}">
+                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}" autocomplete="off">
                                             <input type="hidden" name="formatted_passed_away_date"
                                                 id="formatted_passed_away_date"
                                                 value="{{ old('passed_away_date') }}">
@@ -1045,7 +1218,29 @@
                 </div>
             </div>
             <div class="ui bottom attached segment" data-tab="sample2" style="display: none;">
-                <livewire:dependent-form :dependent="$dependent" :errors="$errors" :id="$employee_id ?? ''" />
+            <button type="button" class="ui small grey basic button mb-1 dependent-button">履歴</button>
+                <div class="ui large modal dependent-history" wire:ignore>
+                    <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">扶養者履歴</div>
+                    <div class="content">
+                        <livewire:dependent-history-modal-content :dependent="$dependent" :prefectures="$prefectures"/>
+                    </div>
+                    <div class="basic actions">
+                        <div class="ui button negative basic">戻る</div>
+                    </div>
+                </div>
+                <div id="removeInformation" class="ui modal mini cancel-modal">
+                    <i class="close icon"></i>
+                    <div class="header">確認</div>
+                    <div class="content">
+                        <livewire:cancel-modal-content />
+                    </div>
+                </div>
+                @livewire('dependent-form', [
+                    'id' => $id,
+                    'prefectures' => $prefectures,
+                    'dependent' => $dependent,
+                    'errors' => $errors,
+                ])
             </div>
             <div class="ui bottom attached segment" data-tab="sample3" style="display: none;">
                 <div class="ui horizontal card card-shadow" style="width: 100%;">
@@ -1055,7 +1250,7 @@
                                 <label for="mynumber_card_no">マイナンバーカード番号</label>
                                 <input type="text" id="mynumber_card_no" name="mynumber_card_no"
                                     value="{{ old('mynumber_card_no', isset($employee_id) ? $employee->mynumber_card_no : '') }}"
-                                    placeholder="123456789012" maxlength='12'>
+                                    placeholder="123456789012" maxlength='12' autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -1119,10 +1314,10 @@
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'employment_insured_no') }}">
-                                <label for="employment_insured_no">雇用保険番号</label>
+                                <label for="employment_insured_no">被保険者番号（雇用）</label>
                                 <input type="text" id="employment_insured_no" name="employment_insured_no"
                                     value="{{ old('employment_insured_no', isset($employee_id) ? $employee->employment_insured_no : '') }}"
-                                    placeholder="01234567891" maxLength="11">
+                                    placeholder="01234567891" maxLength="11" autocomplete="off">
                             </div>
                         </div>
                         <div class="four fields">
@@ -1149,7 +1344,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}">
+                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_insurance_applied_date"
                                             id="employment_insurance_applied_date"
                                             value="{{ old('employment_insurance_applied_date') }}">
@@ -1162,7 +1357,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_insured_date"
-                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}">
+                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_insured_date"
                                             id="employment_insured_date"
                                             value="{{ old('employment_insured_date') }}">
@@ -1175,7 +1370,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_not_insured_date"
-                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}">
+                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="employment_not_insured_date"
                                             id="employment_not_insured_date"
                                             value="{{ old('employment_not_insured_date') }}">
@@ -1203,13 +1398,13 @@
                                 <label for="health_insurance_association_number">健保組合番号</label>
                                 <input type="text" id="health_insurance_association_number" name="health_insurance_association_number"
                                     value="{{ old('health_insurance_association_number', isset($employee_id) ? $employee->health_insurance_association_number : '') }}"
-                                    placeholder="01234567" maxlength='8'>
+                                    placeholder="01234567" maxlength='8' autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'pension_no') }}">
                                 <label for="pension_no">基礎年金番号</label>
                                 <input type="text" id="pension_no" name="pension_no"
                                     value="{{ old('pension_no', isset($employee_id) ? $employee->pension_no : '') }}"
-                                    placeholder="0123456789" maxlength='10'>
+                                    placeholder="0123456789" maxlength='10' autocomplete="off">
                             </div>
                         </div>
                         <div class="three fields">
@@ -1236,7 +1431,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="health_insurance_acquisition_date"
-                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}">
+                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="health_insurance_acquisition_date"
                                             id="health_insurance_acquisition_date"
                                             value="{{ old('health_insurance_acquisition_date') }}">
@@ -1250,7 +1445,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="health_insurance_loss_date"
-                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}">
+                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="health_insurance_loss_date"
                                             id="health_insurance_loss_date"
                                             value="{{ old('health_insurance_loss_date') }}">
@@ -1282,7 +1477,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_exception_date"
-                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}">
+                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="overseas_special_exception_date"
                                             id="overseas_special_exception_date"
                                             value="{{ old('overseas_special_exception_date') }}">
@@ -1296,7 +1491,7 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_not_exception_date"
-                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}">
+                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}" autocomplete="off">
                                         <input type="hidden" name="overseas_special_not_exception_date"
                                             id="overseas_special_not_exception_date"
                                             value="{{ old('overseas_special_not_exception_date') }}">
@@ -1309,19 +1504,19 @@
                                 <label for="social_insurance_no">社会保険番号</label>
                                 <input type="text" id="social_insurance_no" name="social_insurance_no"
                                     value="{{ old('social_insurance_no', isset($employee_id) ? $employee->social_insurance_no : '') }}"
-                                    placeholder="12345678" maxlength='8'>
+                                    placeholder="12345678" maxlength='8' autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'insurer_no') }}">
-                                <label for="insurer_no">被保険者番号</label>
+                                <label for="insurer_no">被保険者番号（健保）</label>
                                 <input type="text" id="insurer_no" name="insurer_no"
                                     value="{{ old('insurer_no', isset($employee_id) ? $employee->insurer_no : '') }}"
-                                    placeholder="01234567" maxLength="8">
+                                    placeholder="01234567" maxLength="8" autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'insurer_reference_no') }}">
                                 <label for="insurer_reference_no">被保険者整理番号</label>
                                 <input type="text" id="insurer_reference_no" name="insurer_reference_no"
                                     value="{{ old('insurer_reference_no', isset($employee_id) ? $employee->insurer_reference_no : '') }}"
-                                    placeholder="012345" maxLength="6">
+                                    placeholder="012345" maxLength="6" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -1348,14 +1543,14 @@
                                 <input type="text" pattern="^[0-9A-Z]{1,12}$" id="residence_card_no"
                                     name="residence_card_no"
                                     value="{{ old('residence_card_no', isset($employee_id) ? $employee->residence_card_no : '') }}"
-                                    placeholder="AB12345678CD" maxLength="12">
+                                    placeholder="AB12345678CD" maxLength="12" autocomplete="off">
                             </div>
                             <div class="field {{ err($errors, 'residential_status_unknown_reason') }}">
                                 <label>在留資格不明理由</label>
                                 <input type="text" id="residential_status_unknown_reason"
                                     name="residential_status_unknown_reason"
                                     value="{{ old('residential_status_unknown_reason', isset($employee_id) ? $employee->residential_status_unknown_reason : '') }}"
-                                    placeholder="" maxLength="255">
+                                    placeholder="" maxLength="255" autocomplete="off">
                             </div>
                             <div class="field">
                                 <div
@@ -1403,12 +1598,82 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="stay_date_period"
-                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}">
+                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}" autocomplete="off">
                                         <input type="hidden" name="formatted_stay_date_period"
                                             id="formatted_stay_date_period"
                                             value="{{ old('stay_date_period') }}">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment" data-tab="sample4" style="display: none;">
+                <div class="ui horizontal card card-shadow" style="width: 100%;">
+                    <div class="content">
+                        <h2>口座情報</h2>
+                        <div class="three fields">
+                            <div class="field {{ err($errors, 'bank_name') }}">
+                                <label for="bank_name">名称</label>
+                                <input type="text" id="bank_name" name="bank_name"
+                                    value="{{ old('bank_name', isset($employee_id) ? $employee->bank_name : '') }}"
+                                    placeholder="" maxlength='' autocomplete="off">
+                            </div>
+                            <div class="field {{ err($errors, 'bank_name_kana') }}">
+                                <label for="bank_name_kana">名称（カナ）</label>
+                                <input type="text" id="bank_name_kana" name="bank_name_kana"
+                                    value="{{ old('bank_name_kana', isset($employee_id) ? $employee->bank_name_kana : '') }}"
+                                    placeholder="" maxlength='' autocomplete="off">
+                            </div>
+                            <div class="field {{ err($errors, 'head_office_or_branch_office') }}">
+                                <label></label>
+                                <div class="mt-1">
+                                    <div class="ui radio checkbox field mr-2 mt-0">
+                                        <input type="radio" name="head_office_or_branch_office" checked="checked"
+                                            value="0"
+                                            {{ (isset($employee_id) && $employee->head_office_or_branch_office == 0) || old('head_office_or_branch_office') == '0' ? 'checked' : '' }}>
+                                        <label>本店</label>
+                                    </div>
+                                    <div class="ui radio checkbox field mt-0">
+                                        <input type="radio" name="head_office_or_branch_office" value="1"
+                                            {{ (isset($employee_id) && $employee->head_office_or_branch_office == 1) || old('head_office_or_branch_office') == '1' ? 'checked' : '' }}>
+                                        <label>支店</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="two wide field {{ err($errors, 'financial_institution_code') }}">
+                                <label for="financial_institution_code">金融機関コード</label>
+                                <input type="text" id="financial_institution_code" name="financial_institution_code"
+                                    value="{{ old('financial_institution_code', isset($employee_id) ? $employee->financial_institution_code : '') }}"
+                                    placeholder="" maxlength='4' autocomplete="off">
+                            </div>
+                            <div class="two wide field {{ err($errors, 'store_code') }}">
+                                <label for="store_code">店舗コード</label>
+                                <input type="text" id="store_code" name="store_code"
+                                    value="{{ old('store_code', isset($employee_id) ? $employee->store_code : '') }}"
+                                    placeholder="" maxlength='3' autocomplete="off">
+                            </div>
+                            <div class="two wide field {{ err($errors, 'japan_bank_flg') }}" style="width: 200px;">
+                                <div class="ui checkbox field mt-3">
+                                    <input type="checkbox" name="japan_bank_flg" id="japan_bank_flg" value='1'
+                                        {{ (isset($employee_id) && $employee->japan_bank_flg == 1) || old('japan_bank_flg') == '1' ? 'checked' : '' }}>
+                                    <label>ゆうちょ銀行</label>
+                                </div>
+                            </div>
+                            <div class="eight wide field bank_account_no {{ err($errors, 'bank_account_no') }}">
+                                <label for="bank_account_no">口座番号</label>
+                                <input type="text" id="bank_account_no" name="bank_account_no"
+                                    value="{{ old('bank_account_no', isset($employee_id) ? $employee->bank_account_no : '') }}"
+                                    placeholder="" maxlength='8' autocomplete="off">
+                            </div>
+                            <div class="eight wide field japan_post_bank_code_no hidden {{ err($errors, 'japan_post_bank_code_no') }}">
+                                <label for="japan_post_bank_code_no">記号番号</label>
+                                <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
+                                    value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
+                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='8' autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -1510,6 +1775,56 @@
                 let ageMonths = monthDiff;
                 const ageString = `${age}歳${ageMonths}ヵ月`;
                 $(".age").val(ageString);
+            }
+            $('.ui.calendar.tenure').calendar({
+                type: 'date',
+                formatter: {
+                    date: 'Y"年"M"月"D"日"'
+                },
+                text: {
+                    days: ['日', '月', '火', '水', '木', '金', '土'],
+                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                },
+                initialDate: "",
+                onChange: (date, text, mode) => {
+                    const match = text.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                    if (match) {
+                        const year = parseInt(match[1], 10);
+                        const month = parseInt(match[2], 10) - 1;
+                        const day = parseInt(match[3], 10);
+                        const tenureDate = new Date(year, month, day);
+                        const today = new Date();
+
+                        let tenure = today.getFullYear() - tenureDate.getFullYear();
+                        let monthDiff = today.getMonth() - tenureDate.getMonth();
+                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
+                            tenure -= 1;
+                            monthDiff += 12;
+                        }
+
+                        let tenureMonths = monthDiff;
+                        const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                        $(".tenure").val(tenureString);
+                    }
+                }
+            });
+            const tenure_date = $('#formatted_hired_date').val();
+            if(tenure_date){
+                const match = tenure_date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                const year = parseInt(match[1], 10);
+                const month = parseInt(match[2], 10) - 1;
+                const day = parseInt(match[3], 10);
+                const tenureDate = new Date(year, month, day);
+                const today = new Date();
+                let tenure = today.getFullYear() - tenureDate.getFullYear();
+                let monthDiff = today.getMonth() - tenureDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
+                    tenure -= 1;
+                    monthDiff += 12;
+                }
+                let tenureMonths = monthDiff;
+                const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                $(".tenure").val(tenureString);
             }
             $('.ui.dropdown.dropdown.multiple').dropdown({});
 
@@ -1628,6 +1943,9 @@
                     contents[index].style.display = 'block';
                 });
             });
+
+            changeEmploymentPathway();
+            changeYutyoFlg();
         });
 
         $('#iconChangeInput').on('change', function() {
@@ -1655,5 +1973,63 @@
         });
 
         $('.ui.dropdown.edit-select').dropdown();
+
+        $('.employment_route').on('click', function() {
+            changeEmploymentPathway()
+        });
+
+        function changeEmploymentPathway() {
+            if($('.employment_route').val() == 3) {
+                $('.private_introduction').prop('disabled', false);
+            } else {
+                $('.private_introduction').prop('disabled', true);
+                $('.private_introduction').val('');
+            }
+        }
+
+        $('#japan_bank_flg').on('click', function() {
+            changeYutyoFlg();
+        });
+
+        function changeYutyoFlg() {
+            if($('#japan_bank_flg').is(':checked')) {
+                $('.bank_account_no').addClass('hidden');
+                $('.japan_post_bank_code_no').removeClass('hidden');
+                $('#bank_account_no').val('');
+            } else {
+                $('.japan_post_bank_code_no').addClass('hidden');
+                $('.bank_account_no').removeClass('hidden');
+                $('#japan_post_bank_code_no').val('');
+            }
+        }
+        $('.ui.modal').modal({
+            allowMultiple: true
+        });
+        $('.dependent-button').click(_ => {
+            $('.dependent-history').modal({
+                blurring: true,
+            }).modal('show');
+        });
+        window.removeDependentHistory = (dependentId) => {
+            Livewire.dispatch('cancelModalOpened', {
+                dependentId: dependentId,
+                receptionistId: null,
+                managerialPositionId: null,
+                closureId: closureId,
+                allowanceId: null,
+                name: null,
+                allowanceHistoryId: null,
+            });
+            setTimeout(() => {
+                $('.cancel-modal').modal('show');
+            }, 0)
+        };
+        window.closeCancelModal = () => {
+            $('.cancel-modal').modal('hide');
+        };
+        window.addEventListener('closeCancelModal', () => {
+            $('.cancel-modal').modal('hide');
+            location.reload();
+        });
     </script>
 </x-layout>

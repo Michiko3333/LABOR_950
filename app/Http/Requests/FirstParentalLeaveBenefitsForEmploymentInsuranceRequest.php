@@ -19,47 +19,52 @@ class FirstParentalLeaveBenefitsForEmploymentInsuranceRequest extends BaseReques
         $data = $this->all();
 
         if (isset($data['fullname'])) {
-            $data['fullname'] = mb_convert_kana($data['fullname'], 'S');
+            $data['fullname'] = mb_convert_kana($data['fullname'], 'AKS');
         }
         if (isset($data['fullname_kana'])) {
-            $data['fullname_kana'] = mb_convert_kana($data['fullname_kana'], 'S');
+            $data['fullname_kana'] = mb_convert_kana($data['fullname_kana'], 'KS');
         }
         if (isset($data['labor_consultant_acting_as_agent_name'])) {
-            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'S');
+            $data['labor_consultant_acting_as_agent_name'] = mb_convert_kana($data['labor_consultant_acting_as_agent_name'], 'AKS');
         }
         if (isset($data['labor_consultant_name'])) {
-            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'S');
+            $data['labor_consultant_name'] = mb_convert_kana($data['labor_consultant_name'], 'AKS');
+        }
+        if (isset($data['employer_company_managerial_position_name'])) {
+            $data['employer_company_managerial_position_name'] = mb_convert_kana($data['employer_company_managerial_position_name'], 'AKS');
         }
         if (isset($data['branch_address'])) {
-            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AS');
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AKS');
             $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
         }
         if (isset($data['address'])) {
-            $data['address'] = mb_convert_kana($data['address'], 'AS');
+            $data['address'] = mb_convert_kana($data['address'], 'AKS');
             $data['address'] = str_replace(['-', '‐', '―'], '－', $data['address']);
         }
         if (isset($data['headquarters_address'])) {
-            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AS');
+            $data['headquarters_address'] = mb_convert_kana($data['headquarters_address'], 'AKS');
             $data['headquarters_address'] = str_replace(['-', '‐', '―'], '－', $data['headquarters_address']);
         }
         if (isset($data['financial_Institutions_name_kana'])) {
-            $data['financial_Institutions_name_kana'] = mb_convert_kana($data['financial_Institutions_name_kana'], 'S');
+            $data['financial_Institutions_name_kana'] = mb_convert_kana($data['financial_Institutions_name_kana'], 'KS');
         }
         if (isset($data['financial_institution_name'])) {
-            $data['financial_institution_name'] = mb_convert_kana($data['financial_institution_name'], 'S');
+            $data['financial_institution_name'] = mb_convert_kana($data['financial_institution_name'], 'AKS');
         }
         if (isset($data['address_prefecture_city'])) {
-            $data['address_prefecture_city'] = mb_convert_kana($data['address_prefecture_city'], 'AS');
+            $data['address_prefecture_city'] = mb_convert_kana($data['address_prefecture_city'], 'KS');
             $data['address_prefecture_city'] = str_replace(['-', '‐', '―'], '－', $data['address_prefecture_city']);
         }
         if (isset($data['address_ward'])) {
-            $data['address_ward'] = mb_convert_kana($data['address_ward'], 'AS');
+            $data['address_ward'] = mb_convert_kana($data['address_ward'], 'AKS');
             $data['address_ward'] = str_replace(['-', '‐', '―'], '－', $data['address_ward']);
         }
         if (isset($data['address_apartment'])) {
-            $data['address_apartment'] = mb_convert_kana($data['address_apartment'], 'AS');
+            $data['address_apartment'] = mb_convert_kana($data['address_apartment'], 'AKS');
             $data['address_apartment'] = str_replace(['-', '‐', '―'], '－', $data['address_apartment']);
         }
+
+        $this->merge($data);
 
         return $data;
     }

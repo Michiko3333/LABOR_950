@@ -135,7 +135,7 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'industry_type' => 'array',
             'industry_type.*' => 'nullable|integer|between:1,1461',
             'stock_code' => 'nullable|string|max:20|regex:/^[a-zA-Z0-9]+$/',
-            'capital' => 'nullable|integer',
+            'capital' => 'nullable|integer|max_digits:9',
             'annual_sales' => 'nullable|integer|max_digits:18',
             'employee_sum' => 'nullable|integer|max_digits:9',
             'qualification' => 'nullable|string',
@@ -308,6 +308,24 @@ class AdminCompanyUpdateRequest extends BaseRequest
             'bou-applied_date' => 'array', 
             'bou-applied_date.*' => 'required|array', 
             'bou-applied_date.*.*' => 'required|string',
+            'al-allowance' => 'array', 
+            'al-allowance.*' => 'required|array', 
+            'al-allowance.*.*' => 'required|integer',
+            'al-pay_month' => 'array', 
+            'al-pay_month.*' => 'required|array', 
+            'al-pay_month.*.*' => 'required|integer',
+            'al-amount' => 'array', 
+            'al-amount.*' => 'required|array', 
+            'al-amount.*.*' => 'required|integer|between:0,9999999',
+            'al-target' => 'array', 
+            'al-target.*' => 'required|array', 
+            'al-target.*.*' => 'required|string|max:30',
+            'al-remarks' => 'array', 
+            'al-remarks.*' => 'required|array', 
+            'al-remarks.*.*' => 'required|string|max:30',
+            'al-applied_date' => 'array', 
+            'al-applied_date.*' => 'required|array', 
+            'al-applied_date.*.*' => 'required|string',
         ];
     }
 
@@ -601,77 +619,119 @@ class AdminCompanyUpdateRequest extends BaseRequest
         foreach ($this->input('sa-departments', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["sa-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_部署";
+                    $Attributes["sa-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "給与_部署";
                 }
             }
         }
         foreach ($this->input('sa-payroll_deadline', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["sa-payroll_deadline.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_締め日";
+                    $Attributes["sa-payroll_deadline.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "給与_締め日";
                 }
             }
         }
         foreach ($this->input('sa-payroll_month', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["sa-payroll_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_支払月";
+                    $Attributes["sa-payroll_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "給与_支払月";
                 }
             }
         }
         foreach ($this->input('sa-payroll_day', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["sa-payroll_day.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_支払日";
+                    $Attributes["sa-payroll_day.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "給与_支払日";
                 }
             }   
         }
         foreach ($this->input('sa-applied_date', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["sa-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "給与_適用年月";
+                    $Attributes["sa-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "給与_適用年月";
                 }
             }   
         }
         foreach ($this->input('bo-departments', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bo-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_部署";
+                    $Attributes["bo-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "賞与_部署";
                 }
             }
         }
         foreach ($this->input('bo-bonus_payment_month', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bo-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_支払月";
+                    $Attributes["bo-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "賞与_支払月";
                 }
             }   
         }
         foreach ($this->input('bo-applied_date', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bo-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "賞与_適用年月";
+                    $Attributes["bo-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "賞与_適用年月";
                 }
             }   
         }
         foreach ($this->input('bou-departments', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bou-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_部署";
+                    $Attributes["bou-departments.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "報奨金_部署";
                 }
             }
         }
         foreach ($this->input('bou-bonus_payment_month', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bou-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_支払月";
+                    $Attributes["bou-bonus_payment_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "報奨金_支払月";
                 }
             }   
         }
         foreach ($this->input('bou-applied_date', []) as $salaryArray) {
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["bou-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事务所_" . ($salaryIndex + 1) . "報奨金_適用年月";
+                    $Attributes["bou-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "報奨金_適用年月";
+                }
+            }   
+        }
+        foreach ($this->input('al-applied_date', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-applied_date.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_適用年月";
+                }
+            }   
+        }
+        foreach ($this->input('al-allowance', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-allowance.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_手当名";
+                }
+            }   
+        }
+        foreach ($this->input('al-amount', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-amount.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_金額";
+                }
+            }   
+        }
+        foreach ($this->input('al-target', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-target.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_対象者";
+                }
+            }   
+        }
+        foreach ($this->input('al-pay_month', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-pay_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_支払月";
+                }
+            }   
+        }
+        foreach ($this->input('al-remarks', []) as $salaryArray) {
+            foreach ($salaryArray as $salaryIndex => $salary) {
+                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
+                    $Attributes["al-remarks.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_備考";
                 }
             }   
         }

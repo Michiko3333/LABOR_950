@@ -191,7 +191,7 @@
 		</申請年月日>
 		<あて先>destination</あて先>
 		<申請者氏名_フリガナ>fullname_kana</申請者氏名_フリガナ>
-		<申請者氏名>fullname</申請者氏名>
+		<申請者氏名>address_fullname</申請者氏名>
 	</申請欄>
 	<払渡希望金融機関>
 		<金融機関フリガナ>financial_Institutions_name_kana</金融機関フリガナ>

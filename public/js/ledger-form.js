@@ -66,7 +66,7 @@ $('#ledger-preview-btn').click(() => {
 
             if (formDataObject.hasOwnProperty(name)) {
                 if ($element.is('input[type="checkbox"]')) {
-                    if (formDataObject[name] == 1) {
+                    if (formDataObject[name] != '') {
                         $element.prop('disabled', false);
                         $element.prop('checked', true);
                     }
@@ -103,7 +103,10 @@ $('#ledger-submit-btn').click((event) => {
 
 function handlePageHistory() {
     const sessionHistory = JSON.parse(sessionStorage.getItem('pageHistory'));
-    $('#ledger-back').attr('href', sessionHistory.toString());
+    if (sessionHistory) {
+        $('#queryParameter').val(sessionHistory.toString());
+        $('#ledger-back').attr('href', sessionHistory.toString());
+    }
 }
 
 document.addEventListener("DOMContentLoaded", handlePageHistory);

@@ -48,18 +48,18 @@
                     <div class="field required mb-2">
                         <label>役職名</label>
                         <input class="edit-managerial-position-form_name" name="edit-managerial-position-form_name"
-                            type="text" placeholder="役職名" maxlength="20">
+                            type="text" placeholder="役職名" maxlength="20" autocomplete="off">
                     </div>
                     <div class="field required mb-2">
                         <label>役職名（カナ）</label>
                         <input class="edit-managerial-position-form_name_kana"
                             name="edit-managerial-position-form_name_kana" type="text" placeholder="役職名（カナ）"
-                            maxlength="50">
+                            maxlength="50" autocomplete="off">
                     </div>
                     <div class="field required mb-2">
                         <label>序列</label>
                         <input type="number" class="edit-managerial-position-form_rank"
-                            name="edit-managerial-position-form_rank" placeholder="序列" min="1" max="10">
+                            name="edit-managerial-position-form_rank" placeholder="序列" min="1" max="10" autocomplete="off">
                     </div>
                     <div class="ui checkbox mr-1">
                         <input type="checkbox" class="edit-managerial-position-form_representative_flg" value='1'

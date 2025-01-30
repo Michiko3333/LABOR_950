@@ -73,6 +73,20 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentPermissionSeeder::class);
         $this->call(FeatureSeeder::class);
         $this->call(FilterEmployeeListSeeder::class);
-        $this->call(PickupSettingSeeder::class);
+        $this->call(wageColumnSeeder::class);
+        $this->call(ValuesEmployeeWorkCategorySeeder::class);
+        $this->call(ValuesEmployeeEnrollmentCategorySeeder::class);
+        $this->call(ValuesEmployeeRecruitmentCategoryDetailSeeder::class);
+        $this->call(ValuesEmployeePayTypeSeeder::class);
+        $this->call(LedgerCategorySeeder::class);
+        $this->call(LedgerCategoryBigSeeder::class);
+        $this->call(LedgerCategoryMediumSeeder::class);
+        $this->call(PickupTypeSeeder::class);
+        $this->call(PickupMessageSeeder::class);
+        $this->call(PickupSituationSeeder::class);
+        $this->call(BatchManagementSeeder::class);
+        $this->call(wageColumnSeeder::class);
+        $this->call(AttendanceColumnsSeeder::class);
+        $this->call(EmployeeColumnsSeeder::class);
     }
 }

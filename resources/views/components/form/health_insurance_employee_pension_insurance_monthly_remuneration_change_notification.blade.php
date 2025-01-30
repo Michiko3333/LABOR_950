@@ -1,5 +1,5 @@
-<!-- 4950013520990000 -->
-<!-- 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届 -->
+<!-- 4950013521025000 -->
+<!-- 健康保険・厚生年金保険被保険者報酬月額変更届／７０歳以上被用者月額変更届（ＣＳＶファイル添付方式）（２０２４年１２月以降手続き） -->
 
 <div>
     <div id="eGovForm">
@@ -4835,42 +4835,42 @@
                 <div class="egov-tool-wrapper">
                     <div class="egov-tool-field-origin" style="left: 82px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N4_005F_944E" name="today_year"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 112px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="today_month"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 142px; top: 60px;">
                         <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" name="today_date"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 22px; height: 18px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 144px; top: 80px;">
                         <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" maxlength="2"
                             value="{{ old('pension_office_reference_prefecture') }}"
                             name="pension_office_reference_prefecture" required="required"
                             style="width: 50px; height: 25px; font-size: 10px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 195.5px; top: 80px;">
                         <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="4"
                             value="{{ old('pension_office_reference_no_cities') }}"
                             name="pension_office_reference_no_cities" required="required"
                             style="width: 50px; height: 25px; font-size: 10px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 246.5px; top: 80px;">
                         <input class="egov-tool-field-rect onImage" id="N9_005F_8C8E" maxlength="4"
                             value="{{ old('pension_office_reference_no_office') }}"
                             name="pension_office_reference_no_office" required="required"
                             style="width: 50px; height: 25px; font-size: 10px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin"
                         style="left: 298px; top: 79.5px; width: 45px; height: 25.5px; border-top: 1px solid #2f323e; border-right: 1px solid #2f323e;">
@@ -4882,67 +4882,67 @@
                             value="{{ old('csv_pension_office_no') }}" name="csv_pension_office_no"
                             required="required"
                             style="width: 47px; height: 25px; font-size: 10px; text-align: left; line-height: 38px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 154px; top: 106px;">
                         <input class="egov-tool-field-rect onImage" id="N10_005F_93FA" maxlength="3"
                             value="{{ old('branch_post_code_parent') }}" name="branch_post_code_parent"
                             required="required"
                             style="width: 40px; height: 17px; font-size: 10px; text-align: center; line-height: 18px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 218px; top: 106px;">
                         <input class="egov-tool-field-rect onImage" id="N11_005F_94ED_95DB_8CAF_8ED2_8E81"
                             maxlength="4" value="{{ old('branch_post_code_child') }}" name="branch_post_code_child"
                             required="required"
                             style="width: 45px; height: 17px; font-size: 10px; text-align: center; line-height: 18px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 135px; top: 124px;">
                         <input class="egov-tool-field-rect onImage" id="N12_005F_905C_90BF_8ED2_8E81" maxlength="70"
                             value="{{ old('branch_address') }}" name="branch_address" required="required"
                             style="width: 253px; height: 27px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 135px; top: 152px;">
                         <input class="egov-tool-field-rect onImage" id="N13_005F_8374_838A_834B_8369" maxlength="40"
                             value="{{ old('branch_name') }}" name="branch_name" required="required"
                             style="width: 253px; height: 27px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 135px; top: 180px;">
                         <input class="egov-tool-field-rect onImage" id="N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC"
                             maxlength="25" value="{{ old('employer_company_managerial_position_name') }}"
                             name="employer_company_managerial_position_name" required="required"
                             style="width: 253px; height: 27px; font-size: 10px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 135px; top: 208px;">
                         <input class="egov-tool-field-rect onImage" id="N16_005F_905C_90BF" maxlength="5"
                             value="{{ old('branch_tel_area_code') }}" name="branch_tel_area_code" required="required"
                             style="width: 66px; height: 19px; font-size: 10px; text-align: center; line-height: 23px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 206px; top: 208px;">
                         <input class="egov-tool-field-rect onImage" id="N17_005F_985A_8F5C_8DCE_82C9" maxlength="4"
                             value="{{ old('branch_tel_city_code') }}" name="branch_tel_city_code"
                             required="required"
                             style="width: 65px; height: 19px; font-size: 10px; text-align: center; line-height: 19px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 284px; top: 208px;">
                         <input class="egov-tool-field-rect onImage" id="N18_005F_8CC2_906C_94D4" maxlength="5"
                             value="{{ old('branch_tel_subscriber_code') }}" name="branch_tel_subscriber_code"
                             required="required"
                             style="width: 66px; height: 19px; font-size: 10px; text-align: center; line-height: 19px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 398.3px; top: 193px;">
                         <input class="egov-tool-field-rect onImage" id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85"
                             maxlength="40" value="{{ old('labor_consultant_submission_agent_name') }}"
                             name="labor_consultant_submission_agent_name"
                             style="width: 293.5px; height: 34px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                         <input id="N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851"
                             value="{{ old('labor_and_social_security_attorney_registration_no') }}"
                             name="labor_and_social_security_attorney_registration_no" type="hidden" />
@@ -4950,22 +4950,22 @@
                     <div class="egov-tool-field-origin" style="left: 62px; top: 267px;">
                         <input class="egov-tool-field-rect onImage" id="N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866"
                             value="{{ old('insurer_reference_no') }}" name="insurer_reference_no"
-                            onfocus="addlength(this,6)"
+                            maxlength="6"
                             style="width: 55px; height: 40px; font-size: 9px; text-align: right; line-height: 62px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 149px; top: 267.5px;">
                         <input class="egov-tool-field-rect onImage" id="N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD"
                             maxlength="25" value="{{ old('insured_fullname_kana') }}" name="insured_fullname_kana"
                             required="required"
                             style="width: 166px; height: 19px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 119px; top: 288px;">
                         <input class="egov-tool-field-rect onImage" id="N23__005F_94ED" maxlength="12"
                             value="{{ old('insured_fullname') }}" name="insured_fullname" required="required"
                             style="width: 196px; height: 19px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color:#ddeeff; overflow-wrap: break-word; word-wrap: break-word;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 317px; top: 272px;">
                         <select class="egov-tool-field-rect onImage" id="N24_005F_8E96_8BC6" name="birthday_era"
@@ -4990,24 +4990,24 @@
                     </div>
                     <div class="egov-tool-field-origin" style="left: 365.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N25_005F_8E96_8BC6_8F8A"
-                            value="{{ old('birthday_year') }}" name="birthday_year" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_year') }}" name="birthday_year" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 393.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N26_005F_8E96_8BC6_8F8A_94D4"
-                            value="{{ old('birthday_month') }}" name="birthday_month" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_month') }}" name="birthday_month" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 422.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N28_8D864_8C85"
-                            value="{{ old('birthday_date') }}" name="birthday_date" onfocus="addlength(this,2)"
+                            value="{{ old('birthday_date') }}" name="birthday_date" maxlength="2"
                             required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 450px; top: 272px;">
                         <select class="egov-tool-field-rect onImage" id="N29_005F_8E73"
@@ -5024,16 +5024,16 @@
                     <div class="egov-tool-field-origin" style="left: 498.8px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N30_93E0_8BC7_94D4"
                             value="{{ old('revision_date_year') }}" name="revision_date_year"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 527.5px; top: 277px;">
                         <input class="egov-tool-field-rect onImage" id="N31__005F_89C1_93FC"
                             value="{{ old('revision_date_month') }}" name="revision_date_month"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 26px; height: 24px; font-size: 12px; text-align: center; line-height: 30px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 552px; top: 285px;">
                         <p class="egov-tool-field-rect onImage"
@@ -5045,35 +5045,35 @@
                             value="{{ old('previous_average_monthly_salary_health_insurance') }}"
                             name="previous_average_monthly_salary_health_insurance"
                             style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 153px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N34_93E0_8BC7_94D4" maxlength="4"
                             value="{{ old('previous_average_monthly_salary_pension') }}"
                             name="previous_average_monthly_salary_pension"
                             style="width: 44px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 216px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N35_94D4_8D86"
                             value="{{ old('before_revision_date_year') }}" name="before_revision_date_year"
-                            onfocus="addlength(this,4)"
+                            maxlength="4"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A"
                             value="{{ old('before_revision_date_month') }}" name="before_revision_date_month"
-                            onfocus="addlength(this,2)"
+                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 306px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_raise_and_reduction_month') }}"
-                            name="salary_raise_and_reduction_month" onfocus="addlength(this,2)"
+                            name="salary_raise_and_reduction_month" maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 350px; top: 326.8px;">
                         <select class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E"
@@ -5091,96 +5091,96 @@
                     <div class="egov-tool-field-origin" style="left: 422px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF"
                             value="{{ old('retroactive_payment_month') }}" name="retroactive_payment_month"
-                            onfocus="addlength(this,2)"
+                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 468px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N40_905C_90BF_8ED2" maxlength="7"
                             value="{{ old('retroactive_payment_amount') }}" name="retroactive_payment_amount"
                             style="width: 51px; height: 16px; font-size: 10px; text-align: right; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N41_005F_96BC_8FCC"
                             value="{{ old('salary_payment_month1') }}" name="salary_payment_month1"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N42_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_payment_month2') }}" name="salary_payment_month2"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4"
                             value="{{ old('salary_payment_month3') }}" name="salary_payment_month3"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6"
                             value="{{ old('salary_calculation_basic_days1') }}" name="salary_calculation_basic_days1"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N45__005F_8E73_8A4F_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days2') }}" name="salary_calculation_basic_days2"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N46__005F_8E73_93E0_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days3') }}" name="salary_calculation_basic_days3"
-                            onfocus="addlength(this,2)" required="required"
+                            maxlength="2" required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 148px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N47_005F_89C1_93FC_8ED2_94D4_8D86"
                             maxlength="7" value="{{ old('monthly_salary_currency1') }}"
                             name="monthly_salary_currency1" required="required"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 148px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N48_005F_8E73_8A4F_8BC7" maxlength="7"
                             value="{{ old('monthly_salary_currency2') }}" name="monthly_salary_currency2"
                             required="required"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 148px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N49_005F_8E73_8A4F_8BC8" maxlength="7"
                             value="{{ old('monthly_salary_currency3') }}" name="monthly_salary_currency3"
                             required="required"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 220px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="7"
                             value="{{ old('monthly_salary_in_kind1') }}" name="monthly_salary_in_kind1"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 220px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="7"
                             value="{{ old('monthly_salary_in_kind2') }}" name="monthly_salary_in_kind2"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 220px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N52_005F_8E73_8A4F" maxlength="7"
                             value="{{ old('monthly_salary_in_kind3') }}" name="monthly_salary_in_kind3"
                             style="width: 60px; height: 16px; font-size: 10px; text-align: right; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" />
+                            type="text" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 291px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N53_005F_8E73_93E0" maxlength="7"
@@ -5282,13 +5282,13 @@
                             id="remarks_salary_raise_and_reduction_reasons_text" maxlength="13"
                             name="remarks_salary_raise_and_reduction_reasons_text"
                             style="width: 125px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="{{ old('remarks_salary_raise_and_reduction_reasons_text') }}" />
+                            type="text" value="{{ old('remarks_salary_raise_and_reduction_reasons_text') }}" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 576px; top: 423px;">
                         <input class="egov-tool-field-rect onImage" disabled id="remarks_others" maxlength="10"
                             name="remarks_others"
                             style="width: 101px; height: 16px; font-size: 10px; text-align: left; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="{{ old('remarks_others') }}" />
+                            type="text" value="{{ old('remarks_others') }}" autocomplete="off"/>
                     </div>
                     <img alt="法令様式画像" src="{{ $dataUri }}" />
                 </div>
@@ -5296,188 +5296,6 @@
         </div>
 
 
-        <script>
-            function addlength(ele, ml) {
-                var tmp = ele.getAttribute("maxlength");
-
-                if (tmp == null) {
-                    ele.setAttribute("maxlength", ml);
-                }
-            }
-        </script>
-        <script type="module">
-            $(document).ready(function() {
-            function cal1() {
-                var nullFlg = true;
-
-                var valueA = parseFloat($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
-                var valueB = parseFloat($('#N50_005F_8E73_8A4F_8BC9').val()) || 0;
-
-                var val = valueA + valueB;
-
-                if ($('#N47_005F_89C1_93FC_8ED2_94D4_8D86').val() == "" && $('#N50_005F_8E73_8A4F_8BC9').val() == "") {
-                    nullFlg = false;
-                }
-
-                if (!isNaN(val) && nullFlg) {
-                    $('#N53_005F_8E73_93E0').val(val);
-                } else {
-                    $('#N53_005F_8E73_93E0').val("");
-                }
-            }
-            function cal2() {
-                var nullFlg = true;
-
-                var valueA = parseFloat($('#N48_005F_8E73_8A4F_8BC7').val()) || 0;
-                var valueB = parseFloat($('#N51_005F_8E73_8A4F_8BC7').val()) || 0;
-
-                var val = valueA + valueB;
-
-                if ($('#N48_005F_8E73_8A4F_8BC7').val() == "" && $('#N51_005F_8E73_8A4F_8BC7').val() == "") {
-                    nullFlg = false;
-                }
-
-                if (!isNaN(val) && nullFlg) {
-                    $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val(val);
-                } else {
-                    $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val("");
-                }
-            }
-            function cal3() {
-                var nullFlg = true;
-
-                var valueA = parseFloat($('#N49_005F_8E73_8A4F_8BC8').val()) || 0;
-                var valueB = parseFloat($('#N52_005F_8E73_8A4F').val()) || 0;
-
-                var val = valueA + valueB;
-
-                if ($('#N49_005F_8E73_8A4F_8BC8').val() == "" && $('#N52_005F_8E73_8A4F').val() == "") {
-                    nullFlg = false;
-                }
-
-                if (!isNaN(val) && nullFlg) {
-                    $('#N55_005F_8E73_8A4F_8BC7_94D4').val(val);
-                } else {
-                    $('#N55_005F_8E73_8A4F_8BC7_94D4').val("");
-                }
-            }
-            function cal4() {
-                var nullFlg = true;
-
-                var valueA = parseFloat($('#N53_005F_8E73_93E0').val()) || 0;
-                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val()) || 0;
-                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val()) || 0;
-
-                var val = valueA + valueB + valueC;
-
-                if ($('#N53_005F_8E73_93E0').val() == "" && $('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val() == "" && $('#N55_005F_8E73_8A4F_8BC7_94D4').val() == "") {
-                    nullFlg = false;
-                }
-
-                if (!isNaN(val) && nullFlg) {
-                    $('#N56_005F_8E73_8A4F_8BC7_94D7').val(val);
-                } else {
-                    $('#N56_005F_8E73_8A4F_8BC7_94D7').val("");
-                }
-            }
-            function cal5() {
-                var sum = 0;
-                var count = 0;
-
-                var valueA = parseFloat($('#N53_005F_8E73_93E0').val());
-                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val());
-                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val());
-
-                if (valueA !== "") {
-                    var parsedA = parseFloat(valueA);
-                    if (!isNaN(parsedA)) {
-                        sum += parsedA;
-                        count++;
-                    }
-                }
-
-                if (valueB !== "") {
-                    var parsedB = parseFloat(valueB);
-                    if (!isNaN(parsedB)) {
-                        sum += parsedB;
-                        count++;
-                    }
-                }
-
-                if (valueC !== "") {
-                    var parsedC = parseFloat(valueC);
-                    if (!isNaN(parsedC)) {
-                        sum += parsedC;
-                        count++;
-                    }
-                }
-
-                var val = (count > 0) ? Math.floor(sum / count) : null;
-
-                if (val !== null && !isNaN(val)) {
-                    $('#N57_005F_8E73_8A4F_8BC7_94D9').val(val);
-                } else {
-                    $('#N57_005F_8E73_8A4F_8BC7_94D9').val("");
-                }
-            }
-            function cal6() {
-                var sum = 0;
-                var count = 0;
-
-                var valueA = parseFloat($('#N53_005F_8E73_93E0').val());
-                var valueB = parseFloat($('#N54_005F_89C1_93FC_8ED2_94D4_8D86').val());
-                var valueC = parseFloat($('#N55_005F_8E73_8A4F_8BC7_94D4').val());
-                var valueD = parseFloat($('#N40_905C_90BF_8ED2').val());
-
-                if (valueA !== "") {
-                    var parsedA = parseFloat(valueA);
-                    if (!isNaN(parsedA)) {
-                        sum += parsedA;
-                        count++;
-                    }
-                }
-
-                if (valueB !== "") {
-                    var parsedB = parseFloat(valueB);
-                    if (!isNaN(parsedB)) {
-                        sum += parsedB;
-                        count++;
-                    }
-                }
-
-                if (valueC !== "") {
-                    var parsedC = parseFloat(valueC);
-                    if (!isNaN(parsedC)) {
-                        sum += parsedC;
-                        count++;
-                    }
-                }
-
-                if (valueD !== "") {
-                    var parsedD = parseFloat(valueD);
-                    if (!isNaN(parsedD)) {
-                        sum = sum-parsedD;
-                    }
-                }
-
-                var val = (count > 0) ? Math.floor(sum / count) : null;
-
-                if(valueD !== null && !isNaN(valueD)){
-                    if (val !== null && !isNaN(val)) {
-                        $('#N58_005F_8E73_8A4F_8BC7_9410').val(val);
-                    } else {
-                        $('#N58_005F_8E73_8A4F_8BC7_9410').val("");
-                    }
-                }
-            }
-
-            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9').on('input', cal1);
-            $('#N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7').on('input', cal2);
-            $('#N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal3);
-            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal4);
-            $('#N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal5);
-            $('#N40_905C_90BF_8ED2, #N47_005F_89C1_93FC_8ED2_94D4_8D86, #N50_005F_8E73_8A4F_8BC9, #N48_005F_8E73_8A4F_8BC7, #N51_005F_8E73_8A4F_8BC7, #N49_005F_8E73_8A4F_8BC8, #N52_005F_8E73_8A4F').on('input', cal6);
-        });
-        </script>
+        
     </div>
 </div>

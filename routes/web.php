@@ -34,6 +34,16 @@ use App\Http\Controllers\Ledger\EmploymentInsuredStatusAcquisitionNotIssuedSepar
 use App\Http\Controllers\Ledger\EmploymentInsuredQualificationLossController;
 use App\Http\Controllers\Ledger\CaregiverLeaveBenefitApplicationController;
 use App\Http\Controllers\Ledger\HealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\ChildcareLeaveApplicationOrExtensionEndNoticeController;
+use App\Http\Controllers\Ledger\NationalPensionCategory3InsuredPersonNoticeController;
+use App\Http\Controllers\Ledger\ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController;
+use App\Http\Controllers\Ledger\MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController;
+use App\Http\Controllers\Ledger\StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController;
+use App\Http\Controllers\Ledger\MaternityLeaveApplicationOrChangeEndNoticeController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceDependentChangeController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
+use App\Http\Controllers\Ledger\OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController;
 use App\Http\Controllers\CompanyDepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
@@ -46,6 +56,11 @@ use App\Http\Controllers\EgovTestController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\FinalExamController;
 use App\Http\Controllers\ShiftCalendarController;
+use App\Http\Controllers\WagesEmployeeController;
+use App\Http\Controllers\AttendanceEmployeeController;
+use App\Http\Controllers\ImportAttendanceController;
+use App\Http\Controllers\ImportEmployeeController;
+use App\Http\Controllers\ImportWageController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
@@ -145,7 +160,9 @@ Route::group(['middleware' => 'auth'], function () {
         }
     })->where('path', '.*');
 
-     // 帳票
+    Route::get('/pick_up', [PickUpController::class, 'index'])->name('pickup.pickup');
+
+    // 帳票
     Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
     Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
 
@@ -161,7 +178,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
         Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout_post');
         Route::get('/about_us', [AboutController::class, 'index'])->name('about_us');
-        Route::get('/employee_information', [EmployeeController::class, 'index'])->name('information');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('/calendar/shift', [ShiftCalendarController::class, 'index'])->name('calendar.shift');
         Route::get('/calendar/shift/download', [ShiftCalendarController::class, 'download'])->name('calendar.shift_download');
@@ -253,20 +269,34 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/ledger/4950008680051000', [CaregiverLeaveBenefitApplicationController::class, 'post'])->name('ledger.4950008680051000_post');
         Route::get('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'index'])->name('ledger.4950008680033000');
         Route::post('/ledger/4950008680033000', [EmploymentInsuredQualificationGetController::class, 'post'])->name('ledger.4950008680033000_post');
+
+        Route::get('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'index'])->name('ledger.4950013520602000');
+        Route::post('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'post'])->name('ledger.4950013520602000_post');
         Route::get('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
         Route::post('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
+
+        Route::get('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'index'])->name('ledger.4950013520608000');
+        Route::post('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'post'])->name('ledger.4950013520608000_post');
         // 2024/12/02新様式帳票
+        Route::get('/ledger/4950013521029000', [ChildcareLeaveApplicationOrExtensionEndNoticeController::class, 'index'])->name('ledger.4950013521029000');
+        Route::post('/ledger/4950013521029000', [ChildcareLeaveApplicationOrExtensionEndNoticeController::class, 'post'])->name('ledger.4950013521029000_post');
         Route::get('/ledger/4950013521025000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'index'])->name('ledger.4950013521025000');
         Route::post('/ledger/4950013521025000', [HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'post'])->name('ledger.4950013521025000_post');
         Route::get('/ledger/4950013521024000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'index'])->name('ledger.4950013521024000');
         Route::post('/ledger/4950013521024000', [HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'post'])->name('ledger.4950013521024000_post');
         Route::get('/ledger/4950013521026000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'index'])->name('ledger.4950013521026000');
         Route::post('/ledger/4950013521026000', [HealthAndPensionInsuredBonusPaymentNotificationController::class, 'post'])->name('ledger.4950013521026000_post');
-
         Route::get('/ledger/4950013521019000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'index'])->name('ledger.4950013521019000');
         Route::post('/ledger/4950013521019000', [HealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'post'])->name('ledger.4950013521019000_post');
         Route::get('/ledger/4950013521021000', [HealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013521021000');
         Route::post('/ledger/4950013521021000', [HealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013521021000_post');
+        Route::get('/ledger/4950013521035000', [NationalPensionCategory3InsuredPersonNoticeController::class, 'index'])->name('ledger.4950013521035000');
+        Route::post('/ledger/4950013521035000', [NationalPensionCategory3InsuredPersonNoticeController::class, 'post'])->name('ledger.4950013521035000_post');
+        Route::get('/ledger/4950013521033000', [StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController::class, 'index'])->name('ledger.4950013521033000');
+        Route::post('/ledger/4950013521033000', [StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceController::class, 'post'])->name('ledger.4950013521033000_post');
+        Route::get('/ledger/4950013521030000', [MaternityLeaveApplicationOrChangeEndNoticeController::class, 'index'])->name('ledger.4950013521030000');
+        Route::post('/ledger/4950013521030000', [MaternityLeaveApplicationOrChangeEndNoticeController::class, 'post'])->name('ledger.4950013521030000_post');
+
 
         // 顧客画面
         Route::get('/company/department', [CompanyDepartmentController::class, 'current_company_department_update'])->name('current_company_department_update');
@@ -278,6 +308,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/company/branch', [BranchController::class, 'branch_post'])->name('branch_post');
 
         Route::get('/company/qualifications', [QualificationsController::class, 'qualifications'])->name('qualifications');
+        Route::post('/company/qualifications/api/position/list', [QualificationsController::class, 'get_position'])->name('qualifications.get_position');
 
         Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
         Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
@@ -301,9 +332,45 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/company/download/{document_type}', [CompanyController::class, 'downloadFile'])->name('company.downloadFile');
         Route::post('/company/api/industry_type/list', [CompanyController::class, 'get_industry_type'])->name('company.get_industry_type');
 
+        Route::get('/employee/allowance', [EmployeeController::class, 'allowance_list'])->name('allowance');
+        Route::get('/employee/wages', [WagesEmployeeController::class, 'wages'])->name('wages.index');
+        Route::get('/employee/wages/ledger', [WagesEmployeeController::class, 'index'])->name('wages-ledger.index');
+        Route::post('/employee/wages/ledger/edit', [WagesEmployeeController::class, 'select'])->name('wages-ledger.edit');
+        Route::get('/employee/wages/ledger/edit', function () {
+            return redirect()->route('wages-ledger.index');
+        });
+        Route::post('/employee/wages/list/edit', [WagesEmployeeController::class, 'wage_post'])->name('wages.post');
+        Route::get('/employee/wages/list/filter-load', [WagesEmployeeController::class, 'wage_filter_load'])->name('wages.filter.load');
+        Route::post('/employee/wages/list/filter-save', [WagesEmployeeController::class, 'wage_filter_save'])->name('wages.filter.save');
+        Route::post('/employee/wages/list/filter-remove', [WagesEmployeeController::class, 'wage_filter_remove'])->name('wages.filter.remove');
+        Route::get('/employee/wages/list/filter-showlist', [WagesEmployeeController::class, 'wage_filter_showlist'])->name('wages.filter.showlist');
         Route::get('/employee/closure_information', [EmployeeController::class, 'closure_information_list'])->name('closure_information');
+
+        Route::get('/employee/wages/list/insurance-get', [WagesEmployeeController::class, 'wage_insurance_get'])->name('wages.insurance.get');
+        Route::post('/employee/wages/list/insurance-save', [WagesEmployeeController::class, 'wage_insurance_save'])->name('wages.insurance.save');
+
+        Route::get('/employee/attendances', [AttendanceEmployeeController::class, 'attendances'])->name('attendances.index');
+        Route::post('/employee/attendances/list/edit', [AttendanceEmployeeController::class, 'attendance_post'])->name('attendances.post');
+        Route::get('/employee/attendances/list/filter-load', [AttendanceEmployeeController::class, 'attendance_filter_load'])->name('attendances.filter.load');
+        Route::post('/employee/attendances/list/filter-save', [AttendanceEmployeeController::class, 'attendance_filter_save'])->name('attendances.filter.save');
+        Route::post('/employee/attendances/list/filter-remove', [AttendanceEmployeeController::class, 'attendance_filter_remove'])->name('attendances.filter.remove');
+        Route::get('/employee/attendances/list/filter-showlist', [AttendanceEmployeeController::class, 'attendance_filter_showlist'])->name('attendances.filter.showlist');
+
+        Route::get('/employee/wages/upload', [ImportWageController::class, 'index'])->name('wages.upload');
+        Route::get('/employee/wages/upload/columns', [ImportWageController::class, 'column_data'])->name('wages.upload.colmuns');
+        Route::post('/employee/wages/upload', [ImportWageController::class, 'upload'])->name('wages.upload.post');
+        Route::get('/employee/attendance/upload', [ImportAttendanceController::class, 'index'])->name('attendances.upload');
+        Route::get('/employee/attendance/upload/columns', [ImportAttendanceController::class, 'column_data'])->name('attendances.upload.colmuns');
+        Route::post('/employee/attendance/upload', [ImportAttendanceController::class, 'upload'])->name('attendances.upload.post');
+        Route::get('/employee/upload', [ImportEmployeeController::class, 'index'])->name('employees.upload');
+        Route::get('/employee/upload/columns', [ImportEmployeeController::class, 'column_data'])->name('employees.upload.colmuns');
+        Route::post('/employee/upload', [ImportEmployeeController::class, 'upload'])->name('employees.upload.post');
+
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');
     });
+
+    Route::get('/employee/wages/list', [WagesEmployeeController::class, 'wages_list'])->name('wages.list');
+    Route::get('/employee/attendances/list', [AttendanceEmployeeController::class, 'attendance_list'])->name('attendances.list');
 });

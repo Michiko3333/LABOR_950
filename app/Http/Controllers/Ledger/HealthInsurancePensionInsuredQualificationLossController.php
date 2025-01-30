@@ -178,7 +178,11 @@ class HealthInsurancePensionInsuredQualificationLossController extends Controlle
                 return redirect()->back()->withErrors($errorMessage)->withInput();
             }
             $this->putSuccess("送信に成功しました");
-            return redirect()->route('ledger.index');
+            if($request->input('query_parameter')) {
+                return redirect()->to($request->input('query_parameter'));
+            } else {
+                return redirect()->route('ledger.index');
+            }
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }

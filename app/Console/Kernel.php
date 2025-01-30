@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Models\BatchManagement;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -12,7 +14,21 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $batches = BatchManagement::where('delete_flg', 0)->get();
+
+        if($batches->count()) {
+            foreach($batches as $batch) {
+                $schedule->command($batch->command)
+                    ->dailyAt($batch->time_specification)
+                    ->withoutOverlapping()
+                    ->onFailure(function () use ($batch) {
+                        \Log::error("{$batch->command} failed");
+                    })
+                    ->onSuccess(function () use ($batch) {
+                        \Log::info("{$batch->command} succeeded");
+                    });
+            }
+        }
     }
 
     /**

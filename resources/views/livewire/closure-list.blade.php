@@ -93,14 +93,14 @@
                     </td>
 
                     <td class="right aligned collapsing">
-                        @if ($userPermission->isReadableFor(14))
+                        @if ($userPermission->isWritableFor(14))
                             <a class="ui basic primary button" type="button"
                             onClick="javascript:openModal('{{ $item->closure_type }}', '{{ $typeMapping[$item->closure_type] }}', '{{ $item->id }}')">
                             編集
                             </a>
                         @endif
-                        @if ($userPermission->isReadableFor(14))
-                            <a class="ui basic primary button" type="button"
+                        @if ($userPermission->isWritableFor(14))
+                            <a class="ui button negative basic" type="button"
                             onClick="javascript:remove({{ $item->id }})">
                             削除
                             </a>

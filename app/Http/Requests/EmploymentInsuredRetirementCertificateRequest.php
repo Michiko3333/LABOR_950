@@ -471,7 +471,7 @@ class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
             "change_office_place" => 'nullable|string|max:255',
             "employee_decision_reasons" => 'nullable|string|max:255',
             "other_reasons" => 'nullable|string|max:255',
-            "memo_for_employer" => 'nullable|string|max:255',
+            "memo_for_employer" => 'required|string|max:255',
             'apply_to_code' => 'required|string',
             'apply_to_name' => 'required|string'
         ];
@@ -1274,6 +1274,16 @@ class EmploymentInsuredRetirementCertificateRequest extends BaseRequest
                         $validator->errors()->add('salary_payment_period_end_day_24', '2枚目(続紙)_10_賃金支払対象期間_終了日付_12行目は正しい日付を入力してください。');
                     }
                 }
+            }
+
+            $fields = [
+                'retirement_reason_1_1', 'retirement_reason_1_2', 'retirement_reason_2', 'retirement_reason_3_1', 'retirement_reason_3_2',
+                'retirement_reason_3_3', 'retirement_reason_3_4', 'retirement_reason_4_1', 'retirement_reason_4_2', 'retirement_reason_4_3_1',
+                'retirement_reason_4_3_2', 'retirement_reason_5_1_1', 'retirement_reason_5_1_2', 'retirement_reason_5_1_3', 'retirement_reason_5_1_4',
+                'retirement_reason_5_1_5', 'retirement_reason_5_1_6', 'retirement_reason_5_1_7', 'retirement_reason_5_2', 'retirement_reason_6',
+            ];
+            if (empty(array_filter(array_intersect_key($data, array_flip($fields))))) {
+                $validator->errors()->add('salary_payment_period_end_day_24', '2枚目_7_事業主記入欄を1つ選択してください。');
             }
         });
     }

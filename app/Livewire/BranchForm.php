@@ -32,9 +32,11 @@ class BranchForm extends Component
     public $salary;
     public $bonus;
     public $bounty;
+    public $allowance;
+    public $id;
 
     public $tabs = [
-        '事務所基本情報',
+        '事業所基本情報',
         '社会保険',
         '雇用保険',
         '労働保険',
@@ -45,11 +47,12 @@ class BranchForm extends Component
     public $paymentTabs = [
         '給与',
         '賞与',
-        '報奨金'
+        '報奨金',
+        '手当',
     ];
 
     public $departments;
-
+    
     public function mount(
         $errors,
         $id = null,
@@ -58,6 +61,7 @@ class BranchForm extends Component
         $salary = [],
         $bonus = [],
         $bounty = [],
+        $allowance = [],
         $prefectures = [],
         $labor_insurance_payment_method = [],
         $place_type = [],
@@ -82,6 +86,8 @@ class BranchForm extends Component
         $this->salary = $salary;
         $this->bonus = $bonus;
         $this->bounty = $bounty;
+        $this->allowance = $allowance;
+        $this->id = $id;
 
         $this->branch = $branch;
         $this->departments = $departments;

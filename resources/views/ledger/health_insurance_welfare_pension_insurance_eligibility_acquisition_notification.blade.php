@@ -75,8 +75,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <input type="hidden" name="query_parameter" id="queryParameter">
+                </div>
 
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"

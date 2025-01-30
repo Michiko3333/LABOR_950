@@ -63,6 +63,12 @@
                 '/^bou-departments\.' . preg_quote($key) . '\..*/',
                 '/^bou-bonus_payment_month\.' . preg_quote($key) . '\..*/',
                 '/^bou-applied_date\.' . preg_quote($key) . '\..*/',
+                '/^al-allowance\.' . preg_quote($key) . '\..*/',
+                '/^al-amount\.' . preg_quote($key) . '\..*/',
+                '/^al-pay_month\.' . preg_quote($key) . '\..*/',
+                '/^al-target\.' . preg_quote($key) . '\..*/',
+                '/^al-remarks\.' . preg_quote($key) . '\..*/',
+                '/^al-applied_date\.' . preg_quote($key) . '\..*/',
             ];
             $field1 = $errors->hasAny([
                 'br-name.' . $key,
@@ -157,6 +163,14 @@
                 '/^bou-bonus_payment_month\.' . preg_quote($key) . '\..*/',
                 '/^bou-applied_date\.' . preg_quote($key) . '\..*/',
             ];
+            $sub4 = [
+                '/^al-allowance\.' . preg_quote($key) . '\..*/',
+                '/^al-amount\.' . preg_quote($key) . '\..*/',
+                '/^al-pay_month\.' . preg_quote($key) . '\..*/',
+                '/^al-target\.' . preg_quote($key) . '\..*/',
+                '/^al-remarks\.' . preg_quote($key) . '\..*/',
+                '/^al-applied_date\.' . preg_quote($key) . '\..*/',
+            ];
 
             $sub = !empty(
                 array_filter($sub, function ($pattern) use ($errors) {
@@ -173,8 +187,13 @@
                     return !empty(preg_grep($pattern, $errors->keys()));
                 })
             );
+            $sub4 = !empty(
+                array_filter($sub4, function ($pattern) use ($errors) {
+                    return !empty(preg_grep($pattern, $errors->keys()));
+                })
+            );
             $anyErrorTab = [
-                '事務所基本情報' => $field1,
+                '事業所基本情報' => $field1,
                 '社会保険' => $field2,
                 '雇用保険' => $field3,
                 '労働保険' => $field4,
@@ -185,6 +204,7 @@
                 '給与' => $sub,
                 '賞与' => $sub2,
                 '報奨金' => $sub3,
+                '手当' => $sub4,
             ];
         @endphp
         <input type="hidden" name="lw-accordion[]"value="{{ $item['lw-accordion'] }}">
@@ -208,7 +228,7 @@
                     @foreach ($tabs as $tab)
                         <div class="ui form item {{ $tab == $item['lw-current_tab'] ? 'active' : '' }}">
                             @switch($tab)
-                                @case('事務所基本情報')
+                                @case('事業所基本情報')
                                     <h3>事業所基本情報</h3>
                                     <div class="two fields" style="padding: 0;">
                                         <div class="field required {{ err_bind($errs, 'br-name', $key) }}">
@@ -397,7 +417,7 @@
                                         </div>
                                         <div
                                             class="field {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
-                                            <label for="br-pension_office_reference_no_office">事業所番号整理記号・事務所記号</label>
+                                            <label for="br-pension_office_reference_no_office">事業所番号整理記号・事業所記号</label>
                                             <input type="text" name="br-pension_office_reference_no_office[]"
                                                 wire:model.live="item.br-pension_office_reference_no_office" placeholder=""
                                                 maxlength="4">
@@ -930,6 +950,12 @@
                                                         <livewire:bounty-form :errors="$errors" :childKey="$key" :bounty="$bounty"
                                                             :branchId="$item['br-id']" :companyId="$company->id"
                                                             wire:key="bounty-form-{{ $key }}" />
+                                                    @break
+
+                                                    @case('手当')
+                                                        <livewire:allowance-form :errors="$errors" :childKey="$key" :allowance="$allowance"
+                                                            :branchId="$item['br-id']" :companyId="$company->id"
+                                                            wire:key="allowance-form-{{ $key }}" />
                                                     @break
 
                                                     @default

@@ -31,5 +31,8 @@ class FilterEmployeeList extends FilterColumn
                 UserFilterEmployeeList::create($d);
             }
         }
+
+        $this->tmp = $this->list_show;
+        $this->dispatchFilterColumn();
     }
 }

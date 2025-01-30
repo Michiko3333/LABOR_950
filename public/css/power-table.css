@@ -1,0 +1,151 @@
+
+.power-table {
+    position: relative;
+    overflow: auto;
+    height: 52vh;
+    max-height: 52vh;
+}
+
+.power-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    
+}
+
+.power-table tbody {
+    position: relative;
+}
+
+.power-table thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: -0px;
+    z-index: 1;
+    background: #f9fafb;
+    padding: 0.5em;
+    min-width: 100px;
+    width: auto;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border: 1px solid rgba(34, 36, 38, .1);
+    border-collapse: collapse;
+    border-top:none;
+    border-bottom: none;
+}
+
+.power-table td {
+    vertical-align: middle;
+    border: 1px solid rgba(34, 36, 38, .1);
+    border-collapse: collapse;
+    font-size: 14px;
+    overflow: hidden;
+    height: 32px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: white;
+}
+
+
+.power-table .edit-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0.4em;
+    font-size: 14px;
+    background-color: #ddeeff;
+}
+
+.power-table .edit-input:focus {
+    outline: solid 1px #4183C0;
+}
+
+.power-table table th.hidden,
+.power-table table td.hidden {
+    display: none;
+}
+.power-table table th button.ui.icon.button {
+    padding: 4.5px !important;
+    height: 17px;
+    margin: 0 4px;
+}
+
+.power-table .label,
+.power-table .view {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0.4em;
+    font-size: 14px;
+}
+
+.power-table .view.hidden,
+.power-table .edit-input.hidden {
+    display: none;
+}
+
+.power-table .plus-btn.hidden {
+    display: none;
+}
+
+.pt-actions-top,
+.pt-actions-bottom {
+    padding: 0.5em 0;
+}
+
+.pt-actions-bottom {
+    text-align: end;
+}
+
+#pt-filter-remove.hidden {
+    display: none;
+}
+
+
+.power-table table th::before,
+.power-table table th::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+
+.power-table table #pt-list-header:not(.edit) th {
+    padding-right: 30px;
+    cursor: pointer;
+}
+
+.power-table table #pt-list-header:not(.edit) th::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.power-table table #pt-list-header:not(.edit) th::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.power-table table #pt-list-header:not(.edit) th.asc::before {
+    border-bottom-color: #555;
+}
+
+.power-table table #pt-list-header:not(.edit) th.desc::after {
+    border-top-color: #555;
+}
+
+#pt-condition-message {
+    display: none;
+}
+
+#pt-condition-message.show {
+    display: block;
+}
+
+#pt-spacer {
+    width: 100%;
+}

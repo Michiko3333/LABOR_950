@@ -24,6 +24,7 @@ class BranchFormItem extends Component
     public $salary;
     public $bonus;
     public $bounty;
+    public $allowance;
 
     public $tabs = [];
     public $paymentTabs = [];
@@ -46,6 +47,7 @@ class BranchFormItem extends Component
         $this->salary = $list['salary'];
         $this->bonus = $list['bonus'];
         $this->bounty = $list['bounty'];
+        $this->allowance = $list['allowance'];
 
         $this->tabs = $tabs;
         $this->paymentTabs = $paymentTabs;

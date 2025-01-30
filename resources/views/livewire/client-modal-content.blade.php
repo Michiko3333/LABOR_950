@@ -32,7 +32,7 @@
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" id="startCalendar" class="startCalendar" wire:model.live="startDate"
-                            placeholder="YYYY年M月D日">
+                            placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" id="endCalendar" class="endCalendar" wire:model.live="endDate"
-                            placeholder="YYYY年M月D日">
+                            placeholder="YYYY年M月D日" autocomplete="off">
                     </div>
                 </div>
             </div>

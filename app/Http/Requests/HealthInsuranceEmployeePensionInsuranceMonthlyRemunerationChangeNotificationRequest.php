@@ -14,6 +14,32 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
         return true;
     }
 
+    public function validationData()
+    {
+        $data = $this->all();
+
+        if (isset($data['branch_address'])) {
+            $data['branch_address'] = mb_convert_kana($data['branch_address'], 'AKS');
+            $data['branch_address'] = str_replace(['-', '‐', '―'], '－', $data['branch_address']);
+        }
+        if (isset($data['employer_company_managerial_position_name'])) {
+            $data['employer_company_managerial_position_name'] = mb_convert_kana($data['employer_company_managerial_position_name'], 'AKS');
+        }
+        if (isset($data['labor_consultant_submission_agent_name'])) {
+            $data['labor_consultant_submission_agent_name'] = mb_convert_kana($data['labor_consultant_submission_agent_name'], 'AKS');
+        }
+        if (isset($data['insured_fullname_kana'])) {
+            $data['insured_fullname_kana'] = mb_convert_kana($data['insured_fullname_kana'], 'KS');
+        }
+        if (isset($data['insured_fullname'])) {
+            $data['insured_fullname'] = mb_convert_kana($data['insured_fullname'], 'AKS');
+        }
+
+        $this->merge($data);
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -207,6 +233,24 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             }
             if ($totalSize > 99 * 1024 * 1024) {
                 $validator->errors()->add('file_total_size', 'ファイルの合計サイズは99MB以下である必要があります。');
+            }
+
+
+            $salary_payment_month1 = $data['salary_payment_month1'] ?? "";
+            $salary_payment_month2 = $data['salary_payment_month2'] ?? "";
+            $salary_payment_month3 = $data['salary_payment_month3'] ?? "";
+
+            if (!empty($salary_payment_month1) && !empty($salary_payment_month2) && !empty($salary_payment_month3)) {
+
+                if ($salary_payment_month1== $salary_payment_month2) {
+                    $validator->errors()->add('salary_payment_month2', '給与支給月は重複しないように入力してください。');
+                }
+                if ($salary_payment_month1== $salary_payment_month3) {
+                    $validator->errors()->add('salary_payment_month3', '給与支給月は重複しないように入力してください。');
+                }
+                if ($salary_payment_month2== $salary_payment_month3) {
+                    $validator->errors()->add('salary_payment_month3', '給与支給月は重複しないように入力してください。');
+                }
             }
         });
 

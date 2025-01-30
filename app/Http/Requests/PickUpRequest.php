@@ -30,8 +30,6 @@ class PickUpRequest extends BaseRequest
             "loss_of_health_insurance_status" => 'nullable|int|between:1,365',
             "labor_insurance_annual_renewal_start_month" => 'nullable|int|between:1,12|required_with:labor_insurance_annual_renewal_start_day,labor_insurance_annual_renewal_end_month,labor_insurance_annual_renewal_end_day',
             "labor_insurance_annual_renewal_start_day" => 'nullable|int|between:1,31|required_with:labor_insurance_annual_renewal_start_month,labor_insurance_annual_renewal_end_month,labor_insurance_annual_renewal_end_day',
-            "labor_insurance_annual_renewal_end_month" => 'nullable|int|between:1,12|required_with:labor_insurance_annual_renewal_start_month,labor_insurance_annual_renewal_start_day,labor_insurance_annual_renewal_end_day',
-            "labor_insurance_annual_renewal_end_day" => 'nullable|int|between:1,31|required_with:labor_insurance_annual_renewal_start_month,labor_insurance_annual_renewal_start_day,labor_insurance_annual_renewal_end_month',
             "year_end_tax_adjustment_start_month" => 'nullable|int|between:1,12|required_with:year_end_tax_adjustment_start_day,year_end_tax_adjustment_end_month,year_end_tax_adjustment_end_day',
             "year_end_tax_adjustment_start_day" => 'nullable|int|between:1,31|required_with:year_end_tax_adjustment_start_month,year_end_tax_adjustment_end_month,year_end_tax_adjustment_end_day',
             "year_end_tax_adjustment_end_month" => 'nullable|int|between:1,12|required_with:year_end_tax_adjustment_start_month,year_end_tax_adjustment_start_day,year_end_tax_adjustment_end_day',
@@ -48,6 +46,7 @@ class PickUpRequest extends BaseRequest
             "subsidies_and_grants" => 'nullable|int|between:1,365',
             "report_on_the_status_of_elderly_and_disabled_people_month" => 'nullable|int|between:1,7|required_with:report_on_the_status_of_elderly_and_disabled_people_day',
             "report_on_the_status_of_elderly_and_disabled_people_day" => 'nullable|int|between:1,31|required_with:report_on_the_status_of_elderly_and_disabled_people_month',
+            "bonus_payment_notice" => 'nullable|int|between:1,365',
         ];
     }
 
@@ -57,8 +56,6 @@ class PickUpRequest extends BaseRequest
             $data = $validator->getData();
             $labor_insurance_annual_renewal_start_month = $data['labor_insurance_annual_renewal_start_month'] ?? "";
             $labor_insurance_annual_renewal_start_day = $data['labor_insurance_annual_renewal_start_day'] ?? "";
-            $labor_insurance_annual_renewal_end_month = $data['labor_insurance_annual_renewal_end_month'] ?? "";
-            $labor_insurance_annual_renewal_end_day = $data['labor_insurance_annual_renewal_end_day'] ?? "";
 
             $year_end_tax_adjustment_start_month = $data['year_end_tax_adjustment_start_month'] ?? "";
             $year_end_tax_adjustment_start_day = $data['year_end_tax_adjustment_start_day'] ?? "";
@@ -67,62 +64,40 @@ class PickUpRequest extends BaseRequest
 
             $report_on_the_status_of_elderly_and_disabled_people_month = $data['report_on_the_status_of_elderly_and_disabled_people_month'] ?? "";
             $report_on_the_status_of_elderly_and_disabled_people_day = $data['report_on_the_status_of_elderly_and_disabled_people_day'] ?? "";
+            $comparisonDate = Carbon::create(2024, 7, 15);
 
             if (!empty($labor_insurance_annual_renewal_start_month) && !empty($labor_insurance_annual_renewal_start_day)) {
-                if (ctype_digit($labor_insurance_annual_renewal_start_month)) {
+                if (ctype_digit($labor_insurance_annual_renewal_start_month) && ctype_digit($labor_insurance_annual_renewal_start_day)) {
                     if (!checkdate($labor_insurance_annual_renewal_start_month, $labor_insurance_annual_renewal_start_day, '2024')) {
-                        $validator->errors()->add('labor_insurance_annual_renewal_start_day', '労働保険年度更新（開始）は正しい日付を入力してください。');
+                        $validator->errors()->add('labor_insurance_annual_renewal_start_day', '労働保険年度更新は正しい日付を入力してください。');
                     }
-                }
-            }
-            if (!empty($labor_insurance_annual_renewal_end_month) && !empty($labor_insurance_annual_renewal_end_day)) {
-                if (ctype_digit($labor_insurance_annual_renewal_end_month)) {
-                    if (!checkdate($labor_insurance_annual_renewal_end_month, $labor_insurance_annual_renewal_end_day, '2024')) {
-                        $validator->errors()->add('labor_insurance_annual_renewal_end_day', '労働保険年度更新（終了）は正しい日付を入力してください。');
-                    }
-                }
-            }
-            if (!empty($labor_insurance_annual_renewal_start_month) && !empty($labor_insurance_annual_renewal_start_day) &&
-                !empty($labor_insurance_annual_renewal_end_month) && !empty($labor_insurance_annual_renewal_end_day)) {
-                $startDate = Carbon::create(2024, $labor_insurance_annual_renewal_start_month, $labor_insurance_annual_renewal_start_day);
-                $endDate = Carbon::create(2024, $labor_insurance_annual_renewal_end_month, $labor_insurance_annual_renewal_end_day);
-                if ($startDate->gte($endDate)) {
-                    $validator->errors()->add('labor_insurance_annual_renewal_end_day', '労働保険年度更新の終了日は開始日以降の日付を入力してください。');
                 }
             }
 
             if (!empty($year_end_tax_adjustment_start_month) && !empty($year_end_tax_adjustment_start_day)) {
-                if (ctype_digit($year_end_tax_adjustment_start_month)) {
+                if (ctype_digit($year_end_tax_adjustment_start_month) && ctype_digit($year_end_tax_adjustment_start_day)) {
                     if (!checkdate($year_end_tax_adjustment_start_month, $year_end_tax_adjustment_start_day, '2024')) {
                         $validator->errors()->add('year_end_tax_adjustment_start_day', '年末調整（開始）は正しい日付を入力してください。');
                     }
                 }
             }
             if (!empty($year_end_tax_adjustment_end_month) && !empty($year_end_tax_adjustment_end_day)) {
-                if (ctype_digit($year_end_tax_adjustment_end_month)) {
+                if (ctype_digit($year_end_tax_adjustment_end_month) && ctype_digit($year_end_tax_adjustment_end_day)) {
                     if (!checkdate($year_end_tax_adjustment_end_month, $year_end_tax_adjustment_end_day, '2024')) {
                         $validator->errors()->add('year_end_tax_adjustment_end_day', '年末調整（終了）は正しい日付を入力してください。');
                     }
                 }
             }
-            if (!empty($year_end_tax_adjustment_start_month) && !empty($year_end_tax_adjustment_start_day) &&
-                !empty($year_end_tax_adjustment_end_month) && !empty($year_end_tax_adjustment_end_day)) {
-                $startDate = Carbon::create(2024, $year_end_tax_adjustment_start_month, $year_end_tax_adjustment_start_day);
-                $endDate = Carbon::create(2024, $year_end_tax_adjustment_end_month, $year_end_tax_adjustment_end_day);
-                if ($startDate->gte($endDate)) {
-                    $validator->errors()->add('year_end_tax_adjustment_end_day', '年末調整の終了日は開始日以降の日付を入力してください。');
-                }
-            }
 
             if (!empty($report_on_the_status_of_elderly_and_disabled_people_month) && !empty($report_on_the_status_of_elderly_and_disabled_people_day)) {
-                if (ctype_digit($report_on_the_status_of_elderly_and_disabled_people_month)) {
-                    if (!checkdate($report_on_the_status_of_elderly_and_disabled_people_month, $report_on_the_status_of_elderly_and_disabled_people_day, '2024')) {
-                        $validator->errors()->add('report_on_the_status_of_elderly_and_disabled_people_day', '高齢者雇用状況報告書・障碍者状況等報告書は正しい日付を入力してください。');
-                    }
-                    if($report_on_the_status_of_elderly_and_disabled_people_month === '7') {
-                        if($report_on_the_status_of_elderly_and_disabled_people_day >= '15') {
-                            $validator->errors()->add('report_on_the_status_of_elderly_and_disabled_people_day', '高齢者雇用状況報告書・障碍者状況等報告書は正しい日付を入力してください。');
+                if (ctype_digit($report_on_the_status_of_elderly_and_disabled_people_month) && ctype_digit($report_on_the_status_of_elderly_and_disabled_people_day)) {
+                    if (checkdate($report_on_the_status_of_elderly_and_disabled_people_month, $report_on_the_status_of_elderly_and_disabled_people_day, '2024')) {
+                        $inputDate = Carbon::create(2024, $report_on_the_status_of_elderly_and_disabled_people_month, $report_on_the_status_of_elderly_and_disabled_people_day);
+                        if ($inputDate->gt($comparisonDate) || $inputDate->eq($comparisonDate)) {
+                            $validator->errors()->add('report_on_the_status_of_elderly_and_disabled_people_day', '高齢者雇用状況報告書・障碍者状況等報告書は年をまたいで設定できません。');
                         }
+                    } else {
+                        $validator->errors()->add('report_on_the_status_of_elderly_and_disabled_people_day', '高齢者雇用状況報告書・障碍者状況等報告書は正しい日付を入力してください。');
                     }
                 }
             }
@@ -132,10 +107,8 @@ class PickUpRequest extends BaseRequest
     public function messages()
     {
         return [
-            "labor_insurance_annual_renewal_start_month.required_with" => '労働保険年度更新（開始月）を入力してください。',
-            "labor_insurance_annual_renewal_start_day.required_with" => '労働保険年度更新（開始日）を入力してください。',
-            "labor_insurance_annual_renewal_end_month.required_with" => '労働保険年度更新（終了月）を入力してください。',
-            "labor_insurance_annual_renewal_end_day.required_with" => '労働保険年度更新（終了日）を入力してください。',
+            "labor_insurance_annual_renewal_start_month.required_with" => '労働保険年度更新（月）を入力してください。',
+            "labor_insurance_annual_renewal_start_day.required_with" => '労働保険年度更新（日）を入力してください。',
             "year_end_tax_adjustment_start_month.required_with" => '年末調整（開始月）を入力してください。',
             "year_end_tax_adjustment_start_day.required_with" => '年末調整（開始日）を入力してください。',
             "year_end_tax_adjustment_end_month.required_with" => '年末調整（終了月）を入力してください。',
@@ -153,10 +126,8 @@ class PickUpRequest extends BaseRequest
             "end_of_nursing_care_insurance_premium_deduction" => '65歳 介護保険料の控除終了',
             "loss_of_eligibility_for_employees_pension_insurance" => '70歳 厚生年金保険被保険者の資格喪失',
             "loss_of_health_insurance_status" => '75歳 健康保険被保険者の資格喪失',
-            "labor_insurance_annual_renewal_start_month" => '労働保険年度更新（開始月）',
-            "labor_insurance_annual_renewal_start_day" => '労働保険年度更新（開始日）',
-            "labor_insurance_annual_renewal_end_month" => '労働保険年度更新（終了月）',
-            "labor_insurance_annual_renewal_end_day" => '労働保険年度更新（終了日）',
+            "labor_insurance_annual_renewal_start_month" => '労働保険年度更新（月）',
+            "labor_insurance_annual_renewal_start_day" => '労働保険年度更新（日）',
             "year_end_tax_adjustment_start_month" => '年末調整（開始月）',
             "year_end_tax_adjustment_start_day" => '年末調整（開始日）',
             "year_end_tax_adjustment_end_month" => '年末調整（終了月）',
@@ -172,6 +143,8 @@ class PickUpRequest extends BaseRequest
             "subsidies_and_grants" => '助成金・補助金等',
             "report_on_the_status_of_elderly_and_disabled_people_month" => '高齢者雇用状況報告書・障碍者状況等報告書（月）',
             "report_on_the_status_of_elderly_and_disabled_people_day" => '高齢者雇用状況報告書・障碍者状況等報告書（日）',
+            "bonus_payment_notice" => '健康保険・厚生年金保険被保険者賞与支払届
+',
         ];
 
         foreach ($this->input('officers', []) as $index => $value) {

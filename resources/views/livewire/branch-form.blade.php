@@ -120,6 +120,7 @@
                     'salary' => $salary,
                     'bonus' => $bonus,
                     'bounty' => $bounty,
+                    'allowance' => $allowance,
                 ],
                 'tabs' => $tabs,
                 'paymentTabs' => $paymentTabs,
