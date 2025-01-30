@@ -269,6 +269,10 @@
             transition: 0.5s;
         }
 
+        .schedule .schedule-item {
+            white-space: normal;
+        }
+
         #arrow {
             position: absolute;
             display: block;
