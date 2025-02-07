@@ -3,7 +3,7 @@ class WageFilter extends PowerTableFilter {
         super(List, options);
         this.filterConditionNodes = [];
         this.wrapperId = 'wage-filter-conditions';
-        this.PowerList.setShowList = () => {            
+        this.PowerList.setShowList = () => {
             this.setShowList();
         }
 
@@ -32,6 +32,15 @@ class WageFilter extends PowerTableFilter {
                 this.setInsurances(insurances);
             }
             super.run();
+        });
+        this.PowerList.get(this.PowerList.commute_get).then(r => {
+            const res = JSON.parse(r);
+            const d = {commute: []};
+            if ('keys' in res) {
+                d.commute = res.keys.split(',');
+                if (!d.commute) d.commute = [];
+            }
+            this.setCommute(d);
         });
     }
 
@@ -76,7 +85,7 @@ class WageFilter extends PowerTableFilter {
             ...j
         };
 
-        const json = this.filter;        
+        const json = this.filter;
 
         const wage_type = document.getElementsByName('wage_type');
         wage_type.forEach(select => {
@@ -129,7 +138,7 @@ class WageFilter extends PowerTableFilter {
                 }
             }
         });
-        const grade = document.getElementsByName('grade');        
+        const grade = document.getElementsByName('grade');
         grade.forEach(select => {
             for (let i = 0; i < select.children.length; i++) {
                 const option = select.children[i];
@@ -178,7 +187,7 @@ class WageFilter extends PowerTableFilter {
                 }
             });
             this.filterConditionNodes.push(row);
-        });        
+        });
 
         const showlist_wrapper = document.getElementById('pt-showlist-wrapper');
         Object.keys(json.show_list).forEach(key => {
@@ -194,9 +203,9 @@ class WageFilter extends PowerTableFilter {
         const condition_preview = [];
         for (let i = 0; i < Object.keys(json).length; i++) {
             const key = Object.keys(json)[i];
-            let name = key;            
+            let name = key;
             const q = document.getElementById(this.PowerList.elementIds.filter).querySelector('label[for="' + key + '"]');
-            if (q) name = q.textContent;            
+            if (q) name = q.textContent;
             if (json[key] && typeof json[key] == 'string' && key != 'wage_year' && !/^show.*/.test(key)) {
                 condition_preview.push({
                     name: name,
@@ -222,8 +231,8 @@ class WageFilter extends PowerTableFilter {
     // override
     setShowList() {
         const wrapper = document.getElementById(this.PowerList.elementIds.list);
-        const showlist_wrapper = document.getElementById(this.elementIds.showlist);        
-        const inputs = showlist_wrapper.querySelectorAll('input[type="checkbox"]');                
+        const showlist_wrapper = document.getElementById(this.elementIds.showlist);
+        const inputs = showlist_wrapper.querySelectorAll('input[type="checkbox"]');
         for (let i = 0; i < inputs.length; i++) {
             const checkbox = inputs[i];
             const targetKey = checkbox.dataset.key;
@@ -246,10 +255,20 @@ class WageFilter extends PowerTableFilter {
         this.PowerList.social_insurances = insurances.social;
     }
 
+    setCommute(data) {
+        this.PowerList.commute = data.commute;
+    }
+
     saveInsurances(data) {
         this.PowerList.submit(this.PowerList.insurance_save, JSON.stringify(data)).then(r => {
             this.setInsurances(data);
             this.PowerList.load();
+        })
+    }
+
+    saveCommute(data) {
+        this.PowerList.submit(this.PowerList.commute_save, JSON.stringify(data)).then(r => {
+            this.setCommute(data);
         })
     }
 
@@ -275,7 +294,7 @@ class WageFilter extends PowerTableFilter {
             node.dataset.key = i;
             wrapper.appendChild(node);
         });
-        
+
         this.onRender();
     }
 

@@ -342,6 +342,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/employee/wages/list/insurance-get', [WagesEmployeeController::class, 'wage_insurance_get'])->name('wages.insurance.get');
         Route::post('/employee/wages/list/insurance-save', [WagesEmployeeController::class, 'wage_insurance_save'])->name('wages.insurance.save');
+        Route::get('/employee/wages/list/commute-get', [WagesEmployeeController::class, 'wage_commute_get'])->name('wages.commute.get');
+        Route::post('/employee/wages/list/commute-save', [WagesEmployeeController::class, 'wage_commute_save'])->name('wages.commute.save');
 
         Route::get('/employee/attendances', [AttendanceEmployeeController::class, 'attendances'])->name('attendances.index');
         Route::post('/employee/attendances/list/edit', [AttendanceEmployeeController::class, 'attendance_post'])->name('attendances.post');

@@ -273,6 +273,10 @@
             white-space: normal;
         }
 
+        #right_schedule.right_close .schedule {
+            height: 0 !important;
+        }
+
         #arrow {
             position: absolute;
             display: block;

@@ -62,7 +62,7 @@
         </div>
         <h1 class="mt-0">賃金情報</h1>
 
-        @if($userPermission->isWritableFor(17))
+        @if ($userPermission->isWritableFor(17))
             <div style="padding: 1em 0;">
                 <a href="{{ route('wages.upload') }}" class="ui button primary">インポート</a>
             </div>
@@ -74,6 +74,8 @@
                 <div class="pt-actions-top">
                     <button class="ui button small" id="pt-filter-button">絞り込み・表示設定</button>
                     <button class="ui button small" id="wage-insurance-button">保険対象賃金設定</button>
+                    <button class="ui button small" id="wage-commute-button">通勤手当設定</button>
+
                 </div>
                 <div id="pt-condition-message" class="ui tiny message"></div>
                 <div id="pt-list" class="power-table">
@@ -88,7 +90,8 @@
                 </div>
                 <div class="pt-actions-bottom">
                     <div style="float:left; padding: 1.1em 0.5em;"><span id="pt-result-num">0</span>件のデータが見つかりました</div>
-                    <button class="ui button" id="pt-edit-button" style="{{ $userPermission->isWritableFor(17) ? '' : 'display: none;' }}">編集</button>
+                    <button class="ui button" id="pt-edit-button"
+                        style="{{ $userPermission->isWritableFor(17) ? '' : 'display: none;' }}">編集</button>
                     <button class="ui button" id="pt-cancel-button">キャンセル</button>
                     <button class="ui button primary" id="pt-submit-button">保存</button>
                 </div>
@@ -251,6 +254,21 @@
                 <button class="ui button approve primary">保存</button>
             </div>
         </div>
+        <div id="wage-commute-modal" class="ui modal tiny">
+            <div class="header">通勤手当設定</div>
+            <div class="content ui form">
+                <p>各帳票で通勤手当として計算対象に含める手当名を選択してください</p>
+                <div class="field">
+                    <label for="wage_commute">手当名</label>
+                    <select id="wage_commute" multiple="" name="commute"
+                        class="ui fluid normal dropdown wage-commute-dd"></select>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="ui button cancel">キャンセル</button>
+                <button class="ui button approve primary">保存</button>
+            </div>
+        </div>
         <div id="add-column-modal" class="ui modal mini">
             <div class="header">項目を追加</div>
             <div class="content ui form">
@@ -293,6 +311,8 @@
                     post: "{{ route('wages.post') }}",
                     insurance_get: "{{ route('wages.insurance.get') }}",
                     insurance_save: "{{ route('wages.insurance.save') }}",
+                    commute_get: "{{ route('wages.commute.get') }}",
+                    commute_save: "{{ route('wages.commute.save') }}",
                 },
                 useEdit: true
             });
@@ -444,6 +464,57 @@
 
                             select_labor.dropdown('save defaults');
                             select_social.dropdown('save defaults');
+
+                            return true;
+                        }
+                    })
+                    .modal('show');
+            })
+
+            $('#wage-commute-button').click(e => {
+                const list = wageList.getCalcableColumns();
+                const commute = wageList.commute;
+
+                const select = $('#wage_commute.wage-commute-dd');
+
+                $('#wage-commute-modal')
+                    .modal({
+                        onShow: () => {
+                            const values = list.map(e => {
+                                return {
+                                    name: e.name,
+                                    value: e.key,
+                                    selected: commute.includes(e.key)
+                                }
+                            });
+
+                            select
+                                .dropdown({
+                                    values: values
+                                })
+                                .dropdown('save defaults');
+                        },
+                        onHidden: () => {
+                            select.dropdown('restore defaults');
+
+                        },
+                        onApprove: () => {
+                            const wage_commute = document.getElementById(
+                                'wage_commute');
+
+                            const data = {
+                                commute: [],
+                            }
+
+                            for (let i = 0; i < wage_commute.options.length; i++) {
+                                const option = wage_commute.options[i];
+                                if (option.selected) {
+                                    data.commute.push(option.value);
+                                }
+                            }
+
+                            wageFilter.saveCommute(data);
+                            select.dropdown('save defaults');
 
                             return true;
                         }
