@@ -1,4 +1,4 @@
-<x-layout title="労働条件通知＆契約書">
+<x-layout title="労働条件通知書兼契約書作成">
     @slot('header')
         <!-- 帳票用の共通CSSを読み込む -->
         <link rel="stylesheet" href="{{ asset('/css/ledger-form.css') }}">
@@ -42,10 +42,10 @@
         <div class="ui huge breadcrumb mb-2">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">労働契約書作成</div>
+            <div class="active section">労働条件通知書兼契約書作成</div>
         </div>
 
-        <h1 class="mb-2 mt-0">労働条件通知＆契約書の作成</h1>
+        <h1 class="mb-2 mt-0">労働条件通知書兼契約書作成</h1>
 
         <!-- 入力エリア -->
         <div id="ledger-step1" class="step-view active my-2">

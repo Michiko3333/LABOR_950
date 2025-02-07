@@ -1,4 +1,4 @@
-<x-layout title="賃金台帳（社員選択）" useRightContent="{{ true }}">
+<x-layout title="賃金台帳作成" useRightContent="{{ true }}">
     @slot('header')
         <style type="text/css">
             .ui.table {
@@ -49,7 +49,7 @@
         <div class="ui huge breadcrumb">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">賃金台帳（社員選択）</div>
+            <div class="active section">賃金台帳作成</div>
         </div>
         <h1 class="mt-0">賃金台帳（社員選択）</h1>
         <p>選択した社員の賃金情報を元に、賃金台帳を作成します。</p>

@@ -1,4 +1,4 @@
-<x-layout title="管理画面" useRightContent="{{false}}">
+<x-layout title="アカウント管理" useRightContent="{{false}}">
     @slot('header')
     <style type="text/css">
         .ui.table {
@@ -37,7 +37,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" href="{{route('admin.labor_create')}}">社労士</a>
-                <a class="item" href="{{route('admin.employee_create')}}">顧客社員</a>
+                <a class="item" href="{{route('admin.employee_create')}}">従業員</a>
             </div>
         </div>
         <div class="ui card full card-shadow item-0">

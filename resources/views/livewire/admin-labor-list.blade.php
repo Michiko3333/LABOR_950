@@ -33,7 +33,7 @@
                         @if ($item->company_division == 1)
                             社労士
                         @elseif($item->company_division == 2)
-                            顧客社員
+                            従業員
                         @endif
                     </td>
                     <td>{{ $item->company_name }}</td>
@@ -45,7 +45,7 @@
                         @endif
                         @if ($item->employee_type > 2)
                             <button class="ui button" type="button" wire:click="toPermission({{ $item->id }})">
-                                権限
+                                個別権限
                             </button>
                         @endif
                         <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">

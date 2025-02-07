@@ -192,6 +192,9 @@
             .japan_post_bank_code_no.hidden {
                 display: none;
             }
+            .active.section{
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">
@@ -200,10 +203,10 @@
             <i class="right chevron icon divider"></i>
             <a class="section" href="{{ route('employee') }}">社員一覧</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">従業員情報更新</div>
+            <div class="active section">従業員情報編集</div>
         </div>
 
-        <h1 class="mb-2 mt-0">従業員情報更新</h1>
+        <h1 class="mb-2 mt-0">従業員情報編集</h1>
 
         <form class="ui form"
             action="{{ !isset($employee_id) ? route('employee_create_post') : route('employee_update_post', $employee_id) }}"

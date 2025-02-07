@@ -1,4 +1,4 @@
-<x-layout title="支店・営業所の追加、削除" useRightContent="{{ true }}">
+<x-layout title="事業所等情報" useRightContent="{{ true }}">
     @slot('header')
         <style type="text/css">
             .calendar-container {
@@ -237,9 +237,9 @@
         <div class="ui huge breadcrumb mb-0">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">支店・営業所情報</div>
+            <div class="active section">事業所等情報</div>
         </div>
-        <h2 class="pl-1">支店・営業所情報</h2>
+        <h2 class="pl-1">事業所等情報</h2>
         <form name="edit-branch" action="{{ route('branch_post') }}" method="post">
             @csrf
             @if (session('errors'))

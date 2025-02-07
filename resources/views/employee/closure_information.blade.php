@@ -1,4 +1,4 @@
-<x-layout title="休業情報一覧" useRightContent="{{ true }}">
+<x-layout title="休業設定" useRightContent="{{ true }}">
     @slot('header')
     <style type="text/css">
         .ui.table {
@@ -55,7 +55,7 @@
         <div class="ui huge breadcrumb">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">休業情報一覧</div>
+            <div class="active section">休業設定</div>
         </div>
         <h1 class="mt-0">休業情報一覧</h1>
         @if($userPermission->isWritableFor(14))

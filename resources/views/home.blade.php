@@ -54,6 +54,71 @@
                 background-color: var(--color-red);
             }
 
+            #control-panel .control-panel-menu .extra.content a .content.set .header::before {
+                position: absolute;
+                content: "";
+                top: 8px;
+                left: 0px;
+                width: 0;
+                height: 0;
+                border-left: 8px solid var(--color-red);
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                background-color: rgba(255,255,255,0.8);
+            }
+
+           #control-panel .control-panel-menu .extra.content a#company-setting.open .header::before {
+                position: absolute !important;
+                content: "";
+                top: 8px;
+                left: 0px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid var(--color-red);
+                background-color: rgba(255,255,255,0.8);
+            }
+
+            #control-panel .control-panel-menu .extra.content a#employee-setting.open .header::before {
+                position: absolute !important;
+                content: "";
+                top: 8px;
+                left: 0px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid var(--color-red);
+                background-color: rgba(255,255,255,0.8);
+            }
+
+            #control-panel .control-panel-menu .extra.content a#procedure-setting.open .header::before {
+                position: absolute !important;
+                content: "";
+                top: 8px;
+                left: 0px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid var(--color-red);
+                background-color: rgba(255,255,255,0.8);
+            }
+
+            #control-panel .control-panel-menu .extra.content a#calendar-setting.open .header::before {
+                position: absolute !important;
+                content: "";
+                top: 8px;
+                left: 0px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid var(--color-red);
+                background-color: rgba(255,255,255,0.8);
+            }
+
             #control-panel .control-panel-menu .extra.content a .content.sub .header::before {
                 position: absolute;
                 display: flex;
@@ -66,7 +131,6 @@
                 height: 10px;
                 color: var(--color-black);
             }
-
 
             #control-panel .control-panel-menu .title.content .overlay {
                 font-weight: bold;
@@ -108,7 +172,7 @@
             }
 
             .panel-menu {
-                backgrount: #fff;
+                background: #fff;
             }
 
             .panel-menu.ui.card>.image {
@@ -163,8 +227,9 @@
                                         </div>
                                     </a>
                                 @endif
-                                <a class="item mt-1" id="company-setting">
-                                    <div class="content">
+                                <div class="ui divider"></div>
+                                <a class="item mt-1" id="company-setting" >
+                                    <div class="content set">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
@@ -208,7 +273,7 @@
                                 @if ($userPermission->isReadableFor(5))
                                     <a href="{{ route('employee') }}" class="item">
                                         <div class="content">
-                                            <div class="header">社員一覧</div>
+                                            <div class="header">従業員一覧</div>
                                         </div>
                                     </a>
                                 @endif
@@ -241,8 +306,9 @@
                                         </div>
                                     </a>
                                 @endif
+                                <div class="ui divider"></div>
                                 <a class="item mt-1" id="employee-setting">
-                                    <div class="content">
+                                    <div class="content set">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
@@ -295,8 +361,9 @@
                                         </div>
                                     </a>
                                 @endif
+                                <div class="ui divider"></div>
                                 <a class="item mt-1" id="procedure-setting">
-                                    <div class="content">
+                                    <div class="content set">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
@@ -336,8 +403,9 @@
                                     </div>
                                 </a>
                             @endif
+                            <div class="ui divider"></div>
                             <a class="item mt-1" id="calendar-setting">
-                                <div class="content">
+                                <div class="content set">
                                     <div class="header">各種設定</div>
                                 </div>
                             </a>
@@ -373,16 +441,20 @@
     <script type="module">
         $(document).ready(function () {
             $("#company-setting").on("click", function () {
-                $(".company-setting-list").toggle();
+                $(this).toggleClass("open");
+                $(".company-setting-list").stop(true, true).slideToggle();
             });
             $("#employee-setting").on("click", function () {
-                $(".employee-setting-list").toggle();
+                $(this).toggleClass("open");
+                $(".employee-setting-list").stop(true, true).slideToggle();
             });
             $("#procedure-setting").on("click", function () {
-                $(".procedure-setting-list").toggle();
+                $(this).toggleClass("open");
+                $(".procedure-setting-list").stop(true, true).slideToggle();
             });
             $("#calendar-setting").on("click", function () {
-                $(".calendar-setting-list").toggle();
+                 $(this).toggleClass("open");
+                $(".calendar-setting-list").stop(true, true).slideToggle();
             });
         });
     </script>

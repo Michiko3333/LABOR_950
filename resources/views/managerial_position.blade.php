@@ -1,4 +1,4 @@
-<x-layout title="役職マスタ登録" useRightContent="{{ true }}">
+<x-layout title="役職マスタ" useRightContent="{{ true }}">
     @slot('header')
         <style type="text/css">
             ul.list-table {
@@ -48,7 +48,7 @@
         <div class="ui huge breadcrumb mb-0">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">役職マスタ登録</div>
+            <div class="active section">役職マスタ</div>
         </div>
         <h1>役職マスタ登録：{{ $company_name }}</h1>
         <livewire:managerial-position-list :company_id="$company_id" />

@@ -36,9 +36,9 @@
             <i class="right chevron icon divider"></i>
             <a class="section ledger-back" href="{{ route('ledger.issues') }}">申請案件一覧</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">申請案件状況</div>
+            <div class="active section">申請案件詳細</div>
         </div>
-        <h2>申請案件状況</h2>
+        <h2>申請案件詳細</h2>
         <table class="ui celled table detail-table">
             <thead>
                 <tr>
