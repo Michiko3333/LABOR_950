@@ -719,16 +719,16 @@ class WagesEmployeeController extends Controller
         // 年度・月条件
         if (!empty($conditions['wage_month'])) {
             $start_month = $conditions['wage_month'];
-            $start_date = Carbon::create($start_year, $start_month, $start_day, 0, 0, 0);
+            $start_date = Carbon::create($start_year, $start_month, 1, 0, 0, 0);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
                 $start_date->clone()->addMonth()->subday()->format('Y/m/d')
             ]);
         } else {
-            $start_date = Carbon::create($start_year, 1, $start_day, 0, 0, 0);
+            $start_date = Carbon::create($start_year, 1, 1, 0, 0, 0);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
-                $start_date->clone()->addMonth()->subday()->format('Y/m/d')
+                $start_date->clone()->addYear()->subday()->format('Y/m/d')
             ]);
         }
 
