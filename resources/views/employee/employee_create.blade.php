@@ -1090,27 +1090,15 @@
                                     <select class="ui fluid dropdown employment_status" name="employment_status"
                                         value="{{ old('employment_status', isset($employee_id) ? $employee->employment_status : '') }}">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('employment_status') == "1" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "1") ? 'selected': '' }}>
-                                                日雇い</option>
-                                        <option value="2" {{ old('employment_status') == "2" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "2") ? 'selected': '' }}>
-                                                派遣</option>
-                                        <option value="3" {{ old('employment_status') == "3" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "3") ? 'selected': '' }}>
-                                                アルバイト・パートタイム</option>
-                                        <option value="4" {{ old('employment_status') == "4" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "4") ? 'selected': '' }}>
-                                                有期契約労働者（契約社員含む）</option>
-                                        <option value="5" {{ old('employment_status') == "5" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "5") ? 'selected': '' }}>
-                                                季節的雇用</option>
-                                        <option value="6" {{ old('employment_status') == "6" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "6") ? 'selected': '' }}>
-                                                船舶</option>
-                                        <option value="7" {{ old('employment_status') == "7" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "7") ? 'selected': '' }}>
-                                                その他（正社員・無期雇用等）</option>
+                                        @foreach($employment_status as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_status') == "$key" ||
+                                                (isset($employee) && old('employment_status', $employee->employment_status) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="required field {{ err($errors, 'pay_type') }}">

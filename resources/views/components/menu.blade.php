@@ -197,15 +197,15 @@
             @endif
             @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12) || $userPermission->isReadableFor(13))
                 <li class="title">スケジュール</li>
-                @if ($userPermission->isReadableFor(11))
-                    <li class="item">
-                        <a href="{{ route('calendar.index') }}">
-                            休日（出勤）カレンダー</a>
-                    </li>
-                @endif
                 @if ($userPermission->isReadableFor(12))
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
+                            休日（出勤）カレンダー</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(11))
+                    <li class="item">
+                        <a href="{{ route('calendar.index') }}">
 
                             行事（業務）カレンダー</a>
                     </li>
