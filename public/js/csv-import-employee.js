@@ -22,7 +22,7 @@ class CsvImportEmployee extends PowerTableList {
         this.onImported = () => {};
         this.onFaildImport = () => {};
 
-        this.get(this.data_uri).then(r => {            
+        this.get(this.data_uri).then(r => {
             const res = JSON.parse(r);
 
             this.columns_map_tmp = res.columns_map;
@@ -108,7 +108,7 @@ class CsvImportEmployee extends PowerTableList {
         reader.readAsText(file);
     }
 
-    loadCsv(columns, rows) {        
+    loadCsv(columns, rows) {
         rows = rows.filter(e => e.length > 1);
 
         this.lengthInputs = rows.length;
@@ -119,14 +119,14 @@ class CsvImportEmployee extends PowerTableList {
                 column_default_names.push(element.name);
             }
         }
-        
+
         this.successed_data = [];
         this.faild_data = [];
 
         for (let r = 0; r < rows.length; r++) {
             const row = rows[r];
             if (row.length < 2) continue;
-            
+
             const newRow = this.createEmptyObjectFromKeys(this.columns_map_tmp);
 
             for (let c = 0; c < columns.length; c++) {
@@ -180,7 +180,7 @@ class CsvImportEmployee extends PowerTableList {
 
             const sex = Object.entries(this.fix_values.sex_type).find(([k, v]) => v.normalize("NFC") === newRow.sex)?.[0];
             if (sex) {
-                //newRow.sex = sex;
+                newRow.sex = sex;
             } else {
                 if (!rules['sex'].includes('nullable')) {
                     console.error(`Validation failed: the value of ${key} is not correct`);
@@ -218,7 +218,7 @@ class CsvImportEmployee extends PowerTableList {
                 }
             }
 
-            const country_id = Object.entries(this.fix_values.country_type).find(([k, v]) => v.normalize("NFC") === newRow.country_id)?.[0];            
+            const country_id = Object.entries(this.fix_values.country_type).find(([k, v]) => v.normalize("NFC") === newRow.country_id)?.[0];
             if (country_id) {
                 newRow.country_id = country_id;
             } else {
@@ -357,7 +357,7 @@ class CsvImportEmployee extends PowerTableList {
                     is_success = false;
                 }
             }
-            
+
             const occupation_type = Object.entries(this.fix_values.occupation_type).find(([k, v]) => v.normalize("NFC") === newRow.occupation_type)?.[0];
             if (occupation_type) {
                 newRow.occupation_type = occupation_type;
@@ -467,78 +467,78 @@ class CsvImportEmployee extends PowerTableList {
         return str;
     }
 
-    valueFormat(key, d) {        
+    valueFormat(key, d) {
         switch (key) {
-            case 'branch_name': 
-                d = this.fix_values.branch[d]; 
+            case 'branch_name':
+                d = this.fix_values.branch[d];
                 break;
-            case 'address_prefecture': 
-                d = this.fix_values.prefectures[d]; 
+            case 'address_prefecture':
+                d = this.fix_values.prefectures[d];
                 break;
-            case 'sex': 
-                d = this.fix_values.sex_type[d]; 
+            case 'sex':
+                d = this.fix_values.sex_type[d];
                 break;
-            case 'insured_age_type': 
-                d = this.fix_values.employee_insured_age_type[d]; 
+            case 'insured_age_type':
+                d = this.fix_values.employee_insured_age_type[d];
                 break;
-            case 'work_category': 
-                d = this.fix_values.work_category[d]; 
+            case 'work_category':
+                d = this.fix_values.work_category[d];
                 break;
-            case 'enrollment_category': 
-                d = this.fix_values.enrollment_category[d]; 
+            case 'enrollment_category':
+                d = this.fix_values.enrollment_category[d];
                 break;
-            case 'country_id': 
-                d = this.fix_values.country_type[d]; 
+            case 'country_id':
+                d = this.fix_values.country_type[d];
                 break;
-            case 'labor_insurance_type': 
-                d = this.fix_values.labor_insurance_type[d]; 
+            case 'labor_insurance_type':
+                d = this.fix_values.labor_insurance_type[d];
                 break;
-            case 'employment_insurance_type': 
-                d = this.fix_values.employment_insurance_type[d]; 
+            case 'employment_insurance_type':
+                d = this.fix_values.employment_insurance_type[d];
                 break;
-            case 'employee_type': 
-                d = this.fix_values.employee_type[d]; 
+            case 'employee_type':
+                d = this.fix_values.employee_type[d];
                 break;
-            case 'employee_status': 
-                d = this.fix_values.employee_status_type[d]; 
+            case 'employee_status':
+                d = this.fix_values.employee_status_type[d];
                 break;
-            case 'employment_route': 
-                d = this.fix_values.employment_route[d]; 
+            case 'employment_route':
+                d = this.fix_values.employment_route[d];
                 break;
-            case 'recruitment_category': 
-                d = this.fix_values.recruitment_category[d]; 
+            case 'recruitment_category':
+                d = this.fix_values.recruitment_category[d];
                 break;
-            case 'recruitment_category_detail': 
-                d = this.fix_values.recruitment_category_detail[d]; 
+            case 'recruitment_category_detail':
+                d = this.fix_values.recruitment_category_detail[d];
                 break;
-            case 'pay_type': 
-                d = this.fix_values.pay_type[d]; 
+            case 'pay_type':
+                d = this.fix_values.pay_type[d];
                 break;
-            case 'employment_status': 
-                d = this.fix_values.employment_status[d]; 
+            case 'employment_status':
+                d = this.fix_values.employment_status[d];
                 break;
-            case 'contract_period_flg': 
-                d = this.fix_values.basic_radio[d]; 
+            case 'contract_period_flg':
+                d = this.fix_values.basic_radio[d];
                 break;
-            case 'contract_renewal_flg': 
-                d = this.fix_values.basic_radio[d]; 
+            case 'contract_renewal_flg':
+                d = this.fix_values.basic_radio[d];
                 break;
-            case 'resignation_letter_request_flg': 
-                d = this.fix_values.basic_radio[d]; 
+            case 'resignation_letter_request_flg':
+                d = this.fix_values.basic_radio[d];
                 break;
-            case 'insured_status': 
-                d = this.fix_values.insured_status[d]; 
+            case 'insured_status':
+                d = this.fix_values.insured_status[d];
                 break;
-            case 'occupation_type': 
-                d = this.fix_values.occupation_type[d]; 
+            case 'occupation_type':
+                d = this.fix_values.occupation_type[d];
                 break;
-            case 'external_advisor_flg': 
-                d = this.fix_values.yesno_radio[d]; 
+            case 'external_advisor_flg':
+                d = this.fix_values.yesno_radio[d];
                 break;
-            case 'insurance_loss_reason': 
-                d = this.fix_values.insurance_loss_reason[d]; 
+            case 'insurance_loss_reason':
+                d = this.fix_values.insurance_loss_reason[d];
                 break;
-            case 'over_retired_insurance_loss_reason': 
+            case 'over_retired_insurance_loss_reason':
                 d = this.fix_values.over_retired_insurance_loss_reason[d];
             default:
                 break;
@@ -557,7 +557,7 @@ class CsvImportEmployee extends PowerTableList {
 
     createEmptyObjectFromKeys(data) {
         const result = {};
-        for (const key in data) {            
+        for (const key in data) {
             if (data[key].key) {
                 result[data[key].key] = "";
             }

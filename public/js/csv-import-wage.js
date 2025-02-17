@@ -594,7 +594,10 @@ class CsvImportWage extends PowerTableList {
         uploadButton.disabled = true;
         const data = [];
         for (let i = 0; i < this.data.length; i++) {
-            const d = {...this.data[i]};
+            const d = {
+                ...this.data[i],
+                month: this.normalizeDate(this.data[i].month)
+            };
             delete d.unknown_values;
             data.push(d);
         }
@@ -671,5 +674,10 @@ class CsvImportWage extends PowerTableList {
             }
         }
         return parseInt(str);
+    }
+
+    normalizeDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
 }
