@@ -44,6 +44,7 @@ use App\Http\Controllers\Ledger\OldHealthInsuranceDependentChangeController;
 use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController;
 use App\Http\Controllers\Ledger\OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController;
 use App\Http\Controllers\Ledger\OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController;
+use App\Http\Controllers\Ledger\OldHealthAndPensionInsuredBonusPaymentNotificationController;
 use App\Http\Controllers\CompanyDepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
@@ -243,10 +244,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/ledger/4950008680044000', [WageCertificatesEmploymentInsuredAtSixtyController::class, 'post'])->name('ledger.4950008680044000_post');
         Route::get('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'index'])->name('ledger.4950008680040000');
         Route::post('/ledger/4950008680040000', [EmploymentInsuredTransferNotificationController::class, 'post'])->name('ledger.4950008680040000_post');
-        Route::get('/ledger/4950013520989000', [OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'index'])->name('ledger.4950013520989000');
-        Route::post('/ledger/4950013520989000', [OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationNotificationForInsuredPersonsController::class, 'post'])->name('ledger.4950013520989000_post');
-        Route::get('/ledger/4950013520711000', [OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'index'])->name('ledger.4950013520711000');
-        Route::post('/ledger/4950013520711000', [OldHealthInsuranceWelfarePensionInsuranceEligibilityAcquisitionNotificationController::class, 'post'])->name('ledger.4950013520711000_post');
         Route::get('/ledger/4950013520990000', [OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'index'])->name('ledger.4950013520990000');
         Route::post('/ledger/4950013520990000', [OldHealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationController::class, 'post'])->name('ledger.4950013520990000_post');
         Route::get('/ledger/4950008680182000', [FirstParentalLeaveBenefitsForEmploymentInsuranceController::class, 'index'])->name('ledger.4950008680182000');
@@ -272,8 +269,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'index'])->name('ledger.4950013520602000');
         Route::post('/ledger/4950013520602000', [ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentController::class, 'post'])->name('ledger.4950013520602000_post');
-        Route::get('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'index'])->name('ledger.4950013520996000');
-        Route::post('/ledger/4950013520996000', [OldHealthInsuranceDependentChangeController::class, 'post'])->name('ledger.4950013520996000_post');
 
         Route::get('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'index'])->name('ledger.4950013520608000');
         Route::post('/ledger/4950013520608000', [MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentController::class, 'post'])->name('ledger.4950013520608000_post');
@@ -348,6 +343,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/employee/wages/list/insurance-get', [WagesEmployeeController::class, 'wage_insurance_get'])->name('wages.insurance.get');
         Route::post('/employee/wages/list/insurance-save', [WagesEmployeeController::class, 'wage_insurance_save'])->name('wages.insurance.save');
+        Route::get('/employee/wages/list/commute-get', [WagesEmployeeController::class, 'wage_commute_get'])->name('wages.commute.get');
+        Route::post('/employee/wages/list/commute-save', [WagesEmployeeController::class, 'wage_commute_save'])->name('wages.commute.save');
 
         Route::get('/employee/attendances', [AttendanceEmployeeController::class, 'attendances'])->name('attendances.index');
         Route::post('/employee/attendances/list/edit', [AttendanceEmployeeController::class, 'attendance_post'])->name('attendances.post');

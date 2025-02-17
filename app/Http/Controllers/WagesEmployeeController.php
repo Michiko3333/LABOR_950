@@ -9,6 +9,7 @@ use App\Models\UserFilterEmployeeList;
 use App\Models\Wage;
 use App\Models\WageAllowance;
 use App\Models\WageColumns;
+use App\Models\WageCommuteColumn;
 use App\Models\WageFilterConfig;
 use App\Models\WageInsuranceColumn;
 use App\Models\WageOvertime;
@@ -638,6 +639,61 @@ class WagesEmployeeController extends Controller
         return response()->json(['result' => 1]);
     }
 
+    public function wage_commute_get(Request $request)
+    {
+        $current_company = CurrentUser::currentCompany();
+        $current_user = CurrentUser::info();
+        $data = WageCommuteColumn::select('keys')->where('company_id', $current_company->id)
+            ->where('employee_id', $current_user->id)
+            ->where('delete_flg', 0)
+            ->first();
+
+        return response()->json($data);
+    }
+
+    public function wage_commute_save(Request $request)
+    {
+        $userPermission = new Permission();
+        if (!$userPermission->isWritableFor(17)) {
+            return response()->json(['result' => 0]);
+        }
+
+        $validated = $request->validate([
+            'commute' => 'array|required',
+        ]);
+
+        $current_company = CurrentUser::currentCompany();
+        $current_user = CurrentUser::info();
+
+        DB::beginTransaction();
+        try {
+            $commute = $request->input('commute');
+            $q = WageCommuteColumn::where('company_id', $current_company->id)
+                ->where('employee_id', $current_user->id)
+                ->where('delete_flg', 0);
+
+            if ($q->exists()) {
+                $q->update([
+                    'keys' => implode(',', $commute)
+                ]);
+            } else {
+                $q->create([
+                    'company_id' => $current_company->id,
+                    'employee_id' => $current_user->id,
+                    'type' => 0,
+                    'keys' => implode(',', $commute)
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $err) {
+            DB::rollback();
+            \Log::error($err->getMessage());
+            return response()->json(['result' => 0]);
+        }
+        return response()->json(['result' => 1]);
+    }
+
     private function wage_keys()
     {
         $list = WageColumns::select('key')->where('delete_flg', 0)->orderBy('order')->get()->pluck('key')->toArray();
@@ -663,13 +719,13 @@ class WagesEmployeeController extends Controller
         // 年度・月条件
         if (!empty($conditions['wage_month'])) {
             $start_month = $conditions['wage_month'];
-            $start_date = Carbon::create($start_year, $start_month, $start_day, 0, 0, 0);
+            $start_date = Carbon::create($start_year, $start_month, 1, 0, 0, 0);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
                 $start_date->clone()->addMonth()->subday()->format('Y/m/d')
             ]);
         } else {
-            $start_date = Carbon::create($start_year, 1, $start_day, 0, 0, 0);
+            $start_date = Carbon::create($start_year, 1, 1, 0, 0, 0);
             $wage = $wage->whereBetween('month', [
                 $start_date->format('Y-m-d'),
                 $start_date->clone()->addYear()->subday()->format('Y/m/d')

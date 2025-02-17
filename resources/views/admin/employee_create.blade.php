@@ -172,6 +172,9 @@
             .japan_post_bank_code_no.hidden {
                 display: none;
             }
+            .active.section{
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">
@@ -185,14 +188,14 @@
             @if (!isset($employee_id))
                 <div class="active section">従業員情報登録</div>
             @else
-                <div class="active section">従業員情報更新</div>
+                <div class="active section">従業員情報編集</div>
             @endif
         </div>
 
         @if (!isset($employee_id))
             <h1 class="mb-2 mt-0">従業員情報登録</h1>
         @else
-            <h1 class="mb-2 mt-0">従業員情報更新</h1>
+            <h1 class="mb-2 mt-0">従業員情報編集</h1>
         @endif
 
         <form class="ui form"

@@ -48,10 +48,10 @@ class CsvImportAttendance extends PowerTableList {
         });
     }
 
-    validationRow(row) {    
+    validationRow(row) {
         // ルール定義
         const rules = this.rules;
-    
+
         // ルールを検証するためのヘルパー関数
         const validators = {
             required: (value) => value !== undefined && value !== null && value !== '',
@@ -59,17 +59,17 @@ class CsvImportAttendance extends PowerTableList {
             date: (value) => !isNaN(Date.parse(value)),
             regex: (value, pattern) => new RegExp(pattern).test(value)
         };
-    
+
         // 全てのルールをチェック
         for (const key in rules) {
             if (rules.hasOwnProperty(key)) {
                 const fieldRules = rules[key];
-    
+
                 // rowに該当キーが存在しない場合は無効
                 if (!row.hasOwnProperty(key)) {
                     return false;
                 }
-    
+
                 // 各ルールを適用
                 for (const rule of fieldRules) {
                     if (rule.startsWith('regex:')) {
@@ -194,8 +194,8 @@ class CsvImportAttendance extends PowerTableList {
         else if (key == 'overtime') {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = (
-                this.replaceInt(item.overtime_low) + 
-                this.replaceInt(item.overtime_normal) + 
+                this.replaceInt(item.overtime_low) +
+                this.replaceInt(item.overtime_normal) +
                 this.replaceInt(item.overtime_early) +
                 this.replaceInt(item.overtime_late) +
                 this.replaceInt(item.overtime_off)
@@ -207,8 +207,8 @@ class CsvImportAttendance extends PowerTableList {
         else if (key == 'holidays') {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = (
-                this.replaceInt(item.holidays_special) + 
-                this.replaceInt(item.holidays_comp) + 
+                this.replaceInt(item.holidays_special) +
+                this.replaceInt(item.holidays_comp) +
                 this.replaceInt(item.holidays_legal) +
                 this.replaceInt(item.holidays_public) +
                 this.replaceInt(item.holidays_transfered)
@@ -216,6 +216,14 @@ class CsvImportAttendance extends PowerTableList {
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
+        } else if (key == 'month') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            const date = new Date(item[key]);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const formattedDate = `${year}年${month}月`;
+            label.textContent = formattedDate;
+            td.dataset.amount = item[key];
         }
 
         else super.onCreateCell(parent, key, item);
@@ -237,7 +245,10 @@ class CsvImportAttendance extends PowerTableList {
         uploadButton.disabled = true;
         const data = [];
         for (let i = 0; i < this.data.length; i++) {
-            const d = {...this.data[i]};
+            const d = {
+                ...this.data[i],
+                month: this.normalizeDate(this.data[i].month)
+            };
             data.push(d);
         }
 
@@ -316,5 +327,10 @@ class CsvImportAttendance extends PowerTableList {
             }
         }
         return parseInt(str);
+    }
+
+    normalizeDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
 }

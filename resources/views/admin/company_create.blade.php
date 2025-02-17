@@ -253,7 +253,7 @@
             @if (!isset($company_id))
                 <div class="active section">会社情報登録</div>
             @else
-                <div class="active section">会社情報更新</div>
+                <div class="active section">会社情報編集</div>
             @endif
         </div>
 

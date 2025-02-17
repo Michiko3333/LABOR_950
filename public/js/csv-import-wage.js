@@ -81,10 +81,10 @@ class CsvImportWage extends PowerTableList {
         });
     }
 
-    validationRow(row) {    
+    validationRow(row) {
         // ルール定義
         const rules = this.rules;
-    
+
         // ルールを検証するためのヘルパー関数
         const validators = {
             required: (value) => value !== undefined && value !== null && value !== '',
@@ -92,17 +92,17 @@ class CsvImportWage extends PowerTableList {
             date: (value) => !isNaN(Date.parse(value)),
             regex: (value, pattern) => new RegExp(pattern).test(value)
         };
-    
+
         // 全てのルールをチェック
         for (const key in rules) {
             if (rules.hasOwnProperty(key)) {
                 const fieldRules = rules[key];
-    
+
                 // rowに該当キーが存在しない場合は無効
                 if (!row.hasOwnProperty(key)) {
                     return false;
                 }
-    
+
                 // 各ルールを適用
                 for (const rule of fieldRules) {
                     if (rule.startsWith('regex:')) {
@@ -125,7 +125,7 @@ class CsvImportWage extends PowerTableList {
         }
         return true;
     }
-    
+
 
     onChangeFile(event) {
         const file = event.target.files[0];
@@ -325,7 +325,7 @@ class CsvImportWage extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = this.comma(
                 this.replaceInt(item.wage_base_amount) +
-                this.getSumArrType(item['salary_values'])
+                this.getSumArrType(item['salary_values']) + this.getSumArrType(item['overtime_values']) + this.getSumArrType(item['allowance_values'])
             );
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
@@ -391,6 +391,14 @@ class CsvImportWage extends PowerTableList {
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
+        } else if (key == 'month') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            const date = new Date(item[key]);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const formattedDate = `${year}年${month}月`;
+            label.textContent = formattedDate;
+            td.dataset.amount = item[key];
         } else if (key == 'wage_amount') {
             const [td, label] = super.onCreateCell(parent, key, item);
             const social_insurances = [
@@ -401,7 +409,7 @@ class CsvImportWage extends PowerTableList {
                 'employment_insurance_deduction'
             ];
             let social_insurance_sum = 0;
-            social_insurances.forEach(k => {            
+            social_insurances.forEach(k => {
                 social_insurance_sum += this.replaceInt(item[k]);
             });
 
@@ -432,16 +440,16 @@ class CsvImportWage extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             let labor_insurance_sum = 0;
             this.labor_insurances.forEach(e => {
-                if (Object.keys(this.columns_map).includes(e)) {                                            
+                if (Object.keys(this.columns_map).includes(e)) {
                     labor_insurance_sum += item[e];
                 }
-                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                else if (Object.keys(item['salary_values']).includes(e)) {
                     labor_insurance_sum += item['salary_values'][e].amount;
                 }
-                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                else if (Object.keys(item['overtime_values']).includes(e)) {
                     labor_insurance_sum += item['overtime_values'][e].amount;
                 }
-                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                else if (Object.keys(item['allowance_values']).includes(e)) {
                     labor_insurance_sum += item['allowance_values'][e].amount;
                 }
             });
@@ -450,16 +458,16 @@ class CsvImportWage extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             let social_insurance_sum = 0;
             this.social_insurances.forEach(e => {
-                if (Object.keys(this.columns_map).includes(e)) {                                            
+                if (Object.keys(this.columns_map).includes(e)) {
                     social_insurance_sum += item[e];
                 }
-                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                else if (Object.keys(item['salary_values']).includes(e)) {
                     social_insurance_sum += item['salary_values'][e].amount;
                 }
-                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                else if (Object.keys(item['overtime_values']).includes(e)) {
                     social_insurance_sum += item['overtime_values'][e].amount;
                 }
-                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                else if (Object.keys(item['allowance_values']).includes(e)) {
                     social_insurance_sum += item['allowance_values'][e].amount;
                 }
             });
@@ -504,10 +512,10 @@ class CsvImportWage extends PowerTableList {
             options.forEach(option => {
                 const fieldDiv = document.createElement('div');
                 fieldDiv.className = 'field';
-              
+
                 const checkboxDiv = document.createElement('div');
                 checkboxDiv.className = 'ui radio checkbox';
-              
+
                 const input = document.createElement('input');
                 input.type = 'radio';
                 input.name = option.name;
@@ -516,19 +524,19 @@ class CsvImportWage extends PowerTableList {
                 input.addEventListener('change', (e) => {
                     this.radioButtonEvent(e);
                 });
-              
+
                 const optionLabel = document.createElement('label');
                 optionLabel.textContent = option.label;
-              
+
                 checkboxDiv.appendChild(input);
                 checkboxDiv.appendChild(optionLabel);
                 fieldDiv.appendChild(checkboxDiv);
-              
+
                 container.appendChild(fieldDiv);
               });
               solvColumn.appendChild(container);
         }
-        this.onChangedCustomColumns();  
+        this.onChangedCustomColumns();
     }
 
     radioButtonEvent(e) {
@@ -539,7 +547,7 @@ class CsvImportWage extends PowerTableList {
         this.salary_columns = this.salary_columns.filter(e => e != name);
         this.overtime_columns = this.overtime_columns.filter(e => e != name);
         this.allowance_columns = this.allowance_columns.filter(e => e != name);
-        
+
         for (let n = 0; n < this.json['data'].length; n++) {
             const row = this.json['data'][n];
             let amount = '0';
@@ -586,7 +594,10 @@ class CsvImportWage extends PowerTableList {
         uploadButton.disabled = true;
         const data = [];
         for (let i = 0; i < this.data.length; i++) {
-            const d = {...this.data[i]};
+            const d = {
+                ...this.data[i],
+                month: this.normalizeDate(this.data[i].month)
+            };
             delete d.unknown_values;
             data.push(d);
         }
@@ -613,7 +624,7 @@ class CsvImportWage extends PowerTableList {
         return str;
     }
 
-    valueFormat(key, d) {        
+    valueFormat(key, d) {
         return d;
     }
 
@@ -663,5 +674,10 @@ class CsvImportWage extends PowerTableList {
             }
         }
         return parseInt(str);
+    }
+
+    normalizeDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
 }

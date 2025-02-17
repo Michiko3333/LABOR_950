@@ -56,7 +56,7 @@
         <div class="ui two cards">
             <a class="primary card card-shadow" href="{{ route('admin.company') }}">
                 <i class="building outline icon" style="visibility: visible;"></i>
-                <p>会社管理</p>
+                <p>会社一覧</p>
             </a>
             <a class="secondary card card-shadow" href="{{ route('admin.labor') }}">
                 <i class="user graduate icon" style="visibility: visible;"></i>

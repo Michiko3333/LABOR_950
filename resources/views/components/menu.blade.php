@@ -72,11 +72,11 @@
                     <li class="item">
                         <a href="{{ route('branch') }}">
 
-                            支店・営業所情報</a>
+                            事業所等情報</a>
                     </li>
                 @endif
                 <div class="ui divider mx-1 my-0"></div>
-                <li class="item" id="menu-company-setting">
+                <li class="item set" id="menu-company-setting">
                     <a class="content">
                         各種設定
                     </a>
@@ -85,7 +85,7 @@
                     <li class="item sub menu-company-setting-list" style="display: none;">
                         <a href="{{ route('current_company_department_update') }}">
 
-                            組織・部署マスタ</a>
+                            部署マスタ</a>
                     </li>
                 @endif
                 @if ($userPermission->isReadableFor(4))
@@ -108,7 +108,7 @@
                         <li class="item">
                             <a href="{{ route('employee') }}">
 
-                                社員一覧</a>
+                                従業員一覧</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(517))
@@ -140,7 +140,7 @@
                         </li>
                     @endif
                     <div class="ui divider mx-1 my-0"></div>
-                    <li class="item" id="menu-employee-setting">
+                    <li class="item set" id="menu-employee-setting">
                         <a class="content">
                             各種設定
                         </a>
@@ -149,7 +149,7 @@
                         <li class="item sub menu-employee-setting-list" style="display: none;">
                             <a href="{{ route('closure_information') }}">
 
-                                休業情報</a>
+                                休業設定</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(20))
@@ -181,7 +181,7 @@
                         </li>
                     @endif
                     <div class="ui divider mx-1 my-0"></div>
-                    <li class="item" id="menu-procedure-setting">
+                    <li class="item set" id="menu-procedure-setting">
                         <a class="content">
                             各種設定
                         </a>
@@ -197,21 +197,21 @@
             @endif
             @if ($userPermission->isReadableFor(11) || $userPermission->isReadableFor(12) || $userPermission->isReadableFor(13))
                 <li class="title">スケジュール</li>
-                @if ($userPermission->isReadableFor(11))
-                    <li class="item">
-                        <a href="{{ route('calendar.index') }}">
-                            休日（出勤）カレンダー</a>
-                    </li>
-                @endif
                 @if ($userPermission->isReadableFor(12))
                     <li class="item">
                         <a href="{{ route('calendar.shift') }}">
+                            休日（出勤）カレンダー</a>
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(11))
+                    <li class="item">
+                        <a href="{{ route('calendar.index') }}">
 
                             行事（業務）カレンダー</a>
                     </li>
                 @endif
                 <div class="ui divider mx-1 my-0"></div>
-                    <li class="item" id="menu-schedule-setting">
+                    <li class="item set" id="menu-schedule-setting">
                         <a class="content">
                             各種設定
                         </a>
@@ -298,16 +298,21 @@
     }
 
     $("#menu-company-setting").on("click", function () {
-        $(".menu-company-setting-list").toggle();
+        $(this).toggleClass("open");
+        $(".menu-company-setting-list").stop(true, true).slideToggle();
+
     });
     $("#menu-employee-setting").on("click", function () {
-        $(".menu-employee-setting-list").toggle();
+        $(".menu-employee-setting-list").stop(true, true).slideToggle();
+        $(this).toggleClass("open");
     });
     $("#menu-procedure-setting").on("click", function () {
-        $(".menu-procedure-setting-list").toggle();
+        $(".menu-procedure-setting-list").stop(true, true).slideToggle();
+        $(this).toggleClass("open");
     });
     $("#menu-schedule-setting").on("click", function () {
-        $(".menu-schedule-setting-list").toggle();
+        $(".menu-schedule-setting-list").stop(true, true).slideToggle();
+        $(this).toggleClass("open");
     });
 
     Livewire.on('changeIconImage', (iconPath) => {
@@ -315,6 +320,7 @@
     });
 </script>
 <style>
+
     header {
         position: fixed;
         display: flex;
@@ -497,7 +503,7 @@
         color: var(--color-black);
     }
 
-    #sidebar menu li.item:not(.sub) a::before {
+    #sidebar menu li.item:not(.sub):not(.icon):not(.set)  a::before {
         position: absolute;
         content: "";
         top: calc(50% - 4px);
@@ -505,6 +511,32 @@
         width: 8px;
         height: 8px;
         background-color: var(--color-red);
+    }
+
+    #sidebar menu li.item.set a::before {
+        position: absolute !important;
+        content: "";
+        top: calc(50% - 5px);
+        left: 1.2em;
+        width: 0;
+        height: 0;
+        border-left: 8px solid var(--color-red);
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        background-color: rgba(255, 255, 255, 0) ;
+    }
+
+    #sidebar menu li.item.set.open a::before {
+        position: absolute !important;
+        content: "";
+        top: calc(50% - 5px);
+        left: 1.2em;
+        width: 0;
+        height: 0;
+        border-top: 8px solid var(--color-red);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        background-color: rgba(255, 255, 255, 0) ;
     }
 
     #sidebar menu li.item.sub a::before {
@@ -553,8 +585,6 @@
         header .right .menu-user .name {
             display: none;
         }
-
-
     }
 
     @media screen and (max-width: 1250px) {

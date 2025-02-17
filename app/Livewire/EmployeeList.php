@@ -53,7 +53,8 @@ class EmployeeList extends BaseTable
             ->leftJoin('m_values_employee_employee_status as employee_status_val', 'm_employee.employee_status', '=', 'employee_status_val.id')
             ->leftJoin('m_values_employee_labor_insurance_type as labor_insurance_type_val', 'm_employee.labor_insurance_type', '=', 'labor_insurance_type_val.id')
             ->leftJoin('m_values_employee_employment_insurance_type as emp_insurance_type_val', 'm_employee.employment_insurance_type', '=', 'emp_insurance_type_val.id')
-            ->where('company.id', $currentCompanyId);
+            ->where('company.id', $currentCompanyId)
+            ->where('m_employee.delete_flg', 0);
 
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';

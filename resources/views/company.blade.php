@@ -1,4 +1,4 @@
-<x-layout title="会社基本情報変更">
+<x-layout title="会社基本情報">
     @slot('header')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <style type="text/css">
@@ -230,7 +230,7 @@
         <div class="ui huge breadcrumb mb-2">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">会社基本情報変更</div>
+            <div class="active section">会社基本情報</div>
         </div>
 
         <h1 class="mb-2 mt-0">会社基本情報変更</h1>

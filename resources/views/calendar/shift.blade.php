@@ -1,4 +1,4 @@
-<x-layout title="年間勤務予定表" mode="">
+<x-layout title="休日（出勤）カレンダー" mode="">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('custom/calendar-small.css') }}">
         <style>
@@ -28,7 +28,7 @@
         <div class="ui huge breadcrumb mb-0 mb-2">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">年間勤務予定表</div>
+            <div class="active section">休日（出勤）カレンダー</div>
         </div>
         @livewire('shift-form', ['editable' => $userPermission->isWritableFor(12) && $userPermission->isBasicDepartment()])
     </section>

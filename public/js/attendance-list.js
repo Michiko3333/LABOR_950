@@ -45,7 +45,7 @@ class AttendanceList extends PowerTableList {
                         sum += item[k];
                     }
                 });
-                
+
                 label.textContent = sum;
                 label.style.fontWeight = 'bold';
                 td.dataset.amount = label.textContent;
@@ -58,7 +58,7 @@ class AttendanceList extends PowerTableList {
                         sum += item[k];
                     }
                 });
-                
+
                 label.textContent = sum;
                 label.style.fontWeight = 'bold';
                 td.dataset.amount = label.textContent;
@@ -78,8 +78,7 @@ class AttendanceList extends PowerTableList {
                 const date = new Date(item[key]);
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1;
-                const day = date.getDate();
-                const formattedDate = `${year}年${month}月${day}日`;
+                const formattedDate = `${year}年${month}月`;
                 label.textContent = formattedDate;
                 td.dataset.amount = item[key];
             } else {
@@ -138,7 +137,7 @@ class AttendanceList extends PowerTableList {
             sum += selected.value ?  parseFloat(selected.value) : 0;
         });
 
-        const total = element.querySelector('div.label[data-id="' + id + '"][data-key="' + label_key + '"]');        
+        const total = element.querySelector('div.label[data-id="' + id + '"][data-key="' + label_key + '"]');
         total.textContent = sum;
     }
 }

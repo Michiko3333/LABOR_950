@@ -47,7 +47,7 @@
                 <i class="right chevron icon divider"></i>
                 <a class="section" href="{{ route('admin.company') }}">会社一覧</a>
                 <i class="right chevron icon divider"></i>
-                <div class="active section">部署マスタ編集</div>
+                <div class="active section">部署マスタ</div>
             </div>
             <h1>部署マスタ：{{ $company_name }}</h1>
             <livewire:department-list :company_id="$company_id" />

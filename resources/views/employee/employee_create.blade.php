@@ -192,6 +192,10 @@
             .japan_post_bank_code_no.hidden {
                 display: none;
             }
+
+            .active.section {
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">
@@ -200,15 +204,14 @@
             <i class="right chevron icon divider"></i>
             <a class="section" href="{{ route('employee') }}">社員一覧</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">従業員情報更新</div>
+            <div class="active section">従業員情報編集</div>
         </div>
 
-        <h1 class="mb-2 mt-0">従業員情報更新</h1>
+        <h1 class="mb-2 mt-0">従業員情報編集</h1>
 
         <form class="ui form"
             action="{{ !isset($employee_id) ? route('employee_create_post') : route('employee_update_post', $employee_id) }}"
-            enctype="multipart/form-data"
-            method="post">
+            enctype="multipart/form-data" method="post">
             @csrf
             @if (session('errors'))
                 <div class="ui error message">
@@ -353,17 +356,19 @@
                                     </div>
                                 </div>
                                 <div class="field icon-input-area">
-                                @if ($userPermission->isDirector() || $userPermission->isWritableFor(6))
-                                    @if(isset($employee_id))
-                                        <p>
-                                            <span class="delete-icon">
-                                                <a id="iconDelete" style=" color: var(--color-red);">削除</a>
-                                                <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg" value="0">
-                                            </span>
-                                        </p>
+                                    @if ($userPermission->isDirector() || $userPermission->isWritableFor(6))
+                                        @if (isset($employee_id))
+                                            <p>
+                                                <span class="delete-icon">
+                                                    <a id="iconDelete" style=" color: var(--color-red);">削除</a>
+                                                    <input type="hidden" name="icon_delete_flg" id="iconDeleteFlg"
+                                                        value="0">
+                                                </span>
+                                            </p>
+                                        @endif
+                                        <input type="file" accept=".jpeg,.jpg,.png" name="icon_file"
+                                            id="iconChangeInput">
                                     @endif
-                                    <input type="file" accept=".jpeg,.jpg,.png" name="icon_file" id="iconChangeInput">
-                                @endif
                                 </div>
                             </div>
                             <div class="three fields">
@@ -405,7 +410,8 @@
                                 <div class="field {{ err($errors, 'grade') }}">
                                     <label for="">等級</label>
                                     <input type="text" id="grade" name="grade"
-                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}" autocomplete="off">
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -457,7 +463,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="birthday_date"
-                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_birthday_date', isset($employee_id) ? $employee->birthday : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_birthday_date"
                                                 id="formatted_birthday_date" value="{{ old('birthday_date') }}">
                                         </div>
@@ -465,8 +472,8 @@
                                 </div>
                                 <div class="field">
                                     <label for="age">年齢</label>
-                                        <input type="text" name="age" class="age"
-                                        placeholder="" readonly style="border: none;">
+                                    <input type="text" name="age" class="age" placeholder="" readonly
+                                        style="border: none;">
                                 </div>
                             </div>
                             <div class="fields">
@@ -586,9 +593,11 @@
                                 <div class="required field {{ err($errors, 'branch_id') }}">
                                     <label for="branch_name">支店</label>
                                     <input type="text" id="branch_name" name="branch_name" readonly
-                                        value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}" autocomplete="off">
+                                        value="{{ old('branch_name', isset($employee_id) ? $employee->branch_name : '') }}"
+                                        autocomplete="off">
                                     <input type="hidden" id="branch_id" name="branch_id"
-                                        value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}" autocomplete="off">
+                                        value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
@@ -613,72 +622,118 @@
                                     <label for="work_category">勤務区分</label>
                                     <select class="ui fluid dropdown" name="work_category">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('work_category') == "1" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "1") ? 'selected': '' }}>
-                                                固定時間勤務</option>
-                                        <option value="2" {{ old('work_category') == "2" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "2") ? 'selected': '' }}>
-                                                変形労働時間勤務</option>
-                                        <option value="3" {{ old('work_category') == "3" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "3") ? 'selected': '' }}>
-                                                フレックスタイム勤務</option>
-                                        <option value="4" {{ old('work_category') == "4" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "4") ? 'selected': '' }}>
-                                                裁量労働勤務（みなし労働時間制）</option>
-                                        <option value="5" {{ old('work_category') == "5" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "5") ? 'selected': '' }}>
-                                                育児短時間勤務</option>
-                                        <option value="6" {{ old('work_category') == "6" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "6") ? 'selected': '' }}>
-                                                テレワーク勤務</option>
-                                        <option value="7" {{ old('work_category') == "7" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "7") ? 'selected': '' }}>
-                                                時差出勤勤務</option>
-                                        <option value="8" {{ old('work_category') == "8" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "8") ? 'selected': '' }}>
-                                                フルタイム勤務</option>
-                                        <option value="9" {{ old('work_category') == "9" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "9") ? 'selected': '' }}>
-                                                パートタイム勤務</option>
-                                        <option value="10" {{ old('work_category') == "10" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "10") ? 'selected': '' }}>
-                                                アルバイト勤務</option>
-                                        <option value="11" {{ old('work_category') == "11" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "11") ? 'selected': '' }}>
-                                                シフト勤務</option>
-                                        <option value="12" {{ old('work_category') == "12" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "12") ? 'selected': '' }}>
-                                                短時間勤務</option>
-                                        <option value="13" {{ old('work_category') == "13" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "13") ? 'selected': '' }}>
-                                                嘱託勤務</option>
-                                        <option value="14" {{ old('work_category') == "14" ||
-                                                (isset($employee) && old('work_category', $employee->work_category) == "14") ? 'selected': '' }}>
-                                                その他</option>
+                                        <option value="1"
+                                            {{ old('work_category') == '1' || (isset($employee) && old('work_category', $employee->work_category) == '1')
+                                                ? 'selected'
+                                                : '' }}>
+                                            固定時間勤務</option>
+                                        <option value="2"
+                                            {{ old('work_category') == '2' || (isset($employee) && old('work_category', $employee->work_category) == '2')
+                                                ? 'selected'
+                                                : '' }}>
+                                            変形労働時間勤務</option>
+                                        <option value="3"
+                                            {{ old('work_category') == '3' || (isset($employee) && old('work_category', $employee->work_category) == '3')
+                                                ? 'selected'
+                                                : '' }}>
+                                            フレックスタイム勤務</option>
+                                        <option value="4"
+                                            {{ old('work_category') == '4' || (isset($employee) && old('work_category', $employee->work_category) == '4')
+                                                ? 'selected'
+                                                : '' }}>
+                                            裁量労働勤務（みなし労働時間制）</option>
+                                        <option value="5"
+                                            {{ old('work_category') == '5' || (isset($employee) && old('work_category', $employee->work_category) == '5')
+                                                ? 'selected'
+                                                : '' }}>
+                                            育児短時間勤務</option>
+                                        <option value="6"
+                                            {{ old('work_category') == '6' || (isset($employee) && old('work_category', $employee->work_category) == '6')
+                                                ? 'selected'
+                                                : '' }}>
+                                            テレワーク勤務</option>
+                                        <option value="7"
+                                            {{ old('work_category') == '7' || (isset($employee) && old('work_category', $employee->work_category) == '7')
+                                                ? 'selected'
+                                                : '' }}>
+                                            時差出勤勤務</option>
+                                        <option value="8"
+                                            {{ old('work_category') == '8' || (isset($employee) && old('work_category', $employee->work_category) == '8')
+                                                ? 'selected'
+                                                : '' }}>
+                                            フルタイム勤務</option>
+                                        <option value="9"
+                                            {{ old('work_category') == '9' || (isset($employee) && old('work_category', $employee->work_category) == '9')
+                                                ? 'selected'
+                                                : '' }}>
+                                            パートタイム勤務</option>
+                                        <option value="10"
+                                            {{ old('work_category') == '10' || (isset($employee) && old('work_category', $employee->work_category) == '10')
+                                                ? 'selected'
+                                                : '' }}>
+                                            アルバイト勤務</option>
+                                        <option value="11"
+                                            {{ old('work_category') == '11' || (isset($employee) && old('work_category', $employee->work_category) == '11')
+                                                ? 'selected'
+                                                : '' }}>
+                                            シフト勤務</option>
+                                        <option value="12"
+                                            {{ old('work_category') == '12' || (isset($employee) && old('work_category', $employee->work_category) == '12')
+                                                ? 'selected'
+                                                : '' }}>
+                                            短時間勤務</option>
+                                        <option value="13"
+                                            {{ old('work_category') == '13' || (isset($employee) && old('work_category', $employee->work_category) == '13')
+                                                ? 'selected'
+                                                : '' }}>
+                                            嘱託勤務</option>
+                                        <option value="14"
+                                            {{ old('work_category') == '14' || (isset($employee) && old('work_category', $employee->work_category) == '14')
+                                                ? 'selected'
+                                                : '' }}>
+                                            その他</option>
                                     </select>
                                 </div>
                                 <div class="required field {{ err($errors, 'enrollment_category') }}">
                                     <label for="enrollment_category">在籍区分</label>
                                     <select class="ui fluid dropdown" name="enrollment_category">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('enrollment_category') == "1" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "1") ? 'selected': '' }}>
-                                                在籍（通常勤務）</option>
-                                        <option value="2" {{ old('enrollment_category') == "2" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "2") ? 'selected': '' }}>
-                                                休職</option>
-                                        <option value="3" {{ old('enrollment_category') == "3" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "3") ? 'selected': '' }}>
-                                                休業</option>
-                                        <option value="4" {{ old('enrollment_category') == "4" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "4") ? 'selected': '' }}>
-                                                出向</option>
-                                        <option value="5" {{ old('enrollment_category') == "5" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "5") ? 'selected': '' }}>
-                                                派遣</option>
-                                        <option value="6" {{ old('enrollment_category') == "6" ||
-                                                (isset($employee) && old('enrollment_category', $employee->enrollment_category) == "6") ? 'selected': '' }}>
-                                                退職</option>
+                                        <option value="1"
+                                            {{ old('enrollment_category') == '1' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '1')
+                                                ? 'selected'
+                                                : '' }}>
+                                            在籍（通常勤務）</option>
+                                        <option value="2"
+                                            {{ old('enrollment_category') == '2' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '2')
+                                                ? 'selected'
+                                                : '' }}>
+                                            休職</option>
+                                        <option value="3"
+                                            {{ old('enrollment_category') == '3' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '3')
+                                                ? 'selected'
+                                                : '' }}>
+                                            休業</option>
+                                        <option value="4"
+                                            {{ old('enrollment_category') == '4' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '4')
+                                                ? 'selected'
+                                                : '' }}>
+                                            出向</option>
+                                        <option value="5"
+                                            {{ old('enrollment_category') == '5' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '5')
+                                                ? 'selected'
+                                                : '' }}>
+                                            派遣</option>
+                                        <option value="6"
+                                            {{ old('enrollment_category') == '6' ||
+                                            (isset($employee) && old('enrollment_category', $employee->enrollment_category) == '6')
+                                                ? 'selected'
+                                                : '' }}>
+                                            退職</option>
                                     </select>
                                 </div>
                             </div>
@@ -689,7 +744,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="transfer_date"
-                                                value="{{ old('formatted_transfer_date', isset($employee_id) ? $employee->transfer_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_transfer_date', isset($employee_id) ? $employee->transfer_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_transfer_date"
                                                 id="formatted_transfer_date" value="{{ old('transfer_date') }}">
                                         </div>
@@ -758,7 +814,8 @@
                                 </div>
                                 <div class="four wide field required {{ err($errors, 'address_prefecture') }}">
                                     <label for="address_prefecture">住所（都道府県）</label>
-                                    <select class="ui fluid dropdown" name="address_prefecture" id="address_prefecture">
+                                    <select class="ui fluid dropdown" name="address_prefecture"
+                                        id="address_prefecture">
                                         <option value="">未選択</option>
                                         @foreach ($prefectures as $k => $value)
                                             <option value="{{ $k }}"
@@ -781,13 +838,13 @@
                             <div class="two fields">
                                 <div class="field required {{ err($errors, 'address_ward') }}">
                                     <label for="address_ward">住所（丁目・番地）</label>
-                                    <input type="text" name="address_ward"  id="address_ward"
+                                    <input type="text" name="address_ward" id="address_ward"
                                         value="{{ old('address_ward', isset($employee_id) ? $employee->address_ward : '') }}"
                                         placeholder="" autocomplete="off">
                                 </div>
                                 <div class="field {{ err($errors, 'address_apartment') }}">
                                     <label for="address_apartment">住所（アパート・マンション名等）</label>
-                                    <input type="text" name="address_apartment"  id="address_apartment"
+                                    <input type="text" name="address_apartment" id="address_apartment"
                                         value="{{ old('address_apartment', isset($employee_id) ? $employee->address_apartment : '') }}"
                                         placeholder="" autocomplete="off">
                                 </div>
@@ -820,7 +877,8 @@
                                         <label for="emergency_tel1">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel1"
                                             name="emergency_tel1"
-                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}" autocomplete="off">
+                                            value="{{ old('emergency_tel1', isset($employee_id) ? $employee->emergency_tel1 : '') }}"
+                                            autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -888,7 +946,8 @@
                                         <label for="emergency_tel2">電話番号（ハイフン無し）</label>
                                         <input type="tel" pattern="[\d\-]*" maxlength="12" id="emergency_tel2"
                                             name="emergency_tel2"
-                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}" autocomplete="off">
+                                            value="{{ old('emergency_tel2', isset($employee_id) ? $employee->emergency_tel2 : '') }}"
+                                            autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -1004,18 +1063,30 @@
                                     <select class="ui fluid dropdown employment_route" name="employment_route"
                                         value="{{ old('employment_route', isset($employee_id) ? $employee->employment_route : '') }}">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('employment_route') == "1" ||
-                                                (isset($employee) && old('employment_route', $employee->employment_route) == "1") ? 'selected': '' }}>
-                                                安定所紹介</option>
-                                        <option value="2" {{ old('employment_route') == "2" ||
-                                                (isset($employee) && old('employment_route', $employee->employment_route) == "2") ? 'selected': '' }}>
-                                                自己就職</option>
-                                        <option value="3" {{ old('employment_route') == "3" ||
-                                                (isset($employee) && old('employment_route', $employee->employment_route) == "3") ? 'selected': '' }}>
-                                                民間紹介</option>
-                                        <option value="4" {{ old('employment_route') == "4" ||
-                                                (isset($employee) && old('employment_route', $employee->employment_route) == "4") ? 'selected': '' }}>
-                                                把握していない</option>
+                                        <option value="1"
+                                            {{ old('employment_route') == '1' ||
+                                            (isset($employee) && old('employment_route', $employee->employment_route) == '1')
+                                                ? 'selected'
+                                                : '' }}>
+                                            安定所紹介</option>
+                                        <option value="2"
+                                            {{ old('employment_route') == '2' ||
+                                            (isset($employee) && old('employment_route', $employee->employment_route) == '2')
+                                                ? 'selected'
+                                                : '' }}>
+                                            自己就職</option>
+                                        <option value="3"
+                                            {{ old('employment_route') == '3' ||
+                                            (isset($employee) && old('employment_route', $employee->employment_route) == '3')
+                                                ? 'selected'
+                                                : '' }}>
+                                            民間紹介</option>
+                                        <option value="4"
+                                            {{ old('employment_route') == '4' ||
+                                            (isset($employee) && old('employment_route', $employee->employment_route) == '4')
+                                                ? 'selected'
+                                                : '' }}>
+                                            把握していない</option>
                                     </select>
                                 </div>
                                 <div class="field {{ err($errors, 'private_introduction') }}">
@@ -1030,14 +1101,13 @@
                                     <label for="recruitment_category">採用区分</label>
                                     <div class="mt-1">
                                         <div class="ui radio checkbox field mr-2 mt-0">
-                                            <input type="radio" name="recruitment_category"
-                                            checked="" value="0"
+                                            <input type="radio" name="recruitment_category" checked=""
+                                                value="0"
                                                 {{ (isset($employee_id) && $employee->recruitment_category == 0) || old('recruitment_category') == '0' ? 'checked' : '' }}>
                                             <label>新卒（第二新卒含む）</label>
                                         </div>
                                         <div class="ui radio checkbox field mt-0">
-                                            <input type="radio" name="recruitment_category"
-                                            value="1"
+                                            <input type="radio" name="recruitment_category" value="1"
                                                 {{ (isset($employee_id) && $employee->recruitment_category == 1) || old('recruitment_category') == '1' ? 'checked' : '' }}>
                                             <label>中途採用</label>
                                         </div>
@@ -1045,39 +1115,70 @@
                                 </div>
                                 <div class="field {{ err($errors, 'recruitment_category_detail') }}">
                                     <label for=""></label>
-                                    <select class="ui fluid dropdown recruitment_category_detail" name="recruitment_category_detail"
+                                    <select class="ui fluid dropdown recruitment_category_detail"
+                                        name="recruitment_category_detail"
                                         value="{{ old('recruitment_category_detail', isset($employee_id) ? $employee->recruitment_category_detail : '') }}">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('recruitment_category_detail') == "1" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "1") ? 'selected': '' }}>
-                                                インターン採用</option>
-                                        <option value="2" {{ old('recruitment_category_detail') == "2" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "2") ? 'selected': '' }}>
-                                                リファラル採用（社員紹介）</option>
-                                        <option value="3" {{ old('recruitment_category_detail') == "3" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "3") ? 'selected': '' }}>
-                                                業者紹介からの採用</option>
-                                        <option value="4" {{ old('recruitment_category_detail') == "4" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "4") ? 'selected': '' }}>
-                                                顧客紹介からの採用</option>
-                                        <option value="5" {{ old('recruitment_category_detail') == "5" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "5") ? 'selected': '' }}>
-                                                知人紹介からの採用</option>
-                                        <option value="6" {{ old('recruitment_category_detail') == "6" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "6") ? 'selected': '' }}>
-                                                再雇用・リターン採用</option>
-                                        <option value="7" {{ old('recruitment_category_detail') == "7" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "7") ? 'selected': '' }}>
-                                                障碍者採用</option>
-                                        <option value="8" {{ old('recruitment_category_detail') == "8" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "8") ? 'selected': '' }}>
-                                                シニア採用（定年退職後）</option>
-                                        <option value="9" {{ old('recruitment_category_detail') == "9" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "9") ? 'selected': '' }}>
-                                                外国人採用</option>
-                                        <option value="10" {{ old('recruitment_category_detail') == "10" ||
-                                                (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == "10") ? 'selected': '' }}>
-                                                その他採用</option>
+                                        <option value="1"
+                                            {{ old('recruitment_category_detail') == '1' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '1')
+                                                ? 'selected'
+                                                : '' }}>
+                                            インターン採用</option>
+                                        <option value="2"
+                                            {{ old('recruitment_category_detail') == '2' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '2')
+                                                ? 'selected'
+                                                : '' }}>
+                                            リファラル採用（社員紹介）</option>
+                                        <option value="3"
+                                            {{ old('recruitment_category_detail') == '3' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '3')
+                                                ? 'selected'
+                                                : '' }}>
+                                            業者紹介からの採用</option>
+                                        <option value="4"
+                                            {{ old('recruitment_category_detail') == '4' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '4')
+                                                ? 'selected'
+                                                : '' }}>
+                                            顧客紹介からの採用</option>
+                                        <option value="5"
+                                            {{ old('recruitment_category_detail') == '5' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '5')
+                                                ? 'selected'
+                                                : '' }}>
+                                            知人紹介からの採用</option>
+                                        <option value="6"
+                                            {{ old('recruitment_category_detail') == '6' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '6')
+                                                ? 'selected'
+                                                : '' }}>
+                                            再雇用・リターン採用</option>
+                                        <option value="7"
+                                            {{ old('recruitment_category_detail') == '7' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '7')
+                                                ? 'selected'
+                                                : '' }}>
+                                            障碍者採用</option>
+                                        <option value="8"
+                                            {{ old('recruitment_category_detail') == '8' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '8')
+                                                ? 'selected'
+                                                : '' }}>
+                                            シニア採用（定年退職後）</option>
+                                        <option value="9"
+                                            {{ old('recruitment_category_detail') == '9' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '9')
+                                                ? 'selected'
+                                                : '' }}>
+                                            外国人採用</option>
+                                        <option value="10"
+                                            {{ old('recruitment_category_detail') == '10' ||
+                                            (isset($employee) && old('recruitment_category_detail', $employee->recruitment_category_detail) == '10')
+                                                ? 'selected'
+                                                : '' }}>
+                                            その他採用</option>
                                     </select>
                                 </div>
                             </div>
@@ -1087,27 +1188,15 @@
                                     <select class="ui fluid dropdown employment_status" name="employment_status"
                                         value="{{ old('employment_status', isset($employee_id) ? $employee->employment_status : '') }}">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('employment_status') == "1" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "1") ? 'selected': '' }}>
-                                                日雇い</option>
-                                        <option value="2" {{ old('employment_status') == "2" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "2") ? 'selected': '' }}>
-                                                派遣</option>
-                                        <option value="3" {{ old('employment_status') == "3" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "3") ? 'selected': '' }}>
-                                                アルバイト・パートタイム</option>
-                                        <option value="4" {{ old('employment_status') == "4" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "4") ? 'selected': '' }}>
-                                                有期契約労働者（契約社員含む）</option>
-                                        <option value="5" {{ old('employment_status') == "5" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "5") ? 'selected': '' }}>
-                                                季節的雇用</option>
-                                        <option value="6" {{ old('employment_status') == "6" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "6") ? 'selected': '' }}>
-                                                船舶</option>
-                                        <option value="7" {{ old('employment_status') == "7" ||
-                                                (isset($employee) && old('employment_status', $employee->employment_status) == "7") ? 'selected': '' }}>
-                                                その他（正社員・無期雇用等）</option>
+                                        @foreach ($employment_status as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('employment_status') == "$key" ||
+                                                (isset($employee) && old('employment_status', $employee->employment_status) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="required field {{ err($errors, 'pay_type') }}">
@@ -1115,27 +1204,41 @@
                                     <select class="ui fluid dropdown pay_type" name="pay_type"
                                         value="{{ old('pay_type', isset($employee_id) ? $employee->pay_type : '') }}">
                                         <option value="">未選択</option>
-                                        <option value="1" {{ old('pay_type') == "1" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "1") ? 'selected': '' }}>
-                                                月給</option>
-                                        <option value="2" {{ old('pay_type') == "2" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "2") ? 'selected': '' }}>
-                                                週休</option>
-                                        <option value="3" {{ old('pay_type') == "3" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "3") ? 'selected': '' }}>
-                                                日給</option>
-                                        <option value="4" {{ old('pay_type') == "4" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "4") ? 'selected': '' }}>
-                                                時給</option>
-                                        <option value="5" {{ old('pay_type') == "5" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "5") ? 'selected': '' }}>
-                                                年俸</option>
-                                        <option value="6" {{ old('pay_type') == "6" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "6") ? 'selected': '' }}>
-                                                出来高</option>
-                                        <option value="7" {{ old('pay_type') == "7" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "7") ? 'selected': '' }}>
-                                                その他</option>
+                                        <option value="1"
+                                            {{ old('pay_type') == '1' || (isset($employee) && old('pay_type', $employee->pay_type) == '1')
+                                                ? 'selected'
+                                                : '' }}>
+                                            月給</option>
+                                        <option value="2"
+                                            {{ old('pay_type') == '2' || (isset($employee) && old('pay_type', $employee->pay_type) == '2')
+                                                ? 'selected'
+                                                : '' }}>
+                                            週給</option>
+                                        <option value="3"
+                                            {{ old('pay_type') == '3' || (isset($employee) && old('pay_type', $employee->pay_type) == '3')
+                                                ? 'selected'
+                                                : '' }}>
+                                            日給</option>
+                                        <option value="4"
+                                            {{ old('pay_type') == '4' || (isset($employee) && old('pay_type', $employee->pay_type) == '4')
+                                                ? 'selected'
+                                                : '' }}>
+                                            時給</option>
+                                        <option value="5"
+                                            {{ old('pay_type') == '5' || (isset($employee) && old('pay_type', $employee->pay_type) == '5')
+                                                ? 'selected'
+                                                : '' }}>
+                                            年俸</option>
+                                        <option value="6"
+                                            {{ old('pay_type') == '6' || (isset($employee) && old('pay_type', $employee->pay_type) == '6')
+                                                ? 'selected'
+                                                : '' }}>
+                                            出来高</option>
+                                        <option value="7"
+                                            {{ old('pay_type') == '7' || (isset($employee) && old('pay_type', $employee->pay_type) == '7')
+                                                ? 'selected'
+                                                : '' }}>
+                                            その他</option>
                                     </select>
                                 </div>
                             </div>
@@ -1146,7 +1249,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_start_date"
-                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_contract_start_date', isset($employee_id) ? $employee->contract_start_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_contract_start_date"
                                                 id="formatted_contract_start_date"
                                                 value="{{ old('contract_start_date') }}">
@@ -1159,7 +1263,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="contract_end_date"
-                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_contract_end_date', isset($employee_id) ? $employee->contract_end_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_contract_end_date"
                                                 id="formatted_contract_end_date"
                                                 value="{{ old('contract_end_date') }}">
@@ -1174,7 +1279,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="hired_date"
-                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_hired_date', isset($employee_id) ? $employee->hired_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_hired_date"
                                                 id="formatted_hired_date" value="{{ old('hired_date') }}">
                                         </div>
@@ -1192,7 +1298,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="retirement_date"
-                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_retirement_date', isset($employee_id) ? $employee->retirement_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_retirement_date"
                                                 id="formatted_retirement_date" value="{{ old('retirement_date') }}">
                                         </div>
@@ -1204,7 +1311,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="intended_retirement_date"
-                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_intended_retirement_date', isset($employee_id) ? $employee->intended_retirement_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_intended_retirement_date"
                                                 id="formatted_intended_retirement_date"
                                                 value="{{ old('intended_retirement_date') }}">
@@ -1251,7 +1359,8 @@
                                         <div class="ui input left icon">
                                             <i class="calendar icon"></i>
                                             <input type="text" placeholder="Date" name="passed_away_date"
-                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}" autocomplete="off">
+                                                value="{{ old('formatted_passed_away_date', isset($employee_id) ? $employee->passed_away_date : '') }}"
+                                                autocomplete="off">
                                             <input type="hidden" name="formatted_passed_away_date"
                                                 id="formatted_passed_away_date"
                                                 value="{{ old('passed_away_date') }}">
@@ -1293,7 +1402,7 @@
                 <div class="ui large modal dependent-history" wire:ignore>
                     <div class="basic header center aligned" style="padding:1.25rem 1.5rem 0">扶養者履歴</div>
                     <div class="content">
-                        <livewire:dependent-history-modal-content :dependent="$dependent" :prefectures="$prefectures"/>
+                        <livewire:dependent-history-modal-content :dependent="$dependent" :prefectures="$prefectures" />
                     </div>
                     <div class="basic actions">
                         <div class="ui button negative basic">戻る</div>
@@ -1367,21 +1476,31 @@
                                 <select class="ui fluid dropdown" name="insured_status"
                                     value="{{ old('insured_status', isset($employee_id) ? $employee->insured_status : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="1" {{ old('insured_status') == "1" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "1") ? 'selected': '' }}>
-                                            海外勤務者（介護保険適用除外）</option>
-                                    <option value="2" {{ old('insured_status') == "2" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "2") ? 'selected': '' }}>
-                                            育児休業者、産前産後休業者（社会保険免除）</option>
-                                    <option value="3" {{ old('insured_status') == "3" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "3") ? 'selected': '' }}>
-                                            特定第二号被保険者（介護保険負担有）</option>
-                                    <option value="4" {{ old('insured_status') == "4" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "4") ? 'selected': '' }}>
-                                            短期雇用特例被保険者</option>
-                                    <option value="5" {{ old('insured_status') == "5" ||
-                                            (isset($employee) && old('insured_status', $employee->insured_status) == "5") ? 'selected': '' }}>
-                                            その他</option>
+                                    <option value="1"
+                                        {{ old('insured_status') == '1' || (isset($employee) && old('insured_status', $employee->insured_status) == '1')
+                                            ? 'selected'
+                                            : '' }}>
+                                        海外勤務者（介護保険適用除外）</option>
+                                    <option value="2"
+                                        {{ old('insured_status') == '2' || (isset($employee) && old('insured_status', $employee->insured_status) == '2')
+                                            ? 'selected'
+                                            : '' }}>
+                                        育児休業者、産前産後休業者（社会保険免除）</option>
+                                    <option value="3"
+                                        {{ old('insured_status') == '3' || (isset($employee) && old('insured_status', $employee->insured_status) == '3')
+                                            ? 'selected'
+                                            : '' }}>
+                                        特定第二号被保険者（介護保険負担有）</option>
+                                    <option value="4"
+                                        {{ old('insured_status') == '4' || (isset($employee) && old('insured_status', $employee->insured_status) == '4')
+                                            ? 'selected'
+                                            : '' }}>
+                                        短期雇用特例被保険者</option>
+                                    <option value="5"
+                                        {{ old('insured_status') == '5' || (isset($employee) && old('insured_status', $employee->insured_status) == '5')
+                                            ? 'selected'
+                                            : '' }}>
+                                        その他</option>
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'employment_insured_no') }}">
@@ -1415,7 +1534,8 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="employment_insurance_applied_date"
-                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}" autocomplete="off">
+                                            value="{{ old('employment_insurance_applied_date', isset($employee_id) ? $employee->employment_insurance_applied_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="employment_insurance_applied_date"
                                             id="employment_insurance_applied_date"
                                             value="{{ old('employment_insurance_applied_date') }}">
@@ -1428,7 +1548,8 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_insured_date"
-                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}" autocomplete="off">
+                                            value="{{ old('employment_insured_date', isset($employee_id) ? $employee->employment_insured_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="employment_insured_date"
                                             id="employment_insured_date"
                                             value="{{ old('employment_insured_date') }}">
@@ -1441,7 +1562,8 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="employment_not_insured_date"
-                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}" autocomplete="off">
+                                            value="{{ old('employment_not_insured_date', isset($employee_id) ? $employee->employment_not_insured_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="employment_not_insured_date"
                                             id="employment_not_insured_date"
                                             value="{{ old('employment_not_insured_date') }}">
@@ -1460,14 +1582,18 @@
                                 <select class="ui fluid dropdown" name="welfare_pension"
                                     value="{{ old('welfare_pension', isset($employee_id) ? $employee->welfare_pension : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="1" {{ old('welfare_pension') == "1" ||
-                                            (isset($employee) && old('welfare_pension', $employee->welfare_pension) == "1") ? 'selected': '' }}>
-                                            加入</option>
+                                    <option value="1"
+                                        {{ old('welfare_pension') == '1' ||
+                                        (isset($employee) && old('welfare_pension', $employee->welfare_pension) == '1')
+                                            ? 'selected'
+                                            : '' }}>
+                                        加入</option>
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'health_insurance_association_number') }}">
                                 <label for="health_insurance_association_number">健保組合番号</label>
-                                <input type="text" id="health_insurance_association_number" name="health_insurance_association_number"
+                                <input type="text" id="health_insurance_association_number"
+                                    name="health_insurance_association_number"
                                     value="{{ old('health_insurance_association_number', isset($employee_id) ? $employee->health_insurance_association_number : '') }}"
                                     placeholder="01234567" maxlength='8' autocomplete="off">
                             </div>
@@ -1484,15 +1610,24 @@
                                 <select class="ui fluid dropdown" name="acquisition_of_distinction"
                                     value="{{ old('acquisition_of_distinction', isset($employee_id) ? $employee->acquisition_of_distinction : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="1" {{ old('acquisition_of_distinction') == "1" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "1") ? 'selected': '' }}>
-                                            健保・厚年</option>
-                                    <option value="2" {{ old('acquisition_of_distinction') == "2" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "2") ? 'selected': '' }}>
-                                            共済出向</option>
-                                    <option value="3" {{ old('acquisition_of_distinction') == "3" ||
-                                            (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == "3") ? 'selected': '' }}>
-                                            船保任続</option>
+                                    <option value="1"
+                                        {{ old('acquisition_of_distinction') == '1' ||
+                                        (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == '1')
+                                            ? 'selected'
+                                            : '' }}>
+                                        健保・厚年</option>
+                                    <option value="2"
+                                        {{ old('acquisition_of_distinction') == '2' ||
+                                        (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == '2')
+                                            ? 'selected'
+                                            : '' }}>
+                                        共済出向</option>
+                                    <option value="3"
+                                        {{ old('acquisition_of_distinction') == '3' ||
+                                        (isset($employee) && old('acquisition_of_distinction', $employee->acquisition_of_distinction) == '3')
+                                            ? 'selected'
+                                            : '' }}>
+                                        船保任続</option>
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'health_insurance_acquisition_date') }}">
@@ -1502,7 +1637,8 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="health_insurance_acquisition_date"
-                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}" autocomplete="off">
+                                            value="{{ old('health_insurance_acquisition_date', isset($employee_id) ? $employee->health_insurance_acquisition_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="health_insurance_acquisition_date"
                                             id="health_insurance_acquisition_date"
                                             value="{{ old('health_insurance_acquisition_date') }}">
@@ -1514,9 +1650,9 @@
                                 <div class="ui calendar" id="health_insurance_loss_date_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Date"
-                                            name="health_insurance_loss_date"
-                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}" autocomplete="off">
+                                        <input type="text" placeholder="Date" name="health_insurance_loss_date"
+                                            value="{{ old('health_insurance_loss_date', isset($employee_id) ? $employee->health_insurance_loss_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="health_insurance_loss_date"
                                             id="health_insurance_loss_date"
                                             value="{{ old('health_insurance_loss_date') }}">
@@ -1530,15 +1666,24 @@
                                 <select class="ui fluid dropdown" name="overseas_special_exception"
                                     value="{{ old('overseas_special_exception', isset($employee_id) ? $employee->overseas_special_exception : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="1" {{ old('overseas_special_exception') == "1" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "1") ? 'selected': '' }}>
-                                            海外在住</option>
-                                    <option value="2" {{ old('overseas_special_exception') == "2" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "2") ? 'selected': '' }}>
-                                            短期在留</option>
-                                    <option value="3" {{ old('overseas_special_exception') == "3" ||
-                                            (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == "3") ? 'selected': '' }}>
-                                            その他</option>
+                                    <option value="1"
+                                        {{ old('overseas_special_exception') == '1' ||
+                                        (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == '1')
+                                            ? 'selected'
+                                            : '' }}>
+                                        海外在住</option>
+                                    <option value="2"
+                                        {{ old('overseas_special_exception') == '2' ||
+                                        (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == '2')
+                                            ? 'selected'
+                                            : '' }}>
+                                        短期在留</option>
+                                    <option value="3"
+                                        {{ old('overseas_special_exception') == '3' ||
+                                        (isset($employee) && old('overseas_special_exception', $employee->overseas_special_exception) == '3')
+                                            ? 'selected'
+                                            : '' }}>
+                                        その他</option>
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'overseas_special_exception_date') }}">
@@ -1548,7 +1693,8 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_exception_date"
-                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}" autocomplete="off">
+                                            value="{{ old('overseas_special_exception_date', isset($employee_id) ? $employee->overseas_special_exception_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="overseas_special_exception_date"
                                             id="overseas_special_exception_date"
                                             value="{{ old('overseas_special_exception_date') }}">
@@ -1562,7 +1708,8 @@
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date"
                                             name="overseas_special_not_exception_date"
-                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}" autocomplete="off">
+                                            value="{{ old('overseas_special_not_exception_date', isset($employee_id) ? $employee->overseas_special_not_exception_date : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="overseas_special_not_exception_date"
                                             id="overseas_special_not_exception_date"
                                             value="{{ old('overseas_special_not_exception_date') }}">
@@ -1655,12 +1802,18 @@
                                 <select class="ui fluid dropdown" name="dispatch_contract_completion"
                                     value="{{ old('dispatch_contract_completion', isset($employee_id) ? $employee->dispatch_contract_completion : '') }}">
                                     <option value="">未選択</option>
-                                    <option value="1" {{ old('dispatch_contract_completion') == "1" ||
-                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "1") ? 'selected': '' }}>
-                                            特定の事業所に勤務</option>
-                                    <option value="2" {{ old('dispatch_contract_completion') == "2" ||
-                                            (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == "2") ? 'selected': '' }}>
-                                            不特定の事業所に勤務</option>
+                                    <option value="1"
+                                        {{ old('dispatch_contract_completion') == '1' ||
+                                        (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == '1')
+                                            ? 'selected'
+                                            : '' }}>
+                                        特定の事業所に勤務</option>
+                                    <option value="2"
+                                        {{ old('dispatch_contract_completion') == '2' ||
+                                        (isset($employee) && old('dispatch_contract_completion', $employee->dispatch_contract_completion) == '2')
+                                            ? 'selected'
+                                            : '' }}>
+                                        不特定の事業所に勤務</option>
                                 </select>
                             </div>
                             <div class="field {{ err($errors, 'formatted_stay_date_period') }}">
@@ -1669,10 +1822,10 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="Date" name="stay_date_period"
-                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}" autocomplete="off">
+                                            value="{{ old('formatted_stay_date_period', isset($employee_id) ? $employee->stay_date_period : '') }}"
+                                            autocomplete="off">
                                         <input type="hidden" name="formatted_stay_date_period"
-                                            id="formatted_stay_date_period"
-                                            value="{{ old('stay_date_period') }}">
+                                            id="formatted_stay_date_period" value="{{ old('stay_date_period') }}">
                                     </div>
                                 </div>
                             </div>
@@ -1701,8 +1854,8 @@
                                 <label></label>
                                 <div class="mt-1">
                                     <div class="ui radio checkbox field mr-2 mt-0">
-                                        <input type="radio" name="head_office_or_branch_office" checked="checked"
-                                            value="0"
+                                        <input type="radio" name="head_office_or_branch_office"
+                                            checked="checked" value="0"
                                             {{ (isset($employee_id) && $employee->head_office_or_branch_office == 0) || old('head_office_or_branch_office') == '0' ? 'checked' : '' }}>
                                         <label>本店</label>
                                     </div>
@@ -1717,7 +1870,8 @@
                         <div class="fields">
                             <div class="two wide field {{ err($errors, 'financial_institution_code') }}">
                                 <label for="financial_institution_code">金融機関コード</label>
-                                <input type="text" id="financial_institution_code" name="financial_institution_code"
+                                <input type="text" id="financial_institution_code"
+                                    name="financial_institution_code"
                                     value="{{ old('financial_institution_code', isset($employee_id) ? $employee->financial_institution_code : '') }}"
                                     placeholder="" maxlength='4' autocomplete="off">
                             </div>
@@ -1727,9 +1881,11 @@
                                     value="{{ old('store_code', isset($employee_id) ? $employee->store_code : '') }}"
                                     placeholder="" maxlength='3' autocomplete="off">
                             </div>
-                            <div class="two wide field {{ err($errors, 'japan_bank_flg') }}" style="width: 200px;">
+                            <div class="two wide field {{ err($errors, 'japan_bank_flg') }}"
+                                style="width: 200px;">
                                 <div class="ui checkbox field mt-3">
-                                    <input type="checkbox" name="japan_bank_flg" id="japan_bank_flg" value='1'
+                                    <input type="checkbox" name="japan_bank_flg" id="japan_bank_flg"
+                                        value='1'
                                         {{ (isset($employee_id) && $employee->japan_bank_flg == 1) || old('japan_bank_flg') == '1' ? 'checked' : '' }}>
                                     <label>ゆうちょ銀行</label>
                                 </div>
@@ -1740,7 +1896,8 @@
                                     value="{{ old('bank_account_no', isset($employee_id) ? $employee->bank_account_no : '') }}"
                                     placeholder="" maxlength='8' autocomplete="off">
                             </div>
-                            <div class="eight wide field japan_post_bank_code_no hidden {{ err($errors, 'japan_post_bank_code_no') }}">
+                            <div
+                                class="eight wide field japan_post_bank_code_no hidden {{ err($errors, 'japan_post_bank_code_no') }}">
                                 <label for="japan_post_bank_code_no">記号番号</label>
                                 <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
                                     value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
@@ -1754,7 +1911,8 @@
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic" href="{{ route('employee') }}"
                         style="width: 200px;">キャンセル</a>
-                    <button class="ui button primary submit-disable" type="submit" style="width: 200px;">更新</button>
+                    <button class="ui button primary submit-disable" type="submit"
+                        style="width: 200px;">更新</button>
                 </div>
             @endif
         </form>
@@ -1878,7 +2036,8 @@
 
                             let age = today.getFullYear() - birthDate.getFullYear();
                             let monthDiff = today.getMonth() - birthDate.getMonth();
-                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate
+                                    .getDate())) {
                                 age -= 1;
                                 monthDiff += 12;
                             }
@@ -1890,7 +2049,7 @@
                     }
                 });
                 const birth_date = $('#formatted_birthday_date').val();
-                if(birth_date){
+                if (birth_date) {
                     const match = birth_date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
                     const year = parseInt(match[1], 10);
                     const month = parseInt(match[2], 10) - 1;
@@ -1928,7 +2087,8 @@
 
                             let tenure = today.getFullYear() - tenureDate.getFullYear();
                             let monthDiff = today.getMonth() - tenureDate.getMonth();
-                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate
+                                    .getDate())) {
                                 tenure -= 1;
                                 monthDiff += 12;
                             }
@@ -1940,7 +2100,7 @@
                     }
                 });
                 const tenure_date = $('#formatted_hired_date').val();
-                if(tenure_date){
+                if (tenure_date) {
                     const match = tenure_date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
                     const year = parseInt(match[1], 10);
                     const month = parseInt(match[2], 10) - 1;
@@ -1991,9 +2151,9 @@
             $('#iconDeleteFlg').val("0");
         });
 
-        $('#iconDelete').on('click', function () {
+        $('#iconDelete').on('click', function() {
             const flg = $('#iconDeleteFlg').val();
-            if(flg === "0") {
+            if (flg === "0") {
                 $('#iconDeleteFlg').val("1");
                 $('#icon').attr('src', '/img/image.png');
                 $('#iconChangeInput').val('');
@@ -2007,7 +2167,7 @@
         });
 
         function changeEmploymentPathway() {
-            if($('.employment_route').val() == 3) {
+            if ($('.employment_route').val() == 3) {
                 $('.private_introduction').prop('disabled', false);
             } else {
                 $('.private_introduction').prop('disabled', true);
@@ -2020,7 +2180,7 @@
         });
 
         function changeYutyoFlg() {
-            if($('#japan_bank_flg').is(':checked')) {
+            if ($('#japan_bank_flg').is(':checked')) {
                 $('.bank_account_no').addClass('hidden');
                 $('.japan_post_bank_code_no').removeClass('hidden');
                 $('#bank_account_no').val('');

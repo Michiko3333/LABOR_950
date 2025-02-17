@@ -36,11 +36,11 @@ class LedgerCategoryBigSeeder extends Seeder
             ],
             [
                 'id' => '6',
-                'big_category_name' => '会社の年間定例事務',
+                'big_category_name' => '会社に関する変更事務',
             ],
             [
                 'id' => '7',
-                'big_category_name' => '会社に関する変更事務',
+                'big_category_name' => '会社の年間定例事務',
             ],
             [
                 'id' => '8',

@@ -1,4 +1,4 @@
-<x-layout title="カレンダー" mode="">
+<x-layout title="行事（業務）カレンダー" mode="">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('custom/calendar.css') }}">
         <link rel="stylesheet" href="{{ asset('custom/calendar-small.css') }}">
@@ -9,7 +9,7 @@
             <div class="ui huge breadcrumb mb-0 mb-2">
                 <a class="section" href="{{ route('home.index') }}">ホーム</a>
                 <i class="right chevron icon divider"></i>
-                <div class="active section">カレンダー</div>
+                <div class="active section">行事（業務）カレンダー</div>
             </div>
             <div>
                 @if($editPermission)

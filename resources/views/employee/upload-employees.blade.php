@@ -11,11 +11,11 @@
         <div class="ui huge breadcrumb">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <a class="section" href="{{ route('employee') }}">社員一覧</a>
+            <a class="section" href="{{ route('employee') }}">従業員一覧</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">社員情報のインポート</div>
+            <div class="active section">従業員情報のインポート</div>
         </div>
-        <h1 class="mt-0">社員情報のインポート</h1>
+        <h1 class="mt-0">従業員情報のインポート</h1>
         <div class="ui card full card-shadow item-0">
             <div class="content">
                 <div class="ui form">
