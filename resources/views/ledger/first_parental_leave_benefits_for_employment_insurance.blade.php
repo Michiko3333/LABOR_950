@@ -374,13 +374,31 @@
                 $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
                 $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
                 $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('');
-                if(('#J104_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').val() == 1
+                if($('#J104_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').val() == 1
                 && spouse !== null && spouse.insurance_office_no !== null){
                     $('#J106_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
                     $('#J107_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
                     $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
                 }
+
+                $('#J165_005F_8BE0_975A_8B40_8AD6_8374_838A_834B_8369').val(employee.bank_name_kana || "");
+                $('#J166_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
+                if(employee.head_office_or_branch_office == 0) {
+                    $('input[name="headquarters_or_branch"][value="本店"]').prop('checked', true);
+                } else if(employee.head_office_or_branch_office == 1) {
+                    $('input[name="headquarters_or_branch"][value="支店"]').prop('checked', true);
                 }
+                $('#J168_005F_8BE0_975A_8B40_8AD6_8352_815B_8368').val(employee.financial_institution_code || "");
+                $('#J169_005F_9358_95DC_8352_815B_8368').val(employee.store_code || "");
+                $('#J170_005F_9761_8BE0_92CA_92A0_82CC_8CFB_8DC0_94D4_8D86').val(employee.bank_account_no || "");
+                if(employee.japan_post_bank_code_no) {
+                    $('#J172_005F_8B4C_8D86_94D4_8D86').val(employee.japan_post_bank_code_no.slice(0, 5) || "");
+                    $('#J173_005F_8CFB_8DC0_94D4_8D86').val(employee.japan_post_bank_code_no.slice(5) || "");
+                } else {
+                    $('#J172_005F_8B4C_8D86_94D4_8D86').val("");
+                    $('#J173_005F_8CFB_8DC0_94D4_8D86').val("");
+                }
+            }
             document.getElementById('J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J3_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').value = this.value;
             });

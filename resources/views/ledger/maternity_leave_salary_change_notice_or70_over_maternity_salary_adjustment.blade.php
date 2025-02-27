@@ -47,7 +47,7 @@
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                     </div>
+                    </div>
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
@@ -71,8 +71,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
                     <input type="hidden" name="query_parameter" id="queryParameter">
+                </div>
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
@@ -91,7 +91,7 @@
             <div class="preview-area">
                 <div class="ui card card-shadow ledger-card">
                     <div class="content" preview-component>
-                      <x-form.maternity_leave_salary_change_notice_or70_over_maternity_salary_adjustment :residentials="$residentials" :countries="$countries"/>
+                        <x-form.maternity_leave_salary_change_notice_or70_over_maternity_salary_adjustment :residentials="$residentials" :countries="$countries"/>
                     </div>
                 </div>
             </div>

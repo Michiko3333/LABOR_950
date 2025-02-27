@@ -14,7 +14,7 @@ class ValuesEmployeeEmploymentStatusSeeder extends Seeder
     {
         DB::table('m_values_employee_employment_status')->truncate();
         DB::table('m_values_employee_employment_status')->insert([
-            ['name' => '日雇い'],
+            ['name' => '日雇'],
             ['name' => '派遣'],
             ['name' => 'アルバイト・パートタイム'],
             ['name' => '有期契約労働者（契約社員含む）'],
