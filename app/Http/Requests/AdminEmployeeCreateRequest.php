@@ -210,7 +210,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
             'private_introduction' => 'nullable|string|required_if:employment_route,3',
             'recruitment_category' => 'required|int',
             'recruitment_category_detail' => 'required|int|between:1,10',
-            'pay_type' => 'required|int|between:1,7',
+            'pay_type' => 'required|int|between:1,8',
             'employment_status' => 'required|int|between:1,7',
             'insurance_loss_reason' => 'nullable|integer',
             'over_retired_insurance_loss_reason' => 'nullable|integer',
