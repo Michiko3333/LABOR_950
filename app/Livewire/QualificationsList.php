@@ -108,7 +108,7 @@ class QualificationsList extends BaseTable
             $this->dispatch('showErrorMessage');
             return;
         }
-        if ($data['form_applicable_grade'] < 0 || $data['form_applicable_grade'] > 1000000) {
+        if (noEmoji::isEmoji($data['form_applicable_grade'])) {
             $this->dispatch('showErrorMessage');
             return;
         }

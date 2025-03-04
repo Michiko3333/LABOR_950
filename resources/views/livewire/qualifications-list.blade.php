@@ -80,8 +80,8 @@
                         </div>
                         <div class="field">
                             <label>該当等級</label>
-                            <input type="number" class="edit-qualifications-form_applicable_grade"
-                                name="edit-qualifications-form_applicable_grade" placeholder="" min="0" max="1000000" autocomplete="off">
+                            <input type="text" class="edit-qualifications-form_applicable_grade" maxlength="255"
+                                name="edit-qualifications-form_applicable_grade" placeholder="" autocomplete="off">
                         </div>
                     </div>
                     <div class="field">
