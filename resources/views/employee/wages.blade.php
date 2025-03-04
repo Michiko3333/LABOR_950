@@ -114,7 +114,7 @@
                                 <div class="ui calendar" id="wage-year_calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" placeholder="20xx" maxLength="4" name="wage_year">
+                                        <input type="text" placeholder="20xx" maxLength="4" name="wage_year" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@
             <div class="content ui form">
                 <div class="field">
                     <label for="">名称</label>
-                    <input id="add-column-name" type="text" maxlength="15">
+                    <input id="add-column-name" type="text" maxlength="15" autocomplete="off">
                 </div>
             </div>
             <div class="actions">
@@ -287,7 +287,7 @@
             <div class="content ui form">
                 <div class="field">
                     <label for="">名称</label>
-                    <input id="edit-column-name" type="text" maxlength="15">
+                    <input id="edit-column-name" type="text" maxlength="15" autocomplete="off">
                 </div>
             </div>
             <div class="actions">

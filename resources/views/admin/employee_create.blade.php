@@ -403,7 +403,7 @@
                                 <div class="field {{ err($errors, 'grade') }}">
                                     <label for="">等級</label>
                                     <input type="text" id="grade" name="grade"
-                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}">
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">

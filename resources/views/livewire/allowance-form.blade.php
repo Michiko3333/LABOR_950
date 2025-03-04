@@ -150,7 +150,7 @@
         <div class="required field {{ err_sub($alErrs, 'al-amount', $childKey, $allowanceKey) }}">
             <label for="al-amount">金額</label>
             <input type="number" min="0" max="9999999" name="al-amount[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-amount" placeholder="9999999">
+                wire:model.live="allowanceData.{{ $allowanceKey }}.al-amount" placeholder="9999999" autocomplete="off">
         </div>
         <div class="required field {{ err_sub($alErrs, 'al-pay_month', $childKey, $allowanceKey) }}">
             <label for="al-pay_month">支払月</label>
@@ -177,12 +177,12 @@
         <div class="required five wide field {{ err_sub($alErrs, 'al-target', $childKey, $allowanceKey) }}">
             <label for="al-target">対象者</label>
             <input type="text" maxlength="30" name="al-target[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-target" placeholder="">
+                wire:model.live="allowanceData.{{ $allowanceKey }}.al-target" placeholder="" autocomplete="off">
         </div>
         <div class="required eight wide field {{ err_sub($alErrs, 'al-remarks', $childKey, $allowanceKey) }}">
             <label for="al-remarks">備考</label>
             <input type="text" maxlength="30" name="al-remarks[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-remarks" placeholder="">
+                wire:model.live="allowanceData.{{ $allowanceKey }}.al-remarks" placeholder="" autocomplete="off">
         </div>
         <div class="required three wide field {{ err_sub($alErrs, 'al-applied_date', $childKey, $allowanceKey) }}">
             <label for="al-applied_date">適用年月</label>
@@ -191,7 +191,7 @@
                     <i class="calendar icon"></i>
                     <input type="text" name="al-applied_date[{{ $childKey }}][]"
                         wire:model.live="allowanceData.{{ $allowanceKey }}.al-applied_date"
-                        placeholder="YYYY年M月">
+                        placeholder="YYYY年M月" autocomplete="off">
                 </div>
             </div>
         </div>

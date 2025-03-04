@@ -66,7 +66,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="20xx" maxLength="4"
-                                            name="attendance_year_from">
+                                            name="attendance_year_from" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
                                         <input type="text" placeholder="20xx" maxLength="4"
-                                            name="attendance_year_to">
+                                            name="attendance_year_to" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                         <div class="fields">
                             <div class="four wide field">
                                 <label for="attendance_full_name">氏名</label>
-                                <input type="text" name="attendance_full_name" placeholder="田中 〇〇">
+                                <input type="text" name="attendance_full_name" placeholder="田中 〇〇" autocomplete="off">
                             </div>
                             <div class="four wide field">
                                 <label for="attendance_branch">所属事業所</label>

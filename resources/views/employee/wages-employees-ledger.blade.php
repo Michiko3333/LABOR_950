@@ -79,7 +79,7 @@
             <div class="ui calendar" id="wage-year_calendar" style="display: inline-block;">
                 <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="text" placeholder="20xx" maxLength="4" name="wage_year">
+                    <input type="text" placeholder="20xx" maxLength="4" name="wage_year" autocomplete="off">
                 </div>
             </div>
             <button id="startBtn" type="button" class="ui button primary">確認</button>

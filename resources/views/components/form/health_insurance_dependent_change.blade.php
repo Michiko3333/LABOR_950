@@ -1,4 +1,4 @@
-<!-- 4950013520996000 -->
+<!-- 4950013521021000(4950013520996000) -->
 <!-- 健康保険被扶養者（異動）・国民年金第３号被保険者関係届（２０２４年１２月以降手続き）/健康保険被扶養者（異動）届／国民年金第３号被保険者関係届 -->
 
 <div class="egovui-application-form-input-area">
@@ -11173,7 +11173,7 @@ div.popup {
         </select>
        </div>
        <div class="egov-tool-field-origin" style="left: 414px; top: 785px;">
-        <input class="egov-tool-field-rect onImage" id="N200_P1" maxlength="9" name="spouse_reason_2" value="{{ old('spouse_reason_2') }}" style="width: 130px; height: 15px; font-size: 11px; text-align: left; line-height: 21px; padding: inherit;" type="text"/>
+        <input class="egov-tool-field-rect onImage" id="N200_P1" maxlength="9" name="spouse_reason_2" value="{{ old('spouse_reason_2') }}" style="width: 130px; height: 15px; font-size: 11px; text-align: left; line-height: 21px; padding: inherit;" type="text" autocomplete="off" />
        </div>
       <div class="egov-tool-field-origin" style="left: 129px; top: 835px;">
        <select class="egov-tool-field-rect" id="N78_P1" name="spouse_remove_date_era" value="{{ old('spouse_remove_date_era') }}" style="width: 64px; height: 30px; font-size: 12px; text-align: left; line-height: 30px; padding: inherit;">
@@ -11572,7 +11572,7 @@ div.popup {
         </select>
        </div>
        <div class="egov-tool-field-origin" style="left: 372px; top: 1437px;">
-        <input class="egov-tool-field-rect onImage" id="N202_P2" maxlength="9" name="other_dependent1_reason_2" value="{{ old('other_dependent1_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+        <input class="egov-tool-field-rect onImage" id="N202_P2" maxlength="9" name="other_dependent1_reason_2" value="{{ old('other_dependent1_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text" autocomplete="off"/>
        </div>
       <div class="egov-tool-field-origin" style="left: 365px; top: 1344px;">
        <select class="egov-tool-field-rect" id="N145_P2" name="other_dependent1_reason_type" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 40px; padding: inherit;">
@@ -11879,7 +11879,7 @@ div.popup {
         </select>
        </div>
        <div class="egov-tool-field-origin" style="left: 372px; top: 1906px;">
-        <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason_2" value="{{ old('other_dependent2_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text"/>
+        <input class="egov-tool-field-rect onImage" id="N187_P2" maxlength="9" name="other_dependent2_reason_2" value="{{ old('other_dependent2_reason_2') }}" style="width: 124px; height: 19px; font-size: 12px; text-align: left; line-height: 19px; padding: inherit;" type="text" autocomplete="off"/>
        </div>
       <div class="egov-tool-field-origin" style="left: 365px; top: 1811px;">
        <select class="egov-tool-field-rect" id="N186_P2" name="other_dependent2_reason_type" style="width: 137px; height: 23px; font-size: 12px; text-align: left; line-height: 23px; padding: inherit;">

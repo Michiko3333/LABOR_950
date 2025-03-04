@@ -19,8 +19,8 @@ class CsvImportAttendance extends PowerTableList {
 
         this.rules = {};
 
-        this.onImported = () => {};
-        this.onFaildImport = () => {};
+        this.onImported = () => { };
+        this.onFaildImport = () => { };
 
         this.get(this.data_uri).then(r => {
             const res = JSON.parse(r);
@@ -116,7 +116,7 @@ class CsvImportAttendance extends PowerTableList {
             this.loadCsv(columns, rows.slice(1));
         }
 
-        reader.onerror = function() {
+        reader.onerror = function () {
             alert('ファイルの読み取り中にエラーが発生しました。');
         };
 
@@ -179,8 +179,8 @@ class CsvImportAttendance extends PowerTableList {
     }
 
     onCreateHeader(parent, key, item) {
-            const th = this.createHeaderElement(item);
-            parent.appendChild(th);
+        const th = this.createHeaderElement(item);
+        parent.appendChild(th);
     }
 
     onCreateCell(parent, key, item) {
@@ -252,15 +252,15 @@ class CsvImportAttendance extends PowerTableList {
             data.push(d);
         }
 
-        this.submit(this.upload_uri, JSON.stringify({data: data})).then(r => {
+        this.submit(this.upload_uri, JSON.stringify({ data: data })).then(r => {
             this.onImported();
         })
-        .catch(() => {
-            this.onFaildImport();
-        })
-        .finally(() => {
-            uploadButton.disabled = false;
-        });
+            .catch(() => {
+                this.onFaildImport();
+            })
+            .finally(() => {
+                uploadButton.disabled = false;
+            });
     }
 
     valueClearing(str) {

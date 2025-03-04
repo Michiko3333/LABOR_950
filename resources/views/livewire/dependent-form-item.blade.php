@@ -419,7 +419,7 @@
                                             <i class="calendar icon"></i>
                                             <input type="text" name="de-birthday[]" class="de-birthday"
                                                 wire:model.live="item.de-birthday"
-                                                placeholder="YYYY年M月D日">
+                                                placeholder="YYYY年M月D日" autocomplete="off">
                                         </div>
                                     </div>
                                 @else
@@ -449,7 +449,7 @@
                                 <label for="de-annual_income">収入</label>
                                 @if($history_flg == 0)
                                     <input type="number" name="de-annual_income[]" max="9999999" min="0"
-                                        wire:model.live="item.de-annual_income" placeholder="9999999">
+                                        wire:model.live="item.de-annual_income" placeholder="9999999" autocomplete="off">
                                 @else
                                     <input type="number" name="de-annual_income[]" max="9999999" min="0"
                                         wire:model.live="item.de-annual_income" placeholder="" style="border: none;" readonly>
@@ -569,7 +569,7 @@
                                             <input type="text" name="de-date_of_authorisation[]"
                                                 class="de-date_of_authorisation"
                                                 wire:model.live="item.de-date_of_authorisation"
-                                                placeholder="YYYY年M月D日">
+                                                placeholder="YYYY年M月D日" autocomplete="off">
                                         </div>
                                     </div>
                                 @else
@@ -587,7 +587,7 @@
                                             <input type="text" name="de-date_of_expiry[]"
                                                 class="de-date_of_expiry"
                                                 wire:model.live="item.de-date_of_expiry"
-                                                placeholder="YYYY年M月D日">
+                                                placeholder="YYYY年M月D日" autocomplete="off">
                                         </div>
                                     </div>
                                 @else

@@ -126,7 +126,7 @@
         <div class="content ui form">
             <div class="field">
                 <label for="additionName">名称</label>
-                <input type="text" name="" id="additionName" class="ui input" placeholder="〇〇手当"
+                <input type="text" name="" id="additionName" class="ui input" placeholder="〇〇手当" autocomplete="off"
                     maxLength="15">
             </div>
             <div class="field">

@@ -71,13 +71,13 @@
                                         <label style="font-size: 11.2px;">個人番号</label>
                                         <input id="personal_number" maxlength="12" type="text" placeholder=""
                                             name="mynumber_no_or_pension_no"
-                                            value="{{ old('mynumber_no_or_pension_no') }}" value="">
+                                            value="{{ old('mynumber_no_or_pension_no') }}" value="" autocomplete="off">
                                     </div>
                                     <div class="ui input" style="display: flex; flex-direction: column; width: 49%;">
                                         <label style="font-size: 11.2px;">基礎年金番号</label>
                                         <input id="basic_pension_number" maxlength="10" type="text" placeholder=""
                                             name="basic_pension_number" value="{{ old('basic_pension_number') }}"
-                                            value="">
+                                            value="" autocomplete="off">
                                     </div>
                                 </div>
                             </div>

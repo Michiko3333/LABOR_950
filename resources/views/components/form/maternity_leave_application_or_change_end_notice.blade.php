@@ -384,7 +384,7 @@
                             text-align: left;
                             margin-left: 5px;
                             line-height: 25px;"
-                        maxlength="5"
+                        maxlength="5" autocomplete="off"
                         type="text" value="{{ old('csv_pension_office_no') }}"/>
                 </SPAN>
                 <input class="business_location_post_code number_3" id="A3_1" name="post_code_former"
@@ -407,7 +407,7 @@
                         height: 26px;
                         overflow-wrap: break-word;
                         word-wrap: break-word;"
-                    type="text"
+                    type="text" autocomplete="off"
                 >{{old('branch_address')}}</textarea>
                 <input class="branch_info" id="A4_2" name="branch_name"
                     required="required"
@@ -452,7 +452,7 @@
                         padding: 3px;
                         overflow-wrap: break-word;
                         word-wrap: break-word;"
-                    type="text"
+                    type="text" autocomplete="off"
                 >{{old('labor_consultant_name')}}</textarea>
                 <input id="A5_2" name="labor_and_social_security_attorney_registration_no"
                     type="hidden" value="{{ old('labor_and_social_security_attorney_registration_no') }}"
@@ -646,7 +646,7 @@
                     type="text" autocomplete="off" value="{{old('date_of_birth_day')}}"
                 />
                 <textarea class="field_other" id="A12"  name="remarks"
-                    maxlength="117"
+                    maxlength="117" autocomplete="off"
                     style=
                         "top: 446px;
                         left: 148px;

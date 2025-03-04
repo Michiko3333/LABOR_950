@@ -757,7 +757,7 @@
                             <div class="field {{ err($errors, 'bank_name') }}">
                                 <label for="bank_name">銀行名</label>
                                 @if (!isset($company_id))
-                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name') }}</textarea>
+                                    <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="" autocomplete="off">{{ old('bank_name') }}</textarea>
                                 @else
                                     <textarea id="bank_name" name="bank_name" maxlength="300" placeholder="">{{ old('bank_name', $company->bank_name) }}</textarea>
                                 @endif

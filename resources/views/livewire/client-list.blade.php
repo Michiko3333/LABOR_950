@@ -5,7 +5,7 @@
     @endphp
     <div class="filter">
         <div class="ui left icon input" style="width: 100%; max-width: 300px; margin-right: 3em;">
-            <input type="text" placeholder="会社名" wire:model.live="search">
+            <input type="text" placeholder="会社名" wire:model.live="search" autocomplete="off">
             <i class="search icon"></i>
         </div>
     </div>

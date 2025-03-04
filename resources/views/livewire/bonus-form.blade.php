@@ -165,7 +165,7 @@
                         <i class="calendar icon"></i>
                         <input type="text" name="bo-applied_date[{{ $childKey }}][]"
                             wire:model.live="bonusData.{{ $bonusKey }}.bo-applied_date" placeholder="YYYY年M月"
-                            autocomplete="off">
+                            autocomplete="off" autocomplete="off">
                     </div>
                 </div>
             </div>

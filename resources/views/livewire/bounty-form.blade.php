@@ -164,7 +164,7 @@
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" name="bou-applied_date[{{ $childKey }}][]"
-                            wire:model.live="bountyData.{{ $bountyKey }}.bou-applied_date" placeholder="YYYY年M月">
+                            wire:model.live="bountyData.{{ $bountyKey }}.bou-applied_date" placeholder="YYYY年M月" autocomplete="off">
                     </div>
                 </div>
             </div>

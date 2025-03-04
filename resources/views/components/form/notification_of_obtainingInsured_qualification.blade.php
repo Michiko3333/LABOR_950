@@ -3303,7 +3303,7 @@
                                 </SPAN>
                             </SPAN>
                             <div class="egov-tool-field-origin" style="left: 562px; top: 409px;">
-                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="10" name="note_others_in" style="width: 103px; height: 18px; font-size: 10px; text-align: left; line-height: 21px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('note_others_in') }}" disabled/>
+                                <input class="egov-tool-field-rect onImage" id="N50_005F_8E73_8A4F_8BC9" maxlength="10" name="note_others_in" style="width: 103px; height: 18px; font-size: 10px; text-align: left; line-height: 21px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('note_others_in') }}" autocomplete="off" disabled/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 175px; top: 443px;">
                                 <input class="egov-tool-field-rect onImage" id="N51_005F_8E73_8A4F_8BC7" maxlength="3" name="employee_post_code_first" style="width: 30px; height: 13px; font-size: 10px; text-align: center; line-height: 19px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('employee_post_code_first') }}" autocomplete="off"/>
