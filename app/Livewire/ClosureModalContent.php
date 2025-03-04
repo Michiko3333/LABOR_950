@@ -56,6 +56,7 @@ class ClosureModalContent extends BaseTable
     public function closureModalOpened($closure_type, $id)
     {
         $this->resetErrorBag();
+        $this->resetForm();
         $this->closure_type = $closure_type;
         $this->id = $id;
         if($id){
@@ -85,16 +86,16 @@ class ClosureModalContent extends BaseTable
         }
         $current_closure->icon = $filePath;
 
-        $this->startDateOfClosed = $current_closure->start_date_of_closed ?? null;
-        $this->endDateOfLosed = $current_closure->end_date_of_losed ?? null;
-        $this->dateOfReturnToWork = $current_closure->date_of_return_to_work ?? null;
-        $this->dueDate = $current_closure->due_date ?? null;
-        $this->plannedEndDateOfClosure = $current_closure->planned_end_date_of_closure ?? null;
-        $this->dateOfBirth = $current_closure->date_of_birth ?? null;
-        $this->dateOfStartOfFosterCare = $current_closure->date_of_start_of_foster_care ?? null;
-        $this->plannedEndDateOfChildSupport = $current_closure->planned_end_date_of_child_support ?? null;
-        $this->endDateOfFosterCare = $current_closure->end_date_of_foster_care ?? null;
-        $this->dateOfCommencementOfSpecialChildcareProvision = $current_closure->date_of_commencement_of_special_childcare_provision ?? null;
+        if(empty($this->startDateOfClosed)) $this->startDateOfClosed = $current_closure->start_date_of_closed ?? null;
+        if(empty($this->endDateOfLosed)) $this->endDateOfLosed = $current_closure->end_date_of_losed ?? null;
+        if(empty($this->dateOfReturnToWork)) $this->dateOfReturnToWork = $current_closure->date_of_return_to_work ?? null;
+        if(empty($this->dueDate)) $this->dueDate = $current_closure->due_date ?? null;
+        if(empty($this->plannedEndDateOfClosure)) $this->plannedEndDateOfClosure = $current_closure->planned_end_date_of_closure ?? null;
+        if(empty($this->dateOfBirth)) $this->dateOfBirth = $current_closure->date_of_birth ?? null;
+        if(empty($this->dateOfStartOfFosterCare)) $this->dateOfStartOfFosterCare = $current_closure->date_of_start_of_foster_care ?? null;
+        if(empty($this->plannedEndDateOfChildSupport)) $this->plannedEndDateOfChildSupport = $current_closure->planned_end_date_of_child_support ?? null;
+        if(empty($this->endDateOfFosterCare)) $this->endDateOfFosterCare = $current_closure->end_date_of_foster_care ?? null;
+        if(empty($this->dateOfCommencementOfSpecialChildcareProvision)) $this->dateOfCommencementOfSpecialChildcareProvision = $current_closure->date_of_commencement_of_special_childcare_provision ?? null;
         $this->current_closure = $current_closure;
     }
 
@@ -298,5 +299,20 @@ class ClosureModalContent extends BaseTable
             \Log::error($e);
             return back()->withErrors('エラー');
         }
+    }
+
+    private function resetForm()
+    {
+        $this->startDateOfClosed = '';
+        $this->endDateOfLosed = '';
+        $this->dateOfReturnToWork = '';
+        $this->dueDate = '';
+        $this->plannedEndDateOfClosure = '';
+        $this->dateOfBirth = '';
+        $this->dateOfStartOfFosterCare = '';
+        $this->plannedEndDateOfChildSupport = '';
+        $this->endDateOfFosterCare = '';
+        $this->dateOfCommencementOfSpecialChildcareProvision = '';
+        $this->current_closure = '';
     }
 }

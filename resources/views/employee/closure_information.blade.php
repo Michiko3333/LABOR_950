@@ -103,6 +103,9 @@
             setTimeout(() => {
                 $('.closure-modal').modal({
                         blurring: true,
+                        onHidden: () => {
+                            closeClosureModal();
+                        }
                     }).modal('show');
                 $('.closure-modal-header').text(closure_name);
             }, 500);
