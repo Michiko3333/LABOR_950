@@ -1,7 +1,7 @@
 <div>
     <div class="filter">
         <div class="ui left icon input" style="margin-right: 1em; display: inline-block;">
-            <input type="text" placeholder="氏名" wire:model.live="search">
+            <input type="text" placeholder="氏名" wire:model.live="search" autocomplete="off">
             <i class="search icon"></i>
         </div>
         <button id="openFilterColumn" class="ui button">表示項目</button>

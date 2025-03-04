@@ -4,7 +4,7 @@
         '2' => '雇用保険：介護休業',
         '3' => '労災保険：傷病休業',
         '4' => '健康保険：産前・産後休業',
-        '5' => '健康保険：養育特例休業',
+        '5' => '養育特例休業（健康保険）',
         '6' => '健康保険：傷病休業',
         '7' => '介護保険：介護休業',
     ];
@@ -23,10 +23,10 @@
                 <th style="width: 250px;">従業員名</th>
                 <th style="width: 200px;">所属事務所</th>
                 <th style="width: 230px;">休業種類</th>
-                <th style="width: 200px;">休業開始日</th>
-                <th style="width: 200px;">休業終了日</th>
-                <th style="width: 200px;">職場復帰日</th>
-                <th style="width: 200px;">出産日</th>
+                <th style="width: 200px;text-align: center;">休業開始日</th>
+                <th style="width: 200px;text-align: center;">休業終了日</th>
+                <th style="width: 200px;text-align: center;">職場復帰日</th>
+                <th style="width: 200px;text-align: center;">出産日</th>
                 <th style="width: 200px;"></th>
             </tr>
         </thead>
@@ -44,18 +44,23 @@
                         {{ $item->employee_employee_no }}<br>
                     </td>
                     <td>{{ $item->branch_name }}</td>
-                    <td>{{ mb_substr($typeMapping[$item->closure_type], 0, 5) }}<br>　{{ mb_substr($typeMapping[$item->closure_type], 5) }}</td>
                     <td>
+                    @if($item->closure_type == 5)
+                    {{ mb_substr($typeMapping[$item->closure_type], 0, 6) }}<br>　{{ mb_substr($typeMapping[$item->closure_type], 6) }}
+                    @else
+                    {{ mb_substr($typeMapping[$item->closure_type], 0, 5) }}<br>　{{ mb_substr($typeMapping[$item->closure_type], 5) }}
+                    @endif</td>
+                    <td style="text-align: center;">
                         @if($item->start_date_of_closed)
                         {{ mb_substr($item->start_date_of_closed, 0, 5) }}<br>{{ mb_substr($item->start_date_of_closed, 5) }}
                         @elseif($item->date_of_start_of_foster_care)
                         {{ mb_substr($item->date_of_start_of_foster_care, 0, 5) }}<br>{{ mb_substr($item->date_of_start_of_foster_care, 5) }}<br>
-                            （養育開始日）
+                        （養育開始日）
                         @else
                         -
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                         @if($item->end_date_of_losed)
                         {{ mb_substr($item->end_date_of_losed, 0, 5) }}<br>{{ mb_substr($item->end_date_of_losed, 5) }}
                         @elseif($item->planned_end_date_of_closure)
@@ -71,7 +76,7 @@
                         -
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                         @if($item->date_of_return_to_work)
                         {{ mb_substr($item->date_of_return_to_work, 0, 5) }}<br>{{ mb_substr($item->date_of_return_to_work, 5) }}
                         @elseif($item->date_of_commencement_of_special_childcare_provision)
@@ -81,7 +86,7 @@
                         -
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                         @if($item->date_of_birth)
                         {{ mb_substr($item->date_of_birth, 0, 5) }}<br>{{ mb_substr($item->date_of_birth, 5) }}
                         @elseif($item->due_date)

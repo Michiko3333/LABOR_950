@@ -1201,44 +1201,17 @@
                                 </div>
                                 <div class="required field {{ err($errors, 'pay_type') }}">
                                     <label for="">給与区分</label>
-                                    <select class="ui fluid dropdown pay_type" name="pay_type"
-                                        value="{{ old('pay_type', isset($employee_id) ? $employee->pay_type : '') }}">
+                                    <select class="ui fluid dropdown pay_type" name="pay_type">
                                         <option value="">未選択</option>
-                                        <option value="1"
-                                            {{ old('pay_type') == '1' || (isset($employee) && old('pay_type', $employee->pay_type) == '1')
-                                                ? 'selected'
-                                                : '' }}>
-                                            月給</option>
-                                        <option value="2"
-                                            {{ old('pay_type') == '2' || (isset($employee) && old('pay_type', $employee->pay_type) == '2')
-                                                ? 'selected'
-                                                : '' }}>
-                                            週給</option>
-                                        <option value="3"
-                                            {{ old('pay_type') == '3' || (isset($employee) && old('pay_type', $employee->pay_type) == '3')
-                                                ? 'selected'
-                                                : '' }}>
-                                            日給</option>
-                                        <option value="4"
-                                            {{ old('pay_type') == '4' || (isset($employee) && old('pay_type', $employee->pay_type) == '4')
-                                                ? 'selected'
-                                                : '' }}>
-                                            時給</option>
-                                        <option value="5"
-                                            {{ old('pay_type') == '5' || (isset($employee) && old('pay_type', $employee->pay_type) == '5')
-                                                ? 'selected'
-                                                : '' }}>
-                                            年俸</option>
-                                        <option value="6"
-                                            {{ old('pay_type') == '6' || (isset($employee) && old('pay_type', $employee->pay_type) == '6')
-                                                ? 'selected'
-                                                : '' }}>
-                                            出来高</option>
-                                        <option value="7"
-                                            {{ old('pay_type') == '7' || (isset($employee) && old('pay_type', $employee->pay_type) == '7')
-                                                ? 'selected'
-                                                : '' }}>
-                                            その他</option>
+                                        @foreach($pay_type as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('pay_type') == "$key" ||
+                                                (isset($employee) && old('pay_type', $employee->pay_type) == "$key")
+                                                    ? 'selected'
+                                                    : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -1901,7 +1874,7 @@
                                 <label for="japan_post_bank_code_no">記号番号</label>
                                 <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
                                     value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
-                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='8' autocomplete="off">
+                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='13' autocomplete="off">
                             </div>
                         </div>
                     </div>

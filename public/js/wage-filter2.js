@@ -15,7 +15,7 @@ class WageFilter extends PowerTableFilter {
     run() {
         this.PowerList.get(this.PowerList.insurance_get).then(r => {
             const res = JSON.parse(r);
-            const insurances = {labor: [], social: []};
+            const insurances = { labor: [], social: [] };
             if (!Object.keys(res).length < 1) {
                 for (let i = 0; i < res.length; i++) {
                     const ins = res[i];
@@ -35,7 +35,7 @@ class WageFilter extends PowerTableFilter {
         });
         this.PowerList.get(this.PowerList.commute_get).then(r => {
             const res = JSON.parse(r);
-            const d = {commute: []};
+            const d = { commute: [] };
             if ('keys' in res) {
                 d.commute = res.keys.split(',');
                 if (!d.commute) d.commute = [];

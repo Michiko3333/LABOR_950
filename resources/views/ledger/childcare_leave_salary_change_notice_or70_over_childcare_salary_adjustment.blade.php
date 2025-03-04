@@ -74,6 +74,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="query_parameter" id="queryParameter">
                 </div>
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
@@ -86,8 +87,6 @@
                             style="width: 200px;">確認</button>
                     @endif
                 </div>
-
-                <input type="hidden" name="query_parameter" id="queryParameter">
             </form>
         </div>
 
@@ -100,7 +99,7 @@
                     </div>
                 </div>
             </div>
-           <div class="submit-btn py-2">
+        <div class="submit-btn py-2">
                 <button id="ledger-edit-btn" class="ui button" type="button" style="width: 200px;">修正</button>
                 <button id="ledger-submit-btn" class="ui button yellow" type="button" style="width: 200px;">申請</button>
             </div>

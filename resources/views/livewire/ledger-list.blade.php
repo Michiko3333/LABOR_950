@@ -36,7 +36,7 @@
         <div style="margin-left: auto;">
             <label style="color:transparent">手続名称</label>
             <div class="ui left icon input" style="width: 100%; max-width: 300px; height:45px; margin-right: 1.5em;">
-                <input type="text" placeholder="手続名称" wire:model.live="search">
+                <input type="text" placeholder="手続名称" wire:model.live="search" autocomplete="off">
                 <i class="search icon"></i>
             </div>
         </div>

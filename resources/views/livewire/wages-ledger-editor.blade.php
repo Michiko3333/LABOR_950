@@ -84,7 +84,7 @@
                                                             <div class="ui input month">
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
-                                                                    max="99999999"
+                                                                    max="99999999" autocomplete="off"
                                                                     wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
@@ -106,7 +106,7 @@
                                                             <div class="ui input month">
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
-                                                                    max="99999999"
+                                                                    max="99999999" autocomplete="off"
                                                                     wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
@@ -128,7 +128,7 @@
                                                             <div class="ui input month">
                                                                 <input class="hide-spin" type="number"
                                                                     name="{{ $key }}[]" placeholder="" min="0"
-                                                                    max="99999999"
+                                                                    max="99999999" autocomplete="off"
                                                                     wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
                                                                     wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
                                                             </div>
@@ -154,7 +154,7 @@
                                                         <div class="ui input month">
                                                             <input class="hide-spin" type="number"
                                                                 name="{{ $key }}[]" placeholder="" min="0"
-                                                                max="99999999"
+                                                                max="99999999" autocomplete="off"
                                                                 wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}"
                                                                 wire:key="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}">
                                                         </div>
@@ -238,7 +238,7 @@
                                                                 <div class="ui input month">
                                                                     <input class="hide-spin" type="number"
                                                                         name="{{ $key }}[]" placeholder=""
-                                                                        min="0" max="99999999"
+                                                                        min="0" max="99999999" autocomplete="off"
                                                                         wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}">
                                                                 </div>
                                                             </td>
@@ -266,7 +266,7 @@
                                                             <div class="ui input month">
                                                                 <input class="hide-spin" type="number"
                                                                     name="bonus_{{ $key }}[]" placeholder=""
-                                                                    min="0" max="99999999"
+                                                                    min="0" max="99999999" autocomplete="off"
                                                                     wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}"
                                                                     wire:key="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}">
                                                             </div>
@@ -326,7 +326,7 @@
                                                 <td>
                                                     <div class="ui input month">
                                                         <input class="hide-spin" type="number" name="{{ $key }}[]"
-                                                            placeholder="" min="0" max="99999999"
+                                                            placeholder="" min="0" max="99999999" autocomplete="off"
                                                             wire:model.live="data.{{ $current_id }}.atd_month.{{ $month }}.{{ $key }}"
                                                             wire:key="data.{{ $current_id }}.atd_month.{{ $month }}.{{ $key }}">
                                                     </div>
@@ -346,7 +346,7 @@
                         <h2>備考</h2>
                         <div class="ui form">
                             <textarea wire:model.live="data.{{ $current_id }}.remarks" wire:key="data.{{ $current_id }}.remarks"
-                                maxLength="100" style="width: 100%; max-width: 300px; height: 100px; resize: none;"></textarea>
+                                maxLength="100" style="width: 100%; max-width: 300px; height: 100px; resize: none;" autocomplete="off"></textarea>
                         </div>
                     </main>
                 @break

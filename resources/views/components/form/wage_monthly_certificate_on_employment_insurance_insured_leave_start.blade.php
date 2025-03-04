@@ -618,7 +618,7 @@
         <INPUT tabindex="250"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1"
-            value="{{ old('wage_note_1') }}"></INPUT>
+            value="{{ old('wage_note_1') }}" autocomplete="off"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:105px; top:1303px; width:131px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -1980,7 +1980,7 @@
             tabindex="276"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:860px; height:34px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J83_005F_9574_8B4C_9793" name="labor_consultant_note"
-            value="{{ old('labor_consultant_note') }}"></SPAN>
+            value="{{ old('labor_consultant_note') }}" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:168px; top:416px; width:15px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="34"
@@ -3250,7 +3250,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:2314px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
         <INPUT tabindex="982"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2"
+            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2" autocomplete="off"
             value="{{ old('wage_note_2') }}"></INPUT>
     </SPAN>
     <SPAN

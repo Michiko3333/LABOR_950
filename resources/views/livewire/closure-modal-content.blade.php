@@ -324,7 +324,7 @@
                     <div class="two fields pb-1">
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="text" placeholder="従業員氏名" maxlength="20" wire:model.live="search">
+                                <input type="text" placeholder="従業員氏名" maxlength="20" wire:model.live="search" autocomplete="off">
                                 <i class="search icon"></i>
                             </div>
                         </div>

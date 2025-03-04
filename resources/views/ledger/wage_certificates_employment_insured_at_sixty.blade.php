@@ -325,6 +325,24 @@
                 $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
                 $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
                 $('#J77_005F_82A0_82C4_90E6').val(hello_work);
+
+                $('#financialInstitutionNameKanaId').val(employee.bank_name_kana || "");
+                $('#J81_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
+                if(employee.head_office_or_branch_office == 0) {
+                    $('input[name="headquartersOrBranch"][value="本店"]').prop('checked', true);
+                } else if(employee.head_office_or_branch_office == 1) {
+                    $('input[name="headquartersOrBranch"][value="支店"]').prop('checked', true);
+                }
+                $('#J83_005F_8BE0_975A_8B40_8AD6_8352_815B_8368').val(employee.financial_institution_code || "");
+                $('#J84_005F_9358_95DC_8352_815B_8368').val(employee.store_code || "");
+                $('#J85_005F_9761_8BE0_92CA_92A0_82CC_8CFB_8DC0_94D4_8D86').val(employee.bank_account_no || "");
+                if(employee.japan_post_bank_code_no) {
+                    $('#J117_005F_8B4C_8D86_94D4_8D86').val(employee.japan_post_bank_code_no.slice(0, 5) || "");
+                    $('#J118_005F_8CFB_8DC0_94D4_8D86').val(employee.japan_post_bank_code_no.slice(5) || "");
+                } else {
+                    $('#J117_005F_8B4C_8D86_94D4_8D86').val("");
+                    $('#J118_005F_8CFB_8DC0_94D4_8D86').val("");
+                }
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;

@@ -236,7 +236,7 @@
                 required="required"
                 style="top: 208px; height: 44px;"
                 type="text"
-                maxlength="50"
+                maxlength="50" autocomplete="off"
             >{{old('npc3ipn_1_branch_address')}}</textarea>
             <input class="npc3ipn_1_branch_info" id="A3_2" name="npc3ipn_1_company_name"
                 required="required"
@@ -385,7 +385,7 @@
                     font-size: 12px;
                     text-align: left;
                     overflow-wrap: break-word;
-                    word-wrap: break-word;"
+                    word-wrap: break-word;" autocomplete="off"
                 maxlength="37">{{old('npc3ipn_1_employee_address')}}</textarea>
 
             <input class="npc3ipn_1_notification_date year" id="C1_1" name="npc3ipn_1_notification_date_year"
@@ -506,7 +506,7 @@
                 maxlength="4"
                 type="text" autocomplete="off" value="{{old('npc3ipn_1_dependent_post_code_latter')}}"
             />
-            <textarea id="C10" name="npc3ipn_1_dependent_address" type="text"
+            <textarea id="C10" name="npc3ipn_1_dependent_address" type="text" autocomplete="off"
                 style="font-size: 10px; top: 711px; left: 202px; height: 21px; width: 249px; text-align: left;"
                 maxlength="37">{{old('npc3ipn_1_dependent_address')}}</textarea>
             <select id="C25" name="npc3ipn_1_dependent_tell_number_type"
@@ -624,7 +624,7 @@
                 maxlength="8"
                 type="text" autocomplete="off" value="{{old('npc3ipn_1_other_input_fields')}}"
             />
-            <textarea id="C19" name="npc3ipn_1_remark" type="text"
+            <textarea id="C19" name="npc3ipn_1_remark" type="text" autocomplete="off"
                 style="top: 735px; left: 614px; height: 218px; width: 146px;
                     text-align: left; overflow-wrap: break-word; word-wrap: break-word;"
                 maxlength="39">{{old('npc3ipn_1_remark')}}</textarea>

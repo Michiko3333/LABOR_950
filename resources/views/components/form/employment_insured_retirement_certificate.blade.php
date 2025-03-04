@@ -3186,10 +3186,10 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1078px; top:246px; width:381px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="263"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:381px; max-width:381px; height:14px; ime-mode:active;"
-            type="TEXT"
+            type="TEXT" autocomplete="off"
             id="J106_005F_8C70_91B1_8CD9_9770_8AF3_965D_8ED2_005F_97A3_9045_979D_9752_005F_82BB_82CC_91BC_005F_8BEF_91CC_9349_979D_9752"
             name="retirement_reason" class="clear c2-c" value="{{ old('retirement_reason') }}"
-            maxlength="34"></SPAN>
+            maxlength="34" autocomplete="off"></SPAN>
     <input type="radio" name="shortened_contract_renewal_reached_limit_flg" value="" checked
         style="display: none;">
     <SPAN
@@ -3446,12 +3446,12 @@
             value="{{ old('contract_period_reached_limit_contract_period_once') }}" maxlength="3" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1143px; top:283px; width:26px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
-            tabindex="265"
+            tabindex="265" autocomplete="off"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:26px; max-width:26px; height:13px; ime-mode:disabled;"
             type="TEXT" id="J195_005F_8CD9_9770_8AFA_8AD4_939E_9788_005F_92CA_8E5A_8C5F_96F1_8AFA_8AD4"
             name="contract_period_reached_limit_contract_period_total" class="clear c3-1"
             value="{{ old('contract_period_reached_limit_contract_period_total') }}"
-            maxlength="3"disabled></SPAN>
+            maxlength="3" autocomplete="off" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:1272px; top:283px; width:27px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="266"

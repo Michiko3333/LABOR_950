@@ -403,7 +403,7 @@
                                 <div class="field {{ err($errors, 'grade') }}">
                                     <label for="">等級</label>
                                     <input type="text" id="grade" name="grade"
-                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}">
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -1676,7 +1676,7 @@
                                 <label for="japan_post_bank_code_no">記号番号</label>
                                 <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
                                     value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
-                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='8' autocomplete="off">
+                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='13' autocomplete="off">
                             </div>
                         </div>
                     </div>

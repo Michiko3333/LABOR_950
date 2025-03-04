@@ -49,7 +49,7 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:left; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:16px; font-family:'ＭＳ 明朝', serif; padding:0px 0px 0px 0px; min-width:400px; max-width:400px; height:20px; ime-mode:disabled;"
             type="TEXT" onBlur="romajiCheck(this.form.name_alphabet)"
             id="J58_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A" value="{{ old('name_alphabet') }}"
-            name="name_alphabet" maxlength="40" disabled></SPAN>
+            name="name_alphabet" maxlength="40" autocomplete="off" disabled></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:60px; top:153px; width:290px; height:28px; font-size:13px; font-family:'ＭＳ 明朝', serif; padding:4px 0px 0px 0px;"><INPUT
             tabindex="9"

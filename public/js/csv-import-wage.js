@@ -23,9 +23,9 @@ class CsvImportWage extends PowerTableList {
 
         this.insurance_get = this.option_data.api.insurance_get;
 
-        this.onImported = () => {};
-        this.onFaildImport = () => {};
-        this.onChangedCustomColumns = () => {};
+        this.onImported = () => { };
+        this.onFaildImport = () => { };
+        this.onChangedCustomColumns = () => { };
 
         this.rules = {
             employee_no: ['required'],
@@ -37,7 +37,7 @@ class CsvImportWage extends PowerTableList {
 
         this.get(this.insurance_get).then(r => {
             const res = JSON.parse(r);
-            const insurances = {labor: [], social: []};
+            const insurances = { labor: [], social: [] };
             if (!Object.keys(res).length < 1) {
                 for (let i = 0; i < res.length; i++) {
                     const ins = res[i];
@@ -150,7 +150,7 @@ class CsvImportWage extends PowerTableList {
             this.loadCsv(columns, rows.slice(1));
         }
 
-        reader.onerror = function() {
+        reader.onerror = function () {
             alert('ファイルの読み取り中にエラーが発生しました。');
         };
 
@@ -378,7 +378,7 @@ class CsvImportWage extends PowerTableList {
             ];
             let deduction_sum = 0;
             deductions.forEach(k => {
-                deduction_sum +=  this.replaceInt(item[k]);
+                deduction_sum += this.replaceInt(item[k]);
             });
 
             label.textContent = this.comma(deduction_sum);
@@ -422,7 +422,7 @@ class CsvImportWage extends PowerTableList {
             ];
             let deduction_sum = 0;
             deductions.forEach(k => {
-                deduction_sum +=  this.replaceInt(item[k]);
+                deduction_sum += this.replaceInt(item[k]);
             });
 
             let wage_amount = 0;
@@ -533,8 +533,8 @@ class CsvImportWage extends PowerTableList {
                 fieldDiv.appendChild(checkboxDiv);
 
                 container.appendChild(fieldDiv);
-              });
-              solvColumn.appendChild(container);
+            });
+            solvColumn.appendChild(container);
         }
         this.onChangedCustomColumns();
     }
@@ -602,15 +602,15 @@ class CsvImportWage extends PowerTableList {
             data.push(d);
         }
 
-        this.submit(this.upload_uri, JSON.stringify({data: data})).then(r => {
+        this.submit(this.upload_uri, JSON.stringify({ data: data })).then(r => {
             this.onImported();
         })
-        .catch(() => {
-            this.onFaildImport();
-        })
-        .finally(() => {
-            uploadButton.disabled = false;
-        });
+            .catch(() => {
+                this.onFaildImport();
+            })
+            .finally(() => {
+                uploadButton.disabled = false;
+            });
     }
 
     setInsurances(insurances) {

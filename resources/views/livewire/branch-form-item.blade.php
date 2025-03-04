@@ -234,7 +234,7 @@
                                         <div class="field required {{ err_bind($errs, 'br-name', $key) }}">
                                             <label for="br-name">名称</label>
                                             <input type="text" name="br-name[]" wire:model.live="item.br-name"
-                                                placeholder="">
+                                                placeholder="" autocomplete="off">
                                         </div>
                                         <div class="ui unstackable two fields">
                                             <div class="field required {{ err_bind($errs, 'br-branch_type', $key) }}">
@@ -269,7 +269,7 @@
                                         <div class="four wide field required {{ err_bind($errs, 'br-post_code', $key) }}">
                                             <label for="br-post_code">郵便番号</label>
                                             <input type="text" name="br-post_code[]" wire:model.live="item.br-post_code"
-                                                placeholder="">
+                                                placeholder="" autocomplete="off">
                                         </div>
                                         <div
                                             class="four wide field required {{ err_bind($errs, 'br-address_prefecture', $key) }}">
@@ -287,19 +287,19 @@
                                         <div class="eight wide field required {{ err_bind($errs, 'br-address_city', $key) }}">
                                             <label for="br-address_city">住所（市区町村）</label>
                                             <input type="text" name="br-address_city[]"
-                                                wire:model.live="item.br-address_city" placeholder="">
+                                                wire:model.live="item.br-address_city" placeholder="" autocomplete="off">
                                         </div>
                                         <div class="field required {{ err_bind($errs, 'br-address_ward', $key) }}">
                                             <label for="br-address_ward">住所（丁目・番地）</label>
                                             <input type="text" name="br-address_ward[]"
-                                                wire:model.live="item.br-address_ward" placeholder="">
+                                                wire:model.live="item.br-address_ward" placeholder="" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
                                         <div class="field {{ err_bind($errs, 'br-address_apartment', $key) }}">
                                             <label for="br-address_apartment">住所（アパート・マンション名等）</label>
                                             <input type="text" name="br-address_apartment[]"
-                                                wire:model.live="item.br-address_apartment" placeholder="">
+                                                wire:model.live="item.br-address_apartment" placeholder="" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="ui divider my-2"></div>
@@ -307,19 +307,19 @@
                                         <div class="field required {{ err_bind($errs, 'br-address_city_kana', $key) }}">
                                             <label for="br-address_city_kana">住所（市区町村）（カナ）</label>
                                             <input type="text" name="br-address_city_kana[]"
-                                                wire:model.live="item.br-address_city_kana" placeholder="">
+                                                wire:model.live="item.br-address_city_kana" placeholder="" autocomplete="off">
                                         </div>
                                         <div class="field required {{ err_bind($errs, 'br-address_ward_kana', $key) }}">
                                             <label for="br-address_ward_kana">住所（丁目・番地）（カナ）</label>
                                             <input type="text" name="br-address_ward_kana[]"
-                                                wire:model.live="item.br-address_ward_kana" placeholder="">
+                                                wire:model.live="item.br-address_ward_kana" placeholder="" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
                                         <div class="field {{ err_bind($errs, 'br-address_apartment_kana', $key) }}">
                                             <label for="br-address_apartment_kana">住所（アパート・マンション名等）（カナ）</label>
                                             <input type="text" name="br-address_apartment_kana[]"
-                                                wire:model.live="item.br-address_apartment_kana" placeholder="">
+                                                wire:model.live="item.br-address_apartment_kana" placeholder="" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="ui divider my-2"></div>
@@ -329,25 +329,25 @@
                                                 style="padding-right: 0.8em;">
                                                 <label for="br-tel_area_code">電話番号</label>
                                                 <input type="text" name="br-tel_area_code[]"
-                                                    wire:model.live="item.br-tel_area_code" placeholder="市外局番">
+                                                    wire:model.live="item.br-tel_area_code" placeholder="市外局番" autocomplete="off">
                                             </div>
                                             <div class="field required tel-hyphen {{ err_bind($errs, 'br-tel_city_code', $key) }}"
                                                 style="padding-left: 0.8em; padding-right: 0.8em;">
                                                 <label for="br-tel_city_code"></label>
                                                 <input type="text" name="br-tel_city_code[]"
-                                                    wire:model.live="item.br-tel_city_code" placeholder="市内局番">
+                                                    wire:model.live="item.br-tel_city_code" placeholder="市内局番" autocomplete="off">
                                             </div>
                                             <div class="field required {{ err_bind($errs, 'br-tel_subscriber_code', $key) }}"
                                                 style="padding-left: 0.8em;">
                                                 <label for="br-tel_subscriber_code"></label>
                                                 <input type="text" name="br-tel_subscriber_code[]"
-                                                    wire:model.live="item.br-tel_subscriber_code" placeholder="加入者番号">
+                                                    wire:model.live="item.br-tel_subscriber_code" placeholder="加入者番号" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-tel_overseas', $key) }}">
                                             <label for="br-tel_overseas">国外電話番号</label>
                                             <input type="text" name="br-tel_overseas[]"
-                                                wire:model.live="item.br-tel_overseas" placeholder="" maxlength="15">
+                                                wire:model.live="item.br-tel_overseas" placeholder="" maxlength="15" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
@@ -356,25 +356,25 @@
                                                 style="padding-right: 0.8em;">
                                                 <label for="br-tel_area_code">fax</label>
                                                 <input type="text" name="br-fax1[]" wire:model.live="item.br-fax1"
-                                                    placeholder="">
+                                                    placeholder="" autocomplete="off">
                                             </div>
                                             <div class="field tel-hyphen {{ err_bind($errs, 'br-fax2', $key) }}"
                                                 style="padding-left: 0.8em; padding-right: 0.8em;">
                                                 <label for="br-fax2"></label>
                                                 <input type="text" name="br-fax2[]" wire:model.live="item.br-fax2"
-                                                    placeholder="">
+                                                    placeholder="" autocomplete="off">
                                             </div>
                                             <div class="field {{ err_bind($errs, 'br-fax3', $key) }}"
                                                 style="padding-left: 0.8em;">
                                                 <label for="br-fax3"></label>
                                                 <input type="text" name="br-fax3[]" wire:model.live="item.br-fax3"
-                                                    placeholder="">
+                                                    placeholder="" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="field required {{ err_bind($errs, 'br-mail_address', $key) }}">
                                             <label for="br-mail_address">メールアドレス</label>
                                             <input type="text" name="br-mail_address[]"
-                                                wire:model.live="item.br-mail_address" placeholder="">
+                                                wire:model.live="item.br-mail_address" placeholder="" autocomplete="off">
                                         </div>
                                     </div>
                                 @break
@@ -385,19 +385,19 @@
                                         <div class="field {{ err_bind($errs, 'br-kenpo_no', $key) }}">
                                             <label for="br-kenpo_no">協会けんぽNo</label>
                                             <input type="text" name="br-kenpo_no[]" wire:model.live="item.br-kenpo_no"
-                                                placeholder="" maxlength="8">
+                                                placeholder="" maxlength="8" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
                                         <div class="field {{ err_bind($errs, 'br-insurance_office_name', $key) }}">
                                             <label for="br-insurance_office_name">健康保険組合・名称</label>
                                             <input type="text" name="br-insurance_office_name[]"
-                                                wire:model.live="item.br-insurance_office_name" placeholder="">
+                                                wire:model.live="item.br-insurance_office_name" placeholder="" autocomplete="off">
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-insurance_office_no', $key) }}">
                                             <label for="br-insurance_office_no">健康保険組合・事業所番号</label>
                                             <input type="text" name="br-insurance_office_no[]"
-                                                wire:model.live="item.br-insurance_office_no" placeholder="" maxlength="5">
+                                                wire:model.live="item.br-insurance_office_no" placeholder="" maxlength="5" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="three fields">
@@ -406,21 +406,21 @@
                                             <label for="br-pension_office_reference_prefecture">事業所番号整理記号・都道府県コード</label>
                                             <input type="text" name="br-pension_office_reference_prefecture[]"
                                                 wire:model.live="item.br-pension_office_reference_prefecture" placeholder=""
-                                                maxlength="2">
+                                                maxlength="2" autocomplete="off">
                                         </div>
                                         <div
                                             class="field {{ err_bind($errs, 'br-pension_office_reference_no_cities', $key) }}">
                                             <label for="br-pension_office_reference_no_cities">事業所番号整理記号・郡市区符号</label>
                                             <input type="text" name="br-pension_office_reference_no_cities[]"
                                                 wire:model.live="item.br-pension_office_reference_no_cities" placeholder=""
-                                                maxlength="2">
+                                                maxlength="2" autocomplete="off">
                                         </div>
                                         <div
                                             class="field {{ err_bind($errs, 'br-pension_office_reference_no_office', $key) }}">
                                             <label for="br-pension_office_reference_no_office">事業所番号整理記号・事業所記号</label>
                                             <input type="text" name="br-pension_office_reference_no_office[]"
                                                 wire:model.live="item.br-pension_office_reference_no_office" placeholder=""
-                                                maxlength="4">
+                                                maxlength="4" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
@@ -429,7 +429,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="1~12" min="1" max="12"
                                                     name="br-insurance_applicable_date[]"
-                                                    wire:model.live="item.br-insurance_applicable_date">
+                                                    wire:model.live="item.br-insurance_applicable_date" autocomplete="off">
                                                 <div class="ui basic label">
                                                     月
                                                 </div>
@@ -440,12 +440,12 @@
                                         <div class="field {{ err_bind($errs, 'br-pension_office_name', $key) }}">
                                             <label for="br-pension_office_name">厚生年金基金・名称</label>
                                             <input type="text" name="br-pension_office_name[]"
-                                                wire:model.live="item.br-pension_office_name" placeholder="">
+                                                wire:model.live="item.br-pension_office_name" placeholder="" autocomplete="off">
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-pension_office_no', $key) }}">
                                             <label for="br-pension_office_no">厚生年金基金・事業所番号</label>
                                             <input type="text" name="br-pension_office_no[]"
-                                                wire:model.live="item.br-pension_office_no" placeholder="" maxlength="5">
+                                                wire:model.live="item.br-pension_office_no" placeholder="" maxlength="5" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="two fields">
@@ -464,7 +464,7 @@
                                             <label for="br-insurance_office_reference_no">健康保険・事業所整理番号</label>
                                             <input type="text" name="br-insurance_office_reference_no[]"
                                                 wire:model.live="item.br-insurance_office_reference_no" placeholder=""
-                                                maxlength="5">
+                                                maxlength="5" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="ui divider"></div>
@@ -546,7 +546,7 @@
                                             <label for="br-employment_insurance_office_no">雇用保険・事業所番号</label>
                                             <input type="text" name="br-employment_insurance_office_no[]"
                                                 wire:model.live="item.br-employment_insurance_office_no" placeholder=""
-                                                maxlength="11">
+                                                maxlength="11" autocomplete="off">
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-employment_insurance_rate', $key) }}">
                                             <label for="br-employment_insurance_rate">雇用保険料率区分</label>
@@ -605,7 +605,7 @@
                                         <div class="field {{ err_bind($errs, 'br-labor_insurance_no', $key) }}">
                                             <label for="br-labor_insurance_no">労働保険番号</label>
                                             <input type="text" name="br-labor_insurance_no[]"
-                                                wire:model.live="item.br-labor_insurance_no" placeholder="" maxlength="14">
+                                                wire:model.live="item.br-labor_insurance_no" placeholder="" maxlength="14" autocomplete="off">
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-labor_insurance_payment_method', $key) }}">
                                             <label for="br-labor_insurance_payment_method">労働保険納付区分</label>
@@ -753,7 +753,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="1680" min="0" max="8760"
                                                     name="br-agreed_hours_year_h[]"
-                                                    wire:model.live="item.br-agreed_hours_year_h">
+                                                    wire:model.live="item.br-agreed_hours_year_h" autocomplete="off">
                                                 <div class="ui basic label">
                                                     時間
                                                 </div>
@@ -764,7 +764,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="30" min="0" max="59"
                                                     name="br-agreed_hours_year_m[]"
-                                                    wire:model.live="item.br-agreed_hours_year_m">
+                                                    wire:model.live="item.br-agreed_hours_year_m" autocomplete="off">
                                                 <div class="ui basic label">
                                                     分
                                                 </div>
@@ -777,7 +777,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="140" min="0" max="744"
                                                     name="br-agreed_hours_month_h[]"
-                                                    wire:model.live="item.br-agreed_hours_month_h">
+                                                    wire:model.live="item.br-agreed_hours_month_h" autocomplete="off">
                                                 <div class="ui basic label">
                                                     時間
                                                 </div>
@@ -788,7 +788,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="30" min="0" max="59"
                                                     name="br-agreed_hours_month_m[]"
-                                                    wire:model.live="item.br-agreed_hours_month_m">
+                                                    wire:model.live="item.br-agreed_hours_month_m" autocomplete="off">
                                                 <div class="ui basic label">
                                                     分
                                                 </div>
@@ -801,7 +801,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="40" min="0" max="168"
                                                     name="br-agreed_hours_week_h[]"
-                                                    wire:model.live="item.br-agreed_hours_week_h">
+                                                    wire:model.live="item.br-agreed_hours_week_h" autocomplete="off">
                                                 <div class="ui basic label">
                                                     時間
                                                 </div>
@@ -812,7 +812,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="30" min="0" max="59"
                                                     name="br-agreed_hours_week_m[]"
-                                                    wire:model.live="item.br-agreed_hours_week_m">
+                                                    wire:model.live="item.br-agreed_hours_week_m" autocomplete="off">
                                                 <div class="ui basic label">
                                                     分
                                                 </div>
@@ -825,7 +825,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="8" min="0" max="168"
                                                     name="br-agreed_hours_day_h[]"
-                                                    wire:model.live="item.br-agreed_hours_day_h">
+                                                    wire:model.live="item.br-agreed_hours_day_h" autocomplete="off">
                                                 <div class="ui basic label">
                                                     時間
                                                 </div>
@@ -836,7 +836,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="30" min="0" max="59"
                                                     name="br-agreed_hours_day_m[]"
-                                                    wire:model.live="item.br-agreed_hours_day_m">
+                                                    wire:model.live="item.br-agreed_hours_day_m" autocomplete="off">
                                                 <div class="ui basic label">
                                                     分
                                                 </div>
@@ -850,7 +850,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="120" min="0" max="365"
                                                     name="br-working_days_yearly[]"
-                                                    wire:model.live="item.br-working_days_yearly">
+                                                    wire:model.live="item.br-working_days_yearly" autocomplete="off">
                                                 <div class="ui basic label">
                                                     日
                                                 </div>
@@ -862,7 +862,7 @@
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="20" min="0" max="31"
                                                     name="br-working_days_monthly[]"
-                                                    wire:model.live="item.br-working_days_monthly">
+                                                    wire:model.live="item.br-working_days_monthly" autocomplete="off">
                                                 <div class="ui basic label">
                                                     日
                                                 </div>
@@ -874,7 +874,7 @@
                                             <label for="br-holiday_yearly">休日(年間)</label>
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="245" min="0" max="365"
-                                                    name="br-holiday_yearly[]" wire:model.live="item.br-holiday_yearly">
+                                                    name="br-holiday_yearly[]" wire:model.live="item.br-holiday_yearly" autocomplete="off">
                                                 <div class="ui basic label">
                                                     日
                                                 </div>
@@ -885,7 +885,7 @@
                                             <label for="br-holiday_monthly">休日(月間)</label>
                                             <div class="ui right labeled input">
                                                 <input type="number" placeholder="20" min="0" max="31"
-                                                    name="br-holiday_monthly[]" wire:model.live="item.br-holiday_monthly">
+                                                    name="br-holiday_monthly[]" wire:model.live="item.br-holiday_monthly" autocomplete="off">
                                                 <div class="ui basic label">
                                                     日
                                                 </div>
@@ -908,12 +908,12 @@
                                         <div class="field {{ err_bind($errs, 'br-holiday_legal', $key) }}">
                                             <label for="br-holiday_legal">休日内容(法定休日)</label>
                                             <input type="text" name="br-holiday_legal[]"
-                                                wire:model.live="item.br-holiday_legal" placeholder="" maxlength="255">
+                                                wire:model.live="item.br-holiday_legal" placeholder="" maxlength="255" autocomplete="off">
                                         </div>
                                         <div class="field {{ err_bind($errs, 'br-holiday_not_logal', $key) }}">
                                             <label for="br-holiday_not_logal">休日内容(法定休日以外)</label>
                                             <input type="text" name="br-holiday_not_logal[]"
-                                                wire:model.live="item.br-holiday_not_logal" placeholder="" maxlength="255">
+                                                wire:model.live="item.br-holiday_not_logal" placeholder="" maxlength="255" autocomplete="off">
                                         </div>
                                     </div>
                                 @break
