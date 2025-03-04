@@ -14,7 +14,7 @@
             <div>
                 @if($editPermission)
                     <i class="inverted secondary big bell icon notification-icon" style="visibility: visible; cursor: pointer;"></i>
-                    <div class="ui card card-shadow" id="notification-modal" style="position: absolute; top: 190px; display: none; width: 400px; max-height: 428px; z-index: 30; overflow-y: auto;">
+                    <div class="ui card card-shadow" id="notification-modal" style="position: absolute; top: 190px; right: 20px; display: none; width: 400px; max-height: 428px; z-index: 30; overflow-y: auto;">
                         <div class="content" style="background-color: var(--color-red);">
                             <div class="header" style="color: white;">
                                 通知
