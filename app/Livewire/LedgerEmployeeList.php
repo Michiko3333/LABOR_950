@@ -253,15 +253,18 @@ class LedgerEmployeeList extends BaseTable
             ];
         }
         $closure_1_data_4950008680182000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
-            ->get()->filter(function ($item) {
+            ->get()->sortBy(function ($item) {
+                $today = Carbon::today();
                 $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-                return Carbon::today()->lessThan($start_date_of_closed);
-            })->sortByDesc('created_at')->first();
-        $closure_1_data_4950008680050000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
-            ->get()->filter(function ($item) {
-                $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-                return Carbon::today()->lessThan($start_date_of_closed);
-            })->sortByDesc('created_at')->first();
+                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
+
+                $start_diff = $today->diffInDays($start_date_of_closed, false);
+                $end_diff = $today->diffInDays($end_date_of_losed, false);
+
+                return min(abs($start_diff), abs($end_diff));
+            })
+            ->first();
+
         $closure_2_data = Closure_information::where('employee_id', $employee_id)->where('closure_type', '2')->where('delete_flg', '0')
             ->get()->filter(function ($item) {
                 $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
@@ -317,6 +320,20 @@ class LedgerEmployeeList extends BaseTable
                 'day' => $due_date_4950008680182000['japanese_calendar_result']->day,
             ];
         }
+        $closure_1_data_4950008680050000 = Closure_information::where('employee_id', $employee_id)
+        ->where('closure_type', '1')->where('delete_flg', '0')
+            ->get()->sortBy(function ($item) {
+                $today = Carbon::today();
+                $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
+
+                $start_diff = $today->diffInDays($start_date_of_closed, false);
+                $end_diff = $today->diffInDays($end_date_of_losed, false);
+
+                return min(abs($start_diff), abs($end_diff));
+            })
+            ->first();
+
         if (!empty($closure_1_data_4950008680050000->start_date_of_closed)) {
             $start_date_of_closed_4950008680050000 = Carbon::parse($closure_1_data_4950008680050000->start_date_of_closed);
             $start_date_of_closed_4950008680050000 = Controller::convertWesternCalendarToJapaneseCalendar($start_date_of_closed_4950008680050000);
@@ -385,7 +402,7 @@ class LedgerEmployeeList extends BaseTable
             ->filter(function ($item) {
                 $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
                 $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
-                return true; 
+                return true;
             })
             ->first();
 

@@ -119,8 +119,15 @@
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative') }}' ? '{{ old('company_representative') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ old('labor_consultant_acting_as_agent') }}'
+                    ).css('background-color', '#ddeeff')
+                    .prop('disabled', false);
                 @else
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('readonly', false);
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ old('labor_consultant_acting_as_agent') }}'
+                    ).css('background-color', '#ffffff')
+                    .prop('disabled', true);
                 @endif
             });
         </script>
