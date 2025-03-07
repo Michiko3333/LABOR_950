@@ -186,7 +186,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:69px; top:956px; width:30px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">機関</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:69px; top:971px; width:30px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">指定届</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:69px; top:971px; width:32px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">指定届</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:114px; top:911px; width:30px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">36</SPAN>
     <SPAN
@@ -284,7 +284,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:150px; width:78px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">４被保険者氏名</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:375px; top:150px; width:105px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">フリガナ（カタカナ）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:375px; top:150px; width:107px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">フリガナ（カタカナ）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:202px; width:68px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">５事業所番号</SPAN>
     <SPAN
@@ -292,7 +292,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:589px; top:202px; width:46px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">（漢字）</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:250px; width:106px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">８介護休業開始年月日</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:61px; top:250px; width:107px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">８介護休業開始年月日</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:622px; top:298px; width:65px; height:11px; text-align:left; font-size:8px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">1
         配偶者</SPAN>
@@ -315,7 +315,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:700px; top:324px; width:65px; height:11px; text-align:left; font-size:8px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">7
         孫</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:316px; top:250px; width:125px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">９介護対象家族の個人番号</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:316px; top:250px; width:128px; height:12px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">９介護対象家族の個人番号</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:162px; top:307px; width:67px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">（カタカナ）</SPAN>
     <SPAN
@@ -324,7 +324,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:433px; top:301px; width:18px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">12</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:452px; top:294px; width:63px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">介護対象家族</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:452px; top:294px; width:64px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">介護対象家族</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:452px; top:307px; width:36px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">の性別</SPAN>
 
@@ -340,7 +340,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:528px; top:301px; width:18px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">13</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:547px; top:294px; width:63px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">介護対象家族</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:547px; top:294px; width:64px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">介護対象家族</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:547px; top:307px; width:36px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">の続柄</SPAN>
 
@@ -387,7 +387,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:534px; top:682px; width:54px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">35特殊事項</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:125px; top:638px; width:117px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">32金融機関・店舗コード</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:125px; top:638px; width:118px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">32金融機関・店舗コード</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:288px; top:638px; width:45px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">口座番号</SPAN>
     <SPAN

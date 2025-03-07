@@ -127,7 +127,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:317px; top:780px; width:63px; height:16px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:2px 0px 0px 0px;">事業主氏名</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:64px; top:804px; width:572px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険法施行規則第101条の５及び第101条の７の規定により、上記のとおり高年齢雇用継続給付の支給を申請します。</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:64px; top:804px; width:576px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険法施行規則第101条の５及び第101条の７の規定により、上記のとおり高年齢雇用継続給付の支給を申請します。</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:259px; top:862px; width:107px; height:11px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">公共職業安定所長
         殿</SPAN>
@@ -158,7 +158,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:57px; top:356px; width:114px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">４支給対象年月その１</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:241px; top:356px; width:210px; height:15px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">５&nbsp;４欄の支給対象年月に支払われた賃金額</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:234px; top:356px; width:210px; height:15px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">５&nbsp;４欄の支給対象年月に支払われた賃金額</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:57px; top:417px; width:115px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">８支給対象年月その２</SPAN>
     <SPAN
@@ -659,11 +659,11 @@
             value="1" type="TEXT" id="J3_005F_8B8B_9574_8BE0_82CC_8EED_97DE"
             value="{{ old('benefits_types') }}" name="benefits_types" maxlength="1" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:356px; width:125px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">６賃金の減額のあった日数</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:356px; width:125px; height:15px; text-align:center; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">６賃金の減額のあった日数</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:417px; width:127px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">10賃金の減額のあった日数</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:417px; width:127px; height:15px; text-align:center; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">10賃金の減額のあった日数</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:478px; width:127px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">14賃金の減額のあった日数</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:445px; top:478px; width:127px; height:15px; text-align:center; font-size:9px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">14賃金の減額のあった日数</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:417px; top:177px; width:57px; height:15px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">要件該当日</SPAN>
     <SPAN

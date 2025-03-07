@@ -543,7 +543,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:62px; top:106px; width:69px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">被保険者番号</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:11px; width:286px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:11px; width:299px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:121px; top:43px; width:160px; height:22px; text-align:center; font-size:18px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険被保険者</SPAN>
     <SPAN
@@ -3205,7 +3205,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:62px; top:1455px; width:69px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">被保険者番号</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:1360px; width:286px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:1360px; width:299px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:121px; top:1392px; width:160px; height:22px; text-align:center; font-size:18px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険被保険者</SPAN>
     <SPAN
