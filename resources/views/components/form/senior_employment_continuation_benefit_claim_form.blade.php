@@ -916,24 +916,24 @@
             size="1" tabindex="23"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:54px; height:18px;"
             id="J25_005F_944E_8D86_005F1" name="payer_japan_era1">
-            <OPTION value="令和" {{ old('payer_japan_era1') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('payer_japan_era1') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="9" {{ old('payer_japan_era1') == '9' ? 'selected' : '' }}>令和</OPTION>
+            <OPTION value="7" {{ old('payer_japan_era1') == '7' ? 'selected' : '' }}>平成</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:57px; top:440px; width:54px; height:18px; font-size:12px; padding:0px 0px 0px 0px;"><SELECT
             size="1" tabindex="29"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:54px; height:18px;"
             id="J32_005F_944E_8D86_005F2" name="payer_japan_era2">
-            <OPTION value="令和" {{ old('payer_japan_era2') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('payer_japan_era2') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="9" {{ old('payer_japan_era2') == '9' ? 'selected' : '' }}>令和</OPTION>
+            <OPTION value="7" {{ old('payer_japan_era2') == '7' ? 'selected' : '' }}>平成</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:57px; top:501px; width:54px; height:18px; font-size:12px; padding:0px 0px 0px 0px;"><SELECT
             size="1" tabindex="35"
             style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:54px; height:18px;"
             id="J32_005F_944E_8D86_005F3" name="payer_japan_era3">
-            <OPTION value="令和" {{ old('payer_japan_era3') == '令和' ? 'selected' : '' }}>令和</OPTION>
-            <OPTION value="平成" {{ old('payer_japan_era3') == '平成' ? 'selected' : '' }}>平成</OPTION>
+            <OPTION value="9" {{ old('payer_japan_era3') == '9' ? 'selected' : '' }}>令和</OPTION>
+            <OPTION value="7" {{ old('payer_japan_era3') == '7' ? 'selected' : '' }}>平成</OPTION>
         </SELECT></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:407px; top:569px; width:54px; height:19px; font-size:12px; padding:0px 0px 0px 0px;"><SELECT

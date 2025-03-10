@@ -64,7 +64,6 @@ class LedgerEmployeeList extends BaseTable
         $this->total = $this->data['pagination']['totalItems'];
         $this->disablePrev = $this->page <= 1;
         $this->disableNext = $this->page >= ceil($this->total / $this->limit);
-
         return view('livewire.ledger-employee-list');
     }
 
@@ -73,7 +72,6 @@ class LedgerEmployeeList extends BaseTable
         $this->paginated = true;
         $items = $this->data['items'];
         $employee = $items->where('id', $id)->first();
-
         $employeeData = $employee->toArray();
         $branchData = $employee->branch->toArray();
         $companyId = $branchData['company_id'];
@@ -476,7 +474,7 @@ class LedgerEmployeeList extends BaseTable
                 'month' => $end_date_of_losed_4950013521030000['japanese_calendar_result']->month,
                 'day' => $end_date_of_losed_4950013521030000['japanese_calendar_result']->day,
             ];
-        }
+        }       
 
         $output = [
             'employee' => $employeeData,
@@ -536,6 +534,8 @@ class LedgerEmployeeList extends BaseTable
 
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
+        $this->dispatch('select_status', $this->selected_id);
+        $this->dispatch('select_payment_status_after60', employee: $employee);
     }
 
     #[On('setDefault')]

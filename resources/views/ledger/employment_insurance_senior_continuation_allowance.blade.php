@@ -50,6 +50,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="wage-payment-status-card">
+                        <div class="ui card card-shadow">
+                            <div class="content">
+                                <h2>賃金支払状況</h2>
+                                <div class="employee-select-area ui form">
+                                    <div class="text_fields">
+                                        <p>1）社員選択から社員を選択してください。</p>
+                                        <p>2）反映する支給対象月を選択下さい。</p>
+                                        <p>数値は初期値として自動入力されますが、会社の事情に応じて手入力にて修正をお願い致します。</p>
+                                        <p>支給対象年月に該当しない場合は右記より反映する月を選択ください。</p>
+                                        <div class="field" style="min-width: 80px; text-align: right;">
+                                            <livewire:wage-payment-status-another-month />
+                                        </div>
+                                    </div>
+                                    <livewire:wage-payment-status />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
@@ -246,7 +265,14 @@
             }) => {
                 insertDataFromEmployee(data)
             });
-        </script>
+
+            //PHPのロジックファイルからshowModalを待受して「支給対象年月の編集モーダル（another_payment_month）」を開く
+            Livewire.on('showModal', (event) => {
+                $('#another_payment_month').modal({
+                    blurring: true, // 背景をぼかす
+                }).modal('show');
+            });
+                </script>
 
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>
