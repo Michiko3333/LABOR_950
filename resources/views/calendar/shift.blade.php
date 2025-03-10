@@ -21,6 +21,10 @@
             .ui.error.message.hidden {
                 display: none;
             }
+
+            .calendar-info {
+                color: var(--color-red);
+            }
         </style>
     @endslot
 
@@ -61,12 +65,6 @@
             });
         </script>
         <script type="module">
-            Livewire.on('onSubmitError', () => {
-                setTimeout(() => {
-                    $('.ui.error.message').removeClass('hidden');
-                }, 0);
-            });
-
             Livewire.on('onSavedShiftCalendar', () => {
                 $.toast({
                     position: 'bottom right',
