@@ -1,8 +1,33 @@
 <div>
-    <div class="filter">
-        <div class="ui left icon input" style="margin-right: 1em; display: inline-block;">
-            <input type="text" placeholder="氏名" wire:model.live="search" autocomplete="off">
-            <i class="search icon"></i>
+    <div class="filter" style="display: flex; align-items: center;">
+        <div style="margin-right: 1.5em;">
+            <label style="font-size:14px">氏名</label>
+            <div class="ui left icon input" style="margin-right: 1em; display: inline-block;">
+                <input style="height:45px;" type="text" placeholder="氏名" wire:model.live="search">
+                <i class="search icon"></i>
+            </div>
+        </div>
+        <div style="margin-right: 1.5em;">
+            <label style="font-size:14px">役職</label>
+            <select class="ui fluid selection clearable dropdown managerial_position"
+                style="width: 300px !important; height:45px;font-size:14px !important;"
+                name="managerial_position_target" wire:model.live="managerial_position_id">
+                <option value="">未選択</option>
+                @foreach ($managerial_position_list as $id => $name)
+                    <option value="{{ $id }}">{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div style="margin-right: 1.5em;">
+            <label style="font-size:14px">部署</label>
+            <select class="ui fluid selection clearable dropdown department_target"
+                style="width: 300px !important; height:45px;font-size:14px !important;" name="department_target"
+                wire:model.live="department_id">
+                <option value="">未選択</option>
+                @foreach ($department_list as $id => $name)
+                    <option value="{{ $id }}">{{ $name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <table class="ui large table">

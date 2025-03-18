@@ -84,7 +84,7 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'id' => '18',
-                'name' => '賃金台帳作成',
+                'name' => '賃金台帳',
             ],
             [
                 'id' => '19',

@@ -356,13 +356,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee/wages/upload', [ImportWageController::class, 'index'])->name('wages.upload');
         Route::get('/employee/wages/upload/columns', [ImportWageController::class, 'column_data'])->name('wages.upload.colmuns');
         Route::post('/employee/wages/upload', [ImportWageController::class, 'upload'])->name('wages.upload.post');
+        Route::post('/employee/wages/solv-column', [ImportWageController::class, 'solv_column'])->name('wages.solv.column');
+
         Route::get('/employee/attendance/upload', [ImportAttendanceController::class, 'index'])->name('attendances.upload');
         Route::get('/employee/attendance/upload/columns', [ImportAttendanceController::class, 'column_data'])->name('attendances.upload.colmuns');
         Route::post('/employee/attendance/upload', [ImportAttendanceController::class, 'upload'])->name('attendances.upload.post');
+        Route::post('/employee/attendance/solv-column', [ImportAttendanceController::class, 'solv_column'])->name('attendances.solv.column');
         Route::get('/employee/upload', [ImportEmployeeController::class, 'index'])->name('employees.upload');
         Route::get('/employee/upload/columns', [ImportEmployeeController::class, 'column_data'])->name('employees.upload.colmuns');
         Route::post('/employee/upload', [ImportEmployeeController::class, 'upload'])->name('employees.upload.post');
-
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');

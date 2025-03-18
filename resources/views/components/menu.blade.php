@@ -129,7 +129,7 @@
                         <li class="item">
                             <a href="{{ route('wages-ledger.index') }}">
 
-                                賃金台帳作成</a>
+                                賃金台帳</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(7))
@@ -211,28 +211,28 @@
                     </li>
                 @endif
                 <div class="ui divider mx-1 my-0"></div>
-                    <li class="item set" id="menu-schedule-setting">
-                        <a class="content">
-                            各種設定
-                        </a>
-                    </li>
-                    @if (
-                        $userPermission->isReadableFor(13) &&
+                <li class="item set" id="menu-schedule-setting">
+                    <a class="content">
+                        各種設定
+                    </a>
+                </li>
+                @if (
+                    $userPermission->isReadableFor(13) &&
                         $userPermission->isBasicDepartment() &&
                         $userPermission->getEmployeeStatus() !== 1)
-                        <li class="item sub menu-schedule-setting-list" style="display: none;">
+                    <li class="item sub menu-schedule-setting-list" style="display: none;">
                         <a href="{{ route('pickup.setting') }}">
-                            
+
                             Pick up設定</a>
-                        </li>
-                    @endif
-                    @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
-                        <li class="item sub menu-schedule-setting-list" style="display: none;">
-                            <a href="{{ route('pickup.pickup') }}">
-    
-                                Pick upリスト</a>
-                        </li>
-                    @endif
+                    </li>
+                @endif
+                @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment())
+                    <li class="item sub menu-schedule-setting-list" style="display: none;">
+                        <a href="{{ route('pickup.pickup') }}">
+
+                            Pick upリスト</a>
+                    </li>
+                @endif
             @endif
             @if ($userPermission->isAdmin() || $userPermission->isLabor())
                 <li class="btn"><button class="ui button small yellow basic " type="button"
@@ -297,20 +297,20 @@
         }
     }
 
-    $("#menu-company-setting").on("click", function () {
+    $("#menu-company-setting").on("click", function() {
         $(this).toggleClass("open");
         $(".menu-company-setting-list").stop(true, true).slideToggle();
 
     });
-    $("#menu-employee-setting").on("click", function () {
+    $("#menu-employee-setting").on("click", function() {
         $(".menu-employee-setting-list").stop(true, true).slideToggle();
         $(this).toggleClass("open");
     });
-    $("#menu-procedure-setting").on("click", function () {
+    $("#menu-procedure-setting").on("click", function() {
         $(".menu-procedure-setting-list").stop(true, true).slideToggle();
         $(this).toggleClass("open");
     });
-    $("#menu-schedule-setting").on("click", function () {
+    $("#menu-schedule-setting").on("click", function() {
         $(".menu-schedule-setting-list").stop(true, true).slideToggle();
         $(this).toggleClass("open");
     });
@@ -320,7 +320,6 @@
     });
 </script>
 <style>
-
     header {
         position: fixed;
         display: flex;
@@ -414,6 +413,7 @@
         color: #fff;
         text-shadow: #000 1px 0 10px;
     }
+
     header .right .menu-user .name.close {
         color: var(--color-black);
         text-shadow: none;
@@ -423,6 +423,7 @@
         color: #fff;
         text-shadow: #000 1px 0 10px;
     }
+
     header .right .ui.menu .item>i.dropdown.icon.close {
         color: black;
     }
@@ -503,7 +504,7 @@
         color: var(--color-black);
     }
 
-    #sidebar menu li.item:not(.sub):not(.icon):not(.set)  a::before {
+    #sidebar menu li.item:not(.sub):not(.icon):not(.set) a::before {
         position: absolute;
         content: "";
         top: calc(50% - 4px);
@@ -523,7 +524,7 @@
         border-left: 8px solid var(--color-red);
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
-        background-color: rgba(255, 255, 255, 0) ;
+        background-color: rgba(255, 255, 255, 0);
     }
 
     #sidebar menu li.item.set.open a::before {
@@ -536,7 +537,7 @@
         border-top: 8px solid var(--color-red);
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
-        background-color: rgba(255, 255, 255, 0) ;
+        background-color: rgba(255, 255, 255, 0);
     }
 
     #sidebar menu li.item.sub a::before {

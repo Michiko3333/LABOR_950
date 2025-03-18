@@ -33,8 +33,9 @@ class WageLedger
     private $salary_names = [];
     private $overtime_names = [];
     private $allowance_names = [];
+    private $deduction_names = [];
     private $bonus_salary_names = [];
-
+    private $bonus_deduction_names = [];
     public function __construct($data, $month_order)
     {
         $this->year = $data['year'];
@@ -44,7 +45,9 @@ class WageLedger
         $this->salary_names = $data['salary_names'];
         $this->overtime_names = $data['overtime_names'];
         $this->allowance_names = $data['allowance_names'];
+        $this->deduction_names = $data['deduction_names'];
         $this->bonus_salary_names = $data['bonus_salary_names'];
+        $this->bonus_deduction_names = $data['bonus_deduction_names'];
 
         $this->month_order = $month_order;
         $this->wage_column = WageColumns::select('id', 'key', 'name', 'calc', 'hide_bonus')
@@ -119,16 +122,31 @@ class WageLedger
             }
 
             $month_i = 0;
-            $department_ids = Department::select('id')->whereIn('name', $employee_department)->where('company_id', $current_company->id)->where('delete_flg', 0)->get()->pluck('id')->toArray();
-            $start_salary_date = Carbon::create($this->year, $start_month, 1, 0, 0, 0);
             foreach ($this->month_order as $month) {
-                \Log::info(print_r($start_salary_date->format('Y-m-d 23:59:59'), true));
-                $salary_info = Salary::select('payroll_day')->where('branch_id', $employee_data->branch_id)->whereIn('department_id', $department_ids)->where('applied_date', '<=', $start_salary_date->format('Y-m-d 23:59:59'))->orderBy('applied_date')->first();
-                if (!empty($salary_info)) {
+                $col = $month_cols[$month_i];
+                $wage_data = $wage['month'][$month];
+                $r_date = $wage_data['payment_date'];
+                if (!empty($r_date)) {
+                    $carbon_r_date = Carbon::createFromFormat('Y-m-d', $r_date);
+                    $carbon_year = $carbon_r_date->year;
+                    $era_year = '';
+                    if ($carbon_year >= 2019) {
+                        // 令和 (2019年5月1日～)
+                        $era_year = 'R' . ($carbon_year - 2018);
+                    } elseif ($carbon_year >= 1989) {
+                        // 平成 (1989年1月8日～2019年4月30日)
+                        $era_year = 'H' . ($carbon_year - 1988);
+                    } elseif ($carbon_year >= 1926) {
+                        // 昭和 (1926年12月25日～1989年1月7日)
+                        $era_year = 'S' . ($carbon_year - 1925);
+                    }
+                    $sheet->setCellValue($col . '9', $era_year . $carbon_r_date->format('.m.d'));
                 }
-                $start_salary_date->addMonth();
                 $month_i++;
             }
+
+
+            $month_i = 0;
 
             $rowIndex = 11;
             $base_amount = $this->wage_column->where('key', 'wage_base_amount')->first();
@@ -195,28 +213,11 @@ class WageLedger
                 $rowIndex++;
             }
 
-            foreach ($this->bonus_salary_names as $key_name) {
-                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
-                $sheet->setCellValue('R' . $rowIndex, $key_name);
-                $bonus_month_i = 0;
-                $bonus_cols = ['S', 'T', 'U', 'V'];
-                foreach ($wage['bonus_month'] as $key => $item) {
-                    if ($bonus_month_i > 3) break;
-                    $salaries = $item['salary_values'];
-                    $col = $bonus_cols[$bonus_month_i];
-                    $sheet->setCellValue($col . $rowIndex, $salaries[$key_name]);
-                    $bonus_month_i++;
-                }
-                $sheet->setCellValue('W' . $rowIndex, '=SUM(S' . $rowIndex . ':V' . $rowIndex . ')');
-                $sheet->setCellValue('X' . $rowIndex, '=W' . $rowIndex);
-                $rowIndex++;
-            }
-
             $sheet->insertNewRowBefore($rowIndex, 1);
             $rowIndex++;
 
+            $pos_salary = [];
             foreach ($this->salary_names as $key_name) {
-
                 if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
                 $sheet->setCellValue('C' . $rowIndex, $key_name);
 
@@ -233,6 +234,25 @@ class WageLedger
 
                 $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
                 $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+                $pos_salary[$key_name] = $rowIndex;
+                $rowIndex++;
+            }
+
+            foreach ($this->bonus_salary_names as $key_name) {
+                if ($rowIndex > 11) $sheet->insertNewRowBefore($rowIndex, 1);
+                $eIndex = $pos_salary[$key_name] ?? $rowIndex;
+                $sheet->setCellValue('R' . $eIndex, $key_name);
+                $bonus_month_i = 0;
+                $bonus_cols = ['S', 'T', 'U', 'V'];
+                foreach ($wage['bonus_month'] as $key => $item) {
+                    if ($bonus_month_i > 3) break;
+                    $salaries = $item['salary_values'];
+                    $col = $bonus_cols[$bonus_month_i];
+                    $sheet->setCellValue($col . $eIndex, $salaries[$key_name]);
+                    $bonus_month_i++;
+                }
+                $sheet->setCellValue('W' . $eIndex, '=SUM(S' . $eIndex . ':V' . $eIndex . ')');
+                $sheet->setCellValue('X' . $eIndex, '=W' . $eIndex);
                 $rowIndex++;
             }
 
@@ -478,25 +498,47 @@ class WageLedger
 
 
             $rowIndex++;
-            $tax_month_i = 0;
-            foreach ($this->month_order as $month) {
-                $wage_data = $wage['month'][$month];
-                $col = $month_cols[$tax_month_i];
-                $sheet->setCellValue($col . $rowIndex, $wage_data['mutual_aid'] ?? '');
-                $tax_month_i++;
+            $dIndex = 0;
+            $pos_deduction = [];
+            foreach ($this->deduction_names as $key_name) {
+                if ($dIndex > 1) $sheet->insertNewRowBefore($rowIndex, 1);
+                $sheet->setCellValue('C' . $rowIndex, $key_name);
+
+                $month_i = 0;
+                foreach ($this->month_order as $month) {
+                    $wage_data = $wage['month'][$month];
+                    $col = $month_cols[$month_i];
+                    $deduction_values = $wage_data['deduction_values'];
+                    if (in_array($key_name, array_keys($deduction_values))) {
+                        $sheet->setCellValue($col . $rowIndex, $deduction_values[$key_name] ?? '');
+                    }
+                    $month_i++;
+                }
+
+                $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+                $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
+                $pos_deduction[$key_name] = $rowIndex;
+                $rowIndex++;
+                $dIndex++;
             }
-            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
-            $rowIndex++;
-            $tax_month_i = 0;
-            foreach ($this->month_order as $month) {
-                $wage_data = $wage['month'][$month];
-                $col = $month_cols[$tax_month_i];
-                $sheet->setCellValue($col . $rowIndex, $wage_data['asset_saving'] ?? '');
-                $tax_month_i++;
+
+            foreach ($this->bonus_deduction_names as $key_name) {
+                if ($dIndex > 1) $sheet->insertNewRowBefore($rowIndex, 1);
+                $eIndex = $pos_deduction[$key_name] ?? $rowIndex;
+                $sheet->setCellValue('R' . $eIndex, $key_name);
+                $bonus_month_i = 0;
+                $bonus_cols = ['S', 'T', 'U', 'V'];
+                foreach ($wage['bonus_month'] as $key => $item) {
+                    if ($bonus_month_i > 3) break;
+                    $deductions = $item['deduction_values'];
+                    $col = $bonus_cols[$bonus_month_i];
+                    $sheet->setCellValue($col . $eIndex, $deductions[$key_name]);
+                    $bonus_month_i++;
+                }
+                $sheet->setCellValue('W' . $eIndex, '=SUM(S' . $eIndex . ':V' . $eIndex . ')');
+                $sheet->setCellValue('X' . $eIndex, '=W' . $eIndex);
+                $rowIndex++;
             }
-            $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
-            $sheet->setCellValue('X' . $rowIndex, '=P' . $rowIndex . '+W' . $rowIndex . '');
 
 
             $rowIndex += 5;
@@ -590,6 +632,7 @@ class WageLedger
                 $month_i++;
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
+            $sheet->removeRow(10, 1);
         }
     }
 
