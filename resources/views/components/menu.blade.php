@@ -152,13 +152,6 @@
                                 休業設定</a>
                         </li>
                     @endif
-                    @if ($userPermission->isReadableFor(20))
-                        <li class="item sub menu-employee-setting-list" style="display: none;">
-                            <a href="{{ route('allowance') }}">
-
-                                手当マスタ</a>
-                        </li>
-                    @endif
                 @endif
                 @if (
                     !$userPermission->denyProcedure() &&

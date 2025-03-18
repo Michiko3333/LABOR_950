@@ -136,11 +136,7 @@ class BranchPaymentConfirmModal extends BaseTable
         }
         $this->allowanceByBranch = Branch_allowance::where('branch_id', $branchID)
         ->where('delete_flg', 0)
-        ->get()
-        ->map(function ($item) {
-            $item->allowance = Allowance::where('id', $item->allowance)->value('name');
-            return $item;
-        });
+        ->get();
         $this->allowanceID = Branch_allowance::where('branch_id', $branchID)->where('delete_flg', 0)->pluck('id')->toArray();
         $this->allowanceID = array_map('strval', $this->allowanceID);
         $this->index =$index;

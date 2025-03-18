@@ -267,7 +267,7 @@ class BranchRequest extends BaseRequest
             'bou-applied_date.*.*' => 'required|string',
             'al-allowance' => 'array', 
             'al-allowance.*' => 'required|array', 
-            'al-allowance.*.*' => 'required|integer',
+            'al-allowance.*.*' => 'required|string|max:255',
             'al-pay_month' => 'array', 
             'al-pay_month.*' => 'required|array', 
             'al-pay_month.*.*' => 'required|integer',
@@ -277,9 +277,6 @@ class BranchRequest extends BaseRequest
             'al-target' => 'array', 
             'al-target.*' => 'required|array', 
             'al-target.*.*' => 'required|string|max:30',
-            'al-remarks' => 'array', 
-            'al-remarks.*' => 'required|array', 
-            'al-remarks.*.*' => 'required|string|max:30',
             'al-applied_date' => 'array', 
             'al-applied_date.*' => 'required|array', 
             'al-applied_date.*.*' => 'required|string',
@@ -647,13 +644,6 @@ class BranchRequest extends BaseRequest
             foreach ($salaryArray as $salaryIndex => $salary) {
                 foreach ($this->input('br-name', []) as $branchIndex => $branch) {
                     $Attributes["al-pay_month.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_支払月";
-                }
-            }   
-        }
-        foreach ($this->input('al-remarks', []) as $salaryArray) {
-            foreach ($salaryArray as $salaryIndex => $salary) {
-                foreach ($this->input('br-name', []) as $branchIndex => $branch) {
-                    $Attributes["al-remarks.{$branchIndex}.{$salaryIndex}"] = ($branchIndex + 1) . "事業所_" . ($salaryIndex + 1) . "手当_備考";
                 }
             }   
         }

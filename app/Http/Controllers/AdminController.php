@@ -528,7 +528,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         if ($alid > 0) {
@@ -538,7 +537,6 @@ class AdminController extends Controller
                                 'amount' => $data['al-amount'][$branchIndex][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                                 'target' => $data['al-target'][$branchIndex][$alIndex],
-                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                             ]);
                             $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
@@ -554,7 +552,6 @@ class AdminController extends Controller
                                 'amount' => $data['al-amount'][$branchIndex][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                                 'target' => $data['al-target'][$branchIndex][$alIndex],
-                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                                 'branch_id' => $brid,
                             ])->id;
@@ -692,7 +689,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                             'branch_id' => $brid,
                         ])->id;
@@ -703,7 +699,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         Branch_allowance_history::create($allowanceHistoryData);

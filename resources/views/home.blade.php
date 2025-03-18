@@ -324,14 +324,6 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($userPermission->isReadableFor(20))
-                                    <a href="{{ route('allowance') }}" class="item employee-setting-list"
-                                        style="display: none;">
-                                        <div class="content sub">
-                                            <div class="header">手当マスタ</div>
-                                        </div>
-                                    </a>
-                                @endif
                             </div>
                         </div>
                     </div>
