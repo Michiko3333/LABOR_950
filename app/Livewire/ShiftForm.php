@@ -12,6 +12,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Rules\noEmoji;
 use Livewire\Attributes\Validate;
 
 class ShiftForm extends Component
