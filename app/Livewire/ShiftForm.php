@@ -198,6 +198,11 @@ class ShiftForm extends Component
 
         $validated = $this->validate();
 
+        if (noEmoji::isEmoji($this->title_value)) {
+            $this->dispatch('onSubmitError');
+            return false;
+        }
+
         $this->is_saving = true;
 
         DB::beginTransaction();

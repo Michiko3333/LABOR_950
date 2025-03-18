@@ -6,7 +6,7 @@
                 <th style="width: 11%;">申請者</th>
                 <th style="width: 14%;">会社名</th>
                 <th style="width: 11%;">対象者</th>
-                <th style="width: 18%;">手続き名</th>
+                <th style="width: 18%;">手続名</th>
                 <th style="width: 18%;">提出先</th>
                 <th style="width: 6%; text-align: center;">公文書</th>
                 <th style="width: 6%; text-align: center;">コメント</th>

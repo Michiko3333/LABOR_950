@@ -146,6 +146,13 @@
                 onRemove: onRemove,
                 isSubmit: false
             };
+            window.addEventListener('success', () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: `更新が完了しました`
+                });
+            });
         </script>
     @endscript
 </div>

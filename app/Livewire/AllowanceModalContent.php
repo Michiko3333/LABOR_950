@@ -60,6 +60,7 @@ class AllowanceModalContent extends BaseTable
                 'applied_date' => $formatAppliedDate,
             ]);
             $this->dispatch('closeAllowanceModal');
+            $this->dispatch('success');
         } catch (\Exception $e) {
             \Log::error($e);
             return back()->withErrors('エラー');
@@ -85,6 +86,7 @@ class AllowanceModalContent extends BaseTable
                 'history_flg' => 1,
             ]);
             $this->dispatch('closeAllowanceModal');
+            $this->dispatch('success');
         } catch (\Exception $e) {
             \Log::error($e);
             return back()->withErrors('エラー');

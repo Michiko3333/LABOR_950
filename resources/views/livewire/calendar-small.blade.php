@@ -71,18 +71,20 @@
         @endfor
 
         @php
-            $c = $day_count - $row_count * 7;
+            $next_month_start = $this->select_date;
         @endphp
 
-        @for ($i = $c; $i < 42; $i++)
+        @php
+            $c = $day_count - $row_count * 7;
+            $is_last_day_in_sixth_row = $c > 35;
+            $fill_count = $is_last_day_in_sixth_row ? 42 : 35;
+        @endphp
+
+        @for ($i = $c; $i < $fill_count; $i++)
             @php
                 $day_count++;
-                $num = $last_num + 1 + $i - $c;
-                $num = $num > $this->num_days_next_month ? $num - $this->num_days_next_month : $num;
+                $num = $next_month_start++;
             @endphp
-            @if ($i - $c >= 42 - $c - 7)
-                @continue
-            @endif
             <div class="day_num ignore">{{ $num }}</div>
         @endfor
     </div>

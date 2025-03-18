@@ -139,7 +139,21 @@
         };
         window.addEventListener('closeCancelModal', () => {
             $('.cancel-modal').modal('hide');
+        });
+        window.addEventListener('success', () => {
+            sessionStorage.setItem('showSuccessToast', 'true');
             location.reload();
+        });
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('showSuccessToast') === 'true') {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: `更新が完了しました`
+                });
+
+                sessionStorage.removeItem('showSuccessToast');
+            }
         });
     });
     </script>

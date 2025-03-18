@@ -3,7 +3,8 @@
         <select class="ui fluid dropdown" name="current_shift" wire:model.live="current_shift"
             wire:change="onChangeShiftId">
             @foreach ($saved_list as $k => $value)
-                <option value="{{ $k }}">{{ $value }}</option>
+                <option value="{{ $k }}" {{ $this->current_shift == $k ? 'selected' : '' }}>
+                    {{ $value }}</option>
             @endforeach
         </select>
     </div>

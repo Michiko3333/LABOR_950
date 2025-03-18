@@ -54,6 +54,10 @@ class LedgerBranchList extends BaseTable
             ->where('m_branch.id', $id)
             ->first();
 
+        if (!$branch) {
+            return;
+        }
+
         $branch_data = $branch;
 
         $output = [

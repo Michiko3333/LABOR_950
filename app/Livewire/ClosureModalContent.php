@@ -46,7 +46,7 @@ class ClosureModalContent extends BaseTable
     public $disablePrev = false;
     public $disableNext = false;
 
-    protected $listeners = ['closureModalOpened','submitClosure','updateClosure','reloadClosureData'];
+    protected $listeners = ['closureModalOpened', 'submitClosure', 'updateClosure', 'reloadClosureData'];
 
     public function mount($company_id)
     {
@@ -59,44 +59,39 @@ class ClosureModalContent extends BaseTable
         $this->resetForm();
         $this->closure_type = $closure_type;
         $this->id = $id;
-        if($id){
-            $this->loadClosureData($id);
-        }
-    }
-
-    public function loadClosureData($id)
-    {
-        $current_closure = Closure_information::where('id', $this->id)->first();
-        $current_closure->employee_last_name = $current_closure->employee->last_name;
-        $current_closure->employee_first_name = $current_closure->employee->first_name;
-        $current_closure->branch_name = $current_closure->employee->branch->name;
-        $current_closure->employee_no = $current_closure->employee->employee_no;
-        $current_closure->employee_status = $current_closure->employee->employee_status;
-        $directory = 'photo/' . $this->companyID;
-        $files = Storage::files($directory);
-        $filePath = '';
-        foreach ($files as $file) {
-            $fileName = pathinfo($file, PATHINFO_FILENAME);
-            if ((int)$fileName === $current_closure->employee_id) {
-                $filePath = '/' . $file . '?v=' . time();
+        if ($id) {
+            $current_closure = Closure_information::where('id', $this->id)->first();
+            $current_closure->employee_last_name = $current_closure->employee->last_name;
+            $current_closure->employee_first_name = $current_closure->employee->first_name;
+            $current_closure->branch_name = $current_closure->employee->branch->name;
+            $current_closure->employee_no = $current_closure->employee->employee_no;
+            $current_closure->employee_status = $current_closure->employee->employee_status;
+            $directory = 'photo/' . $this->companyID;
+            $files = Storage::files($directory);
+            $filePath = '';
+            foreach ($files as $file) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                if ((int)$fileName === $current_closure->employee_id) {
+                    $filePath = '/' . $file . '?v=' . time();
+                }
             }
-        }
-        if (empty($filePath)) {
-            $filePath = '/img/image.png';
-        }
-        $current_closure->icon = $filePath;
+            if (empty($filePath)) {
+                $filePath = '/img/image.png';
+            }
+            $current_closure->icon = $filePath;
 
-        if(empty($this->startDateOfClosed)) $this->startDateOfClosed = $current_closure->start_date_of_closed ?? null;
-        if(empty($this->endDateOfLosed)) $this->endDateOfLosed = $current_closure->end_date_of_losed ?? null;
-        if(empty($this->dateOfReturnToWork)) $this->dateOfReturnToWork = $current_closure->date_of_return_to_work ?? null;
-        if(empty($this->dueDate)) $this->dueDate = $current_closure->due_date ?? null;
-        if(empty($this->plannedEndDateOfClosure)) $this->plannedEndDateOfClosure = $current_closure->planned_end_date_of_closure ?? null;
-        if(empty($this->dateOfBirth)) $this->dateOfBirth = $current_closure->date_of_birth ?? null;
-        if(empty($this->dateOfStartOfFosterCare)) $this->dateOfStartOfFosterCare = $current_closure->date_of_start_of_foster_care ?? null;
-        if(empty($this->plannedEndDateOfChildSupport)) $this->plannedEndDateOfChildSupport = $current_closure->planned_end_date_of_child_support ?? null;
-        if(empty($this->endDateOfFosterCare)) $this->endDateOfFosterCare = $current_closure->end_date_of_foster_care ?? null;
-        if(empty($this->dateOfCommencementOfSpecialChildcareProvision)) $this->dateOfCommencementOfSpecialChildcareProvision = $current_closure->date_of_commencement_of_special_childcare_provision ?? null;
-        $this->current_closure = $current_closure;
+            if (empty($this->startDateOfClosed)) $this->startDateOfClosed = $current_closure->start_date_of_closed ?? null;
+            if (empty($this->endDateOfLosed)) $this->endDateOfLosed = $current_closure->end_date_of_losed ?? null;
+            if (empty($this->dateOfReturnToWork)) $this->dateOfReturnToWork = $current_closure->date_of_return_to_work ?? null;
+            if (empty($this->dueDate)) $this->dueDate = $current_closure->due_date ?? null;
+            if (empty($this->plannedEndDateOfClosure)) $this->plannedEndDateOfClosure = $current_closure->planned_end_date_of_closure ?? null;
+            if (empty($this->dateOfBirth)) $this->dateOfBirth = $current_closure->date_of_birth ?? null;
+            if (empty($this->dateOfStartOfFosterCare)) $this->dateOfStartOfFosterCare = $current_closure->date_of_start_of_foster_care ?? null;
+            if (empty($this->plannedEndDateOfChildSupport)) $this->plannedEndDateOfChildSupport = $current_closure->planned_end_date_of_child_support ?? null;
+            if (empty($this->endDateOfFosterCare)) $this->endDateOfFosterCare = $current_closure->end_date_of_foster_care ?? null;
+            if (empty($this->dateOfCommencementOfSpecialChildcareProvision)) $this->dateOfCommencementOfSpecialChildcareProvision = $current_closure->date_of_commencement_of_special_childcare_provision ?? null;
+            $this->current_closure = $current_closure;
+        }
     }
 
     public function render()
@@ -120,16 +115,13 @@ class ClosureModalContent extends BaseTable
         $this->total = $this->data['pagination']['totalItems'];
         $this->disablePrev = $this->page <= 1;
         $this->disableNext = $this->page >= ceil($this->total / $this->limit);
-        if($this->id){
-            $this->loadClosureData($this->id);
-        }
-        $this->dispatch('client-modal-render');
+        $this->dispatch('closure-modal-render');
         return view('livewire.closure-modal-content');
     }
 
     public function selectEmployee($employee_id)
     {
-        $this->employee_id =$employee_id;
+        $this->employee_id = $employee_id;
     }
 
     public function submitClosure()
@@ -160,7 +152,7 @@ class ClosureModalContent extends BaseTable
             $rules['formatDateOfCommencementOfSpecialChildcareProvision'] = 'nullable|required_without_all:formatDateOfStartOfFosterCare|date';
             $rules['formatDateOfStartOfFosterCare'] = 'nullable|required_without_all:formatDateOfCommencementOfSpecialChildcareProvision|date';
         }
-        $this->validate($rules,[
+        $this->validate($rules, [
             'employee_id.required' => '従業員を選択してください',
             'formatStartDateOfClosed.required_if' => '休業開始日は必須です',
             'formatStartDateOfClosed.date' => '休業開始日は有効な日付でなければなりません',
@@ -196,6 +188,7 @@ class ClosureModalContent extends BaseTable
                 'date_of_commencement_of_special_childcare_provision' => $this->formatDateOfCommencementOfSpecialChildcareProvision,
             ]);
             $this->dispatch('closeClosureModal');
+            $this->dispatch('success');
         } catch (\Exception $e) {
             \Log::error($e);
             return back()->withErrors('エラー');
@@ -204,47 +197,47 @@ class ClosureModalContent extends BaseTable
 
     public function updateClosure($id)
     {
-        $this->formatStartDateOfClosed = $this->startDateOfClosed ? 
-        (Carbon::hasFormat($this->startDateOfClosed, 'Y-m-d') ? 
-            $this->startDateOfClosed : Carbon::createFromFormat('Y年n月j日', $this->startDateOfClosed)->format('Y-m-d')
-        ) : null;
-        $this->formatEndDateOfLosed = $this->endDateOfLosed ? 
-        (Carbon::hasFormat($this->endDateOfLosed, 'Y-m-d') ? 
-            $this->endDateOfLosed : Carbon::createFromFormat('Y年n月j日', $this->endDateOfLosed)->format('Y-m-d')
-        ) : null;
-        $this->formatDateOfReturnToWork = $this->dateOfReturnToWork ? 
-        (Carbon::hasFormat($this->dateOfReturnToWork, 'Y-m-d') ? 
-            $this->dateOfReturnToWork : Carbon::createFromFormat('Y年n月j日', $this->dateOfReturnToWork)->format('Y-m-d')
-        ) : null;
-        $this->formatDueDate = $this->dueDate ? 
-        (Carbon::hasFormat($this->dueDate, 'Y-m-d') ? 
-            $this->dueDate : Carbon::createFromFormat('Y年n月j日', $this->dueDate)->format('Y-m-d')
-        ) : null;
-        $this->formatPlannedEndDateOfClosure = $this->plannedEndDateOfClosure ? 
-        (Carbon::hasFormat($this->plannedEndDateOfClosure, 'Y-m-d') ? 
-            $this->plannedEndDateOfClosure : Carbon::createFromFormat('Y年n月j日', $this->plannedEndDateOfClosure)->format('Y-m-d')
-        ) : null;
-        $this->formatDateOfBirth = $this->dateOfBirth ? 
-        (Carbon::hasFormat($this->dateOfBirth, 'Y-m-d') ? 
-            $this->dateOfBirth : Carbon::createFromFormat('Y年n月j日', $this->dateOfBirth)->format('Y-m-d')
-        ) : null;
-        $this->formatDateOfStartOfFosterCare = $this->dateOfStartOfFosterCare ? 
-        (Carbon::hasFormat($this->dateOfStartOfFosterCare, 'Y-m-d') ? 
-            $this->dateOfStartOfFosterCare : Carbon::createFromFormat('Y年n月j日', $this->dateOfStartOfFosterCare)->format('Y-m-d')
-        ) : null;
-        $this->formatPlannedEndDateOfChildSupport = $this->plannedEndDateOfChildSupport ? 
-        (Carbon::hasFormat($this->plannedEndDateOfChildSupport, 'Y-m-d') ? 
-            $this->plannedEndDateOfChildSupport : Carbon::createFromFormat('Y年n月j日', $this->plannedEndDateOfChildSupport)->format('Y-m-d')
-        ) : null;
-        $this->formatEndDateOfFosterCare = $this->endDateOfFosterCare ? 
-        (Carbon::hasFormat($this->endDateOfFosterCare, 'Y-m-d') ? 
-            $this->endDateOfFosterCare : Carbon::createFromFormat('Y年n月j日', $this->endDateOfFosterCare)->format('Y-m-d')
-        ) : null;
-        $this->formatDateOfCommencementOfSpecialChildcareProvision = $this->dateOfCommencementOfSpecialChildcareProvision ? 
-        (Carbon::hasFormat($this->dateOfCommencementOfSpecialChildcareProvision, 'Y-m-d') ? 
-            $this->dateOfCommencementOfSpecialChildcareProvision : Carbon::createFromFormat('Y年n月j日', $this->dateOfCommencementOfSpecialChildcareProvision)->format('Y-m-d')
-        ) : null;
-        
+        $this->formatStartDateOfClosed = $this->startDateOfClosed ?
+            (Carbon::hasFormat($this->startDateOfClosed, 'Y-m-d') ?
+                $this->startDateOfClosed : Carbon::createFromFormat('Y年n月j日', $this->startDateOfClosed)->format('Y-m-d')
+            ) : null;
+        $this->formatEndDateOfLosed = $this->endDateOfLosed ?
+            (Carbon::hasFormat($this->endDateOfLosed, 'Y-m-d') ?
+                $this->endDateOfLosed : Carbon::createFromFormat('Y年n月j日', $this->endDateOfLosed)->format('Y-m-d')
+            ) : null;
+        $this->formatDateOfReturnToWork = $this->dateOfReturnToWork ?
+            (Carbon::hasFormat($this->dateOfReturnToWork, 'Y-m-d') ?
+                $this->dateOfReturnToWork : Carbon::createFromFormat('Y年n月j日', $this->dateOfReturnToWork)->format('Y-m-d')
+            ) : null;
+        $this->formatDueDate = $this->dueDate ?
+            (Carbon::hasFormat($this->dueDate, 'Y-m-d') ?
+                $this->dueDate : Carbon::createFromFormat('Y年n月j日', $this->dueDate)->format('Y-m-d')
+            ) : null;
+        $this->formatPlannedEndDateOfClosure = $this->plannedEndDateOfClosure ?
+            (Carbon::hasFormat($this->plannedEndDateOfClosure, 'Y-m-d') ?
+                $this->plannedEndDateOfClosure : Carbon::createFromFormat('Y年n月j日', $this->plannedEndDateOfClosure)->format('Y-m-d')
+            ) : null;
+        $this->formatDateOfBirth = $this->dateOfBirth ?
+            (Carbon::hasFormat($this->dateOfBirth, 'Y-m-d') ?
+                $this->dateOfBirth : Carbon::createFromFormat('Y年n月j日', $this->dateOfBirth)->format('Y-m-d')
+            ) : null;
+        $this->formatDateOfStartOfFosterCare = $this->dateOfStartOfFosterCare ?
+            (Carbon::hasFormat($this->dateOfStartOfFosterCare, 'Y-m-d') ?
+                $this->dateOfStartOfFosterCare : Carbon::createFromFormat('Y年n月j日', $this->dateOfStartOfFosterCare)->format('Y-m-d')
+            ) : null;
+        $this->formatPlannedEndDateOfChildSupport = $this->plannedEndDateOfChildSupport ?
+            (Carbon::hasFormat($this->plannedEndDateOfChildSupport, 'Y-m-d') ?
+                $this->plannedEndDateOfChildSupport : Carbon::createFromFormat('Y年n月j日', $this->plannedEndDateOfChildSupport)->format('Y-m-d')
+            ) : null;
+        $this->formatEndDateOfFosterCare = $this->endDateOfFosterCare ?
+            (Carbon::hasFormat($this->endDateOfFosterCare, 'Y-m-d') ?
+                $this->endDateOfFosterCare : Carbon::createFromFormat('Y年n月j日', $this->endDateOfFosterCare)->format('Y-m-d')
+            ) : null;
+        $this->formatDateOfCommencementOfSpecialChildcareProvision = $this->dateOfCommencementOfSpecialChildcareProvision ?
+            (Carbon::hasFormat($this->dateOfCommencementOfSpecialChildcareProvision, 'Y-m-d') ?
+                $this->dateOfCommencementOfSpecialChildcareProvision : Carbon::createFromFormat('Y年n月j日', $this->dateOfCommencementOfSpecialChildcareProvision)->format('Y-m-d')
+            ) : null;
+
         $rules = [
             'formatStartDateOfClosed' => 'nullable|required_if:closure_type,1,2,3,4,6,7|date',
             'formatEndDateOfLosed' => 'nullable|date|after:formatStartDateOfClosed',
@@ -259,7 +252,7 @@ class ClosureModalContent extends BaseTable
             $rules['formatDateOfCommencementOfSpecialChildcareProvision'] = 'nullable|required_without_all:formatDateOfStartOfFosterCare|date';
             $rules['formatDateOfStartOfFosterCare'] = 'nullable|required_without_all:formatDateOfCommencementOfSpecialChildcareProvision|date';
         }
-        $this->validate($rules,[
+        $this->validate($rules, [
             'formatStartDateOfClosed.required_if' => '休業開始日は必須です',
             'formatStartDateOfClosed.date' => '休業開始日は有効な日付でなければなりません',
             'formatEndDateOfLosed.date' => '休業終了日は有効な日付でなければなりません',
@@ -279,7 +272,7 @@ class ClosureModalContent extends BaseTable
         ]);
 
         try {
-            $current_closure = Closure_information::where('id',$id)->first();
+            $current_closure = Closure_information::where('id', $id)->first();
             Closure_information::where('id', $id)->update([
                 'employee_id' => $current_closure->employee_id,
                 'closure_type' => $this->closure_type,
@@ -295,6 +288,7 @@ class ClosureModalContent extends BaseTable
                 'date_of_commencement_of_special_childcare_provision' => $this->formatDateOfCommencementOfSpecialChildcareProvision,
             ]);
             $this->dispatch('closeClosureModal');
+            $this->dispatch('success');
         } catch (\Exception $e) {
             \Log::error($e);
             return back()->withErrors('エラー');

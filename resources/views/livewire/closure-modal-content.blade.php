@@ -38,12 +38,12 @@
         @if($this->id)
         <div class="employee-info mb-2">
             <div class="employee-icon information">
-                <img  src="{{ $current_closure->icon }}">
+                <img  src="{{ $this->current_closure['icon'] }}">
             </div>
-            <div style="color: #4183c4;" class="employee-name">{{ $current_closure->employee_last_name }} {{ $current_closure->employee_first_name }}</div>
-            <div>{{ $current_closure->branch_name }}</div>
-            <div>{{ $current_closure->employee_no }}</div>
-            <div>{{ $statusMapping[$current_closure->employee_status] }}</div>
+            <div style="color: #4183c4;" class="employee-name">{{ $this->current_closure['employee_last_name'] }} {{ $current_closure['employee_first_name'] }}</div>
+            <div>{{ $this->current_closure['branch_name'] }}</div>
+            <div>{{ $this->current_closure['employee_no'] }}</div>
+            <div>{{ $statusMapping[$this->current_closure['employee_status']] }}</div>
         </div>
         @endif
         @if($this->closure_type == "1")
@@ -372,7 +372,7 @@
         <a class="ui negative button" href="javascript:closeClosureModal()" style="width: 150px;">キャンセル</a>
         @if($this->id)
         <button class="ui button primary button-disable" type="button" style="width: 150px;"
-        wire:click.debounce.150ms="updateClosure({{ $current_closure->id }})">更新</button>
+        wire:click.debounce.150ms="updateClosure({{ $current_closure['id'] }})">更新</button>
         @else
         <button class="ui button primary button-disable" type="button" style="width: 150px;"
         wire:click.debounce.150ms="submitClosure">保存</button>
@@ -382,7 +382,7 @@
 
 @script
     <script type="module">
-        Livewire.on('client-modal-render', () => {
+        Livewire.on('closure-modal-render', () => {
             setTimeout(() => {
                 function initializeCalendar(selector, value) {
                     $(selector).calendar({

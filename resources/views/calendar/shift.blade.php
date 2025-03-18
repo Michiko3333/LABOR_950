@@ -60,6 +60,9 @@
 
                 const holidayModal = $('#HolidayModal').modal({
                     blurring: true,
+                    onHide: function () {
+                        $hm.onCancel();
+                    }
                 });
                 window.$holidayModal = holidayModal;
             });

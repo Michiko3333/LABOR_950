@@ -74,6 +74,10 @@ class LedgerEmployeeList extends BaseTable
         $items = $this->data['items'];
         $employee = $items->where('id', $id)->first();
 
+        if (!$employee) {
+            return;
+        }
+
         $employeeData = $employee->toArray();
         $branchData = $employee->branch->toArray();
         $companyId = $branchData['company_id'];
