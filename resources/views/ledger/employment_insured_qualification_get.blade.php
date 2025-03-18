@@ -285,7 +285,7 @@
                     $('#J42_005F_8C8E').val('').prop('disabled', true);
                     $('#J43_005F_93FA').val('').prop('disabled', true);
                     $('#J44_005F_8C5F_96F1_8D58_9056_8FF0_8D80_974C_96B3').val('').prop('disabled', true);
-                    $('#J28_005F_8CD9_9770_8C60_91D4').val('7');
+                    $('#J28_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
                 }
                 $('#J45_005F_8E96_8BC6_8F8A_96BC_8FCC').val(company.name);
                 $('#J46_005F_94F5_8D6C').val(employee.insured_reason_details);
