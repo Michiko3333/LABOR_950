@@ -309,7 +309,7 @@
                 $('#J21_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J20_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employeeName);
                 $('#J162_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employeeNameKana);
-                $('#J163_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '　' + employeeName);
+                $('#J163_005F_905C_90BF_8ED2_8E81_96BC').val(employeeName);
                 $('#J9_005F_8374_838A_834B_8369').val(employeeNameKana);
                 $('#J10_005F_8B78_8BC6_9399_82F0_8A4A_8E6E_82B5_82BD_8ED2_82CC_8E81_96BC').val(employeeName);
 

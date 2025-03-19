@@ -59,12 +59,12 @@
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_amount', 'required_stable_job']" :file_original_names="[
-                                        'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
-                                        'stable_job' => '安定した職業に就いたことの確認資料',
-                                        'eligibility' => '高年齢雇用継続給付受給資格確認票',
-                                        'written_consent' => '支給申請に係る承諾書',
-                                        'other' => 'その他の添付書類',
-                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                    'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
+                                    'stable_job' => '安定した職業に就いたことの確認資料',
+                                    'eligibility' => '高年齢雇用継続給付受給資格確認票',
+                                    'written_consent' => '支給申請に係る承諾書',
+                                    'other' => 'その他の添付書類',
+                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
                     </div>
@@ -127,7 +127,9 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
 
-                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name') }}' ? '{{ old('employer_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
+                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name') }}' ?
+                    '{{ old('employer_name') }}' : '{{ $company->name }}' + '　' +
+                    '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J65_005F_8E73_8A4F_8BC7_94D4').val(
@@ -138,7 +140,7 @@
                         '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                                                                                                                                                                                                            #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
+                                                                                                                                                                                                                                    #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4, #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop('readonly', true);
                 @endif
             });
@@ -177,10 +179,11 @@
                     $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val('');
                 }
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
-                    employee.address_ward || "")+ (employee.address_apartment || "");
+                    employee.address_ward || "") + (employee.address_apartment || "");
                 if (employee.last_name && employee.first_name) {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
-                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '\n' + employee.last_name + '　' + employee.first_name);
+                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '\n' + employee.last_name + '　' + employee
+                        .first_name);
                 } else {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val('');
                     $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val('');

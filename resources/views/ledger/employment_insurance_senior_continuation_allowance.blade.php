@@ -55,10 +55,10 @@
                             <div class="content">
                                 <h2>添付ファイル</h2>
                                 <x-ledger-attachment :required_list="['required_wage_amount']" :file_original_names="[
-                                        'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
-                                        'written_consent' => '支給申請に係る承諾書',
-                                        'other' => 'その他の添付書類',
-                                    ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
+                                    'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
+                                    'written_consent' => '支給申請に係る承諾書',
+                                    'other' => 'その他の添付書類',
+                                ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
                         </div>
                     </div>
@@ -113,108 +113,123 @@
         <script type="module">
             $(document).ready(function() {
                 function toHalfWidth(str) {
-                    return str.replace(/[０-９]/g, function (match) {
+                    return str.replace(/[０-９]/g, function(match) {
                         const halfWidthChar = String.fromCharCode(match.charCodeAt(0) - 65248);
                         return halfWidthChar;
                     });
                 }
-                document.getElementById("J4_005F_8E96_8BC6_8F8A_94D4_8D864_8C85").addEventListener("input", function () {
+                document.getElementById("J4_005F_8E96_8BC6_8F8A_94D4_8D864_8C85").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J5_005F_8E96_8BC6_8F8A_94D4_8D866_8C85").addEventListener("input", function () {
+                document.getElementById("J5_005F_8E96_8BC6_8F8A_94D4_8D866_8C85").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J6_005F_8E96_8BC6_8F8A_94D4_8D86CD").addEventListener("input", function () {
+                document.getElementById("J6_005F_8E96_8BC6_8F8A_94D4_8D86CD").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J7_005F_8AC7_8A8D_8BE6_95AA").addEventListener("input", function () {
+                document.getElementById("J7_005F_8AC7_8A8D_8BE6_95AA").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J8_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85").addEventListener("input", function () {
+                document.getElementById("J8_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85").addEventListener("input",
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J9_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85").addEventListener("input",
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD").addEventListener("input",
+            function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J9_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85").addEventListener("input", function () {
+                document.getElementById("J13_005F_944E").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD").addEventListener("input", function () {
+                document.getElementById("J14_005F_8C8E").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J13_005F_944E").addEventListener("input", function () {
+                document.getElementById("J15_005F_93FA").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J14_005F_8C8E").addEventListener("input", function () {
+                document.getElementById("J26_005F_944E_005F1").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J15_005F_93FA").addEventListener("input", function () {
+                document.getElementById("J27_005F_8C8E_005F1").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J26_005F_944E_005F1").addEventListener("input", function () {
+                document.getElementById(
+                        "J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J33_005F_944E_005F2").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J27_005F_8C8E_005F1").addEventListener("input", function () {
+                document.getElementById("J34_005F_8C8E_005F2").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1").addEventListener("input", function () {
+                document.getElementById(
+                        "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J33_005F_944E_005F3").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1").addEventListener("input", function () {
+                document.getElementById("J34_005F_8C8E_005F3").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J33_005F_944E_005F2").addEventListener("input", function () {
+                document.getElementById(
+                        "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3")
+                    .addEventListener("input", function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J68_005F_92C0_8BE0_92F7_90D8_93FA").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J34_005F_8C8E_005F2").addEventListener("input", function () {
+                document.getElementById("J70_005F_92C0_8BE0_8E78_95A5_93FA").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2").addEventListener("input", function () {
+                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F1").addEventListener("input",
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F2").addEventListener("input",
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F3").addEventListener("input",
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
+                document.getElementById("J51_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2").addEventListener("input", function () {
+                document.getElementById("J52_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J33_005F_944E_005F3").addEventListener("input", function () {
+                document.getElementById("J53_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J34_005F_8C8E_005F3").addEventListener("input", function () {
+                document.getElementById("J65_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3").addEventListener("input", function () {
+                document.getElementById("J66_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
-                document.getElementById("J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J68_005F_92C0_8BE0_92F7_90D8_93FA").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J70_005F_92C0_8BE0_8E78_95A5_93FA").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F1").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F2").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J73_005F_8F8A_92E8_984A_93AD_93FA_9094_005F3").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J51_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J52_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J53_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J65_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J66_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function () {
-                    this.value = toHalfWidth(this.value);
-                });
-                document.getElementById("J67_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function () {
+                document.getElementById("J67_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
                 $('#J46_005F_944E_8D86').val('{{ $todaySet['japanEra'] }}');
@@ -226,7 +241,9 @@
                 $('#J58_005F_8C8E').val('{{ $todaySet['month'] }}');
                 $('#J59_005F_93FA').val('{{ $todaySet['day'] }}');
 
-                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name') }}' ? '{{ old('employer_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
+                $('#J54_005F_8E96_8BC6_8EE5_8E81_96BC').val('{{ old('employer_name') }}' ?
+                    '{{ old('employer_name') }}' : '{{ $company->name }}' + '　' +
+                    '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J65_005F_8E73_8A4F_8BC7_94D4').val(
@@ -237,8 +254,8 @@
                         '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                        #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
-                        #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
+                                #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
+                                #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop(
                             'readonly',
                             true);
@@ -320,7 +337,8 @@
                     employee.address_ward || "") + (employee.address_apartment || "");
                 if (employee.last_name && employee.first_name) {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
-                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '\n' + employee.last_name + '　' + employee.first_name);
+                    $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '\n' + employee.last_name + '　' + employee
+                        .first_name);
                 } else {
                     $('#J83_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val("");
                     $('#J61_005F_905C_90BF_8ED2_8E81_96BC').val("");

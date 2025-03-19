@@ -263,7 +263,7 @@
                 $('#J22_005F_944E').val(sixty_convert_japan['year'] ?? "");
                 $('#J23_005F_8C8E').val(sixty_convert_japan['month'] ?? "");
                 $('#J24_005F_93FA').val(sixty_convert_japan['day'] ?? "");
-                $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
+                $('#J31_005F_8C8E_month').val(day_after_sixty_convert_japan['month'] ?? "");
                 $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
                 $('#J119_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no || '');
                 $('#J68_005F_8E73_8A4F_8BC7_94D4').val(branch.tel_area_code || '');

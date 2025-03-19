@@ -260,19 +260,18 @@ class LedgerEmployeeList extends BaseTable
             ->get()->sortBy(function ($item) {
                 $today = Carbon::today();
                 $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
-
-                $start_diff = $today->diffInDays($start_date_of_closed, false);
-                $end_diff = $today->diffInDays($end_date_of_losed, false);
-
-                return min(abs($start_diff), abs($end_diff));
-            })
-            ->first();
+                return Carbon::today()->greaterThan($start_date_of_closed);
+            })->sortByDesc('created_at')->first();
+        $closure_1_data_4950008680050000 = Closure_information::where('employee_id', $employee_id)->where('closure_type', '1')->where('delete_flg', '0')
+            ->get()->filter(function ($item) {
+                $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+                return Carbon::today()->greaterThan($start_date_of_closed);
+            })->sortByDesc('created_at')->first();
 
         $closure_2_data = Closure_information::where('employee_id', $employee_id)->where('closure_type', '2')->where('delete_flg', '0')
             ->get()->filter(function ($item) {
-                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
-                return Carbon::today()->lessThan($end_date_of_losed);
+                $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
+                return Carbon::today()->greaterThan($start_date_of_closed);
             })->sortByDesc('created_at')->first();
         if (!empty($closure_1_data_4950008680182000->start_date_of_closed)) {
             $start_date_of_closed_4950008680182000 = Carbon::parse($closure_1_data_4950008680182000->start_date_of_closed);
@@ -405,10 +404,8 @@ class LedgerEmployeeList extends BaseTable
             ->get()
             ->filter(function ($item) {
                 $start_date_of_closed = Carbon::parse($item->start_date_of_closed);
-                $end_date_of_losed = Carbon::parse($item->end_date_of_losed);
-                return true;
-            })
-            ->first();
+                return Carbon::today()->greaterThan($start_date_of_closed);
+            })->sortByDesc('created_at')->first();
 
         if (!empty($closure_1_data_4950013521029000->start_date_of_closed)) {
             $start_date_of_closed_4950013521029000 = Carbon::parse($closure_1_data_4950013521029000->start_date_of_closed);

@@ -161,7 +161,7 @@
                 $('#N9_P1').val(branch.pension_office_reference_prefecture || '');
                 $('#N10_P1').val(branch.pension_office_reference_no_cities || '');
                 $('#N11_P1').val(branch.pension_office_reference_no_office || '');
-                $('#N12_P1').val(branch.pension_office_no || '');
+                $('#N12_P1').val(branch.insurance_office_no || '');
 
                 if (branch.post_code != null && employee.post_code.length == 7) {
                     $('#N13_P1').val(branch.post_code.substring(0, 3));

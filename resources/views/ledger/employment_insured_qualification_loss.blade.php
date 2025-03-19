@@ -146,7 +146,7 @@
                 $('#J28_005F_8E81_96BC_005F_89BA_9269').val(
                     '{{ old('employer_managerial_position_name', $company->representative) }}');
                 $('#J27_005F_8E81_96BC_005F_8FE3_9269').val(
-                    '{{ old('employer_managerial_position_name', $company->name) }}');
+                    '{{ old('company_name', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');

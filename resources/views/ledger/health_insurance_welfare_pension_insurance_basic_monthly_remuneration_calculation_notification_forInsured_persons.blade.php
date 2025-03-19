@@ -270,7 +270,7 @@
                 $('#N6_005F_93FA').val(branch.pension_office_reference_prefecture ?? '');
                 $('#N7_005F_944E_8D86').val(branch.pension_office_reference_no_cities ?? '');
                 $('#N8_005F_944E').val(branch.pension_office_reference_no_office ?? '');
-                $('#N9_005F_8C8E0').val(branch.pension_office_no ?? '');
+                $('#N9_005F_8C8E0').val(branch.insurance_office_no ?? '');
                 if (branch.post_code !== null ?? branch.post_code.length == 7) {
                     $('#N9_005F_8C8E').val(branch.post_code.substring(0, 3));
                     $('#N10_005F_93FA').val(branch.post_code.substring(3, 7));

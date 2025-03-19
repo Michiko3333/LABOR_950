@@ -242,10 +242,10 @@
                 };
                 var birthdayEraValue = birthdayConvertJapan['era'] ?? "";
                 var birthdayEra = eraMapping[birthdayEraValue] ?? "";
-                $('#N9_005F_8C8E').val(branch.pension_office_reference_prefecture || '');
-                $('#N10_005F_93FA').val(branch.pension_office_reference_no_cities || '');
-                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch.pension_office_reference_no_office || '');
-                $('#N9_005F_8C8E0').val(branch.pension_office_no || '');
+                $('#N9_005F_8C8E').val(branch.pension_office_reference_prefecture ?? '');
+                $('#N10_005F_93FA').val(branch.pension_office_reference_no_cities ?? '');
+                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch.pension_office_reference_no_office ?? '');
+                $('#N9_005F_8C8E0').val(branch.insurance_office_no ?? '');
                 if (branch.post_code !== null && branch.post_code.length == 7) {
                     $('#N12_005F_905C_90BF_8ED2_8E81').val(branch.post_code.substring(0, 3));
                     $('#N13_005F_8374_838A_834B_8369').val(branch.post_code.substring(3, 7));

@@ -216,7 +216,7 @@
                     headquarters.address_ward || "") + (headquarters.address_apartment || "");
                 const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
                     .address_ward || "") + (branch.address_apartment || "");
-                const branchInfo = (branch.name || "") + '　' + (branch_prefecture_data.name || "") + (branch.address_city ||
+                const branchInfo =  (branch.name || "") + '　' +(branch_prefecture_data.name || "") + (branch.address_city ||
                         "") +
                     (branch.address_ward || "") + (branch.address_apartment || "");
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
