@@ -117,7 +117,6 @@
 
                 $('#_8E96_8BC6_8EE5_8E81_96BCx_91E3_955C_8ED2_8E81_96BC_002E17').val(
                     '{{ old('business_owner_name_representative_name') }}' ? '{{ old('business_owner_name_representative_name') }}' : '{{ $company->representative }}');
-                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val('{{ old('business_name_name_of_ship_owner', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                 @else
@@ -142,6 +141,7 @@
         <script type="module">
             function insertDataFromBranch(data) {
                 const branch = data['branch'];
+                const company = data['company'];
                 const pensionOfficeReferencePrefecture = branch.pension_office_reference_prefecture;
                 const pensionOfficeReferenceNoCities = branch.pension_office_reference_no_cities;
                 const pensionOfficeReferenceNoOffice = branch.pension_office_reference_no_office;
@@ -152,6 +152,7 @@
                 const telSubscriberCode = branch.tel_subscriber_code;
                 const branch_prefecture_data = data['branch_prefecture_data'];
 
+                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(company.name);
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_9373_93B9_957B_8CA7_8352_815B_8368_002E7').val(
                     pensionOfficeReferencePrefecture ?? '');
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_8C53_8E73_8BE6_8B4C_8D86_002E8').val(pensionOfficeReferenceNoCities ??

@@ -2263,7 +2263,7 @@
             type="CHECKBOX" id="J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91"
             <?php echo old('wage_monthly_certificate_on_leave_start') == '1' ? 'checked' : ''; ?> name="wage_monthly_certificate_on_leave_start"><input type="checkbox"
             id="emptySend_1" style="display: none;" value="1" <?php echo old('wage_monthly_certificate_on_leave_start_2') == '1' ? 'checked' : ''; ?>
-            name="wage_monthly_certificate_on_leave_start_2"><SPAN
+            name="wage_monthly_certificate_on_leave_start_2"><SPAN class="checkmark"
             style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:56px; width:25px; line-height:24px; height:24px; text-align:left; font-size:24px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
@@ -2273,7 +2273,7 @@
             id="J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91"
             <?php echo old('wage_certificate_working_hours_shortened_start') == '1' ? 'checked' : ''; ?> name="wage_certificate_working_hours_shortened_start"><input type="checkbox"
             id="emptySend_2" style="display:none;" value="1" <?php echo old('wage_certificate_working_hours_shortened_start_2') == '1' ? 'checked' : ''; ?>
-            name="wage_certificate_working_hours_shortened_start_2"><SPAN
+            name="wage_certificate_working_hours_shortened_start_2"><SPAN class="checkmark"
             style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:853px; top:93px; width:11px; height:12px; text-align:center; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal;">月</SPAN>

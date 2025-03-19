@@ -136,7 +136,6 @@
                 }
 
                 function checkDateAndEnableFields() {
-                    console.log('1');
                     let startYear13 = parseInt(toHalfWidth(document.getElementById('childcare_start_date_japane_era_year').value));
                     let startMonth13 = parseInt(toHalfWidth(document.getElementById('childcare_start_date_month').value));
                     let startDay13 = parseInt(toHalfWidth(document.getElementById('childcare_start_date_day').value));

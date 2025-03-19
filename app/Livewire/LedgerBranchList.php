@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Branch;
+use App\Models\Company;
 use App\Models\CurrentUser;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
@@ -60,8 +61,12 @@ class LedgerBranchList extends BaseTable
 
         $branch_data = $branch;
 
+        $companyId = $branch_data['company_id'];
+        $company = Company::where('id', $companyId)->first();
+
         $output = [
-            'branch' => $branch_data
+            'branch' => $branch_data,
+            'company' => $company,
         ];
 
         $this->selected_id = $id;

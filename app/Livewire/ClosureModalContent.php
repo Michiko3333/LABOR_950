@@ -39,6 +39,12 @@ class ClosureModalContent extends BaseTable
     public $search = '';
     public $branch_id = null;
     public $branch_list = [];
+    public $statusMapping = [
+        '1' => '内定承諾（未社員）',
+        '2' => '有期雇用社員',
+        '3' => '正社員',
+        '9' => '退職者',
+    ];
 
     public $total = 0;
     public $limit = 5;
@@ -295,6 +301,14 @@ class ClosureModalContent extends BaseTable
         }
     }
 
+    public function statusMapping($status)
+    {
+        if ($status) {
+            return $this->statusMapping[$status];
+        }
+        return '';
+    }
+
     private function resetForm()
     {
         $this->startDateOfClosed = '';
@@ -307,6 +321,6 @@ class ClosureModalContent extends BaseTable
         $this->plannedEndDateOfChildSupport = '';
         $this->endDateOfFosterCare = '';
         $this->dateOfCommencementOfSpecialChildcareProvision = '';
-        $this->current_closure = '';
+        $this->current_closure = [];
     }
 }

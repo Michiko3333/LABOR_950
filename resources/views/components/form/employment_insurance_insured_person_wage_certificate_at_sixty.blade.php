@@ -2234,7 +2234,7 @@
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px; min-width:30px; max-width:30px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J25_005F_944E_8D86" name="J25"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:70px; top:1248px; width:42px; height:14px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">社会保険</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:70px; top:1248px; width:44px; height:14px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">社会保険</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:80px; top:1169px; width:30px; height:10px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">（注）</SPAN>
     <SPAN

@@ -107,6 +107,7 @@
                 $('#_92F1_8F6F_944E_8C8E_93FAx_944E_002E1').val('{{ old('notification_year', $today['year']) }}');
                 $('#_92F1_8F6F_944E_8C8E_93FAx_8C8E_002E2').val('{{ old('notification_month', $today['month']) }}');
                 $('#_92F1_8F6F_944E_8C8E_93FAx_93FA_002E3').val('{{ old('notification_day', $today['date']) }}');
+                $('#_8E96_8BC6_8EE5_8E81_96BC_002E10').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
                 @if ($current_employee->role_id === 500)
                     $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E14').val(
                         '{{ old('labor_consultant_acting_as_agent') }}'
@@ -173,7 +174,6 @@
                 $('#_8E96_8BC6_8F8A_8F8A_8DDD_926E_002E8').val((branch_prefecture_data.name  ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#_8E96_8BC6_8F8A_96BC_8FCC_002E9').val(company.name ?? '');
-                $('#_8E96_8BC6_8EE5_8E81_96BC_002E10').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
 
                 $('#_94ED_95DB_8CAF_8ED2_90AE_979D_94D4_8D86_002E15').val(employee.insurer_reference_no ?? '');
                 $('#_94ED_95DB_8CAF_8ED2_8E81_96BCx_8ABF_8E9A_8E81_96BC_002E18').val((employee.last_name ? employee.last_name + '　' : '') + (employee

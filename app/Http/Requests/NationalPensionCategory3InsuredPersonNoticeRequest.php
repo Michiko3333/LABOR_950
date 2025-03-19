@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Rules\FullwidthAndMiscellaneousChars;
+use commonHelpers;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NationalPensionCategory3InsuredPersonNoticeRequest extends FormRequest
@@ -519,7 +521,22 @@ class NationalPensionCategory3InsuredPersonNoticeRequest extends FormRequest
             } elseif ($npc3ipn_1_date_of_expiry_era || $npc3ipn_1_date_of_expiry_year || $npc3ipn_1_date_of_expiry_month || $npc3ipn_1_date_of_expiry_day) {
                 $validator->errors()->add('npc3ipn_1_date_of_expiry_year', '1枚目_19：第3号被保険者でなくなった日を記載する場合は、年号と年月日の項目を全て入力してください。');
             }
-
+            if (!empty($npc3ipn_1_date_of_authorisation_era) && !empty($npc3ipn_1_date_of_authorisation_year) && !empty($npc3ipn_1_date_of_authorisation_month) && !empty($npc3ipn_1_date_of_authorisation_day)
+            && !empty($npc3ipn_1_date_of_expiry_era) && !empty($npc3ipn_1_date_of_expiry_year) && !empty($npc3ipn_1_date_of_expiry_month) && !empty($npc3ipn_1_date_of_expiry_day)) {
+                $startYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($npc3ipn_1_date_of_authorisation_era, Carbon::create($npc3ipn_1_date_of_authorisation_year,$npc3ipn_1_date_of_authorisation_month,$npc3ipn_1_date_of_authorisation_day));
+                $endYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($npc3ipn_1_date_of_expiry_era, Carbon::create($npc3ipn_1_date_of_expiry_year,$npc3ipn_1_date_of_expiry_month,$npc3ipn_1_date_of_expiry_day));
+                if ($endYear < $startYear) {
+                    $validator->errors()->add('npc3ipn_1_date_of_expiry_day', '1枚目_17：第3号被保険者になった年月日は1枚目_19：第3号被保険者でなくなった日以降を入力してください。');
+                } elseif ($endYear == $startYear) {
+                    if ($npc3ipn_1_date_of_expiry_month < $npc3ipn_1_date_of_authorisation_month) {
+                        $validator->errors()->add('npc3ipn_1_date_of_expiry_day', '1枚目_17：第3号被保険者になった年月日は1枚目_19：第3号被保険者でなくなった日以降を入力してください。');
+                    } elseif ($npc3ipn_1_date_of_expiry_month == $npc3ipn_1_date_of_authorisation_month) {
+                        if ($npc3ipn_1_date_of_expiry_day < $npc3ipn_1_date_of_authorisation_day) {
+                            $validator->errors()->add('npc3ipn_1_date_of_expiry_day', '1枚目_17：第3号被保険者になった年月日は1枚目_19：第3号被保険者でなくなった日以降を入力してください。');
+                        }
+                    }
+                }
+            }
             if ($npc3ipn_1_date_of_death_year && $npc3ipn_1_date_of_death_month && $npc3ipn_1_date_of_death_day) {
                 if (!checkdate($npc3ipn_1_date_of_death_month, $npc3ipn_1_date_of_death_day, change_seireki('9',$npc3ipn_1_date_of_death_year))
                 ||   !(check_wareki('9', $npc3ipn_1_date_of_death_year, $npc3ipn_1_date_of_death_month, $npc3ipn_1_date_of_death_day))) {
@@ -547,6 +564,23 @@ class NationalPensionCategory3InsuredPersonNoticeRequest extends FormRequest
                 $validator->errors()->add('npc3ipn_1_date_of_expiry_of_special_overseas_requirements_year', '1枚目_24：海外特例要件に非該当となった年月日を記載する場合は、年号と年月日の項目を全て入力してください。');
             }
 
+            if (!empty($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_era) && !empty($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_year) && !empty($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_month) && !empty($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_day)
+            && !empty($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_era) && !empty($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_year) && !empty($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_month) && !empty($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day)) {
+                $startYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_era, Carbon::create($npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_year,$npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_month,$npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_day));
+                $endYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_era, Carbon::create($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_year,$npc3ipn_1_date_of_expiry_of_special_overseas_requirements_month,$npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day));
+                if ($endYear < $startYear) {
+                    $validator->errors()->add('npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day', '1枚目_22：海外特例要件に該当した年月日は1枚目_24：海外特例要件に非該当となった年月日以降を入力してください。');
+                } elseif ($endYear == $startYear) {
+                    if ($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_month < $npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_month) {
+                        $validator->errors()->add('npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day', '1枚目_22：海外特例要件に該当した年月日は1枚目_24：海外特例要件に非該当となった年月日以降を入力してください。');
+                    } elseif ($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_month == $npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_month) {
+                        if ($npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day < $npc3ipn_1_date_of_authorisation_of_special_overseas_requirements_day) {
+                            $validator->errors()->add('npc3ipn_1_date_of_expiry_of_special_overseas_requirements_day', '1枚目_22：海外特例要件に該当した年月日は1枚目_24：海外特例要件に非該当となった年月日以降を入力してください。');
+                        }
+                    }
+                }
+            }
+            
             if ($npc3ipn_1_date_of_moving_into_japan_year && $npc3ipn_1_date_of_moving_into_japan_month && $npc3ipn_1_date_of_moving_into_japan_day) {
                 if (!checkdate($npc3ipn_1_date_of_moving_into_japan_month, $npc3ipn_1_date_of_moving_into_japan_day, change_seireki('9',$npc3ipn_1_date_of_moving_into_japan_year))) {
                     $validator->errors()->add('npc3ipn_1_date_of_moving_into_japan_year', '1枚目_国内転入年月日に、存在しない日付が入力されています。');

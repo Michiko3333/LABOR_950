@@ -10756,13 +10756,13 @@ min-width: 10px;
        <input class="egov-tool-field-rect" id="N16_1" name="birthday_day" value="{{ old('birthday_day') }}" style="width: 32px; height: 26px; font-size: 12px; text-align: center; line-height: 51px; padding: inherit;" type="text" value="" disabled/>
       </div>
       <div class="egov-tool-field-origin" style="left: 390px; top: 268px;">
-       <input class="egov-tool-field-rect onImage" id="N18_1" name="certification_year" value="{{ old('certification_year') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off"/>
+       <input class="egov-tool-field-rect onImage" id="N18_1" name="certification_year" value="{{ old('certification_year') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off" maxlength="2"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 420px; top: 268px;">
-       <input class="egov-tool-field-rect onImage" id="N19_1" name="certification_month" value="{{ old('certification_month') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off"/>
+       <input class="egov-tool-field-rect onImage" id="N19_1" name="certification_month" value="{{ old('certification_month') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off" maxlength="2"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 450px; top: 268px;">
-       <input class="egov-tool-field-rect onImage" id="N20_1" name="certification_day" value="{{ old('certification_day') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off"/>
+       <input class="egov-tool-field-rect onImage" id="N20_1" name="certification_day" value="{{ old('certification_day') }}" style="width: 17px; height: 12px; font-size: 12px; text-align: center; line-height: 22px; padding: inherit;" type="text" value="" autocomplete="off" maxlength="2"/>
       </div>
       <div class="egov-tool-field-origin" style="left: 244px; top: 294px;">
        <input class="egov-tool-field-rect onImage" id="N21_1" maxlength="3" name="medical_insurer_post_code_former" value="{{ old('medical_insurer_post_code_former') }}" style="width: 38px; height: 15px; font-size: 12px; text-align: center; line-height: 26px; padding: inherit;" type="text" value="" autocomplete="off"/>

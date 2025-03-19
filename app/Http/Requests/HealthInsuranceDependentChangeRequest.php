@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class HealthInsuranceDependentChangeRequest extends BaseRequest
 {
@@ -150,7 +151,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             "other_dependent1_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_era,other_dependent1_become_date_month,other_dependent1_become_date_day',
             "other_dependent1_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_year,other_dependent1_become_date_era,other_dependent1_become_date_day',
             "other_dependent1_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_become_date_year,other_dependent1_become_date_month,other_dependent1_become_date_era',
-            "other_dependent1_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,その他',
+            "other_dependent1_reason_type" => 'nullable|string|in:出生,離職,収入減少,同居,その他',
             "other_dependent1_reason_2" => 'nullable|string|max:255',
             "other_dependent1_remove_date_era" => 'nullable|string|in:7,9|required_with:other_dependent1_remove_date_year,other_dependent1_remove_date_month,other_dependent1_remove_date_day',
             "other_dependent1_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent1_remove_date_era,other_dependent1_remove_date_month,other_dependent1_remove_date_day',
@@ -190,7 +191,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             "other_dependent2_become_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_era,other_dependent2_become_date_month,other_dependent2_become_date_day',
             "other_dependent2_become_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_year,other_dependent2_become_date_era,other_dependent2_become_date_day',
             "other_dependent2_become_date_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_become_date_year,other_dependent2_become_date_month,other_dependent2_become_date_era',
-            "other_dependent2_reason_type" => 'nullable|string|in:出生,離職,収入減,同居,その他',
+            "other_dependent2_reason_type" => 'nullable|string|in:出生,離職,収入減少,同居,その他',
             "other_dependent2_remove_date_era" => 'nullable|int|in:7,9|required_with:other_dependent2_remove_date_year,other_dependent2_remove_date_month,other_dependent2_remove_date_day',
             "other_dependent2_remove_date_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_remove_date_era,other_dependent2_remove_date_month,other_dependent2_remove_date_day',
             "other_dependent2_remove_date_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:other_dependent2_remove_date_year,other_dependent2_remove_date_era,other_dependent2_remove_date_day',
@@ -403,11 +404,15 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             }
             $other_dependent2_domestic_transfer_date_month = $data['other_dependent2_domestic_transfer_date_month'] ?? "";
             $other_dependent2_domestic_transfer_date_day = $data['other_dependent2_domestic_transfer_date_day'] ?? "";
+            $today = Carbon::today();
 
             if(!empty($accepted_month) && !empty($accepted_day) && !empty($accepted_year)) {
                 if(ctype_digit($accepted_month) && ctype_digit($accepted_day)) {
                     if (!checkdate($accepted_month, $accepted_day, $accepted_year)) {
                         $validator->errors()->add('accepted_day','1枚目_3_事業主等受付年月日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($accepted_year,$accepted_month, $accepted_day)->gt($today)) {
+                        $validator->errors()->add('accepted_day','1枚目_3_事業主等受付年月日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -419,6 +424,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                 if (ctype_digit($birthday_month) && ctype_digit($birthday_day)) {
                     if (!checkdate($birthday_month, $birthday_day, $birthday_year)) {
                         $validator->errors()->add('birthday_day', '1枚目_7_生年月日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($birthday_year,$birthday_month, $birthday_day)->gt($today)) {
+                        $validator->errors()->add('birthday_day','1枚目_7_生年月日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -449,6 +457,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($notification_month, $notification_day, $notification_year)) {
                         $validator->errors()->add('notification_day', '1枚目_13_氏名_日付は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($notification_year,$notification_month, $notification_day)->gt($today)) {
+                        $validator->errors()->add('notification_day','1枚目_13_氏名_日付に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if ($notification_japan_year == 1 && ($notification_month < 5)) {
@@ -459,6 +470,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                 if (ctype_digit($spouse_birthday_month) && ctype_digit($spouse_birthday_day)) {
                     if (!checkdate($spouse_birthday_month, $spouse_birthday_day, $spouse_birthday_year)) {
                         $validator->errors()->add('spouse_birthday_day', '1枚目_14_生年月日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($spouse_birthday_year,$spouse_birthday_month, $spouse_birthday_day)->gt($today)) {
+                        $validator->errors()->add('spouse_birthday_day','1枚目_14_生年月日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -489,6 +503,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($acquisition_month, $acquisition_day, $acquisition_year)) {
                         $validator->errors()->add('acquisition_day', '1枚目_10_取得年月日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($acquisition_year,$acquisition_month, $acquisition_day)->gt($today)) {
+                        $validator->errors()->add('acquisition_day','1枚目_10_取得年月日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if ($acquisition_era === '5') {
@@ -518,6 +535,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($spouse_become_date_month, $spouse_become_date_day, $spouse_become_date_year)) {
                         $validator->errors()->add('spouse_become_date_day', '1枚目_21_被扶養者になった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($spouse_become_date_year,$spouse_become_date_month, $spouse_become_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_become_date_day','1枚目_21_被扶養者に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if($spouse_become_date_era === '7') {
@@ -533,11 +553,28 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     $validator->errors()->add('spouse_become_date_day', '1枚目_21_被扶養者になった日は正しい日付を入力してください。');
                 }
             }
-            
+            if (!empty($spouse_become_date_era) && !empty($spouse_become_date_year) && !empty($spouse_become_date_month) && !empty($spouse_become_date_day)
+            && !empty($spouse_remove_date_era) && !empty($spouse_remove_date_year) && !empty($spouse_remove_date_month) && !empty($spouse_remove_date_day)) {
+                if ($spouse_remove_date_year < $spouse_become_date_year) {
+                    $validator->errors()->add('spouse_remove_date_day', '1枚目_25_被扶養者でなくなった日は1枚目_21_被扶養者になった日以降を入力してください。');
+                } elseif ($spouse_remove_date_year == $spouse_become_date_year) {
+                    if ($spouse_remove_date_month < $spouse_become_date_month) {
+                        $validator->errors()->add('spouse_remove_date_day', '1枚目_25_被扶養者でなくなった日は1枚目_21_被扶養者になった日以降を入力してください。');
+                    } elseif ($spouse_remove_date_month == $spouse_become_date_month) {
+                        if ($spouse_remove_date_day < $spouse_become_date_day) {
+                            $validator->errors()->add('spouse_remove_date_day', '1枚目_25_被扶養者でなくなった日は1枚目_21_被扶養者になった日以降を入力してください。');
+                        }
+                    }
+                }
+            }
+
             if (!empty($spouse_remove_date_month) && !empty($spouse_remove_date_day) && !empty($spouse_remove_date_year)) {
                 if (ctype_digit($spouse_remove_date_month) && ctype_digit($spouse_remove_date_day)) {
                     if (!checkdate($spouse_remove_date_month, $spouse_remove_date_day, $spouse_remove_date_year)) {
                         $validator->errors()->add('spouse_remove_date_day', '1枚目_25_被扶養者でなくなった日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($spouse_remove_date_year,$spouse_remove_date_month, $spouse_remove_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_remove_date_day','1枚目_25_被扶養者でなくなった日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -560,6 +597,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($spouse_passed_away_date_month, $spouse_passed_away_date_day, $spouse_passed_away_date_year)) {
                         $validator->errors()->add('spouse_passed_away_date_day', '1枚目_26_理由_死亡年月日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($spouse_passed_away_date_year,$spouse_passed_away_date_month, $spouse_passed_away_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_passed_away_date_day','1枚目_26_理由_死亡年月日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if ($spouse_passed_away_date_japan_year == 1 && ($spouse_passed_away_date_month < 5)) {
@@ -570,6 +610,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                 if (ctype_digit($spouse_special_requirements_applicable_date_month) && ctype_digit($spouse_special_requirements_applicable_date_day)) {
                     if (!checkdate($spouse_special_requirements_applicable_date_month, $spouse_special_requirements_applicable_date_day, $spouse_special_requirements_applicable_date_year)) {
                         $validator->errors()->add('spouse_special_requirements_applicable_date_day', '1枚目_27_海外特例要件に該当した日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($spouse_special_requirements_applicable_date_year,$spouse_special_requirements_applicable_date_month, $spouse_special_requirements_applicable_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_special_requirements_applicable_date_day','1枚目_27_海外特例要件に該当した日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -582,16 +625,36 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($spouse_special_requirements_non_applicable_date_month, $spouse_special_requirements_non_applicable_date_day, $spouse_special_requirements_non_applicable_date_year)) {
                         $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($spouse_special_requirements_non_applicable_date_year,$spouse_special_requirements_non_applicable_date_month, $spouse_special_requirements_non_applicable_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_special_requirements_non_applicable_date_day','1枚目_29_海外特例要件に非該当となった日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if ($spouse_special_requirements_non_applicable_date_japan_year == 1 && ($spouse_special_requirements_non_applicable_date_month < 5)) {
                 $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_29_海外特例要件に非該当となった日は正しい日付を入力してください。');
+            }
+            if (!empty($spouse_special_requirements_applicable_date_year) && !empty($spouse_special_requirements_applicable_date_month) && !empty($spouse_special_requirements_applicable_date_day)
+            && !empty($spouse_special_requirements_non_applicable_date_year) && !empty($spouse_special_requirements_non_applicable_date_month) && !empty($spouse_remove_date_day)) {
+                if ($spouse_special_requirements_non_applicable_date_year < $spouse_special_requirements_applicable_date_year) {
+                    $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_27_海外特例要件に該当した日は1枚目_29_海外特例要件に非該当となった日以降を入力してください。');
+                } elseif ($spouse_special_requirements_non_applicable_date_year == $spouse_special_requirements_applicable_date_year) {
+                    if ($spouse_special_requirements_non_applicable_date_month < $spouse_special_requirements_applicable_date_month) {
+                        $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_27_海外特例要件に該当した日は1枚目_29_海外特例要件に非該当となった日以降を入力してください。');
+                    } elseif ($spouse_special_requirements_non_applicable_date_month == $spouse_special_requirements_applicable_date_month) {
+                        if ($spouse_special_requirements_non_applicable_date_day < $spouse_special_requirements_applicable_date_day) {
+                            $validator->errors()->add('spouse_special_requirements_non_applicable_date_day', '1枚目_27_海外特例要件に該当した日は1枚目_29_海外特例要件に非該当となった日以降を入力してください。');
+                        }
+                    }
+                }
             }
 
             if (!empty($spouse_domestic_transfer_date_month) && !empty($spouse_domestic_transfer_date_day) && !empty($spouse_domestic_transfer_date_year)) {
                 if (ctype_digit($spouse_domestic_transfer_date_month) && ctype_digit($spouse_domestic_transfer_date_day)) {
                     if (!checkdate($spouse_domestic_transfer_date_month, $spouse_domestic_transfer_date_day, $spouse_domestic_transfer_date_year)) {
                         $validator->errors()->add('spouse_domestic_transfer_date_day', '1枚目_30_理由_国内転入日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($spouse_domestic_transfer_date_year,$spouse_domestic_transfer_date_month, $spouse_domestic_transfer_date_day)->gt($today)) {
+                        $validator->errors()->add('spouse_domestic_transfer_date_day','1枚目_30_理由_国内転入日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -603,6 +666,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                 if (ctype_digit($other_dependent1_birthday_month) && ctype_digit($other_dependent1_birthday_day)) {
                     if (!checkdate($other_dependent1_birthday_month, $other_dependent1_birthday_day, $other_dependent1_birthday_year)) {
                         $validator->errors()->add('other_dependent1_birthday_day', '1枚目_35_生年月日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($other_dependent1_birthday_year,$other_dependent1_birthday_month, $other_dependent1_birthday_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent1_birthday_day','1枚目_35_生年月日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -633,6 +699,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($other_dependent1_become_date_month, $other_dependent1_become_date_day, $other_dependent1_become_date_year)) {
                         $validator->errors()->add('other_dependent1_become_date_day', '1枚目_40_被扶養者になった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($other_dependent1_become_date_year,$other_dependent1_become_date_month, $other_dependent1_become_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent1_become_date_day','1枚目_40_被扶養者になった日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if($other_dependent1_become_date_era === '7') {
@@ -654,6 +723,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($other_dependent1_remove_date_month, $other_dependent1_remove_date_day, $other_dependent1_remove_date_year)) {
                         $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_44_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($other_dependent1_remove_date_year,$other_dependent1_remove_date_month, $other_dependent1_remove_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent1_remove_date_day','1枚目_44_被扶養者でなくなった日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if($other_dependent1_remove_date_era === '7') {
@@ -669,11 +741,28 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_44_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             }
-            
+            if (!empty($other_dependent1_become_date_era) && !empty($other_dependent1_become_date_year) && !empty($other_dependent1_become_date_month) && !empty($other_dependent1_become_date_day)
+            && !empty($other_dependent1_remove_date_era) && !empty($other_dependent1_remove_date_year) && !empty($other_dependent1_remove_date_month) && !empty($other_dependent1_remove_date_day)) {
+                if ($other_dependent1_remove_date_year < $other_dependent1_become_date_year) {
+                    $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_40_被扶養者でなくなった日は1枚目_44_被扶養者になった日以降を入力してください。');
+                } elseif ($other_dependent1_remove_date_year == $other_dependent1_become_date_year) {
+                    if ($other_dependent1_remove_date_month < $other_dependent1_become_date_month) {
+                        $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_40_被扶養者でなくなった日は1枚目_44_被扶養者になった日以降を入力してください。');
+                    } elseif ($other_dependent1_remove_date_month == $other_dependent1_become_date_month) {
+                        if ($other_dependent1_remove_date_day < $other_dependent1_become_date_day) {
+                            $validator->errors()->add('other_dependent1_remove_date_day', '1枚目_40_被扶養者でなくなった日は1枚目_44_被扶養者になった日以降を入力してください。');
+                        }
+                    }
+                }
+            }
+
             if (!empty($other_dependent1_domestic_transfer_date_month) && !empty($other_dependent1_domestic_transfer_date_day) && !empty($other_dependent1_domestic_transfer_date_year)) {
                 if (ctype_digit($other_dependent1_domestic_transfer_date_month) && ctype_digit($other_dependent1_domestic_transfer_date_day)) {
                     if (!checkdate($other_dependent1_domestic_transfer_date_month, $other_dependent1_domestic_transfer_date_day, $other_dependent1_domestic_transfer_date_year)) {
                         $validator->errors()->add('other_dependent1_domestic_transfer_date_day', '1枚目_50_国内転入日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($other_dependent1_domestic_transfer_date_year,$other_dependent1_domestic_transfer_date_month, $other_dependent1_domestic_transfer_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent1_domestic_transfer_date_day','1枚目_50_国内転入日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -685,6 +774,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                 if (ctype_digit($other_dependent2_birthday_month) && ctype_digit($other_dependent2_birthday_day)) {
                     if (!checkdate($other_dependent2_birthday_month, $other_dependent2_birthday_day, $other_dependent2_birthday_year)) {
                         $validator->errors()->add('other_dependent2_birthday_day', '1枚目_52_生年月日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($other_dependent2_birthday_year,$other_dependent2_birthday_month, $other_dependent2_birthday_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent2_birthday_day','1枚目_52_生年月日に未来の日付を入力しないでください。');
                     }
                 }
             }
@@ -715,6 +807,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($other_dependent2_become_date_month, $other_dependent2_become_date_day, $other_dependent2_become_date_year)) {
                         $validator->errors()->add('other_dependent2_become_date_day', '1枚目_57_被扶養者になった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($other_dependent2_become_date_year,$other_dependent2_become_date_month, $other_dependent2_become_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent2_become_date_day','1枚目_57_被扶養者になった日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if($other_dependent2_become_date_era === '7') {
@@ -736,6 +831,9 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     if (!checkdate($other_dependent2_remove_date_month, $other_dependent2_remove_date_day, $other_dependent2_remove_date_year)) {
                         $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_61_被扶養者でなくなった日は正しい日付を入力してください。');
                     }
+                    if (Carbon::create($other_dependent2_remove_date_year,$other_dependent2_remove_date_month, $other_dependent2_remove_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent2_remove_date_day','1枚目_61_被扶養者でなくなった日に未来の日付を入力しないでください。');
+                    }
                 }
             }
             if($other_dependent2_remove_date_era === '7') {
@@ -751,11 +849,28 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
                     $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_61_被扶養者でなくなった日は正しい日付を入力してください。');
                 }
             }
+            if (!empty($other_dependent2_become_date_era) && !empty($other_dependent2_become_date_year) && !empty($other_dependent2_become_date_month) && !empty($other_dependent2_become_date_day)
+            && !empty($other_dependent2_remove_date_era) && !empty($other_dependent2_remove_date_year) && !empty($other_dependent2_remove_date_month) && !empty($other_dependent2_remove_date_day)) {
+                if ($other_dependent2_remove_date_year < $other_dependent2_become_date_year) {
+                    $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は1枚目_61_被扶養者になった日以降を入力してください。');
+                } elseif ($other_dependent2_remove_date_year == $other_dependent2_become_date_year) {
+                    if ($other_dependent2_remove_date_month < $other_dependent2_become_date_month) {
+                        $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は1枚目_61_被扶養者になった日以降を入力してください。');
+                    } elseif ($other_dependent2_remove_date_month == $other_dependent2_become_date_month) {
+                        if ($other_dependent2_remove_date_day < $other_dependent2_become_date_day) {
+                            $validator->errors()->add('other_dependent2_remove_date_day', '1枚目_57_被扶養者でなくなった日は1枚目_61_被扶養者になった日以降を入力してください。');
+                        }
+                    }
+                }
+            }
 
             if (!empty($other_dependent2_domestic_transfer_date_month) && !empty($other_dependent2_domestic_transfer_date_day) && !empty($other_dependent2_domestic_transfer_date_year)) {
                 if (ctype_digit($other_dependent2_domestic_transfer_date_month)) {
                     if (!checkdate($other_dependent2_domestic_transfer_date_month, $other_dependent2_domestic_transfer_date_day, $other_dependent2_domestic_transfer_date_year)) {
                         $validator->errors()->add('other_dependent2_domestic_transfer_date_day', '1枚目_67_国内転入日は正しい日付を入力してください。');
+                    }
+                    if (Carbon::create($other_dependent2_domestic_transfer_date_year,$other_dependent2_domestic_transfer_date_month, $other_dependent2_domestic_transfer_date_day)->gt($today)) {
+                        $validator->errors()->add('other_dependent2_domestic_transfer_date_day','1枚目_67_国内転入日に未来の日付を入力しないでください。');
                     }
                 }
             }

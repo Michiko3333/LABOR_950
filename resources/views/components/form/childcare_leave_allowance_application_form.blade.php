@@ -2,12 +2,20 @@
 <!-- 雇用保険育児休業給付（育児休業給付金）の申請（令和４年６月以降手続き） -->
 
 <DIV style="position:relative; left:-20px; top:-20px; width:800px; height:1099px;">
-
     <script type="text/javascript">
         function teateumuCtl(f) {
             var teate = document.getElementsByName("commuting_allowance");
             for (var i = 0; i < teate.length; i++) {
                 if (teate[i].checked && teate[i].value == "無") {
+                    setTimeout(function() {
+                        f.commuting_allowance_period.disabled = true;
+                        f.commuting_allowance_period_other.disabled = true;
+                        f.commuting_allowance_period.value = "";
+                        f.commuting_allowance_period_other.value = "";
+                    }, 0);
+                }else if (teate[i].checked && teate[i].value == "有") {
+                    f.commuting_allowance_period.disabled = false;
+                    f.commuting_allowance_period_other.disabled = false;
                     f.commuting_allowance_period.value = "";
                     f.commuting_allowance_period_other.value = "";
                 }
@@ -427,17 +435,17 @@
             type="TEXT" id="J90_005F_93FA" value="{{ old('today_japan_day') }}" name="today_japan_day"
             maxlength="2" readonly></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:758px; width:228px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:758px; width:228px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="86"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:228px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" value="{{ old('headquarters_address') }}" maxlength="63"
-            name="headquarters_address" autocomplete="off"></SPAN>
+            style="word-wrap: break-word;overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:228px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
+            id="J91_005F_8E96_8BC6_8F8A_96BC_005F_8F8A_8DDD_926E" maxlength="63"
+            name="headquarters_address" autocomplete="off">{{ old('headquarters_address') }}</textarea></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:816px; width:221px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:453px; top:816px; width:221px; line-height:37px; height:37px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="90"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:221px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J95_005F_8E96_8BC6_8EE5_8E81_96BC" value="{{ old('employer_company_managerial_position_name') }}" maxlength="60"
-            name="employer_company_managerial_position_name" autocomplete="off"></SPAN>
+            style="word-wrap: break-word;overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:221px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
+            id="J95_005F_8E96_8BC6_8EE5_8E81_96BC" maxlength="60"
+            name="employer_company_managerial_position_name" autocomplete="off">{{ old('employer_company_managerial_position_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:285px; top:880px; width:12px; height:13px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal;">日</SPAN>
     <SPAN
@@ -1123,7 +1131,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:197px; top:471px; width:32px; height:28px; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:2px 0px 0px 0px;"><INPUT
             tabindex="55"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:32px; max-width:32px; height:18px; ime-mode:disabled;"
-            type="TEXT" id="J59_005F_93FA" value="{{ old('last_payer_day') }}" name="last_payer_japan_day"
+            type="TEXT" id="J59_005F_93FA" value="{{ old('last_payer_japan_day') }}" name="last_payer_japan_day"
             maxlength="2" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:268px; top:471px; width:31px; height:28px; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:2px 0px 0px 0px;"><INPUT

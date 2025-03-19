@@ -2,7 +2,6 @@
 <!-- 雇用保険高年齢雇用継続給付（高年齢雇用継続基本給付金）の申請（令和４年６月以降手続き） -->
 
 <DIV style="position:relative; left:0px; top:0px; width:752px; height:1048px;">
-
     <script type="text/javascript">
         function keitaiCtl(f) {
             if (f.wage_structure.value == "月給" || f.wage_structure.value == "日給" || f.wage_structure.value == "時間給") {
@@ -14,6 +13,15 @@
             var teate = document.getElementsByName("commuting_allowance");
             for (var i = 0; i < teate.length; i++) {
                 if (teate[i].checked && teate[i].value == "無") {
+                    setTimeout(function() {
+                        f.commuting_allowance_period.disabled = true;
+                        f.commuting_allowance_period_other.disabled = true;
+                        f.commuting_allowance_period.value = "";
+                        f.commuting_allowance_period_other.value = "";
+                    }, 0);
+                }else if (teate[i].checked && teate[i].value == "有") {
+                    f.commuting_allowance_period.disabled = false;
+                    f.commuting_allowance_period_other.disabled = false;
                     f.commuting_allowance_period.value = "";
                     f.commuting_allowance_period_other.value = "";
                 }
@@ -585,10 +593,10 @@
             type="TEXT" id="J60_005F_82A0_82C4_90E6" value="{{ old('destination') }}" name="destination"
             maxlength="10" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:225px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); left:457px; top:845px; width:225px; line-height:26px; height:27px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="61"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:225px; height:26px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('address_fullname') }}" name="address_fullname" autocomplete="off"></SPAN>
+            id="J61_005F_905C_90BF_8ED2_8E81_96BC" value="{{ old('address_fullname') }}" name="address_fullname" autocomplete="off"></textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; border-top:1px solid rgb(0, 0, 0); left:400px; top:874px; width:282px; line-height:0px; height:0px;"></SPAN>
     <SPAN
@@ -754,7 +762,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:684px; top:889px; width:20px; height:15px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="72"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:20px; max-width:20px; height:15px; ime-mode:disabled;"
-            type="TEXT" id="J70_005F_92C0_8BE0_8E78_95A5_93FA" name="wage_payment_day" maxlength="2" autocomplete="off"></SPAN>
+            type="TEXT" id="J70_005F_92C0_8BE0_8E78_95A5_93FA" name="wage_payment_day" value="{{ old('wage_payment_day') }}" maxlength="2" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:638px; top:889px; width:46px; height:16px; font-size:10px;"><SELECT
             size="1" tabindex="71"

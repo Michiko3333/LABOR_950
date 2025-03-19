@@ -248,11 +248,23 @@
                     $('#J15_005F_944E').val(start_date_of_closed_2['year']);
                     $('#J16_005F_8C8E').val(start_date_of_closed_2['month']);
                     $('#J17_005F_93FA').val(start_date_of_closed_2['day']);
+                    $('#J12_005F_944E_8D86').val(start_date_of_closed_2['era']);
+                    $('#J13_005F_944E').val(start_date_of_closed_2['year']);
+                    $('#J14_005F_8C8E').val(start_date_of_closed_2['month']);
+                    $('#J15_005F_93FA').val(start_date_of_closed_2['day']);
+                    $('#J29_005F_8C8E').val(start_date_of_closed_2['month']);
+                    $('#J30_005F_93FA').val(start_date_of_closed_2['day']);
                 } else {
                     $('#J14_005F_944E_8D86').val("");
                     $('#J15_005F_944E').val("");
                     $('#J16_005F_8C8E').val("");
                     $('#J17_005F_93FA').val("");
+                    $('#J12_005F_944E_8D86').val("");
+                    $('#J13_005F_944E').val("");
+                    $('#J14_005F_8C8E').val("");
+                    $('#J15_005F_93FA').val("");
+                    $('#J29_005F_8C8E').val("");
+                    $('#J30_005F_93FA').val("");
                 }
                 if (end_date_of_losed_2 != null) {
                     $('#J52_005F_944E_8D86').val(end_date_of_losed_2['era']);

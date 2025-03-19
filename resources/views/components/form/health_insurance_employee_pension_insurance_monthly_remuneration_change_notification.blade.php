@@ -5064,16 +5064,15 @@
                     <div class="egov-tool-field-origin" style="left: 260px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N36_005F_8E96_8BC6_8F8A"
                             value="{{ old('before_revision_date_month') }}" name="before_revision_date_month"
-                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 306px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N37_96BC_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_raise_and_reduction_month') }}"
-                            name="salary_raise_and_reduction_month" maxlength="2"
+                            name="salary_raise_and_reduction_month"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 350px; top: 326.8px;">
                         <select class="egov-tool-field-rect onImage" id="N38_8F8A_96BC_005F_8F8A_8DDD_926E"
@@ -5091,9 +5090,8 @@
                     <div class="egov-tool-field-origin" style="left: 422px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N39_005F_905C_90BF"
                             value="{{ old('retroactive_payment_month') }}" name="retroactive_payment_month"
-                            maxlength="2"
                             style="width: 34px; height: 16px; font-size: 10px; text-align: center; line-height: 24px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 468px; top: 327px;">
                         <input class="egov-tool-field-rect onImage" id="N40_905C_90BF_8ED2" maxlength="7"
@@ -5104,44 +5102,44 @@
                     <div class="egov-tool-field-origin" style="left: 63px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N41_005F_96BC_8FCC"
                             value="{{ old('salary_payment_month1') }}" name="salary_payment_month1"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N42_005F_8F8A_8DDD_926E"
                             value="{{ old('salary_payment_month2') }}" name="salary_payment_month2"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 63px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N43_947A_9242_8BC7_94D4"
                             value="{{ old('salary_payment_month3') }}" name="salary_payment_month3"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 29px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 388.5px;">
                         <input class="egov-tool-field-rect onImage" id="N44_005F_92AC_88E6"
                             value="{{ old('salary_calculation_basic_days1') }}" name="salary_calculation_basic_days1"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 406px;">
                         <input class="egov-tool-field-rect onImage" id="N45__005F_8E73_8A4F_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days2') }}" name="salary_calculation_basic_days2"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 101px; top: 424px;">
                         <input class="egov-tool-field-rect onImage" id="N46__005F_8E73_93E0_8BC7_94D4"
                             value="{{ old('salary_calculation_basic_days3') }}" name="salary_calculation_basic_days3"
-                            maxlength="2" required="required"
+                            required="required"
                             style="width: 39px; height: 16px; font-size: 10px; text-align: center; line-height: 25px; padding: inherit; background-color:#ddeeff;"
-                            type="text" value="" autocomplete="off"/>
+                            type="text" maxlength="2" value="" autocomplete="off"/>
                     </div>
                     <div class="egov-tool-field-origin" style="left: 148px; top: 388px;">
                         <input class="egov-tool-field-rect onImage" id="N47_005F_89C1_93FC_8ED2_94D4_8D86"

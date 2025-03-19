@@ -118,7 +118,247 @@
         </div>
 
         <script type="module">
-            $(document).ready(function() {
+            $(document).ready(function() {function toHalfWidth(str) {
+                    return str.replace(/[０-９]/g, function (match) {
+                        const halfWidthChar = String.fromCharCode(match.charCodeAt(0) - 65248);
+                        return halfWidthChar;
+                    });
+                }
+                document.getElementById("J9_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J11_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J14_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J15_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J16_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J70_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J71_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J72_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J19_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J20_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J21_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J22_005F_8E96_8BC6_8F8A_94D4_8D864_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J23_005F_8E96_8BC6_8F8A_94D4_8D866_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J24_005F_8E96_8BC6_8F8A_94D4_8D86CD").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J25_005F_8AC7_8A8D_8BE6_95AA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J39_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J40_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J41_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J42_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J43_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J44_005F_8F41_8BC6_93FA_90941").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J122_005F_8F41_8BC6_8E9E_8AD41").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J45_005F_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J31_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J32_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J33_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J48_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J49_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J50_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J51_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J52_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J66_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J67_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J68_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J53_005F_8F41_8BC6_93FA_90942").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J54_005F_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J62_005F_9153_93FA_8B78_8BC6_93FA_90943").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J124_005F_8F41_8BC6_8E9E_8AD43").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J63_005F_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A3").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J71_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J72_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J19_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J20_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J21_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J22_005F_8E96_8BC6_8F8A_94D4_8D864_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J23_005F_8E96_8BC6_8F8A_94D4_8D866_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J24_005F_8E96_8BC6_8F8A_94D4_8D86CD").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J25_005F_8AC7_8A8D_8BE6_95AA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J39_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J40_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J41_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J42_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J43_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J44_005F_8F41_8BC6_93FA_90941").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J122_005F_8F41_8BC6_8E9E_8AD41").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J45_005F_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J78_005F_94ED_95DB_8CAF_94D4_8D86CD").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J92_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J93_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J94_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J107_005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J108_005F_8E73_93E0_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J109_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J110_005F_92C0_8BE0_92F7_90D8_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J112_005F_92C0_8BE0_8E78_95A5_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J127_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J128_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J129_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J57_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J58_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J59_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J60_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J61_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J73_005F_8C8E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("J74_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+
                 $('#J87_005F_944E_8D86').val('{{ $todaySet['japanEra'] }}');
                 $('#J88_005F_944E').val('{{ $todaySet['japanEraYear'] }}');
                 $('#J89_005F_8C8E').val('{{ $todaySet['month'] }}');
@@ -275,7 +515,7 @@
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (
                     employee.address_ward || "") + (employee.address_apartment || "");
                 if (employee.last_name && employee.first_name) {
-                    $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val(employeeAddress + '　' + employee.last_name + '　' + employee.first_name);
+                    $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                     $('#J131_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val(employee.last_name + '　' + employee.first_name);
                 } else {
                     $('#J102_005F_905C_90BF_8ED2_8E81_96BC').val('');

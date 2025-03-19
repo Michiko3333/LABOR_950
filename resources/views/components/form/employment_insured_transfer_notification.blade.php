@@ -59,10 +59,10 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:32px; top:495px; width:21px; height:192px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:174px 0px 0px 0px;"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:52px; top:495px; width:714px; line-height:190px; height:192px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:52px; top:495px; width:714px; line-height:190px; height:192px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="34"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; width:712px; height:189px; ime-mode:active;"
-            id="J29_005F_94F5_8D6C" value="{{ old('remarks') }}" name="remarks" autocomplete="off"></SPAN>
+            id="J29_005F_94F5_8D6C" name="remarks" autocomplete="off">{{ old('remarks') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:148px; top:714px; width:350px; line-height:30px; height:30px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="35"

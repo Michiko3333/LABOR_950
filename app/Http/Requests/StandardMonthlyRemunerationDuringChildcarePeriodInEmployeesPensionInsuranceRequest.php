@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
+use commonHelpers;
 
 class StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranceRequest extends BaseRequest
 {
@@ -320,6 +321,23 @@ class StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranc
                     }
                     if ($targetDate->gt($today)) {
                         $validator->errors()->add('childcare_exception_end_day', '終了欄 ー ㉑養育特例終了年月日に未来の日付を入力しないでください。');
+                    }
+                }
+            }
+            
+            if (!empty($aplyChildcareExceptionStartEra) && !empty($aplyChildcareExceptionStartYear) && !empty($aplyChildcareExceptionStartMonth) && !empty($aplyChildcareExceptionStartDay)
+            && !empty($childcareExceptionEndEra) && !empty($childcareExceptionEndYear) && !empty($childcareExceptionEndMonth) && !empty($childcareExceptionEndDay)) {
+                $startYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($aplyChildcareExceptionStartEra, Carbon::create($aplyChildcareExceptionStartYear,$aplyChildcareExceptionStartMonth,$aplyChildcareExceptionStartDay));
+                $endYear = commonHelpers::convertJapaneseCalendarToWesternCalendar($childcareExceptionEndEra, Carbon::create($childcareExceptionEndYear,$childcareExceptionEndMonth,$childcareExceptionEndDay));
+                if ($endYear < $startYear) {
+                    $validator->errors()->add('childcare_exception_end_day', '終了欄 ー ㉑養育特例終了年月日は⑳養育特例開始年月日以降を入力してください。');
+                } elseif ($endYear == $startYear) {
+                    if ($childcareExceptionEndMonth < $aplyChildcareExceptionStartMonth) {
+                        $validator->errors()->add('childcare_exception_end_day', '終了欄 ー ㉑養育特例終了年月日は⑳養育特例開始年月日以降を入力してください。');
+                    } elseif ($childcareExceptionEndMonth == $aplyChildcareExceptionStartMonth) {
+                        if ($childcareExceptionEndDay < $aplyChildcareExceptionStartDay) {
+                            $validator->errors()->add('childcare_exception_end_day', '終了欄 ー ㉑養育特例終了年月日は⑳養育特例開始年月日以降を入力してください。');
+                        }
                     }
                 }
             }
