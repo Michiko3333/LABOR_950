@@ -171,6 +171,29 @@ class WageLedger
                 $sheet->setCellValue($col . $rowIndex, $item['wage_base_amount']);
                 $bonus_month_i++;
             }
+            $bonus_month_i = 0;
+            foreach ($wage['bonus_month'] as $key => $item) {
+                if ($bonus_month_i > 3) break;
+                $col = $bonus_cols[$bonus_month_i];
+                $r_date =   $item['payment_date'];
+                if (!empty($r_date)) {
+                    $carbon_r_date = Carbon::createFromFormat('Y-m-d', $r_date);
+                    $carbon_year = $carbon_r_date->year;
+                    $era_year = '';
+                    if ($carbon_year >= 2019) {
+                        // 令和 (2019年5月1日～)
+                        $era_year = 'R' . ($carbon_year - 2018);
+                    } elseif ($carbon_year >= 1989) {
+                        // 平成 (1989年1月8日～2019年4月30日)
+                        $era_year = 'H' . ($carbon_year - 1988);
+                    } elseif ($carbon_year >= 1926) {
+                        // 昭和 (1926年12月25日～1989年1月7日)
+                        $era_year = 'S' . ($carbon_year - 1925);
+                    }
+                    $sheet->setCellValue($col . '9', $era_year . $carbon_r_date->format('.m.d'));
+                }
+                $bonus_month_i++;
+            }
 
             $rowIndex++;
 
@@ -633,6 +656,8 @@ class WageLedger
             }
             $sheet->setCellValue('P' . $rowIndex, '=SUM(D' . $rowIndex . ':O' . $rowIndex . ')');
             $sheet->removeRow(10, 1);
+            $sheet->setCellValue('B10', '支給額');
+            $sheet->setCellValue('Q10', '支給額');
         }
     }
 

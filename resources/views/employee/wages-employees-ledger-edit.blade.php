@@ -186,6 +186,7 @@
             onHidden: () => {
                 $('#additionName').val('');
                 $('#additionType').val('salary_values');
+                $('body').css('margin-right', '0px');
             },
             onApprove: () => {
                 const name = $('#additionName').val();
@@ -207,6 +208,7 @@
             onHidden: () => {
                 $('#additionNameBonus').val('');
                 $('#additionTypeBonus').val('salary_values');
+                $('body').css('margin-right', '0px');
             },
             onApprove: () => {
                 const name = $('#additionNameBonus').val();

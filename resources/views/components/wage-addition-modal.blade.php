@@ -11,7 +11,7 @@
                 maxLength="15">
         </div>
         <div class="field">
-            <label for="{{ $additionType }}">項目</label>
+            <label for="{{ $additionType }}">配置（項目）</label>
             <select name="" id="{{ $additionType }}" class="ui dropdown">
                 <option value="salary_values">支給金</option>
                 @if ($isBonus === false)
