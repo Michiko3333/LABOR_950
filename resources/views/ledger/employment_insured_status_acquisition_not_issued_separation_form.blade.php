@@ -250,7 +250,16 @@
                 $('#J34_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J35_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
                 $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(insured_age_type_data ?? "");
-                $('#J41_005F_8CD9_9770_8C60_91D4').val(employee.employment_status ?? "");
+                const employmentStatusMap = {
+                    1: '日雇',
+                    2: '派遣',
+                    3: 'アルバイト・パートタイム',
+                    4: '有期契約労働者（契約社員含む）',
+                    5: '季節的雇用',
+                    6: '船員',
+                    7: 'その他（正社員・無期雇用等）',
+                };
+                $('#J41_005F_8CD9_9770_8C60_91D4').val(employmentStatusMap[employee.employment_status] ?? "");
                 if (employee.country_id) {
                     $('#J47_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_838D_815B_837D_8E9A').val(employeeNameAlphabet);
                     $('#J86_005F_8DDD_97AF_834A_815B_8368_94D4_8D86').val(employee.residence_card_no ?? "");

@@ -273,7 +273,7 @@
                     $('#J43_005F_93FA').val(contract_end_convert_date['day'] ?? "");
                     $('#J44_005F_8C5F_96F1_8D58_9056_8FF0_8D80_974C_96B3').val((employee.contract_renewal_flg === 1) ? '有' :
                         '無');
-                    $('#J28_005F_8CD9_9770_8C60_91D4').val('');
+                    $('#J28_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
                 } else if (employee.contract_period_flg === 0) {
                     $("input[name='contract_period_flg']").eq(1).prop("checked", true);
                     $('#J35_005F_944E_8D86').val('').prop('disabled', true);
