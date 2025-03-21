@@ -28,11 +28,15 @@ class EmployeeList extends BaseTable
     {
         $this->residential_status = Residential_status::pluck('content', 'id');
         $this->country_type = Country::pluck('country_name', 'id');
+        $this->page = request()->get('p', 1);
+        $this->paginated = true;
+        $this->pageMemory = true;
         $this->dispatchFilter();
     }
 
     public function render()
     {
+        $ids = [];
         $currentCompany = CurrentUser::currentCompany();
         $currentCompanyId = $currentCompany->id;
         $prefectures = Prefecture::pluck('name', 'id');
@@ -62,6 +66,11 @@ class EmployeeList extends BaseTable
         }
 
         $this->data = $this->getData($condition);
+        foreach ($this->data['items'] as $item) {
+            $ids[] = $item->id;
+        }
+
+        $this->RestrictingQueryParameters($ids);
 
         $items = $this->data['items'];
         foreach ($items as &$item) {
@@ -114,11 +123,6 @@ class EmployeeList extends BaseTable
         return Carbon::parse($d)->format('Y年m月d日');
     }
 
-    #[On('request-reload')]
-    public function handleRequestReload($data)
-    {
-        // $this->company_name = $data['name'];
-    }
     public function toEdit($id)
     {
         $items = $this->data['items'];

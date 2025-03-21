@@ -76,11 +76,23 @@
 .preview-area input[type="CHECKBOX"]:checked::after,
 .preview-area input[type="RADIO"]:checked::after {
     position: absolute;
-    content: '';
+    content: ' ';
     width: 10px;
     height: 5px;
     top: 0px;
     left: 2px;
+    border-left: 2px solid var(--color-blue);
+    border-bottom: 2px solid var(--color-blue);
+    transform: rotate(-45deg);
+}
+
+.preview-area input:checked+.checkmark::after {
+    position: absolute;
+    content: ' ';
+    width: 10px;
+    height: 5px;
+    top: 1px;
+    left: 4px;
     border-left: 2px solid var(--color-blue);
     border-bottom: 2px solid var(--color-blue);
     transform: rotate(-45deg);

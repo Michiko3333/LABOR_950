@@ -67,7 +67,6 @@
                 '/^al-amount\.' . preg_quote($key) . '\..*/',
                 '/^al-pay_month\.' . preg_quote($key) . '\..*/',
                 '/^al-target\.' . preg_quote($key) . '\..*/',
-                '/^al-remarks\.' . preg_quote($key) . '\..*/',
                 '/^al-applied_date\.' . preg_quote($key) . '\..*/',
             ];
             $field1 = $errors->hasAny([
@@ -168,7 +167,6 @@
                 '/^al-amount\.' . preg_quote($key) . '\..*/',
                 '/^al-pay_month\.' . preg_quote($key) . '\..*/',
                 '/^al-target\.' . preg_quote($key) . '\..*/',
-                '/^al-remarks\.' . preg_quote($key) . '\..*/',
                 '/^al-applied_date\.' . preg_quote($key) . '\..*/',
             ];
 

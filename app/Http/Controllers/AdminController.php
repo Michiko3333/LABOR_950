@@ -528,7 +528,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         if ($alid > 0) {
@@ -538,7 +537,6 @@ class AdminController extends Controller
                                 'amount' => $data['al-amount'][$branchIndex][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                                 'target' => $data['al-target'][$branchIndex][$alIndex],
-                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                             ]);
                             $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
@@ -554,7 +552,6 @@ class AdminController extends Controller
                                 'amount' => $data['al-amount'][$branchIndex][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                                 'target' => $data['al-target'][$branchIndex][$alIndex],
-                                'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                                 'branch_id' => $brid,
                             ])->id;
@@ -692,7 +689,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                             'branch_id' => $brid,
                         ])->id;
@@ -703,7 +699,6 @@ class AdminController extends Controller
                             'amount' => $data['al-amount'][$branchIndex][$alIndex],
                             'pay_month' => $data['al-pay_month'][$branchIndex][$alIndex],
                             'target' => $data['al-target'][$branchIndex][$alIndex],
-                            'remarks' => $data['al-remarks'][$branchIndex][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         Branch_allowance_history::create($allowanceHistoryData);
@@ -2544,12 +2539,16 @@ class AdminController extends Controller
 
             DB::commit();
             $this->putSuccess();
+            if($request->input('query_parameter')) {
+                return redirect()->to($request->input('query_parameter'));
+            } else {
+                return redirect()->route('admin.labor');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
             return back()->withErrors('エラー');
         }
-        return redirect()->route('admin.labor');
     }
 
     private function data_dependent(array $requestData, $index, $employee_id)

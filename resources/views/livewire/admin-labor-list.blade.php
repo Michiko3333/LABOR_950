@@ -27,7 +27,7 @@
         </thead>
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
-                <tr class="card">
+                <tr class="card" id="{{ $item->id }}">
                     <td>{{ $item->last_name }} {{ $item->first_name }}</td>
                     <td>
                         @if ($item->company_division == 1)
@@ -48,9 +48,9 @@
                                 個別権限
                             </button>
                         @endif
-                        <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
+                        <a href="/employee/edit/{{ $item->id }}" onclick="addQueryParameter(event, '{{ $item->id }}')" class="ui basic primary button">
                             編集
-                        </button>
+                        </a>
                     </td>
                 </tr>
             @endforeach
@@ -59,4 +59,37 @@
 
     <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
 
+    <script type="module">
+        $(document).ready(function() {
+            sessionStorage.removeItem('pageHistory');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            if (itemId) {
+                const element = $(`#${itemId}`);
+                if (element) {
+                    $('html, body').animate({
+                        scrollTop: element.offset().top - ($(window).height() / 2) + (element.outerHeight() / 2)
+                    }, 800, function () {
+                        element.addClass('fade-highlight');
+                    });
+                }
+            }
+        });
+
+        window.addQueryParameter = function(event, id) {
+            event.preventDefault();
+
+            const href = event.target.getAttribute('href');
+            const nextUrl = new URL(href, window.location.origin);
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('id', id);
+            window.history.pushState({}, '', currentUrl);
+
+            sessionStorage.setItem('pageHistory', JSON.stringify(currentUrl));
+            window.location.href = nextUrl.toString();
+        }
+    </script>
 </div>

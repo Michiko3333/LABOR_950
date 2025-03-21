@@ -42,6 +42,45 @@
                         });
                     })
 
+                    window.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(updateSalaryItemOptions, 100);
+                    });
+                    document.querySelectorAll(key + ' .department_select').forEach(selectElement => {
+                        selectElement.addEventListener('change', function() {
+                            updateSalaryItemOptions();
+                        });
+                    });
+                    document.querySelectorAll('.append-salary').forEach(button => {
+                        button.addEventListener('click', function() {
+                            setTimeout(updateSalaryItemOptions, 500);
+                        });
+                    });
+                    function updateSalaryItemOptions() {
+                        let selectedValues = new Set();
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let selected = $(dropdown).dropdown('get value');
+                            if (selected) {
+                                selected.forEach(value => selectedValues.add(value));
+                            }
+                        });
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let $dropdown = $(dropdown);
+                            let options = $dropdown.find('option');
+
+                            options.each(function () {
+                                let optionValue = $(this).val();
+                                if (selectedValues.has(optionValue) && !$(this).is(':selected')) {
+                                    $(this).prop('disabled', true);
+                                } else {
+                                    $(this).prop('disabled', false);
+                                }
+                            });
+
+                            $dropdown.dropdown('refresh');
+                        });
+                    }
                 }
             })
         }

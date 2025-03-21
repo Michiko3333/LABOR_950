@@ -154,6 +154,7 @@
                     const employee_prefecture_data = data['employee_prefecture_data'];
                     const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                     const insured_age_type_data = data['insured_age_type_data'];
+                    const pensionOffice = data['pensionOffice'];
                     const employeeName = (employee.last_name ? employee.last_name + '　' : "") + (employee.first_name ?? "");
                     const employeeNameKana = (employee.last_name_kana ? employee.last_name_kana + '　' : "") + (employee.first_name_kana ?? "");
                     const headquartersAddress = (branch_prefecture_data.name ?? "") + (branch.address_city ?? "") + (branch.address_ward ?? "") + (branch.address_apartment ?? "");
@@ -194,6 +195,28 @@
                         $('#employee_sex_man').prop("checked", true);
                     } else {
                         $('#employee_sex_woman').prop("checked", true);
+                    }
+
+                    const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                    const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                    if(pensionOffice){
+                        prefectureSelect.addEventListener('change', function () {
+                        setTimeout(()=>{
+                                helloWorkSelect.value = pensionOffice.id;
+                            },500);
+                        });
+                        prefectureSelect.value = pensionOffice.address_prefecture;
+                        prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                        document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                        document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                        document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                    }else{
+                        $("select[name='selected_prefecture']").val('');
+                        $("select[name='selected_pension_office']").val('');
+                        $("input[name='apply_to_name']").val('');
+                        $("input[name='apply_to_code']").val('');
                     }
                 }
 

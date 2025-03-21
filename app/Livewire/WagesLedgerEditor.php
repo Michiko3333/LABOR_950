@@ -48,8 +48,10 @@ class WagesLedgerEditor extends Component
     public $salary_names = [];
     public $overtime_names = [];
     public $allowance_names = [];
+    public $deduction_names = [];
 
     public $bonus_salary_names = [];
+    public $bonus_deduction_names = [];
 
     public $disablePrev = true;
     public $disableNext = true;
@@ -58,8 +60,8 @@ class WagesLedgerEditor extends Component
 
     public $errorMessage = '';
 
-    public $wage_name = ['給与', '役員報酬'];
-    public $bonus_name = ['賞与', '役員賞与'];
+    public $wage_name = ['給与'];
+    public $bonus_name = ['賞与'];
 
     public function mount($employee_ids, $year)
     {
@@ -74,7 +76,6 @@ class WagesLedgerEditor extends Component
         $this->month_order = $this->listMonths($this->getStartMonth());
 
         $carbon_start = Carbon::create($this->year, $this->start_month, 1, 0, 0, 0);
-
         $wage = Wage::where('company_id', $current_company->id)
             ->whereIn('employee_id', $this->employee_ids)
             ->whereBetween('month', [
@@ -90,8 +91,12 @@ class WagesLedgerEditor extends Component
                 },
                 'overtime' => function ($query) {
                     $query->where('delete_flg', 0);
-                }
+                },
+                'deduction' => function ($query) {
+                    $query->where('delete_flg', 0);
+                },
             ])
+            ->where('delete_flg', 0)
             ->orderBy('month')
             ->get();
 
@@ -101,6 +106,7 @@ class WagesLedgerEditor extends Component
                 $carbon_start->format('Y-m-d'),
                 $carbon_start->clone()->addYear()->subday()->format('Y-m-d')
             ])
+            ->where('delete_flg', 0)
             ->orderBy('month')
             ->get();
 
@@ -119,6 +125,7 @@ class WagesLedgerEditor extends Component
         $base_month['salary_values'] = [];
         $base_month['overtime_values'] = [];
         $base_month['allowance_values'] = [];
+        $base_month['deduction_values'] = [];
 
         $this->attendance_column = AttendanceColumns::select('id', 'key', 'name')
             ->where('is_ledger', 1)
@@ -164,6 +171,10 @@ class WagesLedgerEditor extends Component
                         $this->allowance_names[] = $value['name'];
                         $wage_data['allowance_values'][$value['name']] = $value['amount'];
                     }
+                    foreach ($wage_data['deduction'] as $key => $value) {
+                        $this->deduction_names[] = $value['name'];
+                        $wage_data['deduction_values'][$value['name']] = $value['amount'];
+                    }
                 }
                 $d['month'][$month] = array_merge($base_month, $wage_data);
 
@@ -206,6 +217,10 @@ class WagesLedgerEditor extends Component
                     $this->bonus_salary_names[] = $value['name'];
                     $bonus_data['salary_values'][$value['name']] = $value['amount'];
                 }
+                foreach ($bonus_data['deduction'] as $key => $value) {
+                    $this->bonus_deduction_names[] = $value['name'];
+                    $bonus_data['deduction_values'][$value['name']] = $value['amount'];
+                }
                 $d['bonus_month'][$bonus_month] = $bonus_data;
             }
 
@@ -221,8 +236,9 @@ class WagesLedgerEditor extends Component
         $this->salary_names = array_unique($this->salary_names, SORT_STRING);
         $this->overtime_names = array_unique($this->overtime_names, SORT_STRING);
         $this->allowance_names = array_unique($this->allowance_names, SORT_STRING);
+        $this->deduction_names = array_unique($this->deduction_names, SORT_STRING);
         $this->bonus_salary_names = array_unique($this->bonus_salary_names, SORT_STRING);
-
+        $this->bonus_deduction_names = array_unique($this->bonus_deduction_names, SORT_STRING);
 
         $labor = WageInsuranceColumn::select('keys', 'type')->where('company_id', $current_company->id)
             ->where('employee_id', $current_user->id)
@@ -251,6 +267,11 @@ class WagesLedgerEditor extends Component
                 foreach ($this->allowance_names as $name) {
                     if (!in_array($name, array_keys($monthly_data['allowance_values']))) {
                         $monthly_data['allowance_values'][$name] = '';
+                    }
+                }
+                foreach ($this->deduction_names as $name) {
+                    if (!in_array($name, array_keys($monthly_data['deduction_values']))) {
+                        $monthly_data['deduction_values'][$name] = '';
                     }
                 }
 
@@ -329,7 +350,9 @@ class WagesLedgerEditor extends Component
                 'salary_names' => $this->salary_names,
                 'overtime_names' => $this->overtime_names,
                 'allowance_names' => $this->allowance_names,
+                'deduction_names' => $this->deduction_names,
                 'bonus_salary_names' => $this->bonus_salary_names,
+                'bonus_deduction_names' => $this->bonus_deduction_names,
             ], $this->month_order);
 
 
@@ -477,6 +500,57 @@ class WagesLedgerEditor extends Component
         foreach ($deduction_keys as $key_name) {
             $deduction += (int) $month_data[$key_name] ?? 0;
         }
+        if ($is_bonus) {
+            foreach ($this->bonus_deduction_names as $name) {
+                if (in_array($name, array_keys($month_data['deduction_values']))) {
+                    $deduction += (int) $month_data['deduction_values'][$name] ?? 0;
+                }
+            }
+        } else {
+            foreach ($this->deduction_names as $name) {
+                if (in_array($name, array_keys($month_data['deduction_values']))) {
+                    $deduction += (int) $month_data['deduction_values'][$name] ?? 0;
+                }
+            }
+        }
+        return $deduction;
+    }
+
+    public function getSocialDeductionSumRow($is_bonus = false)
+    {
+        $sum = 0;
+        if ($is_bonus) {
+            foreach ($this->bonus_month_order as $month) {
+                $sum += $this->getSocialDeductionSumCol($month, true);
+            }
+        } else {
+            foreach ($this->month_order as $month) {
+                $sum += $this->getSocialDeductionSumCol($month);
+            }
+        }
+
+        return $sum;
+    }
+
+    public function getSocialDeductionSumCol($month, $is_bonus = false)
+    {
+        $query = $this->wage_column->where('calc', 2);
+        if ($is_bonus) $query = $query->where('hide_bonus', 0);
+        $deduction_keys = $query->pluck('key')->toArray();
+
+        $target = 'month';
+        if ($is_bonus) $target = 'bonus_month';
+
+        $month_list = $this->currentData($target);
+        if (empty($month_list[$month])) return 0;
+        $month_data = $month_list[$month];
+        $deduction = 0;
+        foreach ($deduction_keys as $key_name) {
+            if (in_array($key_name, ['health_insurance_deduction', 'nursing_care_insurance_deduction', 'welfare_pension_deduction', 'welfare_pension_insurance_deduction', 'employment_insurance_deduction'])) {
+                $deduction += (int) $month_data[$key_name] ?? 0;
+            }
+        }
+
         return $deduction;
     }
 
@@ -526,6 +600,19 @@ class WagesLedgerEditor extends Component
         if ($type == 'salary_values') $this->salary_names[] = $name;
         else if ($type == 'overtime_values') $this->overtime_names[] = $name;
         else if ($type == 'allowance_values') $this->allowance_names[] = $name;
+        else if ($type == 'deduction_values') $this->deduction_names[] = $name;
+    }
+
+    #[On('approve-addition-bonus')]
+    public function pushBonusAllowanceToCurrent($name, $type)
+    {
+        foreach ($this->data as &$item) {
+            foreach ($this->bonus_month_order as $month) {
+                $item['bonus_month'][$month][$type][$name] = '';
+            }
+        }
+        if ($type == 'salary_values') $this->bonus_salary_names[] = $name;
+        else if ($type == 'deduction_values') $this->bonus_deduction_names[] = $name;
     }
 
     public function removeAddition($name, $type)
@@ -553,6 +640,12 @@ class WagesLedgerEditor extends Component
                 unset($this->allowance_names[$key]);
                 $this->allowance_names = array_values($this->allowance_names);
             }
+        } else if ($type == 'deduction_values') {
+            $key = array_search($name, $this->deduction_names);
+            if (!is_bool($key)) {
+                unset($this->deduction_names[$key]);
+                $this->deduction_names = array_values($this->deduction_names);
+            }
         }
     }
 
@@ -568,6 +661,12 @@ class WagesLedgerEditor extends Component
             if (!is_bool($key)) {
                 unset($this->bonus_salary_names[$key]);
                 $this->bonus_salary_names = array_values($this->bonus_salary_names);
+            }
+        } else if ($type == 'deduction_values') {
+            $key = array_search($name, $this->bonus_deduction_names);
+            if (!is_bool($key)) {
+                unset($this->bonus_deduction_names[$key]);
+                $this->bonus_deduction_names = array_values($this->bonus_deduction_names);
             }
         }
     }

@@ -3113,13 +3113,13 @@
                             <input value="健康保険" type="hidden" name="health_insurance">
                             <input value="厚生年金保険" type="hidden" name="welfare_pension_insurance">
                             <div class="egov-tool-field-origin" style="left: 90px; top: 65px;">
-                                <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="input_date_japan_era_year" required="required" style="width: 26px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('input_date_japan_era_year') }}" autocomplete="off"/>
+                                <input class="egov-tool-field-rect onImage" id="N5_005F_8C8E" name="input_date_japan_era_year" required="required" style="width: 26px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ffffff;" type="text" value="{{ old('input_date_japan_era_year') }}" autocomplete="off" readonly/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 125px; top: 65px;">
-                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" name="input_date_month" required="required" style="width: 24px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('input_date_month') }}" autocomplete="off"/>
+                                <input class="egov-tool-field-rect onImage" id="N6_005F_93FA" name="input_date_month" required="required" style="width: 24px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ffffff;" type="text" value="{{ old('input_date_month') }}" autocomplete="off" readonly/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 159px; top: 65px;">
-                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" name="input_date_day" required="required" style="width: 24px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('input_date_day') }}" autocomplete="off"/>
+                                <input class="egov-tool-field-rect onImage" id="N7_005F_944E_8D86" name="input_date_day" required="required" style="width: 24px; height: 18px; font-size: 10px; text-align: center; line-height: 22px; padding: inherit; background-color:#ffffff;" type="text" value="{{ old('input_date_day') }}" autocomplete="off" readonly/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 159px; top: 86px;">
                                 <input class="egov-tool-field-rect onImage" id="N8_005F_944E" maxlength="2" name="employee_pension_office_reference_prefecture" required="required" style="width: 32px; height: 17px; font-size: 10px; text-align: left; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('employee_pension_office_reference_prefecture') }}" autocomplete="off"/>
@@ -3131,7 +3131,7 @@
                                 <input class="egov-tool-field-rect onImage" id="N10_005F_93FA" maxlength="4" name="employee_pension_office_reference_no_office" required="required" style="width: 45.5px; height: 17px; font-size: 10px; text-align: left; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('employee_pension_office_reference_no_office') }}" autocomplete="off"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 347px; top: 86px;">
-                                <input class="egov-tool-field-rect onImage" id="N11_005F_94ED_95DB_8CAF_8ED2_8E81" maxlength="5" name="branch_insurance_office_no" required="required" style="width: 103px; height: 17px; font-size: 10px; text-align: right; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('branch_insurance_office_no') }}" autocomplete="off"/>
+                                <input class="egov-tool-field-rect onImage" id="N11_005F_94ED_95DB_8CAF_8ED2_8E81" maxlength="5" name="branch_insurance_office_no" required="required" style="width: 102px; height: 17px; font-size: 10px; text-align: right; line-height: 22px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('branch_insurance_office_no') }}" autocomplete="off"/>
                             </div>
                             <div class="egov-tool-field-origin" style="left: 190px; top: 105px;">
                                 <input class="egov-tool-field-rect onImage" id="N12_005F_905C_90BF_8ED2_8E81" maxlength="3" name="branch_post_code_first" required="required" style="width: 30px; height: 14px; font-size: 10px; text-align: center; line-height: 19px; padding: inherit; background-color:#ddeeff;" type="text" value="{{ old('branch_post_code_first') }}" autocomplete="off"/>

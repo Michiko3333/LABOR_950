@@ -55,6 +55,7 @@
 
                 $(element).calendar({
                     type: 'date',
+                    maxDate: new Date(),
                     formatter: {
                         date: 'Y"年"M"月"D"日"'
                     },

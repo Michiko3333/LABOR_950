@@ -59,6 +59,24 @@
                 flex-shrink: 0;
                 flex-grow: 0;
             }
+
+            .fade-highlight {
+                animation: fadeHighlight 0.5s ease-out forwards;
+            }
+
+            @keyframes fadeHighlight {
+                0% {
+                    box-shadow: none;
+                }
+
+                50% {
+                    box-shadow: inset 0 0 0 2px rgba(153, 153, 153, 0.5);
+                }
+
+                100% {
+                    box-shadow: inset 0 0 0 2px #999999;
+                }
+            }
         </style>
     @endslot
     <section class="content">
@@ -105,6 +123,9 @@
                 },
                 onApprove: () => {
                     window.$lw.onSave();
+                    const url = new URL(window.location.href);
+                    url.search = '';
+                    window.history.replaceState({}, '', url.toString());
                 }
             }).modal('show');
         });

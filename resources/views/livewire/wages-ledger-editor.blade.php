@@ -37,7 +37,12 @@
 
                         <h2>給与</h2>
                         <div class="controller mb-1">
-                            <button class="ui button small" id="openNewAddition" type="button">支給・手当を追加</button>
+                            <button class="ui button small" id="openNewAddition" type="button">項目を追加</button>
+                        </div>
+                        <div class="controller mb-1">
+                            <span class="type-salary-text">主な支給（青色）</span>、<span
+                                class="type-overtime-text">時間外手当（紫色）</span>、<span
+                                class="type-allowance-text">諸手当（緑色）</span>、<span class="type-deduction-text">控除（赤色）</span>
                         </div>
                         <div class="ui short scrolling container" style="width: 100%; max-height: 800px;">
                             <table class="ui first last head foot stuck unstackable celled table">
@@ -52,7 +57,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($wage_column_names as $key => $name)
-                                        @if ($key == 'taxable_paymment')
+                                        @if ($key == 'absence_deduction')
                                             <tr class="empty-line">
                                                 <td></td>
                                                 <td></td>
@@ -74,7 +79,7 @@
                                         @if ($key == 'overtime_values')
                                             @foreach ($overtime_names as $name)
                                                 <tr>
-                                                    <td>
+                                                    <td class="type-overtime">
                                                         <button class="remove-cotrollable" type="button"
                                                             wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
                                                                 class="trash alternate outline icon"></i></button>{{ $name }}
@@ -96,7 +101,7 @@
                                         @elseif ($key == 'allowance_values')
                                             @foreach ($allowance_names as $name)
                                                 <tr>
-                                                    <td>
+                                                    <td class="type-allowance">
                                                         <button class="remove-cotrollable" type="button"
                                                             wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
                                                                 class="trash alternate outline icon"></i></button>{{ $name }}
@@ -118,7 +123,7 @@
                                         @elseif ($key == 'salary_values')
                                             @foreach ($salary_names as $name)
                                                 <tr>
-                                                    <td>
+                                                    <td class="type-salary">
                                                         <button class="remove-cotrollable" type="button"
                                                             wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
                                                                 class="trash alternate outline icon"></i></button>{{ $name }}
@@ -137,6 +142,36 @@
                                                     <td>{{ $this->getControllableRowSum($key, $name) }}</td>
                                                 </tr>
                                             @endforeach
+                                        @elseif ($key == 'deduction_values')
+                                            @foreach ($deduction_names as $name)
+                                                <tr>
+                                                    <td class="type-deduction">
+                                                        <button class="remove-cotrollable" type="button"
+                                                            wire:click="removeAddition('{{ $name }}', '{{ $key }}')"><i
+                                                                class="trash alternate outline icon"></i></button>{{ $name }}
+                                                    </td>
+                                                    @foreach ($this->month_order as $month)
+                                                        <td>
+                                                            <div class="ui input month">
+                                                                <input class="hide-spin" type="number"
+                                                                    name="{{ $key }}[]" placeholder=""
+                                                                    min="0" max="99999999" autocomplete="off"
+                                                                    wire:key="{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}"
+                                                                    wire:model.live="data.{{ $current_id }}.month.{{ $month }}.{{ $key }}.{{ $name }}">
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                    <td>{{ $this->getControllableRowSum($key, $name) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @elseif ($key == 'social_insurance_amount')
+                                            <tr class="label">
+                                                <td>{{ $name }}</td>
+                                                @foreach ($this->month_order as $month)
+                                                    <td>{{ $this->getSocialDeductionSumCol($month) }}</td>
+                                                @endforeach
+                                                <td>{{ $this->getSocialDeductionSumRow() }}</td>
+                                            </tr>
                                         @elseif ($key == 'deduction_sum')
                                             <tr class="label">
                                                 <td>{{ $name }}</td>
@@ -146,6 +181,8 @@
                                                 <td>{{ $this->getDeductionSumRow() }}</td>
                                             </tr>
                                         @elseif ($key == 'wage_amount')
+
+                                        @elseif ($key == 'payment_date')
                                         @else
                                             <tr>
                                                 <td>{{ $name }}</td>
@@ -163,7 +200,7 @@
                                                 <td>{{ $this->getRowSum($key) }}</td>
                                             </tr>
 
-                                            @if ($key == 'non_taxable_paymment')
+                                            @if ($key == 'taxable_paymment')
                                                 <tr class="label">
                                                     <td>支給合計</td>
                                                     @foreach ($this->month_order as $month)
@@ -209,6 +246,12 @@
                 @case('bonus')
                     <main class="tab pt-1" data-tab="bonus">
                         <h2>賞与</h2>
+                        <div class="controller mb-1">
+                            <button class="ui button small" id="openNewAdditionBonus" type="button">項目を追加</button>
+                        </div>
+                        <div class="controller mb-1">
+                            <span class="type-salary-text">主な支給（青色）</span>、<span class="type-deduction-text">控除（赤色）</span>
+                        </div>
                         <div class="ui short scrolling container" style="width: 100%; max-height: 800px;">
                             <table class="ui first last head foot stuck unstackable celled table">
                                 <thead>
@@ -224,10 +267,21 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($bonus_column_names as $key => $name)
+                                        @if ($key == 'non_taxable_paymment')
+                                            <tr class="empty-line">
+                                                <td></td>
+                                                @foreach ($bonus_month_order as $month)
+                                                    @if (!empty($data[$current_id]['bonus_month'][$month]))
+                                                        <td style="border-left: none;"></td>
+                                                    @endif
+                                                @endforeach
+                                                <td></td>
+                                            </tr>
+                                        @endif
                                         @if ($key == 'salary_values')
                                             @foreach ($bonus_salary_names as $salary_name)
                                                 <tr>
-                                                    <td>
+                                                    <td class="type-salary">
                                                         <button class="remove-cotrollable" type="button"
                                                             wire:click="removeAdditionBonus('{{ $salary_name }}', '{{ $key }}')"><i
                                                                 class="trash alternate outline icon"></i></button>{{ $salary_name }}
@@ -239,6 +293,7 @@
                                                                     <input class="hide-spin" type="number"
                                                                         name="{{ $key }}[]" placeholder=""
                                                                         min="0" max="99999999" autocomplete="off"
+                                                                        wire:key="{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}"
                                                                         wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $salary_name }}">
                                                                 </div>
                                                             </td>
@@ -247,6 +302,38 @@
                                                     <td>{{ $this->getControllableRowSumBonus($key, $salary_name) }}</td>
                                                 </tr>
                                             @endforeach
+                                        @elseif ($key == 'deduction_values')
+                                            @foreach ($bonus_deduction_names as $deduction_name)
+                                                <tr>
+                                                    <td class="type-deduction">
+                                                        <button class="remove-cotrollable" type="button"
+                                                            wire:click="removeAdditionBonus('{{ $deduction_name }}', '{{ $key }}')"><i
+                                                                class="trash alternate outline icon"></i></button>{{ $deduction_name }}
+                                                    </td>
+                                                    @foreach ($this->bonus_month_order as $month)
+                                                        <td>
+                                                            <div class="ui input month">
+                                                                <input class="hide-spin" type="number"
+                                                                    name="{{ $key }}[]" placeholder=""
+                                                                    min="0" max="99999999" autocomplete="off"
+                                                                    wire:key="{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $deduction_name }}"
+                                                                    wire:model.live="data.{{ $current_id }}.bonus_month.{{ $month }}.{{ $key }}.{{ $deduction_name }}">
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                    <td>{{ $this->getControllableRowSum($key, $name) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @elseif ($key == 'payment_date')
+
+                                        @elseif ($key == 'social_insurance_amount')
+                                            <tr class="label">
+                                                <td>{{ $name }}</td>
+                                                @foreach ($this->bonus_month_order as $month)
+                                                    <td>{{ $this->getSocialDeductionSumCol($month, true) }}</td>
+                                                @endforeach
+                                                <td>{{ $this->getSocialDeductionSumRow(true) }}</td>
+                                            </tr>
                                         @elseif ($key == 'deduction_sum')
                                             <tr class="label">
                                                 <td>{{ $name }}</td>
@@ -276,7 +363,16 @@
                                                 <td>{{ $this->getRowSum($key, true) }}</td>
                                             </tr>
                                         @endif
-                                        @if ($key == 'non_taxable_paymment' || $key == 'other_insurance_deduction' || $key == 'other_deduction')
+                                        @if ($key == 'taxable_paymment')
+                                            <tr class="label">
+                                                <td>支給合計</td>
+                                                @foreach ($this->bonus_month_order as $month)
+                                                    <td>{{ $this->getAddtionSumCol($month, true) }}</td>
+                                                @endforeach
+                                                <td>{{ $this->getAddtionSumRow(true) }}</td>
+                                            </tr>
+                                        @endif
+                                        @if ($key == 'social_insurance_target' || $key == 'other_insurance_deduction' || $key == 'other_deduction')
                                             <tr class="empty-line">
                                                 <td></td>
                                                 @foreach ($bonus_month_order as $month)
@@ -325,8 +421,9 @@
                                             @foreach ($this->month_order as $month)
                                                 <td>
                                                     <div class="ui input month">
-                                                        <input class="hide-spin" type="number" name="{{ $key }}[]"
-                                                            placeholder="" min="0" max="99999999" autocomplete="off"
+                                                        <input class="hide-spin" type="number"
+                                                            name="{{ $key }}[]" placeholder="" min="0"
+                                                            max="99999999" autocomplete="off"
                                                             wire:model.live="data.{{ $current_id }}.atd_month.{{ $month }}.{{ $key }}"
                                                             wire:key="data.{{ $current_id }}.atd_month.{{ $month }}.{{ $key }}">
                                                     </div>

@@ -10,6 +10,7 @@ use App\Models\Wage;
 use App\Models\WageAllowance;
 use App\Models\WageColumns;
 use App\Models\WageCommuteColumn;
+use App\Models\WageDeduction;
 use App\Models\WageFilterConfig;
 use App\Models\WageInsuranceColumn;
 use App\Models\WageOvertime;
@@ -85,6 +86,7 @@ class WagesEmployeeController extends Controller
         }
 
         $employee_ids = $request->input('selected', []);
+        \Log::info([$employee_ids]);
         return view('employee.wages-employees-ledger-edit', ['year' => $request->input('year'), 'employee_ids' => $employee_ids]);
     }
 
@@ -130,6 +132,7 @@ class WagesEmployeeController extends Controller
                 'salary_columns' => [],
                 'allowance_columns' => [],
                 'overtime_columns' => [],
+                'deduction_columns' => [],
                 'data' => []
             ]);
         }
@@ -173,6 +176,9 @@ class WagesEmployeeController extends Controller
             },
             'overtime' => function ($query) {
                 $query->where('delete_flg', 0);
+            },
+            'deduction' => function ($query) {
+                $query->where('delete_flg', 0);
             }
         ])->get();
 
@@ -186,11 +192,12 @@ class WagesEmployeeController extends Controller
         $salary_columns = [];
         $allowance_columns = [];
         $overtime_columns = [];
+        $deduction_columns = [];
         foreach ($data as &$item) {
             $item['salary_values'] = [];
             $item['allowance_values'] = [];
             $item['overtime_values'] = [];
-
+            $item['deduction_values'] = [];
             if (!empty($item['salary'])) {
                 foreach ($item['salary'] as $salary) {
                     $salary_columns[$salary['name']] = true;
@@ -211,14 +218,20 @@ class WagesEmployeeController extends Controller
                     $item['overtime_values'][$overtime['name']] = $overtime;
                 }
             }
-            unset($item['salary'], $item['allowance'], $item['overtime']);
+
+            if (!empty($item['deduction'])) {
+                foreach ($item['deduction'] as $deduction) {
+                    $deduction_columns[$deduction['name']] = true;
+                    $item['deduction_values'][$deduction['name']] = $deduction;
+                }
+            }
         }
 
         // カラム確定
         $salary_columns = array_keys($salary_columns);
         $allowance_columns = array_keys($allowance_columns);
         $overtime_columns = array_keys($overtime_columns);
-
+        $deduction_columns = array_keys($deduction_columns);
         // 全データに対して欠損分を埋める
         foreach ($data as &$item) {
             foreach ($salary_columns as $salary_name) {
@@ -252,6 +265,17 @@ class WagesEmployeeController extends Controller
                     ];
                 }
             }
+
+            foreach ($deduction_columns as $deduction_name) {
+                if (!isset($item['deduction_values'][$deduction_name])) {
+                    $item['deduction_values'][$deduction_name] = [
+                        'id' => null,
+                        'name' => $deduction_name,
+                        'amount' => null,
+                        'type' => 0
+                    ];
+                }
+            }
         }
 
         // キーソート
@@ -268,6 +292,7 @@ class WagesEmployeeController extends Controller
             'salary_columns' => $salary_columns,
             'allowance_columns' => $allowance_columns,
             'overtime_columns' => $overtime_columns,
+            'deduction_columns' => $deduction_columns,
             'data' => $data
         ]);
     }
@@ -284,6 +309,7 @@ class WagesEmployeeController extends Controller
             'salary' => 'array',
             'allowance' => 'array',
             'overtime' => 'array',
+            'deduction' => 'array',
             'change_name' => 'array',
             'remove_name' => 'array',
             'conditions' => 'array',
@@ -295,7 +321,7 @@ class WagesEmployeeController extends Controller
         $salaries = $request->input('salary');
         $allowances = $request->input('allowance');
         $overtimes = $request->input('overtime');
-
+        $deductions = $request->input('deduction');
         $changes = $request->input('change_name');
         $removes = $request->input('remove_name');
         $condition_data = $request->input('conditions');
@@ -379,6 +405,22 @@ class WagesEmployeeController extends Controller
                 }
             }
 
+            foreach ($deductions as $wage_id => $values) {
+                foreach ($values as $key => $v) {
+                    $q = WageDeduction::where('wage_id', $wage_id)->where('delete_flg', 0)->where('name', strval($key));
+                    if ($q->exists()) {
+                        $q->update(['amount' => $v]);
+                    } else {
+                        WageDeduction::create([
+                            'company_id' => $current_company->id,
+                            'wage_id' => $wage_id,
+                            'name' => strval($key),
+                            'amount' => $v
+                        ]);
+                    }
+                }
+            }
+
             $conditions = [
                 'wage_year' => $condition_data['conditions']['wage_year'] ?? null,
                 'wage_month' => $condition_data['conditions']['wage_month'] ?? null,
@@ -404,6 +446,9 @@ class WagesEmployeeController extends Controller
                 },
                 'overtime' => function ($query) {
                     $query->where('delete_flg', 0);
+                },
+                'deduction' => function ($query) {
+                    $query->where('delete_flg', 0);
                 }
             ])->get();
             $wage = $this->wage_detail_filter($wage, $conds);
@@ -425,6 +470,11 @@ class WagesEmployeeController extends Controller
                         ->where('name', $remove['key'])
                         ->where('delete_flg', 0)
                         ->update(['delete_flg' => 1]);
+                } else if ($remove['section'] == 'deduction') {
+                    WageDeduction::whereIn('wage_id', $target_ids)
+                        ->where('name', $remove['key'])
+                        ->where('delete_flg', 0)
+                        ->update(['delete_flg' => 1]);
                 }
             }
 
@@ -441,6 +491,11 @@ class WagesEmployeeController extends Controller
                         ->update(['name' => $change['val']]);
                 } else if ($change['section'] == 'allowance') {
                     WageAllowance::whereIn('wage_id', $target_ids)
+                        ->where('name', $change['key'])
+                        ->where('delete_flg', 0)
+                        ->update(['name' => $change['val']]);
+                } else if ($change['section'] == 'deduction') {
+                    WageDeduction::whereIn('wage_id', $target_ids)
                         ->where('name', $change['key'])
                         ->where('delete_flg', 0)
                         ->update(['name' => $change['val']]);
@@ -829,6 +884,23 @@ class WagesEmployeeController extends Controller
                         return $overtime->name === $cond['name'] && $overtime->amount >= $cond['amount'];
                     } else {
                         return $overtime->name === $cond['name'] && $overtime->amount <= $cond['amount'];
+                    }
+                });
+                return !$contain;
+            });
+
+            $wage = $wage->reject(function ($w) use ($cond) {
+                $hasCommuteDeduction = $w->deduction->contains(function ($deduction) use ($cond) {
+                    return $deduction->name === $cond['name'];
+                });
+                if (!$hasCommuteDeduction) {
+                    return false;
+                }
+                $contain = $w->deduction->contains(function ($deduction) use ($cond) {
+                    if (empty($cond['comparison'])) {
+                        return $deduction->name === $cond['name'] && $deduction->amount >= $cond['amount'];
+                    } else {
+                        return $deduction->name === $cond['name'] && $deduction->amount <= $cond['amount'];
                     }
                 });
                 return !$contain;

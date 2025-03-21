@@ -1285,6 +1285,7 @@ class Calendar extends Component
 
         $this->resetForm();
         $this->dispatch('modal-closeCalendarModal');
+        $this->dispatch('success');
         return true;
     }
 

@@ -59,6 +59,48 @@
                             }
                         });
                     });
+
+                    window.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(updateBountyItemOptions, 100);
+                    });
+                    document.querySelectorAll(key + ' .department_select').forEach(selectElement => {
+                        selectElement.addEventListener('change', function() {
+                            updateBountyItemOptions();
+                        });
+                    });
+                    document.querySelectorAll('.append-bounty').forEach(button => {
+                        button.addEventListener('click', function() {
+                            setTimeout(updateBountyItemOptions, 500);
+                        });
+                    });
+
+                    function updateBountyItemOptions() {
+                        let selectedValues = new Set();
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let selected = $(dropdown).dropdown('get value');
+                            if (selected) {
+                                selected.forEach(value => selectedValues.add(value));
+                            }
+                        });
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let $dropdown = $(dropdown);
+                            let options = $dropdown.find('option');
+
+                            options.each(function() {
+                                let optionValue = $(this).val();
+                                if (selectedValues.has(optionValue) && !$(this).is(
+                                    ':selected')) {
+                                    $(this).prop('disabled', true);
+                                } else {
+                                    $(this).prop('disabled', false);
+                                }
+                            });
+
+                            $dropdown.dropdown('refresh');
+                        });
+                    }
                 }
             })
         }
@@ -102,10 +144,7 @@
                         </thead>
                         <tbody>
                             @foreach ($bountyHistory as $historyItem)
-                                <tr
-                                @if($historyItem->delete_flg == 1)
-                                class="deleted"
-                                @endif>
+                                <tr @if ($historyItem->delete_flg == 1) class="deleted" @endif>
                                     <td>{{ $historyItem->department_names }}</td>
                                     <td>{{ $historyItem->bonus_payment_month }}</td>
                                     <td>{{ substr($historyItem->applied_date, 0, 7) }}</td>
@@ -128,7 +167,8 @@
             wire:key="{{ 'bounty-item-' . $childKey . '-' . $bountyKey . '-' . $bountyItem['bou-key'] }}"
             x-init="init_bounty('{{ $uniqueId }}')">
             <input type="hidden" name="bou-id[{{ $childKey }}][]" value="{{ $bountyItem['bou-id'] }}" />
-            <div class="required six wide field {{ err_sub($bouErrs, 'bou-departments', $childKey, $bountyKey) }}" wire:ignore>
+            <div class="required six wide field {{ err_sub($bouErrs, 'bou-departments', $childKey, $bountyKey) }}"
+                wire:ignore>
                 <label for="bou-departments[]">該当部署</label>
                 <select class="ui fluid search dropdown multiple department_select bounty-dropdown-{{ $childKey }}"
                     wire:model.live="bountyData.{{ $bountyKey }}.bou-departments" multiple=""
@@ -164,7 +204,8 @@
                     <div class="ui fluid input left icon">
                         <i class="calendar icon"></i>
                         <input type="text" name="bou-applied_date[{{ $childKey }}][]"
-                            wire:model.live="bountyData.{{ $bountyKey }}.bou-applied_date" placeholder="YYYY年M月" autocomplete="off">
+                            wire:model.live="bountyData.{{ $bountyKey }}.bou-applied_date" placeholder="YYYY年M月"
+                            autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -213,7 +254,7 @@
         }
 
         .deleted {
-        background: lightgray;
+            background: lightgray;
         }
     </style>
 </div>

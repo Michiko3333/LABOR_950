@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Managerial_position;
+use App\Rules\katakanaOnly;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Rules\noEmoji;
@@ -86,6 +88,15 @@ class ManagerialPositionList extends Component
             return;
         }
 
+        $validator = Validator::make($data, [
+            'form_name_kana' => [new katakanaOnly(false)],
+        ]);
+        
+        if ($validator->fails()) {
+            $this->dispatch('showErrorMessage');
+            return;
+        }
+
         if (!empty($data['form_id'])) {
             Managerial_position::where('company_id', $this->company_id)->where('id', $data['form_id'])->update([
                 'name' => $data['form_name'],
@@ -103,6 +114,7 @@ class ManagerialPositionList extends Component
             ]);
         }
         $this->dispatch('closeModal');
+        $this->dispatch('success');
         $this->render();
     }
 

@@ -152,6 +152,7 @@ class DepartmentList extends Component
             ]);
         }
         $this->dispatch('closeModal');
+        $this->dispatch('success');
         $this->render();
     }
 

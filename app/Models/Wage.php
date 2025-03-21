@@ -68,4 +68,9 @@ class Wage extends Model
     {
         return $this->hasMany(WageOvertime::class, 'wage_id', 'id');
     }
+
+    public function deduction()
+    {
+        return $this->hasMany(WageDeduction::class, 'wage_id', 'id');
+    }
 }

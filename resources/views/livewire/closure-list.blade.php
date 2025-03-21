@@ -1,12 +1,12 @@
 @php
     $typeMapping = [
-        '1' => '雇用保険：育児休業',
-        '2' => '雇用保険：介護休業',
-        '3' => '労災保険：傷病休業',
-        '4' => '健康保険：産前・産後休業',
+        '1' => '育児休業（雇用保険）',
+        '2' => '介護休業（雇用保険）',
+        '3' => '傷病休業（労災保険）',
+        '4' => '産前・産後休業（健康保険）',
         '5' => '養育特例休業（健康保険）',
-        '6' => '健康保険：傷病休業',
-        '7' => '介護保険：介護休業',
+        '6' => '傷病休業（健康保険）',
+        '7' => '介護休業（介護保険）',
     ];
     $statusMapping = [
         '1' => '内定承諾（未社員）',
@@ -22,7 +22,7 @@
                 <th style="width: 64px;"></th>
                 <th style="width: 250px;">従業員名</th>
                 <th style="width: 200px;">所属事務所</th>
-                <th style="width: 230px;">休業種類</th>
+                <th style="width: 230px;text-align: center;">休業種類</th>
                 <th style="width: 200px;text-align: center;">休業開始日</th>
                 <th style="width: 200px;text-align: center;">休業終了日</th>
                 <th style="width: 200px;text-align: center;">職場復帰日</th>
@@ -44,11 +44,13 @@
                         {{ $item->employee_employee_no }}<br>
                     </td>
                     <td>{{ $item->branch_name }}</td>
-                    <td>
+                    <td style="text-align: center;">
                     @if($item->closure_type == 5)
-                    {{ mb_substr($typeMapping[$item->closure_type], 0, 6) }}<br>　{{ mb_substr($typeMapping[$item->closure_type], 6) }}
+                    {{ mb_substr($typeMapping[$item->closure_type], 0, 6) }}<br>{{ mb_substr($typeMapping[$item->closure_type], 6) }}
+                    @elseif($item->closure_type != 5 && $item->closure_type != 4)
+                    {{ mb_substr($typeMapping[$item->closure_type], 0, 4) }}<br>{{ mb_substr($typeMapping[$item->closure_type], 4) }}
                     @else
-                    {{ mb_substr($typeMapping[$item->closure_type], 0, 5) }}<br>　{{ mb_substr($typeMapping[$item->closure_type], 5) }}
+                    {{ mb_substr($typeMapping[$item->closure_type], 0, 7) }}<br>{{ mb_substr($typeMapping[$item->closure_type], 7) }}
                     @endif</td>
                     <td style="text-align: center;">
                         @if($item->start_date_of_closed)

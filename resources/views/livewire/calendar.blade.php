@@ -75,6 +75,13 @@ Livewire.on('modal-closeCalendarModal', () => {
     calendar_edit_modal.modal('hide');
     $wire.dispatch('getEvents');
 });
+window.addEventListener('success', () => {
+    $.toast({
+        position: 'bottom right',
+        class: 'success',
+        message: `更新が完了しました`
+    });
+});
 </script>
 @endscript
 <script>

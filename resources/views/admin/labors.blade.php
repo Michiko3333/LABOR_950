@@ -21,6 +21,20 @@
             display: flex;
             justify-content: center;
         }
+        .fade-highlight {
+            animation: fadeHighlight 0.5s ease-out forwards;
+        }
+        @keyframes fadeHighlight {
+            0% {
+                box-shadow: none;
+            }
+            50% {
+                box-shadow: inset 0 0 0 2px rgba(153, 153, 153, 0.5);
+            }
+            100% {
+                box-shadow:inset 0 0 0 2px #999999;
+            }
+        }
     </style>
     @endslot
     <section class="content">

@@ -2162,7 +2162,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:169px; top:488px; width:18px; height:18px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="31"
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
-            type="TEXT" id="J31_005F_8C8E" value="{{ old('dayAfter60Month') }}" name="dayAfter60Month"
+            type="TEXT" id="J31_005F_8C8E_month" value="{{ old('dayAfter60Month') }}" name="dayAfter60Month"
             maxlength="2" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:0px solid rgb(0, 0, 0); left:230px; top:469px; width:11px; height:11px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif;"></SPAN>
@@ -2234,7 +2234,7 @@
             style="border-style:none; box-sizing:border-box; -moz-box-sizing:border-box; text-align:center; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:'ＭＳ 明朝', serif; padding:1px 0px 0px 0px; min-width:30px; max-width:30px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J25_005F_944E_8D86" name="J25"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:70px; top:1248px; width:42px; height:14px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">社会保険</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:70px; top:1248px; width:44px; height:14px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">社会保険</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:80px; top:1169px; width:30px; height:10px; text-align:left; font-size:9px; font-family:'ＭＳ 明朝', serif; line-height:normal; padding:1px 0px 0px 0px;">（注）</SPAN>
     <SPAN

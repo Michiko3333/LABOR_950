@@ -29,11 +29,7 @@ class AllowanceForm extends Component
 
         $allowance = Branch_allowance::where('branch_id',$branchId)->where('delete_flg', 0)->get();
         $this->allowance = $allowance;
-        $allowanceHistory = Branch_allowance_history::where('branch_id',$branchId)->get()
-        ->map(function ($item) {
-            $item->allowance = Allowance::where('id', $item->allowance)->value('name');
-            return $item;
-        });
+        $allowanceHistory = Branch_allowance_history::where('branch_id',$branchId)->get();
         $this->allowanceHistory = $allowanceHistory;
         $this->companyId = $companyId;
         $this->childKey = $childKey;
@@ -58,7 +54,6 @@ class AllowanceForm extends Component
                 $d['al-amount'] = $item['amount'];
                 $d['al-pay_month'] = $item['pay_month'];
                 $d['al-target'] = $item['target'];
-                $d['al-remarks'] = $item['remarks'];
                 if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $item['applied_date'], $matches)) {
                     $year = $matches[1];
                     $month = intval($matches[2]);
@@ -120,7 +115,6 @@ class AllowanceForm extends Component
             'al-amount' => '',
             'al-pay_month' => '',
             'al-target' => '',
-            'al-remarks' => '',
             'al-applied_date' => '',
         ];
 

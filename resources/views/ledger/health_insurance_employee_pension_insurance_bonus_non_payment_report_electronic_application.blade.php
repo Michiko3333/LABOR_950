@@ -117,7 +117,6 @@
 
                 $('#_8E96_8BC6_8EE5_8E81_96BCx_91E3_955C_8ED2_8E81_96BC_002E17').val(
                     '{{ old('business_owner_name_representative_name') }}' ? '{{ old('business_owner_name_representative_name') }}' : '{{ $company->representative }}');
-                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val('{{ old('business_name_name_of_ship_owner', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                 @else
@@ -142,6 +141,7 @@
         <script type="module">
             function insertDataFromBranch(data) {
                 const branch = data['branch'];
+                const company = data['company'];
                 const pensionOfficeReferencePrefecture = branch.pension_office_reference_prefecture;
                 const pensionOfficeReferenceNoCities = branch.pension_office_reference_no_cities;
                 const pensionOfficeReferenceNoOffice = branch.pension_office_reference_no_office;
@@ -151,14 +151,16 @@
                 const telCityCode = branch.tel_city_code;
                 const telSubscriberCode = branch.tel_subscriber_code;
                 const branch_prefecture_data = data['branch_prefecture_data'];
+                const pensionOffice = data['pensionOffice'];
 
+                $('#_8E96_8BC6_8F8A_96BC_8FCCx_9144_9495_8F8A_974C_8ED2_8E81_96BC_002E16').val(company.name);
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_9373_93B9_957B_8CA7_8352_815B_8368_002E7').val(
                     pensionOfficeReferencePrefecture ?? '');
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_8C53_8E73_8BE6_8B4C_8D86_002E8').val(pensionOfficeReferenceNoCities ??
                     '');
                 $('#_8E96_8BC6_8F8A_90AE_979D_8B4C_8D86x_8E96_8BC6_8F8A_8B4C_8D86_002E9').val(pensionOfficeReferenceNoOffice ??
                     '');
-                $('#_8E96_8BC6_8F8A_94D4_8D86x_8D90_926D_94D4_8D86_002E12').val(pensionOfficeNo ?? '');
+                $('#_8E96_8BC6_8F8A_94D4_8D86x_8D90_926D_94D4_8D86_002E12').val(branch.insurance_office_no ?? '');
                 if (postCode && postCode.length == 7) {
                     $('#_8E96_8BC6_8F8A_8F8A_8DDD_926Ex_9758_95D6_94D4_8D86x_9065_94D4_8D86_002E13').val(postCode.substring(0,
                         3));
@@ -171,6 +173,28 @@
                 $('#_9364_9862_94D4_8D86x_8E73_8A4F_8BC7_94D4_002E18').val(telAreaCode ?? '');
                 $('#_9364_9862_94D4_8D86x_8BC7_94D4_002E19').val(telCityCode ?? '');
                 $('#_9364_9862_94D4_8D86x_94D4_8D86_002E20').val(telSubscriberCode ?? '');
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectBranch', ({
                 data

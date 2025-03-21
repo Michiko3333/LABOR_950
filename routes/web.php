@@ -167,6 +167,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ledger', [ListController::class, 'index'])->name('ledger.index');
     Route::get('/ledger/issues', [EgovIssuesController::class, 'index'])->name('ledger.issues');
 
+    // 顧客画面
+    Route::get('/employee', [EmployeeController::class, 'employee_list'])->name('employee');
+    // Admin
+    Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
+
     Route::middleware([CheckQueryParameters::class])->group(function () {
 
         Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home.index');
@@ -208,7 +213,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/company/department/{id}', [AdminController::class, 'company_department_update'])->name('admin.company_department_update');
         Route::post('/admin/company/department/{id}', [AdminController::class, 'company_department_update_post'])->name('admin.company_department_update_post');
 
-        Route::get('/admin/labor', [AdminController::class, 'labor_list'])->name('admin.labor');
         Route::get('/admin/labor/create', [AdminController::class, 'labor_create'])->name('admin.labor_create');
         Route::post('/admin/labor/create', [AdminController::class, 'labor_create_post'])->name('admin.labor_create_post');
         Route::get('/admin/labor/edit/{id}', [AdminController::class, 'labor_update'])->name('admin.labor_update');
@@ -308,7 +312,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/labor/company', [LaborCompanyController::class, 'labor_company_update'])->name('labor_company_update');
         Route::post('/labor/company', [LaborCompanyController::class, 'labor_company_update_post'])->name('labor_company_update_post');
 
-        Route::get('/employee', [EmployeeController::class, 'employee_list'])->name('employee');
         Route::get('/employee/edit/{id}', [EmployeeController::class, 'employee_update'])->name('employee_update');
         Route::post('/employee/edit/{id}', [EmployeeController::class, 'employee_update_post'])->name('employee_update_post');
 
@@ -356,13 +359,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee/wages/upload', [ImportWageController::class, 'index'])->name('wages.upload');
         Route::get('/employee/wages/upload/columns', [ImportWageController::class, 'column_data'])->name('wages.upload.colmuns');
         Route::post('/employee/wages/upload', [ImportWageController::class, 'upload'])->name('wages.upload.post');
+        Route::post('/employee/wages/solv-column', [ImportWageController::class, 'solv_column'])->name('wages.solv.column');
+
         Route::get('/employee/attendance/upload', [ImportAttendanceController::class, 'index'])->name('attendances.upload');
         Route::get('/employee/attendance/upload/columns', [ImportAttendanceController::class, 'column_data'])->name('attendances.upload.colmuns');
         Route::post('/employee/attendance/upload', [ImportAttendanceController::class, 'upload'])->name('attendances.upload.post');
+        Route::post('/employee/attendance/solv-column', [ImportAttendanceController::class, 'solv_column'])->name('attendances.solv.column');
         Route::get('/employee/upload', [ImportEmployeeController::class, 'index'])->name('employees.upload');
         Route::get('/employee/upload/columns', [ImportEmployeeController::class, 'column_data'])->name('employees.upload.colmuns');
         Route::post('/employee/upload', [ImportEmployeeController::class, 'upload'])->name('employees.upload.post');
-
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');

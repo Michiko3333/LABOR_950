@@ -146,7 +146,7 @@
                 $('#J28_005F_8E81_96BC_005F_89BA_9269').val(
                     '{{ old('employer_managerial_position_name', $company->representative) }}');
                 $('#J27_005F_8E81_96BC_005F_8FE3_9269').val(
-                    '{{ old('employer_managerial_position_name', $company->name) }}');
+                    '{{ old('company_name', $company->name) }}');
 
                 @if ($current_employee->role_id === 500)
                     $('#J70_005F_944E_8D86').val('{{ old('labor_consultant_japan_era', $today['era']) }}');
@@ -199,6 +199,7 @@
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
+                const helloWork = data['helloWork'];
 
                 $('#J4_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val('');
                 $('#J5_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val('');
@@ -281,7 +282,16 @@
                 $('#J34_005F_8C8E').val(birthdayConvertJapan['month'] ?? "");
                 $('#J35_005F_93FA').val(birthdayConvertJapan['day'] ?? "");
                 $('#J36_005F_8EE6_93BE_8E9E_94ED_95DB_8CAF_8ED2_8EED_97DE').val(insured_age_type_data ?? "");
-                $('#J41_005F_8CD9_9770_8C60_91D4').val(employee.employment_status);
+                const employmentStatusMap = {
+                    1: '日雇',
+                    2: '派遣',
+                    3: 'パートタイム',
+                    4: '有期契約労働者',
+                    5: '季節的雇用',
+                    6: '船員',
+                    7: 'その他',
+                };
+                $('#J41_005F_8CD9_9770_8C60_91D4').val(employmentStatusMap[employee.employment_status] ?? "");
                 $('#J44_005F_8E96_8BC6_8F8A_96BC_97AA_8FCC').val(company.name);
                 $('#J45_005F_8F5A_8F8A_9694_82CD_8B8F_8F8A').val((employee_prefecture_data.name ?? '') + (employee
                     .address_city ??
@@ -560,6 +570,28 @@
                             .reason ?? '');
                     }
                 });
+                
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

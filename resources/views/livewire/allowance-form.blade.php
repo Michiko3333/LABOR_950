@@ -97,7 +97,6 @@
                         <th>金額</th>
                         <th>支払月</th>
                         <th>対象者</th>
-                        <th>備考</th>
                         <th>適用年月</th>
                         <th>登録日付</th>
                     </tr>
@@ -116,7 +115,6 @@
                             </script>
                         </td>
                         <td>{{ $historyItem->target }}</td>
-                        <td>{{ $historyItem->remarks }}</td>
                         <td>{{ substr($historyItem->applied_date, 0, 7) }}</td>
                         <td>{{ substr($historyItem->created_at, 0, 10) }}</td>
                     </tr>
@@ -137,22 +135,17 @@
         wire:key="{{ 'allowance-item-' . $childKey . '-' . $allowanceKey . '-' . $allowanceItem['al-key'] }}"
         x-init="init_allowance('{{ $uniqueId }}')">
     <input type="hidden" name="al-id[{{ $childKey }}][]" value="{{ $allowanceItem['al-id'] }}" />
-        <div class="required field {{ err_sub($alErrs, 'al-allowance', $childKey, $allowanceKey) }}">
+        <div class="required twelve wide field {{ err_sub($alErrs, 'al-allowance', $childKey, $allowanceKey) }}">
             <label for="al-allowance">手当名</label>
-            <select class="ui fluid dropdown" name="al-allowance[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-allowance">
-                <option value="">未選択</option>
-                @foreach ($allowance_list as $k => $value)
-                    <option value="{{ $k }}">{{ $value }}</option>
-                @endforeach
-            </select>
+            <input type="text" maxlength="255" name="al-allowance[{{ $childKey }}][]"
+            wire:model.live="allowanceData.{{ $allowanceKey }}.al-allowance" autocomplete="off">
         </div>
-        <div class="required field {{ err_sub($alErrs, 'al-amount', $childKey, $allowanceKey) }}">
+        <div class="required twelve wide field {{ err_sub($alErrs, 'al-amount', $childKey, $allowanceKey) }}">
             <label for="al-amount">金額</label>
             <input type="number" min="0" max="9999999" name="al-amount[{{ $childKey }}][]"
                 wire:model.live="allowanceData.{{ $allowanceKey }}.al-amount" placeholder="9999999" autocomplete="off">
         </div>
-        <div class="required field {{ err_sub($alErrs, 'al-pay_month', $childKey, $allowanceKey) }}">
+        <div class="required eight wide field {{ err_sub($alErrs, 'al-pay_month', $childKey, $allowanceKey) }}">
             <label for="al-pay_month">支払月</label>
             <select class="ui fluid dropdown" name="al-pay_month[{{ $childKey }}][]"
                 wire:model.live="allowanceData.{{ $allowanceKey }}.al-pay_month">
@@ -172,19 +165,7 @@
                 <option value="13">不定期</option>
             </select>
         </div>
-    </div>
-    <div class="allowance fields">
-        <div class="required five wide field {{ err_sub($alErrs, 'al-target', $childKey, $allowanceKey) }}">
-            <label for="al-target">対象者</label>
-            <input type="text" maxlength="30" name="al-target[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-target" placeholder="" autocomplete="off">
-        </div>
-        <div class="required eight wide field {{ err_sub($alErrs, 'al-remarks', $childKey, $allowanceKey) }}">
-            <label for="al-remarks">備考</label>
-            <input type="text" maxlength="30" name="al-remarks[{{ $childKey }}][]"
-                wire:model.live="allowanceData.{{ $allowanceKey }}.al-remarks" placeholder="" autocomplete="off">
-        </div>
-        <div class="required three wide field {{ err_sub($alErrs, 'al-applied_date', $childKey, $allowanceKey) }}">
+        <div class="required eight wide field {{ err_sub($alErrs, 'al-applied_date', $childKey, $allowanceKey) }}">
             <label for="al-applied_date">適用年月</label>
             <div class="ui calendar month-calendar" wire:ignore>
                 <div class="ui fluid input left icon">
@@ -194,6 +175,11 @@
                         placeholder="YYYY年M月" autocomplete="off">
                 </div>
             </div>
+        </div>
+        <div class="required twelve wide field {{ err_sub($alErrs, 'al-target', $childKey, $allowanceKey) }}">
+            <label for="al-target">対象者</label>
+            <input type="text" maxlength="30" name="al-target[{{ $childKey }}][]"
+                wire:model.live="allowanceData.{{ $allowanceKey }}.al-target" placeholder="" autocomplete="off">
         </div>
         @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(2))
         <div class="field">

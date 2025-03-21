@@ -3,8 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Branch;
+use App\Models\Company;
 use App\Models\CurrentUser;
 use App\Models\Employee;
+use App\Models\Pension_office;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -54,10 +56,21 @@ class LedgerBranchList extends BaseTable
             ->where('m_branch.id', $id)
             ->first();
 
+        if (!$branch) {
+            return;
+        }
+
         $branch_data = $branch;
+        $pension_office_id = $branch_data['pension_office_id'];
+        $pensionOffice = Pension_office::where('id', $pension_office_id)->first();
+
+        $companyId = $branch_data['company_id'];
+        $company = Company::where('id', $companyId)->first();
 
         $output = [
-            'branch' => $branch_data
+            'branch' => $branch_data,
+            'pensionOffice' => $pensionOffice ?? '',
+            'company' => $company
         ];
 
         $this->selected_id = $id;

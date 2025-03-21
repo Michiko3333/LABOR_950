@@ -105,6 +105,63 @@
             .ui.table>tbody>tr>td:last-child {
                 padding: 0.78em;
             }
+
+
+            .type-overtime::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: rgb(120, 63, 146);
+            }
+
+            .type-overtime-text {
+                color: rgb(120, 63, 146);
+            }
+
+            .type-allowance::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: rgb(82, 184, 82);
+            }
+
+            .type-allowance-text {
+                color: rgb(82, 184, 82);
+            }
+
+            .type-salary::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: rgb(86, 132, 201);
+            }
+
+            .type-salary-text {
+                color: rgb(86, 132, 201);
+            }
+
+            .type-deduction::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: rgb(214, 91, 91);
+            }
+
+            .type-deduction-text {
+                color: rgb(214, 91, 91);
+            }
         </style>
     @endslot
     <section class="content">
@@ -117,32 +174,11 @@
         </div>
         <h1 class="mt-0">{{ $year }}年度　賃金台帳（入力）</h1>
         @livewire('wages-ledger-editor', ['employee_ids' => $employee_ids, 'year' => $year])
+        <x-wage-addition-modal id="AdditionModal" additionName="additionName" additionType="additionType"
+            :isBonus="false" />
+        <x-wage-addition-modal id="AdditionModalBonus" additionName="additionNameBonus" additionType="additionTypeBonus"
+            :isBonus="true" />
     </section>
-    <div id="AdditionModal" class="ui modal mini addition-modal">
-        <i class="close icon"></i>
-        <div class="header">
-            支給・手当を追加
-        </div>
-        <div class="content ui form">
-            <div class="field">
-                <label for="additionName">名称</label>
-                <input type="text" name="" id="additionName" class="ui input" placeholder="〇〇手当" autocomplete="off"
-                    maxLength="15">
-            </div>
-            <div class="field">
-                <label for="additionType">種類</label>
-                <select name="" id="additionType" class="ui dropdown">
-                    <option value="salary_values">支給金</option>
-                    <option value="overtime_values">時間外手当</option>
-                    <option value="allowance_values">諸手当</option>
-                </select>
-            </div>
-        </div>
-        <div class="actions">
-            <button class="ui button cancel" type="button">キャンセル</button>
-            <div class="ui approve primary button">追加</div>
-        </div>
-    </div>
 
     <script type="module">
         const AdditionModal = $('#AdditionModal').modal({
@@ -150,10 +186,12 @@
             onHidden: () => {
                 $('#additionName').val('');
                 $('#additionType').val('salary_values');
+                $('body').css('margin-right', '0px');
             },
             onApprove: () => {
                 const name = $('#additionName').val();
                 const type = $('#additionType').val();
+                console.log(name, type);
                 if (!name || !type) return false;
                 Livewire.dispatch('approve-addition', {
                     name: name,
@@ -165,10 +203,33 @@
             }
         });
 
+        const AdditionModalBonus = $('#AdditionModalBonus').modal({
+            blurring: true,
+            onHidden: () => {
+                $('#additionNameBonus').val('');
+                $('#additionTypeBonus').val('salary_values');
+                $('body').css('margin-right', '0px');
+            },
+            onApprove: () => {
+                const name = $('#additionNameBonus').val();
+                const type = $('#additionTypeBonus').val();
+                if (!name || !type) return false;
+                Livewire.dispatch('approve-addition-bonus', {
+                    name: name,
+                    type: type
+                });
+                $('#additionNameBonus').val('');
+                $('#additionTypeBonus').val('salary_values');
+                return true;
+            }
+        });
         Livewire.on('wages-ledger-editor-render', (d) => {
             setTimeout(() => {
                 $('#openNewAddition').click(_ => {
                     AdditionModal.modal('show');
+                });
+                $('#openNewAdditionBonus').click(_ => {
+                    AdditionModalBonus.modal('show');
                 });
             }, 0);
 
@@ -177,6 +238,10 @@
 
         $('#openNewAddition').click(_ => {
             AdditionModal.modal('show');
+        });
+
+        $('#openNewAdditionBonus').click(_ => {
+            AdditionModalBonus.modal('show');
         });
 
         $('#ledger-create-button').click(_ => {

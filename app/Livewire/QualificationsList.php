@@ -141,6 +141,7 @@ class QualificationsList extends BaseTable
             ]);
         }
         $this->dispatch('closeModal');
+        $this->dispatch('success');
         $this->render();
     }
 

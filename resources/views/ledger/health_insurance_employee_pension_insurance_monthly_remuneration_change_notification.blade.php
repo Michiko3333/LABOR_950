@@ -146,6 +146,112 @@
 
         <script type="module">
             $(document).ready(function() {
+                function toHalfWidth(str) {
+                    return str.replace(/[０-９]/g, function (match) {
+                        const halfWidthChar = String.fromCharCode(match.charCodeAt(0) - 65248);
+                        return halfWidthChar;
+                    });
+                }
+                document.getElementById("N7_005F_944E_8D86").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N8_005F_944E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N9_005F_8C8E0").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N10_005F_93FA").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N11_005F_94ED_95DB_8CAF_8ED2_8E81").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N16_005F_905C_90BF").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N17_005F_985A_8F5C_8DCE_82C9").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N18_005F_8CC2_906C_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N20_005F_94ED_95DB_8CAF_8ED2_94D4_8D866").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N25_005F_8E96_8BC6_8F8A").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N26_005F_8E96_8BC6_8F8A_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N28_8D864_8C85").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N30_93E0_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N31__005F_89C1_93FC").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N33_005F_8E73_8A4F").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N34_93E0_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N35_94D4_8D86").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N36_005F_8E96_8BC6_8F8A").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N37_96BC_005F_8F8A_8DDD_926E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N39_005F_905C_90BF").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N40_905C_90BF_8ED2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N41_005F_96BC_8FCC").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N42_005F_8F8A_8DDD_926E").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N43_947A_9242_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N44_005F_92AC_88E6").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N45__005F_8E73_8A4F_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N46__005F_8E73_93E0_8BC7_94D4").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N47_005F_89C1_93FC_8ED2_94D4_8D86").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N48_005F_8E73_8A4F_8BC7").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N49_005F_8E73_8A4F_8BC8").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N50_005F_8E73_8A4F_8BC9").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N51_005F_8E73_8A4F_8BC7").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N52_005F_8E73_8A4F").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+
                 $('#N4_005F_944E').val('{{ old('today_year', $todaySet['year']) }}');
                 $('#N5_005F_8C8E').val('{{ old('today_month', $todaySet['month']) }}');
                 $('#N6_005F_93FA').val('{{ old('today_date', $todaySet['date']) }}');
@@ -240,6 +346,7 @@
                 const headquarters = data['headquarters'];
                 const birthdayConvertJapan = data['birthday_convert_japan'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
+                const pensionOffice = data['pensionOffice'];
                 let eraMapping = {
                     '明治': '1',
                     '大正': '3',
@@ -252,7 +359,7 @@
                 $('#N7_005F_944E_8D86').val(branch.pension_office_reference_prefecture || '');
                 $('#N8_005F_944E').val(branch.pension_office_reference_no_cities || '');
                 $('#N9_005F_8C8E').val(branch.pension_office_reference_no_office || '');
-                $('#N9_005F_8C8E0').val(branch.pension_office_no || '');
+                $('#N9_005F_8C8E0').val(branch.insurance_office_no || '');
                 if (branch.post_code !== null && branch.post_code.length == 7) {
                     $('#N10_005F_93FA').val(branch.post_code.substring(0, 3));
                     $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch.post_code.substring(3, 7));
@@ -274,6 +381,28 @@
                 $('#N25_005F_8E96_8BC6_8F8A').val(birthdayConvertJapan['year'] ?? "");
                 $('#N26_005F_8E96_8BC6_8F8A_94D4').val(birthdayConvertJapan['month'] ?? "");
                 $('#N28_8D864_8C85').val(birthdayConvertJapan['day'] ?? "");
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

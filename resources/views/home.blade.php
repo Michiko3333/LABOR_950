@@ -64,10 +64,10 @@
                 border-left: 8px solid var(--color-red);
                 border-top: 5px solid transparent;
                 border-bottom: 5px solid transparent;
-                background-color: rgba(255,255,255,0.8);
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
-           #control-panel .control-panel-menu .extra.content a#company-setting.open .header::before {
+            #control-panel .control-panel-menu .extra.content a#company-setting.open .header::before {
                 position: absolute !important;
                 content: "";
                 top: 8px;
@@ -77,7 +77,7 @@
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-top: 8px solid var(--color-red);
-                background-color: rgba(255,255,255,0.8);
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
             #control-panel .control-panel-menu .extra.content a#employee-setting.open .header::before {
@@ -90,7 +90,7 @@
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-top: 8px solid var(--color-red);
-                background-color: rgba(255,255,255,0.8);
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
             #control-panel .control-panel-menu .extra.content a#procedure-setting.open .header::before {
@@ -103,7 +103,7 @@
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-top: 8px solid var(--color-red);
-                background-color: rgba(255,255,255,0.8);
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
             #control-panel .control-panel-menu .extra.content a#calendar-setting.open .header::before {
@@ -116,7 +116,7 @@
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-top: 8px solid var(--color-red);
-                background-color: rgba(255,255,255,0.8);
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
             #control-panel .control-panel-menu .extra.content a .content.sub .header::before {
@@ -228,27 +228,30 @@
                                     </a>
                                 @endif
                                 <div class="ui divider"></div>
-                                <a class="item mt-1" id="company-setting" >
+                                <a class="item mt-1" id="company-setting">
                                     <div class="content set">
                                         <div class="header">各種設定</div>
                                     </div>
                                 </a>
                                 @if ($userPermission->isReadableFor(3))
-                                    <a href="{{ route('current_company_department_update') }}" class="item company-setting-list" style="display: none;">
+                                    <a href="{{ route('current_company_department_update') }}"
+                                        class="item company-setting-list" style="display: none;">
                                         <div class="content sub">
                                             <div class="header">部署マスタ</div>
                                         </div>
                                     </a>
                                 @endif
                                 @if ($userPermission->isReadableFor(4))
-                                    <a href="{{ route('managerial_position') }}" class="item company-setting-list" style="display: none;">
+                                    <a href="{{ route('managerial_position') }}" class="item company-setting-list"
+                                        style="display: none;">
                                         <div class="content sub">
                                             <div class="header">役職マスタ</div>
                                         </div>
                                     </a>
                                 @endif
                                 @if ($userPermission->isAdmin() || $userPermission->isLabor() || $userPermission->isReadableFor(16))
-                                    <a href="{{ route('qualifications') }}" class="item company-setting-list" style="display: none;">
+                                    <a href="{{ route('qualifications') }}" class="item company-setting-list"
+                                        style="display: none;">
                                         <div class="content sub">
                                             <div class="header">資格マスタ</div>
                                         </div>
@@ -295,7 +298,7 @@
                                 @if ($userPermission->isReadableFor(18) && $userPermission->isWritableFor(18))
                                     <a href="{{ route('wages-ledger.index') }}" class="item">
                                         <div class="content">
-                                            <div class="header">賃金台帳作成</div>
+                                            <div class="header">賃金台帳</div>
                                         </div>
                                     </a>
                                 @endif
@@ -314,16 +317,10 @@
                                 </a>
 
                                 @if ($userPermission->isReadableFor(14))
-                                    <a href="{{ route('closure_information') }}" class="item employee-setting-list" style="display: none;">
+                                    <a href="{{ route('closure_information') }}" class="item employee-setting-list"
+                                        style="display: none;">
                                         <div class="content sub">
                                             <div class="header">休業設定</div>
-                                        </div>
-                                    </a>
-                                @endif
-                                @if ($userPermission->isReadableFor(20))
-                                    <a href="{{ route('allowance') }}" class="item employee-setting-list" style="display: none;">
-                                        <div class="content sub">
-                                            <div class="header">手当マスタ</div>
                                         </div>
                                     </a>
                                 @endif
@@ -368,7 +365,8 @@
                                     </div>
                                 </a>
                                 @if ($userPermission->isReadableFor(10) && $userPermission->isWritableFor(10))
-                                    <a href="{{ route('ledger.egov') }}" class="item procedure-setting-list" style="display: none;">
+                                    <a href="{{ route('ledger.egov') }}" class="item procedure-setting-list"
+                                        style="display: none;">
                                         <div class="content sub">
                                             <div class="header">e-Gov連携</div>
                                         </div>
@@ -409,15 +407,23 @@
                                     <div class="header">各種設定</div>
                                 </div>
                             </a>
-                            @if ($userPermission->isReadableFor(13) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
-                                <a href="{{ route('pickup.setting') }}" class="item calendar-setting-list" style="display: none;">
+                            @if (
+                                $userPermission->isReadableFor(13) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('pickup.setting') }}" class="item calendar-setting-list"
+                                    style="display: none;">
                                     <div class="content sub">
                                         <div class="header">Pick up設定</div>
                                     </div>
                                 </a>
                             @endif
-                            @if ($userPermission->isReadableFor(15) && $userPermission->isBasicDepartment() && $userPermission->getEmployeeStatus() !== 1)
-                                <a href="{{ route('pickup.pickup') }}" class="item calendar-setting-list" style="display: none;">
+                            @if (
+                                $userPermission->isReadableFor(15) &&
+                                    $userPermission->isBasicDepartment() &&
+                                    $userPermission->getEmployeeStatus() !== 1)
+                                <a href="{{ route('pickup.pickup') }}" class="item calendar-setting-list"
+                                    style="display: none;">
                                     <div class="content sub">
                                         <div class="header">Pick upリスト</div>
                                     </div>
@@ -439,21 +445,21 @@
         });
     </script>
     <script type="module">
-        $(document).ready(function () {
-            $("#company-setting").on("click", function () {
+        $(document).ready(function() {
+            $("#company-setting").on("click", function() {
                 $(this).toggleClass("open");
                 $(".company-setting-list").stop(true, true).slideToggle();
             });
-            $("#employee-setting").on("click", function () {
+            $("#employee-setting").on("click", function() {
                 $(this).toggleClass("open");
                 $(".employee-setting-list").stop(true, true).slideToggle();
             });
-            $("#procedure-setting").on("click", function () {
+            $("#procedure-setting").on("click", function() {
                 $(this).toggleClass("open");
                 $(".procedure-setting-list").stop(true, true).slideToggle();
             });
-            $("#calendar-setting").on("click", function () {
-                 $(this).toggleClass("open");
+            $("#calendar-setting").on("click", function() {
+                $(this).toggleClass("open");
                 $(".calendar-setting-list").stop(true, true).slideToggle();
             });
         });

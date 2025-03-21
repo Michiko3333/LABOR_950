@@ -21,6 +21,10 @@
             .ui.error.message.hidden {
                 display: none;
             }
+
+            .calendar-info {
+                color: var(--color-red);
+            }
         </style>
     @endslot
 
@@ -56,17 +60,14 @@
 
                 const holidayModal = $('#HolidayModal').modal({
                     blurring: true,
+                    onHide: function () {
+                        $hm.onCancel();
+                    }
                 });
                 window.$holidayModal = holidayModal;
             });
         </script>
         <script type="module">
-            Livewire.on('onSubmitError', () => {
-                setTimeout(() => {
-                    $('.ui.error.message').removeClass('hidden');
-                }, 0);
-            });
-
             Livewire.on('onSavedShiftCalendar', () => {
                 $.toast({
                     position: 'bottom right',
@@ -80,6 +81,11 @@
                     class: 'red',
                     message: `エラーが発生しました`
                 });
+            });
+            Livewire.on('onSubmitError', () => {
+                setTimeout(() => {
+                    $('.ui.error.message.emoji').removeClass('hidden');
+                }, 100);
             });
         </script>
     @endslot
