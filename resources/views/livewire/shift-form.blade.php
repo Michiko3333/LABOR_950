@@ -19,6 +19,12 @@
                 </ul>
             </div>
         @endif
+        <div class="ui error message emoji hidden my-1">
+            <div class="header">入力エラー</div>
+            <ul class="list">
+                <li>絵文字の入力は許可されていません</li>
+            </ul>
+        </div>
     </div>
     <div class="ui card full card-shadow shift-calendar-inputs" wire:key="shift-form:{{ $current_shift }}">
         <div class="content">
@@ -207,9 +213,9 @@
             </table>
             @php
                 $holiday_num = count($values);
-                $agreed_hours = $agreed_hours_day_h + $agreed_hours_day_m / 60;
+                $agreed_hours = number_format(floor(($agreed_hours_day_h + $agreed_hours_day_m / 60) * 100) / 100, 1, '.', '');
                 $yearly_work_days = 365 - $holiday_num;
-                $yearly_work_times = $yearly_work_days * $agreed_hours;
+                $yearly_work_times = number_format(floor(($yearly_work_days * $agreed_hours) * 100) / 100, 1, '.', '');
             @endphp
             <table class="ui definition table" style="width: 300px;">
                 <tbody>

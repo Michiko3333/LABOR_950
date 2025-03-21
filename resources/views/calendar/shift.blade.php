@@ -82,6 +82,11 @@
                     message: `エラーが発生しました`
                 });
             });
+            Livewire.on('onSubmitError', () => {
+                setTimeout(() => {
+                    $('.ui.error.message.emoji').removeClass('hidden');
+                }, 100);
+            });
         </script>
     @endslot
 </x-layout>
