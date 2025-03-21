@@ -2539,12 +2539,16 @@ class AdminController extends Controller
 
             DB::commit();
             $this->putSuccess();
+            if($request->input('query_parameter')) {
+                return redirect()->to($request->input('query_parameter'));
+            } else {
+                return redirect()->route('admin.labor');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
             return back()->withErrors('エラー');
         }
-        return redirect()->route('admin.labor');
     }
 
     private function data_dependent(array $requestData, $index, $employee_id)

@@ -183,7 +183,7 @@
             <i class="right chevron icon divider"></i>
             <a class="section" href="{{ route('admin.index') }}">Karte管理</a>
             <i class="right chevron icon divider"></i>
-            <a class="section" href="{{ route('admin.labor') }}">アカウント管理</a>
+            <a class="section employee-back" href="{{ route('admin.labor') }}">アカウント管理</a>
             <i class="right chevron icon divider"></i>
             @if (!isset($employee_id))
                 <div class="active section">従業員情報登録</div>
@@ -1681,9 +1681,10 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="query_parameter" id="queryParameter">
             </div>
             <div class="my-4" style="text-align: right; margin-right: 1em;">
-                <a class="ui button negative basic" href="{{ route('admin.labor') }}"
+                <a class="ui button negative basic employee-back" href="{{ route('admin.labor') }}"
                     style="width: 200px;">キャンセル</a>
                 @if (!isset($employee_id))
                     <button class="ui button primary submit-disable" type="submit" style="width: 200px;">登録</button>
@@ -1731,6 +1732,7 @@
             });
             $('.ui.calendar.birthday').calendar({
                 type: 'date',
+                maxDate: new Date(),
                 formatter: {
                     date: 'Y"年"M"月"D"日"'
                 },
@@ -1798,16 +1800,21 @@
                         const tenureDate = new Date(year, month, day);
                         const today = new Date();
 
-                        let tenure = today.getFullYear() - tenureDate.getFullYear();
-                        let monthDiff = today.getMonth() - tenureDate.getMonth();
-                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
-                            tenure -= 1;
-                            monthDiff += 12;
-                        }
+                        if (tenureDate <= today) {
+                            let tenure = today.getFullYear() - tenureDate.getFullYear();
+                            let monthDiff = today.getMonth() - tenureDate.getMonth();
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate
+                                    .getDate())) {
+                                tenure -= 1;
+                                monthDiff += 12;
+                            }
 
-                        let tenureMonths = monthDiff;
-                        const tenureString = `${tenure}年${tenureMonths}ヵ月`;
-                        $(".tenure").val(tenureString);
+                            let tenureMonths = monthDiff;
+                            const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                            $(".tenure").val(tenureString);
+                        }else{
+                            $(".tenure").val('0年0ヵ月');
+                        }
                     }
                 }
             });
@@ -1819,15 +1826,21 @@
                 const day = parseInt(match[3], 10);
                 const tenureDate = new Date(year, month, day);
                 const today = new Date();
-                let tenure = today.getFullYear() - tenureDate.getFullYear();
-                let monthDiff = today.getMonth() - tenureDate.getMonth();
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
-                    tenure -= 1;
-                    monthDiff += 12;
+                if (tenureDate <= today) {
+                    let tenure = today.getFullYear() - tenureDate.getFullYear();
+                    let monthDiff = today.getMonth() - tenureDate.getMonth();
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate
+                            .getDate())) {
+                        tenure -= 1;
+                        monthDiff += 12;
+                    }
+
+                    let tenureMonths = monthDiff;
+                    const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                    $(".tenure").val(tenureString);
+                }else{
+                    $(".tenure").val('0年0ヵ月');
                 }
-                let tenureMonths = monthDiff;
-                const tenureString = `${tenure}年${tenureMonths}ヵ月`;
-                $(".tenure").val(tenureString);
             }
             $('.ui.dropdown.dropdown.multiple').dropdown({});
 
@@ -2033,6 +2046,15 @@
         window.addEventListener('closeCancelModal', () => {
             $('.cancel-modal').modal('hide');
             location.reload();
+        });
+    </script>
+    <script type="module">
+        $(document).ready(function() {
+            const sessionHistory = JSON.parse(sessionStorage.getItem('pageHistory'));
+            if (sessionHistory) {
+                $('#queryParameter').val(sessionHistory.toString());
+                $('.employee-back').attr('href', sessionHistory.toString());
+            }
         });
     </script>
 </x-layout>

@@ -129,11 +129,6 @@ class WagesEmployeeList extends BaseTable
         return false;
     }
 
-    #[On('request-reload')]
-    public function handleRequestReload($data)
-    {
-        // $this->company_name = $data['name'];
-    }
     public function toEdit($id)
     {
         $items = $this->data['items'];

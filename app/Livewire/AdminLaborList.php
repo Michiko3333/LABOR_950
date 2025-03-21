@@ -12,8 +12,17 @@ class AdminLaborList extends BaseTable
     public $search = '';
     public $company_name = '';
     public $type = 0;
+
+    public function mount()
+    {
+        $this->page = request()->get('p', 1);
+        $this->paginated = true;
+        $this->pageMemory = true;
+    }
+
     public function render()
     {
+        $ids = [];
         $condition = Employee::select([
             'm_employee.id as id',
             'employee_type',
@@ -40,6 +49,9 @@ class AdminLaborList extends BaseTable
         }
 
         $this->data = $this->getData($condition);
+        foreach($this->data['items'] as $item) {
+            $ids[] = $item->id;
+        }
 
         return view('livewire.admin-labor-list');
     }

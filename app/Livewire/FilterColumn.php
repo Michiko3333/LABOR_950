@@ -148,9 +148,9 @@ class FilterColumn extends Component
     public function dispatchFilterColumn()
     {
         if (empty($this->name)) {
-            $this->dispatch('refresh-filter', $this->list_show);
+            $this->dispatch('refresh-filter', $this->list_show, $this->isFirst);
         } else {
-            $this->dispatch('refresh-filter:' . $this->name, $this->list_show);
+            $this->dispatch('refresh-filter:' . $this->name, $this->list_show, $this->isFirst);
         }
     }
 

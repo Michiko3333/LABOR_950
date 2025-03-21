@@ -410,27 +410,16 @@ class EmployeeController extends Controller
                     'employment_status' => $request->input('employment_status'),
                     'pay_type' => $request->input('pay_type'),
                     'insurance_loss_reason' => $request->input('insurance_loss_reason'),
-                    'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'), // developにない
-                    //'over_70_non_applicable_flg' => $request->input('over_70_non_applicable_flg'), // developにない
+                    'over_retired_insurance_loss_reason' => $request->input('over_retired_insurance_loss_reason'),
                     'passed_away_date' => $this->formatDate($request->input('passed_away_date')),
-                    //'personal_information_access_flg' => $request->input('personal_information_access_flg'),
-                    //'personal_information_access_flg_tmsp' => $request->input('personal_information_access_flg_tmsp'),
                     'external_advisor_flg' => $request->input('external_advisor_flg'),
                     'occupation_type' => $request->input('occupation_type'),
                     'employment_route' => $request->input('employment_route'),
-                    //'insured_reason' => $request->input('insured_reason'),
-                    //'insured_reason_details' => $request->input('insured_reason_details'),
-                    //'currency_id' => $request->input('currency_id'),
-                    //'salary_payment_system' => $request->input('salary_payment_system'),
-                    // 'caregiver_leave_benefit_receive_bank_id' => $request->input('caregiver_leave_benefit_receive_bank_id'),// developにない
-                    // 'japan_post_bank_account_no' => $request->input('japan_post_bank_account_no'),// developにない
-                    // 'bank_account_no' => $request->input('bank_account_no'),// developにない
                     'employment_type' => $request->input('employment_type'),
                     'employer_type' => $request->input('employer_type'),
                     'employment_start_date' => $this->formatDate($request->input('employment_start_date')),
                     'employment_end_date' => $this->formatDate($request->input('employment_end_date')),
                     'blood_type' => $request->input('blood_type'),
-                    // 'qualifications' => $request->input('qualifications'),
                     'insured_status' => $request->input('insured_status'),
                     'health_insurance_association_number' => $request->input('health_insurance_association_number'),
                     'acquisition_of_distinction' => $request->input('acquisition_of_distinction'),
@@ -934,12 +923,16 @@ class EmployeeController extends Controller
 
             DB::commit();
             $this->putSuccess();
+            if($request->input('query_parameter')) {
+                return redirect()->to($request->input('query_parameter'));
+            } else {
+                return redirect()->route('employee');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error($e);
             return back()->withErrors('エラー');
         }
-        return redirect()->route('employee');
     }
 
     public function get_departments(Request $request)
