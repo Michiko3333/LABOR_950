@@ -416,6 +416,7 @@
                 const date_of_birth_1 = data['date_of_birth_4950008680050000'];
                 const date_of_return_to_work_1 = data['date_of_return_to_work_4950008680050000'];
                 const before_date_of_return_to_work = data['before_date_of_return_to_work_4950008680050000'];
+                const helloWork = data['helloWork'];
                 if (employee.last_name_kana && employee.first_name_kana) {
                     $('#J8_005F_8E81_96BC').val(employee.last_name_kana + '　' + employee.first_name_kana);
                     $('#J78_005F_905C_90BF_8ED2_8E81_96BC_005F_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
@@ -546,18 +547,40 @@
                     $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
                     $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
                 }
-            }
-            document.getElementById('J75_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').addEventListener('change', function() {
-                if(this.value == 1 && spouse !== null && spouse.insurance_office_no !== null){
-                    $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
-                    $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
-                    $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                document.getElementById('J75_005F_947A_8BF4_8ED2_88E7_8B78_8EE6_93BE').addEventListener('change', function() {
+                    if(this.value == 1 && spouse !== null && spouse.insurance_office_no !== null){
+                        $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val(spouse.insurance_office_no.substring(0, 4));
+                        $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val(spouse.insurance_office_no.substring(4, 10));
+                        $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
+                    }else{
+                        $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val('');
+                        $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val('');
+                        $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val('');
+                    }
+                });
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
                 }else{
-                    $('#J76_005F_94ED_95DB_8CAF_94D4_8D864_8C85').val('');
-                    $('#J77_005F_94ED_95DB_8CAF_94D4_8D866_8C85').val('');
-                    $('#J78_005F_94ED_95DB_8CAF_94D4_8D86CD').val('');
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
                 }
-            });
+            }
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {

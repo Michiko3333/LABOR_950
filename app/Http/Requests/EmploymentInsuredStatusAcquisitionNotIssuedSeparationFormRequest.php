@@ -94,7 +94,7 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends B
             'insured_birthday_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u|required_with:insured_birthday_year,insured_birthday_japan_era,insured_birthday_day',
             'insured_birthday_day' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u|required_with:insured_birthday_year,insured_birthday_month,insured_birthday_japan_era',
             'hello_work_office_no' => 'nullable|string|regex:/^[0-9]{5}$/u',
-            'employment_status' => 'nullable|string|in:日雇,派遣,パートタイム,有期契約労働者,季節的雇用,船員,その他',
+            'employment_status' => 'nullable|string|in:日雇,派遣,アルバイト・パートタイム,有期契約労働者,季節的雇用,船員,その他',
             'branch_name_abbreviation' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々々０-９ａ-ｚＡ-Ｚ　＆’，‐．・]+\z/u',
             'insured_address' => 'string|max:110|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　－]+\z/u',
             'insured_loss_reason' => 'string|max:255|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ0-9a-zA-Z　]+\z/u',

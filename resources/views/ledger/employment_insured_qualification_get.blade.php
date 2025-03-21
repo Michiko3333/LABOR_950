@@ -190,6 +190,7 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const contract_start_convert_date = data['contract_start_convert_date'];
                 const contract_end_convert_date = data['contract_end_convert_date'];
+                const helloWork = data['helloWork'];
                 $('#J2_005F_8CC2_906C_94D4_8D86').val(employee.mynumber_card_no ?? '');
                 if (employee.employment_insured_no != null) {
                     if($('#J6_005F_8EE6_93BE').val() == '2'){
@@ -331,6 +332,28 @@
                 $('#J62_005F_8E73_93E0_8BC7_94D4').val(branch.tel_city_code ?? '');
                 $('#J63_005F_89C1_93FC_8ED2_94D4_8D86').val(branch.tel_subscriber_code ?? '');
                 $('#J69_005F_82A0_82C4_90E6').val(hello_work);
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

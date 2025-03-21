@@ -139,6 +139,7 @@
                 const planned_end_date_of_closure_ConvertJapan = data['planned_end_date_of_closure_4950013521030000'];
                 const date_of_birth_ConvertJapan = data['date_of_birth_4950013521030000'];
                 const end_date_of_losed_ConvertJapan = data['end_date_of_losed_4950013521030000'];
+                const pensionOffice = data['pensionOffice'];
 
                 $('#A2_1').val(branch.pension_office_reference_prefecture || '');
                 $('#A2_2').val(branch.pension_office_reference_no_cities || '');
@@ -194,6 +195,27 @@
                 $('#A17_2').val(end_date_of_losed_ConvertJapan['month'] ?? "");
                 $('#A17_3').val(end_date_of_losed_ConvertJapan['day'] ?? "");
 
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

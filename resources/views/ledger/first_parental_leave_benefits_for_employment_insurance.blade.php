@@ -216,6 +216,7 @@
                 const due_date_1 = data['due_date_4950008680182000'];
                 const date_of_birth_1 = data['date_of_birth_4950008680182000'];
                 const before_date_of_return_to_work = data['before_date_of_return_to_work_4950008680182000'];
+                const helloWork = data['helloWork'];
                 if (employee.employment_insured_no !== null && employee.employment_insured_no.length == 11) {
                     $('#J12_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').val(employee.employment_insured_no.substring(0, 4));
                     $('#J13_005F_94ED_95DB_8CAF_8ED2_94D4_8D866_8C85').val(employee.employment_insured_no.substring(4, 10));
@@ -385,6 +386,27 @@
                     $('#J108_005F_947A_8BF4_8ED2_82CC_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(spouse.insurance_office_no.substring(10, 11));
                 }
 
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
                 $('#J165_005F_8BE0_975A_8B40_8AD6_8374_838A_834B_8369').val(employee.bank_name_kana || "");
                 $('#J166_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
                 if(employee.head_office_or_branch_office == 0) {

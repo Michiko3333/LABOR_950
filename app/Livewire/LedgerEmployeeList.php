@@ -21,6 +21,7 @@ use App\Models\Retirement_reason_employee_decision_reasons;
 use App\Http\Controllers\Controller;
 use App\Models\Closure_information;
 use App\Models\Hello_work;
+use App\Models\Pension_office;
 use App\Models\Prefecture;
 use Carbon\Carbon;
 use App\Models\Values_employee_insured_age_type;
@@ -96,7 +97,9 @@ class LedgerEmployeeList extends BaseTable
         $branch_prefecture_id = $branchData['address_prefecture'];
         $branch_prefecture_data = Prefecture::where('id', $branch_prefecture_id)->first();
         $hello_work_id = $branchData['hello_work_id'];
+        $pension_office_id = $branchData['pension_office_id'];
         $helloWork = Hello_work::where('id', $hello_work_id)->first();
+        $pensionOffice = Pension_office::where('id', $pension_office_id)->first();
         $helloWorkName = $helloWork ? $helloWork->name : '';
         $headquarters_prefecture_id = $headquartersData['address_prefecture'];
         $headquarters_prefecture_data = Prefecture::where('id', $headquarters_prefecture_id)->first();
@@ -500,6 +503,8 @@ class LedgerEmployeeList extends BaseTable
             'employee' => $employeeData,
             'branch' => $branchData,
             'hello_work' => $helloWorkName,
+            'helloWork' => $helloWork ?? '',
+            'pensionOffice' => $pensionOffice ?? '',
             'headquarters' => $headquartersData,
             'company' => $companyData,
             'spouse' => $spouse_data,

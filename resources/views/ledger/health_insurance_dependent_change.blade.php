@@ -513,6 +513,7 @@
                 const spouse_prefecture_data = data['spouse_prefecture_data'];
                 const date_of_authorisation_convert = data['date_of_authorisation_convert'];
                 const date_of_expiry_convert = data['date_of_expiry_convert'];
+                const pensionOffice = data['pensionOffice'];
                 var eraMapping = {
                     '昭和': '5',
                     '平成': '7',
@@ -717,6 +718,28 @@
                 $('#N27_1').val(branch.tel_area_code ?? '');
                 $('#N28_1').val(branch.tel_city_code ?? '');
                 $('#N29_1').val(branch.tel_subscriber_code ?? '');
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
 
             Livewire.on('onSelectEmployee', ({

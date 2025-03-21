@@ -210,6 +210,7 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const start_date_of_closed_2 = data['start_date_of_closed'];
                 const end_date_of_losed_2 = data['end_date_of_losed'];
+                const helloWork = data['helloWork'];
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 const headquartersAddress = (headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (
@@ -340,6 +341,27 @@
                 $('#J27_005F_8F5A_8F8A').val(headquartersAddress);
                 $('#J83_005F_82A0_82C4_90E6').val(hello_work);
 
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
                 $('#J86_005F_8BE0_975A_8B40_8AD6_8374_838A_834B_8369').val(employee.bank_name_kana || "");
                 $('#J87_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
                 if(employee.head_office_or_branch_office == 0) {
