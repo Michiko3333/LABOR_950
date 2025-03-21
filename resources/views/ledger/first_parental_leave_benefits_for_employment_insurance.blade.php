@@ -247,19 +247,23 @@
                     $('#J28_005F_944E').val(start_date_of_closed_1['year']);
                     $('#J29_005F_8C8E').val(start_date_of_closed_1['month']);
                     $('#J30_005F_93FA').val(start_date_of_closed_1['day']);
-                    $('#J97_005F_944E_8D86').val(start_date_of_closed_1['era']);
-                    $('#J98_005F_944E').val(start_date_of_closed_1['year']);
-                    $('#J99_005F_8C8E').val(start_date_of_closed_1['month']);
-                    $('#J100_005F_93FA').val(start_date_of_closed_1['day']);
+                    $('#J12_005F_944E_8D86').val(start_date_of_closed_1['era']);
+                    $('#J13_005F_944E').val(start_date_of_closed_1['year']);
+                    $('#J14_005F_8C8E').val(start_date_of_closed_1['month']);
+                    $('#J15_005F_93FA').val(start_date_of_closed_1['day']);
+                    $('#J29_005F_8C8E1').val(start_date_of_closed_1['month']);
+                    $('#J30_005F_93FA1').val(start_date_of_closed_1['day']);
                 } else {
                     $('#J27_005F_944E_8D86').val("");
                     $('#J28_005F_944E').val("");
                     $('#J29_005F_8C8E').val("");
                     $('#J30_005F_93FA').val("");
-                    $('#J97_005F_944E_8D86').val("");
-                    $('#J98_005F_944E').val("");
-                    $('#J99_005F_8C8E').val("");
-                    $('#J100_005F_93FA').val("");
+                    $('#J12_005F_944E_8D86').val("");
+                    $('#J13_005F_944E').val("");
+                    $('#J14_005F_8C8E').val("");
+                    $('#J15_005F_93FA').val("");
+                    $('#J29_005F_8C8E1').val("");
+                    $('#J30_005F_93FA1').val("");
                 }
                 if (date_of_birth_1 != null) {
                     $('#J32_005F_944E_8D86').val(date_of_birth_1['era']);
