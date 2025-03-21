@@ -253,11 +253,11 @@
                 const employmentStatusMap = {
                     1: '日雇',
                     2: '派遣',
-                    3: 'アルバイト・パートタイム',
-                    4: '有期契約労働者（契約社員含む）',
+                    3: 'パートタイム',
+                    4: '有期契約労働者',
                     5: '季節的雇用',
                     6: '船員',
-                    7: 'その他（正社員・無期雇用等）',
+                    7: 'その他',
                 };
                 $('#J41_005F_8CD9_9770_8C60_91D4').val(employmentStatusMap[employee.employment_status] ?? "");
                 if (employee.country_id) {
