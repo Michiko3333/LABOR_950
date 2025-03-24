@@ -62,6 +62,7 @@ use App\Http\Controllers\AttendanceEmployeeController;
 use App\Http\Controllers\ImportAttendanceController;
 use App\Http\Controllers\ImportEmployeeController;
 use App\Http\Controllers\ImportWageController;
+use App\Http\Controllers\MonthlyStandardSalaryController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
 use Illuminate\Support\Facades\Route;
@@ -368,6 +369,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee/upload', [ImportEmployeeController::class, 'index'])->name('employees.upload');
         Route::get('/employee/upload/columns', [ImportEmployeeController::class, 'column_data'])->name('employees.upload.colmuns');
         Route::post('/employee/upload', [ImportEmployeeController::class, 'upload'])->name('employees.upload.post');
+
+        Route::get('/employee/monthly_standard_salary', [MonthlyStandardSalaryController::class, 'index'])->name('monthly_standard_salary.index');
 
         //最終試験用
         Route::get('/finalexam/getauth', [FinalExamController::class, 'get_auth'])->name('finalexam.get_auth');

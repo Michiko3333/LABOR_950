@@ -111,11 +111,18 @@
                                 従業員一覧</a>
                         </li>
                     @endif
-                    @if ($userPermission->isReadableFor(517))
+                    @if ($userPermission->isReadableFor(17))
                         <li class="item">
                             <a href="{{ route('wages.index') }}">
 
                                 賃金情報</a>
+                        </li>
+                    @endif
+                    @if ($userPermission->isReadableFor(21))
+                        <li class="item">
+                            <a href="{{ route('monthly_standard_salary.index') }}">
+
+                            標準報酬月額（定時・随時）</a>
                         </li>
                     @endif
                     @if ($userPermission->isReadableFor(19))

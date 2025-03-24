@@ -287,6 +287,13 @@
                                         </div>
                                     </a>
                                 @endif
+                                @if ($userPermission->isReadableFor(21))
+                                    <a href="{{ route('monthly_standard_salary.index') }}" class="item">
+                                        <div class="content">
+                                            <div class="header">標準報酬月額（定時・随時）</div>
+                                        </div>
+                                    </a>
+                                @endif
                                 @if ($userPermission->isReadableFor(19))
                                     <a href="{{ route('attendances.index') }}" class="item">
 

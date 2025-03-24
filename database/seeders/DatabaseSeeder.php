@@ -88,5 +88,6 @@ class DatabaseSeeder extends Seeder
         $this->call(wageColumnSeeder::class);
         $this->call(AttendanceColumnsSeeder::class);
         $this->call(EmployeeColumnsSeeder::class);
+        $this->call(MonthStandardSalarySeeder::class);
     }
 }
