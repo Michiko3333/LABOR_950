@@ -15,7 +15,6 @@ class FilterEmployeeList extends FilterColumn
         $currentUser = CurrentUser::info();
         $list = $this->getUserList();
 
-        $cond = [];
         UserFilterEmployeeList::where('employee_id', $currentUser->id)->update(['delete_flg' => 1]);
         for ($i = 0; $i < count($list); $i++) {
             $column = $list[$i];
@@ -33,6 +32,22 @@ class FilterEmployeeList extends FilterColumn
         }
 
         $this->tmp = $this->list_show;
+        $this->dispatchFilterColumn();
+    }
+
+    #[On('filter-filter-column')]
+    public function onlyFilterEmployeeList()
+    {
+        $this->tmp = $this->list_show;
+        $this->dispatchFilterColumn();
+    }
+
+    #[On('reset-filter-column')]
+    public function resetFilterEmployeeList()
+    {
+        $currentUser = CurrentUser::info();
+        UserFilterEmployeeList::where('employee_id', $currentUser->id)->update(['delete_flg' => 1]);
+        $this->tmp = $this->list_all;
         $this->dispatchFilterColumn();
     }
 }

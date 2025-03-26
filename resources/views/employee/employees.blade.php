@@ -64,6 +64,10 @@
                 animation: fadeHighlight 0.5s ease-out forwards;
             }
 
+            .remove-ordinary-btn.hidden {
+                display: none;
+            }
+
             @keyframes fadeHighlight {
                 0% {
                     box-shadow: none;
@@ -99,8 +103,19 @@
                 'default' => $defaultList,
             ])
             <div class="actions">
-                <button class="ui button cancel" type="button">キャンセル</button>
-                <button class="ui approve primary button">保存</button>
+                <button class="ui button basic red remove-ordinary-btn hidden" id="filter-remove" style="float: left;"
+                    type="button">常時設定を削除</button>
+                <button class="ui cancel button" type="button">キャンセル</button>
+                <div class="ui primary buttons">
+                    <button class="ui button approve" type="button" data-type="filter">絞り込む</button>
+                    <div class="ui floating dropdown icon button">
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <button type="button" id="pt-filter-save" class="item approve"
+                                data-type="save">常時設定として保存する</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="ui card full card-shadow item-0">
@@ -121,13 +136,32 @@
                 onHidden: () => {
                     window.$lw.onHidden();
                 },
-                onApprove: () => {
-                    window.$lw.onSave();
+                onApprove: (e) => {
+                    if ($(e[0]).data('type') === 'save') {
+                        window.$lw.onSave();
+                        $('#filter-remove').removeClass('hidden');
+                    } else {
+                        window.$lw.onFilter();
+                    }
                     const url = new URL(window.location.href);
                     url.search = '';
                     window.history.replaceState({}, '', url.toString());
                 }
             }).modal('show');
         });
+        $('#exportFilterColumn').click(_ => {
+            Livewire.dispatch('export-filter-list');
+        });
+        $('.ui.dropdown.button')
+            .dropdown();
+        $('#filter-remove').click(_ => {
+            window.$lw.onReset();
+            $('#filter-remove').addClass('hidden');
+        });
+
+        const isSetUserList = {{ $isSetUserList == true ? 'true' : 'false' }};
+        if (isSetUserList) {
+            $('#filter-remove').removeClass('hidden');
+        }
     </script>
 </x-layout>

@@ -76,12 +76,6 @@ class EmployeeController extends Controller
         $currentCompany = CurrentUser::CurrentCompany();
         $division = $currentCompany->company_division;
 
-        $paginate = [
-            'page' => $request->input('page', 1),
-            'limit' => 20,
-            'search' => $request->input('search'),
-        ];
-
         $columnList = FilterEmployeeList::select('name', 'value', 'parent');
 
         if ($userPermission->isBasicDepartment()) {
@@ -91,6 +85,7 @@ class EmployeeController extends Controller
         $masterColumnList = $columnList->orderBy('order')->get()->toArray();
         $userDefaultList = [];
         $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
+        $isSetUserList = false;
         if (count($userList) > 0) {
             foreach ($userList as $key => $value) {
                 $key = array_search($value, array_column($masterColumnList, 'value'));
@@ -98,12 +93,13 @@ class EmployeeController extends Controller
                     $userDefaultList[] = $masterColumnList[$key];
                 }
             }
+            $isSetUserList = true;
         } else {
             $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
             $userDefaultList = $defaultList;
         }
 
-        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList]);
+        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList, 'isSetUserList' => $isSetUserList]);
     }
 
     public function closure_information_list(Request $request)
@@ -923,7 +919,7 @@ class EmployeeController extends Controller
 
             DB::commit();
             $this->putSuccess();
-            if($request->input('query_parameter')) {
+            if ($request->input('query_parameter')) {
                 return redirect()->to($request->input('query_parameter'));
             } else {
                 return redirect()->route('employee');

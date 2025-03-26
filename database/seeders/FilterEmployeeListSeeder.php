@@ -288,5 +288,171 @@ class FilterEmployeeListSeeder extends Seeder
             'hidden_default' => 1,
             'hidden_basic_department' => 0
         ]);
+
+        // 賃金・勤怠
+        FilterEmployeeList::create([
+            'name' => '勤怠情報',
+            'value' => 'attendance',
+            'order' => 34,
+            'parent' => '',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '労働日数',
+            'value' => 'actual_working_days',
+            'order' => 35,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '出勤日数',
+            'value' => 'working_days',
+            'order' => 36,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        /*
+        FilterEmployeeList::create([
+            'name' => '残業時間',
+            'value' => 'overtime',
+            'order' => 37,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        */
+        FilterEmployeeList::create([
+            'name' => '休日日数',
+            'value' => 'holidays',
+            'order' => 38,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '欠勤日数',
+            'value' => 'absent_days',
+            'order' => 39,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '有給取得日数',
+            'value' => 'paid_leave',
+            'order' => 40,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '有給残日数',
+            'value' => 'remaining_paid_leave',
+            'order' => 41,
+            'parent' => 'attendance',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+
+        FilterEmployeeList::create([
+            'name' => '賃金情報（給与）',
+            'value' => 'wage_salary',
+            'order' => 42,
+            'parent' => '',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '総支給額（給与）',
+            'value' => 'w_total_amount',
+            'order' => 43,
+            'parent' => 'wage_salary',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '基本給（給与）',
+            'value' => 'w_wage_base_amount',
+            'order' => 44,
+            'parent' => 'wage_salary',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '時間外手当（給与）',
+            'value' => 'w_overtime_label',
+            'order' => 45,
+            'parent' => 'wage_salary',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '諸手当合計（給与）',
+            'value' => 'w_allowance_label',
+            'order' => 46,
+            'parent' => 'wage_salary',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '差引支給額（給与）',
+            'value' => 'w_amount',
+            'order' => 47,
+            'parent' => 'wage_salary',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+
+        FilterEmployeeList::create([
+            'name' => '賃金情報（賞与）',
+            'value' => 'wage_bonus',
+            'order' => 48,
+            'parent' => '',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '総支給額（賞与）',
+            'value' => 'b_total_amount',
+            'order' => 49,
+            'parent' => 'wage_bonus',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '基本給（賞与）',
+            'value' => 'b_wage_base_amount',
+            'order' => 50,
+            'parent' => 'wage_bonus',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '時間外手当（賞与）',
+            'value' => 'b_overtime_label',
+            'order' => 51,
+            'parent' => 'wage_bonus',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '諸手当合計（賞与）',
+            'value' => 'b_allowance_label',
+            'order' => 52,
+            'parent' => 'wage_bonus',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
+        FilterEmployeeList::create([
+            'name' => '差引支給額（賞与）',
+            'value' => 'b_amount',
+            'order' => 53,
+            'parent' => 'wage_bonus',
+            'hidden_default' => 1,
+            'hidden_basic_department' => 0
+        ]);
     }
 }

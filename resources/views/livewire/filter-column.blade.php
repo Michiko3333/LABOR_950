@@ -65,8 +65,14 @@
                 onSave: () => {
                     $wire.dispatch("{{ $filterSaveTarget }}");
                 },
+                onFilter: () => {
+                    $wire.dispatch("{{ $filterFilterTarget }}");
+                },
                 onHidden: () => {
                     $wire.dispatch("{{ $filterHiddenTarget }}");
+                },
+                onReset: () => {
+                    $wire.dispatch("{{ $filterResetTarget }}");
                 }
             }
         </script>
