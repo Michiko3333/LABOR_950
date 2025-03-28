@@ -77,6 +77,24 @@
             }
         </script>
     @endscript
+    <div class="ui form pattern-select mb-1">
+        <div class="field" style="padding: 0 3px;">
+            <label style="font-size: 14px;">保存されたフィルター</label>
+
+            <div class="ui input action">
+                <select id="filter-pattern-select" class="ui dropdown" wire:model="pattern_id" wire:change="changePattern"
+                    style="margin-right: 3px; height: 40px;">
+                    <option value="0">---</option>
+                    @foreach ($pattern_list as $k => $item)
+                        <option value="{{ $k }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+                <button class="ui button icon red basic" wire:click.debounce.180ms="removePattern"
+                    @if ($pattern_id == 0) disabled @endif><i
+                        class="trash alternate outline icon"></i></button>
+            </div>
+        </div>
+    </div>
     <table class="filter-column-wrapper">
         <thead>
             <tr>

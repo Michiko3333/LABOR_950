@@ -42,6 +42,7 @@ use App\Models\Values_employee_recruitment_category_detail;
 use App\Models\Values_employee_employment_status;
 use App\Models\Values_employee_pay_type;
 use App\Models\Company;
+use App\Models\FilterEmployeePatterns;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +73,6 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
-        $currentUser = CurrentUser::info();
         $currentCompany = CurrentUser::CurrentCompany();
         $division = $currentCompany->company_division;
 
@@ -83,23 +83,9 @@ class EmployeeController extends Controller
         }
 
         $masterColumnList = $columnList->orderBy('order')->get()->toArray();
-        $userDefaultList = [];
-        $userList = UserFilterEmployeeList::select('value')->where('delete_flg', 0)->where('employee_id', $currentUser->id)->orderBy('order')->get()->pluck('value')->toArray();
-        $isSetUserList = false;
-        if (count($userList) > 0) {
-            foreach ($userList as $key => $value) {
-                $key = array_search($value, array_column($masterColumnList, 'value'));
-                if ($key !== false) {
-                    $userDefaultList[] = $masterColumnList[$key];
-                }
-            }
-            $isSetUserList = true;
-        } else {
-            $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
-            $userDefaultList = $defaultList;
-        }
+        $defaultList = $columnList->where('hidden_default', 0)->orderBy('order')->get()->toArray();
 
-        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $userDefaultList, 'isSetUserList' => $isSetUserList]);
+        return view('employee.employees', ['division' => $division, 'columnList' => $masterColumnList, 'defaultList' => $defaultList]);
     }
 
     public function closure_information_list(Request $request)

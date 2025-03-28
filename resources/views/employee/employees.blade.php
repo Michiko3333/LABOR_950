@@ -81,6 +81,22 @@
                     box-shadow: inset 0 0 0 2px #999999;
                 }
             }
+
+            .filter-dropdown-menu button {
+                width: 100%;
+            }
+
+            .filter-dropdown-menu button:hover {
+                background: #e6eaed !important;
+            }
+
+            .filter-dropdown-menu .active.item {
+                font-weight: inherit !important;
+            }
+
+            .text-danger {
+                color: var(--color-red);
+            }
         </style>
     @endslot
     <section class="content">
@@ -98,10 +114,7 @@
             <div class="header">
                 表示項目の切替
             </div>
-            @livewire('filter-employee-list', [
-                'columns' => $columnList,
-                'default' => $defaultList,
-            ])
+            @livewire('filter-employee-list', ['columns' => $columnList, 'default' => $defaultList])
             <div class="actions">
                 <button class="ui button basic red remove-ordinary-btn hidden" id="filter-remove" style="float: left;"
                     type="button">常時設定を削除</button>
@@ -110,12 +123,47 @@
                     <button class="ui button approve" type="button" data-type="filter">絞り込む</button>
                     <div class="ui floating dropdown icon button">
                         <i class="dropdown icon"></i>
-                        <div class="menu">
+                        <div class="menu filter-dropdown-menu">
                             <button type="button" id="pt-filter-save" class="item approve"
-                                data-type="save">常時設定として保存する</button>
+                                data-type="save">現在の表示項目を常時設定として保存する</button>
+                            <button type="button" id="pt-filter-pattern" class="item"
+                                data-type="save">現在の表示項目に名前を付けて保存する</button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="filter-name-modal" class="ui modal mini">
+            <div class="header">
+                現在の表示項目に名前を付けて保存
+            </div>
+            <div class="content">
+                <div class="ui form">
+                    <div class="field" id="filter-pattern-name-wrapper">
+                        <label>名前</label>
+                        <div class="ui input">
+                            <input type="text" id="filter-pattern-name" maxlength="50" placeholder="名前">
+                        </div>
+                    </div>
+                    <p class="text-small"><span class="text-danger">※</span>同じ名前のフィルターが存在する場合は上書きされます。</p>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="ui cancel button" type="button">キャンセル</button>
+                <button class="ui button approve primary" type="button">保存</button>
+            </div>
+        </div>
+
+        <div id="filter-pattern-confirm-modal" class="ui modal mini">
+            <div class="header">
+                確認
+            </div>
+            <div class="content">
+                <p>表示パターン「<span id="filter-pattern-confirm-name"></span>」を削除しますか？</p>
+            </div>
+            <div class="actions">
+                <button class="ui cancel button" type="button">キャンセル</button>
+                <button class="ui button approve red" type="button">削除</button>
             </div>
         </div>
         <div class="ui card full card-shadow item-0">
@@ -126,10 +174,18 @@
     </section>
     <script type="module">
         const filterModal = $('#FilterModal').modal({
+            allowMultiple: true,
             blurring: true
+        });
+        const filterPatternNameModal = $('#filter-name-modal').modal({
+            allowMultiple: true,
+        });
+        const filterPatternConfirmModal = $('#filter-pattern-confirm-modal').modal({
+            allowMultiple: true,
         });
         $('#openFilterColumn').click(_ => {
             filterModal.modal({
+                allowMultiple: true,
                 onShow: () => {
                     window.$lw.onShow();
                 },
@@ -149,6 +205,40 @@
                 }
             }).modal('show');
         });
+        $('#pt-filter-pattern').click(_ => {
+            filterPatternNameModal.modal({
+                allowMultiple: true,
+                onShow: () => {
+                    $('#filter-pattern-name').val('');
+                    $('#filter-pattern-name-wrapper').removeClass('error');
+                },
+                onApprove: (e) => {
+                    const val = $('#filter-pattern-name').val();
+                    if (!val) {
+                        $('#filter-pattern-name-wrapper').addClass('error');
+                        return false;
+                    }
+                    Livewire.dispatch('save-filter-pattern', {
+                        name: val
+                    });
+                }
+            }).modal('show');
+        });
+
+        Livewire.on('remove-filter-pattern', () => {
+            filterPatternConfirmModal.modal({
+                allowMultiple: true,
+                onApprove: () => {
+                    Livewire.dispatch('remove-filter-pattern-approved');
+                },
+                onShow: () => {
+                    const name = $('#filter-pattern-select').find('option:selected').text();
+                    $('#filter-pattern-confirm-name').text(name);
+                }
+            }).modal('show');
+        });
+
+
         $('#exportFilterColumn').click(_ => {
             Livewire.dispatch('export-filter-list');
         });
@@ -159,9 +249,18 @@
             $('#filter-remove').addClass('hidden');
         });
 
-        const isSetUserList = {{ $isSetUserList == true ? 'true' : 'false' }};
+        Livewire.on('filter-set-user-list', (bool) => {
+            if (bool[0]) {
+                $('#filter-remove').addClass('hidden');
+            } else {
+                $('#filter-remove').removeClass('hidden');
+            }
+        });
+
+        /*const isSetUserList =
         if (isSetUserList) {
             $('#filter-remove').removeClass('hidden');
         }
+        */
     </script>
 </x-layout>
