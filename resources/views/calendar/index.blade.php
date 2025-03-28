@@ -1,4 +1,4 @@
-<x-layout title="カレンダー" mode="">
+<x-layout title="行事（業務）カレンダー" mode="">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('custom/calendar.css') }}">
         <link rel="stylesheet" href="{{ asset('custom/calendar-small.css') }}">
@@ -9,12 +9,12 @@
             <div class="ui huge breadcrumb mb-0 mb-2">
                 <a class="section" href="{{ route('home.index') }}">ホーム</a>
                 <i class="right chevron icon divider"></i>
-                <div class="active section">カレンダー</div>
+                <div class="active section">行事（業務）カレンダー</div>
             </div>
             <div>
                 @if($editPermission)
                     <i class="inverted secondary big bell icon notification-icon" style="visibility: visible; cursor: pointer;"></i>
-                    <div class="ui card card-shadow" id="notification-modal" style="position: absolute; top: 190px; display: none; width: 400px; max-height: 428px; z-index: 30; overflow-y: auto;">
+                    <div class="ui card card-shadow" id="notification-modal" style="position: absolute; top: 190px; right: 20px; display: none; width: 400px; max-height: 428px; z-index: 30; overflow-y: auto;">
                         <div class="content" style="background-color: var(--color-red);">
                             <div class="header" style="color: white;">
                                 通知

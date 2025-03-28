@@ -12,6 +12,8 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Rules\noEmoji;
+use Livewire\Attributes\Validate;
 
 class ShiftForm extends Component
 {
@@ -19,14 +21,25 @@ class ShiftForm extends Component
 
     public $errs = [];
 
+    #[Validate('required', as: '起算日（年）')]
     public $start_year;
+
+    #[Validate('required', as: '起算月（月）')]
     public $start_month;
+
+    #[Validate('required', as: '起算曜日（曜日）')]
     public $start_weekday = 7;
+
+    #[Validate('required', as: '起算日（日）')]
     public $start_date = 1;
+
     public $render_months = [];
     public $is_default = false;
 
+    #[Validate('required', as: '事業所')]
     public $branch_value = null;
+
+    #[Validate('required', as: 'タイトル')]
     public $title_value = null;
 
     public $initial_date = '';
@@ -184,7 +197,9 @@ class ShiftForm extends Component
     {
         if ($this->is_saving) return;
 
-        if (empty($this->title_value) || empty($this->start_year) || empty($this->start_month) || empty($this->start_date) || empty($this->start_weekday)) {
+        $validated = $this->validate();
+
+        if (noEmoji::isEmoji($this->title_value)) {
             $this->dispatch('onSubmitError');
             return false;
         }
@@ -336,6 +351,7 @@ class ShiftForm extends Component
 
     public function download()
     {
+        $validated = $this->validate();
         $currentCompany = CurrentUser::currentCompany();
         $data = [
             'origin' => [

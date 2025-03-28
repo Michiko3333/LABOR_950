@@ -20,11 +20,11 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'id' => '2',
-                'name' => '支店・営業所',
+                'name' => '事業所等情報',
             ],
             [
                 'id' => '3',
-                'name' => '組織・部署マスタ',
+                'name' => '部署マスタ',
             ],
             [
                 'id' => '4',
@@ -32,15 +32,15 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'id' => '5',
-                'name' => '社員一覧',
+                'name' => '従業員一覧',
             ],
             [
                 'id' => '6',
-                'name' => '社員詳細',
+                'name' => '従業員情報編集',
             ],
             [
                 'id' => '7',
-                'name' => '労働条件通知契約書',
+                'name' => '労働条件通知書兼契約書作成',
             ],
             [
                 'id' => '8',
@@ -56,23 +56,23 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'id' => '11',
-                'name' => 'カレンダー',
+                'name' => '行事（業務）カレンダー',
             ],
             [
                 'id' => '12',
-                'name' => '年間勤務予定表',
+                'name' => '休日（出勤）カレンダー',
             ],
             [
                 'id' => '13',
-                'name' => 'pickup設定',
+                'name' => 'Pick up設定',
             ],
             [
                 'id' => '14',
-                'name' => '休業情報',
+                'name' => '休業設定',
             ],
             [
                 'id' => '15',
-                'name' => 'pickupリスト',
+                'name' => 'Pick upリスト',
             ],
             [
                 'id' => '16',
@@ -89,10 +89,6 @@ class FeatureSeeder extends Seeder
             [
                 'id' => '19',
                 'name' => '勤怠情報',
-            ],
-            [
-                'id' => '20',
-                'name' => '手当情報',
             ],
         ]);
     }

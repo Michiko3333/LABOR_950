@@ -75,6 +75,13 @@ Livewire.on('modal-closeCalendarModal', () => {
     calendar_edit_modal.modal('hide');
     $wire.dispatch('getEvents');
 });
+window.addEventListener('success', () => {
+    $.toast({
+        position: 'bottom right',
+        class: 'success',
+        message: `更新が完了しました`
+    });
+});
 </script>
 @endscript
 <script>
@@ -260,7 +267,7 @@ class="edit-calendar-to" wire:ignore>
 </div>
 <div class="field">
 <label for="event-title">内容・詳細</label>
-<textarea name="event-contents" cols="30" rows="6" wrap="off" maxlength="255" class='edit-calendar-inputs_contents'></textarea>
+<textarea name="event-contents" cols="30" rows="6" wrap="off" maxlength="255" class='edit-calendar-inputs_contents' autocomplete="off"></textarea>
 </div>
 </div>
 </form>

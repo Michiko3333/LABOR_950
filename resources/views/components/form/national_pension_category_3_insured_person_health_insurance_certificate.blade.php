@@ -185,7 +185,7 @@
                 type="text" autocomplete="off" value="{{old('npc3ipn_3_business_owners_post_code_letter')}}"
             />
             <textarea class="npc3ipn_3_business_owners_info" id="G9_1" name="npc3ipn_3_business_owners_address"
-                style="top: 371px; height: 33px;"
+                style="top: 371px; height: 33px;" autocomplete="off"
                 maxlength="50" type="text"
                 >{{old('npc3ipn_3_business_owners_address')}}</textarea>
             <input class="npc3ipn_3_business_owners_info" id="G9_2" name="npc3ipn_3_business_owners_location"

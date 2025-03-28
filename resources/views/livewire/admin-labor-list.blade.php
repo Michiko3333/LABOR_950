@@ -1,7 +1,7 @@
 <div>
     <div class="filter">
         <div class="ui left icon input" style="margin-right: 1em; display: inline-block;">
-            <input type="text" placeholder="氏名" wire:model.live="search">
+            <input type="text" placeholder="氏名" wire:model.live="search" autocomplete="off">
             <i class="search icon"></i>
         </div>
         <div style="width: 150px; margin-right: 1em; display: inline-block;">
@@ -27,13 +27,13 @@
         </thead>
         <tbody id="tbody">
             @foreach ($data['items'] as $item)
-                <tr class="card">
+                <tr class="card" id="{{ $item->id }}">
                     <td>{{ $item->last_name }} {{ $item->first_name }}</td>
                     <td>
                         @if ($item->company_division == 1)
                             社労士
                         @elseif($item->company_division == 2)
-                            顧客社員
+                            従業員
                         @endif
                     </td>
                     <td>{{ $item->company_name }}</td>
@@ -45,12 +45,12 @@
                         @endif
                         @if ($item->employee_type > 2)
                             <button class="ui button" type="button" wire:click="toPermission({{ $item->id }})">
-                                権限
+                                個別権限
                             </button>
                         @endif
-                        <button class="ui basic primary button" type="button" wire:click="toEdit({{ $item->id }})">
+                        <a href="/employee/edit/{{ $item->id }}" onclick="addQueryParameter(event, '{{ $item->id }}')" class="ui basic primary button">
                             編集
-                        </button>
+                        </a>
                     </td>
                 </tr>
             @endforeach
@@ -59,4 +59,37 @@
 
     <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
 
+    <script type="module">
+        $(document).ready(function() {
+            sessionStorage.removeItem('pageHistory');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            if (itemId) {
+                const element = $(`#${itemId}`);
+                if (element) {
+                    $('html, body').animate({
+                        scrollTop: element.offset().top - ($(window).height() / 2) + (element.outerHeight() / 2)
+                    }, 800, function () {
+                        element.addClass('fade-highlight');
+                    });
+                }
+            }
+        });
+
+        window.addQueryParameter = function(event, id) {
+            event.preventDefault();
+
+            const href = event.target.getAttribute('href');
+            const nextUrl = new URL(href, window.location.origin);
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('id', id);
+            window.history.pushState({}, '', currentUrl);
+
+            sessionStorage.setItem('pageHistory', JSON.stringify(currentUrl));
+            window.location.href = nextUrl.toString();
+        }
+    </script>
 </div>

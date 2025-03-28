@@ -543,7 +543,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:62px; top:106px; width:69px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">被保険者番号</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:11px; width:286px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:11px; width:299px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:121px; top:43px; width:160px; height:22px; text-align:center; font-size:18px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険被保険者</SPAN>
     <SPAN
@@ -618,7 +618,7 @@
         <INPUT tabindex="250"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J55_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_1"
-            value="{{ old('wage_note_1') }}"></INPUT>
+            value="{{ old('wage_note_1') }}" autocomplete="off"></INPUT>
     </SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:105px; top:1303px; width:131px; height:15px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
@@ -1980,7 +1980,7 @@
             tabindex="276"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:860px; height:34px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J83_005F_9574_8B4C_9793" name="labor_consultant_note"
-            value="{{ old('labor_consultant_note') }}"></SPAN>
+            value="{{ old('labor_consultant_note') }}" autocomplete="off"></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:168px; top:416px; width:15px; height:14px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="34"
@@ -2274,7 +2274,7 @@
             type="CHECKBOX" id="J1_005F_8B78_8BC6_8A4A_8E6E_8E9E_92C0_8BE0_8C8E_8A7A_8FD8_96BE_8F91"
             name="leave_start_wage_monthly_certificate" <?php echo old('leave_start_wage_monthly_certificate') == '1' ? 'checked' : ''; ?>><input type="checkbox"
             id="emptySend_1" style="display: none;" value="1" name="leave_start_wage_monthly_certificate2"
-            <?php echo old('leave_start_wage_monthly_certificate2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
+            <?php echo old('leave_start_wage_monthly_certificate2') == '1' ? 'checked' : ''; ?>><SPAN style="font-size:20px; height:20px; vertical-align:middle;" class="checkmark">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:283px; top:56px; width:25px; line-height:24px; height:24px; text-align:left; font-size:24px; font-family:'ＭＳ 明朝', serif; white-space:nowrap;"><INPUT
             tabindex="2" value="1"
@@ -2283,7 +2283,7 @@
             id="J2_005F_8F8A_92E8_984A_93AD_8E9E_8AD4_925A_8F6B_8A4A_8E6E_8E9E_92C0_8BE0_8FD8_96BE_8F91"
             name="reduced_working_hours_wage_certificate_start" <?php echo old('reduced_working_hours_wage_certificate_start') == '1' ? 'checked' : ''; ?>><input type="checkbox"
             id="emptySend_2" style="display:none;" value="1"
-            name="reduced_working_hours_wage_certificate_start2" <?php echo old('reduced_working_hours_wage_certificate_start2') == '1' ? 'checked' : ''; ?>><SPAN
+            name="reduced_working_hours_wage_certificate_start2" <?php echo old('reduced_working_hours_wage_certificate_start2') == '1' ? 'checked' : ''; ?>><SPAN class="checkmark"
             style="font-size:20px; height:20px; vertical-align:middle;">&nbsp;</SPAN></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:853px; top:93px; width:11px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal;">月</SPAN>
@@ -3205,7 +3205,7 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:62px; top:1455px; width:69px; height:12px; text-align:center; font-size:10px; font-family:'ＭＳ 明朝', serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">被保険者番号</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:1360px; width:286px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:58px; top:1360px; width:299px; height:13px; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:distribute-all-lines;">様式第10号の2の2（第14条の2、第14条の3、第65条の12関係）</SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:121px; top:1392px; width:160px; height:22px; text-align:center; font-size:18px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">雇用保険被保険者</SPAN>
     <SPAN
@@ -3250,7 +3250,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:115px; top:2314px; width:542px; line-height:65px; height:68px; font-size:11px; font-family:'ＭＳ 明朝', serif; padding:0px 6px 0px 1px;">
         <INPUT tabindex="982"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:11px; font-family:'ＭＳ 明朝', serif; width:533px; height:65px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2"
+            id="J110_005F_92C0_8BE0_82C9_8AD6_82B7_82E9_93C1_8B4C_8E96_8D80" name="wage_note_2" autocomplete="off"
             value="{{ old('wage_note_2') }}"></INPUT>
     </SPAN>
     <SPAN

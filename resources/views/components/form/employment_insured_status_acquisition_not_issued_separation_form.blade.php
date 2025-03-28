@@ -536,7 +536,7 @@
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:480px; top:673px; width:274px; line-height:45px; height:45px; font-size:12px; font-family:'ＭＳ 明朝', serif;"><input
             tabindex="49"
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 30px 0px 0px; width:274px; height:44px; ime-mode:active;"
-            id="J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752" name="residential_status_unknown_reason"
+            id="J55_005F_8DDD_97AF_8E91_8A69_005F_9573_96BE_979D_9752" name="residential_status_unknown_reason" autocomplete="off"
             value="{{ old('residential_status_unknown_reason') }}" type="text" @if(old('country_id') == null ) disabled @endif></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:759px; top:673px; width:11px; height:45px; text-align:left; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; padding:9px 0px 0px 0px;"></SPAN>

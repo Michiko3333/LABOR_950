@@ -75,7 +75,7 @@ class Controller extends BaseController
         }
     }
 
-    public function convertJapaneseCalendarToWesternCalendar(int $era, Carbon $japaneseCalendar)
+    public static function convertJapaneseCalendarToWesternCalendar(int $era, Carbon $japaneseCalendar)
     {
         $arr = [
             ['date' => '1912-07-30', 'year' => '1912', 'era' => 1],
@@ -108,7 +108,7 @@ class Controller extends BaseController
         }
 
         // 元号の期間が存在し、入力日付がその期間よりも前かどうかを判定
-        if ($endYear <= $westernCalendarYear || $westernCalendarYear < $startYear) {
+        if ($endYear < $westernCalendarYear || $westernCalendarYear < $startYear) {
             return false;
         } else {
             // 日付をCarbonオブジェクトに変換

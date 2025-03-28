@@ -126,7 +126,21 @@
                 localStorage.setItem('selectedBranchId', selectedBranchId);
                 localStorage.setItem('selectedHistoryFlg', selectedHistoryFlg);
                 localStorage.setItem('isFromModalClose', 'true');
+            });
+            window.addEventListener('success', () => {
+                sessionStorage.setItem('showSuccessToast', 'true');
                 location.reload();
+            });
+            window.addEventListener('load', () => {
+                if (sessionStorage.getItem('showSuccessToast') === 'true') {
+                    $.toast({
+                        position: 'bottom right',
+                        class: 'success',
+                        message: `更新が完了しました`
+                    });
+
+                    sessionStorage.removeItem('showSuccessToast');
+                }
             });
         });
     </script>

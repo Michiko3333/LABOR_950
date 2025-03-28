@@ -356,7 +356,6 @@ class BranchController extends Controller
                             'amount' => $data['al-amount'][$index][$alIndex],
                             'pay_month' => $data['al-pay_month'][$index][$alIndex],
                             'target' => $data['al-target'][$index][$alIndex],
-                            'remarks' => $data['al-remarks'][$index][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         if ($alid > 0) {
@@ -366,7 +365,6 @@ class BranchController extends Controller
                                 'amount' => $data['al-amount'][$index][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$index][$alIndex],
                                 'target' => $data['al-target'][$index][$alIndex],
-                                'remarks' => $data['al-remarks'][$index][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                             ]);
                             $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
@@ -382,7 +380,6 @@ class BranchController extends Controller
                                 'amount' => $data['al-amount'][$index][$alIndex],
                                 'pay_month' => $data['al-pay_month'][$index][$alIndex],
                                 'target' => $data['al-target'][$index][$alIndex],
-                                'remarks' => $data['al-remarks'][$index][$alIndex],
                                 'applied_date' => $formatted_applied_date,
                                 'branch_id' => $brid,
                             ])->id;
@@ -498,7 +495,7 @@ class BranchController extends Controller
                             $salaryHistoryData = [
                                 'salary_id' => $SalaryId,
                                 'department_id' => $departmentsAll,
-                                'branch_id' => $brid,
+                                'branch_id' => $created_id,
                                 'payroll_deadline' => $data['sa-payroll_deadline'][$index][$saIndex],
                                 'payroll_month' => $data['sa-payroll_month'][$index][$saIndex],
                                 'payroll_day' => $data['sa-payroll_day'][$index][$saIndex],
@@ -515,23 +512,21 @@ class BranchController extends Controller
                         } else {
                             $formatted_applied_date = $applied_date;
                         }
-                        $created_id = Branch_allowance::create([
+                        $allowance_id = Branch_allowance::create([
                             'allowance' => $data['al-allowance'][$index][$alIndex],
                             'amount' => $data['al-amount'][$index][$alIndex],
                             'pay_month' => $data['al-pay_month'][$index][$alIndex],
                             'target' => $data['al-target'][$index][$alIndex],
-                            'remarks' => $data['al-remarks'][$index][$alIndex],
                             'applied_date' => $formatted_applied_date,
-                            'branch_id' => $brid,
+                            'branch_id' => $created_id,
                         ])->id;
                         $allowanceHistoryData = [
-                            'allowance_id' => $created_id,
-                            'branch_id' => $brid,
+                            'allowance_id' => $allowance_id,
+                            'branch_id' => $created_id,
                             'allowance' => $data['al-allowance'][$index][$alIndex],
                             'amount' => $data['al-amount'][$index][$alIndex],
                             'pay_month' => $data['al-pay_month'][$index][$alIndex],
                             'target' => $data['al-target'][$index][$alIndex],
-                            'remarks' => $data['al-remarks'][$index][$alIndex],
                             'applied_date' => $formatted_applied_date,
                         ];
                         Branch_allowance_history::create($allowanceHistoryData);

@@ -417,13 +417,11 @@
                 allowanceIds.forEach((allowanceId, alIndex) => {
                     const allowanceElement = parentElement.find(`input[name="al-id[${thisIndex}][]"][value="${allowanceId}"]`);
                     const thisElement = allowanceElement.closest('.allowance.fields');
-                    const secondElement = allowanceElement.closest('.allowance.fields').next('.allowance.fields');
-                    const nameElement = thisElement.find(`select[name="al-allowance[${thisIndex}][]"] option:selected`).text();
+                    const nameElement = thisElement.find(`input[name="al-allowance[${thisIndex}][]"]`).val();
                     const amountElement = thisElement.find(`input[name="al-amount[${thisIndex}][]"]`).val();
                     const monthElement = thisElement.find(`select[name="al-pay_month[${thisIndex}][]"] option:selected`).text();
-                    const targetElement = secondElement.find(`input[name="al-target[${thisIndex}][]"]`).val();
-                    const remarksElement = secondElement.find(`input[name="al-remarks[${thisIndex}][]"]`).val();
-                    const notFormattedDateElement = secondElement.find(`input[name="al-applied_date[${thisIndex}][]"]`).val();
+                    const targetElement = thisElement.find(`input[name="al-target[${thisIndex}][]"]`).val();
+                    const notFormattedDateElement = thisElement.find(`input[name="al-applied_date[${thisIndex}][]"]`).val();
                     const dateElement = notFormattedDateElement ? formatAppliedDate(notFormattedDateElement) : "未選択";
 
                     if (allowanceId === "0") {
@@ -431,13 +429,12 @@
                             <div class="new-allowance mb-2 mt-0">
                                 <h3>新規</h3>
                                 <table class="ui celled table center aligned">
-                                    <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>備考</th><th>適用年月</th><th>登録日付</th></tr></thead>
+                                    <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>適用年月</th><th>登録日付</th></tr></thead>
                                     <tbody><tr>
                                         <td class="names-cell">${nameElement}</td>
                                         <td class="amount-cell">${amountElement}</td>
                                         <td class="month-cell">${monthElement}</td>
                                         <td class="target-cell">${targetElement}</td>
-                                        <td class="remarks-cell">${remarksElement}</td>
                                         <td class="applied-date-cell">${dateElement}</td>
                                         <td class="register-date-cell">${formattedDate}</td>
                                     </tr></tbody>
@@ -452,20 +449,19 @@
 
                         const isChanged = oldAllowance.allowance !== nameElement || oldAllowance.target !== targetElement ||
                             oldAllowance.amount != amountElement || paymonthMapping[oldAllowance.pay_month] !== monthElement ||
-                            oldAllowance.remarks !== remarksElement || oldAllowance.applied_date.substring(0, 7) !== dateElement;
+                            oldAllowance.applied_date.substring(0, 7) !== dateElement;
 
                         if (isChanged) {
                             const $beforeChangedAllowanceTable = $(`
                                 <div class="before-changed-allowance mb-2 mt-0">
                                     <h3>変更前</h3>
                                     <table class="ui celled table center aligned">
-                                        <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>備考</th><th>適用年月</th><th>登録日付</th></tr></thead>
+                                        <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>適用年月</th><th>登録日付</th></tr></thead>
                                         <tbody><tr>
                                             <td class="names-cell">${oldAllowance.allowance || ''}</td>
                                             <td class="amount-cell">${oldAllowance.amount ?? ''}</td>
                                             <td class="month-cell">${paymonthMapping[oldAllowance.pay_month] || ''}</td>
                                             <td class="target-cell">${oldAllowance.target || ''}</td>
-                                            <td class="remarks-cell">${oldAllowance.remarks || ''}</td>
                                             <td class="applied-date-cell">${oldAllowance.applied_date.substring(0, 7) || ''}</td>
                                             <td class="register-date-cell">${oldAllowance.updated_at.substring(0, 10) || ''}</td>
                                         </tr></tbody>
@@ -478,13 +474,12 @@
                                 <div class="changed-allowance mb-2 mt-0">
                                     <h3>変更</h3>
                                     <table class="ui celled table center aligned">
-                                        <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>備考</th><th>適用年月</th><th>更新日付</th></tr></thead>
+                                        <thead><tr><th>手当名</th><th>金額</th><th>支払月</th><th>対象者</th><th>適用年月</th><th>更新日付</th></tr></thead>
                                         <tbody><tr>
                                             <td class="names-cell  ${oldAllowance.allowance !== nameElement ? 'red-text' : ''}">${nameElement}</td>
                                             <td class="amount-cell  ${oldAllowance.amount != amountElement ? 'red-text' : ''}">${amountElement}</td>
                                             <td class="month-cell  ${paymonthMapping[oldAllowance.pay_month] !== monthElement ? 'red-text' : ''}">${monthElement}</td>
                                             <td class="target-cell  ${oldAllowance.target !== targetElement ? 'red-text' : ''}">${targetElement}</td>
-                                            <td class="remarks-cell  ${oldAllowance.remarks !== remarksElement ? 'red-text' : ''}">${remarksElement}</td>
                                             <td class="applied-date-cell  ${oldAllowance.applied_date.substring(0, 7) !== dateElement ? 'red-text' : ''}">${dateElement}</td>
                                             <td class="register-date-cell">${formattedDate}</td>
                                         </tr></tbody>

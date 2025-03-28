@@ -5,6 +5,35 @@
             .power-table {
                 height: 375px;
             }
+
+            .mapping-row {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-bottom: 15px;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .mapping-row label {
+                flex: 0 0 150px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .mapping-row span {
+                flex: 0 0 80px;
+                color: #888;
+                font-style: italic;
+            }
+
+            .mapping-row select {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                max-width: 200px;
+            }
         </style>
     @endslot
     <section class="content">
@@ -25,6 +54,25 @@
                             <input id="csv-input" type="file" accept=".csv" disabled>
                         </div>
                     </div>
+                    <div class="field" style="width: 450px;">
+                        <div class="fields two">
+                            <div class="field">
+                                <label>対象年月</label>
+                                <div class="ui calendar" id="attendance_month">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input type="text" placeholder="Date" name="attendance_month"
+                                            autocomplete="off">
+                                        <input type="hidden" name="formatted_attendance_month"
+                                            id="formatted_attendance_month">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1" style="text-align: left;">
+                    <button id="preview-btn" class="ui button small">プレビュー</button>
                 </div>
             </div>
         </div>
@@ -35,6 +83,9 @@
                 <p>読込可能なデータの一覧：<span id="preview-loadable">0</span>/<span id="preview-inputs">0</span></p>
                 <!-- Power Table List -->
                 <x-power-table-layout></x-power-table-layout>
+                <h3>取り込み項目の割り当て</h3>
+                <div id="solv-column" class="ui form"></div>
+                <button id="solv-column-btn" class="ui button primary mini" disabled>現在の設定を保存</button>
             </div>
         </div>
         <div class="submit-action py-1" style="text-align: right;">
@@ -57,6 +108,7 @@
                     // custom data below
                     data: "{{ route('attendances.upload.colmuns') }}",
                     upload: "{{ route('attendances.upload.post') }}",
+                    solv: "{{ route('attendances.solv.column') }}"
                 }
             });
             csvImportAttendance.onImported = () => {
@@ -65,6 +117,7 @@
                     class: 'success',
                     message: '正常にインポートが完了しました'
                 })
+                document.scrollTo(0, 0);
             };
             csvImportAttendance.onFaildImport = () => {
                 $.toast({
@@ -72,7 +125,35 @@
                     class: 'red',
                     message: 'インポートに失敗しました'
                 })
+                document.scrollTo(0, 0);
             };
+            csvImportAttendance.onSolvedColumn = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: '割当設定を保存しました'
+                })
+            };
+            csvImportAttendance.onFaildSolvedColumn = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: '割当設定の保存に失敗しました'
+                })
+            };
+            $('#attendance_month').calendar({
+                type: 'month',
+                formatter: {
+                    month: 'Y年M月'
+                },
+                text: {
+                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+                        '12月'
+                    ],
+                },
+                initialDate: "",
+            });
         })
     </script>
 </x-layout>

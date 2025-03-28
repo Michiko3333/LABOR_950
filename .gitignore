@@ -19,3 +19,4 @@ yarn-error.log
 app/PdfService/user/*
 !registrymodifications.xcu
 !/storage/app/wage-template
+!/storage/app/shift-template

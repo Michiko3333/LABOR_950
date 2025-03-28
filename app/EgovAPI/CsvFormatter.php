@@ -894,6 +894,7 @@ class CsvFormatter
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 0;
                 $maternity_leave_sheets = 0;
+                $childcare_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -923,6 +924,7 @@ class CsvFormatter
                 $basis_of_calculation_sheets = 1;
                 $bonus_payment_sheets = 0;
                 $maternity_leave_sheets = 0;
+                $childcare_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -952,6 +954,7 @@ class CsvFormatter
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 1;
                 $maternity_leave_sheets = 0;
+                $childcare_leave_sheets = 0;
                 $identification_information_1 = $request->input('pension_office_reference_prefecture').$request->input('pension_office_reference_no_cities').$request->input('pension_office_reference_no_office');
                 $business_serial_number_prefecture = $request->input('pension_office_reference_prefecture');
                 $business_serial_number_city = $request->input('pension_office_reference_no_cities');
@@ -976,12 +979,13 @@ class CsvFormatter
                 }
             break;
              // 旧様式（4950013520994000）
-             case '4950013521029000':
+            case '4950013521029000':
                 $current_employee = CurrentUser::info();
                 $monthly_change_sheets = 0;
                 $basis_of_calculation_sheets = 0;
                 $bonus_payment_sheets = 0;
                 $childcare_leave_sheets = 1;
+                $maternity_leave_sheets = 0;
                 $identification_information_1 = $request->input('business_establishment_code_prefecture_code').$request->input('office_arrangement_code_county_city_ward_code').$request->input('office_reference_symbol_office_symbol');
                 $business_serial_number_prefecture = $request->input('business_establishment_code_prefecture_code');
                 $business_serial_number_city = $request->input('office_arrangement_code_county_city_ward_code');

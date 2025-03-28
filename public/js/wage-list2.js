@@ -8,19 +8,24 @@ class WageList extends PowerTableList {
         this.salary_columns = [];
         this.overtime_columns = [];
         this.allowance_columns = [];
+        this.deduction_columns = [];
         this.unknown_columns = [];
 
         this.labor_insurances = [];
         this.social_insurances = [];
+        this.commute = [];
 
         this.insurance_get = this.option_data.api.insurance_get;
         this.insurance_save = this.option_data.api.insurance_save;
+        this.commute_save = this.option_data.api.commute_save;
+        this.commute_get = this.option_data.api.commute_get;
 
-        this.onChangedCustomColumns = () => {};
-        this.onEditColumn = (key, name) => {};
-        this.successSubmit = () => {};
-        this.errorSubmit = () => {};
-        this.setShowList = () => {};
+        this.onChangedCustomColumns = () => { };
+        this.onEditColumn = (key, name) => { };
+        this.successSubmit = () => { };
+        this.errorSubmit = () => { };
+        this.setShowList = () => { };
+        this.onAddColumn = (section, position) => { };
     }
 
     // override
@@ -28,6 +33,7 @@ class WageList extends PowerTableList {
         this.salary_columns = d['salary_columns'];
         this.overtime_columns = d['overtime_columns'];
         this.allowance_columns = d['allowance_columns'];
+        this.deduction_columns = d['deduction_columns'];
     }
 
     // override
@@ -123,6 +129,28 @@ class WageList extends PowerTableList {
                 btn.appendChild(plus);
                 th.querySelector('span').before(btn);
             }
+        } else if (key == 'deduction_values') {
+            for (let i = 0; i < this.deduction_columns.length; i++) {
+                const column = this.deduction_columns[i];
+                const th = this.createHeaderElement({
+                    key: column,
+                    name: column,
+                    width: 120
+                });
+                th.dataset.parent = key;
+                th.dataset.name = column;
+                parent.appendChild(th);
+
+                const btn = document.createElement('button');
+                const plus = document.createElement('i');
+                btn.classList.add('mini', 'ui', 'button', 'icon', 'plus-btn', 'hidden');
+                plus.classList.add('pen', 'icon');
+                btn.addEventListener('click', e => {
+                    this.onEditColumn(key, column);
+                });
+                btn.appendChild(plus);
+                th.querySelector('span').before(btn);
+            }
         } else if (key == 'total_amount') {
             const th = this.createHeaderElement(item);
             parent.appendChild(th);
@@ -131,7 +159,7 @@ class WageList extends PowerTableList {
             btn.classList.add('mini', 'ui', 'button', 'icon', 'primary', 'hidden', 'plus-btn');
             plus.classList.add('plus', 'icon');
             btn.appendChild(plus);
-            btn.addEventListener('click', e => {                            
+            btn.addEventListener('click', e => {
                 this.onAddColumn('salary_values', 'overtime_label');
             });
             th.querySelector('span').before(btn);
@@ -143,7 +171,7 @@ class WageList extends PowerTableList {
             btn.classList.add('mini', 'ui', 'button', 'icon', 'primary', 'hidden', 'plus-btn');
             plus.classList.add('plus', 'icon');
             btn.appendChild(plus);
-            btn.addEventListener('click', e => {                            
+            btn.addEventListener('click', e => {
                 this.onAddColumn('overtime_values', 'allowance_label');
             });
             th.querySelector('span').before(btn);
@@ -155,8 +183,20 @@ class WageList extends PowerTableList {
             btn.classList.add('mini', 'ui', 'button', 'icon', 'primary', 'hidden', 'plus-btn');
             plus.classList.add('plus', 'icon');
             btn.appendChild(plus);
-            btn.addEventListener('click', e => {                            
+            btn.addEventListener('click', e => {
                 this.onAddColumn('allowance_values', 'absence_deduction');
+            });
+            th.querySelector('span').before(btn);
+        } else if (key == 'deduction_sum') {
+            const th = this.createHeaderElement(item);
+            parent.appendChild(th);
+            const btn = document.createElement('button');
+            const plus = document.createElement('i');
+            btn.classList.add('mini', 'ui', 'button', 'icon', 'primary', 'hidden', 'plus-btn');
+            plus.classList.add('plus', 'icon');
+            btn.appendChild(plus);
+            btn.addEventListener('click', e => {
+                this.onAddColumn('deduction_values', 'deduction_sum');
             });
             th.querySelector('span').before(btn);
         } else {
@@ -166,15 +206,15 @@ class WageList extends PowerTableList {
     }
 
     // override
-    onCreateCell(parent, key, item) {        
+    onCreateCell(parent, key, item) {
         if (key == 'salary_values') {
             for (let i = 0; i < this.salary_columns.length; i++) {
                 const column = this.salary_columns[i];
                 const data = item['salary_values'][column];
                 const custom_item = {};
                 custom_item['id'] = item['id'];
-                custom_item[column] = data.amount;                                
-                
+                custom_item[column] = data.amount;
+
                 const [td, input, label] = this.baseInputCell(column, custom_item);
                 input.type = 'number';
                 input.min = 0;
@@ -230,11 +270,29 @@ class WageList extends PowerTableList {
                     parent.appendChild(td);
                 }
             }
+        } else if (key == 'deduction_values') {
+            for (let i = 0; i < this.deduction_columns.length; i++) {
+                const column = this.deduction_columns[i];
+                const data = item['deduction_values'][column];
+                const custom_item = {};
+                custom_item['id'] = item['id'];
+                custom_item[column] = data.amount;
+
+                const [td, input, label] = this.baseInputCell(column, custom_item);
+                input.type = 'number';
+                input.min = 0;
+                input.max = 99999;
+                input.dataset.section = key;
+                input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
+                label.textContent = this.comma(input.value);
+                td.dataset.parent = key;
+                parent.appendChild(td);
+            }
         } else if (key == 'total_amount') {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = this.comma(
                 this.replaceInt(item.wage_base_amount) +
-                this.getSumArrType(item['salary_values'])
+                this.getSumArrType(item['salary_values']) + this.getSumArrType(item['overtime_values']) + this.getSumArrType(item['allowance_values'])
             );
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
@@ -268,7 +326,7 @@ class WageList extends PowerTableList {
                 'employment_insurance_deduction'
             ];
             let social_insurance_sum = 0;
-            social_insurances.forEach(k => {            
+            social_insurances.forEach(k => {
                 social_insurance_sum += this.replaceInt(item[k]);
             });
 
@@ -287,10 +345,10 @@ class WageList extends PowerTableList {
             ];
             let deduction_sum = 0;
             deductions.forEach(k => {
-                deduction_sum +=  this.replaceInt(item[k]);
+                deduction_sum += this.replaceInt(item[k]);
             });
 
-            label.textContent = this.comma(deduction_sum);
+            label.textContent = this.comma(deduction_sum + this.getSumArrType(item['deduction_values']));
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
             item[key] = this.replaceInt(label.textContent);
@@ -313,7 +371,7 @@ class WageList extends PowerTableList {
                 'employment_insurance_deduction'
             ];
             let social_insurance_sum = 0;
-            social_insurances.forEach(k => {            
+            social_insurances.forEach(k => {
                 social_insurance_sum += this.replaceInt(item[k]);
             });
 
@@ -326,8 +384,9 @@ class WageList extends PowerTableList {
             ];
             let deduction_sum = 0;
             deductions.forEach(k => {
-                deduction_sum +=  this.replaceInt(item[k]);
+                deduction_sum += this.replaceInt(item[k]);
             });
+
 
             let wage_amount = 0;
             wage_amount += this.replaceInt(item.wage_base_amount);
@@ -336,6 +395,7 @@ class WageList extends PowerTableList {
             wage_amount += this.getSumArrType(item.overtime_values);
             wage_amount -= social_insurance_sum;
             wage_amount -= deduction_sum;
+            wage_amount -= this.getSumArrType(item.deduction_values);
             label.textContent = this.comma(wage_amount);
             label.style.fontWeight = 'bold';
             td.dataset.amount = label.textContent;
@@ -344,16 +404,16 @@ class WageList extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             let labor_insurance_sum = 0;
             this.labor_insurances.forEach(e => {
-                if (Object.keys(this.columns_map).includes(e)) {                                            
+                if (Object.keys(this.columns_map).includes(e)) {
                     labor_insurance_sum += item[e];
                 }
-                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                else if (Object.keys(item['salary_values']).includes(e)) {
                     labor_insurance_sum += item['salary_values'][e].amount;
                 }
-                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                else if (Object.keys(item['overtime_values']).includes(e)) {
                     labor_insurance_sum += item['overtime_values'][e].amount;
                 }
-                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                else if (Object.keys(item['allowance_values']).includes(e)) {
                     labor_insurance_sum += item['allowance_values'][e].amount;
                 }
             });
@@ -362,16 +422,16 @@ class WageList extends PowerTableList {
             const [td, label] = super.onCreateCell(parent, key, item);
             let social_insurance_sum = 0;
             this.social_insurances.forEach(e => {
-                if (Object.keys(this.columns_map).includes(e)) {                                            
+                if (Object.keys(this.columns_map).includes(e)) {
                     social_insurance_sum += item[e];
                 }
-                else if (Object.keys(item['salary_values']).includes(e)) {                                                                                        
+                else if (Object.keys(item['salary_values']).includes(e)) {
                     social_insurance_sum += item['salary_values'][e].amount;
                 }
-                else if (Object.keys(item['overtime_values']).includes(e)) {                                            
+                else if (Object.keys(item['overtime_values']).includes(e)) {
                     social_insurance_sum += item['overtime_values'][e].amount;
                 }
-                else if (Object.keys(item['allowance_values']).includes(e)) {                                            
+                else if (Object.keys(item['allowance_values']).includes(e)) {
                     social_insurance_sum += item['allowance_values'][e].amount;
                 }
             });
@@ -384,9 +444,17 @@ class WageList extends PowerTableList {
             input.addEventListener('change', (e) => { this.SumWhenChanged(e); });
             label.textContent = this.comma(input.value);
             parent.appendChild(td);
+        } else if (key == 'month') {
+            const [td, label] = super.onCreateCell(parent, key, item);
+            const date = new Date(item[key]);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const formattedDate = `${year}年${month}月`;
+            label.textContent = formattedDate;
+            td.dataset.amount = item[key];
         } else {
             super.onCreateCell(parent, key, item);
-        }        
+        }
     }
 
     // override
@@ -399,7 +467,7 @@ class WageList extends PowerTableList {
                 salaries_res[id] = {};
             }
             salaries_res[id][key] = Number(val);
-        });            
+        });
 
         const allowances = this.dirtyVal.filter(f => f.section == 'allowance_values');
         const allowances_res = {};
@@ -420,11 +488,21 @@ class WageList extends PowerTableList {
             overtimes_res[id][key] = Number(val);
         });
 
+        const deductions = this.dirtyVal.filter(f => f.section == 'deduction_values');
+        const deductions_res = {};
+        deductions.forEach(item => {
+            const { id, key, val, section } = item;
+            if (!deductions_res[id]) {
+                deductions_res[id] = {};
+            }
+            deductions_res[id][key] = Number(val);
+        });
+
         const formData = new FormData(document.forms.wage_filter);
         const target = [];
         const amount = [];
         const comparison = [];
-        for (let d of formData.entries()) { 
+        for (let d of formData.entries()) {
             if (/^cond_target\[\]$/.test(d[0])) {
                 target.push(d[1]);
             } else if (/^cond_amount\[\]$/.test(d[0])) {
@@ -450,6 +528,7 @@ class WageList extends PowerTableList {
             salary: salaries_res,
             allowance: allowances_res,
             overtime: overtimes_res,
+            deduction: deductions_res,
             conditions: {
                 conditions: data.conditions,
                 detail: details
@@ -471,12 +550,12 @@ class WageList extends PowerTableList {
         for (let i = 0; i < Object.keys(this.columns_map).length; i++) {
             const key = Object.keys(this.columns_map)[i];
             const item = this.columns_map[key];
-            if (item.calc == 1) column_names.push({name: item.name, key: item.key});
+            if (item.calc == 1) column_names.push({ name: item.name, key: item.key });
         }
 
-        const salary_columns = this.salary_columns.map(e => ({name: e, key: e}));
-        const overtime_columns = this.overtime_columns.map(e => ({name: e, key: e}));
-        const allowance_columns = this.allowance_columns.map(e => ({name: e, key: e}));
+        const salary_columns = this.salary_columns.map(e => ({ name: e, key: e }));
+        const overtime_columns = this.overtime_columns.map(e => ({ name: e, key: e }));
+        const allowance_columns = this.allowance_columns.map(e => ({ name: e, key: e }));
 
         const all = [
             ...column_names,
@@ -490,7 +569,7 @@ class WageList extends PowerTableList {
 
     checkColumn(name) {
         const wageListHeader = document.getElementById(this.elementIds.header);
-        const exists = wageListHeader.querySelectorAll('th[data-name="' + name + '"]');        
+        const exists = wageListHeader.querySelectorAll('th[data-name="' + name + '"]');
         if (exists.length) return true;
         return false;
     }
@@ -500,6 +579,7 @@ class WageList extends PowerTableList {
         if (key == 'salary_values') section = 'salary';
         else if (key == 'overtime_values') section = 'overtime';
         else if (key == 'allowance_values') section = 'allowance';
+        else if (key == 'deduction_values') section = 'deduction';
 
         const idx = this.dirtyName.findIndex(d => {
             return d.key == original
@@ -532,7 +612,7 @@ class WageList extends PowerTableList {
         th.dataset.name = name;
         const btn = document.createElement('button');
         const plus = document.createElement('i');
-        btn.classList.add('mini', 'ui', 'button', 'icon', 'plus-btn', 'hidden');
+        btn.classList.add('mini', 'ui', 'button', 'icon', 'plus-btn');
         plus.classList.add('pen', 'icon');
         btn.addEventListener('click', e => {
             this.onEditColumn(section, name);
@@ -546,7 +626,7 @@ class WageList extends PowerTableList {
             const row = this.item_nodes[l];
             const origin = row.querySelector('td[data-key="' + position + '"]');
             const wage_type_td = row.querySelector('td[data-key="wage_type"]');
-            let d = {id: row.dataset.id};
+            let d = { id: row.dataset.id };
             d[name] = '';
 
             if (wage_type_td.dataset.amount == 2) {
@@ -577,7 +657,7 @@ class WageList extends PowerTableList {
         }
     }
 
-    removeColumn(key, original) {        
+    removeColumn(key, original) {
         let section = '';
         if (key == 'salary_values') section = 'salary';
         else if (key == 'overtime_values') section = 'overtime';
@@ -614,34 +694,31 @@ class WageList extends PowerTableList {
         const base_amount_node = element.querySelector('input[data-id="' + id + '"][data-key="' + base_amount_key + '"]');
 
         const salary_section = 'salary_values';
-        const salary_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="'+ salary_section + '"]');
-        let salary = 0;                                
+        const salary_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="' + salary_section + '"]');
+        let salary = 0;
         for (let i = 0; i < salary_nodes.length; i++) {
             const node = salary_nodes[i];
-            const val = node.value.replace(/,/g, '');
-            salary += parseInt(val);
+            salary += this.replaceInt(node.value);
         }
 
         const overtime_section = 'overtime_values';
         const overtime_key = 'overtime_label';
-        const overtime_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="'+ overtime_section + '"]');
-        const overtime_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + overtime_key + '"]');        
-        let overtime = 0;                                
+        const overtime_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="' + overtime_section + '"]');
+        const overtime_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + overtime_key + '"]');
+        let overtime = 0;
         for (let i = 0; i < overtime_nodes.length; i++) {
             const node = overtime_nodes[i];
-            const val = node.value.replace(/,/g, '');
-            overtime += parseInt(val);
+            overtime += this.replaceInt(node.value);
         }
 
         const allowance_section = 'allowance_values';
         const allowance_key = 'allowance_label';
-        const allowance_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="'+ allowance_section + '"]');
+        const allowance_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="' + allowance_section + '"]');
         const allowance_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + allowance_key + '"]');
-        let allowance = 0;                                
+        let allowance = 0;
         for (let i = 0; i < allowance_nodes.length; i++) {
             const node = allowance_nodes[i];
-            const val = node.value.replace(/,/g, '');
-            allowance += parseInt(val);
+            allowance += this.replaceInt(node.value);
         }
 
         const total_amount_key = 'total_amount';
@@ -653,7 +730,7 @@ class WageList extends PowerTableList {
         const taxable_paymment_node = element.querySelector('input[data-id="' + id + '"][data-key="' + taxable_paymment_key + '"]');
         const non_taxable_paymment_node = element.querySelector('input[data-id="' + id + '"][data-key="' + non_taxable_paymment_key + '"]');
         const salary_amount_node = element.querySelector('div.label[data-id="' + id + '"][data-key="' + salary_amount_key + '"]');
-        
+
         const absence_deduction_key = 'absence_deduction';
         const late_deduction_key = 'late_deduction';
         const other_deduction_key = 'other_deduction';
@@ -669,9 +746,9 @@ class WageList extends PowerTableList {
             'employment_insurance_deduction'
         ];
         let social_insurance_sum = 0;
-        social_insurances.forEach(k => {            
-            const node = element.querySelector('input[data-id="' + id + '"][data-key="' + k + '"]');            
-            if (node) social_insurance_sum +=  this.replaceInt(node.value);
+        social_insurances.forEach(k => {
+            const node = element.querySelector('input[data-id="' + id + '"][data-key="' + k + '"]');
+            if (node) social_insurance_sum += this.replaceInt(node.value);
         });
 
         const deductions = [
@@ -684,12 +761,21 @@ class WageList extends PowerTableList {
         let deduction = 0;
         deductions.forEach(k => {
             const node = element.querySelector('input[data-id="' + id + '"][data-key="' + k + '"]');
-            if (node) deduction +=  this.replaceInt(node.value);
+            if (node) deduction += this.replaceInt(node.value);
         });
+
+        const deduction_values_key = 'deduction_values';
+        const deduction_values_nodes = element.querySelectorAll('input[data-id="' + id + '"][data-section="' + deduction_values_key + '"]');
+        const deduction_values_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + deduction_values_key + '"]');
+        let deduction_values = 0;
+        for (let i = 0; i < deduction_values_nodes.length; i++) {
+            const node = deduction_values_nodes[i];
+            deduction_values += this.replaceInt(node.value);
+        }
 
         const social_insurance_amount_key = 'social_insurance_amount';
         const social_insurance_amount_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + social_insurance_amount_key + '"]');
-        
+
         const deduction_sum_key = 'deduction_sum';
         const deduction_sum_label = element.querySelector('div.label[data-id="' + id + '"][data-key="' + deduction_sum_key + '"]');
         const wage_amount_key = 'wage_amount';
@@ -727,12 +813,12 @@ class WageList extends PowerTableList {
             },
             {
                 key: deduction_sum_key,
-                value: deduction,
+                value: deduction + deduction_values,
                 element: deduction_sum_label
             },
             {
                 key: wage_amount_key,
-                value: total_amount + overtime + allowance - social_insurance_sum - deduction,
+                value: total_amount + overtime + allowance - social_insurance_sum - deduction - deduction_values,
                 element: wage_amount_label
             }
         ];
@@ -741,7 +827,7 @@ class WageList extends PowerTableList {
             const idx = this.dirtyVal.findIndex(d => {
                 return d.id == id && d.key == el.key
             });
-    
+
             if (idx >= 0) {
                 this.dirtyVal[idx].val = el.value;
             } else {
@@ -794,11 +880,11 @@ class WageList extends PowerTableList {
         return str;
     }
 
-    getSumArrType(obj) {        
+    getSumArrType(obj) {
         let c = 0;
         for (let j = 0; j < Object.keys(obj).length; j++) {
             const key = Object.keys(obj)[j];
-            const t = obj[key];            
+            const t = obj[key];
             c += this.replaceInt(t.amount);
         }
         return c;
@@ -806,12 +892,12 @@ class WageList extends PowerTableList {
 
     replaceInt(str) {
         if (typeof str != 'number') {
-            if (str != null && str != '') {                
+            if (str != null && str != '') {
                 str = str.replace(/,/g, '');
             } else {
                 str = 0;
             }
-        }        
+        }
         return parseInt(str);
     }
 

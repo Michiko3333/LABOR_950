@@ -16,7 +16,7 @@ class ValuesEmployeePayTypeSeeder extends Seeder
         DB::table('m_values_employee_pay_type')->insert([
             [
                 'id' => '1',
-                'name' => '月給',
+                'name' => '月給（日給月給）',
             ],
             [
                 'id' => '2',
@@ -36,10 +36,14 @@ class ValuesEmployeePayTypeSeeder extends Seeder
             ],
             [
                 'id' => '6',
-                'name' => '出来高',
+                'name' => '月給（完全月給）',
             ],
             [
                 'id' => '7',
+                'name' => '出来高',
+            ],
+            [
+                'id' => '8',
                 'name' => 'その他',
             ],
         ]);

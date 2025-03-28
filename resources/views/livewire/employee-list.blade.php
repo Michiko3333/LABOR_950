@@ -1,10 +1,11 @@
 <div>
     <div class="filter">
         <div class="ui left icon input" style="margin-right: 1em; display: inline-block;">
-            <input type="text" placeholder="氏名" wire:model.live="search">
+            <input type="text" placeholder="氏名" wire:model.live="search" autocomplete="off">
             <i class="search icon"></i>
         </div>
-        <button id="openFilterColumn" class="ui button">表示項目</button>
+        <button id="openFilterColumn" class="ui button small">表示項目</button>
+        <button id="exportFilterColumn" class="ui button yellow small">Excel出力</button>
     </div>
     <div style="max-width: 100%; overflow-x: auto;">
         <table class="ui large table" style="table-layout: fixed;">
@@ -26,7 +27,7 @@
             </thead>
             <tbody id="tbody">
                 @foreach ($data['items'] as $item)
-                    <tr class="card">
+                    <tr class="card" id="{{ $item->id }}">
                         <td>
                             <div class="base-data">
                                 <div class="employee-icon">
@@ -69,7 +70,8 @@
 
                                 @case('full_address')
                                     <td>
-                                        {{ $item->address_prefecture_name }} {{ $item->address_city }} {{ $item->address_ward }}
+                                        {{ $item->address_prefecture_name }} {{ $item->address_city }}
+                                        {{ $item->address_ward }}
                                         {{ $item->address_apartment }}
                                     </td>
                                 @break
@@ -131,7 +133,41 @@
                                 @break
 
                                 @case('dispatch_contract_completion')
-                                    <td>{{ $this->format_dispatch_contract_completion($item->dispatch_contract_completion) }}</td>
+                                    <td>{{ $this->format_dispatch_contract_completion($item->dispatch_contract_completion) }}
+                                    </td>
+                                @break
+
+                                @case('actual_working_days')
+                                @case('working_days')
+
+                                @case('holidays')
+                                @case('absent_days')
+
+                                @case('paid_leave')
+                                @case('remaining_paid_leave')
+                                    <td>{{ is_null($item[$column['value']]) ? '-' : $item[$column['value']] . '日' }}</td>
+                                @break
+
+                                @case('w_total_amount')
+                                @case('w_wage_base_amount')
+
+                                @case('w_overtime_label')
+                                @case('w_allowance_label')
+
+                                @case('w_amount')
+                                    <td>{{ is_null($item[$column['value']]) ? '-' : number_format($item[$column['value']]) }}
+                                    </td>
+                                @break
+
+                                @case('b_total_amount')
+                                @case('b_wage_base_amount')
+
+                                @case('b_overtime_label')
+                                @case('b_allowance_label')
+
+                                @case('b_amount')
+                                    <td>{{ is_null($item[$column['value']]) ? '-' : number_format($item[$column['value']]) }}
+                                    </td>
                                 @break
 
                                 @default
@@ -155,16 +191,18 @@
                                 @endif
                             @endif
                             @if ($userPermission->isAdmin() || ($userPermission->isReadableFor(6) && $userPermission->isWritableFor(6)))
-                                <button class="ui basic primary button" type="button"
-                                    wire:click="toEdit({{ $item->id }})">
+                                <a href="/employee/edit/{{ $item->id }}"
+                                    onclick="addQueryParameter(event, '{{ $item->id }}')"
+                                    class="ui basic primary button">
                                     編集
-                                </button>
+                                </a>
                             @else
                                 @if ($userPermission->isReadableFor(6))
-                                    <button class="ui basic primary button" type="button"
-                                        wire:click="toEdit({{ $item->id }})">
+                                    <a href="/employee/edit/{{ $item->id }}"
+                                        onclick="addQueryParameter(event, '{{ $item->id }}')"
+                                        class="ui basic primary button">
                                         詳細
-                                    </button>
+                                    </a>
                                 @endif
                             @endif
                         </td>
@@ -176,4 +214,38 @@
 
     <livewire:pagination :pagination="$data['pagination']" wire:key="pagination-component" />
 
+    <script type="module">
+        $(document).ready(function() {
+            sessionStorage.removeItem('pageHistory');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+
+            if (itemId) {
+                const element = $(`#${itemId}`);
+                if (element) {
+                    $('html, body').animate({
+                        scrollTop: element.offset().top - ($(window).height() / 2) + (element
+                            .outerHeight() / 2)
+                    }, 800, function() {
+                        element.addClass('fade-highlight');
+                    });
+                }
+            }
+        });
+
+        window.addQueryParameter = function(event, id) {
+            event.preventDefault();
+
+            const href = event.target.getAttribute('href');
+            const nextUrl = new URL(href, window.location.origin);
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('id', id);
+            window.history.pushState({}, '', currentUrl);
+
+            sessionStorage.setItem('pageHistory', JSON.stringify(currentUrl));
+            window.location.href = nextUrl.toString();
+        }
+    </script>
 </div>

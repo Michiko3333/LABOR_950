@@ -273,6 +273,10 @@
             white-space: normal;
         }
 
+        #right_schedule.right_close .schedule {
+            height: 0 !important;
+        }
+
         #arrow {
             position: absolute;
             display: block;
@@ -361,10 +365,10 @@
             $("section.content textarea").addClass("permission-readonly");
             $(".hidden-readonly").remove();
             $("i.calendar.icon").remove();
-            $(".ui.fluid.dropdown.multiple i.dropdown.icon").remove();
+            $(".ui.fluid.dropdown i.dropdown.icon").remove();
             $("i.delete.icon").remove();
             $(".branch-calendar").addClass("dropdown-readonly");
-            $("section.content .dropdown.multiple").addClass("dropdown-readonly");
+            $("section.content .dropdown").addClass("dropdown-readonly");
         }
     </script>
     {{ $header ?? '' }}

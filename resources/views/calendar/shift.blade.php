@@ -1,4 +1,4 @@
-<x-layout title="年間勤務予定表" mode="">
+<x-layout title="休日（出勤）カレンダー" mode="">
     @slot('header')
         <link rel="stylesheet" href="{{ asset('custom/calendar-small.css') }}">
         <style>
@@ -21,6 +21,10 @@
             .ui.error.message.hidden {
                 display: none;
             }
+
+            .calendar-info {
+                color: var(--color-red);
+            }
         </style>
     @endslot
 
@@ -28,7 +32,7 @@
         <div class="ui huge breadcrumb mb-0 mb-2">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">年間勤務予定表</div>
+            <div class="active section">休日（出勤）カレンダー</div>
         </div>
         @livewire('shift-form', ['editable' => $userPermission->isWritableFor(12) && $userPermission->isBasicDepartment()])
     </section>
@@ -56,17 +60,14 @@
 
                 const holidayModal = $('#HolidayModal').modal({
                     blurring: true,
+                    onHide: function () {
+                        $hm.onCancel();
+                    }
                 });
                 window.$holidayModal = holidayModal;
             });
         </script>
         <script type="module">
-            Livewire.on('onSubmitError', () => {
-                setTimeout(() => {
-                    $('.ui.error.message').removeClass('hidden');
-                }, 0);
-            });
-
             Livewire.on('onSavedShiftCalendar', () => {
                 $.toast({
                     position: 'bottom right',
@@ -80,6 +81,11 @@
                     class: 'red',
                     message: `エラーが発生しました`
                 });
+            });
+            Livewire.on('onSubmitError', () => {
+                setTimeout(() => {
+                    $('.ui.error.message.emoji').removeClass('hidden');
+                }, 100);
             });
         </script>
     @endslot

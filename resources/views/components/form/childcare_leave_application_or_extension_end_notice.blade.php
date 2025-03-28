@@ -415,21 +415,21 @@
                     required="required"
                     style="left: 77px; background-color: #ffffff;"
                     type="text" value="{{ old('submission_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="date_of_submission month" id="submission_month" name="submission_month"
                     maxlength="2"
                     required="required" 
                     style="left: 122px; background-color: #ffffff;"
                     type="text" value="{{ old('submission_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="date_of_submission day" id="submission_day" name="submission_day"        
                     maxlength="2"
                     required="required"
                     style="left: 167px; background-color: #ffffff;"
                     type="text" value="{{ old('submission_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="business_establishment_code number_2" id="business_establishment_code_prefecture_code" name="business_establishment_code_prefecture_code"
@@ -437,21 +437,21 @@
                     required="required"
                     style="left: 166px; width: 25px;"
                     type="text" value="{{ old('business_establishment_code_prefecture_code') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="business_establishment_code number_2" id="office_arrangement_code_county_city_ward_code" name="office_arrangement_code_county_city_ward_code"
                     maxlength="2"
                     required="required"
                     style="left: 193px; width: 52px;"
                     type="text" value="{{ old('office_arrangement_code_county_city_ward_code') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="business_establishment_code" id="office_reference_symbol_office_symbol" name="office_reference_symbol_office_symbol"
                     maxlength="4"
                     required="required"
                     style="left: 246px; width: 52px;"
                     type="text" value="{{ old('office_reference_symbol_office_symbol') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <SPAN class="field_other" 
@@ -480,7 +480,7 @@
                         border-top: 1px solid #2f323e;
                         border-right: 1px solid #2f323e;">
                     <input class="field_other number_5" id="csv_pension_office_no" name="csv_pension_office_no" 
-                        required="required"
+                        required="required" autocomplete="off"
                         style="
                             width: 101.5px;
                             height: 21.5px;
@@ -498,18 +498,18 @@
                     required="required"
                     style="left: 181px; width: 30px;"
                     type="text" value="{{ old('post_code_former') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="business_location_post_code number_4" id="post_code_latter" name="post_code_latter"
                     maxlength="4"
                     required="required"
                     style="left: 220px; width: 56px;"
                     type="text" value="{{ old('post_code_latter') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <textarea class="branch_info" id="branch_address" name="branch_address"
-                    maxlength="50"
+                    maxlength="50" autocomplete="off"
                     required="required"
                     style= "top: 142px;
                             height: 28px;
@@ -524,7 +524,7 @@
                             height: 17px;
                             padding: 3px;"
                     type="text" value="{{ old('branch_office_name') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="branch_info" id="employer_company_managerial_position_name" name="employer_company_managerial_position_name"
@@ -534,7 +534,7 @@
                             height: 17px;
                             padding: 3px;"
                     type="text" value="{{ old('employer_company_managerial_position_name') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="branch_tel number_5" id="branch_tel_area_code" name="branch_tel_area_code"
@@ -542,25 +542,25 @@
                     required="required"
                     style="left: 166px; width: 54px;"
                     type="text" value="{{ old('branch_tel_area_code') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="branch_tel number_4" id="branch_tel_city_code" name="branch_tel_city_code"
                     maxlength="4"
                     required="required"
                     style="left: 227px; width: 35px;"
                     type="text" value="{{ old('branch_tel_city_code') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="branch_tel number_5" id="branch_tel_subscriber_code" name="branch_tel_subscriber_code"
                     maxlength="5"
                     required="required"
                     style="left: 269px; width: 54px;"
                     type="text" value="{{ old('branch_tel_subscriber_code') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <textarea class="field_other" id="labor_consultant_name" name="labor_consultant_name"
-                    maxlength="40"
+                    maxlength="40" autocomplete="off"
                     style= "left: 497px;
                             top: 201px;
                             width: 265px;
@@ -586,7 +586,7 @@
                             text-align: left;
                             padding: 3px;"
                     type="text" value="{{ old('insured_person_reference_number') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <SPAN class="person_number" 
@@ -638,7 +638,7 @@
                             font-size: 12px;
                             padding: 3px;"
                     type="text" value="{{ old('fullname_kana') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="insured_persons_name" id="fullname" name="fullname"
@@ -648,7 +648,7 @@
                             font-size: 12px;
                             padding: 3px;"
                     type="text" value="{{ old('fullname') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <select class="field_other" id="year_of_birth_era" name="year_of_birth_era"
@@ -670,7 +670,7 @@
                     required="required"
                     style="left: 541px; text-align: center;"
                     type="text" value="{{ old('year_of_birth') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                     
                 />
                 <input class="insured_persons_date_of_birth month" id="month_of_birth" name="month_of_birth"
@@ -678,14 +678,14 @@
                     required="required"
                     style="left: 584px; text-align: center;"
                     type="text" value="{{ old('month_of_birth') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="insured_persons_date_of_birth day" id="date_of_birth" name="date_of_birth"
                     maxlength="2"
                     required="required"
                     style="left: 627px; text-align: center;"
                     type="text" value="{{ old('date_of_birth') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
 
@@ -721,7 +721,7 @@
                             font-size: 12px;
                             padding: 3px;"
                     type="text" value="{{ old('child_fullname_kana') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_name" id="child_fullname" name="child_fullname"
@@ -731,7 +731,7 @@
                             font-size: 12px;
                             padding: 3px;"
                     type="text" value="{{ old('child_fullname') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
 
@@ -740,21 +740,21 @@
                     required="required"
                     style="left: 537px;"
                     type="text" value="{{ old('child_year_of_birth_era') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_date_of_birth month" id="child_month_of_birth" name="child_month_of_birth"
                     maxlength="2"
                     required="required"
                     style="left: 581px;"
                     type="text" value="{{ old('child_month_of_birth') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_date_of_birth day" id="child_date_of_birth" name="child_date_of_birth"
                     maxlength="2"
                     required="required"
                     style="left: 624px;"
                     type="text" value="{{ old('child_date_of_birth') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <select class="field_other" id="classification" name="classification"
@@ -774,7 +774,7 @@
                     maxlength="2"
                     style="left: 537px; background-color: {{ old('classification') === '2' ? '#ddeeff' : '#ffffff' }};" 
                     type="text" value="{{ old('child_raising_start_dete_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                     data-readonly="{{ old('classification') === '2' ? 'false' : 'true' }}" 
                     {{ old('classification') === '2' ? '' : 'readonly' }}
                 />
@@ -782,7 +782,7 @@
                     maxlength="2"
                     style="left: 581px; background-color: {{ old('classification') === '2' ? '#ddeeff' : '#ffffff' }};" 
                     type="text" value="{{ old('child_raising_start_dete_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                     data-readonly="{{ old('classification') === '2' ? 'false' : 'true' }}" 
                     {{ old('classification') === '2' ? '' : 'readonly' }}
                 />
@@ -790,7 +790,7 @@
                     maxlength="2"
                     style="left: 624px; background-color: {{ old('classification') === '2' ? '#ddeeff' : '#ffffff' }};" 
                     type="text" value="{{ old('child_raising_start_dete_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                     data-readonly="{{ old('classification') === '2' ? 'false' : 'true' }}" 
                     {{ old('classification') === '2' ? '' : 'readonly' }}
                 />
@@ -800,21 +800,21 @@
                     required="required"
                     style="left: 187px;"
                     type="text" value="{{ old('childcare_start_date_japane_era_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_13_14 month" id="childcare_start_date_month" name="childcare_start_date_month"
                     maxlength="2"
                     required="required"
                     style="left: 231px;"
                     type="text" value="{{ old('childcare_start_date_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_13_14 day" id="childcare_start_date_day" name="childcare_start_date_day"
                     maxlength="2"
                     required="required"
                     style="left: 275px;"
                     type="text" value="{{ old('childcare_start_date_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_13_14 year" id="childcare_end_date_japane_era_year" name="childcare_end_date_japane_era_year"
@@ -822,35 +822,35 @@
                     required="required"
                     style="left: 537px;"
                     type="text" value="{{ old('childcare_end_date_japane_era_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_13_14 month" id="childcare_end_date_month" name="childcare_end_date_month"
                     maxlength="2"
                     required="required"
                     style="left: 581px;"
                     type="text" value="{{ old('childcare_end_date_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_13_14 day" id="childcare_end_date_day" name="childcare_end_date_day"
                     maxlength="2"
                     required="required"
                     style="left: 624px;"
                     type="text" value="{{ old('childcare_end_date_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_15_16 number_2" id="parental_leave_count" name="parental_leave_count"
                     maxlength="2"
                     style="left: 227px; "
                     type="text" value="{{ old('parental_leave_count') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_15_16 number_2" id="workday_count" name="workday_count"
                     maxlength="2"
                     style="left: 414px; "
                     type="text" value="{{ old('workday_count') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <div class="field_other" style="left: 601px; top: 492px; width: 15px; height: 15px; background-color: white;">
@@ -865,7 +865,7 @@
                 </div>
 
                 <textarea class="field_other" id="note" name="note"
-                    maxlength="75"
+                    maxlength="75" autocomplete="off"
                     style=" top: 472px;
                             left: 678px;
                             width: 84px;
@@ -881,246 +881,246 @@
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_extension_scheduled_end_date_japane_era_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_A19 month" id="childcare_extension_scheduled_end_date_month" name="childcare_extension_scheduled_end_date_month"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_extension_scheduled_end_date_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_A19 day" id="childcare_extension_scheduled_end_date_day" name="childcare_extension_scheduled_end_date_day"
                     maxlength="2"
                     style="left: 271px;"
                     type="text" value="{{ old('childcare_extension_scheduled_end_date_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_20 number_2" id="after_parental_leave_count_20" name="after_parental_leave_count_20"
                     maxlength="2"
                     style="left: 606px; "
                     type="text" value="{{ old('after_parental_leave_count_20') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_B21 year"  id="childcare_extension_end_date_japane_era_year" name="childcare_extension_end_date_japane_era_year"
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_extension_end_date_japane_era_year') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_B21 month" id="childcare_extension_end_date_month" name="childcare_extension_end_date_month"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_extension_end_date_month') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_B21 day" id="childcare_extension_end_date_day" name="childcare_extension_end_date_day"
                     maxlength="2"
                     style="left: 271px;"
                     type="text" value="{{ old('childcare_extension_end_date_day') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_22 number_2" id="after_parental_leave_count_22" name="after_parental_leave_count_22"
                     maxlength="2"
                     style="left: 606px; "
                     type="text" value="{{ old('after_parental_leave_count_22') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_23_24 year" id="childcare_start_date_japane_era_year1" name="childcare_start_date_japane_era_year1"
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_start_date_japane_era_year1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_23_24 month" id="childcare_start_date_month1" name="childcare_start_date_month1"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_start_date_month1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_23_24 day" id="childcare_start_date_day1" name="childcare_start_date_day1"
                     maxlength="2"
                     style="left: 271px;"
                     type="text" value="{{ old('childcare_start_date_day1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_23_24 year" id="childcare_end_date_japane_era_year1" name="childcare_end_date_japane_era_year1"
                     maxlength="2"
                     style="left: 422px;"
                     type="text" value="{{ old('childcare_end_date_japane_era_year1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_23_24 month" id="childcare_end_date_month1" name="childcare_end_date_month1"
                     maxlength="2"
                     style="left: 460px;"
                     type="text" value="{{ old('childcare_end_date_month1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_23_24 day" id="childcare_end_date_day1" name="childcare_end_date_day1"
                     maxlength="2"
                     style="left: 498px;"
                     type="text" value="{{ old('childcare_end_date_day1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_25_26 number_2" id="parental_leave_count1"name="parental_leave_count1"
                     maxlength="2"
                     style="left: 609px; "
                     type="text" value="{{ old('parental_leave_count1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_25_26 number_2" id="workday_count1" name="workday_count1"
                     maxlength="2"
                     style="left: 726px;"
                     type="text" value="{{ old('workday_count1') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_27_28 year" id="childcare_start_date_japane_era_year2" name="childcare_start_date_japane_era_year2"
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_start_date_japane_era_year2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_27_28 month" id="childcare_start_date_month2" name="childcare_start_date_month2"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_start_date_month2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_27_28 day" id="childcare_start_date_day2" name="childcare_start_date_day2"
                     maxlength="2"
                     style="left:271px"
                     type="text" value="{{ old('childcare_start_date_day2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_27_28 year" id="childcare_end_date_japane_era_year2" name="childcare_end_date_japane_era_year2"
                     maxlength="2"
                     style="left: 422px;"
                     type="text" value="{{ old('childcare_end_date_japane_era_year2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_27_28 month" id="childcare_end_date_month2" name="childcare_end_date_month2"
                     maxlength="2"
                     style="left: 460px"
                     type="text" value="{{ old('childcare_end_date_month2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_27_28 day" id="childcare_end_date_day2" name="childcare_end_date_day2"
                     maxlength="2"
                     style="left: 498px;"
                     type="text" value="{{ old('childcare_end_date_day2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_29_30 number_2" id="parental_leave_count2" name="parental_leave_count2"
                     maxlength="2"
                     style="left: 609px;"
                     type="text" value="{{ old('parental_leave_count2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_29_30 number_2" id="workday_count2" name="workday_count2"
                     maxlength="2"
                     style="left: 726px;"
                     type="text" value="{{ old('workday_count2') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_31_32 year" id="childcare_start_date_japane_era_year3" name="childcare_start_date_japane_era_year3"
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_start_date_japane_era_year3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_31_32 month" id="childcare_start_date_month3" name="childcare_start_date_month3"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_start_date_month3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_31_32 day" id="childcare_start_date_day3" name="childcare_start_date_day3"
                     maxlength="2"
                     style="left: 271px;"
                     type="text" value="{{ old('childcare_start_date_day3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_31_32 year" id="childcare_end_date_japane_era_year3" name="childcare_end_date_japane_era_year3"
                     maxlength="2"
                     style="left: 422px;"
                     type="text" value="{{ old('childcare_end_date_japane_era_year3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_31_32 month" id="childcare_end_date_month3" name="childcare_end_date_month3"
                     maxlength="2"
                     style="left: 460px;"
                     type="text" value="{{ old('childcare_end_date_month3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_31_32 day" id="childcare_end_date_day3" name="childcare_end_date_day3"
                     maxlength="2"
                     style="left: 498px;"
                     type="text" value="{{ old('childcare_end_date_day3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_33 number_2" id="parental_leave_count3" name="parental_leave_count3"
                     maxlength="2"
                     style="left: 609px;"
                     type="text" value="{{ old('parental_leave_count3') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_35_36 year" id="childcare_start_date_japane_era_year4" name="childcare_start_date_japane_era_year4"
                     maxlength="2"
                     style="left: 195px;"
                     type="text" value="{{ old('childcare_start_date_japane_era_year4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_35_36 month" id="childcare_start_date_month4" name="childcare_start_date_month4"
                     maxlength="2"
                     style="left: 234px;"
                     type="text" value="{{ old('childcare_start_date_month4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_35_36 day" id="childcare_start_date_day4" name="childcare_start_date_day4"
                     maxlength="2"
                     style="left: 271px;"
                     type="text" value="{{ old('childcare_start_date_day4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="child_care_leave_date_35_36 year" id="childcare_end_date_japane_era_year4" name="childcare_end_date_japane_era_year4"
                     maxlength="2"
                     style="left: 422px;"
                     type="text" value="{{ old('childcare_end_date_japane_era_year4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_35_36 month" id="childcare_end_date_month4" name="childcare_end_date_month4"
                     maxlength="2"
                     style="left: 460px;"
                     type="text" value="{{ old('childcare_end_date_month4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
                 <input class="child_care_leave_date_35_36 day" id="childcare_end_date_day4" name="childcare_end_date_day4"
                     maxlength="2"
                     style="left: 498px;"
                     type="text" value="{{ old('childcare_end_date_day4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
 
                 <input class="number_of_days_37 number_2" id="parental_leave_count4" name="parental_leave_count4"
                     maxlength="2"
                     style="left: 609px;"
                     type="text" value="{{ old('parental_leave_count4') }}"
-                    autocomplete=”off”
+                    autocomplete="off"
                 />
             </div>
             <img alt="法令様式画像" src="{{ $dataUri }}">

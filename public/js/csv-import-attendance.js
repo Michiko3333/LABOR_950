@@ -3,55 +3,90 @@ class CsvImportAttendance extends PowerTableList {
         super(options)
         this.data_uri = this.option_data.api.data;
         this.upload_uri = this.option_data.api.upload;
+        this.solv_column = this.option_data.api.solv;
         this.columns_map_tmp = [];
         this.employee_list = [];
 
-        this.salary_columns = [];
-        this.overtime_columns = [];
-        this.allowance_columns = [];
         this.unknown_columns = [];
+        this.all_columns = [];
 
         this.lengthInputs = 0;
         this.lengthLoadable = 0;
+
+        this.base_columns = [];
+        this.base_rows = [];
 
         this.successed_data = [];
         this.faild_data = [];
 
         this.rules = {};
 
-        this.onImported = () => {};
-        this.onFaildImport = () => {};
+        this.onImported = () => { };
+        this.onFaildImport = () => { };
+
+        this.mapping = {};
+        this.mapping_base = {};
 
         this.get(this.data_uri).then(r => {
             const res = JSON.parse(r);
 
             this.columns_map_tmp = res.columns_map;
             this.employee_list = res.employees;
+            
+            const configAttendanceUpload = res.mapping;
 
             this.setJson({
                 columns_map: this.columns_map_tmp,
                 data: []
             });
+
+            Object.keys(this.columns_map_tmp).forEach(key => {
+                if (
+                    this.columns_map_tmp[key].key == 'employee_no' ||
+                    this.columns_map_tmp[key].type == 'number' ||
+                    this.columns_map_tmp[key].type == 'array'
+                ) {
+                    this.mapping_base[this.columns_map_tmp[key].key] = this.columns_map_tmp[key].name;
+                }
+            });
+            this.mapping = {...this.mapping_base};
+            for (let i = 0; i < configAttendanceUpload.length; i++) {
+                const element = configAttendanceUpload[i];
+                Object.keys(this.mapping).forEach(key => {
+                    if (key !== element.key && this.mapping[key] === element.name) {                        
+                        this.mapping[key] = null;
+                    }
+                });
+                this.mapping[element.key] = element.name;
+            }
+
             this.load(true);
 
             // input event
             const input = document.getElementById('csv-input');
             input.disabled = false;
-            input.addEventListener('change', (event) => {
-                this.onChangeFile(event)
-            });
 
+            const previewButton = document.getElementById('preview-btn');
+            previewButton.addEventListener('click', (event) => {
+                const input = document.getElementById('csv-input');
+                this.onChangeFile(input);
+            });
             const uploadButton = document.getElementById('upload-btn');
             uploadButton.addEventListener('click', (event) => {
                 this.upload();
             });
         });
+
+        const solvColumnBtn = document.getElementById('solv-column-btn');
+        solvColumnBtn.addEventListener('click', (event) => {
+            this.solvColumn();
+        });
     }
 
-    validationRow(row) {    
+    validationRow(row) {
         // ルール定義
         const rules = this.rules;
-    
+
         // ルールを検証するためのヘルパー関数
         const validators = {
             required: (value) => value !== undefined && value !== null && value !== '',
@@ -59,17 +94,17 @@ class CsvImportAttendance extends PowerTableList {
             date: (value) => !isNaN(Date.parse(value)),
             regex: (value, pattern) => new RegExp(pattern).test(value)
         };
-    
+
         // 全てのルールをチェック
         for (const key in rules) {
             if (rules.hasOwnProperty(key)) {
                 const fieldRules = rules[key];
-    
+
                 // rowに該当キーが存在しない場合は無効
                 if (!row.hasOwnProperty(key)) {
                     return false;
                 }
-    
+
                 // 各ルールを適用
                 for (const rule of fieldRules) {
                     if (rule.startsWith('regex:')) {
@@ -93,12 +128,12 @@ class CsvImportAttendance extends PowerTableList {
         return true;
     }
 
-    onChangeFile(event) {
-        const file = event.target.files[0];
+    onChangeFile(input) {
+        const file = input.files[0];
 
         if (!file || file.type !== 'text/csv') {
             alert('CSVファイルを選択してください。');
-            event.target.value = '';
+            input.value = '';
             return;
         }
 
@@ -113,58 +148,62 @@ class CsvImportAttendance extends PowerTableList {
             }
 
             const columns = [...rows[0]].map(e => this.valueClearing(e));
-            this.loadCsv(columns, rows.slice(1));
+            this.base_columns = columns;
+            this.base_rows = rows.slice(1);
+            this.loadCsv(this.base_columns, this.base_rows);
         }
 
-        reader.onerror = function() {
+        reader.onerror = function () {
             alert('ファイルの読み取り中にエラーが発生しました。');
         };
 
         reader.readAsText(file);
     }
 
-    loadCsv(columns, rows) {
-        rows = rows.filter(e => e.length > 1);
-        this.lengthInputs = rows.length;
-        const column_default_names = [];
-        for (const key in this.columns_map_tmp) {
-            if (Object.prototype.hasOwnProperty.call(this.columns_map_tmp, key)) {
-                const element = this.columns_map_tmp[key];
-                column_default_names.push(element.name);
-            }
-        }
+    loadCsv(columns, rows) {                
+        this.all_columns = [];
         this.successed_data = [];
         this.faild_data = [];
 
+        for (let c = 0; c < columns.length; c++) {
+            const name = columns[c];
+            this.all_columns.push(name);
+        }
+
+        const attendance_month = document.getElementById('formatted_attendance_month');
+
         for (let r = 0; r < rows.length; r++) {
-            const row = rows[r];
+            const row = rows[r];            
             if (row.length < 2) continue;
             const newRow = this.createEmptyObjectFromKeys(this.columns_map_tmp);
 
             for (let c = 0; c < columns.length; c++) {
                 const column_name = columns[c];
-                const existsBasicColumn = this.findKeyByName(this.columns_map_tmp, column_name);
-                if (existsBasicColumn) {
-                    newRow[existsBasicColumn] = this.valueFormat(existsBasicColumn, this
-                        .valueClearing(row[c]));
+                for (const key in this.mapping) {
+                    if (Object.prototype.hasOwnProperty.call(this.mapping, key)) {
+                        const element = this.mapping[key];
+                        if (element == column_name) {
+                            newRow[key] = row[c];
+                            break;
+                        }
+                    }
                 }
             }
 
             newRow['id'] = r;
+            newRow['month'] = attendance_month.value;
 
-            let is_success = true;
-            if (!newRow.employee_no || !newRow.month || !newRow.employment_type) {
-                is_success = false;
-            } else {
-                const employees = this.employee_list.filter(e => {
-                    return e.employee_no == newRow.employee_no;
-                });
-                if (employees.length < 1) is_success = false;
-                else {
-                    if (!newRow.employee_name) newRow.employee_name =
-                        `${employees[0].last_name} ${employees[0].first_name}`;
-                    if (!newRow.branch_name) newRow.branch_name = employees[0].branch_name;
-                }
+            let is_success = this.validationRow(newRow);
+            const employees = this.employee_list.filter(e => {
+                return e.employee_no == newRow.employee_no;
+            });
+            if (employees.length < 1) is_success = false;
+            else {
+                newRow.employee_name = `${employees[0].last_name} ${employees[0].first_name}`;
+                newRow.branch_name = employees[0].branch_name;
+                newRow.departments = employees[0].department_names;
+                newRow.employment_type = employees[0].employee_status;
+                newRow.work_type = employees[0].work_category;
             }
             if (is_success) this.successed_data.push(newRow);
             else this.faild_data.push(newRow);
@@ -175,12 +214,15 @@ class CsvImportAttendance extends PowerTableList {
             data: this.successed_data
         });
         this.lengthLoadable = this.successed_data.length;
+        this.lengthInputs = rows.length;
         this.load();
+        const solvColumnBtn = document.getElementById('solv-column-btn');
+        solvColumnBtn.disabled = false;
     }
 
     onCreateHeader(parent, key, item) {
-            const th = this.createHeaderElement(item);
-            parent.appendChild(th);
+        const th = this.createHeaderElement(item);
+        parent.appendChild(th);
     }
 
     onCreateCell(parent, key, item) {
@@ -194,8 +236,8 @@ class CsvImportAttendance extends PowerTableList {
         else if (key == 'overtime') {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = (
-                this.replaceInt(item.overtime_low) + 
-                this.replaceInt(item.overtime_normal) + 
+                this.replaceInt(item.overtime_low) +
+                this.replaceInt(item.overtime_normal) +
                 this.replaceInt(item.overtime_early) +
                 this.replaceInt(item.overtime_late) +
                 this.replaceInt(item.overtime_off)
@@ -207,8 +249,8 @@ class CsvImportAttendance extends PowerTableList {
         else if (key == 'holidays') {
             const [td, label] = super.onCreateCell(parent, key, item);
             label.textContent = (
-                this.replaceInt(item.holidays_special) + 
-                this.replaceInt(item.holidays_comp) + 
+                this.replaceInt(item.holidays_special) +
+                this.replaceInt(item.holidays_comp) +
                 this.replaceInt(item.holidays_legal) +
                 this.replaceInt(item.holidays_public) +
                 this.replaceInt(item.holidays_transfered)
@@ -230,6 +272,76 @@ class CsvImportAttendance extends PowerTableList {
         const uploadButton = document.getElementById('upload-btn');
         if (this.lengthLoadable > 0) uploadButton.disabled = false;
         else uploadButton.disabled = true;
+
+        this.renderMapping();
+    }
+
+    renderMapping() {        
+        const solvColumn = document.getElementById('solv-column');
+        solvColumn.innerHTML = '';
+
+        const options = [{
+            name: '【取り込み不可】',
+            key: '',
+        }];
+        const options_tmp = {...this.mapping_base};
+
+
+        Object.keys(options_tmp).forEach(key => {
+            options.push({
+                name: options_tmp[key],
+                key: key
+            });
+        });        
+        
+        for (let i = 0; i < this.all_columns.length; i++) {
+            const name = this.all_columns[i];
+            const div = document.createElement('div');
+            div.className = 'mapping-row';
+
+            const label = document.createElement('label');
+            label.textContent = name;
+
+            const span = document.createElement('span');
+            span.textContent = '→';
+
+            const select = document.createElement('select');
+            select.dataset.name = name;
+            select.className = 'map-target-column';
+            select.addEventListener('change', (e) => {
+                this.selectButtonEvent(e);
+            });
+
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.key;
+                optionElement.textContent = option.name;
+                if (name == this.mapping[option.key]) {
+                    optionElement.selected = true;
+                }
+                select.appendChild(optionElement);
+            });
+
+            div.appendChild(label);
+            div.appendChild(span);
+            div.appendChild(select);
+            solvColumn.appendChild(div);
+        }
+    }
+
+    selectButtonEvent(e) {
+        const target = e.target.value;
+        const name = e.target.dataset.name;
+        
+        // targetキー以外で値がnameのマッピングをクリア
+        Object.keys(this.mapping).forEach(key => {
+            if (key !== target && this.mapping[key] === name) {
+                this.mapping[key] = null;
+            }
+        });
+        this.mapping[target] = name;
+
+        this.loadCsv(this.base_columns, this.base_rows);
     }
 
     upload() {
@@ -237,19 +349,22 @@ class CsvImportAttendance extends PowerTableList {
         uploadButton.disabled = true;
         const data = [];
         for (let i = 0; i < this.data.length; i++) {
-            const d = {...this.data[i]};
+            const d = {
+                ...this.data[i],
+                month: this.convertJapaneseDateToISO(this.data[i].month)
+            };
             data.push(d);
         }
 
-        this.submit(this.upload_uri, JSON.stringify({data: data})).then(r => {
+        this.submit(this.upload_uri, JSON.stringify({ data: data })).then(r => {
             this.onImported();
         })
-        .catch(() => {
-            this.onFaildImport();
-        })
-        .finally(() => {
-            uploadButton.disabled = false;
-        });
+            .catch(() => {
+                this.onFaildImport();
+            })
+            .finally(() => {
+                uploadButton.disabled = false;
+            });
     }
 
     valueClearing(str) {
@@ -316,5 +431,36 @@ class CsvImportAttendance extends PowerTableList {
             }
         }
         return parseInt(str);
+    }
+
+    normalizeDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+
+    solvColumn() {
+        const data = [];
+        const mapping = Object.keys(this.mapping);
+        for (let i = 0; i < mapping.length; i++) {
+            const key = mapping[i];
+            const name = this.mapping[key];
+            if (name == '') continue;
+            if (name == this.mapping_base[key]) continue;
+            data.push({ name: name, key: key });
+        }
+        
+        this.submit(this.solv_column, JSON.stringify({ data: data })).then(r => {
+            this.onSolvedColumn();
+        }).catch(() => {
+            this.onFaildSolvedColumn();
+        });
+    }
+
+    convertJapaneseDateToISO(dataStr) {
+        const [year, month] = dataStr.split(/[年月]/).filter(s => s);
+        
+        const paddedMonth = month.padStart(2, '0');
+        
+        return `${year}-${paddedMonth}-01`;
     }
 }

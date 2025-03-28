@@ -85,55 +85,55 @@
                 <input class="egov-tool-field-rect submission_day" id="submission_day" name="submission_day" required="required" style="width: 30px; height: 28px; font-size: 12px; text-align: center; line-height: 28px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('submission_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 108px;">
-                <input class="egov-tool-field-rect office_reference_code_prefecture" id="office_reference_code_prefecture" maxlength="2" name="office_reference_code_prefecture" required="required" autocomplete=”off” style="width: 32px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_prefecture')}}"/>
+                <input class="egov-tool-field-rect office_reference_code_prefecture" id="office_reference_code_prefecture" maxlength="2" name="office_reference_code_prefecture" required="required" autocomplete="off" style="width: 32px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_prefecture')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 249px; top: 108px;">
-                <input class="egov-tool-field-rect office_reference_code_city" id="office_reference_code_city" maxlength="4" name="office_reference_code_city" required="required" autocomplete=”off” style="width: 58px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_city')}}" />
+                <input class="egov-tool-field-rect office_reference_code_city" id="office_reference_code_city" maxlength="4" name="office_reference_code_city" required="required" autocomplete="off" style="width: 58px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_city')}}" />
             </div>
             <div class="egov-tool-field-origin" style="left: 313px; top: 108px;">
-                <input class="egov-tool-field-rect office_reference_code_office" id="office_reference_code_office" maxlength="4" name="office_reference_code_office" required="required" autocomplete=”off” style="width: 66px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_office')}}"/>
+                <input class="egov-tool-field-rect office_reference_code_office" id="office_reference_code_office" maxlength="4" name="office_reference_code_office" required="required" autocomplete="off" style="width: 66px; height: 26px; font-size: 12px; text-align: left; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('office_reference_code_office')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 506px; top: 108px;">
-                <input class="egov-tool-field-rect pension_office_number" id="pension_office_number" maxlength="5" name="pension_office_number" required="required" autocomplete=”off” style="width: 77px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('pension_office_number')}}"/>
+                <input class="egov-tool-field-rect pension_office_number" id="pension_office_number" maxlength="5" name="pension_office_number" required="required" autocomplete="off" style="width: 77px; height: 26px; font-size: 12px; text-align: right; line-height: 26px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('pension_office_number')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 236px; top: 139px;">
-                <input class="egov-tool-field-rect postcode_office_parent" id="postcode_office_parent" maxlength="3" name="postcode_office_parent" required="required" autocomplete=”off” style="width: 69px; height: 27px; font-size: 12px; text-align: center; line-height: 27px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('postcode_office_parent')}}" />
+                <input class="egov-tool-field-rect postcode_office_parent" id="postcode_office_parent" maxlength="3" name="postcode_office_parent" required="required" autocomplete="off" style="width: 69px; height: 27px; font-size: 12px; text-align: center; line-height: 27px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('postcode_office_parent')}}" />
             </div>
             <div class="egov-tool-field-origin" style="left: 329px; top: 139px;">
-                <input class="egov-tool-field-rect postcode_office_child" id="postcode_office_child" maxlength="4" name="postcode_office_child" required="required" autocomplete=”off” style="width: 81px; height: 27px; font-size: 12px; text-align: center; line-height: 27px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('postcode_office_child')}}" />
+                <input class="egov-tool-field-rect postcode_office_child" id="postcode_office_child" maxlength="4" name="postcode_office_child" required="required" autocomplete="off" style="width: 81px; height: 27px; font-size: 12px; text-align: center; line-height: 27px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('postcode_office_child')}}" />
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 168px;">
-                <textarea class="egov-tool-field-rect str_company_address" id="str_company_address" maxlength="75" name="str_company_address" required="required" style="width: 372px; height: 55px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_company_address') ?? ''}}</textarea>
+                <textarea class="egov-tool-field-rect str_company_address" autocomplete="off" id="str_company_address" maxlength="75" name="str_company_address" required="required" style="width: 372px; height: 55px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_company_address') ?? ''}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 225px;">
-                <textarea class="egov-tool-field-rect str_company_name" id="str_company_name" maxlength="50" name="str_company_name" required="required" style="width: 372px; height: 34px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_company_name') ?? ''}}</textarea>
+                <textarea class="egov-tool-field-rect str_company_name" autocomplete="off" id="str_company_name" maxlength="50" name="str_company_name" required="required" style="width: 372px; height: 34px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_company_name') ?? ''}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 261px;">
-                <textarea class="egov-tool-field-rect str_representative_name" id="str_representative_name" maxlength="25" name="str_representative_name" required="required" style="width: 372px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_representative_name') ?? ''}}</textarea>
+                <textarea class="egov-tool-field-rect str_representative_name" autocomplete="off" id="str_representative_name" maxlength="25" name="str_representative_name" required="required" style="width: 372px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('str_representative_name') ?? ''}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 289px;">
-                <input class="egov-tool-field-rect tel_area_code" id="tel_area_code" maxlength="5" name="tel_area_code" required="required" autocomplete=”off” style="width: 94px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_area_code')}}" />
+                <input class="egov-tool-field-rect tel_area_code" id="tel_area_code" maxlength="5" name="tel_area_code" required="required" autocomplete="off" style="width: 94px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_area_code')}}" />
             </div>
             <div class="egov-tool-field-origin" style="left: 315px; top: 289px;">
-                <input class="egov-tool-field-rect tel_city_code" id="tel_city_code" maxlength="4" name="tel_city_code" required="required" autocomplete=”off” style="width: 93px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_city_code')}}"/>
+                <input class="egov-tool-field-rect tel_city_code" id="tel_city_code" maxlength="4" name="tel_city_code" required="required" autocomplete="off" style="width: 93px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_city_code')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 432px; top: 289px;">
-                <input class="egov-tool-field-rect tel_subscriber_code" id="tel_subscriber_code" maxlength="5" name="tel_subscriber_code" autocomplete=”off” required="required" style="width: 95px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_subscriber_code')}}"/>
+                <input class="egov-tool-field-rect tel_subscriber_code" id="tel_subscriber_code" maxlength="5" name="tel_subscriber_code" autocomplete="off" required="required" style="width: 95px; height: 25px; font-size: 12px; text-align: center; line-height: 25px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('tel_subscriber_code')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 335px; top: 358px;">
-                <textarea class="egov-tool-field-rect labor_and_social_security_attorney_name" id="labor_and_social_security_attorney_name" maxlength="40" name="labor_and_social_security_attorney_name" style="width: 429px; height: 47px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('labor_and_social_security_attorney_name') ?? ''}}</textarea>
+                <textarea class="egov-tool-field-rect labor_and_social_security_attorney_name" autocomplete="off" id="labor_and_social_security_attorney_name" maxlength="40" name="labor_and_social_security_attorney_name" style="width: 429px; height: 47px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('labor_and_social_security_attorney_name') ?? ''}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 166px; top: 418px;">
-                <input class="egov-tool-field-rect insurer_reference_num" id="insurer_reference_num" name="insurer_reference_num" maxlength="6" required="required" autocomplete=”off” style="width: 183px; height: 33px; font-size: 12px; text-align: right; line-height: 33px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('insurer_reference_num')}}"/>
+                <input class="egov-tool-field-rect insurer_reference_num" id="insurer_reference_num" name="insurer_reference_num" maxlength="6" required="required" autocomplete="off" style="width: 183px; height: 33px; font-size: 12px; text-align: right; line-height: 33px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('insurer_reference_num')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 513px; top: 419px;">
-                <input class="egov-tool-field-rect emp_mynumber_or_pension_num" id="emp_mynumber_or_pension_num" maxlength="12" name="emp_mynumber_or_pension_num" autocomplete=”off” style="width: 251px; height: 31px; font-size: 12px; text-align: left; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('emp_mynumber_or_pension_num')}}" />
+                <input class="egov-tool-field-rect emp_mynumber_or_pension_num" id="emp_mynumber_or_pension_num" maxlength="12" name="emp_mynumber_or_pension_num" autocomplete="off" style="width: 251px; height: 31px; font-size: 12px; text-align: left; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('emp_mynumber_or_pension_num')}}" />
             </div>
             <div class="egov-tool-field-origin" style="left: 211px; top: 455px;">
-                <textarea class="egov-tool-field-rect employee_name_kana" id="employee_name_kana" maxlength="25" name="employee_name_kana" style="width: 172px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('employee_name_kana')}}</textarea>
+                <textarea class="egov-tool-field-rect employee_name_kana" autocomplete="off" id="employee_name_kana" maxlength="25" name="employee_name_kana" style="width: 172px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('employee_name_kana')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 166px; top: 486px;">
-                <textarea class="egov-tool-field-rect employee_name_kanji" id="employee_name_kanji" maxlength="12" name="employee_name_kanji" required="required" style="width: 217px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('employee_name_kanji')}}</textarea>
+                <textarea class="egov-tool-field-rect employee_name_kanji" autocomplete="off" id="employee_name_kanji" maxlength="12" name="employee_name_kanji" required="required" style="width: 217px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('employee_name_kanji')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 479px; top: 456px;">
                 <select class="egov-tool-field-rect employee_birth_era" id="employee_birth_era" name="employee_birth_era" required="required" style="width: 66px; height: 55px; font-size: 12px; text-align: left; line-height: 55px; padding: inherit; background-color: #ddeeff;">
@@ -143,13 +143,13 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 550px; top: 468px;">
-                <input class="egov-tool-field-rect employee_birth_year" id="employee_birth_year" name="employee_birth_year" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_year')}}"/>
+                <input class="egov-tool-field-rect employee_birth_year" id="employee_birth_year" name="employee_birth_year" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 589px; top: 468px;">
-                <input class="egov-tool-field-rect employee_birth_month" id="employee_birth_month" name="employee_birth_month" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_month')}}"/>
+                <input class="egov-tool-field-rect employee_birth_month" id="employee_birth_month" name="employee_birth_month" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 626px; top: 468px;">
-                <input class="egov-tool-field-rect employee_birth_day" id="employee_birth_day" name="employee_birth_day" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_day')}}"/>
+                <input class="egov-tool-field-rect employee_birth_day" id="employee_birth_day" name="employee_birth_day" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('employee_birth_day')}}"/>
             </div>
             <span class="egov-tool-field-origin egovuiForm-radio-wrapper" style="position: absolute; left: 728px; top: 466.5px; background-color: #ddeeff;">
                 <input checked="" id="employee_sex_man" name="employee_sex" required="required" type="radio" style="position: absolute; left: 1.5px; top: 1.5px; box-sizing:border-box;" value="1" {{ old('employee_sex') == '1' ? 'checked' : '' }}/>
@@ -160,10 +160,10 @@
                 <label class="egovuiForm-label" for="employee_sex_woman" style="font-size: 12px;"></label>
             </span>
             <div class="egov-tool-field-origin" style="left: 210px; top: 516px;">
-                <textarea class="egov-tool-field-rect child_name_kana" id="child_name_kana" maxlength="25" name="child_name_kana" style="width: 172px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('child_name_kana')}}</textarea>
+                <textarea class="egov-tool-field-rect child_name_kana" autocomplete="off" id="child_name_kana" maxlength="25" name="child_name_kana" style="width: 172px; height: 26px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('child_name_kana')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 166px; top: 547px;">
-                <textarea class="egov-tool-field-rect child_name_kanji" id="child_name_kanji" maxlength="12" name="child_name_kanji" style="width: 217px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('child_name_kanji')}}</textarea>
+                <textarea class="egov-tool-field-rect child_name_kanji" autocomplete="off" id="child_name_kanji" maxlength="12" name="child_name_kanji" style="width: 217px; height: 25px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('child_name_kanji')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 479px; top: 517px;">
                 <select class="egov-tool-field-rect child_birth_era" id="child_birth_era" name="child_birth_era" required="required" style="width: 66px; height: 55px; font-size: 12px; text-align: left; line-height: 55px; padding: inherit; background-color: #ddeeff;">
@@ -172,16 +172,16 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 551px; top: 529px;">
-                <input class="egov-tool-field-rect child_birth_year" id="child_birth_year" name="child_birth_year" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_year')}}"/>
+                <input class="egov-tool-field-rect child_birth_year" id="child_birth_year" name="child_birth_year" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 589px; top: 529px;">
-                <input class="egov-tool-field-rect child_birth_month" id="child_birth_month" name="child_birth_month" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_month')}}"/>
+                <input class="egov-tool-field-rect child_birth_month" id="child_birth_month" name="child_birth_month" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 627px; top: 529px;">
-                <input class="egov-tool-field-rect child_birth_day" id="child_birth_day" name="child_birth_day" maxlength="2" required="required" autocomplete=”off” style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_day')}}"/>
+                <input class="egov-tool-field-rect child_birth_day" id="child_birth_day" name="child_birth_day" maxlength="2" required="required" autocomplete="off" style="width: 33px; height: 43px; font-size: 12px; text-align: center; line-height: 43px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_birth_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 336px; top: 577px;">
-                <input class="egov-tool-field-rect child_mynumber_or_pension_num" id="child_mynumber_or_pension_num" maxlength="12" name="child_mynumber_or_pension_num" autocomplete=”off” style="width: 209px; height: 51px; font-size: 12px; text-align: left; line-height: 51px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_mynumber_or_pension_num')}}"/>
+                <input class="egov-tool-field-rect child_mynumber_or_pension_num" id="child_mynumber_or_pension_num" maxlength="12" name="child_mynumber_or_pension_num" autocomplete="off" style="width: 209px; height: 51px; font-size: 12px; text-align: left; line-height: 51px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('child_mynumber_or_pension_num')}}"/>
             </div>
             <span class="egov-tool-field-origin egovuiForm-checkbox-wrapper" style="left: 670px; top: 593px; background-color: #ddeeff;">
                 <input id="relationship_comfirm_0" name="relationship_comfirm" type="checkbox" style="position: absolute; left: 2.5px; top: 2.5px;" value="確認済" {{old('relationship_comfirm') ? 'checked' : ''}} />
@@ -202,16 +202,16 @@
                 <label class="egovuiForm-label" for="branch_confirm_1" style="font-size: 12px;"></label>
             </span>
             <div class="egov-tool-field-origin" style="left: 336px; top: 731px;">
-                <input class="egov-tool-field-rect branch_postcode_parent" id="branch_postcode_parent" maxlength="3" name="branch_postcode_parent" autocomplete=”off” style="width: 53px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('branch_postcode_parent')}}"/>
+                <input class="egov-tool-field-rect branch_postcode_parent" id="branch_postcode_parent" maxlength="3" name="branch_postcode_parent" autocomplete="off" style="width: 53px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('branch_postcode_parent')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 408px; top: 731px;">
-                <input class="egov-tool-field-rect branch_postcode_child" id="branch_postcode_child" maxlength="4" name="branch_postcode_child" autocomplete=”off” style="width: 79px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('branch_postcode_child')}}"/>
+                <input class="egov-tool-field-rect branch_postcode_child" id="branch_postcode_child" maxlength="4" name="branch_postcode_child" autocomplete="off" style="width: 79px; height: 19px; font-size: 12px; text-align: center; line-height: 19px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('branch_postcode_child')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 320px; top: 751px;">
-                <textarea class="egov-tool-field-rect branch_address" id="branch_address" maxlength="75" name="branch_address" style="width: 444px; height: 24px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('branch_address')}}</textarea>
+                <textarea class="egov-tool-field-rect branch_address" autocomplete="off" id="branch_address" maxlength="75" name="branch_address" style="width: 444px; height: 24px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('branch_address')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 320px; top: 781px;">
-                <textarea class="egov-tool-field-rect branch_name" id="branch_name" maxlength="50" name="branch_name" style="width: 444px; height: 33px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('branch_name')}}</textarea>
+                <textarea class="egov-tool-field-rect branch_name" autocomplete="off" id="branch_name" maxlength="50" name="branch_name" style="width: 444px; height: 33px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('branch_name')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 196px; top: 845px;">
                 <select class="egov-tool-field-rect" id="childcare_start_era" name="childcare_start_era" style="width: 70px; height: 44px; font-size: 12px; text-align: left; line-height: 44px; padding: inherit; background-color: #ddeeff;">
@@ -221,13 +221,13 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 271px; top: 858px;">
-                <input class="egov-tool-field-rect childcare_start_year" id="childcare_start_year" name="childcare_start_year" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_year')}}"/>
+                <input class="egov-tool-field-rect childcare_start_year" id="childcare_start_year" name="childcare_start_year" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 309px; top: 858px;">
-                <input class="egov-tool-field-rect childcare_start_month" id="childcare_start_month" name="childcare_start_month" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_month')}}"/>
+                <input class="egov-tool-field-rect childcare_start_month" id="childcare_start_month" name="childcare_start_month" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 347px; top: 858px;">
-                <input class="egov-tool-field-rect childcare_start_day" id="childcare_start_day" name="childcare_start_day" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_day')}}"/>
+                <input class="egov-tool-field-rect childcare_start_day" id="childcare_start_day" name="childcare_start_day" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_start_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 487px; top: 845px;">
                 <select class="egov-tool-field-rect" id="aply_childcare_exception_start_era" name="aply_childcare_exception_start_era" style="width: 70px; height: 44px; font-size: 12px; text-align: left; line-height: 44px; padding: inherit; background-color: #ddeeff;">
@@ -237,16 +237,16 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 562px; top: 858px;">
-                <input class="egov-tool-field-rect aply_childcare_exception_start_year" id="aply_childcare_exception_start_year" name="aply_childcare_exception_start_year" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_year')}}"/>
+                <input class="egov-tool-field-rect aply_childcare_exception_start_year" id="aply_childcare_exception_start_year" name="aply_childcare_exception_start_year" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 600px; top: 858px;">
-                <input class="egov-tool-field-rect aply_childcare_exception_start_month" id="aply_childcare_exception_start_month" name="aply_childcare_exception_start_month" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_month')}}"/>
+                <input class="egov-tool-field-rect aply_childcare_exception_start_month" id="aply_childcare_exception_start_month" name="aply_childcare_exception_start_month" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 638px; top: 858px;">
-                <input class="egov-tool-field-rect  aply_childcare_exception_start_day" id="aply_childcare_exception_start_day" name="aply_childcare_exception_start_day" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_day')}}"/>
+                <input class="egov-tool-field-rect  aply_childcare_exception_start_day" id="aply_childcare_exception_start_day" name="aply_childcare_exception_start_day" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('aply_childcare_exception_start_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 195px; top: 894px;">
-                <textarea class="egov-tool-field-rect" id="apply_note" maxlength="117" name="apply_note" style="width: 569px; height: 44px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('apply_note')}}</textarea>
+                <textarea class="egov-tool-field-rect" id="apply_note" autocomplete="off" maxlength="117" name="apply_note" style="width: 569px; height: 44px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('apply_note')}}</textarea>
             </div>
             <div class="egov-tool-field-origin" style="left: 195px; top: 970px;">
                 <select class="egov-tool-field-rect" id="end_childcare_exception_start_era" name="end_childcare_exception_start_era" style="width: 70px; height: 44px; font-size: 12px; text-align: left; line-height: 44px; padding: inherit; background-color: #ddeeff;">
@@ -256,13 +256,13 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 271px; top: 983px;">
-                <input class="egov-tool-field-rect end_childcare_exception_start_year" id="end_childcare_exception_start_year" name="end_childcare_exception_start_year" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_year')}}"/>
+                <input class="egov-tool-field-rect end_childcare_exception_start_year" id="end_childcare_exception_start_year" name="end_childcare_exception_start_year" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 309px; top: 983px;">
-                <input class="egov-tool-field-rect end_childcare_exception_start_month" id="end_childcare_exception_start_month" name="end_childcare_exception_start_month" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_month')}}"/>
+                <input class="egov-tool-field-rect end_childcare_exception_start_month" id="end_childcare_exception_start_month" name="end_childcare_exception_start_month" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 348px; top: 983px;">
-                <input class="egov-tool-field-rect end_childcare_exception_start_day" id="end_childcare_exception_start_day" name="end_childcare_exception_start_day" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_day')}}"/>
+                <input class="egov-tool-field-rect end_childcare_exception_start_day" id="end_childcare_exception_start_day" name="end_childcare_exception_start_day" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('end_childcare_exception_start_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 487px; top: 970px;">
                 <select class="egov-tool-field-rect" id="childcare_exception_end_era" name="childcare_exception_end_era" style="width: 70px; height: 44px; font-size: 12px; text-align: left; line-height: 44px; padding: inherit; background-color: #ddeeff;">
@@ -272,16 +272,16 @@
                 </select>
             </div>
             <div class="egov-tool-field-origin" style="left: 562px; top: 983px;">
-                <input class="egov-tool-field-rect childcare_exception_end_year" id="childcare_exception_end_year" name="childcare_exception_end_year" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_year')}}"/>
+                <input class="egov-tool-field-rect childcare_exception_end_year" id="childcare_exception_end_year" name="childcare_exception_end_year" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_year')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 600px; top: 983px;">
-                <input class="egov-tool-field-rect childcare_exception_end_month" id="childcare_exception_end_month" name="childcare_exception_end_month" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_month')}}"/>
+                <input class="egov-tool-field-rect childcare_exception_end_month" id="childcare_exception_end_month" name="childcare_exception_end_month" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_month')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 638px; top: 983px;">
-                <input class="egov-tool-field-rect childcare_exception_end_day" id="childcare_exception_end_day" name="childcare_exception_end_day" maxlength="2" autocomplete=”off” style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_day')}}"/>
+                <input class="egov-tool-field-rect childcare_exception_end_day" id="childcare_exception_end_day" name="childcare_exception_end_day" maxlength="2" autocomplete="off" style="width: 33px; height: 31px; font-size: 12px; text-align: center; line-height: 31px; padding: inherit; background-color: #ddeeff;" type="text" value="{{old('childcare_exception_end_day')}}"/>
             </div>
             <div class="egov-tool-field-origin" style="left: 195px; top: 1019px;">
-                <textarea class="egov-tool-field-rect" id="end_note" maxlength="117" name="end_note" style="width: 569px; height: 44px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('end_note')}}</textarea>
+                <textarea class="egov-tool-field-rect" id="end_note" autocomplete="off" maxlength="117" name="end_note" style="width: 569px; height: 44px; font-size: 12px; text-align: left; line-height: 12px; padding: 3px; background-color: #ddeeff; overflow-wrap: break-word; word-wrap: break-word;">{{old('end_note')}}</textarea>
             </div>
             <img alt="法令様式画像" src="{{ $dataUri }}"/>
         </div>

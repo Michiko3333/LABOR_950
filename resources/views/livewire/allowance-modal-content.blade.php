@@ -28,14 +28,14 @@
         <div class="required field">
             <label>名称</label>
             <input type="text" id="allowance_name"
-                wire:model.live="allowance_name" placeholder="">
+                wire:model.live="allowance_name" placeholder="" autocomplete="off">
         </div>
         <div class="required field">
             <label>適用日</label>
             <div class="ui calendar applied_date">
                 <div class="ui fluid input left icon">
                     <i class="calendar icon"></i>
-                    <input type="text" wire:model.live="applied_date" placeholder="YYYY年M月D日">
+                    <input type="text" wire:model.live="applied_date" placeholder="YYYY年M月D日" autocomplete="off">
                 </div>
             </div>
         </div>

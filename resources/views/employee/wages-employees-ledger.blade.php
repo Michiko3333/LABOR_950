@@ -1,4 +1,4 @@
-<x-layout title="賃金台帳（社員選択）" useRightContent="{{ true }}">
+<x-layout title="賃金台帳" useRightContent="{{ true }}">
     @slot('header')
         <style type="text/css">
             .ui.table {
@@ -43,16 +43,31 @@
                 height: 100%;
                 object-fit: cover;
             }
+
+            .filter label {
+                display: block;
+                margin: 0 0 .28571429rem;
+                font-size: .8em;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
         </style>
     @endslot
     <section class="content">
         <div class="ui huge breadcrumb">
             <a class="section" href="{{ route('home.index') }}">ホーム</a>
             <i class="right chevron icon divider"></i>
-            <div class="active section">賃金台帳（社員選択）</div>
+            <div class="active section">賃金台帳</div>
         </div>
         <h1 class="mt-0">賃金台帳（社員選択）</h1>
         <p>選択した社員の賃金情報を元に、賃金台帳を作成します。</p>
+
+        <div class="ui calendar" id="wage-year_calendar" style="display: inline-block;">
+            <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="20xx" maxLength="4" name="wage_year">
+            </div>
+        </div>
 
         @if (session('errors'))
             <div class="ui error message">
@@ -76,12 +91,6 @@
             </div>
         </div>
         <div class="py-2" style="text-align: right;">
-            <div class="ui calendar" id="wage-year_calendar" style="display: inline-block;">
-                <div class="ui input left icon">
-                    <i class="calendar icon"></i>
-                    <input type="text" placeholder="20xx" maxLength="4" name="wage_year">
-                </div>
-            </div>
             <button id="startBtn" type="button" class="ui button primary">確認</button>
         </div>
     </section>

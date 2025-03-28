@@ -213,6 +213,7 @@
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
+                const helloWork = data['helloWork'];
                 var fullname_kana;
                 var fullname;
                 fullname_kana = (employee.last_name_kana && employee.first_name_kana) ? (employee.last_name_kana + '　' +
@@ -322,9 +323,48 @@
                 $('#J22_005F_944E').val(sixty_convert_japan['year'] ?? "");
                 $('#J23_005F_8C8E').val(sixty_convert_japan['month'] ?? "");
                 $('#J24_005F_93FA').val(sixty_convert_japan['day'] ?? "");
-                $('#J30_005F_8C8E').val(day_after_sixty_convert_japan['month'] ?? "");
+                $('#J31_005F_8C8E_month').val(day_after_sixty_convert_japan['month'] ?? "");
                 $('#J32_005F_93FA').val(day_after_sixty_convert_japan['day'] ?? "");
                 $('#J77_005F_82A0_82C4_90E6').val(hello_work);
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
+                $('#financialInstitutionNameKanaId').val(employee.bank_name_kana || "");
+                $('#J81_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
+                if(employee.head_office_or_branch_office == 0) {
+                    $('input[name="headquartersOrBranch"][value="本店"]').prop('checked', true);
+                } else if(employee.head_office_or_branch_office == 1) {
+                    $('input[name="headquartersOrBranch"][value="支店"]').prop('checked', true);
+                }
+                $('#J83_005F_8BE0_975A_8B40_8AD6_8352_815B_8368').val(employee.financial_institution_code || "");
+                $('#J84_005F_9358_95DC_8352_815B_8368').val(employee.store_code || "");
+                $('#J85_005F_9761_8BE0_92CA_92A0_82CC_8CFB_8DC0_94D4_8D86').val(employee.bank_account_no || "");
+                if(employee.japan_post_bank_code_no) {
+                    $('#J117_005F_8B4C_8D86_94D4_8D86').val(employee.japan_post_bank_code_no.slice(0, 5) || "");
+                    $('#J118_005F_8CFB_8DC0_94D4_8D86').val(employee.japan_post_bank_code_no.slice(5) || "");
+                } else {
+                    $('#J117_005F_8B4C_8D86_94D4_8D86').val("");
+                    $('#J118_005F_8CFB_8DC0_94D4_8D86').val("");
+                }
             }
             document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').addEventListener('input', function() {
                 document.getElementById('J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85_2nd').value = this.value;

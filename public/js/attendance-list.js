@@ -1,7 +1,7 @@
 class AttendanceList extends PowerTableList {
     constructor(options) {
         super(options);
-        this.sum_working_days= [
+        this.sum_working_days = [
             'working_off_days',
             'working_legal_days',
         ];
@@ -19,10 +19,10 @@ class AttendanceList extends PowerTableList {
             'holidays_public',
             'holidays_transfered'
         ];
-        this.setShowList = () => {};
+        this.setShowList = () => { };
 
-        this.successSubmit = () => {};
-        this.errorSubmit = () => {};
+        this.successSubmit = () => { };
+        this.errorSubmit = () => { };
     }
 
     // override
@@ -45,7 +45,7 @@ class AttendanceList extends PowerTableList {
                         sum += item[k];
                     }
                 });
-                
+
                 label.textContent = sum;
                 label.style.fontWeight = 'bold';
                 td.dataset.amount = label.textContent;
@@ -58,7 +58,7 @@ class AttendanceList extends PowerTableList {
                         sum += item[k];
                     }
                 });
-                
+
                 label.textContent = sum;
                 label.style.fontWeight = 'bold';
                 td.dataset.amount = label.textContent;
@@ -78,8 +78,7 @@ class AttendanceList extends PowerTableList {
                 const date = new Date(item[key]);
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1;
-                const day = date.getDate();
-                const formattedDate = `${year}年${month}月${day}日`;
+                const formattedDate = `${year}年${month}月`;
                 label.textContent = formattedDate;
                 td.dataset.amount = item[key];
             } else {
@@ -135,10 +134,10 @@ class AttendanceList extends PowerTableList {
         let sum = 0;
         array.forEach(k => {
             const selected = element.querySelector('input[data-id="' + id + '"][data-key="' + k + '"]');
-            sum += selected.value ?  parseFloat(selected.value) : 0;
+            sum += selected.value ? parseFloat(selected.value) : 0;
         });
 
-        const total = element.querySelector('div.label[data-id="' + id + '"][data-key="' + label_key + '"]');        
+        const total = element.querySelector('div.label[data-id="' + id + '"][data-key="' + label_key + '"]');
         total.textContent = sum;
     }
 }

@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Livewire\BaseTable;
 use App\Models\CurrentUser;
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Employee_department;
+use App\Models\Managerial_position;
 use App\Models\Prefecture;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +30,19 @@ class WagesEmployeeList extends BaseTable
     public $selected = [];
     public $all_select = 0;
     public $all_ids = [];
+
+    public $managerial_position_list = [];
+    public $managerial_position_id = null;
+    public $department_list = [];
+    public $department_id = null;
+
+    public function mount()
+    {
+        $currentCompany = CurrentUser::currentCompany();
+        $currentCompanyId = $currentCompany->id;
+        $this->managerial_position_list = Managerial_position::where('delete_flg', 0)->where('company_id', $currentCompanyId)->pluck('name', 'id');
+        $this->department_list = Department::where('delete_flg', 0)->where('company_id', $currentCompanyId)->pluck('name', 'id');
+    }
 
     public function render()
     {
@@ -58,11 +73,23 @@ class WagesEmployeeList extends BaseTable
                 $join->on('position.id', '=', 'managerial_position_id')
                     ->where('position.delete_flg', 0);
             })
-            ->where('company.id', $currentCompanyId);
+            ->where('company.id', $currentCompanyId)
+            ->where('m_employee.delete_flg', 0);
 
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
             $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);
+        }
+
+        if (!empty($this->managerial_position_id)) {
+            $condition = $condition->where('managerial_position_id', $this->managerial_position_id);
+        }
+
+        if (!empty($this->department_id)) {
+            $condition = $condition->join('m_employee_department as dep', function ($join) {
+                $join->on('dep.employee_id', '=', 'm_employee.id')
+                    ->where('dep.delete_flg', 0);
+            })->where('dep.department_id', $this->department_id);
         }
 
         $this->data = $this->getData($condition);
@@ -102,11 +129,6 @@ class WagesEmployeeList extends BaseTable
         return false;
     }
 
-    #[On('request-reload')]
-    public function handleRequestReload($data)
-    {
-        // $this->company_name = $data['name'];
-    }
     public function toEdit($id)
     {
         $items = $this->data['items'];

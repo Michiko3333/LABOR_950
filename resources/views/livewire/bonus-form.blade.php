@@ -59,6 +59,48 @@
                             }
                         });
                     });
+
+                    window.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(updateBonusItemOptions, 100);
+                    });
+                    document.querySelectorAll(key + ' .department_select').forEach(selectElement => {
+                        selectElement.addEventListener('change', function() {
+                            updateBonusItemOptions();
+                        });
+                    });
+                    document.querySelectorAll('.append-bonus').forEach(button => {
+                        button.addEventListener('click', function() {
+                            setTimeout(updateBonusItemOptions, 500);
+                        });
+                    });
+
+                    function updateBonusItemOptions() {
+                        let selectedValues = new Set();
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let selected = $(dropdown).dropdown('get value');
+                            if (selected) {
+                                selected.forEach(value => selectedValues.add(value));
+                            }
+                        });
+
+                        document.querySelectorAll(key + ' .department_select').forEach(dropdown => {
+                            let $dropdown = $(dropdown);
+                            let options = $dropdown.find('option');
+
+                            options.each(function() {
+                                let optionValue = $(this).val();
+                                if (selectedValues.has(optionValue) && !$(this).is(
+                                    ':selected')) {
+                                    $(this).prop('disabled', true);
+                                } else {
+                                    $(this).prop('disabled', false);
+                                }
+                            });
+
+                            $dropdown.dropdown('refresh');
+                        });
+                    }
                 }
             })
         }
@@ -102,10 +144,7 @@
                         </thead>
                         <tbody>
                             @foreach ($bonusHistory as $historyItem)
-                                <tr
-                                @if($historyItem->delete_flg == 1)
-                                class="deleted"
-                                @endif>
+                                <tr @if ($historyItem->delete_flg == 1) class="deleted" @endif>
                                     <td>{{ $historyItem->department_names }}</td>
                                     <td>{{ $historyItem->bonus_payment_month }}</td>
                                     <td>{{ substr($historyItem->applied_date, 0, 7) }}</td>
@@ -128,7 +167,8 @@
             wire:key="{{ 'bonus-item-' . $childKey . '-' . $bonusKey . '-' . $bonusItem['bo-key'] }}"
             x-init="init_bonus('{{ $uniqueId }}')">
             <input type="hidden" name="bo-id[{{ $childKey }}][]" value="{{ $bonusItem['bo-id'] }}" />
-            <div class="required six wide field {{ err_sub($boErrs, 'bo-departments', $childKey, $bonusKey) }}" wire:ignore>
+            <div class="required six wide field {{ err_sub($boErrs, 'bo-departments', $childKey, $bonusKey) }}"
+                wire:ignore>
                 <label for="bo-departments[]">該当部署</label>
                 <select class="ui fluid search dropdown multiple department_select bonus-dropdown-{{ $childKey }}"
                     wire:model.live="bonusData.{{ $bonusKey }}.bo-departments" multiple=""
@@ -165,7 +205,7 @@
                         <i class="calendar icon"></i>
                         <input type="text" name="bo-applied_date[{{ $childKey }}][]"
                             wire:model.live="bonusData.{{ $bonusKey }}.bo-applied_date" placeholder="YYYY年M月"
-                            autocomplete="off">
+                            autocomplete="off" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -214,7 +254,7 @@
         }
 
         .deleted {
-        background: lightgray;
+            background: lightgray;
         }
     </style>
 </div>

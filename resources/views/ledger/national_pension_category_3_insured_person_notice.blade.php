@@ -152,10 +152,6 @@
                 $('#A1_2').val('{{ old('npc3ipn_1_submission_month') ?? $todaySet['month'] }}').css('background-color', '#ffffff').prop('readonly', true);
                 $('#A1_3').val('{{ old('npc3ipn_1_submission_day') ?? $todaySet['day'] }}').css('background-color', '#ffffff').prop('readonly', true);
 
-                $('#A3_2').val('{{ $company->name }}' || '');
-                $('#E2_2').val('{{ $company->name }}' || '');
-                $('#G9_2').val('{{ $company->name }}' || '');
-
                 $('#A3_3').val('{{ $company->representative }}' ?? '');
                 $('#E2_3').val('{{ $company->representative }}' ?? '');
                 $('#G9_3').val('{{ $company->representative }}' ?? '');
@@ -273,6 +269,11 @@
                 const spouse = data['spouse'];
                 const spouse_birthday_convert_japan = data['spouse_birthday_convert_japan'];
                 const spouse_prefecture_data = data['spouse_prefecture_data'];
+                const pensionOffice = data['pensionOffice'];
+
+                $('#A3_2').val(company.name);
+                $('#E2_2').val(company.name);
+                $('#G9_2').val(company.name);
 
                 if (branch.post_code != null && branch.post_code.length == 7) {
                     $('#A2_1').val(branch.post_code.substring(0, 3));
@@ -497,8 +498,29 @@
                     $('#C15_3').val(date_of_expiry_convert['month'] ?? "");
                     $('#C15_4').val(date_of_expiry_convert['day'] ?? "");
                 }
-            }
 
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
+            }
             document.getElementById('C6').addEventListener('input', function() {
                 document.getElementById('D1').value = this.value;
                 document.getElementById('G1').value = this.value;

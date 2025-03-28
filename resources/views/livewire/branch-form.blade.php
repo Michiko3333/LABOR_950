@@ -98,6 +98,14 @@
         .tab-container__area .item.active {
             display: block;
         }
+        .ui.celled.table {
+            text-align: center;
+        }
+        .ui.multiple.search.dropdown {
+            min-height: auto !important;
+            max-height: none !important;
+            height: auto !important;
+        }
     </style>
     @foreach ($data as $key => $item)
         @livewire(

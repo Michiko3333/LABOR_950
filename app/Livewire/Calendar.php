@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Calendar_event;
 use App\Models\CurrentUser;
 use App\Models\Values_calendar_event_category_type;
+use App\Models\Holidays;
 use App\Models\Pickup_setting;
 use App\Models\Pickup;
 use App\Models\Pickup_message;
@@ -233,7 +234,7 @@ class Calendar extends Component
                 't_calendar_event.employee_id',
                 'emp.role_id'
             )->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')
-            ->where('t_calendar_event.company_id', $current_company->id)
+                ->where('t_calendar_event.company_id', $current_company->id)
                 ->where('t_calendar_event.delete_flg', 0)
                 ->whereDate('t_calendar_event.from', '>=', $date_start)
                 ->whereDate('t_calendar_event.from', '<=', $date_to)
@@ -246,14 +247,39 @@ class Calendar extends Component
         $position_map = [];
         $end_day_of_week = ($this->start_day % 7) - 1;
 
-        if(empty($events_list)) {
+        if (empty($events_list)) {
             $this->events = [];
+        }
+
+        $holidays_list = Holidays::select('id', 'holiday_name', 'holiday_date')
+            ->where('delete_flg', 0)
+            ->whereDate('holiday_date', '>=', $date_start)
+            ->whereDate('holiday_date', '<=', $date_to)
+            ->get()
+            ->toArray();
+
+        if (count($holidays_list) > 0) {
+            foreach ($holidays_list as $holiday) {
+                if (!isset($grouped_events[$holiday['holiday_date']])) {
+                    $grouped_events[$holiday['holiday_date']] = [];
+                }
+
+                // Carbon::parse($holiday['holiday_date'])->setTime(0, 0, 0)->addHours(23)->addMinutes(55)
+                $grouped_events[$holiday['holiday_date']][] = [
+                    'id' => 0,
+                    'name' => $holiday['holiday_name'],
+                    'from' => Carbon::parse($holiday['holiday_date'])->setTime(0, 0, 0),
+                    'days' => 1,
+                    'type' => 'holiday',
+                    'event_start' => true,
+                    'filter_event' => false,
+                ];
+            }
         }
 
         foreach ($events_list as $ev) {
             $days = 1;
             $event_id = $ev['id'];
-            $type = '';
 
             $timestamp1 = strtotime($ev['from']);
             $date1 = date('Y-m-d 00:00', $timestamp1);
@@ -296,31 +322,31 @@ class Calendar extends Component
                     $grouped_events[$eventDay] = [];
                 }
 
-                if($i === 0) {
-                    if($ev['to']) {
-                        if($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
+                if ($i === 0) {
+                    if ($ev['to']) {
+                        if ($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
                             $new_days = 1;
                         } else {
                             $new_days = abs(($end_day_of_week - $event_day_of_week + 7) % 7) + 1;
-                            
-                            if($day_difference < $new_days) {
+
+                            if ($day_difference < $new_days) {
                                 $new_days = $day_difference + 1;
                             }
-                            if($daysRemaining <= $new_days) {
+                            if ($daysRemaining <= $new_days) {
                                 $new_days = $daysRemaining;
                             }
                         }
                         $daysRemaining--;
                         $ev['days'] = $new_days;
 
-                        if((int)$event_day_of_week === $this->start_day) {
+                        if ((int)$event_day_of_week === $this->start_day) {
                             $ev['start_day'] = true;
                         } else {
                             $ev['start_day'] = false;
                         }
                     }
 
-                    if(!isset($position_map)) {
+                    if (!isset($position_map)) {
                         $position_map = [];
                     }
 
@@ -346,27 +372,27 @@ class Calendar extends Component
                     $ev['from'] = $eventDay;
 
                     $new_days = abs(($end_day_of_week - $event_day_of_week + 7) % 7) + 1;
-                    if($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
+                    if ($end_day_of_week === (int)$event_day_of_week || (int)$day_of_next_month === 1) {
                         $new_days = 1;
                     } else {
-                        if($daysRemaining <= $new_days) {
+                        if ($daysRemaining <= $new_days) {
                             $new_days = $daysRemaining;
                         }
-                        if($day_difference < $new_days) {
+                        if ($day_difference < $new_days) {
                             $new_days = $day_difference + 1;
                         }
                     }
                     $daysRemaining--;
                     $ev['days'] = $new_days;
-                    
-                    if((int)$event_day_of_week === $this->start_day) {
+
+                    if ((int)$event_day_of_week === $this->start_day) {
                         $ev['start_day'] = true;
                     } else {
                         $ev['start_day'] = false;
                     }
-                    
-                    if(((int)$event_day_of_week === $end_day_of_week + 1) || (int)$day_of_month === 1) {
-                        if(isset($position_map[$event_id])) {
+
+                    if (((int)$event_day_of_week === $end_day_of_week + 1) || (int)$day_of_month === 1) {
+                        if (isset($position_map[$event_id])) {
                             $ev['event_start'] = true;
                             $grouped_events[$eventDay][] = $ev;
                             $id_values = array_column($grouped_events[$eventDay], 'id');
@@ -374,7 +400,7 @@ class Calendar extends Component
                             $position_map[$event_id] = $position;
                         }
                     } else {
-                        if(isset($position_map[$event_id])) {
+                        if (isset($position_map[$event_id])) {
                             $ev['event_start'] = false;
                             $position = $position_map[$event_id];
 
@@ -426,10 +452,10 @@ class Calendar extends Component
         $events_date = array_column($this->events, 2);
         if (isset($events_date)) {
             $nextMonth = sprintf('%02d', ($this->select_month % 12) + $nextMonthNum);
-            if($nextMonth >= '13') {
+            if ($nextMonth >= '13') {
                 $nextMonth = '01';
             }
-            $filteredNextMonth  = array_filter($events_date, function($date) use ($nextMonth) {
+            $filteredNextMonth  = array_filter($events_date, function ($date) use ($nextMonth) {
                 $month = explode('-', explode(' ', $date)[0])[1];
                 return $month === $nextMonth;
             });
@@ -443,7 +469,7 @@ class Calendar extends Component
                     'mark' => 'dot'
                 ];
             }
-            unset($nextMonth,$filteredNextMonth,$event);
+            unset($nextMonth, $filteredNextMonth, $event);
         }
         return $calenderSmallDotValues;
     }
@@ -468,7 +494,7 @@ class Calendar extends Component
 
             $width = 100 * $days;
 
-            if(isset($event['start_day']) && $event['start_day'] === true) {
+            if (isset($event['start_day']) && $event['start_day'] === true) {
                 $add_width = (($days - 1) * 17) + ((1 * $days) - 1) * 1;
             } else {
                 $add_width = ($days - 1) * 17;
@@ -495,11 +521,11 @@ class Calendar extends Component
                 $d = date('Y-m-d', $m);
                 $this->select_year = date('Y', strtotime($d));
                 $this->select_month = date('m', strtotime($d));
-                
+
                 $next_d = date('Y-m-d', $next_m);
                 $this->todayNextYear = date('Y', strtotime($next_d));
                 $this->todayNextMonth = date('m', strtotime($next_d));
-                
+
                 $next_after_d = date('Y-m-d', $after_next_m);
                 $this->todayAfterNextYear = date('Y', strtotime($next_after_d));
                 $this->todayAfterNextMonth = date('m', strtotime($next_after_d));
@@ -630,12 +656,15 @@ class Calendar extends Component
         if (!empty($id)) {
             $current_user = CurrentUser::info();
             $role_type = 'employee';
-            if($current_user->role_id === 999) {
+            if ($current_user->role_id === 999) {
                 $role_type = 'admin';
-            } elseif($current_user->role_id === 500) {
+            } elseif ($current_user->role_id === 500) {
                 $role_type = 'labor';
             }
             $current_company = CurrentUser::currentCompany();
+            if ($id === 0) {
+                return;
+            }
             $d = Calendar_event::where('t_calendar_event.id', $id)->where('t_calendar_event.delete_flg', 0)->whereIn('company_id', [0, $current_company->id])->leftJoin('m_employee as emp', 't_calendar_event.employee_id', '=', 'emp.id')->first();
             if (!empty($d)) {
                 $edit_id = $id;
@@ -726,7 +755,7 @@ class Calendar extends Component
 
         $insertData = [];
 
-        if($data['inputs_category'] !== '7') {
+        if ($data['inputs_category'] !== '7') {
             $data['inputs_subsidies_name'] = '';
         } else {
             $data['inputs_repetition'] = 0;
@@ -803,10 +832,10 @@ class Calendar extends Component
                         $new_to_date = $to_date ? $to_date->addMonth(1) : null;
 
                         $new_from_date = Carbon::createFromDate($new_from_date->year, $new_from_date->month)
-                                            ->nthOfMonth($weekNumber, $weekDayConstant);
+                            ->nthOfMonth($weekNumber, $weekDayConstant);
                         $new_to_date = $new_to_date ? Carbon::createFromDate($new_to_date->year, $new_to_date->month)
-                                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
-                        if($new_from_date === false || $new_to_date === false) {
+                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
+                        if ($new_from_date === false || $new_to_date === false) {
                             continue;
                         }
 
@@ -896,7 +925,7 @@ class Calendar extends Component
                     break;
 
                 default: // 繰り返しなし
-                    if($data['inputs_category'] === '7') {
+                    if ($data['inputs_category'] === '7') {
                         Calendar_event::create([
                             'employee_id' => $current_user->id,
                             'company_id' => $current_user->role_id == 999 ? 0 : $current_company->id,
@@ -917,7 +946,7 @@ class Calendar extends Component
                             'subsidies_name' => $data['inputs_subsidies_name'],
                             'category_type' => $data['inputs_category'],
                             'from' => $from_date->toDateTimeString(),
-                            'to' => $to_date ? $to_date->toDateTimeString() :null,
+                            'to' => $to_date ? $to_date->toDateTimeString() : null,
                             'contents' => $data['inputs_contents'],
                             'repetition_type' => $data['inputs_repetition'],
                             'identifier' => null,
@@ -925,7 +954,7 @@ class Calendar extends Component
                     }
                     break;
             }
-        // 編集
+            // 編集
         } else {
             $select_event_type = $data['inputs_select_events_type'];
             $exitingFirstsEvents = null;
@@ -933,12 +962,12 @@ class Calendar extends Component
             $existingEvent = Calendar_event::where('id', $this->inputs_edit_id)
                 ->first();
 
-            if($existingEvent->identifier === null) {
-                if($data['inputs_repetition'] === '0') {
+            if ($existingEvent->identifier === null) {
+                if ($data['inputs_repetition'] === '0') {
                     $identifier = null;
                 }
 
-                if($data['inputs_category'] === '7') {
+                if ($data['inputs_category'] === '7') {
                     Calendar_event::where('id', $this->inputs_edit_id)
                         ->update([
                             'employee_id' => $current_user->id,
@@ -974,7 +1003,7 @@ class Calendar extends Component
             $eventIdentifier = $existingEvent->identifier;
 
             // この予定
-            if($select_event_type === '0' && $existingEvent) {
+            if ($select_event_type === '0' && $existingEvent) {
                 $data['inputs_repetition'] = 0;
 
                 Calendar_event::where('id', $this->inputs_edit_id)
@@ -996,8 +1025,8 @@ class Calendar extends Component
                     ->select('id')
                     ->get()
                     ->toArray();
-            // これ以降の予定
-            } elseif($select_event_type === '1' && $existingEvent) {
+                // これ以降の予定
+            } elseif ($select_event_type === '1' && $existingEvent) {
                 Calendar_event::where('identifier', $eventIdentifier)
                     ->where('id', '>', $this->inputs_edit_id)
                     ->update([
@@ -1025,8 +1054,8 @@ class Calendar extends Component
                         'repetition_type' => $data['inputs_repetition'],
                         'identifier' => $eventIdentifier,
                     ]);
-            // 全ての予定
-            } elseif($select_event_type === '2' && $existingEvent) {
+                // 全ての予定
+            } elseif ($select_event_type === '2' && $existingEvent) {
                 $exiting_from_date = Carbon::parse($existingEvent->from);
                 $from_time = $from_date->format('H:i:s');
                 $to_time = $to_date ? $to_date->format('H:i:s') : null;
@@ -1043,7 +1072,7 @@ class Calendar extends Component
                 list($hour, $minute, $second) = explode(':', $from_time);
                 $from_date->setTime($hour, $minute, $second);
 
-                if($to_date) {
+                if ($to_date) {
                     $to_difference = $exiting_from_date->diffInDays($to_date, false);
                     $to_date = $from_difference >= 0
                         ? $exiting_first_from_date->copy()->addDays($to_difference)
@@ -1142,10 +1171,10 @@ class Calendar extends Component
                         $new_to_date = $to_date ? $to_date->copy()->addMonth($i) : null;
 
                         $new_from_date = Carbon::createFromDate($new_from_date->year, $new_from_date->month)
-                                            ->nthOfMonth($weekNumber, $weekDayConstant);
+                            ->nthOfMonth($weekNumber, $weekDayConstant);
                         $new_to_date = $new_to_date ? Carbon::createFromDate($new_to_date->year, $new_to_date->month)
-                                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
-                        if($new_from_date === false || $new_to_date === false) {
+                            ->nthOfMonth($weekNumber, $weekDayConstant) : null;
+                        if ($new_from_date === false || $new_to_date === false) {
                             continue;
                         }
 
@@ -1285,6 +1314,7 @@ class Calendar extends Component
 
         $this->resetForm();
         $this->dispatch('modal-closeCalendarModal');
+        $this->dispatch('success');
         return true;
     }
 
@@ -1294,20 +1324,20 @@ class Calendar extends Component
         $identifier = Calendar_event::where('id', $this->inputs_edit_id)->value('identifier');
 
         // この予定
-        if($value === '0') {
+        if ($value === '0') {
             Calendar_event::where('id', $this->inputs_edit_id)
                 ->update([
                     'delete_flg' => 1
                 ]);
-        // これ以降の予定
-        } elseif($value === '1') {
+            // これ以降の予定
+        } elseif ($value === '1') {
             Calendar_event::where('identifier', $identifier)
                 ->where('id', '>=', $this->inputs_edit_id)
                 ->update([
                     'delete_flg' => 1
                 ]);
-        // 全ての予定
-        } elseif($value === '2') {
+            // 全ての予定
+        } elseif ($value === '2') {
             Calendar_event::where('identifier', $identifier)
                 ->update([
                     'delete_flg' => 1
@@ -1330,7 +1360,7 @@ class Calendar extends Component
             return;
         }
         if ($data['inputs_category'] == 7) {
-            if(empty($data['inputs_subsidies_name'])) {
+            if (empty($data['inputs_subsidies_name'])) {
                 return;
             }
         }

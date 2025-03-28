@@ -210,13 +210,14 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const start_date_of_closed_2 = data['start_date_of_closed'];
                 const end_date_of_losed_2 = data['end_date_of_losed'];
+                const helloWork = data['helloWork'];
                 const employeeName = (employee.last_name || "") + '　' + (employee.first_name || "");
                 const employeeNameKana = (employee.last_name_kana || "") + '　' + (employee.first_name_kana || "");
                 const headquartersAddress = (headquarters_prefecture_data.name || "") + (headquarters.address_city || "") + (
                     headquarters.address_ward || "") + (headquarters.address_apartment || "");
                 const branchAddress = (branch_prefecture_data.name || "") + (branch.address_city || "") + (branch
                     .address_ward || "") + (branch.address_apartment || "");
-                const branchInfo = (branch.name || "") + '　' + (branch_prefecture_data.name || "") + (branch.address_city ||
+                const branchInfo =  (branch.name || "") + '　' +(branch_prefecture_data.name || "") + (branch.address_city ||
                         "") +
                     (branch.address_ward || "") + (branch.address_apartment || "");
                 const employeeAddress = (employee_prefecture_data.name || "") + (employee.address_city || "") + (employee
@@ -248,11 +249,23 @@
                     $('#J15_005F_944E').val(start_date_of_closed_2['year']);
                     $('#J16_005F_8C8E').val(start_date_of_closed_2['month']);
                     $('#J17_005F_93FA').val(start_date_of_closed_2['day']);
+                    $('#J12_005F_944E_8D86').val(start_date_of_closed_2['era']);
+                    $('#J13_005F_944E').val(start_date_of_closed_2['year']);
+                    $('#J14_005F_8C8E').val(start_date_of_closed_2['month']);
+                    $('#J15_005F_93FA').val(start_date_of_closed_2['day']);
+                    $('#J29_005F_8C8E').val(start_date_of_closed_2['month']);
+                    $('#J30_005F_93FA').val(start_date_of_closed_2['day']);
                 } else {
                     $('#J14_005F_944E_8D86').val("");
                     $('#J15_005F_944E').val("");
                     $('#J16_005F_8C8E').val("");
                     $('#J17_005F_93FA').val("");
+                    $('#J12_005F_944E_8D86').val("");
+                    $('#J13_005F_944E').val("");
+                    $('#J14_005F_8C8E').val("");
+                    $('#J15_005F_93FA').val("");
+                    $('#J29_005F_8C8E').val("");
+                    $('#J30_005F_93FA').val("");
                 }
                 if (end_date_of_losed_2 != null) {
                     $('#J52_005F_944E_8D86').val(end_date_of_losed_2['era']);
@@ -327,6 +340,45 @@
                 $('#J26_005F_89C1_93FC_8ED2_94D4_8D86').val(employee.tel_subscriber_code || "");
                 $('#J27_005F_8F5A_8F8A').val(headquartersAddress);
                 $('#J83_005F_82A0_82C4_90E6').val(hello_work);
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
+
+                if(helloWork){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = helloWork.id;
+                        },700);
+                    });
+                    prefectureSelect.value = helloWork.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_hello_work']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
+                $('#J86_005F_8BE0_975A_8B40_8AD6_8374_838A_834B_8369').val(employee.bank_name_kana || "");
+                $('#J87_005F_8BE0_975A_8B40_8AD6_96BC').val(employee.bank_name || "");
+                if(employee.head_office_or_branch_office == 0) {
+                    $('input[name="bank_head_office_branch_office_type"][value="本店"]').prop('checked', true);
+                } else if(employee.head_office_or_branch_office == 1) {
+                    $('input[name="bank_head_office_branch_office_type"][value="支店"]').prop('checked', true);
+                }
+                $('#J91_005F_8BE0_975A_8B40_8AD6_8352_815B_8368').val(employee.financial_institution_code || "");
+                $('#J92_005F_9358_95DC_8352_815B_8368').val(employee.store_code || "");
+                $('#J93_005F_9761_8BE0_92CA_92A0_82CC_8CFB_8DC0_94D4_8D86').val(employee.bank_account_no || "");
+                if(employee.japan_post_bank_code_no) {
+                    $('#J118_005F_8B4C_8D86_94D4_8D86').val(employee.japan_post_bank_code_no.slice(0, 5) || "");
+                    $('#J119_005F_8CFB_8DC0_94D4_8D86').val(employee.japan_post_bank_code_no.slice(5) || "");
+                } else {
+                    $('#J118_005F_8B4C_8D86_94D4_8D86').val("");
+                    $('#J119_005F_8CFB_8DC0_94D4_8D86').val("");
+                }
             }
 
             $('#J2_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C85').on('input', function() {

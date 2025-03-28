@@ -16,7 +16,9 @@ class FilterColumn extends Component
     public $value_show = null;
     public $filterShowTarget = 'show-filter-column';
     public $filterSaveTarget = 'save-filter-column';
+    public $filterFilterTarget = 'filter-filter-column';
     public $filterHiddenTarget = 'hidden-filter-column';
+    public $filterResetTarget = 'reset-filter-column';
     public $select_all = null;
     public $select_show = null;
     public $isFirst = true;
@@ -148,9 +150,9 @@ class FilterColumn extends Component
     public function dispatchFilterColumn()
     {
         if (empty($this->name)) {
-            $this->dispatch('refresh-filter', $this->list_show);
+            $this->dispatch('refresh-filter', $this->list_show, $this->isFirst);
         } else {
-            $this->dispatch('refresh-filter:' . $this->name, $this->list_show);
+            $this->dispatch('refresh-filter:' . $this->name, $this->list_show, $this->isFirst);
         }
     }
 

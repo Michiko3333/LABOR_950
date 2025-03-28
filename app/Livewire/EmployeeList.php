@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\BaseTable;
+use App\Models\Attendance;
 use App\Models\Country;
 use App\Models\CurrentUser;
 use App\Models\Employee;
@@ -10,13 +11,17 @@ use App\Models\Employee_department;
 use App\Models\Employee_qualifications;
 use App\Models\Prefecture;
 use App\Models\Residential_status;
+use App\Models\Wage;
+use App\PdfService\EmployeeListXlsx;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use \Carbon\Carbon;
+use App\Formats\EmployeeListFormats;
 
 class EmployeeList extends BaseTable
 {
+    use EmployeeListFormats;
     public $search = '';
     public $branch_name = '';
     public $type = 0;
@@ -24,18 +29,62 @@ class EmployeeList extends BaseTable
     public $country_type = [];
     public $residential_status = [];
 
+    public $wage_name = ['給与', '役員報酬'];
+    public $bonus_name = ['賞与', '役員賞与'];
+
     public function mount()
     {
         $this->residential_status = Residential_status::pluck('content', 'id');
         $this->country_type = Country::pluck('country_name', 'id');
+        $this->page = request()->get('p', 1);
+        $this->paginated = true;
+        $this->pageMemory = true;
         $this->dispatchFilter();
     }
 
     public function render()
     {
+        $ids = [];
         $currentCompany = CurrentUser::currentCompany();
         $currentCompanyId = $currentCompany->id;
-        $prefectures = Prefecture::pluck('name', 'id');
+        $condition = $this->getQueryBase($currentCompanyId);
+        $this->data = $this->getData($condition);
+        foreach ($this->data['items'] as $item) {
+            $ids[] = $item->id;
+        }
+        $this->RestrictingQueryParameters($ids);
+        $this->data['items'] = $this->getFormatData($this->data['items'], $currentCompanyId);
+
+        return view('livewire.employee-list');
+    }
+
+
+    public function toEdit($id)
+    {
+        $items = $this->data['items'];
+        redirect()->route('employee_update', ['id' => $id]);
+    }
+    public function toPermission($id)
+    {
+        redirect()->route('employee_permission', ['id' => $id]);
+    }
+
+    #[On('export-filter-list')]
+    public function exportFilterList()
+    {
+        $currentCompany = CurrentUser::currentCompany();
+        $currentCompanyId = $currentCompany->id;
+        $condition = $this->getQueryBase($currentCompanyId);
+        $items = $condition->get();
+        $items = $this->getFormatData($items, $currentCompanyId);
+
+        $xlsx = new EmployeeListXlsx($items, $this->showColumns);
+        $xlsx->run();
+        return $xlsx->export();
+    }
+
+    private function getQueryBase($currentCompanyId)
+    {
         $condition = Employee::select(
             'm_employee.*',
             'branch.name as branch_name',
@@ -53,16 +102,20 @@ class EmployeeList extends BaseTable
             ->leftJoin('m_values_employee_employee_status as employee_status_val', 'm_employee.employee_status', '=', 'employee_status_val.id')
             ->leftJoin('m_values_employee_labor_insurance_type as labor_insurance_type_val', 'm_employee.labor_insurance_type', '=', 'labor_insurance_type_val.id')
             ->leftJoin('m_values_employee_employment_insurance_type as emp_insurance_type_val', 'm_employee.employment_insurance_type', '=', 'emp_insurance_type_val.id')
-            ->where('company.id', $currentCompanyId);
+            ->where('company.id', $currentCompanyId)
+            ->where('m_employee.delete_flg', 0);
 
         if (!empty($this->search)) {
             $pat = '%' . addcslashes($this->search, '%_\\') . '%';
             $condition = $condition->where(DB::raw("CONCAT(last_name, ' ', first_name)"), 'LIKE', $pat);
         }
 
-        $this->data = $this->getData($condition);
+        return $condition;
+    }
 
-        $items = $this->data['items'];
+    private function getFormatData($items, $currentCompanyId)
+    {
+        $prefectures = Prefecture::pluck('name', 'id');
         foreach ($items as &$item) {
             $item->departments = Employee_department::select('name')
                 ->where('m_employee_department.delete_flg', 0)
@@ -76,6 +129,40 @@ class EmployeeList extends BaseTable
                 ->where('m_qualifications.delete_flg', 0)
                 ->where('m_employee_qualifications.delete_flg', 0)
                 ->pluck('m_qualifications.qualification_name');
+
+            $attendances = Attendance::where('employee_id', $item->id)->where('branch_id', $item->branch_id)->where('company_id', $currentCompanyId)
+                ->where('delete_flg', 0)
+                ->orderBy('month')->first();
+
+            $item->attendance_month = $attendances->month ?? null;
+            $item->actual_working_days = $attendances->actual_working_days ?? null;
+            $item->working_days = $attendances->working_days ?? null;
+            $item->holidays = $attendances->holidays ?? null;
+            $item->absent_days = $attendances->absent_days ?? null;
+            $item->paid_leave = $attendances->paid_leave ?? null;
+            $item->remaining_paid_leave = $attendances->remaining_paid_leave ?? null;
+
+            $salary = Wage::where('employee_id', $item->id)->where('branch_id', $item->branch_id)->where('company_id', $currentCompanyId)
+                ->where('delete_flg', 0)
+                ->whereIn('wage_type', $this->wage_name)
+                ->orderBy('month')->first();
+
+            $item->w_total_amount = $salary->total_amount ?? null;
+            $item->w_wage_base_amount = $salary->wage_base_amount ?? null;
+            $item->w_overtime_label = $salary->overtime_label ?? null;
+            $item->w_allowance_label = $salary->allowance_label ?? null;
+            $item->w_amount = $salary->wage_amount ?? null;
+
+            $bonus = Wage::where('employee_id', $item->id)->where('branch_id', $item->branch_id)->where('company_id', $currentCompanyId)
+                ->where('delete_flg', 0)
+                ->whereIn('wage_type', $this->bonus_name)
+                ->orderBy('month')->first();
+
+            $item->b_total_amount = $bonus->total_amount ?? null;
+            $item->b_wage_base_amount = $bonus->wage_base_amount ?? null;
+            $item->b_overtime_label = $bonus->overtime_label ?? null;
+            $item->b_allowance_label = $bonus->allowance_label ?? null;
+            $item->b_amount = $bonus->wage_amount ?? null;
 
             if (!empty($item->address_prefecture)) {
                 $pref = Prefecture::where('id', $item->address_prefecture)->first();
@@ -104,76 +191,6 @@ class EmployeeList extends BaseTable
             $item->address_prefecture_name = $prefectures[$item->address_prefecture];
         }
 
-        return view('livewire.employee-list');
-    }
-
-    public function formatDate($d)
-    {
-        if (empty($d)) return '-';
-        return Carbon::parse($d)->format('Y年m月d日');
-    }
-
-    #[On('request-reload')]
-    public function handleRequestReload($data)
-    {
-        // $this->company_name = $data['name'];
-    }
-    public function toEdit($id)
-    {
-        $items = $this->data['items'];
-        redirect()->route('employee_update', ['id' => $id]);
-    }
-    public function toPermission($id)
-    {
-        redirect()->route('employee_permission', ['id' => $id]);
-    }
-
-    public function format_insured_status($v)
-    {
-        if ($v == 1) return '海外勤務者（介護保険適用除外）';
-        if ($v == 2) return '育児休業者、産前産後休業者（社会保険免除）';
-        if ($v == 3) return '特定第二号被保険者（介護保険負担有）';
-        if ($v == 4) return '短期雇用特例被保険者';
-        if ($v == 5) return 'その他';
-        return $v;
-    }
-
-    public function format_acquisition_of_distinction($v)
-    {
-        if ($v == 1) return '健保・厚年';
-        if ($v == 2) return '共済出向';
-        if ($v == 3) return '船保任続';
-        return $v;
-    }
-
-    public function format_overseas_special_exception($v)
-    {
-        if ($v == 1) return '海外在住';
-        if ($v == 2) return '短期在留';
-        if ($v == 3) return 'その他';
-        return $v;
-    }
-
-    public function format_welfare_pension($v)
-    {
-        if ($v == 1) return '加入';
-        return $v;
-    }
-
-    public function format_country_id($v)
-    {
-        return $this->country_type[$v] ?? '日本';
-    }
-
-    public function format_residential_status_id($v)
-    {
-        return $this->residential_status[$v] ?? '-';
-    }
-
-    public function format_dispatch_contract_completion($v)
-    {
-        if ($v == 1) return '特定の事業所に勤務';
-        if ($v == 2) return '不特定の事業所に勤務';
-        return $v;
+        return $items;
     }
 }

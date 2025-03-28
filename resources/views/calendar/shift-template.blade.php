@@ -277,7 +277,8 @@
                 <tr>
                     <td>総実働時間</td>
                     @foreach ($render_months as $month)
-                        <td>{{ fmod($num_work[$month] * $work_time, 1) == 0 ? $num_work[$month] * $work_time : number_format($num_work[$month] * $work_time, 1) }}</td>
+                        <td>{{ fmod($num_work[$month] * $work_time, 1) == 0 ? $num_work[$month] * $work_time : number_format($num_work[$month] * $work_time, 1) }}
+                        </td>
                     @endforeach
                 </tr>
                 <tr>
@@ -285,7 +286,8 @@
                         <br>実働時間
                     </td>
                     @foreach ($render_months as $month)
-                    <td>{{ fmod(($num_work[$month] * $work_time) * 12 / 52, 1) == 0 ? ($num_work[$month] * $work_time) * 12 / 52 : number_format(($num_work[$month] * $work_time) * 12 / 52, 1) }}</td>
+                        <td>{{ fmod(($num_work[$month] * $work_time * 12) / 52, 1) == 0 ? ($num_work[$month] * $work_time * 12) / 52 : number_format(($num_work[$month] * $work_time * 12) / 52, 1) }}
+                        </td>
                     @endforeach
                 </tr>
                 <tr>

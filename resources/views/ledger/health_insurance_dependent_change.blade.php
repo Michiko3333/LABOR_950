@@ -151,6 +151,327 @@
 
         <script type="module">
             $(document).ready(function() {
+                function toHalfWidth(str) {
+                    return str.replace(/[０-９]/g, function (match) {
+                        const halfWidthChar = String.fromCharCode(match.charCodeAt(0) - 65248);
+                        return halfWidthChar;
+                    });
+                }
+                document.getElementById("N22_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N23_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N24_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N31_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N14_1").value = toHalfWidth(this.value);
+                    document.getElementById("N14").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N32_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N15_1").value = toHalfWidth(this.value);
+                    document.getElementById("N15").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N33_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N16_1").value = toHalfWidth(this.value);
+                    document.getElementById("N16").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N7_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N8_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N10_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N21_1").value = toHalfWidth(this.value);
+                    document.getElementById("N17").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N11_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N22_1").value = toHalfWidth(this.value);
+                    document.getElementById("N18").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N16_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N27_1").value = toHalfWidth(this.value);
+                    document.getElementById("N23").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N17_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N28_1").value = toHalfWidth(this.value);
+                    document.getElementById("N24").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N18_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N29_1").value = toHalfWidth(this.value);
+                    document.getElementById("N25").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N26_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N35_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N9_1").value = toHalfWidth(this.value);
+                    document.getElementById("N9").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N38_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N39_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N40_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N41_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N42_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N43_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N46_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N47_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N48_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N54_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N6_1").value = toHalfWidth(this.value);
+                    document.getElementById("N6").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N55_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N7_1").value = toHalfWidth(this.value);
+                    document.getElementById("N7").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N56_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N8_1").value = toHalfWidth(this.value);
+                    document.getElementById("N8").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N58_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                    document.getElementById("N2_1").value = toHalfWidth(this.value);
+                    document.getElementById("N2").value = toHalfWidth(this.value);
+                });
+                document.getElementById("N63_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N64_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N68_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N69_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N70_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N74_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N75_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N76_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N79_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N80_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N81_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N84_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N85_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N86_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N90_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N94_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N95_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N96_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N101_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N102_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N103_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N106_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N107_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N108_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N113_P1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N121_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N122_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N123_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N126_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N127_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N128_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N133_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N134_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N135_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N137_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N142_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N143_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N144_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N137_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N139_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N154_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N155_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N156_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N162_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N163_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N164_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N167_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N169_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N170_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N174_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N175_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N176_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N178_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N183_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N184_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N185_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N180_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N195_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N196_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N197_P2").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N18_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N19_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N20_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N21_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N22_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N27_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N28_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+                document.getElementById("N29_1").addEventListener("input", function () {
+                    this.value = toHalfWidth(this.value);
+                });
+
                 $('#N4_P1').val('{{ old('submission_year', $today['year']) }}');
                 $('#N5_P1').val('{{ old('submission_month', $today['month']) }}');
                 $('#N6_P1').val('{{ old('submission_date', $today['date']) }}');
@@ -192,6 +513,7 @@
                 const spouse_prefecture_data = data['spouse_prefecture_data'];
                 const date_of_authorisation_convert = data['date_of_authorisation_convert'];
                 const date_of_expiry_convert = data['date_of_expiry_convert'];
+                const pensionOffice = data['pensionOffice'];
                 var eraMapping = {
                     '昭和': '5',
                     '平成': '7',
@@ -396,6 +718,28 @@
                 $('#N27_1').val(branch.tel_area_code ?? '');
                 $('#N28_1').val(branch.tel_city_code ?? '');
                 $('#N29_1').val(branch.tel_subscriber_code ?? '');
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
 
             Livewire.on('onSelectEmployee', ({

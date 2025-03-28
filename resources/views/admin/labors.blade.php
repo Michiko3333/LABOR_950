@@ -1,4 +1,4 @@
-<x-layout title="管理画面" useRightContent="{{false}}">
+<x-layout title="アカウント管理" useRightContent="{{false}}">
     @slot('header')
     <style type="text/css">
         .ui.table {
@@ -21,6 +21,20 @@
             display: flex;
             justify-content: center;
         }
+        .fade-highlight {
+            animation: fadeHighlight 0.5s ease-out forwards;
+        }
+        @keyframes fadeHighlight {
+            0% {
+                box-shadow: none;
+            }
+            50% {
+                box-shadow: inset 0 0 0 2px rgba(153, 153, 153, 0.5);
+            }
+            100% {
+                box-shadow:inset 0 0 0 2px #999999;
+            }
+        }
     </style>
     @endslot
     <section class="content">
@@ -37,7 +51,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" href="{{route('admin.labor_create')}}">社労士</a>
-                <a class="item" href="{{route('admin.employee_create')}}">顧客社員</a>
+                <a class="item" href="{{route('admin.employee_create')}}">従業員</a>
             </div>
         </div>
         <div class="ui card full card-shadow item-0">

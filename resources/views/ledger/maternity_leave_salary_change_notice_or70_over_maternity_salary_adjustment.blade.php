@@ -47,7 +47,7 @@
                                 <livewire:ledger-employee-list />
                             </div>
                         </div>
-                     </div>
+                    </div>
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
@@ -71,8 +71,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
                     <input type="hidden" name="query_parameter" id="queryParameter">
+                </div>
                 <div class="prevew-btn">
                     <a id="ledger-back" class="ui button negative basic" type="button" style="width: 200px;"
                         href="{{ route('ledger.index') }}">戻る</a>
@@ -91,7 +91,7 @@
             <div class="preview-area">
                 <div class="ui card card-shadow ledger-card">
                     <div class="content" preview-component>
-                      <x-form.maternity_leave_salary_change_notice_or70_over_maternity_salary_adjustment :residentials="$residentials" :countries="$countries"/>
+                        <x-form.maternity_leave_salary_change_notice_or70_over_maternity_salary_adjustment :residentials="$residentials" :countries="$countries"/>
                     </div>
                 </div>
             </div>
@@ -107,6 +107,7 @@
                 $('#_92F1_8F6F_944E_8C8E_93FAx_944E_002E1').val('{{ old('notification_year', $today['year']) }}');
                 $('#_92F1_8F6F_944E_8C8E_93FAx_8C8E_002E2').val('{{ old('notification_month', $today['month']) }}');
                 $('#_92F1_8F6F_944E_8C8E_93FAx_93FA_002E3').val('{{ old('notification_day', $today['date']) }}');
+                $('#_8E96_8BC6_8EE5_8E81_96BC_002E10').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
                 @if ($current_employee->role_id === 500)
                     $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E14').val(
                         '{{ old('labor_consultant_acting_as_agent') }}'
@@ -139,6 +140,7 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const contract_start_convert_date = data['contract_start_convert_date'];
                 const contract_end_convert_date = data['contract_end_convert_date'];
+                const pensionOffice = data['pensionOffice'];
                 let employee_mynumber_card_no = "";
                   if (employee.mynumber_card_no) {
                     employee_mynumber_card_no = employee.mynumber_card_no;
@@ -173,7 +175,6 @@
                 $('#_8E96_8BC6_8F8A_8F8A_8DDD_926E_002E8').val((branch_prefecture_data.name  ?? '') + (branch.address_city ?? '') + (branch
                     .address_ward ?? '') + (branch.address_apartment ?? ''));
                 $('#_8E96_8BC6_8F8A_96BC_8FCC_002E9').val(company.name ?? '');
-                $('#_8E96_8BC6_8EE5_8E81_96BC_002E10').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
 
                 $('#_94ED_95DB_8CAF_8ED2_90AE_979D_94D4_8D86_002E15').val(employee.insurer_reference_no ?? '');
                 $('#_94ED_95DB_8CAF_8ED2_8E81_96BCx_8ABF_8E9A_8E81_96BC_002E18').val((employee.last_name ? employee.last_name + '　' : '') + (employee
@@ -220,6 +221,28 @@
                 let birthdayEraValue = birthdayConvertJapan['era'] ?? "";
                 let birthdayEra = eraMapping[birthdayEraValue] ?? "";
                 $('#_94ED_95DB_8CAF_8ED2_90B6_944E_8C8E_93FAx_8CB3_8D86_002E19').val(birthdayEra);
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

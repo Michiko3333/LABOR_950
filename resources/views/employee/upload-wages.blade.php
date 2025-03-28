@@ -5,6 +5,35 @@
             .power-table {
                 height: 375px;
             }
+
+            .mapping-row {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-bottom: 15px;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .mapping-row label {
+                flex: 0 0 150px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .mapping-row span {
+                flex: 0 0 80px;
+                color: #888;
+                font-style: italic;
+            }
+
+            .mapping-row select {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                max-width: 200px;
+            }
         </style>
     @endslot
     <section class="content">
@@ -19,12 +48,53 @@
         <div class="ui card full card-shadow item-0">
             <div class="content">
                 <div class="ui form">
-                    <div class="field" style="max-width: 450px;">
+                    <div class="field" style="width: 450px;">
                         <label for="">ファイル選択</label>
                         <div class="ui file input">
                             <input id="csv-input" type="file" accept=".csv" disabled>
                         </div>
                     </div>
+                    <div class="field" style="width: 450px;">
+                        <div class="fields two">
+                            <div class="field">
+                                <label>対象年月</label>
+                                <div class="ui calendar" id="wage_month">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input type="text" placeholder="Date" name="wage_month" autocomplete="off">
+                                        <input type="hidden" name="formatted_wage_month" id="formatted_wage_month">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>支払年月日</label>
+                                <div class="ui calendar" id="payment_date">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input type="text" placeholder="Date" name="payment_date" autocomplete="off">
+                                        <input type="hidden" name="formatted_payment_date" id="formatted_payment_date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-1">
+                        <div class="ui radio checkbox field mr-2 mt-0">
+                            <input type="radio" name="wage_type_radio" checked="checked" value="0" />
+                            <label>給与</label>
+                        </div>
+                        <div class="ui radio checkbox field mt-0">
+                            <input type="radio" name="wage_type_radio" value="1" />
+                            <label>賞与</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1" style="text-align: left;">
+                    <button id="preview-btn" class="ui button small">プレビュー</button>
+                    <button id="import-help-btn" type="button" class="ui icon button basic">
+                        <i class="info icon"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -35,20 +105,77 @@
                 <p>読込可能なデータの一覧：<span id="preview-loadable">0</span>/<span id="preview-inputs">0</span></p>
                 <!-- Power Table List -->
                 <x-power-table-layout></x-power-table-layout>
-                <h3>不明な項目</h3>
+                <h3>取り込み項目の割り当て
+                </h3>
                 <div id="solv-column" class="ui form"></div>
+                <button id="solv-column-btn" class="ui button primary mini" disabled>現在の設定を保存</button>
             </div>
         </div>
         <div class="submit-action py-1" style="text-align: right;">
             <button id="upload-btn" class="ui button primary" disabled>アップロード</button>
         </div>
     </section>
+
+    <div id="import-help-modal" class="ui modal small">
+        <div class="header">
+            <h3>配置項目の一覧（例）</h3>
+        </div>
+        <div class="content">
+            <table class="ui celled table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>主な支給額</th>
+                        <th>時間外手当</th>
+                        <th>諸手当</th>
+                        <th>控除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>基本給*</td>
+                        <td>所定残業金額</td>
+                        <td>通勤手当</td>
+                        <td>住民税*</td>
+                    </tr>
+                    <tr>
+                        <td>職務給</td>
+                        <td>普通残業金額</td>
+                        <td>資格手当</td>
+                        <td>源泉所得税*</td>
+                    </tr>
+                    <tr>
+                        <td>歩合給</td>
+                        <td>深夜残業金額</td>
+                        <td>役職手当</td>
+                        <td>共済費</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>出張手当</td>
+                        <td>財形貯蓄</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>住宅手当</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="mt-1">* 削除できない固定項目</p>
+        </div>
+        <div class="actions">
+            <button type="button" class="ui button cancel">閉じる</button>
+        </div>
+    </div>
     <script src="{{ asset('/js/power-table-list.js') }}" defer></script>
     <script src="{{ asset('/js/power-table-filter.js') }}" defer></script>
     <script src="{{ asset('/js/csv-import-wage.js') }}" defer></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
+            const configModal = $('#import-config-modal').modal();
             const csvImportWage = new CsvImportWage({
                 mode: 'json',
                 useEdit: false,
@@ -60,6 +187,7 @@
                     data: "{{ route('wages.upload.colmuns') }}",
                     upload: "{{ route('wages.upload.post') }}",
                     insurance_get: "{{ route('wages.insurance.get') }}",
+                    solv: "{{ route('wages.solv.column') }}"
                 }
             });
             csvImportWage.onImported = () => {
@@ -68,6 +196,7 @@
                     class: 'success',
                     message: '正常にインポートが完了しました'
                 })
+                document.scrollTo(0, 0);
             };
             csvImportWage.onFaildImport = () => {
                 $.toast({
@@ -75,7 +204,50 @@
                     class: 'red',
                     message: 'インポートに失敗しました'
                 })
+                document.scrollTo(0, 0);
             };
+            csvImportWage.onSolvedColumn = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'success',
+                    message: '割当設定を保存しました'
+                })
+            };
+            csvImportWage.onFaildSolvedColumn = () => {
+                $.toast({
+                    position: 'bottom right',
+                    class: 'red',
+                    message: '割当設定の保存に失敗しました'
+                })
+            };
+            $('#wage_month').calendar({
+                type: 'month',
+                formatter: {
+                    month: 'Y年M月'
+                },
+                text: {
+                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+                        '12月'
+                    ],
+                },
+                initialDate: "",
+            });
+            $('#payment_date').calendar({
+                type: 'date',
+                formatter: {
+                    date: 'Y"年"M"月"D"日"'
+                },
+                text: {
+                    days: ['日', '月', '火', '水', '木', '金', '土'],
+                    months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                },
+                initialDate: "",
+            });
+            const importHelpModal = $('#import-help-modal').modal();
+            $('#import-help-btn').click(() => {
+                importHelpModal.modal('show');
+            });
         })
     </script>
 </x-layout>

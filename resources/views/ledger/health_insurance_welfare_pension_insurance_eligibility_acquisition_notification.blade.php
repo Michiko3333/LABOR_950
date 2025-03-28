@@ -119,8 +119,15 @@
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative') }}' ? '{{ old('company_representative') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ old('labor_consultant_acting_as_agent') }}'
+                    ).css('background-color', '#ddeeff')
+                    .prop('disabled', false);
                 @else
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('readonly', false);
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ old('labor_consultant_acting_as_agent') }}'
+                    ).css('background-color', '#ffffff')
+                    .prop('disabled', true);
                 @endif
             });
         </script>
@@ -135,6 +142,7 @@
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const headquarters_prefecture_data = data['headquarters_prefecture_data'];
                 const branch_prefecture_data = data['branch_prefecture_data'];
+                const pensionOffice = data['pensionOffice'];
                 const employee_pension_office_reference_prefecture = branch.pension_office_reference_prefecture;
                 const employee_pension_office_reference_no_cities = branch.pension_office_reference_no_cities;
                 const employee_pension_office_reference_no_office = branch.pension_office_reference_no_office;
@@ -175,7 +183,7 @@
                 $('#N8_005F_944E').val(employee_pension_office_reference_prefecture ?? '');
                 $('#N9_005F_8C8E').val(employee_pension_office_reference_no_cities ?? '');
                 $('#N10_005F_93FA').val(employee_pension_office_reference_no_office ?? '');
-                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch_insurance_office_no ?? '');
+                $('#N11_005F_94ED_95DB_8CAF_8ED2_8E81').val(branch.insurance_office_no ?? '');
                 $('#N12_005F_905C_90BF_8ED2_8E81').val(branch_post_code_first ?? '');
                 $('#N13_005F_8374_838A_834B_8369').val(branch_post_code_last ?? '');
                 $('#N15_005F_94ED_95DB_8CAF_8ED2_8E81_96BC').val((branch_prefecture_data.name ?? '') + (branch
@@ -198,6 +206,28 @@
                 $('#N52_005F_8E73_8A4F').val(employee_post_code_last ?? '');
                 $('#N53_005F_8E73_93E0').val((employee_prefecture_data.name ?? '') + (employee.address_city ?? '') + (
                     employee.address_ward ?? ''));
+
+                const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
+                const helloWorkSelect = document.querySelector('select[name="selected_pension_office"]');
+
+                if(pensionOffice){
+                    prefectureSelect.addEventListener('change', function () {
+                    setTimeout(()=>{
+                            helloWorkSelect.value = pensionOffice.id;
+                        },700);
+                    });
+                    prefectureSelect.value = pensionOffice.address_prefecture;
+                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    document.querySelector('input[name="apply_to_code"]').value = pensionOffice.identifier_e;
+                    document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
+                    document.querySelector('input[name="apply_to_name"]').value = pensionOffice.submit_union_name_e;
+                    document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
+                }else{
+                    $("select[name='selected_prefecture']").val('');
+                    $("select[name='selected_pension_office']").val('');
+                    $("input[name='apply_to_name']").val('');
+                    $("input[name='apply_to_code']").val('');
+                }
             }
             Livewire.on('onSelectEmployee', ({
                 data

@@ -1,8 +1,8 @@
 class WageFilter {
     constructor(wageList) {
         this.wageList = wageList;
-        this.onRender = () => {};
-        this.onLoadedShowlist = () => {};
+        this.onRender = () => { };
+        this.onLoadedShowlist = () => { };
         this.filterConditionNodes = [];
         this.filiter = {};
         this.isOrdinaryFiltered = false;
@@ -24,8 +24,8 @@ class WageFilter {
 
     init() {
         this.wageList.get(this.wageList.insurance_get_uri).then(r => {
-            const res = JSON.parse(r);            
-            const insurances = {labor: [], social: []};
+            const res = JSON.parse(r);
+            const insurances = { labor: [], social: [] };
             if (!Object.keys(res).length < 1) {
                 for (let i = 0; i < res.length; i++) {
                     const ins = res[i];
@@ -41,7 +41,7 @@ class WageFilter {
             } else {
                 this.setInsurances(insurances);
             }
-            
+
         });
         this.wageList.get(this.wageList.filter_showlist_uri).then(r => {
             const res = JSON.parse(r);
@@ -80,7 +80,7 @@ class WageFilter {
                 this.showRemoveOrdinaryBtn();
             });
         });
-        
+
     }
 
     showRemoveOrdinaryBtn() {
@@ -97,7 +97,7 @@ class WageFilter {
         this.wageList.social_insurances = insurances.social;
     }
 
-    saveInsurances(data) {        
+    saveInsurances(data) {
         this.wageList.submit(this.wageList.insurance_save_uri, JSON.stringify(data)).then(r => {
             this.setInsurances(data);
             this.wageList.load();
@@ -155,7 +155,7 @@ class WageFilter {
 
         this.filterConditionNodes = [];
 
-        json.conditions.forEach(cond => {            
+        json.conditions.forEach(cond => {
             const row = this.createNode();
             const cond_target = row.querySelectorAll('[name="cond_target[]"]');
             cond_target.forEach(el => el.value = cond.name);
@@ -164,7 +164,7 @@ class WageFilter {
             const cond_comparison = row.querySelectorAll('[name="cond_comparison[]"]');
             cond_comparison.forEach(select => {
                 for (let i = 0; i < select.children.length; i++) {
-                    const option = select.children[i];                    
+                    const option = select.children[i];
                     if (option.value == cond.comparison) {
                         option.dataset.n = 0;
                         option.selected = true;
@@ -199,14 +199,14 @@ class WageFilter {
             let name = key;
             const q = document.forms.wage_filter.querySelector('label[for="' + key + '"]');
             if (q) name = q.textContent;
-            
+
             if (json[key] && typeof json[key] == 'string' && key != 'wage_year' && !/^show-.*/.test(key)) {
                 condition_preview.push({
                     name: name,
                     text: json[key]
                 });
             }
-            
+
         }
         const box = document.getElementById('wage-condition-message');
         box.innerText = '';
@@ -237,7 +237,7 @@ class WageFilter {
             node.dataset.key = i;
             wrapper.appendChild(node);
         });
-        
+
         this.onRender();
     }
 
@@ -294,6 +294,7 @@ class WageFilter {
         inputText.maxLength = 20;
         inputText.name = 'cond_target[]';
         inputText.placeholder = '項目名';
+        inputText.autocomplete = 'off';
         row.appendChild(inputText);
 
         // Create the first label
@@ -309,6 +310,7 @@ class WageFilter {
         inputNumber.min = 0;
         inputNumber.max = 99999999;
         inputNumber.name = 'cond_amount[]';
+        inputText.autocomplete = 'off';
         row.appendChild(inputNumber);
 
         // Create the second label

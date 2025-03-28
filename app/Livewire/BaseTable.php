@@ -54,14 +54,14 @@ class BaseTable extends Component
     {
         $queryParameterP = request()->get('p');
         $totalPages = $this->data['pagination']['totalPages'];
-        if(isset($queryParameterP)) {
-            if(1 > $queryParameterP || $queryParameterP > $totalPages) {
+        if (isset($queryParameterP)) {
+            if (1 > $queryParameterP || $queryParameterP > $totalPages) {
                 abort(404);
             }
         }
 
         $queryParameterId = request()->query('id');
-        if(isset($queryParameterId)) {
+        if (isset($queryParameterId)) {
             if (!in_array($queryParameterId, $ids)) {
                 abort(404);
             }
@@ -85,11 +85,11 @@ class BaseTable extends Component
     public function movePage($page)
     {
         $this->paginated = true;
-        if($page === 0) {
+        if ($page === 0) {
             return;
         }
         $this->page = $page;
-        if($this->pageMemory) {
+        if ($this->pageMemory) {
             $this->dispatch('pageMemory', $this->page);
         }
     }
@@ -98,7 +98,7 @@ class BaseTable extends Component
     {
         $this->paginated = true;
         $this->page = $this->page - 1;
-        if($this->pageMemory) {
+        if ($this->pageMemory) {
             $this->dispatch('pageMemory', $this->page);
         }
     }
@@ -107,13 +107,17 @@ class BaseTable extends Component
     {
         $this->paginated = true;
         $this->page = $this->page + 1;
-        if($this->pageMemory) {
+        if ($this->pageMemory) {
             $this->dispatch('pageMemory', $this->page);
         }
     }
     #[On('refresh-filter')]
-    public function filterColumn($list)
+    public function filterColumn($list, $isFirst)
     {
         $this->showColumns = $list;
+        if ($isFirst) {
+            $this->paginated = true;
+        }
+        $this->dispatch('refreshed-filter');
     }
 }

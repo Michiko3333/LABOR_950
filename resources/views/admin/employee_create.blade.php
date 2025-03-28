@@ -172,6 +172,9 @@
             .japan_post_bank_code_no.hidden {
                 display: none;
             }
+            .active.section{
+                font-size: 1em;
+            }
         </style>
     @endslot
     <section class="content">
@@ -180,19 +183,19 @@
             <i class="right chevron icon divider"></i>
             <a class="section" href="{{ route('admin.index') }}">Karte管理</a>
             <i class="right chevron icon divider"></i>
-            <a class="section" href="{{ route('admin.labor') }}">アカウント管理</a>
+            <a class="section employee-back" href="{{ route('admin.labor') }}">アカウント管理</a>
             <i class="right chevron icon divider"></i>
             @if (!isset($employee_id))
                 <div class="active section">従業員情報登録</div>
             @else
-                <div class="active section">従業員情報更新</div>
+                <div class="active section">従業員情報編集</div>
             @endif
         </div>
 
         @if (!isset($employee_id))
             <h1 class="mb-2 mt-0">従業員情報登録</h1>
         @else
-            <h1 class="mb-2 mt-0">従業員情報更新</h1>
+            <h1 class="mb-2 mt-0">従業員情報編集</h1>
         @endif
 
         <form class="ui form"
@@ -400,7 +403,7 @@
                                 <div class="field {{ err($errors, 'grade') }}">
                                     <label for="">等級</label>
                                     <input type="text" id="grade" name="grade"
-                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}">
+                                        value="{{ old('grade', isset($employee_id) ? $employee->grade : '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="two fields">
@@ -1673,14 +1676,15 @@
                                 <label for="japan_post_bank_code_no">記号番号</label>
                                 <input type="text" id="japan_post_bank_code_no" name="japan_post_bank_code_no"
                                     value="{{ old('japan_post_bank_code_no', isset($employee_id) ? $employee->japan_post_bank_code_no : '') }}"
-                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='8' autocomplete="off">
+                                    placeholder="ゆうちょ銀行の記号番号を入力" maxlength='13' autocomplete="off">
                             </div>
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="query_parameter" id="queryParameter">
             </div>
             <div class="my-4" style="text-align: right; margin-right: 1em;">
-                <a class="ui button negative basic" href="{{ route('admin.labor') }}"
+                <a class="ui button negative basic employee-back" href="{{ route('admin.labor') }}"
                     style="width: 200px;">キャンセル</a>
                 @if (!isset($employee_id))
                     <button class="ui button primary submit-disable" type="submit" style="width: 200px;">登録</button>
@@ -1728,6 +1732,7 @@
             });
             $('.ui.calendar.birthday').calendar({
                 type: 'date',
+                maxDate: new Date(),
                 formatter: {
                     date: 'Y"年"M"月"D"日"'
                 },
@@ -1795,16 +1800,21 @@
                         const tenureDate = new Date(year, month, day);
                         const today = new Date();
 
-                        let tenure = today.getFullYear() - tenureDate.getFullYear();
-                        let monthDiff = today.getMonth() - tenureDate.getMonth();
-                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
-                            tenure -= 1;
-                            monthDiff += 12;
-                        }
+                        if (tenureDate <= today) {
+                            let tenure = today.getFullYear() - tenureDate.getFullYear();
+                            let monthDiff = today.getMonth() - tenureDate.getMonth();
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate
+                                    .getDate())) {
+                                tenure -= 1;
+                                monthDiff += 12;
+                            }
 
-                        let tenureMonths = monthDiff;
-                        const tenureString = `${tenure}年${tenureMonths}ヵ月`;
-                        $(".tenure").val(tenureString);
+                            let tenureMonths = monthDiff;
+                            const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                            $(".tenure").val(tenureString);
+                        }else{
+                            $(".tenure").val('0年0ヵ月');
+                        }
                     }
                 }
             });
@@ -1816,15 +1826,21 @@
                 const day = parseInt(match[3], 10);
                 const tenureDate = new Date(year, month, day);
                 const today = new Date();
-                let tenure = today.getFullYear() - tenureDate.getFullYear();
-                let monthDiff = today.getMonth() - tenureDate.getMonth();
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate.getDate())) {
-                    tenure -= 1;
-                    monthDiff += 12;
+                if (tenureDate <= today) {
+                    let tenure = today.getFullYear() - tenureDate.getFullYear();
+                    let monthDiff = today.getMonth() - tenureDate.getMonth();
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < tenureDate
+                            .getDate())) {
+                        tenure -= 1;
+                        monthDiff += 12;
+                    }
+
+                    let tenureMonths = monthDiff;
+                    const tenureString = `${tenure}年${tenureMonths}ヵ月`;
+                    $(".tenure").val(tenureString);
+                }else{
+                    $(".tenure").val('0年0ヵ月');
                 }
-                let tenureMonths = monthDiff;
-                const tenureString = `${tenure}年${tenureMonths}ヵ月`;
-                $(".tenure").val(tenureString);
             }
             $('.ui.dropdown.dropdown.multiple').dropdown({});
 
@@ -2030,6 +2046,15 @@
         window.addEventListener('closeCancelModal', () => {
             $('.cancel-modal').modal('hide');
             location.reload();
+        });
+    </script>
+    <script type="module">
+        $(document).ready(function() {
+            const sessionHistory = JSON.parse(sessionStorage.getItem('pageHistory'));
+            if (sessionHistory) {
+                $('#queryParameter').val(sessionHistory.toString());
+                $('.employee-back').attr('href', sessionHistory.toString());
+            }
         });
     </script>
 </x-layout>
