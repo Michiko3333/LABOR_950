@@ -82,7 +82,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
         }
         if (isset($data['de-birthday'])) {
             foreach ($data['de-birthday'] as &$birthday) {
-                if($birthday){
+                if ($birthday) {
                     if (Carbon::hasFormat($birthday, 'Y-m-d')) {
                         continue;
                     }
@@ -288,7 +288,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
             'de-address_ward.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
             "de-address_apartment" => 'array',
             'de-address_apartment.*' => 'nullable|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々a-zａ-ｚA-ZＡ-Ｚ0-9０-９ 　－]+$/u',
-        
+
         ];
     }
 
@@ -328,7 +328,7 @@ class AdminEmployeeUpdateRequest extends BaseRequest
     {
         $Attributes =  [
             'icon_file' => 'アイコン画像',
-            'employee_no' => '社員番号',
+            'employee_no' => '従業員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',
             'grade' => '等級',

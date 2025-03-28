@@ -15,7 +15,7 @@ class EmployeeColumnsSeeder extends Seeder
     {
         DB::table('m_employee_columns')->truncate();
         DB::table('m_employee_columns')->insert([
-            ['key' => 'employee_no', 'name' => '社員番号（企業割当）', 'type' => 'label'],
+            ['key' => 'employee_no', 'name' => '従業員番号', 'type' => 'label'],
             ['key' => 'branch_name', 'name' => '所属事業所', 'type' => 'label'],
             ['key' => 'managerial_position_name', 'name' => '役職', 'type' => 'label'],
             ['key' => 'last_name', 'name' => '氏', 'type' => 'label'],

@@ -59,7 +59,7 @@ class AdminLaborUpdateRequest extends BaseRequest
             'first_name' => '名',
             'first_name_kana' => '名（カナ）',
             'first_name_alphabet' => '名（アルファベット）',
-            'employee_no' => '社員番号',
+            'employee_no' => '従業員番号',
             'employee_type' => '社員区分',
             'tel_area_code' => '電話番号（市外局番）',
             'tel_city_code' => '電話番号（市内局番）',

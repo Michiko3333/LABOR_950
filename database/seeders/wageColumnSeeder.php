@@ -16,7 +16,7 @@ class wageColumnSeeder extends Seeder
     {
         DB::table('m_wage_columns')->truncate();
         DB::table('m_wage_columns')->insert([
-            ['key' => 'employee_no', 'name' => '社員ID', 'width' => 120, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 1, 'ledger_order' => 1, 'hide_bonus' => 1],
+            ['key' => 'employee_no', 'name' => '従業員番号', 'width' => 120, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 1, 'ledger_order' => 1, 'hide_bonus' => 1],
             ['key' => 'employee_name', 'name' => '従業員氏名', 'width' => 140, 'type' => 'label', 'fixed' => 1, 'calc' => 0, 'show' => 1, 'is_ledger' => 0, 'order' => 2, 'ledger_order' => 2, 'hide_bonus' => 1],
             ['key' => 'branch_name', 'name' => '事業所名', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 3, 'ledger_order' => 3, 'hide_bonus' => 1],
             ['key' => 'departments', 'name' => '部署', 'width' => 120, 'type' => 'label', 'fixed' => 0, 'calc' => 0, 'show' => 0, 'is_ledger' => 0, 'order' => 3, 'ledger_order' => 4, 'hide_bonus' => 1],
