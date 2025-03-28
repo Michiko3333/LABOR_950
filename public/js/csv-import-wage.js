@@ -34,6 +34,7 @@ class CsvImportWage extends PowerTableList {
         this.onChangedCustomColumns = () => { };
         this.onSolvedColumn = () => { };
         this.onFaildSolvedColumn = () => { };
+        this.onLoadedCsv = () => { };
         this.rules = {
             employee_no: ['required'],
             month: ['required'],
@@ -298,6 +299,8 @@ class CsvImportWage extends PowerTableList {
         this.load();
         const solvColumnBtn = document.getElementById('solv-column-btn');
         solvColumnBtn.disabled = false;
+
+        this.onLoadedCsv();
     }
 
     onCreateHeader(parent, key, item) {

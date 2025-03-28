@@ -92,9 +92,6 @@
                 </div>
                 <div class="mt-1" style="text-align: left;">
                     <button id="preview-btn" class="ui button small">プレビュー</button>
-                    <button id="import-help-btn" type="button" class="ui icon button basic">
-                        <i class="info icon"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -102,11 +99,15 @@
         <div class="ui card full card-shadow item-0">
             <div class="content">
                 <h2>プレビュー</h2>
-                <p>読込可能なデータの一覧：<span id="preview-loadable">0</span>/<span id="preview-inputs">0</span></p>
+                <p style="display: flex; align-items: center;">
+                    読込可能なデータの一覧：<span id="preview-loadable">0</span>/<span id="preview-inputs">0</span>
+                    <button id="import-help-btn" type="button" class="ui icon button basic mini ml-1">
+                        配置項目の一覧
+                    </button>
+                </p>
                 <!-- Power Table List -->
                 <x-power-table-layout></x-power-table-layout>
-                <h3>取り込み項目の割り当て
-                </h3>
+                <h3>取り込み項目の割り当て</h3>
                 <div id="solv-column" class="ui form"></div>
                 <button id="solv-column-btn" class="ui button primary mini" disabled>現在の設定を保存</button>
             </div>
@@ -118,7 +119,7 @@
 
     <div id="import-help-modal" class="ui modal small">
         <div class="header">
-            <h3>配置項目の一覧（例）</h3>
+            <h3>配置項目の一覧</h3>
         </div>
         <div class="content">
             <table class="ui celled table" style="width: 100%;">
@@ -131,39 +132,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>基本給*</td>
-                        <td>所定残業金額</td>
-                        <td>通勤手当</td>
-                        <td>住民税*</td>
-                    </tr>
-                    <tr>
-                        <td>職務給</td>
-                        <td>普通残業金額</td>
-                        <td>資格手当</td>
-                        <td>源泉所得税*</td>
-                    </tr>
-                    <tr>
-                        <td>歩合給</td>
-                        <td>深夜残業金額</td>
-                        <td>役職手当</td>
-                        <td>共済費</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>出張手当</td>
-                        <td>財形貯蓄</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>住宅手当</td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
-            <p class="mt-1">* 削除できない固定項目</p>
+            <p class="mt-1">* 固定項目</p>
         </div>
         <div class="actions">
             <button type="button" class="ui button cancel">閉じる</button>
@@ -248,6 +219,34 @@
             $('#import-help-btn').click(() => {
                 importHelpModal.modal('show');
             });
+
+            csvImportWage.onLoadedCsv = () => {
+                const salary_columns = ['基本給*', ...csvImportWage.salary_columns];
+                const overtime_columns = [...csvImportWage.overtime_columns];
+                const allowance_columns = [...csvImportWage.allowance_columns];
+                const deduction_columns = ['住民税*', '源泉所得税*', ...csvImportWage.deduction_columns];
+
+                const tbody = document.querySelector('#import-help-modal tbody');
+                tbody.innerHTML = '';
+                const maxLength = Math.max(salary_columns.length, overtime_columns.length, allowance_columns
+                    .length, deduction_columns.length);
+                for (let i = 0; i < maxLength; i++) {
+                    const tr = document.createElement('tr');
+                    const td1 = document.createElement('td');
+                    const td2 = document.createElement('td');
+                    const td3 = document.createElement('td');
+                    const td4 = document.createElement('td');
+                    td1.textContent = salary_columns[i] || '';
+                    td2.textContent = overtime_columns[i] || '';
+                    td3.textContent = allowance_columns[i] || '';
+                    td4.textContent = deduction_columns[i] || '';
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+                    tbody.appendChild(tr);
+                }
+            }
         })
     </script>
 </x-layout>

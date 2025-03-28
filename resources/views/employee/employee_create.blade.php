@@ -373,7 +373,7 @@
                             </div>
                             <div class="three fields">
                                 <div class="required field {{ err($errors, 'employee_no') }}">
-                                    <label for="employee_no">社員番号</label>
+                                    <label for="employee_no">従業員番号</label>
                                     <input type="text" id="employee_no" name="employee_no"
                                         value="{{ old('employee_no', isset($employee_id) ? $employee->employee_no : '') }}"
                                         placeholder="E9999999" autocomplete="off">
