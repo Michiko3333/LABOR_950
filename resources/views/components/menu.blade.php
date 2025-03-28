@@ -254,6 +254,10 @@
                     <a href="{{ route('admin.labor') }}">
                         アカウント管理</a>
                 </li>
+                <li class="item">
+                    <a href="{{ route('admin.holidays') }}">
+                        休日設定</a>
+                </li>
                 @if (config('egov.test') === true)
                     <li class="item">
                         <a href="{{ route('egovtest.index') }}">

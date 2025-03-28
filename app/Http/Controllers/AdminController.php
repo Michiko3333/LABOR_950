@@ -6,6 +6,7 @@ use App\Http\Requests\AdminCompanyCreateRequest;
 use App\Http\Requests\AdminCompanyUpdateRequest;
 use App\Http\Requests\AdminEmployeeCreateRequest;
 use App\Http\Requests\AdminEmployeeUpdateRequest;
+use App\Http\Requests\AdminHolidaysRequest;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -66,6 +67,7 @@ use App\Models\Salary;
 use App\Models\Salary_history;
 use App\Models\Qualifications;
 use App\Models\Employee_qualifications;
+use App\Models\Holidays;
 use App\Models\Values_employee_work_category;
 use App\Models\Values_employee_enrollment_category;
 use App\Models\Values_employee_employment_route;
@@ -325,7 +327,7 @@ class AdminController extends Controller
                                 ];
                                 $existingData = array_map('strval', $existingSalaryHistory->only(array_keys($salaryHistoryData)));
                                 $newData = array_map('strval', $salaryHistoryData);
-                                if ($existingData != $newData){
+                                if ($existingData != $newData) {
                                     Salary_history::create($salaryHistoryData);
                                 }
                             };
@@ -406,7 +408,7 @@ class AdminController extends Controller
                                 ];
                                 $existingData = array_map('strval', $existingBonusHistory->only(array_keys($bonusHistoryData)));
                                 $newData = array_map('strval', $bonusHistoryData);
-                                if ($existingData != $newData){
+                                if ($existingData != $newData) {
                                     Bonus_history::create($bonusHistoryData);
                                 }
                             };
@@ -483,7 +485,7 @@ class AdminController extends Controller
                                 ];
                                 $existingData = array_map('strval', $existingBountyHistory->only(array_keys($bountyHistoryData)));
                                 $newData = array_map('strval', $bountyHistoryData);
-                                if ($existingData != $newData){
+                                if ($existingData != $newData) {
                                     Bounty_history::create($bountyHistoryData);
                                 }
                             };
@@ -542,11 +544,11 @@ class AdminController extends Controller
                             $existingAllowanceHistory = Branch_allowance_history::where('allowance_id', $alid)->orderBy('created_at', 'desc')->first();
                             $existingData = array_map('strval', $existingAllowanceHistory->only(array_keys($allowanceHistoryData)));
                             $newData = array_map('strval', $allowanceHistoryData);
-                            if ($existingData != $newData){
+                            if ($existingData != $newData) {
                                 $allowanceHistoryData['allowance_id'] = $alid;
                                 Branch_allowance_history::create($allowanceHistoryData);
                             }
-                        }else{
+                        } else {
                             $created_id = Branch_allowance::create([
                                 'allowance' => $data['al-allowance'][$branchIndex][$alIndex],
                                 'amount' => $data['al-amount'][$branchIndex][$alIndex],
@@ -1537,7 +1539,7 @@ class AdminController extends Controller
             $insertData = [];
 
             $hired_date = $this->formatDate($request->input('hired_date'));
-            if($hired_date) {
+            if ($hired_date) {
                 $hired_date = Carbon::parse($hired_date);
                 $due_date = $hired_date->copy()->addMonth()->day(10);
 
@@ -1557,7 +1559,7 @@ class AdminController extends Controller
                 $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                 $content = str_replace($search, $replace, $pickupMessage->content);
 
-                if($due_date->gte(Carbon::today())) {
+                if ($due_date->gte(Carbon::today())) {
                     $insertData[] = [
                         'company_id' => $company_id->id,
                         'pickup_type_id' => 21,
@@ -1574,8 +1576,8 @@ class AdminController extends Controller
 
             $retirement_date = $this->formatDate($request->input('retirement_date')) ? $this->formatDate($request->input('retirement_date'))
                 : ($this->formatDate($request->input('intended_retirement_date')) ? $this->formatDate($request->input('intended_retirement_date'))
-                : null);
-            if($retirement_date) {
+                    : null);
+            if ($retirement_date) {
                 $retirement_date = Carbon::parse($retirement_date);
 
                 $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
@@ -1593,7 +1595,7 @@ class AdminController extends Controller
                 $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                 $content = str_replace($search, $replace, $pickupMessage->content);
 
-                if(!empty($retirement_date) && $retirement_date->gte(Carbon::today())) {
+                if (!empty($retirement_date) && $retirement_date->gte(Carbon::today())) {
                     $insertData[] = [
                         'company_id' => $company_id->id,
                         'pickup_type_id' => 24,
@@ -1614,7 +1616,7 @@ class AdminController extends Controller
                     $dedata = $this->data_dependent($validationData, $index, $employee_id);
                     $dependent_id = Dependent::create($dedata)->id;
 
-                    if(!empty($pickup_setting)) {
+                    if (!empty($pickup_setting)) {
                         $relationship_spouses = [
                             '未選択',
                             '夫',
@@ -1643,9 +1645,9 @@ class AdminController extends Controller
                         $relationship_spouse = $dedata['relationship_spouse'] ?? null;
                         $relationship_dependent = $dedata['relationship_dependent'] ?? null;
                         $relation = '';
-                        if(!empty($relationship_spouse)) {
+                        if (!empty($relationship_spouse)) {
                             $relation = $relationship_spouses[$relationship_spouse];
-                        } elseif(!empty($relationship_dependent)) {
+                        } elseif (!empty($relationship_dependent)) {
                             $relation = $relationship_dependents[$relationship_dependent];
                         }
 
@@ -1667,10 +1669,10 @@ class AdminController extends Controller
                         $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                         $content = str_replace($search, $replace, $pickupMessage->content);
 
-                        if(!empty($dedata['date_of_expiry'])) {
+                        if (!empty($dedata['date_of_expiry'])) {
                             $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
 
-                            if($due_date->gte(Carbon::today())) {
+                            if ($due_date->gte(Carbon::today())) {
                                 $insertData[] = [
                                     'company_id' => $company_id->id,
                                     'pickup_type_id' => 15,
@@ -1683,10 +1685,10 @@ class AdminController extends Controller
                                     'created_at' => now(),
                                 ];
                             }
-                        } elseif(!empty($dedata['date_of_authorisation'])) {
+                        } elseif (!empty($dedata['date_of_authorisation'])) {
                             $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
 
-                            if($due_date->gte(Carbon::today())) {
+                            if ($due_date->gte(Carbon::today())) {
                                 $insertData[] = [
                                     'company_id' => $company_id->id,
                                     'pickup_type_id' => 15,
@@ -1699,7 +1701,7 @@ class AdminController extends Controller
                                     'created_at' => now(),
                                 ];
                             }
-                        } elseif(!empty($dedata['dependent_type'])) {
+                        } elseif (!empty($dedata['dependent_type'])) {
                             $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
 
                             $insertData[] = [
@@ -2068,9 +2070,9 @@ class AdminController extends Controller
             $excepts = [];
 
             $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
-                    ->where('m_branch.id', $request->input('branch_id'))
-                    ->select('company.id')
-                    ->first();
+                ->where('m_branch.id', $request->input('branch_id'))
+                ->select('company.id')
+                ->first();
 
             $pickup_setting = Pickup_setting::where('company_id', $company_id->id)
                 ->select('change_in_dependent_status')
@@ -2104,11 +2106,11 @@ class AdminController extends Controller
             $insertData = [];
 
             $hired_date = $this->formatDate($request->input('hired_date'));
-            if($hired_date) {
+            if ($hired_date) {
                 $hired_date = Carbon::parse($hired_date);
                 $due_date = $hired_date->copy()->addMonth()->day(10);
 
-                if(!$hired_date->isSameDay($old_hired_date) && $due_date->gte(Carbon::today())) {
+                if (!$hired_date->isSameDay($old_hired_date) && $due_date->gte(Carbon::today())) {
                     $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
                         ->select('m_pickup_message.business_name', 'm_pickup_message.content')
                         ->where('m_pickup_type.id', 21)
@@ -2126,12 +2128,12 @@ class AdminController extends Controller
                     $content = str_replace($search, $replace, $pickupMessage->content);
 
                     $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 21)->get();
-                    if(!empty($pickups)) {
-                        foreach($pickups as $pickup) {
+                    if (!empty($pickups)) {
+                        foreach ($pickups as $pickup) {
                             $pickup->update([
                                 'pickup_situation_id' => 4,
                                 'anonymous_flg' => 1,
-                            ]); 
+                            ]);
                         }
                     }
 
@@ -2151,10 +2153,10 @@ class AdminController extends Controller
 
             $retirement_date = $this->formatDate($request->input('retirement_date')) ?? null;
             $intended_retirement_date = $this->formatDate($request->input('intended_retirement_date')) ?? null;
-            if($retirement_date) {
+            if ($retirement_date) {
                 $retirement_date = Carbon::parse($retirement_date);
 
-                if(!empty($retirement_date) && ($old_retirement_date === null || !$retirement_date->isSameDay($old_retirement_date)) && $retirement_date->gte(Carbon::today())) {
+                if (!empty($retirement_date) && ($old_retirement_date === null || !$retirement_date->isSameDay($old_retirement_date)) && $retirement_date->gte(Carbon::today())) {
                     $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
                         ->select('m_pickup_message.business_name', 'm_pickup_message.content')
                         ->where('m_pickup_type.id', 24)
@@ -2171,12 +2173,12 @@ class AdminController extends Controller
                     $content = str_replace($search, $replace, $pickupMessage->content);
 
                     $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
-                    if(!empty($pickups)) {
-                        foreach($pickups as $pickup) {
+                    if (!empty($pickups)) {
+                        foreach ($pickups as $pickup) {
                             $pickup->update([
                                 'pickup_situation_id' => 4,
                                 'anonymous_flg' => 1,
-                            ]); 
+                            ]);
                         }
                     }
 
@@ -2192,10 +2194,10 @@ class AdminController extends Controller
                         'created_at' => now(),
                     ];
                 }
-            } elseif($intended_retirement_date) {
+            } elseif ($intended_retirement_date) {
                 $intended_retirement_date = Carbon::parse($intended_retirement_date);
 
-                if(!empty($intended_retirement_date) && !$intended_retirement_date->isSameDay($old_intended_retirement_date) && $intended_retirement_date->gte(Carbon::today())) {
+                if (!empty($intended_retirement_date) && !$intended_retirement_date->isSameDay($old_intended_retirement_date) && $intended_retirement_date->gte(Carbon::today())) {
                     $pickupMessage = Pickup_message::join('m_pickup_type', 'm_pickup_message.id', '=', 'm_pickup_type.pickup_message_id')
                         ->select('m_pickup_message.business_name', 'm_pickup_message.content')
                         ->where('m_pickup_type.id', 24)
@@ -2212,12 +2214,12 @@ class AdminController extends Controller
                     $content = str_replace($search, $replace, $pickupMessage->content);
 
                     $pickups = Pickup::where('employee_id', $request->input('employee_id'))->where('pickup_type_id', 24)->get();
-                    if(!empty($pickups)) {
-                        foreach($pickups as $pickup) {
+                    if (!empty($pickups)) {
+                        foreach ($pickups as $pickup) {
                             $pickup->update([
                                 'pickup_situation_id' => 4,
                                 'anonymous_flg' => 1,
-                            ]); 
+                            ]);
                         }
                     }
 
@@ -2254,7 +2256,7 @@ class AdminController extends Controller
                     }
                     $excepts[] = $deid;
 
-                    if(!empty($pickup_setting)) {
+                    if (!empty($pickup_setting)) {
                         $relationship_spouses = [
                             '未選択',
                             '夫',
@@ -2283,9 +2285,9 @@ class AdminController extends Controller
                         $relationship_spouse = $dedata['relationship_spouse'] ?? null;
                         $relationship_dependent = $dedata['relationship_dependent'] ?? null;
                         $relation = '';
-                        if(!empty($relationship_spouse)) {
+                        if (!empty($relationship_spouse)) {
                             $relation = $relationship_spouses[$relationship_spouse];
-                        } elseif(!empty($relationship_dependent)) {
+                        } elseif (!empty($relationship_dependent)) {
                             $relation = $relationship_dependents[$relationship_dependent];
                         }
 
@@ -2307,10 +2309,10 @@ class AdminController extends Controller
                         $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                         $content = str_replace($search, $replace, $pickupMessage->content);
 
-                        if(!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type'])) {
-                            if($dedata['date_of_expiry'] && ($old_date_of_expiry === null || !Carbon::parse($dedata['date_of_expiry'])->isSameDay($old_date_of_expiry))) {
+                        if (!empty($dedata['date_of_expiry']) || !empty($dedata['date_of_authorisation']) || !empty($dedata['dependent_type'])) {
+                            if ($dedata['date_of_expiry'] && ($old_date_of_expiry === null || !Carbon::parse($dedata['date_of_expiry'])->isSameDay($old_date_of_expiry))) {
                                 $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
-                                if($due_date->gte(Carbon::today())) {
+                                if ($due_date->gte(Carbon::today())) {
                                     $insertData[] = [
                                         'company_id' => $company_id->id,
                                         'pickup_type_id' => 15,
@@ -2323,9 +2325,9 @@ class AdminController extends Controller
                                         'created_at' => now(),
                                     ];
                                 }
-                            } elseif(($dedata['date_of_authorisation'] && $old_date_of_authorisation === null || !Carbon::parse($dedata['date_of_authorisation'])->isSameDay($old_date_of_authorisation))) {
+                            } elseif (($dedata['date_of_authorisation'] && $old_date_of_authorisation === null || !Carbon::parse($dedata['date_of_authorisation'])->isSameDay($old_date_of_authorisation))) {
                                 $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
-                                if($due_date->gte(Carbon::today())) {
+                                if ($due_date->gte(Carbon::today())) {
                                     $insertData[] = [
                                         'company_id' => $company_id->id,
                                         'pickup_type_id' => 15,
@@ -2338,7 +2340,7 @@ class AdminController extends Controller
                                         'created_at' => now(),
                                     ];
                                 }
-                            } elseif($dedata['dependent_type'] && $old_dependent_type === null || $old_dependent_type !== (int)$dedata['dependent_type']) {
+                            } elseif ($dedata['dependent_type'] && $old_dependent_type === null || $old_dependent_type !== (int)$dedata['dependent_type']) {
                                 $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
                                 $insertData[] = [
                                     'company_id' => $company_id->id,
@@ -2358,7 +2360,7 @@ class AdminController extends Controller
                     $created_id = Dependent::create($dedata)->id;
                     $excepts[] = $created_id;
 
-                    if(!empty($pickup_setting)) {
+                    if (!empty($pickup_setting)) {
                         $relationship_spouses = [
                             '未選択',
                             '夫',
@@ -2387,9 +2389,9 @@ class AdminController extends Controller
                         $relationship_spouse = $dedata['relationship_spouse'] ?? null;
                         $relationship_dependent = $dedata['relationship_dependent'] ?? null;
                         $relation = '';
-                        if(!empty($relationship_spouse)) {
+                        if (!empty($relationship_spouse)) {
                             $relation = $relationship_spouses[$relationship_spouse];
-                        } elseif(!empty($relationship_dependent)) {
+                        } elseif (!empty($relationship_dependent)) {
                             $relation = $relationship_dependents[$relationship_dependent];
                         }
 
@@ -2411,10 +2413,10 @@ class AdminController extends Controller
                         $business_name = str_replace($search, $replace, $pickupMessage->business_name);
                         $content = str_replace($search, $replace, $pickupMessage->content);
 
-                        if(!empty($dedata['date_of_expiry'])) {
+                        if (!empty($dedata['date_of_expiry'])) {
                             $due_date = Carbon::parse($dedata['date_of_expiry'])->addDays($pickup_setting->change_in_dependent_status);
 
-                            if($due_date->gte(Carbon::today())) {
+                            if ($due_date->gte(Carbon::today())) {
                                 $insertData[] = [
                                     'company_id' => $company_id->id,
                                     'pickup_type_id' => 15,
@@ -2427,10 +2429,10 @@ class AdminController extends Controller
                                     'created_at' => now(),
                                 ];
                             }
-                        } elseif(!empty($dedata['date_of_authorisation'])) {
+                        } elseif (!empty($dedata['date_of_authorisation'])) {
                             $due_date = Carbon::parse($dedata['date_of_authorisation'])->addDays($pickup_setting->change_in_dependent_status);
 
-                            if($due_date->gte(Carbon::today())) {
+                            if ($due_date->gte(Carbon::today())) {
                                 $insertData[] = [
                                     'company_id' => $company_id->id,
                                     'pickup_type_id' => 15,
@@ -2443,7 +2445,7 @@ class AdminController extends Controller
                                     'created_at' => now(),
                                 ];
                             }
-                        } elseif(!empty($dedata['dependent_type'])) {
+                        } elseif (!empty($dedata['dependent_type'])) {
                             $due_date = Carbon::now()->addDays($pickup_setting->change_in_dependent_status);
 
                             $insertData[] = [
@@ -2462,7 +2464,7 @@ class AdminController extends Controller
                 }
             }
             Pickup::insert($insertData);
-            Dependent::where('employee_id', $request->input('employee_id'))->where('history_flg',0)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
+            Dependent::where('employee_id', $request->input('employee_id'))->where('history_flg', 0)->whereNotIn('id', $excepts)->update(['delete_flg' => 1]);
 
             $qualifications = $request->input('qualifications', []);
             Employee_qualifications::whereNotIn('qualifications_id', $qualifications)
@@ -2539,7 +2541,7 @@ class AdminController extends Controller
 
             DB::commit();
             $this->putSuccess();
-            if($request->input('query_parameter')) {
+            if ($request->input('query_parameter')) {
                 return redirect()->to($request->input('query_parameter'));
             } else {
                 return redirect()->route('admin.labor');
@@ -2652,5 +2654,78 @@ class AdminController extends Controller
         $company = $employee->branch->company()->first();
 
         return view('admin.client', ['employee' => $employee, 'company' => $company]);
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // 祝日設定
+    // ---------------------------------------------------------------------------------------
+
+    public function holidays(Request $request)
+    {
+        $year = Carbon::now()->year;
+        $next_next = Carbon::now()->addYears()->year;
+
+        return view('admin.holidays', ['year' => $year, 'next_next' => $next_next]);
+    }
+
+    public function holidays_post(AdminHolidaysRequest $request)
+    {
+        $select_year = $request->input('select_year');
+        $holiday_ids = $request->input('holiday_id', []);
+        $holiday_names = $request->input('holiday_name', []);
+        $holiday_dates = $request->input('holiday_date', []);
+
+        $insertData = [];
+
+        DB::beginTransaction();
+        try {
+            foreach ($holiday_names as $index => $name) {
+                $id = $holiday_ids[$index] ?? null;
+                $date = $holiday_dates[$index];
+
+                $formattedDate = Carbon::createFromFormat('Y年m月d日', $select_year . '年' . $date)->format('Y-m-d');
+
+                $select_year_holidays = Holidays::select('id')
+                    ->whereYear('holiday_date', $select_year)
+                    ->get();
+
+                if ($id) {
+                    if ($select_year_holidays->contains('id', $id)) {
+                        $holiday = Holidays::where('id', $id)->first();
+                        if ($holiday->holiday_name !== $name || $holiday->holiday_date !== $formattedDate) {
+                            $holiday->update([
+                                'holiday_name' => $name,
+                                'holiday_date' => $formattedDate,
+                            ]);
+                        }
+                    } else {
+                        $ids_to_delete = array_diff($select_year_holidays, $holiday_ids);
+
+                        if (!empty($ids_to_delete)) {
+                            Holidays::whereIn('id', $ids_to_delete)
+                                ->update('delete_flg', 1);
+                        }
+                    }
+                } else {
+                    $insertData[] = [
+                        'holiday_name' => $name,
+                        'holiday_date' => $formattedDate,
+                        'created_at' => now(),
+                    ];
+                }
+            }
+
+            if (!empty($insertData)) {
+                Holidays::insert($insertData);
+            }
+
+            DB::commit();
+            $this->putSuccess();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+
+        return redirect()->route('admin.holidays');
     }
 }

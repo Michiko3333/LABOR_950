@@ -65,6 +65,7 @@ use App\Http\Controllers\ImportWageController;
 use App\Http\Controllers\MonthlyStandardSalaryController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\QualificationsController;
+use App\Http\Controllers\HolidayController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -228,6 +229,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/api/position/list', [AdminController::class, 'get_position'])->name('admin.get_position');
         Route::post('/admin/api/industry_type/list', [AdminController::class, 'get_industry_type'])->name('admin.get_industry_type');
         Route::post('/admin/api/qualifications/list', [AdminController::class, 'get_qualifications'])->name('admin.get_qualifications');
+
+        Route::get('/admin/holidays', [AdminController::class, 'holidays'])->name('admin.holidays');
+        Route::post('/admin/holidays', [AdminController::class, 'holidays_post'])->name('admin.holidays_post');
 
         // Ledger
         Route::post('/ledger/api/auth', [EgovController::class, 'auth'])->name('egov.auth');

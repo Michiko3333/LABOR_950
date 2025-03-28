@@ -1,7 +1,7 @@
 <x-layout title="管理画面" useRightContent="{{false}}">
     @slot('header')
     <style type="text/css">
-        .ui.two.cards {
+        .ui.three.cards {
             display: flex;
             justify-content: space-evenly;
             text-align: center;
@@ -11,20 +11,20 @@
             content: none;
         }
 
-        .ui.two.cards>.card {
+        .ui.three.cards>.card {
             display: block;
             width: 360px;
             height: 360px;
             margin: 10rem 0 0;
         }
 
-        .ui.two.cards i {
+        .ui.three.cards i {
             margin: 30% auto 0;
             color: #2F323E;
             font-size: 8rem;
         }
 
-        .ui.two.cards p {
+        .ui.three.cards p {
             margin-top: 3rem;
             color: #2F323E;
             font-size: 24px;
@@ -32,14 +32,14 @@
         }
 
         @media(max-width: 759px) {
-            .ui.two.cards {
+            .ui.three.cards {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
                 align-items: center;
             }
 
-            .ui.two.cards>.card {
+            .ui.three.cards>.card {
                 display: block;
                 margin-top: 2rem;
             }
@@ -53,7 +53,7 @@
             <div class="active section">Karte管理</div>
         </div>
 
-        <div class="ui two cards">
+        <div class="ui three cards">
             <a class="primary card card-shadow" href="{{ route('admin.company') }}">
                 <i class="building outline icon" style="visibility: visible;"></i>
                 <p>会社一覧</p>
@@ -61,6 +61,10 @@
             <a class="secondary card card-shadow" href="{{ route('admin.labor') }}">
                 <i class="user graduate icon" style="visibility: visible;"></i>
                 <p>アカウント管理</p>
+            </a>
+            <a class="secondary card card-shadow" href="{{ route('admin.holidays') }}">
+                <i class="calendar alternate outline icon" style="visibility: visible;"></i>
+                <p>休日設定</p>
             </a>
         </div>
     </section>
