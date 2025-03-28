@@ -53,10 +53,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_disqualification_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'disqualification_status' =>
                                             '資格喪失の事実、資格喪失日及び資格喪失の状況が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'other' => 'その他の添付書類',
                                     ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>

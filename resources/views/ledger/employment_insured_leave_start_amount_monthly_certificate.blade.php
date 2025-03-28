@@ -54,10 +54,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_wage_certificate_or_payment_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'wage_certificate_or_payment_status' =>
                                             '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'childcare' => '育児の事実が確認できる書類',
                                         'nursing_care' => '介護の事実が確認できる書類',
                                         'other' => 'その他の添付書類',

@@ -52,7 +52,7 @@
                         <div class="attachment-card">
                             <div class="ui card card-shadow">
                                 <div class="content">
-                                    <h2>添付ファイル</h2>
+                                    <h2>書類・データの添付</h2>
                                     <x-ledger-attachment :file_original_names="[
                                     'certificate_of_family_register' => '戸籍謄(抄)本または戸籍記載事項証明書',
                                     'certificate_of_residence' => '住民票',

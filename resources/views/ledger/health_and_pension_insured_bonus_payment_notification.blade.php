@@ -81,7 +81,7 @@
                         </div>
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'wage_ledger' => '健康保険　標準賞与額累計申出書',
                                     'other' => 'その他の添付書類',

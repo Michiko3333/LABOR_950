@@ -56,8 +56,8 @@ class ChildcareLeaveSalaryChangeNoticeOr70OverChildcareSalaryAdjustmentRequest e
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "submission_year" => 'required|int|between:1,99|regex:/^[0-9]+$/',
             "submission_month" => 'required|int|between:1,12|regex:/^[0-9]+$/',
             "submission_day" => 'required|int|between:1,31|regex:/^[0-9]+$/',

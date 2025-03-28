@@ -106,7 +106,7 @@ class OldHealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculati
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
 
-                $attachment_type = ($value === '2') ? '添付' : '別送';
+                $attachment_type = ($value === '2') ? '添付' : ($value === '1' ? '別送' : '');
 
                 $attached_document_name = $request->input($label_key);
 

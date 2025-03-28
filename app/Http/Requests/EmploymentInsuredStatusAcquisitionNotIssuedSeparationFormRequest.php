@@ -64,8 +64,8 @@ class EmploymentInsuredStatusAcquisitionNotIssuedSeparationFormRequest extends B
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_disqualification_status" => 'required_unless:radio_file_disqualification_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'employment_insured_no_4' => 'string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'string|regex:/^[0-9]{6}$/u',
             'employment_insured_no_cd' => 'string|regex:/^[0-9]{1}$/u',

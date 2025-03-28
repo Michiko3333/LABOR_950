@@ -51,8 +51,8 @@ class SeniorEmploymentContinuationBenefitClaimFormRequest extends BaseRequest
         return [
             "file_wage_amount" => 'required_unless:radio_file_wage_amount,1|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
             "file_written_consent" => 'required_if:radio_file_written_consent,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'labor_consultant_acting_as_agent' => 'nullable|string|max:255',
             'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
             'ledger_type' => 'required|string|regex:/^[0-9]{1,5}$/u',

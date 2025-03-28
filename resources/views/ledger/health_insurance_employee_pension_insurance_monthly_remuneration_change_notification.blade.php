@@ -84,7 +84,7 @@
                         </div>
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'wage_ledger' => '（様式1）年間報酬の平均で算定することの申立書（随時改定用）',
                                     'attendance_record' =>

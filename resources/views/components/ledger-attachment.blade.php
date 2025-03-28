@@ -28,82 +28,112 @@
 </style>
 
 <div class="ui form">
-    @foreach ($file_original_names as $key => $file_original_name)
+    @if($required_list)
+    <h4>必須　添付ファイル</h4>
+    @foreach ($required_list as $key => $file_original_name)
         <div
-            class="field {{ in_array('required_' . $key, $required_list) ? 'required' : '' }} {{ err($errors, 'file_' . $key) }}">
+            class="field required {{ err($errors, 'file_' . $key) }}">
             <input type="hidden" name="label_file_{{ $key }}" value="{{ $file_original_name }}">
             <label for="file_{{ $key }}">{{ $file_original_name }}</label>
             <div class="inline" id="radio-button">
                 <div class="ui radio checkbox">
-                    <input type="radio" name="radio_file_{{ $key }}" checked="checked" value="2"
-                        {{ old("radio_file_{$key}") == '2' ? 'checked' : '' }}>
+                    <input type="radio" name="radio_file_{{ $key }}" value="2"
+                        {{ old("radio_file_{$key}") == '2' ? 'checked' : ($separateDisabled && old("radio_file_{$key}") === null ? 'checked' : '') }}>
                     <label>添付</label>
                 </div>
-                @if ($separateDisabled)
-                    <lavel />
-                @else
+                @if (!$separateDisabled)
                     <div class="ui radio checkbox">
                         <input type="radio" {{ $separateDisabled ? 'hidden' : '' }}
                             name="radio_file_{{ $key }}" value="1"
-                            {{ old("radio_file_{$key}") == '1' ? 'checked' : '' }}>
+                            {{ old("radio_file_{$key}") === '1' ? 'checked' : (!$separateDisabled && old("radio_file_{$key}") === null ? 'checked' : '') }}>
                         <label>別送</label>
                     </div>
                 @endif
             </div>
-            <div class="inline fields">
+            <div class="inline fields" style="display: none;">
                 <div class="field thirteen wide">
                     <div class="ui file input">
                         <input type="file" class="file-attachment-form" name="file_{{ $key }}"
                             accept="{{ $extensions }}">
                     </div>
                 </div>
-                <div class="field four wide {{ err($errors, "checked_{$key}") }}">
-                    <div class="ui toggle checkbox">
-                        <input class="file_check" type="checkbox" data-input="file_{{ $key }}"
-                            data-label="label_file_{{ $key }}" data-radio="radio_file_{{ $key }}"
-                            data-input-other="input_file_{{ $key }}" name="checked_{{ $key }}"
-                            {{ old("checked_{$key}") ? 'checked' : '' }}>
-                        <label></label>
+            </div>
+        </div>
+    @endforeach
+    <div class="ui divider my-2"></div>
+    @endif
+    <h4>任意・依頼された場合　添付ファイル</h4>
+    @foreach ($file_original_names as $key => $file_original_name)
+        <div
+            class="field ? 'required' : '' }} {{ err($errors, 'file_' . $key) }}">
+            <input type="hidden" name="label_file_{{ $key }}" value="{{ $file_original_name }}">
+            <label for="file_{{ $key }}">{{ $file_original_name }}</label>
+            <div class="inline" id="radio-button">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="radio_file_{{ $key }}" value="2"
+                        {{ old("radio_file_{$key}") == '2' ? 'checked' : '' }}>
+                    <label>添付</label>
+                </div>
+                @if (!$separateDisabled)
+                    <div class="ui radio checkbox">
+                        <input type="radio" {{ $separateDisabled ? 'hidden' : '' }}
+                            name="radio_file_{{ $key }}" value="1"
+                            {{ old("radio_file_{$key}") === '1' ? 'checked' : '' }}>
+                        <label>別送</label>
+                    </div>
+                @endif
+                <div class="ui radio checkbox">
+                    <input type="radio" name="radio_file_{{ $key }}" value="0"
+                    {{ old("radio_file_{$key}") === '0' || old("radio_file_{$key}") === null ? 'checked' : '' }}>
+                    <label>不要</label>
+                </div>
+            </div>
+            <div class="inline fields" style="display: none;">
+                <div class="field thirteen wide">
+                    <div class="ui file input">
+                        <input type="file" class="file-attachment-form" name="file_{{ $key }}"
+                            accept="{{ $extensions }}">
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-    <div class="ui input {{ $errors->has('input_file_other') ? ' error' : '' }}" id="other_file_name">
+    <div class="ui input {{ $errors->has('input_file_other') ? ' error' : '' }}" id="other_file_name" style="display: none;">
         <input type="text" placeholder="その他添付書類の名称" name="input_file_other" autocomplete="off" value="{{ old('input_file_other') }}">
     </div>
 
     <script type="module">
         $(document).ready(function() {
-            function updateFields() {
-                const name = $(this).data('input');
-                const label = $(this).data('label');
-                const radio = $(this).data('radio');
-                const other_name = $(this).data('input-other');
-                const bool = $(this).prop('checked');
-                $('input[name=' + name + '], input[name=' + label + '], input[name=' + radio + '], input[name=' +
-                    other_name + ']').prop('disabled', !bool);
-
-                if (bool) {
-                    const radioValue = $('input[name=' + radio + ']:checked').val();
-                    if (radioValue === '1') {
-                        $('input[name=' + name + ']').prop('disabled', true);
-                        $('input[name=' + name + ']').val('');
-                    }
+            const separateDisabled = @json($separateDisabled);
+            function toggleFileInputAndFields(radioValue, fieldSelector, fileInputSelector, inlineFieldsSelector) {
+                const fileInputField = fieldSelector.find(fileInputSelector);
+                if (radioValue === '2') {
+                    fileInputField.val('');
+                    fieldSelector.find(inlineFieldsSelector).css('display', 'block');
+                } else {
+                    fileInputField.val('');
+                    fieldSelector.find(inlineFieldsSelector).css('display', 'none');
                 }
             }
 
-            $('.file_check').change(function() {
-                updateFields.call(this);
-            }).trigger('change');
+            $('input[type="radio"][name^="radio_file_"]:checked').each(function() {
+                toggleFileInputAndFields($(this).val(), $(this).closest('.field'), 'input[type="file"]', 'div.inline.fields');
+            });
+
+            function toggleFileNameInput() {
+                const fileNameInputField = $('input[name="input_file_other"]');
+                const displayStyle = $('input[name="radio_file_other"]:checked').val() != '0' ? 'block' : 'none';
+                fileNameInputField.val('');
+                $('#other_file_name').css('display', displayStyle);
+            }
+            
+            toggleFileNameInput();
 
             $('input[type="radio"][name^="radio_file_"]').change(function() {
-                const fileInputField = $(this).closest('.field').find('input[type="file"]');
-                fileInputField.prop('disabled', $(this).val() === '1');
-                if ($(this).val() === '1') {
-                    fileInputField.val('');
-                }
+                toggleFileInputAndFields($(this).val(), $(this).closest('.field'), 'input[type="file"]', 'div.inline.fields');
             });
+
+            $('input[name="radio_file_other"]').change(toggleFileNameInput);
         });
         /* filesize validation */
         const fileInputs = document.getElementsByClassName('file-attachment-form');

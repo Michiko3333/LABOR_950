@@ -54,9 +54,11 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_childcare']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'childcare' => '育児の事実が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'wage_amount' =>
                                             '休業開始時賃金月額証明書に記載された育児休業を開始した日及びその日前の賃金の額が確認できる書類',
                                         'wage_certificate' => '雇用保険被保険者休業開始時賃金月額証明票',

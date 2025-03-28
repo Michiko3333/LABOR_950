@@ -53,9 +53,10 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_wage_amount']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                     'wage_amount' => '支給申請書に記載した賃金額等記載内容を確認できる書類',
+                                ]" :file_original_names="[
                                     'written_consent' => '支給申請に係る承諾書',
                                     'other' => 'その他の添付書類',
                                 ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
@@ -139,9 +140,9 @@
                         this.value = toHalfWidth(this.value);
                     });
                 document.getElementById("J10_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD").addEventListener("input",
-            function() {
-                    this.value = toHalfWidth(this.value);
-                });
+                    function() {
+                        this.value = toHalfWidth(this.value);
+                    });
                 document.getElementById("J13_005F_944E").addEventListener("input", function() {
                     this.value = toHalfWidth(this.value);
                 });
@@ -254,8 +255,8 @@
                         '{{ old('labor_consultant_tel_subscriber_code', $current_branch->tel_subscriber_code) }}');
                 @else
                     $('#J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2,\
-                                #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
-                                #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
+                                        #J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC, #J65_005F_8E73_8A4F_8BC7_94D4,\
+                                        #J66_005F_8E73_93E0_8BC7_94D4, #J67_005F_89C1_93FC_8ED2_94D4_8D86')
                         .prop(
                             'readonly',
                             true);
@@ -361,19 +362,21 @@
                 const prefectureSelect = document.querySelector('select[name="selected_prefecture"]');
                 const helloWorkSelect = document.querySelector('select[name="selected_hello_work"]');
 
-                if(helloWork){
-                    prefectureSelect.addEventListener('change', function () {
-                    setTimeout(()=>{
+                if (helloWork) {
+                    prefectureSelect.addEventListener('change', function() {
+                        setTimeout(() => {
                             helloWorkSelect.value = helloWork.id;
-                        },700);
+                        }, 700);
                     });
                     prefectureSelect.value = helloWork.address_prefecture;
-                    prefectureSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    prefectureSelect.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
                     document.querySelector('input[name="apply_to_code"]').value = helloWork.identifier_d;
                     document.querySelector('input[name="apply_to_code"]').dispatchEvent(new Event('input'));
                     document.querySelector('input[name="apply_to_name"]').value = helloWork.submit_union_name_d;
                     document.querySelector('input[name="apply_to_name"]').dispatchEvent(new Event('input'));
-                }else{
+                } else {
                     $("select[name='selected_prefecture']").val('');
                     $("select[name='selected_hello_work']").val('');
                     $("input[name='apply_to_name']").val('');

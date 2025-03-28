@@ -302,7 +302,9 @@ class MixXmlEgovSigner
                     $targetElements = $xpath->query($query);
                     foreach ($targetElements as $element) {
                         if ($key == ($element->nodeValue)) {
-                            $element->nodeValue = str_replace($key, $value, $element->nodeValue);
+                            $safeKey = htmlspecialchars($key, ENT_XML1, 'UTF-8');
+                            $safeValue = htmlspecialchars($value, ENT_XML1, 'UTF-8');
+                            $element->nodeValue = str_replace($safeKey, $safeValue, $element->nodeValue);
                         }
                     }
                 }
@@ -321,7 +323,11 @@ class MixXmlEgovSigner
                     $xml->load($attachmentPath);
 
                     $submitInfoElement = $xml->getElementsByTagName('提出先情報')->item(0);
+
                     foreach ($attachments as $attachment) {
+                        if(!$attachment['attachment_type']){
+                            continue;
+                        }
                         $newElement = $xml->createElement('添付書類属性情報');
                         $newElement->appendChild($xml->createTextNode("\n\t\t\t"));
 

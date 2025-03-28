@@ -54,11 +54,13 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_nursing_facts', 'required_nursing_care_recipient']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'nursing_facts' => '介護の事実が確認できる書類',
                                         'nursing_care_recipient' =>
                                             '介護対象家族の氏名、申請者本人との続柄、性別、生年月日が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'wage_payment_status' =>
                                             '休業開始時賃金月額証明書に記載された賃金支払い状況の内容が確認できる書類',
                                         'closing_starts' => '雇用保険被保険者休業開始時賃金月額証明票',

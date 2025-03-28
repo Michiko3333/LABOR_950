@@ -49,8 +49,8 @@ class OldNotificationOfObtainingInsuredQualificationRequest extends BaseRequest
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "health_insurance" => 'nullable|int|in:1',
             "welfare_pension_insurance" => 'nullable|int|in:1',
             "input_date_japan_era_year" => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',

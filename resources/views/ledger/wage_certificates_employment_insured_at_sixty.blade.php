@@ -54,10 +54,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_wage_payment_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'wage_payment_status' =>
                                             '六十歳到達時等賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'insured_age' => '被保険者の年齢が確認できる書類',
                                         'separation_form' =>
                                             '直前の被保険者資格喪失の日前の賃金支払い状況を記した雇用保険被保険者離職票－２',

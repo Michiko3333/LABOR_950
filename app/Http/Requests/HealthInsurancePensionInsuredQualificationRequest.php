@@ -51,11 +51,11 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "file_insurance" => 'required_if:radio_file_insurance,2|file|mimes:jpg,pdf|max:50000',
-            "radio_file_other" => 'nullable|string|in:2',
+            "radio_file_other" => 'nullable|string|in:2,0',
             "file_dependent" => 'required_if:radio_file_dependent,2|file|mimes:jpg,pdf|max:50000',
             "file_remote_dependent" => 'required_if:radio_file_remote_dependent,2|file|mimes:jpg,pdf|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'health_insurance' => 'nullable|int|in:1',
             'pension' => 'nullable|int|in:1',
             'submission_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
@@ -322,7 +322,6 @@ class HealthInsurancePensionInsuredQualificationRequest extends BaseRequest
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
-            "radio_file_other" => '当該帳票では添付ファイルに別送を選択することはできません。',
             'loss_era.required_with' => '喪失年月日_年号を入力してください。',
             'loss_year.required_with' => '喪失年月日_年を入力してください。',
             'loss_month.required_with' => '喪失年月日_月を入力してください。',
