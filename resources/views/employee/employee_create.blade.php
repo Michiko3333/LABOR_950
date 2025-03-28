@@ -599,12 +599,12 @@
                                         value="{{ old('branch_id', isset($employee_id) ? $employee->branch_id : '') }}"
                                         autocomplete="off">
                                 </div>
-                            @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
-                                <div class="field">
-                                    <label for=""></label>
-                                    <button class="ui button" type="button" id="branch_btn">支店検索</button>
-                                </div>
-                            @endif
+                                @if ($userPermission->isBasicDepartment() && $userPermission->isWritableFor(6))
+                                    <div class="field">
+                                        <label for=""></label>
+                                        <button class="ui button" type="button" id="branch_btn">支店検索</button>
+                                    </div>
+                                @endif
                             </div>
                             <div class="field {{ err($errors, 'departments[]') }}">
                                 <label for="departments[]">所属部署</label>
@@ -1204,10 +1204,9 @@
                                     <label for="">給与区分</label>
                                     <select class="ui fluid dropdown pay_type" name="pay_type">
                                         <option value="">未選択</option>
-                                        @foreach($pay_type as $key => $value)
+                                        @foreach ($pay_type as $key => $value)
                                             <option value="{{ $key }}"
-                                                {{ old('pay_type') == "$key" ||
-                                                (isset($employee) && old('pay_type', $employee->pay_type) == "$key")
+                                                {{ old('pay_type') == "$key" || (isset($employee) && old('pay_type', $employee->pay_type) == "$key")
                                                     ? 'selected'
                                                     : '' }}>
                                                 {{ $value }}
@@ -1886,13 +1885,59 @@
                 <div class="my-4" style="text-align: right; margin-right: 1em;">
                     <a class="ui button negative basic employee-back" href="{{ route('employee') }}"
                         style="width: 200px;">キャンセル</a>
-                    <button class="ui button primary submit-disable" type="submit"
-                        style="width: 200px;">更新</button>
+                    <button class="ui button primary authority" type="submit" style="width: 200px;">更新</button>
                 </div>
             @endif
         </form>
 
     </section>
+
+    <x-logout-confirmation-modal id="logout_confirmation" />
+    <script type="module">
+        $(document).ready(function() {
+            const current_user_id = @json($current_user_id);
+            const employee_id = $('input[name="employee_id"]').val();
+            const old_employee_type = $('select[name="employee_type"]').val();
+            const old_employee_status = $('select[name="employee_status"]').val();
+            const old_departments = @json($departments);
+
+            function arraysAreEqual(arr1, arr2) {
+                if (arr1.length !== arr2.length) return false;
+                let sortedArr1 = [...arr1].sort((a, b) => a - b);
+                let sortedArr2 = [...arr2].sort((a, b) => a - b);
+
+                return sortedArr1.every((value, index) => value === sortedArr2[index]);
+            }
+
+            $('select[name="employee_type"], select[name="employee_status"], select[name="departments[]').on(
+                'change',
+                function() {
+                    let new_employee_type = $('select[name="employee_type"]').val();
+                    let new_employee_status = $('select[name="employee_status"]').val();
+                    let new_departments = $('select[name="departments[]"]').val() ? $(
+                        'select[name="departments[]"]').val().map(Number) : [];
+
+                    if (
+                        current_user_id === parseInt(employee_id) &&
+                        ((parseInt(old_employee_type) < 3 && parseInt(new_employee_type) > 2) ||
+                            (parseInt(old_employee_type) > 2 && parseInt(new_employee_type) < 3) ||
+                            (parseInt(old_employee_status) == 1 && parseInt(new_employee_status) > 1) ||
+                            (parseInt(old_employee_status) > 1 && parseInt(new_employee_status) == 1) ||
+                            !arraysAreEqual(old_departments, new_departments))
+                    ) {
+                        $('.authority').prop('type', 'button').addClass('logout-confirmation');
+                    } else {
+                        $('.authority').prop('type', 'submit').removeClass('logout-confirmation');
+                    }
+                });
+        });
+
+        $(document).on('click', '.logout-confirmation', function() {
+            $('#logout_confirmation').modal({
+                blurring: true
+            }).modal('show');
+        });
+    </script>
 
     <!-- 会社検索モーダル -->
     <x-search-branch-modal id="branch_select" selectorBrName="#branch_name" selectorBrId="#branch_id"
@@ -2073,7 +2118,7 @@
                                 let tenureMonths = monthDiff;
                                 const tenureString = `${tenure}年${tenureMonths}ヵ月`;
                                 $(".tenure").val(tenureString);
-                            }else{
+                            } else {
                                 $(".tenure").val('0年0ヵ月');
                             }
                         }
@@ -2099,7 +2144,7 @@
                         let tenureMonths = monthDiff;
                         const tenureString = `${tenure}年${tenureMonths}ヵ月`;
                         $(".tenure").val(tenureString);
-                    }else{
+                    } else {
                         $(".tenure").val('0年0ヵ月');
                     }
                 }
