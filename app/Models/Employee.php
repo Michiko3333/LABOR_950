@@ -107,6 +107,9 @@ class Employee extends Model
 
 
         'labor_and_social_security_attorney_registration_no',
+        'indication_of_labor',
+        'indication_of_agent',
+        'labor_and_social_security_association',
         'contract_period_flg',
         'contract_start_date',
         'contract_end_date',

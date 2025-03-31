@@ -1632,18 +1632,18 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; padding:0px 1px 0px 0px; width:17px; height:15px; ime-mode:disabled;"
             type="TEXT" id="J193_005F_93FA" name="J193_日" maxlength="2" disabled></span>
     <span
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:54px; top:1080px; width:118px; line-height:39px; height:40px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:54px; top:1080px; width:118px; line-height:39px; height:40px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><textarea
             tabindex="149"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:116px; height:37px; ime-mode:active;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:116px; height:37px; ime-mode:active;border: none !important;"
             id="J195_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2"
-            value="{{ old('labor_consultant_acting_as_agent_name') }}"
-            name="labor_consultant_acting_as_agent_name" autocomplete="off"></span>
+            value=""
+            name="labor_consultant_acting_as_agent_name" autocomplete="off">{{ old('labor_consultant_acting_as_agent_name') }}</textarea></span>
     <span
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:171px; top:1080px; width:120px; line-height:39px; height:40px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:171px; top:1080px; width:120px; line-height:39px; height:40px; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><textarea
             tabindex="150"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:119px; height:37px; ime-mode:active;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:&#39;ＭＳ 明朝&#39;, serif; width:119px; height:37px; ime-mode:active;border: none !important;"
             id="J196_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC"
-            value="{{ old('labor_consultant_name') }}" name="labor_consultant_name" autocomplete="off"></span>
+            value="" name="labor_consultant_name" autocomplete="off">{{ old('labor_consultant_name') }}</textarea></span>
     <span
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:302px; top:1085px; width:38px; height:15px; font-size:11px; font-family:&#39;ＭＳ 明朝&#39;, serif;"><input
             tabindex="151"

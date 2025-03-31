@@ -119,9 +119,11 @@
                     '{{ old('business_owner_name_representative_name') }}' ? '{{ old('business_owner_name_representative_name') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E21').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    );
                 @else
-                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E21').prop('readonly',
-                        false);
+                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E21').prop('readonly',true);
                 @endif
             });
             document.addEventListener('DOMContentLoaded', function() {

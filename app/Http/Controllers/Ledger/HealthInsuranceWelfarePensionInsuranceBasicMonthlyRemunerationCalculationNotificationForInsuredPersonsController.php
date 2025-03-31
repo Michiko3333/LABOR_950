@@ -60,6 +60,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         }
 
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -83,6 +84,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 'todaySet' => $todaySet,
                 'dataUri' => $dataUri,
                 'current_employee' => $current_employee,
+                'current_branch' => $current_branch,
                 'certificate' => $certificate,
                 'procedureName' => $procedureName,
                 'egovAcount' => $egovAcount,

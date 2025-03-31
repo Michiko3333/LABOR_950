@@ -68,7 +68,7 @@ class OldNotificationOfObtainingInsuredQualificationRequest extends BaseRequest
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}$/u',
             "branch_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}$/u',
-            "labor_consultant_acting_as_agent" => 'nullable|string|max:255',
+            "labor_consultant_acting_as_agent" => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "employee_name_kana" =>  'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "employee_name" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',
             "employee_birthday_japan_era" => 'int|in:5,7,9',

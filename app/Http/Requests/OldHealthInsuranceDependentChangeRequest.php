@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
-class HealthInsuranceDependentChangeRequest extends BaseRequest
+class OldHealthInsuranceDependentChangeRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -49,7 +49,7 @@ class HealthInsuranceDependentChangeRequest extends BaseRequest
             "headquarters_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
             "headquarters_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}$/u',
             "headquarters_representative" => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
-            "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_name" => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "accepted_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "accepted_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "accepted_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',

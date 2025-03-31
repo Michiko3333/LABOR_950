@@ -625,11 +625,11 @@
             value="{{ old('labor_consultant_submission_agency_name') }}" name="labor_consultant_submission_agency_name"
             maxlength="12" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:253px; top:1282px; width:109px; line-height:36px; height:36px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:253px; top:1282px; width:109px; line-height:36px; height:36px; font-size:9px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="272"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:109px; height:35px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J79_005F_8E81_96BC" value="{{ old('employee_salary_notices1') }}" name="labor_consultant_name"
-            type="text" autocomplete="off"></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:109px; height:35px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J79_005F_8E81_96BC" value="" name="labor_consultant_name" autocomplete="off"
+            type="text">{{ old('labor_consultant_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:746px; top:1018px; width:126px; height:13px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="-1" disabled

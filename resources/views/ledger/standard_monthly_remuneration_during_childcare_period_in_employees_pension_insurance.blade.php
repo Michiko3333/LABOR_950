@@ -136,7 +136,11 @@
                     $('#str_representative_name').val(
                         '{{ old('employer_company_managerial_position_name ') }}' ? '{{ old('employer_company_managerial_position_name ') }}' : '{{ $company->representative }}');
                     @if($current_employee->role_id === 500)
-                    $('#labor_and_social_security_attorney_name').prop('disabled', false).css('background-color', '#ddeeff');
+                    $('#labor_and_social_security_attorney_name').prop('disabled', false)
+                    .val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    )
+                    .css('background-color', '#ddeeff');
                     @else
                     $('#labor_and_social_security_attorney_name').prop('disabled', true).css('background-color', '#ffffff');
                     @endif

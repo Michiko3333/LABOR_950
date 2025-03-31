@@ -85,18 +85,17 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:359px; top:887px; width:85px; height:12px; text-align:center; font-size:8px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 7px 0px 7px; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:102px; top:898px; width:126px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:102px; top:898px; width:126px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="65"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:8px; font-family:'ＭＳ 明朝', serif; width:124px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:8px; font-family:'ＭＳ 明朝', serif; width:124px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
             id="J63_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2"
-            value="{{ old('labor_consultant_acting_as_agent') }}" name="labor_consultant_acting_as_agent"
-            autocomplete="off"></SPAN>
+            value="" name="labor_consultant_acting_as_agent" autocomplete="off">{{ old('labor_consultant_acting_as_agent') }}</textarea></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:227px; top:898px; width:119px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:227px; top:898px; width:119px; line-height:33px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="66"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:8px; font-family:'ＭＳ 明朝', serif; width:118px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC" value="{{ old('labor_consultant_name') }}"
-            name="labor_consultant_name" autocomplete="off"></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:8px; font-family:'ＭＳ 明朝', serif; width:118px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J64_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC" value=""
+            name="labor_consultant_name" autocomplete="off">{{ old('labor_consultant_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:359px; top:898px; width:85px; height:35px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:17px 0px 0px 0px;"></SPAN>
     <SPAN

@@ -166,10 +166,16 @@
                 $('#A5_4').val('{{ old('npc3ipn_1_date_of_receipt_day') ?? $yesterdaySet['day'] }}');
 
                 @if ($current_employee->role_id === 500)
-                    $('#A6_1').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}').css('background-color', '#ddeeff').prop('readonly', false);
+                    $('#A6_1').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    ).css('background-color', '#ddeeff').prop('readonly', false);
                     $('#A6_2').val('{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
-                    $('#F2').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}').css('background-color', '#ffffff').prop('readonly', true);
-                    $('#G12').val('{{ $current_employee->last_name }}' + '　' + '{{ $current_employee->first_name }}').css('background-color', '#ffffff').prop('readonly', true);
+                    $('#F2').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    ).css('background-color', '#ffffff').prop('readonly', true);
+                    $('#G12').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    ).css('background-color', '#ffffff').prop('readonly', true);
                 @else
                     $('#A6_1').prop('disabled', true).css('background-color', '#e6eaed').prop('readonly', true);
                     $('#F2').prop('disabled', true).css('background-color', '#e6eaed').prop('readonly', true);

@@ -129,6 +129,11 @@
                     $('#J71_005F_944E').val('{{ old('labor_consultant_japan_era_year', $today['year']) }}');
                     $('#J72_005F_8C8E').val('{{ old('labor_consultant_month', $today['month']) }}');
                     $('#J73_005F_93FA').val('{{ old('labor_consultant_day', $today['date']) }}');
+                    $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('labor_consultant_display', $current_employee->indication_of_agent) }}');
+                    $('#J75_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J76_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
                     $('#J77_005F_8E73_93E0_8BC7_94D4').val(

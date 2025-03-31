@@ -308,7 +308,9 @@ class MixXmlEgovSigner
                         }
                     }
                 }
-                $xml->save($file);
+                $xmlContent = $xml->saveXML();
+                $xmlContent = str_replace('&#13;', '', $xmlContent);
+                file_put_contents($file, $xmlContent);
             }
 
             // 添付情報付与

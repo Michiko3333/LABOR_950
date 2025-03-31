@@ -150,8 +150,9 @@
                 @endif
 
                 @if ($current_employee->role_id === 500)
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('{{ $current_employee->last_name }}' + '　' +
-                        '{{ $current_employee->first_name }}');
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ $current_employee->last_name . '　' .$current_employee->first_name}}'
+                    );
                     $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val(
                         '{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
                 @else

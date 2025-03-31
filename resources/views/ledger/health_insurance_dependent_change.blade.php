@@ -490,8 +490,17 @@
                 $('#N25_1').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#N19_P1').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    );
+                    $('#N30').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    );
+                    $('#N34_1').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    );
                 @else
-                    $('#N22_P1').prop('readonly', false);
+                    $('#N19_P1').prop('readonly', false);
                     $('#N30').prop('readonly', false);
                     $('#N34_1').prop('readonly', false);
                 @endif
