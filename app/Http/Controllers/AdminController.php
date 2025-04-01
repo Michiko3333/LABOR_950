@@ -1060,6 +1060,13 @@ class AdminController extends Controller
                 'labor_and_social_security_attorney_registration_no' => $request->input('labor_and_social_security_attorney_registration_no'),
             ])->id;
 
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
+
             Employee::where('id', $employee_id)->update(['role_id' => 500]);
 
             $departments = $request->input('departments', []);
@@ -1179,6 +1186,13 @@ class AdminController extends Controller
                 'mail_address2' => $request->input('mail_address2'),
                 'labor_and_social_security_attorney_registration_no' => $request->input('labor_and_social_security_attorney_registration_no'),
             ]);
+
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
 
             $departments = $request->input('departments', []);
             Employee_department::whereNotIn('department_id', $departments)
@@ -1499,6 +1513,13 @@ class AdminController extends Controller
                 'bank_account_no' => $request->input('bank_account_no'),
                 'japan_post_bank_code_no' => $request->input('japan_post_bank_code_no'),
             ])->id;
+
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
 
             $company_id = Branch::join('m_company as company', 'm_branch.company_id', '=', 'company.id')
                 ->where('m_branch.id', $request->input('branch_id'))
@@ -2056,6 +2077,13 @@ class AdminController extends Controller
                     'store_code' => $request->input('store_code'),
                     'japan_bank_flg' => $request->input('japan_bank_flg'),
                 ]);
+
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
 
             $employee = Employee::find($request->input('employee_id'));
             $employee->update([
