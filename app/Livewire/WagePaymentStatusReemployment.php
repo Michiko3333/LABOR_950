@@ -10,7 +10,7 @@ use Livewire\Attributes\On;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 
-class WagePaymentStatus extends Component{
+class WagePaymentStatusReemployment extends Component{
 
     public $wage_id_1;
     public $era_1;
@@ -43,118 +43,49 @@ class WagePaymentStatus extends Component{
     public $checkedIndexes;
 
     public $employeeId;
+    public string $info_text_1;
+    public string $info_text_2;
+
 
     public function render()
     {
         $employeeId = $this->employeeId ? $this->employeeId : null;
 
-        return view('livewire.wage-payment-status', [
+        return view('livewire.wage-payment-status-reemployment', [
             'employeeId' => $this->employeeId
         ]);
     }
 
-   // 連携ボタンが押された時
-    #[On('reflectValues')]
-    public function reflectValues()
+    //月額賃金と選択社員情報の受信
+    #[On('submit-basic-allowance')]
+    public function SubmitBasicAllowance($seventy_five_percent_threshold,$employeeData,$calculated_wage)
     {
-        $this->dispatch('runConfirmation');
+        $this->seventy_five_percent_threshold = $seventy_five_percent_threshold;
+        $this->employeeData = $employeeData;
+        $this->calculated_wage = $calculated_wage;
+        $seventy_five_percent_threshold = $seventy_five_percent_threshold;
+        $employee = $employeeData;
+        $calculated_wage = $calculated_wage;
+
+        $this->SelectStatusReemployment($seventy_five_percent_threshold,$employee,$calculated_wage);
     }
 
-    // チェックの状態を受け取ったとき
-    #[On('checkbox_change')]
-    public function checkbox_change($checkedIndexes)
-    {
-        $this->dispatch('sendCheckedIndexes', $checkedIndexes);
-    }
-
-    // 編集ボタンが押された時
-    #[On('openEditWageAmountModal')]
-    public function openEditWageAmountModal($type)
-    {
-        $data = $this->payment_target_year_months[$type] ?? null;
-
-        if (empty($data)) {
-            $this->dispatch('showErrorMessage_empty_input');
-            return;
-        } else {
-            $this->selectedType = $type;
-            $this->dispatch('editWageAmount', $data);
-            $this->dispatch('open_edit_modal_input');
-        }
-    }
-
-    //社員選択ボタンが押された時
-    #[On('select_status')]
-    public function select_status($employee) { 
-
+    public function SelectStatusReemployment($seventy_five_percent_threshold,$employee,$calculated_wage) { 
+    
         $this->resetData();
-
         $this->employeeId = $employee['id'];
-
-        if (!$employee['birthday']) {
-            return;
-        }
-
         $birthday = Carbon::parse($employee['birthday']);
-        $today = Carbon::today();
-        $age = $birthday->diffInYears($today);
-
-        if ($age < 60 || $age > 65) {
-            $this->dispatch('show_error_60');
-            return;
-        }
-
         $sixty_years_old_date = $birthday->copy()->addYears(60);
-        $calculated_wage = $this->calculate_wage($employee, $sixty_years_old_date);
 
-        if (!$calculated_wage) {
-            $this->dispatch('show_error');
-            return;
-        }
-
-        $info_text_1 = "※選択可能な年月は60歳到達時点の平均月額賃金と比べて、60歳以後の賃金が75％未満になっている年月です。";
+        $info_text_1 = "※選択可能な年月は基本手当から算出した平均月額賃金と比べて、再就職後の賃金が75％未満になっている年月です。";
         $info_text_2 = "※選択した支給対象年月の前１ヶ月〜２ヶ月の賃金が75％未満と連続している場合は、最大3ヶ月分が自動で選択されます。";
 
         $this->dispatch('updateInfoText', [
             'info_text_1' => $info_text_1,
             'info_text_2' => $info_text_2
         ]);
-
+        
         $this->dispatch('calculatedWageUpdated', calculated_wage: $calculated_wage, sixty_years_old_date: $sixty_years_old_date->format('Y-m-d'));
-
-        $this->process_wages_below_75_percent($employee, $birthday, $calculated_wage);
-    }
-
-    public function calculate_wage($employee, $sixty_years_old_date)
-    {
-        $attendance_months = Attendance::where('employee_id', $employee['id'])
-            ->where('actual_working_days', '>=', 11)
-            ->where('month', '<', $sixty_years_old_date->format('Y-m-d'))
-            ->orderBy('month', 'desc')
-            ->pluck('month');
-
-        $wages = Wage::where('employee_id', $employee['id'])
-            ->whereIn('month', $attendance_months)
-            ->orderBy('month', 'desc')
-            ->select('month', 'total_amount')
-            ->take(6)
-            ->get();
-
-        $total_six_months_wage = $wages->sum('total_amount');
-        
-        if ($wages->isEmpty()) {
-            return null;
-        }
-
-        $calculated_wage = round(($total_six_months_wage / 180) * 30);
-        return max(82380, min(486300, $calculated_wage));
-        
-    }
-
-    public function process_wages_below_75_percent($employee, $birthday, $calculated_wage)
-    {
-        $sixty_years_old_date = $birthday->copy()->addYears(60);
-        $seventy_five_percent_threshold = $calculated_wage * 0.75;
 
         $wages_below_75_percent = Wage::where('employee_id', $employee['id'])
             ->where('total_amount', '<', $seventy_five_percent_threshold)
@@ -285,6 +216,35 @@ class WagePaymentStatus extends Component{
         $this->reduced_days_3 = null;
     }
 
+    // 編集ボタンが押された時
+    #[On('openEditWageAmountModal')]
+    public function openEditWageAmountModal($type)
+    {
+        $data = $this->payment_target_year_months[$type] ?? null;
+
+        if (empty($data)) {
+            $this->dispatch('showErrorMessage_empty_input');
+            return;
+        } else {
+            $this->selectedType = $type;
+            $this->dispatch('editWageAmount', $data);
+            $this->dispatch('open_edit_modal_input');
+        }
+    }
+
+    // チェックの状態を受け取ったとき
+    #[On('checkbox_change')]
+    public function checkbox_change($checkedIndexes)
+    {
+        $this->dispatch('sendCheckedIndexes', $checkedIndexes);
+    }
+
+    // 連携ボタンが押された時
+    #[On('reflectValues')]
+    public function reflectValues()
+    {
+        $this->dispatch('runConfirmation');
+    }
 
     // 別の年月の選択データを受信して上書きする
     #[On('selectedRowsUpdated')]
@@ -311,7 +271,6 @@ class WagePaymentStatus extends Component{
                 }
             }
         
-            // 一致するデータがなかった場合、新規追加
             if (!$found) {
                 $payment_target_year_months[] = [
                     'wage_id' => $tempRow['valid_id'], 

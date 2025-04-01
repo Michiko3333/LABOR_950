@@ -558,8 +558,7 @@ class LedgerEmployeeList extends BaseTable
 
         $this->selected_id = $id;
         $this->dispatch('onSelectEmployee', data: $output);
-        $this->dispatch('select_status', $this->selected_id);
-        $this->dispatch('select_payment_status_after60', employee: $employee);
+        $this->dispatch('select_status', employee: $employee);
     }
 
     #[On('setDefault')]

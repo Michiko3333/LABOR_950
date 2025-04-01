@@ -50,26 +50,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wage-payment-status-card">
-                        <div class="ui card card-shadow">
+
+                    <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
                             <div class="content">
                                 <h2>賃金支払状況</h2>
                                 <div class="employee-select-area ui form">
-                                    <div class="text_fields">
-                                        <p>1）社員選択から社員を選択してください。</p>
-                                        <p>2）反映する支給対象月を選択下さい。</p>
-                                        <p>数値は初期値として自動入力されますが、会社の事情に応じて手入力にて修正をお願い致します。</p>
-                                        <p>支給対象年月に該当しない場合は右記より反映する月を選択ください。</p>
-                                        <div class="field" style="min-width: 80px; text-align: right;">
-                                            <livewire:wage-payment-status-another-month />
-                                        </div>
+                                    <p>1）社員選択から社員を選択してください。</p>
+                                    <div class="ui warning message 60 hidden">
+                                        <div class="header">選択された社員は申請対象の条件に合いません（対象：60歳〜65歳）</div>
                                     </div>
+                                    <div class="ui warning message hidden">
+                                        <div class="header">選択された社員の賃金情報のデータがありません</div>
+                                    </div>
+                                </div>
+                                <!-- 社員が選択されるまで非表示 -->
+                                <div id="wage-payment-status-onoff" class="wage-payment-status-onoff" style="display: none;">
+                                    <p>2）反映にチェックを入れて『連携する』ボタンを押すと帳票画面に反映されます。</p>
+                                    <p>　※下記のフォームに入力されている数値は、申請可能な直近の賃金支払状況です。</p>
+                                    <p>　※別の支給対象年月に変更したい場合は、『別の支給対象年月を参照する』ボタンより変更可能です。</p>
+                                    <div class="field" style="min-width: 80px; text-align: right;">
+                                        <button type="button" class="ui button small" id="another_payment_month_btn">別の支給対象年月を参照する</button>
+                                    </div>
+                                    <x-another-payment-month/>
                                     <livewire:wage-payment-status />
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="attachment-card">
+                        
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>書類・データの添付</h2>
@@ -314,6 +322,7 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const helloWork = data['helloWork'];
+                employeeData = employee;
                 var employmentInsuredNo = employee.employment_insured_no;
                 if (employmentInsuredNo && employmentInsuredNo.length === 11) {
                     var employmentInsuredNo4digit = employmentInsuredNo.substring(0, 4);
@@ -418,16 +427,111 @@
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {
-                insertDataFromEmployee(data)
+                reset_form(); 
+                insertDataFromEmployee(data);
             });
 
-            //PHPのロジックファイルからshowModalを待受して「支給対象年月の編集モーダル（another_payment_month）」を開く
-            Livewire.on('showModal', (event) => {
-                $('#another_payment_month').modal({
-                    blurring: true, // 背景をぼかす
-                }).modal('show');
+            window.modal24 = $('#another_payment_month').modal({
+                blurring: true 
             });
-                </script>
+
+            function reset_form() {
+            $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+            $('.employee-select-area .ui.warning.message').addClass('hidden');
+            $('#wage-payment-status-onoff').hide();
+            $('#J25_005F_944E_8D86_005F1').val("");
+            $('#J26_005F_944E_005F1').val("");
+            $('#J27_005F_8C8E_005F1').val("");
+            $('#J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1').val("");
+            $('#J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1').val("");
+            $('#J32_005F_944E_8D86_005F2').val("");
+            $('#J33_005F_944E_005F2').val("");
+            $('#J34_005F_8C8E_005F2').val("");
+            $('#J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2').val("");
+            $('#J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2').val("");
+            $('#J32_005F_944E_8D86_005F3').val("");
+            $('#J33_005F_944E_005F3').val("");
+            $('#J34_005F_8C8E_005F3').val("");
+            $('#J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3').val("");
+            $('#J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3').val("")
+            };
+
+            Livewire.on('show_form', () => {
+                $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+                $('.employee-select-area .ui.warning.message').addClass('hidden');
+                $('#wage-payment-status-onoff').show();
+            });
+
+            Livewire.on('show_error', () => {
+                $('.employee-select-area .ui.warning.message').removeClass('hidden');
+                $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+                $('#wage-payment-status-onoff').hide();
+            });
+
+            Livewire.on('show_error_60', () => {
+                $('.employee-select-area .ui.warning.60.message').removeClass('hidden');
+                $('#wage-payment-status-onoff').hide();
+            });
+
+            let employeeData;
+
+            $('#another_payment_month_btn').on('click', () => {
+                modal24.modal('show');
+                Livewire.dispatch('select_payment_status_after60', { employeeData: employeeData });
+            });
+
+            Livewire.on('sendCheckedIndexes', function($checkedIndexes) {
+                const checkedIndexes = $checkedIndexes.flat();
+
+                const idSets = [
+                    {
+                        era: "J25_005F_944E_8D86_005F1",
+                        year: "J26_005F_944E_005F1",
+                        month: "J27_005F_8C8E_005F1",
+                        amount: "J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1",
+                        days: "J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1"
+                    },
+                    {
+                        era: "J32_005F_944E_8D86_005F2",
+                        year: "J33_005F_944E_005F2",
+                        month: "J34_005F_8C8E_005F2",
+                        amount: "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2",
+                        days: "J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2"
+                    },
+                    {
+                        era: "J32_005F_944E_8D86_005F3",
+                        year: "J33_005F_944E_005F3",
+                        month: "J34_005F_8C8E_005F3",
+                        amount: "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3",
+                        days: "J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3"
+                    }
+                ];
+
+                checkedIndexes.forEach((num, displayIndex) => {
+                    let year = document.querySelector(`[name="payment_year_${num}"]`)?.value || "";
+                    let month = document.querySelector(`[name="payment_month_${num}"]`)?.value || "";
+                    let amount = document.querySelector(`[name="payment_amount_${num}"]`)?.value || "";
+                    let days = document.querySelector(`[name="reduced_days_${num}"]`)?.value || "";
+
+                    let ids = idSets[displayIndex];
+
+                    if (document.getElementById(ids.era)) document.getElementById(ids.era).value = 9;
+                    if (document.getElementById(ids.year)) document.getElementById(ids.year).value = year;
+                    if (document.getElementById(ids.month)) document.getElementById(ids.month).value = month;
+                    if (document.getElementById(ids.amount)) document.getElementById(ids.amount).value = amount;
+                    if (document.getElementById(ids.days)) document.getElementById(ids.days).value = days;
+                });
+
+                for (let i = checkedIndexes.length; i < idSets.length; i++) {
+                    if (document.getElementById(idSets[i].era)) document.getElementById(idSets[i].era).value = "";
+                    if (document.getElementById(idSets[i].year)) document.getElementById(idSets[i].year).value = "";
+                    if (document.getElementById(idSets[i].month)) document.getElementById(idSets[i].month).value = "";
+                    if (document.getElementById(idSets[i].amount)) document.getElementById(idSets[i].amount).value = "";
+                    if (document.getElementById(idSets[i].days)) document.getElementById(idSets[i].days).value = "";
+                }
+            });
+
+        </script>
 
         @slot('footer')
             <script src="{{ asset('/js/ledger-form.js') }}" type="module"></script>

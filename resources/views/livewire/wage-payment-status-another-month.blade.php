@@ -1,7 +1,4 @@
-<!-- ②呼び出し元のLivewireのBladeファイル（デザインファイル） 使いまわせる画面側の実装-->
-<div>
-    <button type="button" class="ui button small" id="another_payment_month_btn" wire:click="openPaymentModal">別の支給対象年月を参照する</button>
-
+<div style="padding: 1.25rem 1.5rem;">
     <style type="text/css">
 
     .wage-container {
@@ -12,30 +9,17 @@
         margin-bottom: 1.5rem;
         padding: 1.5rem 0.5rem;
         font-size: 16px;
-        border-top: 6px double #000;
-        border-bottom: 6px double #000;
+        background-color:  rgba(151, 145, 0, 0.1);
     }
 
     /* クリック可能な行*/
     .clickable-row {
-        background: rgba(151, 145, 0, 0.1);
-        font-weight: bold;
-        color: #13265f;
+        background: white;
         cursor: pointer;
     }
 
     .clickable-row:hover {
-        background-color:  rgba(151, 145, 0, 0.2);
-    }
-
-    /* クリック可能な年月の部分*/
-    .clickable-text {
-        text-decoration: underline;
-        color: #13265f;
-    }
-
-    .clickable-text:hover {
-        background-color:  rgba(151, 145, 0, 0.2);
+        background-color: #bbdbf3;
     }
 
     /* クリック不可な行*/
@@ -44,76 +28,103 @@
         cursor: not-allowed;
         opacity: 0.6;
     }
-    
+
+    /* 選択した行*/
+    .selected-row {
+        background-color: #ddeeff;
+    }
+
+
+    .ui.form .warning.message {
+        display: block;
+    }
 
     </style>
 
-
-    <div id="another_payment_month" class="ui tiny modal another_payment_month">
-
-        <i class="close icon"></i>
-        <div class="header">
-            支給対象年月の編集
+    <div class="content" >
+    
+        <div class="error-message-24-onoff">
+            <div class="ui warning message hidden" style = "margin: -20px 0 20px 0;">
+                <div class="header">支給対象年月が選択されていません</div>
+            </div>
         </div>
-        <p style="margin: 1.25rem 1.5rem;">下記より支給対象年月を選択し、反映ボタンを押してください。</p>
-        <p style="margin: 1.25rem 1.5rem 0;">※選択可能な年月は60歳到達時の賃金と比べて、60歳以後の賃金が75％未満になっている年月です。</p>
-        <p style="margin: 0 1.5rem;">※選択した支給対象年月の前2ヶ月〜3ヶ月の賃金が75％未満と連続している場合は、最大3ヶ月分が自動で選択されます。</p>
-        
-        <div class="content" > 
-            <form id="another_payment_months" name="another_payment_months" onsubmit="return false;">
-                <div class="wage-container">
-                    <label class="wage-label">60歳到達時の賃金額：</label>
-                    <p class="wage-amount">{{ $sixty_years_total_amount }}円</p>
-                </div>
-                <div class="ui form" style = "display: flex;">
-                    <table class="ui celled table" style="margin: 0;">
-                        <thead>
-                            <tr>
-                                <td style="background: #F9FAFB; font-weight: 700; height: 40px; padding: 10px;">支給対象年月</td>
-                                <td style="background: #F9FAFB; font-weight: 700; height: 40px; padding: 10px;">総支給額</td> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($filtered_wage_data as $wage)
-                            @if ($wage['below_75_percent_flag'])
-                                <tr 
-                                    class="clickable-row"
-                                    wire:key="row-{{ $index }}"
-                                    wire:click="handleRowClick({{ $index }})"
-                                >
-                            @else
-                                <tr class="disabled-row" wire:key="row-{{ $index }}">
-                            @endif
-                                    <td>
-                                        @if ($wage['below_75_percent_flag'])
-                                            <span class="clickable-text">
-                                                {{ $wage['era'] ? $wage['era'] . $wage['year'] . '年' . $wage['month'] . '月' : $wage['year'] . '年' . $wage['month'] . '月' }}
-                                            </span>
-                                        @else
-                                            {{ $wage['era'] ? $wage['era'] . $wage['year'] . '年' . $wage['month'] . '月' : $wage['year'] . '年' . $wage['month'] . '月' }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{ number_format($wage['valid_total_amount']) }}円
-                                    </td>
-                                </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+
+        <div class="wage-container ui form">
+            <label class="wage-label">平均月額賃金：</label>
+            <p class="wage-amount">{{ $calculated_wage }}円</p>
         </div>
-        <div class="actions">
-            <button class="ui negative button" onClick="javascript:$lw.onCancel()" type="button">キャンセル</button>
-            <div class="ui primary button" wire:click="saveSelectedData">反映</div>
+
+        <div class="ui form" style = "display: flex;">
+            <table class="ui celled table" style="margin: 0;">
+                <thead>
+                    <tr>
+                        <td style="background: #F9FAFB; font-weight: 700; height: 40px; padding: 10px;">支給対象年月</td>
+                        <td style="background: #F9FAFB; font-weight: 700; height: 40px; padding: 10px;">総支給額</td> 
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($filtered_wage_data as $index => $wage)
+                    @if ($wage['below_75_percent_flag'])
+                        <tr 
+                            class="clickable-row {{ array_key_exists($index, $selectedRows) ? 'selected-row' : '' }}"
+                            wire:key="row-{{ $index }}"
+                            wire:click="handleRowClick({{ $index }})"
+                        >
+                    @else
+                        <tr class="disabled-row" wire:key="row-{{ $index }}">
+                    @endif
+                            <td>
+                                @if ($wage['below_75_percent_flag'])
+                                <span class="clickable-text">
+                                    {{ $wage['era'] ? $wage['era'] . $wage['year'] . '年' . $wage['month'] . '月' : $wage['year'] . '年' . $wage['month'] . '月' }}
+                                </span>
+                                @else
+                                    {{ $wage['era'] ? $wage['era'] . $wage['year'] . '年' . $wage['month'] . '月' : $wage['year'] . '年' . $wage['month'] . '月' }}
+                                @endif
+                            </td>
+                            <td>
+                                {{ number_format($wage['valid_total_amount']) }}円
+                            </td>
+                        </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
 
     </div>
 
-    <script type="module">
+    <div class="actions" style="margin: 1.5rem 0; text-align: right;">
+        <button class="ui negative button" onClick="javascript:onCancel24Modal()" type="button">キャンセル</button>
+        <div class="ui primary button" onClick="javascript:onEdit24Modal()">確定</div>
+    </div>
 
-    
+</div>  
 
-    </script>
+@script
+<script>
 
-</div>
+window.onCancel24Modal = () => {
+    $wire.dispatch('onCancel24');
+    $('#another_payment_month').modal('hide');
+};
+
+window.onEdit24Modal = () => {
+    $wire.dispatch('onEdit24');
+};
+
+Livewire.on('closed24modal', () => {
+    $('#another_payment_month').modal('hide');
+});
+
+Livewire.on('showErrorMessage_nodata24', () => {
+    setTimeout(() => {
+        $('.error-message-24-onoff .ui.warning.message').removeClass('hidden');
+    }, 0);
+});
+
+Livewire.on('updateInfoText', (data) => {
+    $('#info_text_1').text(data[0].info_text_1);
+    $('#info_text_2').text(data[0].info_text_2);
+});
+</script>
+@endscript

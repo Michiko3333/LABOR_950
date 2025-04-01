@@ -55,6 +55,39 @@
                         </div>
                     </div>
                     <div class="attachment-card">
+                        <div class="ui card card-shadow mb-1">
+                            <div class="content">
+                                <h2>賃金支払状況</h2>
+                                <div class="employee-select-area ui form">
+                                    <p>1）社員選択から社員を選択してください。</p>
+                                    <div class="ui warning message 60 hidden">
+                                        <div class="header">選択された社員は申請対象の条件に合いません（対象：60歳〜65歳）</div>
+                                    </div>
+                                    <div class="ui warning message hidden">
+                                        <div class="header">選択された社員の賃金情報のデータがありません</div>
+                                    </div>
+                                </div>
+                                <!-- 社員が選択されるまで非表示 -->
+                                <div id="basic-allowance-onoff" class="basic-allowance-onoff" style="display: none;">
+                                    <p>2）基本手当を受給する際に基準となった賃金日額を入力してください。</p>
+                                    <div class="ui mini form" style="display: flex; align-items: center;">
+                                        <input id="basic_allowance" name="basic_allowance" type="text" style="width: 25%; font-size: 1.3em; height: 38px; margin: 0 5px 5px 0;">
+                                            円 × 30日 × 75％ = 比較対象賃金
+                                    </div>
+                                </div>
+                                <!-- 月額賃金が入力されるまで非表示 -->
+                                <div id="wage-payment-status-onoff" class="wage-payment-status-onoff" style="display: none;">
+                                    <p>3）反映にチェックを入れて『連携する』ボタンを押すと帳票画面に反映されます。</p>
+                                    <p>　※下記のフォームに入力されている数値は、申請可能な直近の賃金支払状況です。</p>
+                                    <p>　※別の支給対象年月に変更したい場合は、『別の支給対象年月を参照する』ボタンより変更可能です。</p>
+                                    <div class="field" style="min-width: 80px; text-align: right;">
+                                        <button type="button" class="ui button small" id="another_payment_month_btn">別の支給対象年月を参照する</button>
+                                    </div>
+                                    <x-another-payment-month/>
+                                    <livewire:wage-payment-status-reemployment />
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui card card-shadow">
                             <div class="content">
                                 <h2>書類・データの添付</h2>
@@ -178,6 +211,8 @@
                 const employmentInsuredConvertDate = data['employment_insured_convert_date'];
                 const employee_prefecture_data = data['employee_prefecture_data'];
                 const helloWork = data['helloWork'];
+                employeeData = employee;
+
                 if (employee.last_name_kana && employee.first_name_kana) {
                     $('#J20_005F_8E81_96BC').val(employee.last_name_kana + '　' + employee.first_name_kana);
                     $('#J84_005F_94ED_95DB_8CAF_8ED2_8E81_96BC_8374_838A_834B_8369').val(employee.last_name_kana + '　' +
@@ -281,8 +316,163 @@
             Livewire.on('onSelectEmployee', ({
                 data
             }) => {
-                insertDataFromEmployee(data)
+                reset_form(); 
+                insertDataFromEmployee(data);
+                
+                const birthday = new Date(data.employee.birthday);
+                const today = new Date();
+                
+                let age = today.getFullYear() - birthday.getFullYear();
+                const month = today.getMonth();
+                const day = today.getDate();
+
+                if (month < birthday.getMonth() || (month === birthday.getMonth() && day < birthday.getDate())) {
+                    age--;
+                }
+
+                if (age >= 60 && age <= 65) {
+                    $('#basic-allowance-onoff').show();  
+                } else {
+                    $('.employee-select-area .ui.warning.60.message').removeClass('hidden');
+                }
             });
+
+            window.modal24 = $('#another_payment_month').modal({
+                blurring: true 
+            });
+
+            Livewire.on('show_error', () => {
+                $('.employee-select-area .ui.warning.message').removeClass('hidden');
+                $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+                $('#wage-payment-status-onoff').hide();
+            });
+
+            Livewire.on('show_form', () => {
+                $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+                $('.employee-select-area .ui.warning.message').addClass('hidden');
+                $('#wage-payment-status-onoff').show();
+            }); 
+
+            let basicAllowanceInput = document.getElementById('basic_allowance');
+            let timeout;
+            let employeeData;
+
+            $('#basic_allowance').on('input', _ => {
+                const inputValue = parseFloat(toHalfWidth($('#basic_allowance').val().trim()));
+
+                if (!isNaN(inputValue)) {
+                    let calculated_wage = inputValue * 30;
+                    let seventy_five_percent_threshold = calculated_wage * 0.75;
+                    calculated_wage = Math.floor(calculated_wage);
+                    seventy_five_percent_threshold = Math.floor(seventy_five_percent_threshold);
+                    seventy_five_percent_threshold = Math.max(82380, Math.min(486300, seventy_five_percent_threshold));
+
+                    console.log("計算された賃金: " + calculated_wage); // 計算結果をコンソールに表示
+                    console.log("75%閾値: " + seventy_five_percent_threshold); 
+
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        Livewire.dispatch('submit-basic-allowance', { seventy_five_percent_threshold: seventy_five_percent_threshold, employeeData: employeeData, calculated_wage: calculated_wage });
+                    }, 500);
+                }
+            });
+
+            function toHalfWidth(str) {
+                return str.replace(/[０-９]/g, function (match) {
+                    const halfWidthChar = String.fromCharCode(match.charCodeAt(0) - 65248);
+                    return halfWidthChar;
+                });
+            }
+            document.querySelectorAll("input").forEach(input => {
+                input.addEventListener("blur", function(event) {
+                    event.target.value = toHalfWidth(event.target.value);
+                });
+                input.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.target.value = toHalfWidth(event.target.value);
+                    }
+                });
+            });
+
+            $('#another_payment_month_btn').on('click', () => {
+                modal24.modal('show');
+                Livewire.dispatch('select_payment_status_after60', { employeeData: employeeData });
+            });
+
+            function reset_form() {
+                $('.employee-select-area .ui.warning.60.message').addClass('hidden');
+                $('.employee-select-area .ui.warning.message').addClass('hidden');
+                $('#basic-allowance-onoff').hide();
+                $('#wage-payment-status-onoff').hide();
+                $('#basic_allowance').val("");
+                $('#J25_005F_944E_8D86_005F1').val("");
+                $('#J26_005F_944E_005F1').val("");
+                $('#J27_005F_8C8E_005F1').val("");
+                $('#J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1').val("");
+                $('#J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1').val("");
+                $('#J32_005F_944E_8D86_005F2').val("");
+                $('#J33_005F_944E_005F2').val("");
+                $('#J34_005F_8C8E_005F2').val("");
+                $('#J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2').val("");
+                $('#J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2').val("");
+                $('#J32_005F_944E_8D86_005F3').val("");
+                $('#J33_005F_944E_005F3').val("");
+                $('#J34_005F_8C8E_005F3').val("");
+                $('#J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3').val("");
+                $('#J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3').val("")
+            };
+
+            Livewire.on('sendCheckedIndexes', function($checkedIndexes) {
+                const checkedIndexes = $checkedIndexes.flat();
+
+                const idSets = [
+                    {
+                        era: "J25_005F_944E_8D86_005F1",
+                        year: "J26_005F_944E_005F1",
+                        month: "J27_005F_8C8E_005F1",
+                        amount: "J28_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F1",
+                        days: "J29_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F1"
+                    },
+                    {
+                        era: "J32_005F_944E_8D86_005F2",
+                        year: "J33_005F_944E_005F2",
+                        month: "J34_005F_8C8E_005F2",
+                        amount: "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F2",
+                        days: "J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F2"
+                    },
+                    {
+                        era: "J32_005F_944E_8D86_005F3",
+                        year: "J33_005F_944E_005F3",
+                        month: "J34_005F_8C8E_005F3",
+                        amount: "J35_005F_8E78_8B8B_91CE_8FDB_944E_8C8E_82C9_8E78_95A5_82ED_82EA_82BD_92C0_8BE0_8A7A_005F3",
+                        days: "J36_005F_92C0_8BE0_82CC_8CB8_8A7A_82CC_82A0_82C1_82BD_93FA_9094_005F3"
+                    }
+                ];
+
+                checkedIndexes.forEach((num, displayIndex) => {
+                    let year = document.querySelector(`[name="payment_year_${num}"]`)?.value || "";
+                    let month = document.querySelector(`[name="payment_month_${num}"]`)?.value || "";
+                    let amount = document.querySelector(`[name="payment_amount_${num}"]`)?.value || "";
+                    let days = document.querySelector(`[name="reduced_days_${num}"]`)?.value || "";
+
+                    let ids = idSets[displayIndex];
+
+                    if (document.getElementById(ids.era)) document.getElementById(ids.era).value = "令和";
+                    if (document.getElementById(ids.year)) document.getElementById(ids.year).value = year;
+                    if (document.getElementById(ids.month)) document.getElementById(ids.month).value = month;
+                    if (document.getElementById(ids.amount)) document.getElementById(ids.amount).value = amount;
+                    if (document.getElementById(ids.days)) document.getElementById(ids.days).value = days;
+                });
+
+                for (let i = checkedIndexes.length; i < idSets.length; i++) {
+                    if (document.getElementById(idSets[i].era)) document.getElementById(idSets[i].era).value = "";
+                    if (document.getElementById(idSets[i].year)) document.getElementById(idSets[i].year).value = "";
+                    if (document.getElementById(idSets[i].month)) document.getElementById(idSets[i].month).value = "";
+                    if (document.getElementById(idSets[i].amount)) document.getElementById(idSets[i].amount).value = "";
+                    if (document.getElementById(idSets[i].days)) document.getElementById(idSets[i].days).value = "";
+                }
+            });
+
         </script>
 
         @slot('footer')
