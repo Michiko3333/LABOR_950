@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HealthAndPensionInsuredBonusPaymentNotificationRequest extends BaseRequest
@@ -47,13 +48,14 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends BaseRequest
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|regex:/^[0-9]{1,10}+$/',
             "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "title_health_insurance" => 'nullable|int|in:1',
             "title_pension_insurance" => 'nullable|int|in:1',
             "today_year" => 'int|between:1,99|regex:/^[0-9]{1,2}+$/',
@@ -71,7 +73,7 @@ class HealthAndPensionInsuredBonusPaymentNotificationRequest extends BaseRequest
             "branch_tel_area_code" => 'string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
+            "labor_consultant_submission_agent_name" => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "employment_insured_no" => 'nullable|int|regex:/^[0-9]{1,6}+$/',
             "insured_fullname_kana" => 'string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+$/u',
             "insured_fullname" => 'string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',

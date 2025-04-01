@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FullwidthAndMiscellaneousChars;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificationRequest extends BaseRequest
@@ -47,14 +48,15 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
      */
     public function rules(): array
     {
+        FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
             "over_70_check" => 'nullable|string|in:on',
             "mynumber_no_or_pension_no" => 'nullable|string|max:12|regex:/^[0-9]{1,12}+$/',
             "basic_pension_number" => 'nullable|string|max:10|regex:/^[0-9]{1,12}+$/',
             "file_wage_ledger" => 'required_if:radio_file_wage_ledger,2|file|mimes:csv,jpg,pdf|max:50000',
             "file_attendance_record" => 'required_if:radio_file_attendance_record,2|file|mimes:csv,jpg,pdf|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "today_year" => 'required|int|between:1,99|regex:/^[0-9]{1,2}+$/',
             "today_month" => 'required|int|between:1,12|regex:/^[0-9]{1,2}+$/',
             "today_date" => 'required|int|between:1,31|regex:/^[0-9]{1,2}+$/',
@@ -70,7 +72,7 @@ class HealthInsuranceEmployeePensionInsuranceMonthlyRemunerationChangeNotificati
             "branch_tel_area_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_city_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
             "branch_tel_subscriber_code" => 'required|string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_submission_agent_name" => 'nullable|string|max:255',
+            "labor_consultant_submission_agent_name" => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "insurer_reference_no" => 'nullable|string|max:6|regex:/^[0-9]{1,6}+$/',
             "insured_fullname_kana" => 'required|string|max:255|regex:/^[ァ-ヴー]+[　][ァ-ヴー]+\z/u',
             "insured_fullname" => 'required|string|max:255|regex:/^[ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+[　][ぁ-んァ-ヴー一-龥々Ａ-Ｚ]+$/u',

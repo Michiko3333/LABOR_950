@@ -54,11 +54,13 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_nursing_facts', 'required_nursing_care_recipient']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'nursing_facts' => '介護の事実が確認できる書類',
                                         'nursing_care_recipient' =>
                                             '介護対象家族の氏名、申請者本人との続柄、性別、生年月日が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'wage_payment_status' =>
                                             '休業開始時賃金月額証明書に記載された賃金支払い状況の内容が確認できる書類',
                                         'closing_starts' => '雇用保険被保険者休業開始時賃金月額証明票',
@@ -152,6 +154,12 @@
                 $('#J28_005F_8E81_96BC').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val(
+                        '{{ $today['era'] . $today['year'] .'年'. $today['month'] .'月'. $today['date'] .'日'. '\n' . $current_employee->indication_of_agent }}'
+                    );
+                    $('#J114_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
@@ -167,6 +175,11 @@
                     $('#J75_005F_944E').val('{{ old('creation_date_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('creation_date_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('creation_date_day', $today['date']) }}');
+                    $('#J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('submission_agent', $current_employee->indication_of_agent) }}');
+                    $('#J79_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J80_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val(

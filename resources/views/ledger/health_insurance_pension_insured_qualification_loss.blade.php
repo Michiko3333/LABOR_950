@@ -57,7 +57,7 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                         'insurance' => '被保険者証',
                                         'dependent' => '被扶養者証',
@@ -125,6 +125,9 @@
                 $('#N17_P1').val('{{ old('entrepreneur_name') }}' ? '{{ old('entrepreneur_name') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#N22_P1').val(
+                        '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                    );
                 @else
                     $('#N22_P1').prop('readonly', false);
                 @endif

@@ -38,6 +38,9 @@ class AdminLaborUpdateRequest extends BaseRequest
             'tel_subscriber_code' => 'required',
             'mail_address2' => 'nullable|email:rfc',
             'labor_and_social_security_attorney_registration_no' => 'required|string|regex:/^[0-9]{8}$/u',
+            'indication_of_labor' => 'required|string|max:20',
+            'indication_of_agent' => 'required|string|max:20',
+            'labor_and_social_security_association' => 'required|string|max:20',
         ];
     }
 
@@ -59,13 +62,16 @@ class AdminLaborUpdateRequest extends BaseRequest
             'first_name' => '名',
             'first_name_kana' => '名（カナ）',
             'first_name_alphabet' => '名（アルファベット）',
-            'employee_no' => '社員番号',
+            'employee_no' => '従業員番号',
             'employee_type' => '社員区分',
             'tel_area_code' => '電話番号（市外局番）',
             'tel_city_code' => '電話番号（市内局番）',
             'tel_subscriber_code' => '電話番号（加入者番号）',
             'mail_address2' => '連絡先_メールアドレス',
             'labor_and_social_security_attorney_registration_no' => '社会保険労務士登録番号',
+            'indication_of_labor' => '社会保険労務士欄の表示',
+            'indication_of_agent' => '提出代行者欄の表示',
+            'labor_and_social_security_association' => '社会保険労務士会',
         ];
     }
 }

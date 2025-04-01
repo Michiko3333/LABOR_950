@@ -139,6 +139,8 @@ class EmployeeController extends Controller
             return redirect()->route('home.index');
         }
 
+        $current_user_id = CurrentUser::info()->id;
+
         $employee = Employee::where('id', $id)->where('delete_flg', 0)->first();
         $branch = $employee->branch()->first();
         $company = $branch->company()->first();
@@ -202,6 +204,7 @@ class EmployeeController extends Controller
         $pay_type = Values_employee_pay_type::pluck('name', 'id');
 
         return view('employee.employee_create', [
+            'current_user_id' => $current_user_id,
             'filePath' => $filePath,
             'employee' => $employee,
             'departments' => $departments,
@@ -298,6 +301,12 @@ class EmployeeController extends Controller
             $emergency_address_apartment1 = $data['emergency_address_apartment1'];
             $emergency_address_ward2 = $data['emergency_address_ward2'];
             $emergency_address_apartment2 = $data['emergency_address_apartment2'];
+
+            $old_employee_data = Employee::select('employee_type', 'employee_status')
+                ->where('id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->first();
+
             Employee::where('id', $request->input('employee_id'))
                 ->update([
                     'employee_no' => $request->input('employee_no'),
@@ -420,6 +429,14 @@ class EmployeeController extends Controller
                     'store_code' => $request->input('store_code'),
                     'japan_bank_flg' => $request->input('japan_bank_flg'),
                 ]);
+
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
+
             $employee = Employee::find($request->input('employee_id'));
             $employee->update([
                 'mynumber_card_no' => $request->input('mynumber_card_no'),
@@ -849,6 +866,16 @@ class EmployeeController extends Controller
 
 
             $departments = $request->input('departments', []);
+            $currentDepartments = Employee_department::where('employee_id', $request->input('employee_id'))
+                ->where('delete_flg', 0)
+                ->pluck('department_id')
+                ->toArray();
+
+            $addedDepartments = array_diff($departments, $currentDepartments);
+            $removedDepartments = array_diff($currentDepartments, $departments);
+
+            $hasDepartmentsChanges = !empty($addedDepartments) || !empty($removedDepartments);
+
             Employee_department::whereNotIn('department_id', $departments)
                 ->where('employee_id', $request->input('employee_id'))
                 ->where('delete_flg', 0)
@@ -905,10 +932,21 @@ class EmployeeController extends Controller
 
             DB::commit();
             $this->putSuccess();
-            if ($request->input('query_parameter')) {
-                return redirect()->to($request->input('query_parameter'));
+            if (
+                $currentUser->id == $request->input('employee_id') &&
+                (($old_employee_data->employee_type < 3 && $request->input('employee_type') > 2) ||
+                    ($old_employee_data->employee_type > 2 && $request->input('employee_type') < 3) ||
+                    ($old_employee_data->employee_status == 1 && $request->input('employee_status') > 1) ||
+                    ($old_employee_data->employee_type > 1 && $request->input('employee_status') == 1) ||
+                    $hasDepartmentsChanges)
+            ) {
+                return redirect()->route('auth.logout');
             } else {
-                return redirect()->route('employee');
+                if ($request->input('query_parameter')) {
+                    return redirect()->to($request->input('query_parameter'));
+                } else {
+                    return redirect()->route('employee');
+                }
             }
         } catch (\Exception $e) {
             DB::rollBack();

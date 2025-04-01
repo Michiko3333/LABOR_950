@@ -81,7 +81,7 @@
                         </div>
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                     'wage_ledger' => '健康保険　標準賞与額累計申出書',
                                     'other' => 'その他の添付書類',
@@ -150,8 +150,9 @@
                 @endif
 
                 @if ($current_employee->role_id === 500)
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val('{{ $current_employee->last_name }}' + '　' +
-                        '{{ $current_employee->first_name }}');
+                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                        '{{ $current_employee->last_name . '　' .$current_employee->first_name}}'
+                    );
                     $('#N19_005F_94ED_95DB_8CAF_8ED2_94D4_8D864_8C851').val(
                         '{{ $current_employee->labor_and_social_security_attorney_registration_no }}');
                 @else

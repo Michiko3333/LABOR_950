@@ -6,6 +6,7 @@ use App\Permission;
 use App\EgovAPI\MixXmlEgovSigner;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NationalPensionCategory3InsuredPersonNoticeRequest;
+use App\Models\Branch;
 use App\Models\Certificate;
 use App\Models\CurrentUser;
 use App\Models\Employee;
@@ -82,6 +83,8 @@ class NationalPensionCategory3InsuredPersonNoticeController extends Controller
         ];
 
         $current_employee = CurrentUser::info();
+        $current_branch_id = $current_employee->branch_id;
+        $current_branch = Branch::where('id', $current_branch_id)->first();
         $company = CurrentUser::currentCompany();
 
         return view('ledger.national_pension_category_3_insured_person_notice',
@@ -96,7 +99,8 @@ class NationalPensionCategory3InsuredPersonNoticeController extends Controller
                 'todaySet',
                 'yesterdaySet',
                 'current_employee',
-                'company'
+                'company',
+                'current_branch'
             ));
     }
 
@@ -110,7 +114,7 @@ class NationalPensionCategory3InsuredPersonNoticeController extends Controller
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
 
-                $attachment_type = ($value === '2') ? '添付' : '別送';
+                $attachment_type = ($value === '2') ? '添付' : ($value === '1' ? '別送' : '');
 
                 $attached_document_name = $request->input($label_key);
 

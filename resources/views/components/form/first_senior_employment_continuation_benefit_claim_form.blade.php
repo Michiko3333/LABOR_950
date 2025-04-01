@@ -732,16 +732,16 @@
             style="box-sizing:border-box; -moz-box-sizing:border-box; text-align:right; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); font-size:12px; font-family:'ＭＳ 明朝', serif; padding:0px 1px 0px 0px; min-width:18px; max-width:18px; height:16px; ime-mode:disabled;"
             type="TEXT" id="J111_005F_93FA" name="J111" maxlength="2"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:59px; top:1069px; width:122px; line-height:35px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:59px; top:1069px; width:122px; line-height:35px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="120"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:120px; height:33px; ime-mode:active; padding:0px 0px 0px 1px;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:120px; height:33px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
             id="J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2"
-            value="{{ old('laborConsultantActingAsAgent') }}" name="laborConsultantActingAsAgent" autocomplete="off"></SPAN>
+            value="" name="laborConsultantActingAsAgent" autocomplete="off">{{ old('laborConsultantActingAsAgent') }}</textarea></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:180px; top:1069px; width:120px; line-height:35px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:180px; top:1069px; width:120px; line-height:35px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="121"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:119px; height:33px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J113_005F_8E81_96BC" value="{{ old('laborConsultantName') }}" name="laborConsultantName" autocomplete="off"></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:119px; height:33px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J113_005F_8E81_96BC" value="" name="laborConsultantName" autocomplete="off">{{ old('laborConsultantName') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:309px; top:1069px; width:85px; height:36px; text-align:left; font-size:10px; font-family:'ＭＳ 明朝', serif; padding:22px 0px 0px 0px;"></SPAN>
     <SPAN

@@ -56,10 +56,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_amount_days_time']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'amount_days_time' =>
                                             '支給申請書に記載した賃金額、就業した日数及び時間等記載内容を確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'written_consent' => '支給申請に係る承諾書',
                                         'extension_reason' => '延長事由に該当することを確認できる書類',
                                         'spouse' => '被保険者の配偶者であることを確認できる書類',
@@ -372,6 +374,12 @@
                     '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2').val(
+                        '{{ $todaySet['japanEra'] . $todaySet['japanEraYear'] .'年'. $todaySet['month'] .'月'. $todaySet['day'] .'日'. '\n' . $current_employee->indication_of_agent }}'
+                    );
+                    $('#J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J107_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_treacode', $current_branch->tel_area_code) }}');
                     $('#J108_005F_8E73_93E0_8BC7_94D4').val(

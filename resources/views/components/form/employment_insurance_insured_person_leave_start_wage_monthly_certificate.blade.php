@@ -620,11 +620,11 @@
             type="TEXT" id="J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6"
             value="{{ old('agent_delegate_name') }}" name="agent_delegate_name" maxlength="12" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:253px; top:1282px; width:109px; line-height:36px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:253px; top:1282px; width:109px; line-height:36px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="272"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:109px; height:35px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J79_005F_8E81_96BC" value="{{ old('labor_consultant_name') }}" name="labor_consultant_name"
-            disabled></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:109px; height:35px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J79_005F_8E81_96BC" value="" name="labor_consultant_name"
+            disabled>{{ old('labor_consultant_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:746px; top:1018px; width:126px; height:13px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="-1" readonly
@@ -2734,9 +2734,9 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; left:754px; top:113px; width:48px; height:16px; font-size:10px;"><SELECT
             size="1" tabindex="11"
-            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:48px; height:16px;"
+            style="box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:48px; height:16px;pointer-events:none;border:none"
             id="J12_005F_944E_8D86" value="{{ old('leave_start_date_japan_era') }}"
-            name="leave_start_date_japan_era" aria-readonly="true" disabled>
+            name="leave_start_date_japan_era">
             <OPTION value="令和" {{ old('leave_start_date_japan_era') == '令和' ? 'selected' : '' }}>令和</OPTION>
             <OPTION value="平成" {{ old('leave_start_date_japan_era') == '平成' ? 'selected' : '' }}>平成</OPTION>
         </SELECT></SPAN>

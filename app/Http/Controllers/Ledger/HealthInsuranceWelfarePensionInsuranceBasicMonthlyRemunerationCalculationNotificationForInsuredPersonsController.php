@@ -60,6 +60,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
         }
 
         $current_employee = CurrentUser::info();
+        $current_branch = Branch::where('id', $current_employee->branch_id)->first();
         $convertToday = $this->convertWesternCalendarToJapaneseCalendar(Carbon::today());
         $todaySet = [
             'era' => $convertToday['japanese_calendar_era_string'],
@@ -83,6 +84,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 'todaySet' => $todaySet,
                 'dataUri' => $dataUri,
                 'current_employee' => $current_employee,
+                'current_branch' => $current_branch,
                 'certificate' => $certificate,
                 'procedureName' => $procedureName,
                 'egovAcount' => $egovAcount,
@@ -106,7 +108,7 @@ class HealthInsuranceWelfarePensionInsuranceBasicMonthlyRemunerationCalculationN
                 $file_key = substr($key, strlen('radio_'));
                 $label_key = ($file_key === 'file_other') ? 'input_file_other' : 'label_' . $file_key;
 
-                $attachment_type = ($value === '2') ? '添付' : '別送';
+                $attachment_type = ($value === '2') ? '添付' : ($value === '1' ? '別送' : '');
 
                 $attached_document_name = $request->input($label_key);
 

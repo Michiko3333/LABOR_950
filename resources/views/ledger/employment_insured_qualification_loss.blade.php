@@ -54,10 +54,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_disqualification_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                     'disqualification_status' =>
                                         '資格喪失の事実、資格喪失日及び資格喪失の状況が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                     'other' => 'その他の添付書類',
                                 ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
                             </div>
@@ -155,6 +157,16 @@
                     $('#J71_005F_944E').val('{{ old('labor_consultant_japan_era_year', $today['year']) }}');
                     $('#J72_005F_8C8E').val('{{ old('labor_consultant_month', $today['month']) }}');
                     $('#J73_005F_93FA').val('{{ old('labor_consultant_day', $today['date']) }}');
+                    $('#J74_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('labor_consultant_acting_as_agent_name', $current_employee->indication_of_agent) }}');
+                    $('#J75_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
+                    $('#J76_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('agent_name', $current_employee->indication_of_agent) }}');
+                    $('#J77_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J76_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
                     $('#J77_005F_8E73_93E0_8BC7_94D4').val(

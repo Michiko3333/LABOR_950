@@ -47,11 +47,10 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "radio_file_other" => 'nullable|string|in:2',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "office_number_notification_number" => 'required|string|regex:/^[0-9]{1,5}+$/',
-            "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_name" => ['nullable', 'string', 'max:40', new FullwidthAndMiscellaneousChars(true)],
             "business_location_ship_owner_address" => ['required', 'string', 'max:50', new FullwidthAndMiscellaneousChars(true)],
             "business_name_name_of_ship_owner" => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
             "business_owner_name_representative_name" => 'string|max:25|regex:/^[ぁ-んァ-ヴ０-９ー一-龥々ａ-ｚＡ-Ｚ　0-9a-zA-Z ]+\z/u',
@@ -120,7 +119,6 @@ class HealthInsuranceEmployeePensionInsuranceBonusNonPaymentReportElectronicAppl
     {
         return [
             'input_file_other' => '添付ファイル_その他添付書類の名称は正しい形式で入力してください。',
-            "radio_file_other" => '当該帳票では添付ファイルに別送を選択することはできません。',
         ];
     }
 

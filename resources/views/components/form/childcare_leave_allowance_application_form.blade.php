@@ -80,18 +80,18 @@
             style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:201px; height:44px; ime-mode:active; padding:0px 0px 0px 1px;"
             id="J116_005F_94F5_8D6C" value="{{ old('note') }}" name="note" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:118px; top:941px; width:142px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:118px; top:941px; width:142px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="99"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:140px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:140px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
             id="J105_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2"
-            value="{{ old('labor_consultant_acting_as_agent_name') }}"
-            name="labor_consultant_acting_as_agent_name" autocomplete="off"></SPAN>
+            value="" autocomplete="off"
+            name="labor_consultant_acting_as_agent_name">{{ old('labor_consultant_acting_as_agent_name') }}</textarea></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:259px; top:941px; width:120px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:259px; top:941px; width:120px; line-height:34px; height:35px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="100"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:119px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC" value="{{ old('labor_consultant_name') }}"
-            name="labor_consultant_name" autocomplete="off"></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:9px; font-family:'ＭＳ 明朝', serif; width:119px; height:32px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J106_005F_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_005F_8E81_96BC" value=""
+            name="labor_consultant_name" autocomplete="off">{{ old('labor_consultant_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:396px; top:941px; width:85px; height:35px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:17px 0px 0px 0px;"></SPAN>
     <SPAN

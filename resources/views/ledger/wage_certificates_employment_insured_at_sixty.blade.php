@@ -54,10 +54,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_wage_payment_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'wage_payment_status' =>
                                             '六十歳到達時等賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'insured_age' => '被保険者の年齢が確認できる書類',
                                         'separation_form' =>
                                             '直前の被保険者資格喪失の日前の賃金支払い状況を記した雇用保険被保険者離職票－２',
@@ -156,6 +158,12 @@
                     '{{ old('employer_company_managerial_position_name') }}' ? '{{ old('employer_company_managerial_position_name') }}' : '{{ $company->name }}'+ '　' + '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
+                    $('#J112_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2').val(
+                        '{{ $todaySet['japanEra'] . $todaySet['japanEraYear'] .'年'. $todaySet['month'] .'月'. $todaySet['day'] .'日'. '\n' . $current_employee->indication_of_agent }}'
+                    );
+                    $('#J113_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J114_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('laborConsultantTelAreaCode', $current_branch->tel_area_code) }}');
                     $('#J115_005F_8E73_93E0_8BC7_94D4').val(
@@ -166,6 +174,11 @@
                     $('#J65_005F_944E').val('{{ old('laborConsultantJapanEraYear', $todaySet['japanEraYear']) }}');
                     $('#J66_005F_8C8E').val('{{ old('laborConsultantMonth', $todaySet['month']) }}');
                     $('#J67_005F_93FA').val('{{ old('laborConsultantDay', $todaySet['day']) }}');
+                    $('#J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('submission_agent', $current_employee->indication_of_agent) }}');
+                    $('#J69_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J70_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('laborConsultantTelAreaCode', $current_branch->tel_area_code) }}');
                     $('#J71_005F_8E73_93E0_8BC7_94D4').val(

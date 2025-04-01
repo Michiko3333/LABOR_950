@@ -54,10 +54,12 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
-                                <x-ledger-attachment :required_list="['required_wage_certificate_or_payment_status']" :file_original_names="[
+                                <h2>書類・データの添付</h2>
+                                <x-ledger-attachment :required_list="[
                                         'wage_certificate_or_payment_status' =>
                                             '賃金月額証明書 又は 賃金証明書に記載された賃金支払い状況の内容が確認できる書類',
+                                    ]"
+                                    :file_original_names="[
                                         'childcare' => '育児の事実が確認できる書類',
                                         'nursing_care' => '介護の事実が確認できる書類',
                                         'other' => 'その他の添付書類',
@@ -123,6 +125,11 @@
                     $('#J75_005F_944E').val('{{ old('labor_consultant_japan_era_year', $today['year']) }}');
                     $('#J76_005F_8C8E').val('{{ old('labor_consultant_month', $today['month']) }}');
                     $('#J77_005F_93FA').val('{{ old('labor_consultant_day', $today['date']) }}');
+                    $('#J78_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('labor_consultant_submission_agency_name', $current_employee->indication_of_agent) }}');
+                    $('#J79_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J80_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
                     $('#J81_005F_8E73_93E0_8BC7_94D4').val(

@@ -10,7 +10,7 @@
                 </div>
                 <div class="profile-info">
                     <h2>{{ $this->employee_data->last_name . ' ' . $this->employee_data->first_name }}</h2>
-                    <p>社員番号：{{ $profiles['employee_no'] }}</p>
+                    <p>従業員番号：{{ $profiles['employee_no'] }}</p>
                     <p>配属：{{ $profiles['branch_name'] }}</p>
                     <p>部署：{{ count($profiles['departments']) ? implode(', ', $profiles['departments']) : '-' }}</p>
                     <p>役職：{{ $profiles['managerial_position'] }}
@@ -40,7 +40,7 @@
                             <button class="ui button small" id="openNewAddition" type="button">項目を追加</button>
                         </div>
                         <div class="controller mb-1">
-                            <span class="type-salary-text">主な支給（青色）</span>、<span
+                            <span class="type-salary-text">主な支給額（青色）</span>、<span
                                 class="type-overtime-text">時間外手当（紫色）</span>、<span
                                 class="type-allowance-text">諸手当（緑色）</span>、<span class="type-deduction-text">控除（赤色）</span>
                         </div>
@@ -250,7 +250,7 @@
                             <button class="ui button small" id="openNewAdditionBonus" type="button">項目を追加</button>
                         </div>
                         <div class="controller mb-1">
-                            <span class="type-salary-text">主な支給（青色）</span>、<span class="type-deduction-text">控除（赤色）</span>
+                            <span class="type-salary-text">主な支給額（青色）</span>、<span class="type-deduction-text">控除（赤色）</span>
                         </div>
                         <div class="ui short scrolling container" style="width: 100%; max-height: 800px;">
                             <table class="ui first last head foot stuck unstackable celled table">

@@ -15,7 +15,7 @@ class AttendanceColumnsSeeder extends Seeder
     {
         DB::table('m_attendance_columns')->truncate();
         DB::table('m_attendance_columns')->insert([
-            ['key' => 'employee_no', 'name' => '社員ID', 'type' => 'label', 'width' => 120, 'fixed' => 1, 'order' => 1, 'show' => 0, 'is_ledger' => 0, 'ledger_order' => 0, 'parent_key' => ''],
+            ['key' => 'employee_no', 'name' => '従業員番号', 'type' => 'label', 'width' => 120, 'fixed' => 1, 'order' => 1, 'show' => 0, 'is_ledger' => 0, 'ledger_order' => 0, 'parent_key' => ''],
             ['key' => 'employee_name', 'name' => '従業員氏名', 'type' => 'label', 'width' => 140, 'fixed' => 1, 'order' => 2, 'show' => 1, 'is_ledger' => 0, 'ledger_order' => 0, 'parent_key' => ''],
             ['key' => 'branch_name', 'name' => '事業所', 'type' => 'label', 'width' => 120, 'fixed' => 1, 'order' => 3, 'show' => 1, 'is_ledger' => 0, 'ledger_order' => 0, 'parent_key' => ''],
             ['key' => 'departments', 'name' => '部署', 'type' => 'label', 'width' => 120, 'fixed' => 1, 'order' => 3, 'show' => 1, 'is_ledger' => 0, 'ledger_order' => 0, 'parent_key' => ''],

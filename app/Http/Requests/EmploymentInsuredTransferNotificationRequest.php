@@ -66,8 +66,8 @@ class EmploymentInsuredTransferNotificationRequest extends BaseRequest
     {
         FullwidthAndMiscellaneousChars::$attributes = $this->attributes();
         return [
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'employment_insured_no_4' => 'string|regex:/^[0-9]{4}$/u',
             'employment_insured_no_6' => 'string|regex:/^[0-9]{6}$/u',
             'employment_insured_no_cd' => 'string|regex:/^[0-9]{1}$/u',
@@ -113,8 +113,8 @@ class EmploymentInsuredTransferNotificationRequest extends BaseRequest
             'labor_consultant_today_year' => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'labor_consultant_today_month' => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'labor_consultant_today_date' => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            'agent' => 'nullable|string|max:255',
-            'labor_consultant_name' => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            'agent' => 'nullable|string|max:12',
+            'labor_consultant_name' => ['nullable', 'string', 'max:30', new FullwidthAndMiscellaneousChars(true)],
             'labor_consultant_tel_area_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_city_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             'labor_consultant_tel_subscriber_code' => 'nullable|string|regex:/^[0-9]{1,5}$/u',

@@ -2528,11 +2528,11 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:232px; top:1036px; width:138px; height:39px; text-align:center; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:21px 0px 0px 0px;"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:235px; top:1037px; width:111px; line-height:36px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:235px; top:1037px; width:111px; line-height:36px; height:36px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="232"
-            style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:111px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J77_005F_8E81_96BC" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}"
-            disabled></SPAN>
+            style="overflow:hidden; text-align:center; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:111px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J77_005F_8E81_96BC" name="labor_consultant_name" value=""
+            disabled>{{ old('labor_consultant_name') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:369px; top:1021px; width:96px; height:16px; text-align:center; font-size:10px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:1px 0px 0px 0px;">電　話　番　号</SPAN>
     <SPAN

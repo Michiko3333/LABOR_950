@@ -51,7 +51,7 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="['other' => 'その他の添付書類']"/>
                             </div>
                         </div>
@@ -110,13 +110,12 @@
                 $('#_8E96_8BC6_8EE5_8E81_96BC_002E10').val('{{ old('headquarters_representative') }}' ? '{{ old('headquarters_representative') }}' : '{{ $company->representative }}');
                 @if ($current_employee->role_id === 500)
                     $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E14').val(
-                        '{{ old('labor_consultant_acting_as_agent') }}'
+                                                '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
                     ).css('background-color', '#ddeeff')
                     .prop('readonly', false);
                 @else
-                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E14').val(
-                        '{{ old('labor_consultant_acting_as_agent') }}'
-                    ).css('background-color', '#ffffff')
+                    $('#_8ED0_89EF_95DB_8CAF_984A_96B1_8E6D_82CC_92F1_8F6F_91E3_8D73_8ED2_96BC_002E14')
+                    .css('background-color', '#ffffff')
                     .prop('readonly', true);
                 @endif
 

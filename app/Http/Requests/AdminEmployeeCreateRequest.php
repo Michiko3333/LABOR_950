@@ -88,7 +88,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
         }
         if (isset($data['de-birthday'])) {
             foreach ($data['de-birthday'] as &$birthday) {
-                if($birthday){
+                if ($birthday) {
                     if (Carbon::hasFormat($birthday, 'Y-m-d')) {
                         continue;
                     }
@@ -339,7 +339,7 @@ class AdminEmployeeCreateRequest extends BaseRequest
     {
         $Attributes = [
             'icon_file' => 'アイコン画像',
-            'employee_no' => '社員番号',
+            'employee_no' => '従業員番号',
             'branch_id' => '支店',
             'managerial_position_id' => '役職',
             'grade' => '等級',

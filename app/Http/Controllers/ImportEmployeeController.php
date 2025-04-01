@@ -150,7 +150,7 @@ class ImportEmployeeController extends Controller
 
             foreach ($data as $key => $item) {
 
-                // 社員番号が既にあればスキップ
+                // 従業員番号が既にあればスキップ
                 $employee_no = $item['employee_no'];
                 $emp = $currentCompany->employees()->where('employee_no', $employee_no)->where('delete_flg', 0)->first();
                 if (!empty($emp)) {

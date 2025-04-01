@@ -835,17 +835,17 @@
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:301px; top:1074px; width:85px; height:12px; text-align:center; font-size:8px; font-family:'ＭＳ ゴシック', sans-serif; line-height:normal; padding:0px 11px 0px 11px; display:block; text-align:justify; text-justify:inter-ideograph; text-align-last:justify;">電話番号</SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:64px; top:1085px; width:120px; line-height:38px; height:39px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:64px; top:1085px; width:120px; line-height:38px; height:39px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="118"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:118px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:118px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
             id="J113_005F_8DEC_90AC_944E_8C8E_93FA_005F_92F1_8F6F_91E3_8D73_8ED2"
-            name="creation_date_submission_agent" value="{{ old('creation_date_submission_agent') }}" autocomplete="off"></INPUT></SPAN>
+            name="creation_date_submission_agent" value="" autocomplete="off">{{ old('creation_date_submission_agent') }}</textarea></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:183px; top:1085px; width:99px; line-height:38px; height:39px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><INPUT
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:#ddeeff; border-top:1px solid rgb(0, 0, 0); border-right:0px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:183px; top:1085px; width:99px; line-height:38px; height:39px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="119"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;"
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:98px; height:36px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
             id="J114_005F_8E81_96BC" name="labor_consultant_fullname"
-            value="{{ old('labor_consultant_fullname') }}" autocomplete="off"></INPUT></SPAN>
+            value="" autocomplete="off">{{ old('labor_consultant_fullname') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); border-top:1px solid rgb(0, 0, 0); border-right:1px solid rgb(0, 0, 0); border-bottom:1px solid rgb(0, 0, 0); border-left:1px solid rgb(0, 0, 0); left:301px; top:1085px; width:85px; height:39px; text-align:left; font-size:14px; font-family:'ＭＳ 明朝', serif; padding:10px 0px 0px 1px;"></SPAN>
     <SPAN

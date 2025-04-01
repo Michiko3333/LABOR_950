@@ -53,7 +53,7 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                         'other' => 'その他の添付書類',
                                     ]" :extensions="'.jpg,.jpeg,.pdf'" />
@@ -119,15 +119,11 @@
                 $('#N17_005F_985A_8F5C_8DCE_82C9').val('{{ old('company_representative') }}' ? '{{ old('company_representative') }}' : '{{ $company->representative }}');
 
                 @if ($current_employee->role_id === 500)
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
-                        '{{ old('labor_consultant_acting_as_agent') }}'
-                    ).css('background-color', '#ddeeff')
-                    .prop('disabled', false);
+                $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
+                    '{{ $current_employee->indication_of_labor . '　' . $current_employee->last_name . $current_employee->first_name . '　' . $current_branch->tel_area_code . '-' . $current_branch->tel_city_code. '-' . $current_branch->tel_subscriber_code }}'
+                );
                 @else
-                    $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').val(
-                        '{{ old('labor_consultant_acting_as_agent') }}'
-                    ).css('background-color', '#ffffff')
-                    .prop('disabled', true);
+                $('#N21_005F_94ED_95DB_8CAF_8ED2_94D4_8D86CD').prop('disabled', true);
                 @endif
             });
         </script>

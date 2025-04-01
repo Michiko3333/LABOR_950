@@ -228,16 +228,6 @@
                                     placeholder="TARO" autocomplete="off">
                             </div>
                         </div>
-                        <div class="two fields">
-                            <div
-                                class="field required {{ err($errors, 'labor_and_social_security_attorney_registration_no') }}">
-                                <label for="labor_and_social_security_attorney_registration_no">社会保険労務士登録番号</label>
-                                <input type="text" id="labor_and_social_security_attorney_registration_no"
-                                    name="labor_and_social_security_attorney_registration_no"
-                                    value="{{ old('labor_and_social_security_attorney_registration_no', isset($employee_id) ? $employee->labor_and_social_security_attorney_registration_no : '') }}"
-                                    placeholder="01234567" autocomplete="off">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="ui horizontal card card-shadow item-1">
@@ -266,6 +256,51 @@
                     </div>
                 </div>
                 <div class="ui horizontal card card-shadow item-2">
+                    <div class="content">
+                        <h2>社労士情報</h2>
+                        <div class="two fields">
+                            <div
+                                class="field required {{ err($errors, 'labor_and_social_security_attorney_registration_no') }}">
+                                <label for="labor_and_social_security_attorney_registration_no">社会保険労務士登録番号</label>
+                                <input type="text" id="labor_and_social_security_attorney_registration_no"
+                                    name="labor_and_social_security_attorney_registration_no"
+                                    value="{{ old('labor_and_social_security_attorney_registration_no', isset($employee_id) ? $employee->labor_and_social_security_attorney_registration_no : '') }}"
+                                    placeholder="01234567" autocomplete="off">
+                            </div>
+                            <div class="required field {{ err($errors, 'indication_of_labor') }}">
+                                <label>社会保険労務士欄の表示</label>
+                                <select class="ui fluid dropdown" name="indication_of_labor">
+                                    <option value="社会保険労務士">社会保険労務士</option>
+                                    <option value="特定社会保険労務士">特定社会保険労務士</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="two fields">
+                            <div class="required field {{ err($errors, 'indication_of_agent') }}">
+                                <label>提出代行者欄の表示</label>
+                                <select class="ui fluid dropdown" name="indication_of_agent">
+                                    <option value="提出代行者">提出代行者</option>
+                                    <option value="事務代理者">事務代理者</option>
+                                    <option value="事務担当者">事務担当者</option>
+                                </select>
+                            </div>
+                            <div class="required field {{ err($errors, 'labor_and_social_security_association') }}">
+                                <label>社会保険労務士会</label>
+                                <select class="ui fluid dropdown" name="labor_and_social_security_association">
+                                    <option value="">未選択</option>
+                                    @foreach ($prefectures as $k => $item)
+                                        <option value="{{ $item }}"
+                                            {{ old('labor_and_social_security_association') == $item || (isset($employee) && old('labor_and_social_security_association', $employee->labor_and_social_security_association) == $item)
+                                                ? 'selected'
+                                                : '' }}>
+                                            {{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui horizontal card card-shadow item-4">
                     <div class="content">
                         <h2>連絡先情報</h2>
                         <div class="two fields">

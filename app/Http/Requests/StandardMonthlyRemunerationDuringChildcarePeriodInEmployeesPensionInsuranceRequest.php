@@ -56,8 +56,8 @@ class StandardMonthlyRemunerationDuringChildcarePeriodInEmployeesPensionInsuranc
         return [
             'file_certificate_of_family_register' => 'required_if:radio_file_certificate_of_family_register,2|file|mimes:jpg,pdf|max:50000',
             'file_certificate_of_residence' => 'required_if:radio_file_certificate_of_residence,2|file|mimes:jpg,pdf|max:50000',
-            'file_other' => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            'input_file_other' => 'required_if:checked_other,on|string|max:255',
+            'file_other' => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            'input_file_other' => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'submission_year' => 'int|between:1,99|regex:/^[0-9]{1,2}$/u',
             'submission_month' => 'int|between:1,12|regex:/^[0-9]{1,2}$/u',
             'submission_day' => 'int|between:1,31|regex:/^[0-9]{1,2}$/u',

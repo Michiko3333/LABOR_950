@@ -113,8 +113,8 @@ class MaternityLeaveSalaryChangeNoticeOr70OverMaternitySalaryAdjustmentRequest e
             "remarks_and_others" => 'nullable|String|in:有',
             "text_remarks_and_others" => 'nullable|string|max:10',
             "month_applicable" => 'nullable|string|in:開始していません|max:8',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:jpg,pdf|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             'selected_prefecture'=>'required|string',
             'selected_pension_office'=> 'required|string',
         ];

@@ -53,7 +53,7 @@
                     <div class="attachment-card">
                         <div class="ui card card-shadow">
                             <div class="content">
-                                <h2>添付ファイル</h2>
+                                <h2>書類・データの添付</h2>
                                 <x-ledger-attachment :file_original_names="[
                                         'other' => 'その他の添付書類',
                                     ]" :extensions="'.doc,.docx,.jpg,.jpeg,.pdf,.xls,.xlsx'" />
@@ -122,6 +122,11 @@
                     $('#J43_005F_944E').val('{{ old('labor_consultant_today_year', $today['year']) }}');
                     $('#J44_005F_8C8E').val('{{ old('labor_consultant_today_month', $today['month']) }}');
                     $('#J45_005F_93FA').val('{{ old('labor_consultant_today_date', $today['date']) }}');
+                    $('#J46_005F_92F1_8F6F_91E3_8D73_8ED2_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6').val(
+                        '{{ old('agent', $current_employee->indication_of_agent) }}');
+                    $('#J47_005F_8E81_96BC').val(
+                        '{{ $current_employee->indication_of_labor . '(' . $current_employee->labor_and_social_security_association . '社会保険労務士会)' . '\n' . $current_employee->last_name . '　' . $current_employee->first_name }}'
+                    );
                     $('#J48_005F_8E73_8A4F_8BC7_94D4').val(
                         '{{ old('labor_consultant_tel_area_code', $current_branch->tel_area_code) }}');
                     $('#J49_005F_8E73_93E0_8BC7_94D4').val(

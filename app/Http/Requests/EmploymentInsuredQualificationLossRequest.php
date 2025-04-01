@@ -27,8 +27,8 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
         FullwidthAndMiscellaneousChars::$attributes = $instance->attributes();
         return [
             "file_disqualification_status" => 'required_unless:radio_file_disqualification_status,1|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "file_other" => 'required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
-            "input_file_other" => 'required_if:checked_other,on|string|max:255',
+            "file_other" => 'nullable|required_if:radio_file_other,2|file|mimes:doc,docx,jpg,jpeg,pdf,xls,xlsx|max:50000',
+            "input_file_other" => 'nullable|required_if:radio_file_other,2,1|string|max:255',
             "employment_insured_no_4" => 'string|regex:/^[0-9]{4}$/u',
             "employment_insured_no_6" => 'string|regex:/^[0-9]{6}$/u',
             "employment_insured_no_CD" => 'string|regex:/^[0-9]{1}$/u',
@@ -84,8 +84,8 @@ class EmploymentInsuredQualificationLossRequest extends BaseRequest
             "labor_consultant_japan_era_year" => 'nullable|int|between:1,99|regex:/^[0-9]{1,2}$/u',
             "labor_consultant_month" => 'nullable|int|between:1,12|regex:/^[0-9]{1,2}$/u',
             "labor_consultant_day" => 'nullable|int|between:1,31|regex:/^[0-9]{1,2}$/u',
-            "labor_consultant_acting_as_agent_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
-            "labor_consultant_name" => 'nullable|string|max:255|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_acting_as_agent_name" => 'nullable|string|max:12|regex:/\A[ぁ-んァ-ヴー一-龥々Ａ-Ｚ　]+\z/u',
+            "labor_consultant_name" => ['nullable', 'string', 'max:30', new FullwidthAndMiscellaneousChars(true)],
             "labor_consultant_tel_area_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "labor_consultant_tel_city_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',
             "labor_consultant_tel_subscriber_code" => 'nullable|string|regex:/^[0-9]{1,5}$/u',

@@ -2117,11 +2117,11 @@
             type="TEXT" id="J68_005F_92F1_8F6F_91E3_8D73_8ED2_005F_8E96_96B1_91E3_979D_8ED2_82CC_955C_8EA6"
             value="{{ old('submission_agent') }}" name="submission_agent" maxlength="12" autocomplete="off"></SPAN>
     <SPAN
-        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:264px; top:1261px; width:109px; line-height:38px; height:38px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><input
+        style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:264px; top:1261px; width:109px; line-height:38px; height:38px; font-size:10px; font-family:'ＭＳ 明朝', serif;"><textarea
             tabindex="222"
-            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:109px; height:37px; ime-mode:active; padding:0px 0px 0px 1px;"
-            id="J69_005F_8E81_96BC" value="{{ old('laborConsultantName') }}" name="laborConsultantName"
-            disabled></SPAN>
+            style="overflow:hidden; text-align:left; box-sizing:border-box; -moz-box-sizing:border-box; line-height:1em; color:rgb(0, 0, 0); background-color:#ddeeff; font-size:10px; font-family:'ＭＳ 明朝', serif; width:109px; height:37px; ime-mode:active; padding:0px 0px 0px 1px;border: none !important;"
+            id="J69_005F_8E81_96BC" value="" name="laborConsultantName"
+            disabled>{{ old('laborConsultantName') }}</textarea></SPAN>
     <SPAN
         style="position:absolute; box-sizing:border-box; -moz-box-sizing:border-box; overflow:hidden; color:rgb(0, 0, 0); background-color:rgb(255, 255, 255); left:405px; top:1262px; width:35px; height:14px; font-size:11px; font-family:'ＭＳ 明朝', serif;"><INPUT
             tabindex="223"
