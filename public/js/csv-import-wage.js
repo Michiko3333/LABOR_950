@@ -559,8 +559,8 @@ class CsvImportWage extends PowerTableList {
             key: '',
         }];
         const options_tmp = {...this.mapping_base};
-        options_tmp['salary_values'] = '【複数枠】支給';
-        options_tmp['overtime_values'] = '【複数枠】残業手当';
+        options_tmp['salary_values'] = '【複数枠】主な支給額';
+        options_tmp['overtime_values'] = '【複数枠】時間外手当';
         options_tmp['allowance_values'] = '【複数枠】諸手当';
         options_tmp['deduction_values'] = '【複数枠】控除';
 

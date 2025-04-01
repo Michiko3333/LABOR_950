@@ -429,6 +429,14 @@ class EmployeeController extends Controller
                     'store_code' => $request->input('store_code'),
                     'japan_bank_flg' => $request->input('japan_bank_flg'),
                 ]);
+
+            $currentCompany = CurrentUser::CurrentCompany();
+            $employeeNos = $currentCompany->employees()->where('delete_flg', 0)->pluck('employee_no')->toArray();
+
+            if (in_array($request->input('employee_no'), $employeeNos)) {
+                return back()->withErrors('この従業員番号は既に使用されています。')->withInput();
+            }
+
             $employee = Employee::find($request->input('employee_id'));
             $employee->update([
                 'mynumber_card_no' => $request->input('mynumber_card_no'),
