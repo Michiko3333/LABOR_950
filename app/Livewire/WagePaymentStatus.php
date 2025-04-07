@@ -46,8 +46,6 @@ class WagePaymentStatus extends Component{
 
     public function render()
     {
-        $employeeId = $this->employeeId ? $this->employeeId : null;
-
         return view('livewire.wage-payment-status', [
             'employeeId' => $this->employeeId
         ]);
@@ -86,6 +84,7 @@ class WagePaymentStatus extends Component{
     //社員選択ボタンが押された時
     #[On('select_status')]
     public function select_status($employee) { 
+        \Log::info($employee);
 
         $this->resetData();
 
@@ -134,6 +133,7 @@ class WagePaymentStatus extends Component{
             ->pluck('month');
 
         $wages = Wage::where('employee_id', $employee['id'])
+            ->where('wage_type', '給与')
             ->whereIn('month', $attendance_months)
             ->orderBy('month', 'desc')
             ->select('month', 'total_amount')
@@ -159,6 +159,7 @@ class WagePaymentStatus extends Component{
         $wages_below_75_percent = Wage::where('employee_id', $employee['id'])
             ->where('total_amount', '<', $seventy_five_percent_threshold)
             ->where('month', '>=', $sixty_years_old_date)
+            ->where('wage_type', '給与')
             ->orderBy('month', 'desc')
             ->take(3)
             ->get();
@@ -256,10 +257,15 @@ class WagePaymentStatus extends Component{
             $this->total_amount_3 = null;
             $this->reduced_days_3 = null;
         }
+
+       
     }
 
     private function resetData()
     {
+
+        $this->dispatch('resetCheckboxes');
+
         $this->checkbox_1 = false; 
         $this->wage_id_1 = null;
         $this->era_1 = null;
@@ -290,6 +296,8 @@ class WagePaymentStatus extends Component{
     #[On('selectedRowsUpdated')]
     public function selectedRowsUpdated($tempSelectedRows) {
 
+        $this->dispatch('resetCheckboxes');
+
         $payment_target_year_months = [];
 
         foreach ($tempSelectedRows as $tempRow) {
@@ -311,7 +319,6 @@ class WagePaymentStatus extends Component{
                 }
             }
         
-            // 一致するデータがなかった場合、新規追加
             if (!$found) {
                 $payment_target_year_months[] = [
                     'wage_id' => $tempRow['valid_id'], 
@@ -333,11 +340,11 @@ class WagePaymentStatus extends Component{
     public function wageAfterChange($wage_amount_after_exclusion)
     {
         if ($this->selectedType === 0) {
-            $this->total_amount_1 = $wage_amount_after_exclusion;
+            $this->total_amount_1 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         } elseif ($this->selectedType === 1) {
-            $this->total_amount_2 = $wage_amount_after_exclusion;
+            $this->total_amount_2 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         } elseif ($this->selectedType === 2) {
-            $this->total_amount_3 = $this->$wage_amount_after_exclusion;
+            $this->total_amount_3 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         }
     }
 }

@@ -1,4 +1,4 @@
-<div style="padding: 1.25rem 1.5rem;">
+<div>
     <style type="text/css">
 
     .wage-container {
@@ -44,17 +44,17 @@
     <div class="content" >
     
         <div class="error-message-24-onoff">
-            <div class="ui warning message hidden" style = "margin: -20px 0 20px 0;">
+            <div class="ui warning message hidden" style = "margin: 20px;">
                 <div class="header">支給対象年月が選択されていません</div>
             </div>
         </div>
 
-        <div class="wage-container ui form">
+        <div class="wage-container ui form" style = "margin: 20px;">
             <label class="wage-label">平均月額賃金：</label>
             <p class="wage-amount">{{ $calculated_wage }}円</p>
         </div>
 
-        <div class="ui form" style = "display: flex;">
+        <div class="ui form" style = "display: flex; padding: 20px;">
             <table class="ui celled table" style="margin: 0;">
                 <thead>
                     <tr>
@@ -93,7 +93,7 @@
 
     </div>
 
-    <div class="actions" style="margin: 1.5rem 0; text-align: right;">
+    <div class="actions" style="padding: 1.5rem; text-align: right; background: #f9fafb;">
         <button class="ui negative button" onClick="javascript:onCancel24Modal()" type="button">キャンセル</button>
         <div class="ui primary button" onClick="javascript:onEdit24Modal()">確定</div>
     </div>

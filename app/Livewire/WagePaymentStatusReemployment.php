@@ -49,11 +49,39 @@ class WagePaymentStatusReemployment extends Component{
 
     public function render()
     {
-        $employeeId = $this->employeeId ? $this->employeeId : null;
-
         return view('livewire.wage-payment-status-reemployment', [
             'employeeId' => $this->employeeId
         ]);
+    }
+
+    // 連携ボタンが押された時
+    #[On('reflectValues')]
+    public function reflectValues()
+    {
+        $this->dispatch('runConfirmation');
+    }
+
+    // チェックの状態を受け取ったとき
+    #[On('checkbox_change')]
+    public function checkbox_change($checkedIndexes)
+    {
+        $this->dispatch('sendCheckedIndexes', $checkedIndexes);
+    }
+    
+    // 編集ボタンが押された時
+    #[On('openEditWageAmountModal')]
+    public function openEditWageAmountModal($type)
+    {
+        $data = $this->payment_target_year_months[$type] ?? null;
+
+        if (empty($data)) {
+            $this->dispatch('showErrorMessage_empty_input');
+            return;
+        } else {
+            $this->selectedType = $type;
+            $this->dispatch('editWageAmount', $data);
+            $this->dispatch('open_edit_modal_input');
+        }
     }
 
     //月額賃金と選択社員情報の受信
@@ -90,6 +118,7 @@ class WagePaymentStatusReemployment extends Component{
         $wages_below_75_percent = Wage::where('employee_id', $employee['id'])
             ->where('total_amount', '<', $seventy_five_percent_threshold)
             ->where('month', '>=', $sixty_years_old_date)
+            ->where('wage_type', '給与')
             ->orderBy('month', 'desc')
             ->take(3)
             ->get();
@@ -191,6 +220,9 @@ class WagePaymentStatusReemployment extends Component{
 
     private function resetData()
     {
+
+        $this->dispatch('resetCheckboxes');
+
         $this->checkbox_1 = false; 
         $this->wage_id_1 = null;
         $this->era_1 = null;
@@ -216,39 +248,11 @@ class WagePaymentStatusReemployment extends Component{
         $this->reduced_days_3 = null;
     }
 
-    // 編集ボタンが押された時
-    #[On('openEditWageAmountModal')]
-    public function openEditWageAmountModal($type)
-    {
-        $data = $this->payment_target_year_months[$type] ?? null;
-
-        if (empty($data)) {
-            $this->dispatch('showErrorMessage_empty_input');
-            return;
-        } else {
-            $this->selectedType = $type;
-            $this->dispatch('editWageAmount', $data);
-            $this->dispatch('open_edit_modal_input');
-        }
-    }
-
-    // チェックの状態を受け取ったとき
-    #[On('checkbox_change')]
-    public function checkbox_change($checkedIndexes)
-    {
-        $this->dispatch('sendCheckedIndexes', $checkedIndexes);
-    }
-
-    // 連携ボタンが押された時
-    #[On('reflectValues')]
-    public function reflectValues()
-    {
-        $this->dispatch('runConfirmation');
-    }
-
     // 別の年月の選択データを受信して上書きする
     #[On('selectedRowsUpdated')]
     public function selectedRowsUpdated($tempSelectedRows) {
+
+        $this->dispatch('resetCheckboxes');
 
         $payment_target_year_months = [];
 
@@ -292,11 +296,11 @@ class WagePaymentStatusReemployment extends Component{
     public function wageAfterChange($wage_amount_after_exclusion)
     {
         if ($this->selectedType === 0) {
-            $this->total_amount_1 = $wage_amount_after_exclusion;
+            $this->total_amount_1 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         } elseif ($this->selectedType === 1) {
-            $this->total_amount_2 = $wage_amount_after_exclusion;
+            $this->total_amount_2 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         } elseif ($this->selectedType === 2) {
-            $this->total_amount_3 = $this->$wage_amount_after_exclusion;
+            $this->total_amount_3 = $wage_amount_after_exclusion['wage_amount_after_exclusion'];
         }
     }
 }

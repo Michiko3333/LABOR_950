@@ -120,6 +120,7 @@ class WagePaymentStatusAnotherMonth extends Component
         
         $wageData = Wage::where('employee_id', $employeeId)
             ->where('month', '>=', $this->sixty_years_old_date)
+            ->where('wage_type', '給与')
             ->orderBy('month', 'desc')
             ->select('id', 'total_amount', 'month')
             ->take(24)

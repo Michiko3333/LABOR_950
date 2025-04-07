@@ -1,4 +1,4 @@
-<div style="padding: 1.25rem 1.5rem;">
+<div>
 
     <style type="text/css">
 
@@ -9,7 +9,7 @@
 
     <div class="content" > 
         <div class="error-message-hensyu-onoff">
-            <div class="ui warning message hidden" style = "margin: -35px 0 20px 0;">
+            <div class="ui warning message hidden" style = "margin: 20px;">
                 <div class="header">除外対象がチェックされていません</div>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="ui basic label" style=" display: flex; height: 40px; padding: 0 1.5rem; font-size: 16px; border: none;">
                 <div>
                     <label>除外後の賃金額：</label>
-                    <input value="{{ number_format($wage_amount_after_exclusion) }}円" id="wage_amount_after_exclusion" name="wage_amount_after_exclusion" style="border: none;" disabled>
+                    <input value="{{ number_format($wage_amount_after_exclusion ) }}円"  id="wage_amount_after_exclusion" name="wage_amount_after_exclusion" style="border: none;" disabled>
                 </div>
                 <div>
                     <label>除外合計：</label>
@@ -142,7 +142,7 @@
             </div>
         </form>
     </div>
-    <div class="actions" style="margin: 1.5rem 0; text-align: right;">
+    <div class="actions" style="padding: 1.5rem; text-align: right; background: #f9fafb;">
         <button class="ui negative button" type="button">キャンセル</button>
         <div class="ui primary button " wire:click="onEditClick">確定</div>
     </div>
